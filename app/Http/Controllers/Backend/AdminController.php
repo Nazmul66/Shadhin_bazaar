@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Validator;
 
 class AdminController extends Controller
 {
@@ -18,25 +20,47 @@ class AdminController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function login()
+    public function login(Request $request)
     {
-        return view("backend.pages.auth.login");
-    }
+        if( $request->isMethod('POST') ){
+           $data = $request->all();
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function loginStore(Request $request)
-    {
-        //
+           // validation
+           $rules = [
+              "email" => 'required|email|max:255',
+              "password" => 'required|max:30',
+           ];
+
+           $customMessage = [
+               "email.required" => 'Email is required',
+               "email.email" => 'Valid Email is required',
+               "password.required" => 'Password is required',
+           ];
+
+           $request->validate($rules, $customMessage);
+
+
+           if( Auth::guard('admin')->attempt(["email" => $data['email'], "password" => $data['password']]) ){
+              return redirect('/admin/dashboard');
+           }
+           else{
+              return redirect()->back()->with('error_message', "Invalid Email or Password");
+           }
+        }
+
+        else{
+            return view("backend.pages.auth.login");
+        }
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function logout()
     {
-        //
+        Auth::guard('admin')->logout();
+
+        return redirect('/admin/login');
     }
 
     /**
