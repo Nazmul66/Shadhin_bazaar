@@ -2,7 +2,7 @@
 
 
 @push('meta-title')
-      Dashboard | Minia - Minimal Admin & Dashboard Template
+    {{ env('APP_NAME') }} | Dashboard 
 @endpush
 
 

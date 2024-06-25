@@ -27,6 +27,8 @@
     <link href="{{ asset('/public/assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
     <!-- App Css-->
     <link href="{{ asset('/public/assets/css/app.min.css') }}" id="app-style" rel="stylesheet" type="text/css" />
+    <!-- Custom Css-->
+    <link href="{{ asset('/public/assets/css/custom.css') }}" id="app-style" rel="stylesheet" type="text/css" />
     
     @stack('style-css')
 </head>

@@ -1,0 +1,20 @@
+.auth-content{
+    padding: 40px;
+    border: 1px solid #f2f2f2;
+    box-shadow: 0px 0px 56px rgba(0, 38, 3, 0.08);
+    --webkit-box-shadow: 0px 0px 56px rgba(0,38,3,0.08);
+    border-radius: 6px;
+    --webkit-border-radius: 6px;
+}
+
+@media (min-width: 320px) and (max-width: 576px){
+    .auth-content{
+        padding: 30px 15px;
+    }
+} 
+
+@media (min-width: 769px) and (max-width: 992px){
+    .auth-content{
+        padding: 30px;
+    }
+}
