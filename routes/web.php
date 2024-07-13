@@ -19,10 +19,10 @@ Route::get('/', function () {
 Route::group(["prefix" => '/admin'], function () {
     Route::match(["get", "post"], '/login', [AdminController::class, "login"]); // login page
     
-    Route::group(["middleware" => ['admin']], function () {
-        Route::get('/dashboard', [AdminController::class, "dashboard"])->name('dashboard');
+    // Route::group(["middleware" => ['admin']], function () {
+        Route::get('/dashboards', [AdminController::class, "dashboards"])->name('dashboards');
         Route::get('/logout', [AdminController::class, "logout"]);
-    });
+    // });
 });
 
 

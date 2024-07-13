@@ -12,7 +12,7 @@ class AdminController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function dashboard()
+    public function dashboards()
     {
         return view('backend.pages.dashboard');
     }
