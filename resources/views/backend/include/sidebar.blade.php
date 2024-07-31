@@ -18,18 +18,47 @@
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i data-feather="grid"></i>
-                        <span data-key="t-apps">Apps</span>
+                        <span data-key="t-apps">Products</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li>
-                            <a href="apps-calendar.html">
-                                <span data-key="t-calendar">Calendar</span>
+                            <a href="{{ route('admin.category.index') }}">
+                                <span data-key="t-categories">Categories</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('admin.subcategory.index') }}">
+                                <span data-key="t-subCat">Sub-Categories</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('admin.childCategory.index') }}">
+                                <span data-key="t-childCat">child-Categories</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('admin.brand.index') }}">
+                                <span data-key="t-brand">Brands</span>
                             </a>
                         </li>
 
                         <li>
                             <a href="apps-chat.html">
-                                <span data-key="t-chat">Chat</span>
+                                <span data-key="t-product">Products</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('admin.coupons.index') }}">
+                                <span data-key="t-coupon">Coupons</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('admin.reviews.index') }}">
+                                <span data-key="t-review">Reviews</span>
                             </a>
                         </li>
                     </ul>

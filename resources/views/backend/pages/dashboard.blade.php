@@ -1,4 +1,4 @@
-@extends("backend.layout.master-template")
+@extends("backend.layout.master")
 
 
 @push('meta-title')

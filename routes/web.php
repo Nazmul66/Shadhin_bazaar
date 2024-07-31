@@ -16,16 +16,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::group(["prefix" => '/admin'], function () {
-    Route::match(["get", "post"], '/login', [AdminController::class, "login"]); // login page
-    
-    // Route::group(["middleware" => ['admin']], function () {
-        Route::get('/dashboards', [AdminController::class, "dashboards"])->name('dashboards');
-        Route::get('/logout', [AdminController::class, "logout"]);
-    // });
-});
-
-
 
 
 
@@ -40,3 +30,4 @@ Route::group(["prefix" => '/admin'], function () {
 
 
 require __DIR__.'/auth.php';
+require __DIR__.'/admin.php';

@@ -8,15 +8,23 @@
  <!-- pace js -->
  <script src="{{ asset('/public/backend/assets/libs/pace-js/pace.min.js') }}"></script>
 
- <!-- apexcharts -->
+ {{-- <!-- apexcharts -->
  <script src="{{ asset('/public/backend/assets/libs/apexcharts/apexcharts.min.js') }}"></script>
 
  <!-- Plugins js-->
  <script src="{{ asset('/public/backend/assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.min.js') }}"></script>
  <script src="{{ asset('/public/backend/assets/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-world-mill-en.js') }}"></script>
  <!-- dashboard init -->
- <script src="{{ asset('/public/backend/assets/js/pages/dashboard.init.js') }}"></script>
+ <script src="{{ asset('/public/backend/assets/js/pages/dashboard.init.js') }}"></script> --}}
 
  <script src="{{ asset('/public/backend/assets/js/app.js') }}"></script>
 
-@stack('script')
+@stack('add-script')
+
+<script>
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+</script>
