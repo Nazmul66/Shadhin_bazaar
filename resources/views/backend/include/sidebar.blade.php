@@ -10,14 +10,14 @@
 
                 <li>
                     <a href="{{ route('dashboards') }}">
-                        <i data-feather="home"></i>
+                        <i class='bx bx-home'></i>
                         <span data-key="t-dashboard">Dashboard</span>
                     </a>
                 </li>
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
-                        <i data-feather="grid"></i>
+                        <i class='bx bx-package'></i>
                         <span data-key="t-apps">Products</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -59,6 +59,20 @@
                         <li>
                             <a href="{{ route('admin.reviews.index') }}">
                                 <span data-key="t-review">Reviews</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow">
+                        <i class='bx bx-grid-alt'></i>
+                        <span data-key="t-apps">Manage Website</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li>
+                            <a href="{{ route('admin.slider.index') }}">
+                                <span data-key="t-slider">Slider</span>
                             </a>
                         </li>
                     </ul>

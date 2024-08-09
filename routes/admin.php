@@ -16,14 +16,22 @@ use App\Http\Controllers\Backend\SubcategoryController;
 use App\Http\Controllers\Backend\ChildCategoryController;
 use App\Http\Controllers\Backend\CouponController;
 use App\Http\Controllers\Backend\ReviewController;
+use App\Http\Controllers\Backend\SliderController;
 
 
 
 Route::get('/logout', [AdminController::class, "logout"]);
 Route::match(["get", "post"], '/login', [AdminController::class, "login"]); // login page
 
+
 Route::group(["prefix" => '/admin'], function () {
     Route::get('/dashboards', [AdminController::class, "dashboards"])->name('dashboards');
+
+
+    //______ Slider _____//
+    Route::resource('/slider', SliderController::class)->names('admin.slider');
+    Route::get('/slider-data', [SliderController::class, 'getData'])->name('admin.slider-data');
+    Route::post('/slider/status', [SliderController::class, 'changeSliderStatus'])->name('admin.slider.status');
 
     //______ Category _____//
     Route::resource('/categories', CategoryController::class)->names('admin.category');
