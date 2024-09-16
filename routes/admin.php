@@ -33,6 +33,7 @@ Route::group(["prefix" => '/admin'], function () {
     Route::get('/slider-data', [SliderController::class, 'getData'])->name('admin.slider-data');
     Route::post('/slider/status', [SliderController::class, 'changeSliderStatus'])->name('admin.slider.status');
 
+    
     //______ Category _____//
     Route::resource('/categories', CategoryController::class)->names('admin.category');
     Route::get('/category-data', [CategoryController::class, 'getData'])->name('admin.category-data');
@@ -70,4 +71,5 @@ Route::group(["prefix" => '/admin'], function () {
     Route::resource('/reviews', ReviewController::class)->names('admin.reviews');
     Route::get('/review-data', [ReviewController::class, 'getData'])->name('admin.review-data');
     Route::post('/change-review-status', [ReviewController::class, 'changeReviewStatus'])->name('admin.review.status');
+    
 });
