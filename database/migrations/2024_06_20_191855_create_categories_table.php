@@ -16,11 +16,7 @@ return new class extends Migration
             $table->string('category_name')->unique();
             $table->string('slug');
             $table->text('category_img')->nullable();
-            $table->text('category_img_path')->nullable();
-            $table->tinyInteger('front_status')->default(0)->comment('1=active,0=inactive');
-            $table->tinyInteger('topCategory_status')->default(0)->comment('1=active,0=inactive');
             $table->tinyInteger('status')->default(1)->comment('1=active,0=inactive');
-
             $table->timestamps();
         });
     }
