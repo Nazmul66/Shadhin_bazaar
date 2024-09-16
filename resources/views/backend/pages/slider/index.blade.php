@@ -5,10 +5,7 @@
 @endpush
 
 @push('add-css')
-
-    <link href="{{ asset('public/backend/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('public/backend/assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css') }}" rel="stylesheet" type="text/css">
-
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.6/css/dataTables.dataTables.min.css">
 @endpush
 
 @section('body-content')
@@ -84,12 +81,16 @@
                             <div class="row">
                                 <div class="col mb-3">
                                     <label for="slider_image" class="form-label">Slider Image </label>
-                                    <input type="file" class="form-control" name="slider_image" id="slider_image" required >
+                                    <input type="file" class="form-control" name="slider_image" id="slider_image" >
+
+                                    <span id="image_validate" class="text-danger mt-1"></span>
                                 </div>
                                 
                                 <div class="col mb-3">
                                     <label for="title" class="form-label">Slider Title</label>
-                                    <input class="form-control" id="title" type="text" name="title" required >
+                                    <input class="form-control" id="title" type="text" name="title" >
+
+                                    <span id="title_validate" class="text-danger mt-1"></span>
                                 </div>
                             </div>
 
@@ -101,7 +102,7 @@
                                 
                                 <div class="col mb-3">
                                     <label for="starting_price" class="form-label">Price</label>
-                                    <input class="form-control" id="starting_price" type="number" name="starting_price" required>
+                                    <input class="form-control" id="starting_price" type="number" name="starting_price">
                                 </div>
                             </div>
 
@@ -113,31 +114,17 @@
                                 
                                 <div class="col mb-3">
                                     <label for="serial" class="form-label">Serial</label>
-                                    <input class="form-control" id="serial" type="text" name="serial" required >
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="mb-3">
-                                    <label class="form-label">Status</label>
-                                    <select class="form-select" name="status" required >
-                                        <option value="" disabled="" selected="">Select</option>
-                                        <option value="1">Active</option>
-                                        <option value="0">Inactive</option>
-                                    </select>
+                                    <input class="form-control" id="serial" type="text" name="serial" >
                                 </div>
                             </div>
 
                             <div class="d-flex justify-content-end align-items-center">
                                 <button type="button" class="btn btn-secondary waves-effect me-3"
                                     data-bs-dismiss="modal">Close</button>
-
                                 <button type="submit" id="btn-store" class="btn btn-primary waves-effect waves-light"> Save changes</button>
                             </div>
                         </form>
                     </div>
-
-
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div>
@@ -149,12 +136,11 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="myModalLabel">Add New Category</h5>
+                        <h5 class="modal-title" id="myModalLabel">Update Slider</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
 
                     <div class="modal-body">
-                        {{-- method="POST" action="{{ route('admin.category.store') }}" --}}
                         <form id="editForm" enctype="multipart/form-data">
                             @csrf
                             @method("PUT")
@@ -172,6 +158,8 @@
                                 <div class="col mb-3">
                                     <label for="up_title" class="form-label">Slider Title</label>
                                     <input class="form-control" id="up_title" type="text" name="title">
+
+                                    <span id="up_title_validate" class="text-danger mt-1"></span>
                                 </div>
                             </div>
 
@@ -199,23 +187,12 @@
                                 </div>
                             </div>
 
-                            <div class="mb-3">
-                                <label class="form-label" for="up_status">Status</label>
-                                <select class="form-select" id="up_status" name="status">
-                                    <option value="" disabled selected>Select</option>
-                                    <option value="1">Active</option>
-                                    <option value="0">Inactive</option>
-                                </select>
-                            </div>
-
                             <div class="d-flex justify-content-end align-items-center">
                                 <button type="button" class="btn btn-secondary waves-effect me-3"
-                                        data-bs-dismiss="modal">Close
-                                </button>
+                                    data-bs-dismiss="modal">Close</button>
 
                                 <button type="submit" id="btn-store" class="btn btn-primary waves-effect waves-light">
-                                    Save changes
-                                </button>
+                                    Save changes </button>
                             </div>
                         </form>
                     </div>
@@ -230,8 +207,7 @@
 
 @push('add-script')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="{{asset('public/backend')}}/assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
-    <script src="{{asset('public/backend')}}/assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/2.1.6/js/dataTables.min.js"></script>
 
     <script>
 
@@ -361,7 +337,11 @@
                         }
                     },
                     error: function (err) {
-                        console.error('Error:', err);
+                        let error = err.responseJSON.errors;
+
+                        $('#title_validate').empty().html(error.title);
+                        $('#image_validate').empty().html(error.slider_image);
+
                         swal.fire({
                             title: "Failed",
                             text: "Something Went Wrong !",
@@ -437,7 +417,10 @@
                         slidersTable.ajax.reload();
                     },
                     error: function (err) {
-                        console.error('Error:', err);
+                        let error = err.responseJSON.errors;
+
+                        $('#up_title_validate').empty().html(error.title);
+
                         swal.fire({
                             title: "Failed",
                             text: "Something Went Wrong !",

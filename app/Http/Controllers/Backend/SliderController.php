@@ -29,16 +29,39 @@ class SliderController extends Controller
                 return '<img src="'. asset( $slider->slider_image ) .'" width="75px">';
             })
             ->addColumn('type', function ($slider) {
-                return '<span class="badge bg-primary">'. $slider->type .'</span>';
+                if( !is_null($slider->type) ){
+                    return '<span class="badge bg-primary">'. $slider->type .'</span>';
+                }
+                else{
+                    return '<span class="badge bg-primary">N/A</span>';
+                }
             })
             ->addColumn('title', function ($slider) {
                 return '<span class="badge bg-primary">'. $slider->title .'</span>';
             })
             ->addColumn('btn_url', function ($slider) {
-                return '<span class="badge bg-info">'. $slider->btn_url .'</span>';
+                if( !is_null($slider->starting_price) ){
+                     return '<span class="badge bg-info">'. $slider->btn_url .'</span>';
+                }
+                else{
+                    return '<span class="badge bg-info">N/A</span>';
+                }
             })
             ->addColumn('starting_price', function ($slider) {
-                return '<span class="badge bg-success">'. $slider->starting_price .' TK</span>';
+                if( !is_null($slider->starting_price) ){
+                    return '<span class="badge bg-success">'. $slider->starting_price .' TK</span>';
+                }
+                else{
+                    return '<span class="badge bg-success">N/A</span>';
+                }
+            })
+            ->addColumn('serial', function ($slider) {
+                if( !is_null($slider->serial) ){
+                    return '<span class="badge bg-success">'. $slider->serial .' TK</span>';
+                }
+                else{
+                    return '<span class="badge bg-success">N/A</span>';
+                }
             })
             ->addColumn('status', function ($slider) {
                 if ($slider->status == 1) {
@@ -60,7 +83,7 @@ class SliderController extends Controller
                 </div>';
             })
             
-            ->rawColumns(['slider_image', 'starting_price', 'type', 'btn_url', 'title', 'status','action'])
+            ->rawColumns(['slider_image', 'starting_price', 'serial', 'type', 'btn_url', 'title', 'status','action'])
             ->make(true);
     }
 
@@ -87,13 +110,17 @@ class SliderController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'slider_image' => ['required', 'image', 'max:2000' ],
-            'type' => ['string', 'max:200' ],
-            'title' => ['required', 'max:200' ],
-            'serial' => ['required'],
-            'status' => ['required'],
-        ]);
+        $request->validate(
+            [
+                'slider_image' => ['required', 'image' ],
+                'title' => ['required', 'max:200' ],
+            ],
+            [
+                'title.required' => 'Please fill up title name',
+                'title.max' => 'Character might be 255 words',
+                'slider_image.required' => 'Slider image required',
+            ]
+        );
         
         $slider = new Slider();
 
@@ -102,7 +129,7 @@ class SliderController extends Controller
         $slider->starting_price         = $request->starting_price;
         $slider->btn_url                = $request->btn_url;
         $slider->serial                 = $request->serial;
-        $slider->status                 = $request->status;
+        $slider->status                 = 1;
         
         if( $request->file('slider_image') ){
             $images = $request->file('slider_image');
@@ -132,14 +159,26 @@ class SliderController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Slider $slider)
+    public function update(Request $request, string $id)
     {
+        $slider =  Slider::find($id);
+
+        $request->validate(
+            [
+                'title' => ['required', 'max:200' ],
+            ],
+            [
+                'title.required' => 'Please fill up title name',
+                'title.max' => 'Character might be 255 words',
+            ]
+        );
+
         $slider->type                   = $request->type;
         $slider->title                  = $request->title;
         $slider->starting_price         = $request->starting_price;
         $slider->btn_url                = $request->btn_url;
         $slider->serial                 = $request->serial;
-        $slider->status                 = $request->status;
+        $slider->status                 = 1;
 
         if( $request->file('slider_image') ){
              $images = $request->file('slider_image');
