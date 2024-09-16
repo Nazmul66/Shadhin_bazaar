@@ -8,12 +8,8 @@
 @endpush
 
 
-@push('backendCss')
-
-    <link href="{{ asset('public/backend') }}/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css">
-
-    <link href="{{ asset('public/backend') }}/assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css">
-
+@push('add-css')
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.6/css/dataTables.dataTables.min.css">
 @endpush
 
 
@@ -35,11 +31,8 @@
         </div>
     </div>
 
-
     <!-- Content part Start -->
-
     <div class="card">
-
         <div class="card-header">
             <div class="d-flex justify-content-between align-items-center">
                 <h4 class="card-title">SubCategories List</h4>
@@ -52,18 +45,16 @@
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-bordered mb-0" id="subCategoryTable">
-
                     <thead>
-                    <tr>
-                        <th>#SL.</th>
-                        <th>Image</th>
-                        <th>Category Name</th>
-                        <th>SubCategory Name</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
+                        <tr>
+                            <th>#SL.</th>
+                            <th>Image</th>
+                            <th>Category Name</th>
+                            <th>SubCategory Name</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
                     </thead>
-
                     <tbody>
 
                     </tbody>
@@ -91,19 +82,25 @@
                                 <select class="form-select" name="category_id">
                                     <option value="" disabled selected>Select</option>
                                         @foreach ($categories as $category)
-                                            <option value="{{ $category->id }}">{{ $category->category_name }}</option>      
+                                            <option value="{{ $category->id }}">{{ $category->category_name }}</option>
                                         @endforeach
                                 </select>
+
+                                <span id="cat_name_validate" class="text-danger mt-1"></span>
                             </div>
 
                             <div class="mb-3">
                                 <label for="subcategory_name" class="form-label">SubCategory Name</label>
-                                <input class="form-control" id="subcategory_name" type="text" name="subcategory_name" required>
+                                <input class="form-control" id="subcategory_name" type="text" name="subcategory_name">
+
+                                <span id="subCat_name_validate" class="text-danger mt-1"></span>
                             </div>
 
                             <div class="mb-3">
                                 <label for="subcategory_img" class="form-label">SubCategory Image </label>
-                                <input type="file" class="form-control" name="subcategory_img" id="subcategory_img" required>
+                                <input type="file" class="form-control" name="subcategory_img" id="subcategory_img">
+
+                                <span id="image_validate" class="text-danger mt-1"></span>
                             </div>
 
                             <div class="mb-3">
@@ -113,6 +110,8 @@
                                     <option value="1">Active</option>
                                     <option value="0">Inactive</option>
                                 </select>
+
+                                <span id="status_validate" class="text-danger mt-1"></span>
                             </div>
 
                             <div class="d-flex justify-content-end align-items-center">
@@ -123,8 +122,6 @@
                             </div>
                         </form>
                     </div>
-
-
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div>
@@ -152,15 +149,17 @@
                                 <label class="form-label">Category Name</label>
                                 <select class="form-select" name="category_id" id="up_category_id">
                                     <option value="" disabled selected>Select</option>
-                                        @foreach ($categories as $category)
-                                            <option value="{{ $category->id }}">{{ $category->category_name }}</option>      
+                                        @foreach ($categories as $row)
+                                            <option value="{{ $row->id }}">{{ $row->category_name }}</option>
                                         @endforeach
                                 </select>
                             </div>
 
                             <div class="mb-3">
                                 <label for="up_subcat_name" class="form-label">SubCategory Name</label>
-                                <input class="form-control" id="up_subcat_name" type="text" name="subcategory_name" required>
+                                <input class="form-control" id="up_subcat_name" type="text" name="subcategory_name" >
+
+                                <span id="up_subCat_name_validate" class="text-danger mt-1"></span>
                             </div>
 
                             <div class="mb-3">
@@ -201,8 +200,7 @@
 
 @push('add-script')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="{{asset('public/backend')}}/assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
-    <script src="{{asset('public/backend')}}/assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/2.1.6/js/dataTables.min.js"></script>
 
     <script>
 
@@ -253,7 +251,7 @@
                 var id = $(this).data('id');
                 var status = $(this).data('status');
 
-                console.log(id, status);
+                // console.log(id, status);
 
                 $.ajax({
                     type: "POST",
@@ -287,7 +285,7 @@
                 })
             })
 
-            // Create SubCategory
+            // Create
             $('#createForm').submit(function (e) {
                 e.preventDefault();
 
@@ -317,7 +315,13 @@
                         }
                     },
                     error: function (err) {
-                        console.error('Error:', err);
+                        let error = err.responseJSON.errors;
+
+                        $('#cat_name_validate').empty().html(error.category_id);
+                        $('#subCat_name_validate').empty().html(error.subcategory_name);
+                        $('#image_validate').empty().html(error.subcategory_img);
+                        $('#status_validate').empty().html(error.status);
+
                         swal.fire({
                             title: "Failed",
                             text: "Something Went Wrong !",
@@ -344,7 +348,7 @@
                     success: function (res) {
                         let data = res.success;
                         // console.log(res)
-                        
+
                         $('#id').val(data.id);
                         $('#up_category_id').val(data.category_id);
                         $('#up_subcat_name').val(data.subcategory_name);
@@ -383,7 +387,7 @@
 
                         swal.fire({
                             title: "Success",
-                            text: "Category Edited",
+                            text: "SubCategory Edited",
                             icon: "success"
                         })
 
@@ -392,7 +396,10 @@
                         subCategoryTables.ajax.reload();
                     },
                     error: function (err) {
-                        console.error('Error:', err);
+                        let error = err.responseJSON.errors;
+
+                        $('#up_subCat_name_validate').empty().html(error.subcategory_name);
+
                         swal.fire({
                             title: "Failed",
                             text: "Something Went Wrong !",

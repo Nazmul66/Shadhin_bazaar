@@ -36,8 +36,8 @@ class ChildCategoryController extends Controller
                 ->get();
 
         return DataTables::of($childCategories)
-            
-        ->addColumn('childCategoryImg', function ($childCategory) {    
+
+        ->addColumn('childCategoryImg', function ($childCategory) {
             return '<img src="'.asset( $childCategory->img ).'" width="50px" height="50px">';
         })
 
@@ -56,13 +56,13 @@ class ChildCategoryController extends Controller
         })
 
         ->addColumn('action', function ($childCategory) {
-            return '<div class="d-flex gap-3"> 
+            return '<div class="d-flex gap-3">
                 <a class="btn btn-sm btn-primary" id="editButton" href="javascript:void(0)" data-id="'.$childCategory->id.'" data-bs-toggle="modal" data-bs-target="#editModal"><i class="fas fa-edit"></i></a>
 
                 <a class="btn btn-sm btn-danger" href="javascript:void(0)" data-id="'.$childCategory->id.'" id="deleteBtn"> <i class="fas fa-trash"></i></a>
             </div>';
         })
-        
+
         ->rawColumns(['childCategoryImg','status','action'])
         ->make(true);
     }
@@ -72,12 +72,24 @@ class ChildCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'category_id' => ['required'],
-            'subCategory_id' => ['required'],
-            'name' => ['required', 'max:150', 'unique:child_categories,name' ],
-            'status' => ['required'],
-        ]);
+        $request->validate(
+            [
+                'category_id' => ['required'],
+                'subCategory_id' => ['required'],
+                'name' => ['required', 'unique:child_categories', 'max:255'],
+                'img' => ['required', 'image'],
+                'status' => ['required'],
+            ],
+            [
+                'category_id.required' => 'Please select category name',
+                'subCategory_id.required' => 'Please select subCategory name',
+                'name.required' => 'Please fill up childCategory name',
+                'name.max' => 'Character might be 255 word',
+                'name.unique' => 'Character might be unique',
+                'img.required' => 'Image is required',
+                'status.required' => 'status is required',
+            ]
+        );
 
         $childCategory = new ChildCategory();
 
@@ -86,8 +98,8 @@ class ChildCategoryController extends Controller
         $childCategory->name                   = $request->name;
         $childCategory->slug                   = Str::slug($request->name);
         $childCategory->status                 = $request->status;
-        
-        
+
+
         if( $request->file('img') ){
             $images = $request->file('img');
 
@@ -97,10 +109,10 @@ class ChildCategoryController extends Controller
 
             $childCategory->img   =  $imagePath . $imageName;
         }
-        
+
         // dd($category);
         $childCategory->save();
-        
+
         return response()->json(['message'=> "Successfully ChildCategory Created!", 'status' => true]);
     }
 
@@ -127,11 +139,6 @@ class ChildCategoryController extends Controller
     }
 
 
-    public function subCategoryEdit()
-    {
-
-    }
-
     /**
      * Show the form for editing the specified resource.
      */
@@ -144,8 +151,21 @@ class ChildCategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, ChildCategory $childCategory)
+    public function update(Request $request, string $id)
     {
+        $childCategory = ChildCategory::find($id);
+
+        $request->validate(
+            [
+                'name' => ['required', 'max:255', 'unique:child_categories,name,'. $childCategory->id ],
+            ],
+            [
+                'name.required' => 'Please fill up childCategory name',
+                'name.max' => 'Character might be 255 word',
+                'name.unique' => 'Character might be unique',
+            ]
+        );
+
         $childCategory->category_id            = $request->category_id;
         $childCategory->subCategory_id         = $request->subCategory_id;
         $childCategory->name                   = $request->name;
@@ -182,7 +202,7 @@ class ChildCategoryController extends Controller
             }
         }
         $childCategory->delete();
-        
+
         return response()->json(['message' => 'ChildCategory has been deleted.'], 200);
     }
 }

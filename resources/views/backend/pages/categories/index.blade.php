@@ -5,9 +5,7 @@
 @endpush
 
 @push('add-css')
-
     <link rel="stylesheet" href="https://cdn.datatables.net/2.1.6/css/dataTables.dataTables.min.css">
-
 @endpush
 
 @section('body-content')

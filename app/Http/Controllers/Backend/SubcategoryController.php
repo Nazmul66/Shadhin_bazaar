@@ -28,12 +28,12 @@ class SubcategoryController extends Controller
     {
         // get all data
         $subCategories= Category::join('subcategories', 'subcategories.category_id', '=', 'categories.id')
-        ->select('categories.category_name', 'subcategories.subcategory_name', 'subcategories.*')
-        ->get();
+                        ->select('categories.category_name', 'subcategories.subcategory_name', 'subcategories.*')
+                        ->get();
 
         return DataTables::of($subCategories)
-            
-        ->addColumn('subCategoryImg', function ($subCategory) {    
+
+        ->addColumn('subCategoryImg', function ($subCategory) {
             return '<img src="'.asset( $subCategory->subcategory_img ).'" width="50px" height="50px">';
         })
 
@@ -52,13 +52,13 @@ class SubcategoryController extends Controller
         })
 
         ->addColumn('action', function ($subCategory) {
-            return '<div class="d-flex gap-3"> 
+            return '<div class="d-flex gap-3">
                 <a class="btn btn-sm btn-primary" id="editButton" href="javascript:void(0)" data-id="'.$subCategory->id.'" data-bs-toggle="modal" data-bs-target="#editModal"><i class="fas fa-edit"></i></a>
 
                 <a class="btn btn-sm btn-danger" href="javascript:void(0)" data-id="'.$subCategory->id.'" id="deleteBtn"> <i class="fas fa-trash"></i></a>
             </div>';
         })
-        
+
         ->rawColumns(['subCategoryImg','status','action'])
         ->make(true);
     }
@@ -68,11 +68,22 @@ class SubcategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'category_id' => ['required'],
-            'subcategory_name' => ['required', 'max:150', 'unique:subcategories,subcategory_name' ],
-            'status' => ['required'],
-        ]);
+        $request->validate(
+            [
+                'category_id' => ['required'],
+                'subcategory_name' => ['required', 'unique:subcategories', 'max:255'],
+                'subcategory_img' => ['required', 'image'],
+                'status' => ['required'],
+            ],
+            [
+                'category_id.required' => 'Please select category name',
+                'subcategory_name.required' => 'Please fill up subCategory name',
+                'subcategory_name.max' => 'Character might be 255 words',
+                'subcategory_name.unique' => 'Character might be unique',
+                'subcategory_img.required' => 'Image is required',
+                'status.required' => 'status is required',
+            ]
+        );
 
         $SubCategory = new Subcategory();
 
@@ -80,8 +91,8 @@ class SubcategoryController extends Controller
         $SubCategory->subcategory_name       = $request->subcategory_name;
         $SubCategory->slug                   = Str::slug($request->subcategory_name);
         $SubCategory->status                 = $request->status;
-        
-        
+
+
         if( $request->file('subcategory_img') ){
             $images = $request->file('subcategory_img');
 
@@ -91,10 +102,10 @@ class SubcategoryController extends Controller
 
             $SubCategory->subcategory_img   =  $imagePath . $imageName;
         }
-        
+
         // dd($category);
         $SubCategory->save();
-        
+
         return response()->json(['message'=> "Successfully SubCategory Created!", 'status' => true]);
     }
 
@@ -120,12 +131,6 @@ class SubcategoryController extends Controller
         return response()->json(['message' => 'success', 'status' => $status, 'id' => $id]);
     }
 
-
-    public function subCategoryEdit()
-    {
-
-    }
-
     /**
      * Show the form for editing the specified resource.
      */
@@ -138,8 +143,22 @@ class SubcategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Subcategory $subcategory)
+    public function update(Request $request, string $id)
     {
+        $subcategory  = Subcategory::find($id);
+        // dd($subCategory);
+
+        $request->validate(
+            [
+                'subcategory_name' => ['required', 'max:255', 'unique:subcategories,subcategory_name,'. $subcategory->id ],
+            ],
+            [
+                'subcategory_name.required' => 'Please fill up subCategory name',
+                'subcategory_name.max' => 'Character might be 255 words',
+                'subcategory_name.unique' => 'Character might be unique',
+            ]
+        );
+
         $subcategory->category_id            = $request->category_id;
         $subcategory->subcategory_name       = $request->subcategory_name;
         $subcategory->slug                   = Str::slug($request->subcategory_name);
@@ -175,7 +194,7 @@ class SubcategoryController extends Controller
             }
         }
         $subcategory->delete();
-        
+
         return response()->json(['message' => 'SubCategory has been deleted.'], 200);
     }
 }

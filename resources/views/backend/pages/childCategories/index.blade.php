@@ -5,12 +5,7 @@
 @endpush
 
 @push('add-css')
-
-    <link href="{{ asset('public/backend') }}/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css"
-          rel="stylesheet" type="text/css">
-    <link href="{{ asset('public/backend') }}/assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css"
-          rel="stylesheet" type="text/css">
-
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.6/css/dataTables.dataTables.min.css">
 @endpush
 
 @section('body-content')
@@ -46,7 +41,6 @@
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-bordered mb-0" id="childCategoryTable">
-
                     <thead>
                     <tr>
                         <th>#SL.</th>
@@ -72,12 +66,11 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="myModalLabel">Add New Category</h5>
+                        <h5 class="modal-title" id="myModalLabel">Add New Child-Category</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
 
                     <div class="modal-body">
-                        {{-- method="POST" action="{{ route('admin.category.store') }}" --}}
                         <form id="createForm" enctype="multipart/form-data">
                             @csrf
 
@@ -86,9 +79,11 @@
                                 <select class="form-select" name="category_id">
                                     <option value="" disabled selected>Select</option>
                                         @foreach ($categories as $category)
-                                            <option value="{{ $category->id }}">{{ $category->category_name }}</option>      
+                                            <option value="{{ $category->id }}">{{ $category->category_name }}</option>
                                         @endforeach
                                 </select>
+
+                                <span id="cat_name_validate" class="text-danger mt-1"></span>
                             </div>
 
                             <div class="mb-3">
@@ -96,19 +91,25 @@
                                 <select class="form-select" name="subCategory_id">
                                     <option value="" disabled selected>Select</option>
                                         @foreach ($subCategories as $subCat)
-                                            <option value="{{ $subCat->id }}">{{ $subCat->subcategory_name }}</option>      
+                                            <option value="{{ $subCat->id }}">{{ $subCat->subcategory_name }}</option>
                                         @endforeach
                                 </select>
+
+                                <span id="subCat_name_validate" class="text-danger mt-1"></span>
                             </div>
 
                             <div class="mb-3">
                                 <label for="childCategory_name" class="form-label">ChildCategory Name</label>
-                                <input class="form-control" id="childCategory_name" type="text" name="name" required>
+                                <input class="form-control" id="childCategory_name" type="text" name="name" >
+
+                                <span id="childCat_name_validate" class="text-danger mt-1"></span>
                             </div>
 
                             <div class="mb-3">
                                 <label for="childCategory_img" class="form-label">Category Image </label>
-                                <input type="file" class="form-control" name="img" id="childCategory_img" required>
+                                <input type="file" class="form-control" name="img" id="childCategory_img">
+
+                                <span id="image_validate" class="text-danger mt-1"></span>
                             </div>
 
                             <div class="mb-3">
@@ -118,6 +119,8 @@
                                     <option value="1">Active</option>
                                     <option value="0">Inactive</option>
                                 </select>
+
+                                <span id="status_validate" class="text-danger mt-1"></span>
                             </div>
 
                             <div class="d-flex justify-content-end align-items-center">
@@ -143,12 +146,11 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="myModalLabel">Add New Category</h5>
+                        <h5 class="modal-title" id="myModalLabel">Update Child Category</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
 
                     <div class="modal-body">
-                        {{-- method="POST" action="{{ route('admin.category.store') }}" --}}
                         <form id="EditChildCategory" enctype="multipart/form-data">
                             @csrf
                             @method("PUT")
@@ -160,7 +162,7 @@
                                 <select class="form-select" name="category_id" id="up_category_id">
                                     <option value="" disabled selected>Select</option>
                                         @foreach ($categories as $category)
-                                            <option value="{{ $category->id }}">{{ $category->category_name }}</option>      
+                                            <option value="{{ $category->id }}">{{ $category->category_name }}</option>
                                         @endforeach
                                 </select>
                             </div>
@@ -170,14 +172,16 @@
                                 <select class="form-select" name="subCategory_id" id="up_subCategory_id">
                                     <option value="" disabled selected>Select</option>
                                         @foreach ($subCategories as $subCat)
-                                            <option value="{{ $subCat->id }}">{{ $subCat->subcategory_name }}</option>      
+                                            <option value="{{ $subCat->id }}">{{ $subCat->subcategory_name }}</option>
                                         @endforeach
                                 </select>
                             </div>
 
                             <div class="mb-3">
                                 <label for="childCategory_name" class="form-label">ChildCategory Name</label>
-                                <input class="form-control" id="up_childCategory_name" type="text" name="name" required>
+                                <input class="form-control" id="up_childCategory_name" type="text" name="name">
+
+                                <span id="up_childCat_name_validate" class="text-danger mt-1"></span>
                             </div>
 
                             <div class="mb-3">
@@ -218,8 +222,7 @@
 @push('add-script')
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="{{asset('public/backend')}}/assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
-    <script src="{{asset('public/backend')}}/assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/2.1.6/js/dataTables.min.js"></script>
 
     <script>
 
@@ -272,7 +275,7 @@
                 var id = $(this).data('id');
                 var status = $(this).data('status');
 
-                console.log(id, status);
+                // console.log(id, status);
 
                 $.ajax({
                     type: "POST",
@@ -336,7 +339,14 @@
                         }
                     },
                     error: function (err) {
-                        console.error('Error:', err);
+                        let error = err.responseJSON.errors;
+
+                        $('#cat_name_validate').empty().html(error.category_id);
+                        $('#subCat_name_validate').empty().html(error.subCategory_id);
+                        $('#childCat_name_validate').empty().html(error.name);
+                        $('#image_validate').empty().html(error.img);
+                        $('#status_validate').empty().html(error.status);
+
                         swal.fire({
                             title: "Failed",
                             text: "Something Went Wrong !",
@@ -362,7 +372,7 @@
                     contentType: false,  // Prevent jQuery from setting contentType
                     success: function (res) {
                         let data = res.success;
-                        
+
                         $('#up_id').val(data.id);
                         $('#up_category_id').val(data.category_id);
                         $('#up_subCategory_id').val(data.subCategory_id);
@@ -412,7 +422,10 @@
                         childCategoryTable.ajax.reload();
                     },
                     error: function (err) {
-                        console.error('Error:', err);
+                        let error = err.responseJSON.errors;
+
+                        $('#up_childCat_name_validate').empty().html(error.name);
+
                         swal.fire({
                             title: "Failed",
                             text: "Something Went Wrong !",

@@ -37,7 +37,6 @@ Route::group(["prefix" => '/admin'], function () {
     Route::resource('/categories', CategoryController::class)->names('admin.category');
     Route::get('/category-data', [CategoryController::class, 'getData'])->name('admin.category-data');
     Route::post('/categories/status', [CategoryController::class, 'changeCategoryStatus'])->name('admin.category.status');
-    // Route::get('/categories/edit/{id}', [CategoryController::class, 'categoryEdit'])->name('category.edit');
     Route::get('/get-subcategory/{category}', [CategoryController::class, 'getSubCategories'])->name('admin.get.subcategory');
 
 
