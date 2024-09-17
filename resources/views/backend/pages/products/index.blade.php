@@ -81,19 +81,18 @@
 
                                 <div class="col-md-4 mb-3">
                                     <label for="name" class="form-label">Product Name</label>
-                                    <input class="form-control" id="name" type="text" name="name" >
+                                    <input class="form-control" id="name" type="text" name="name" placeholder="Write product name....">
 
                                     <span id="name_validate" class="text-danger mt-1"></span>
                                 </div>
 
                                 <div class="col-md-4 mb-3">
                                     <label for="sku" class="form-label">Product Sku</label>
-                                    <input class="form-control" id="sku" type="text" name="sku" >
+                                    <input class="form-control" id="sku" type="text" name="sku" placeholder="Write product sku....">
 
                                     <span id="sku_validate" class="text-danger mt-1"></span>
                                 </div>
                             </div>
-
 
                             <div class="row">
                                 <div class="col-md-4 mb-3">
@@ -127,7 +126,6 @@
                                 </div>
                             </div>
 
-
                             <div class="row">
                                 <div class="col-md-4 mb-3">
                                     <label class="form-label" for="brand_id">Brand</label>
@@ -135,38 +133,138 @@
                                         <option value="" disabled selected>Select</option>
                                         <option>Large select</option>
                                     </select>
+
+                                    <span id="brand_id_validate" class="text-danger mt-1"></span>
                                 </div>
 
                                 <div class="col-md-4 mb-3">
                                     <label class="form-label" for="price">Price</label>
-                                    <input class="form-control" id="price" type="text" name="price" >
+                                    <input class="form-control" id="price" type="text" name="price" placeholder="Write price....">
+
+                                    <span id="price_validate" class="text-danger mt-1"></span>
                                 </div>
 
                                 <div class="col-md-4 mb-3">
                                     <label class="form-label" for="offer_price">Offer Price</label>
-                                    <input class="form-control" id="offer_price" type="text" name="offer_price" >
+                                    <input class="form-control" id="offer_price" type="text" name="offer_price" placeholder="Write offer_price....">
+
+                                    <span id="offer_price_validate" class="text-danger mt-1"></span>
                                 </div>
                             </div>
 
-                            <div class="col-md-4 mb-3">
-                                <label class="form-label">Status</label>
-                                <select class="form-select" name="status">
-                                    <option value="" disabled selected>Select</option>
-                                    <option value="1">Active</option>
-                                    <option value="0">Inactive</option>
-                                </select>
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label" for="qty">Stock Quantity</label>
+                                    <input class="form-control" id="qty" type="text" name="qty" placeholder="Product Quantity....">
 
-                                <span id="status_validate" class="text-danger mt-1"></span>
+                                    <span id="quantity_validate" class="text-danger mt-1"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label" for="offer_start_date">Offer Start Date</label>
+                                    <input class="form-control" type="date" id="offer_start_date" name="offer_start_date">
+
+                                    <span id="start_date_validate" class="text-danger mt-1"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label" for="offer_end_date">Offer End Date</label>
+                                    <input class="form-control" type="date" id="offer_end_date" name="offer_end_date">
+
+                                    <span id="end_date_validate" class="text-danger mt-1"></span>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label" for="video_link">Video Link</label>
+                                    <textarea class="form-control" id="video_link" name="video_link"  rows="4" placeholder="Link Paste Here...."></textarea>
+
+                                    <span id="link_validate" class="text-danger mt-1"></span>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label" for="short">Short Description</label>
+                                    <textarea class="form-control" id="short" class="" name="short_description" rows="4" placeholder="Short Description...."></textarea>
+
+                                    <span id="short_validate" class="text-danger mt-1"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label class="form-label" for="long_description">Long Description</label>
+                                    <textarea class="form-control" id="long_description" name="long_description" rows="8" placeholder="Long Description...."></textarea>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label" for="is_featured">Is Featured</label>
+                                    <select class="form-select" id="is_featured" name="is_featured">
+                                        <option value="" disabled selected>Select</option>
+                                        <option value="1">Yes</option>
+                                        <option value="0">No</option>
+                                    </select>
+    
+                                    <span id="is_featured_validate" class="text-danger mt-1"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label" for="is_top">Is Top</label>
+                                    <select class="form-select" id="is_top" name="is_top">
+                                        <option value="" disabled selected>Select</option>
+                                        <option value="1">Yes</option>
+                                        <option value="0">No</option>
+                                    </select>
+    
+                                    <span id="is_top_validate" class="text-danger mt-1"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label" for="is_best">Is Best</label>
+                                    <select class="form-select" id="is_best" name="is_best">
+                                        <option value="" disabled selected>Select</option>
+                                        <option value="1">Yes</option>
+                                        <option value="0">No</option>
+                                    </select>
+    
+                                    <span id="is_best_validate" class="text-danger mt-1"></span>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label" for="seo_title">SEO Title</label>
+                                    <input class="form-control" id="seo_title" type="text" name="seo_title" placeholder="Write SEO Title....">
+
+                                    <span id="seo_title_validate" class="text-danger mt-1"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label" for="seo_description">SEO Description</label>
+                                    <input class="form-control" id="seo_description" type="text" name="seo_description" placeholder="Write SEO Description....">
+
+                                    <span id="seo_description_validate" class="text-danger mt-1"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label" for="status">Status</label>
+                                    <select class="form-select" id="status" name="status">
+                                        <option value="" disabled selected>Select</option>
+                                        <option value="1">Active</option>
+                                        <option value="0">Inactive</option>
+                                    </select>
+    
+                                    <span id="status_validate" class="text-danger mt-1"></span>
+                                </div>
                             </div>
 
                             <div class="d-flex justify-content-end align-items-center">
                                 <button type="button" class="btn btn-secondary waves-effect me-3"
-                                        data-bs-dismiss="modal">Close
-                                </button>
+                                    data-bs-dismiss="modal">Close</button>
 
-                                <button type="submit" id="btn-store" class="btn btn-primary waves-effect waves-light">
-                                    Save changes
-                                </button>
+                                <button type="submit" id="btn-store" class="btn btn-primary waves-effect waves-light">Save changes</button>
                             </div>
                         </form>
                     </div>
@@ -183,52 +281,214 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="myModalLabel">Update Category</h5>
+                        <h5 class="modal-title" id="myModalLabel">Update Product</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
 
                     <div class="modal-body">
-                        <form id="EditCategory" enctype="multipart/form-data">
+                        <form id="EditForm" enctype="multipart/form-data">
                             @csrf
                             @method("PUT")
 
                             <input type="text" name="id" id="id" hidden>
 
-                            <div class="mb-3">
-                                <label for="up_category_name" class="form-label">Category Name</label>
-                                <input class="form-control" id="up_category_name" type="text" name="category_name" >
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <label for="thumb_image" class="form-label">Product Image </label>
+                                    <input type="file" class="form-control" name="thumb_image" id="thumb_image" >
 
-                                <span id="up_name_validate" class="text-danger mt-1"></span>
+                                    <div id="showImage"></div>
+                                </div>
+
+                                <div class="col-md-4 mb-3">
+                                    <label for="up_name" class="form-label">Product Name</label>
+                                    <input class="form-control" id="up_name" type="text" name="name" placeholder="Write product name....">
+
+                                    <span id="up_name_validate" class="text-danger mt-1"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-3">
+                                    <label for="up_sku" class="form-label">Product Sku</label>
+                                    <input class="form-control" id="up_sku" type="text" name="sku" placeholder="Write product sku....">
+
+                                    <span id="up_sku_validate" class="text-danger mt-1"></span>
+                                </div>
                             </div>
 
-                            <div class="mb-3">
-                                <label for="category_img" class="form-label">Category Image </label>
-                                <input type="file" class="form-control" name="category_img" id="up_cat_img">
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label" for="up_category_id">Category</label>
+                                    <select class="form-select" id="up_category_id" name="category_id">
+                                        <option value="" disabled selected>Select</option>
+                                        <option>Large select</option>
+                                    </select>
 
-                                <div id="imageShow"></div>
+                                    <span id="category_id_validate" class="text-danger mt-1"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label" for="up_subCategory_id">SubCategory</label>
+                                    <select class="form-select" id="up_subCategory_id" name="subCategory_id">
+                                        <option value="" disabled selected>Select</option>
+                                        <option>Large select</option>
+                                    </select>
+
+                                    <span id="subCategory_id_validate" class="text-danger mt-1"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label" for="up_childCategory_id">ChildCategory</label>
+                                    <select class="form-select" id="up_childCategory_id" name="childCategory_id">
+                                        <option value="" disabled selected>Select</option>
+                                        <option>Large select</option>
+                                    </select>
+
+                                    <span id="childCategory_id_validate" class="text-danger mt-1"></span>
+                                </div>
                             </div>
 
-                            <div class="mb-3">
-                                <label class="form-label">Status</label>
-                                <select class="form-select" id="up_status" name="status">
-                                    <option value="" disabled selected>Select</option>
-                                    <option value="1">Active</option>
-                                    <option value="0">Inactive</option>
-                                </select>
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label" for="up_brand_id">Brand</label>
+                                    <select class="form-select" id="up_brand_id" name="brand_id">
+                                        <option value="" disabled selected>Select</option>
+                                        <option>Large select</option>
+                                    </select>
+
+                                    <span id="brand_id_validate" class="text-danger mt-1"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label" for="up_price">Price</label>
+                                    <input class="form-control" id="up_price" type="text" name="price" placeholder="Write price....">
+
+                                    <span id="up_price_validate" class="text-danger mt-1"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label" for="up_offer_price">Offer Price</label>
+                                    <input class="form-control" id="up_offer_price" type="text" name="offer_price" placeholder="Write offer_price....">
+
+                                    <span id="up_offer_price_validate" class="text-danger mt-1"></span>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label" for="up_qty">Stock Quantity</label>
+                                    <input class="form-control" id="up_qty" type="number" name="qty" placeholder="Product Quantity....">
+
+                                    <span id="up_quantity_validate" class="text-danger mt-1"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label" for="up_offer_start_date">Offer Start Date</label>
+                                    <input class="form-control" type="date" id="up_offer_start_date" name="offer_start_date">
+
+                                    <span id="up_start_date_validate" class="text-danger mt-1"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label" for="up_offer_end_date">Offer End Date</label>
+                                    <input class="form-control" type="date" id="up_offer_end_date" name="offer_end_date">
+
+                                    <span id="up_end_date_validate" class="text-danger mt-1"></span>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label" for="up_video_link">Video Link</label>
+                                    <textarea class="form-control" id="up_video_link" name="video_link"  rows="4" placeholder="Link Paste Here...."></textarea>
+
+                                    <span id="up_link_validate" class="text-danger mt-1"></span>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label" for="up_short">Short Description</label>
+                                    <textarea class="form-control" id="up_short" class="" name="short_description" rows="4" placeholder="Short Description...."></textarea>
+
+                                    <span id="up_short_validate" class="text-danger mt-1"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label class="form-label" for="up_long_description">Long Description</label>
+                                    <textarea class="form-control" id="up_long_description" name="long_description" rows="8" placeholder="Long Description...."></textarea>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label" for="up_is_featured">Is Featured</label>
+                                    <select class="form-select" id="up_is_featured" name="is_featured">
+                                        <option value="" disabled selected>Select</option>
+                                        <option value="1">Yes</option>
+                                        <option value="0">No</option>
+                                    </select>
+    
+                                    <span id="is_featured_validate" class="text-danger mt-1"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label" for="up_is_top">Is Top</label>
+                                    <select class="form-select" id="up_is_top" name="is_top">
+                                        <option value="" disabled selected>Select</option>
+                                        <option value="1">Yes</option>
+                                        <option value="0">No</option>
+                                    </select>
+    
+                                    <span id="is_top_validate" class="text-danger mt-1"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label" for="up_is_best">Is Best</label>
+                                    <select class="form-select" id="up_is_best" name="is_best">
+                                        <option value="" disabled selected>Select</option>
+                                        <option value="1">Yes</option>
+                                        <option value="0">No</option>
+                                    </select>
+    
+                                    <span id="is_best_validate" class="text-danger mt-1"></span>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label" for="up_seo_title">SEO Title</label>
+                                    <input class="form-control" id="up_seo_title" type="text" name="seo_title" placeholder="Write SEO Title....">
+
+                                    <span id="up_seo_title_validate" class="text-danger mt-1"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label" for="up_seo_description">SEO Description</label>
+                                    <input class="form-control" id="up_seo_description" type="text" name="seo_description" placeholder="Write SEO Description....">
+
+                                    <span id="up_seo_description_validate" class="text-danger mt-1"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label" for="up_status">Status</label>
+                                    <select class="form-select" id="up_status" name="status">
+                                        <option value="" disabled selected>Select</option>
+                                        <option value="1">Active</option>
+                                        <option value="0">Inactive</option>
+                                    </select>
+    
+                                    <span id="up_status_validate" class="text-danger mt-1"></span>
+                                </div>
                             </div>
 
                             <div class="d-flex justify-content-end align-items-center">
                                 <button type="button" class="btn btn-secondary waves-effect me-3"
-                                        data-bs-dismiss="modal">Close
-                                </button>
+                                        data-bs-dismiss="modal">Close </button>
 
-                                <button type="submit" id="btn-store" class="btn btn-primary waves-effect waves-light">
-                                    Save changes
-                                </button>
+                                <button type="submit" id="btn-store" class="btn btn-primary waves-effect waves-light"> Save changes</button>
                             </div>
                         </form>
                     </div>
-
 
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
@@ -238,11 +498,36 @@
 @endsection
 
 @push('add-script')
+    {{-- data.setData(res.data.schedules_desc); --}}
+    <script src="{{asset('https://cdn.ckeditor.com/ckeditor5/41.1.0/classic/ckeditor.js')}}"></script>
     <script src="https://cdn.datatables.net/2.1.6/js/dataTables.min.js"></script>
 
     <script>
 
         $(document).ready(function () {
+
+            let jReq;
+            // Ckeditor 5
+            ClassicEditor
+                .create(document.querySelector('#long_description'))
+                .then(newEditor => {
+                    jReq = newEditor;
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+
+            let data;
+            // Ckeditor 5
+            ClassicEditor
+                .create(document.querySelector('#up_long_description'))
+                .then(newEditor => {
+                    data = newEditor;
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+
 
             // Show Data through Datatable
             let CategoryTables = $('#categoryTable').DataTable({
@@ -368,15 +653,15 @@
 
             // Edit Category
             $(document).on("click", '#editButton', function (e) {
-                let categoryId = $(this).attr('data-id');
-                // alert(categoryId);
+                let id = $(this).attr('data-id');
+                // alert(id);
 
                 $.ajax({
                     type: 'GET',
                     // headers: {
                     //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     // },
-                    url: "{{ url('admin/categories') }}/" + categoryId + "/edit",
+                    url: "{{ url('admin/categories') }}/" + id + "/edit",
                     processData: false,  // Prevent jQuery from processing the data
                     contentType: false,  // Prevent jQuery from setting contentType
                     success: function (res) {
@@ -399,7 +684,7 @@
 
 
             // Update Category
-            $("#EditCategory").submit(function (e) {
+            $("#EditForm").submit(function (e) {
                 e.preventDefault();
 
                 let id = $('#id').val();
