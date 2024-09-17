@@ -22,6 +22,7 @@
                         'admin.subcategory.index',
                         'admin.childCategory.index',
                         'admin.brand.index',
+                        'admin.product.index',
                         'admin.coupons.index',
                         'admin.reviews.index',
                      ]) }}>
@@ -54,8 +55,8 @@
                             </a>
                         </li>
 
-                        <li>
-                            <a href="apps-chat.html">
+                        <li {{ setActive(['admin.product.index']) }}>
+                            <a href="{{ route('admin.product.index') }}">
                                 <span data-key="t-product">Products</span>
                             </a>
                         </li>

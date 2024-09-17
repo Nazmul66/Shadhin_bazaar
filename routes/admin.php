@@ -17,6 +17,7 @@ use App\Http\Controllers\Backend\ChildCategoryController;
 use App\Http\Controllers\Backend\CouponController;
 use App\Http\Controllers\Backend\ReviewController;
 use App\Http\Controllers\Backend\SliderController;
+use App\Http\Controllers\Backend\ProductController;
 
 
 
@@ -33,7 +34,7 @@ Route::group(["prefix" => '/admin'], function () {
     Route::get('/slider-data', [SliderController::class, 'getData'])->name('admin.slider-data');
     Route::post('/slider/status', [SliderController::class, 'changeSliderStatus'])->name('admin.slider.status');
 
-    
+
     //______ Category _____//
     Route::resource('/categories', CategoryController::class)->names('admin.category');
     Route::get('/category-data', [CategoryController::class, 'getData'])->name('admin.category-data');
@@ -61,6 +62,12 @@ Route::group(["prefix" => '/admin'], function () {
     Route::post('/change-brand-status', [BrandsController::class, 'changeBrandStatus'])->name('admin.brand.status');
 
 
+    //______ Product _____//
+    Route::resource('/product', ProductController::class)->names('admin.product');
+    Route::get('/product-data', [ProductController::class, 'getData'])->name('admin.product-data');
+    Route::post('/change-product-status', [ProductController::class, 'changeProductStatus'])->name('admin.product.status');
+
+
     //______ Coupon _____//
     Route::resource('/coupons', CouponController::class)->names('admin.coupons');
     Route::get('/coupon-data', [CouponController::class, 'getData'])->name('admin.coupon-data');
@@ -71,5 +78,5 @@ Route::group(["prefix" => '/admin'], function () {
     Route::resource('/reviews', ReviewController::class)->names('admin.reviews');
     Route::get('/review-data', [ReviewController::class, 'getData'])->name('admin.review-data');
     Route::post('/change-review-status', [ReviewController::class, 'changeReviewStatus'])->name('admin.review.status');
-    
+
 });
