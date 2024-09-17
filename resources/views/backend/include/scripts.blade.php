@@ -7,6 +7,7 @@
  <script src="{{ asset('/public/backend/assets/libs/feather-icons/feather.min.js') }}"></script>
  <!-- pace js -->
  <script src="{{ asset('/public/backend/assets/libs/pace-js/pace.min.js') }}"></script>
+ <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
  {{-- <!-- apexcharts -->
  <script src="{{ asset('/public/backend/assets/libs/apexcharts/apexcharts.min.js') }}"></script>

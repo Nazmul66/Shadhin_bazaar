@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Traits\ImageUploadTraits;
 use App\Models\Category;
 use App\Models\Subcategory;
 use Illuminate\Http\Request;
@@ -11,6 +12,9 @@ use Yajra\DataTables\DataTables;
 
 class CategoryController extends Controller
 {
+
+    use ImageUploadTraits;
+    
     /**
      * Display a listing of the resource.
      */
@@ -94,22 +98,15 @@ class CategoryController extends Controller
             ]
         );
 
+
         $category = new Category();
 
         $category->category_name          = $request->category_name;
         $category->slug                   = Str::slug($request->category_name);
         $category->status                 = $request->status;
 
-
-        if( $request->file('category_img') ){
-            $images = $request->file('category_img');
-
-            $imageName          = $request->slug . rand(1, 99999999) . '.' . $images->getClientOriginalExtension();
-            $imagePath          = 'public/backend/images/category/';
-            $images->move($imagePath, $imageName);
-
-            $category->category_img        =  $imagePath . $imageName;
-        }
+        $uploadImage                      = $this->imageUpload($request, 'category_img', 'category');
+        $category->category_img           =  $uploadImage;
 
         // dd($category);
         $category->save();
@@ -150,19 +147,8 @@ class CategoryController extends Controller
          $category->slug                   = Str::slug($request->category_name);
          $category->status                 = $request->status;
 
-         if( $request->file('category_img') ){
-             $images = $request->file('category_img');
-
-             if ( !is_null($category->category_img) && file_exists($category->category_img))  {
-                 unlink($category->category_img); // Delete the existing category_img
-             }
-
-             $imageName          = $request->slug . rand(1, 99999999) . '.' . $images->getClientOriginalExtension();
-             $imagePath          = 'public/backend/images/category/';
-             $images->move($imagePath, $imageName);
-
-             $category->category_img   =  $imagePath . $imageName;
-         }
+         $uploadImages                     = $this->deleteImageAndUpload($request, 'category_img', 'category', $category->category_img );
+         $category->category_img           =  $uploadImages;
 
          $category->save();
 
@@ -179,6 +165,7 @@ class CategoryController extends Controller
                 unlink($category->category_img);
             }
         }
+
         $category->delete();
 
         return response()->json(['message' => 'Category has been deleted.'], 200);

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Traits\ImageUploadTraits;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Subcategory;
@@ -13,6 +14,8 @@ use Yajra\DataTables\DataTables;
 
 class ChildCategoryController extends Controller
 {
+    use ImageUploadTraits;
+
      /**
      * Display a listing of the resource.
      */
@@ -99,18 +102,10 @@ class ChildCategoryController extends Controller
         $childCategory->slug                   = Str::slug($request->name);
         $childCategory->status                 = $request->status;
 
+        $uploadImage                           = $this->imageUpload($request, 'img', 'childCategory');
+        $childCategory->img                    =  $uploadImage;
 
-        if( $request->file('img') ){
-            $images = $request->file('img');
-
-            $imageName          = $request->slug . rand(1, 99999999) . '.' . $images->getClientOriginalExtension();
-            $imagePath          = 'public/backend/images/childCategory/';
-            $images->move($imagePath, $imageName);
-
-            $childCategory->img   =  $imagePath . $imageName;
-        }
-
-        // dd($category);
+        // dd($childCategory);
         $childCategory->save();
 
         return response()->json(['message'=> "Successfully ChildCategory Created!", 'status' => true]);
@@ -172,19 +167,8 @@ class ChildCategoryController extends Controller
         $childCategory->slug                   = Str::slug($request->name);
         $childCategory->status                 = $request->status;
 
-        if( $request->file('img') ){
-            $images = $request->file('img');
-
-            if ( !is_null($childCategory->img) && file_exists($childCategory->img))  {
-                unlink($childCategory->img); // Delete the existing category_img
-            }
-
-            $imageName          = $request->slug . rand(1, 99999999) . '.' . $images->getClientOriginalExtension();
-            $imagePath          = 'public/backend/images/childCategory/';
-            $images->move($imagePath, $imageName);
-
-            $childCategory->img   =  $imagePath . $imageName;
-        }
+        $uploadImages                          = $this->deleteImageAndUpload($request, 'img', 'childCategory', $childCategory->img );
+        $childCategory->img                    =  $uploadImages;
 
         $childCategory->save();
 

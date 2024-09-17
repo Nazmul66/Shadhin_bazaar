@@ -85,7 +85,7 @@
 
                                     <span id="image_validate" class="text-danger mt-1"></span>
                                 </div>
-                                
+
                                 <div class="col mb-3">
                                     <label for="title" class="form-label">Slider Title</label>
                                     <input class="form-control" id="title" type="text" name="title" >
@@ -99,7 +99,7 @@
                                     <label for="type" class="form-label">Slider Type</label>
                                     <input class="form-control" id="type" type="text" name="type" >
                                 </div>
-                                
+
                                 <div class="col mb-3">
                                     <label for="starting_price" class="form-label">Price</label>
                                     <input class="form-control" id="starting_price" type="number" name="starting_price">
@@ -111,7 +111,7 @@
                                     <label for="btn_url" class="form-label">Button Url</label>
                                     <input class="form-control" id="btn_url" type="text" name="btn_url">
                                 </div>
-                                
+
                                 <div class="col mb-3">
                                     <label for="serial" class="form-label">Serial</label>
                                     <input class="form-control" id="serial" type="text" name="serial" >
@@ -154,7 +154,7 @@
 
                                     <div id="imageShow"></div>
                                 </div>
-                                
+
                                 <div class="col mb-3">
                                     <label for="up_title" class="form-label">Slider Title</label>
                                     <input class="form-control" id="up_title" type="text" name="title">
@@ -168,7 +168,7 @@
                                     <label for="up_type" class="form-label">Slider Type</label>
                                     <input class="form-control" id="up_type" type="text" name="type">
                                 </div>
-                                
+
                                 <div class="col mb-3">
                                     <label for="up_starting_price" class="form-label">Price</label>
                                     <input class="form-control" id="up_starting_price" type="number" name="starting_price">
@@ -180,7 +180,7 @@
                                     <label for="up_btn_url" class="form-label">Button Url</label>
                                     <input class="form-control" id="up_btn_url" type="text" name="btn_url">
                                 </div>
-                                
+
                                 <div class="col mb-3">
                                     <label for="up_serial" class="form-label">Serial</label>
                                     <input class="form-control" id="up_serial" type="text" name="serial">
@@ -206,7 +206,6 @@
 @endsection
 
 @push('add-script')
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.datatables.net/2.1.6/js/dataTables.min.js"></script>
 
     <script>
@@ -366,7 +365,7 @@
                     contentType: false,  // Prevent jQuery from setting contentType
                     success: function (res) {
                         let data = res.success;
-                        
+
                         $('#up_id').val(data.id);
                         $('#up_title').val(data.title);
                         $('#up_type').val(data.type);

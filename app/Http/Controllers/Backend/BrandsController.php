@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Traits\ImageUploadTraits;
 use App\Models\Brand;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -10,6 +11,8 @@ use Yajra\DataTables\DataTables;
 
 class BrandsController extends Controller
 {
+    use ImageUploadTraits;
+
     /**
      * Display a listing of the resource.
      */
@@ -98,17 +101,10 @@ class BrandsController extends Controller
         $brand->is_featured            = $request->is_featured;
         $brand->status                 = 1;
 
-        if( $request->file('image') ){
-            $image = $request->file('image');
+        $uploadImage                   = $this->imageUpload($request, 'image', 'brand');
+        $brand->image                  =  $uploadImage;
 
-            $imageName          = $request->slug . rand(1, 99999999) . '.' . $image->getClientOriginalExtension();
-            $imagePath          = 'public/backend/images/brand/';
-            $image->move($imagePath, $imageName);
-
-            $brand->image        =  $imagePath . $imageName;
-        }
-
-        // dd($category);
+        // dd($brand);
         $brand->save();
 
         return response()->json(['message'=> "Successfully Brand Created!", 'status' => true]);
@@ -146,20 +142,8 @@ class BrandsController extends Controller
         $brand->is_featured            = $request->is_featured;
         $brand->status                 = 1;
 
-
-        if( $request->file('image') ){
-            $image = $request->file('image');
-
-            if ( !is_null($brand->image) && file_exists($brand->image))  {
-                unlink($brand->image); // Delete the existing category_img
-            }
-
-            $imageName          = $request->slug . rand(1, 99999999) . '.' . $image->getClientOriginalExtension();
-            $imagePath          = 'public/backend/images/brand/';
-            $image->move($imagePath, $imageName);
-
-            $brand->image        =  $imagePath . $imageName;
-        }
+        $uploadImages                  = $this->deleteImageAndUpload($request, 'image', 'brand', $brand->image );
+        $brand->image                  =  $uploadImages;
 
          $brand->save();
 

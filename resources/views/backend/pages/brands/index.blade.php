@@ -167,7 +167,6 @@
 @endsection
 
 @push('add-script')
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.datatables.net/2.1.6/js/dataTables.min.js"></script>
 
     <script>
@@ -297,7 +296,7 @@
             })
 
 
-            // Edit 
+            // Edit
             $(document).on("click", '#editButton', function (e) {
                 let id = $(this).attr('data-id');
                 // alert(id);

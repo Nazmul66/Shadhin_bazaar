@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Traits\ImageUploadTraits;
 use App\Models\Category;
 use App\Models\Subcategory;
 use Illuminate\Http\Request;
@@ -11,6 +12,8 @@ use Yajra\DataTables\DataTables;
 
 class SubcategoryController extends Controller
 {
+    use ImageUploadTraits;
+
     /**
      * Display a listing of the resource.
      */
@@ -92,18 +95,10 @@ class SubcategoryController extends Controller
         $SubCategory->slug                   = Str::slug($request->subcategory_name);
         $SubCategory->status                 = $request->status;
 
+        $uploadImage                         = $this->imageUpload($request, 'subcategory_img', 'subCategory');
+        $SubCategory->subcategory_img        =  $uploadImage;
 
-        if( $request->file('subcategory_img') ){
-            $images = $request->file('subcategory_img');
-
-            $imageName          = $request->slug . rand(1, 99999999) . '.' . $images->getClientOriginalExtension();
-            $imagePath          = 'public/backend/images/subCategory/';
-            $images->move($imagePath, $imageName);
-
-            $SubCategory->subcategory_img   =  $imagePath . $imageName;
-        }
-
-        // dd($category);
+        // dd($SubCategory);
         $SubCategory->save();
 
         return response()->json(['message'=> "Successfully SubCategory Created!", 'status' => true]);
@@ -164,19 +159,8 @@ class SubcategoryController extends Controller
         $subcategory->slug                   = Str::slug($request->subcategory_name);
         $subcategory->status                 = $request->status;
 
-        if( $request->file('subcategory_img') ){
-            $images = $request->file('subcategory_img');
-
-            if ( !is_null($subcategory->category_img_path) && file_exists($subcategory->category_img_path))  {
-                unlink($subcategory->category_img_path); // Delete the existing category_img
-            }
-
-            $imageName          = $request->slug . rand(1, 99999999) . '.' . $images->getClientOriginalExtension();
-            $imagePath          = 'public/backend/images/subCategory/';
-            $images->move($imagePath, $imageName);
-
-            $subcategory->subcategory_img   =  $imagePath . $imageName;
-        }
+        $uploadImages                        = $this->deleteImageAndUpload($request, 'subcategory_img', 'subCategory', $subcategory->subcategory_img );
+        $subcategory->subcategory_img        =  $uploadImages;
 
         $subcategory->save();
 
