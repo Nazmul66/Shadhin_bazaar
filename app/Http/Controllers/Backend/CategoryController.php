@@ -14,7 +14,7 @@ class CategoryController extends Controller
 {
 
     use ImageUploadTraits;
-    
+
     /**
      * Display a listing of the resource.
      */
@@ -105,6 +105,7 @@ class CategoryController extends Controller
         $category->slug                   = Str::slug($request->category_name);
         $category->status                 = $request->status;
 
+        // Handle image with ImageUploadTraits function
         $uploadImage                      = $this->imageUpload($request, 'category_img', 'category');
         $category->category_img           =  $uploadImage;
 
@@ -143,6 +144,7 @@ class CategoryController extends Controller
             ]
         );
 
+        // Handle image with ImageUploadTraits function
          $category->category_name          = $request->category_name;
          $category->slug                   = Str::slug($request->category_name);
          $category->status                 = $request->status;

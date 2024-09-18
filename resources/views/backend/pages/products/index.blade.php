@@ -5,6 +5,8 @@
 @endpush
 
 @push('add-css')
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ asset('public/backend/assets/libs/flatpickr/flatpickr.min.css') }}">
     <link rel="stylesheet" href="https://cdn.datatables.net/2.1.6/css/dataTables.dataTables.min.css">
 @endpush
 
@@ -40,7 +42,7 @@
 
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered mb-0" id="categoryTable">
+                <table class="table table-bordered mb-0" id="productTables">
                     <thead>
                         <tr>
                             <th>#SL.</th>
@@ -89,17 +91,19 @@
                                 <div class="col-md-4 mb-3">
                                     <label for="sku" class="form-label">Product Sku</label>
                                     <input class="form-control" id="sku" type="text" name="sku" placeholder="Write product sku....">
-
-                                    <span id="sku_validate" class="text-danger mt-1"></span>
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="col-md-4 mb-3">
                                     <label class="form-label" for="category_id">Category</label>
-                                    <select class="form-select" id="category_id" name="category_id">
+                                    <select class="form-select " id="category_id" name="category_id">
                                         <option value="" disabled selected>Select</option>
-                                        <option>Large select</option>
+
+                                        @foreach ($categories as $row)
+                                             <option value="{{ $row->id }}" data-image-url="{{ asset($row->category_img) }}">{{ $row->category_name }}</option>
+                                        @endforeach
+
                                     </select>
 
                                     <span id="category_id_validate" class="text-danger mt-1"></span>
@@ -109,20 +113,22 @@
                                     <label class="form-label" for="subCategory_id">SubCategory</label>
                                     <select class="form-select" id="subCategory_id" name="subCategory_id">
                                         <option value="" disabled selected>Select</option>
-                                        <option>Large select</option>
-                                    </select>
 
-                                    <span id="subCategory_id_validate" class="text-danger mt-1"></span>
+                                        @foreach ($subCategories as $row)
+                                            <option value="{{ $row->id }}" data-image-url="{{ asset($row->subcategory_img) }}">{{ $row->subcategory_name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
 
                                 <div class="col-md-4 mb-3">
                                     <label class="form-label" for="childCategory_id">ChildCategory</label>
                                     <select class="form-select" id="childCategory_id" name="childCategory_id">
                                         <option value="" disabled selected>Select</option>
-                                        <option>Large select</option>
-                                    </select>
 
-                                    <span id="childCategory_id_validate" class="text-danger mt-1"></span>
+                                        @foreach ($childCategories as $row)
+                                            <option value="{{ $row->id }}" data-image-url="{{ asset($row->img) }}">{{ $row->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
 
@@ -131,7 +137,10 @@
                                     <label class="form-label" for="brand_id">Brand</label>
                                     <select class="form-select" id="brand_id" name="brand_id">
                                         <option value="" disabled selected>Select</option>
-                                        <option>Large select</option>
+
+                                        @foreach ($brands as $row)
+                                            <option value="{{ $row->id }}" data-image-url="{{ asset($row->image) }}">{{ $row->brand_name }}</option>
+                                        @endforeach
                                     </select>
 
                                     <span id="brand_id_validate" class="text-danger mt-1"></span>
@@ -139,39 +148,33 @@
 
                                 <div class="col-md-4 mb-3">
                                     <label class="form-label" for="price">Price</label>
-                                    <input class="form-control" id="price" type="text" name="price" placeholder="Write price....">
+                                    <input class="form-control" id="price" type="number" name="price" placeholder="Write price....">
 
                                     <span id="price_validate" class="text-danger mt-1"></span>
                                 </div>
 
                                 <div class="col-md-4 mb-3">
                                     <label class="form-label" for="offer_price">Offer Price</label>
-                                    <input class="form-control" id="offer_price" type="text" name="offer_price" placeholder="Write offer_price....">
-
-                                    <span id="offer_price_validate" class="text-danger mt-1"></span>
+                                    <input class="form-control" id="offer_price" type="number" name="offer_price" placeholder="Write offer_price....">
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="col-md-4 mb-3">
                                     <label class="form-label" for="qty">Stock Quantity</label>
-                                    <input class="form-control" id="qty" type="text" name="qty" placeholder="Product Quantity....">
+                                    <input class="form-control" id="qty" type="number" name="qty" placeholder="Product Quantity....">
 
                                     <span id="quantity_validate" class="text-danger mt-1"></span>
                                 </div>
 
                                 <div class="col-md-4 mb-3">
                                     <label class="form-label" for="offer_start_date">Offer Start Date</label>
-                                    <input class="form-control" type="date" id="offer_start_date" name="offer_start_date">
-
-                                    <span id="start_date_validate" class="text-danger mt-1"></span>
+                                    <input class="form-control offer_start_date" type="date" id="offer_start_date" name="offer_start_date" placeholder="Select a date....">
                                 </div>
 
                                 <div class="col-md-4 mb-3">
                                     <label class="form-label" for="offer_end_date">Offer End Date</label>
-                                    <input class="form-control" type="date" id="offer_end_date" name="offer_end_date">
-
-                                    <span id="end_date_validate" class="text-danger mt-1"></span>
+                                    <input class="form-control offer_end_date" type="date" id="offer_end_date" name="offer_end_date"  placeholder="Select a date....">
                                 </div>
                             </div>
 
@@ -179,8 +182,6 @@
                                 <div class="col-md-6 mb-3">
                                     <label class="form-label" for="video_link">Video Link</label>
                                     <textarea class="form-control" id="video_link" name="video_link"  rows="4" placeholder="Link Paste Here...."></textarea>
-
-                                    <span id="link_validate" class="text-danger mt-1"></span>
                                 </div>
 
                                 <div class="col-md-6 mb-3">
@@ -196,6 +197,8 @@
                                     <label class="form-label" for="long_description">Long Description</label>
                                     <textarea class="form-control" id="long_description" name="long_description" rows="8" placeholder="Long Description...."></textarea>
                                 </div>
+
+                                <span id="long_validate" class="text-danger mt-1"></span>
                             </div>
 
                             <div class="row">
@@ -206,7 +209,7 @@
                                         <option value="1">Yes</option>
                                         <option value="0">No</option>
                                     </select>
-    
+
                                     <span id="is_featured_validate" class="text-danger mt-1"></span>
                                 </div>
 
@@ -217,7 +220,7 @@
                                         <option value="1">Yes</option>
                                         <option value="0">No</option>
                                     </select>
-    
+
                                     <span id="is_top_validate" class="text-danger mt-1"></span>
                                 </div>
 
@@ -228,7 +231,7 @@
                                         <option value="1">Yes</option>
                                         <option value="0">No</option>
                                     </select>
-    
+
                                     <span id="is_best_validate" class="text-danger mt-1"></span>
                                 </div>
                             </div>
@@ -237,25 +240,21 @@
                                 <div class="col-md-4 mb-3">
                                     <label class="form-label" for="seo_title">SEO Title</label>
                                     <input class="form-control" id="seo_title" type="text" name="seo_title" placeholder="Write SEO Title....">
-
-                                    <span id="seo_title_validate" class="text-danger mt-1"></span>
                                 </div>
 
                                 <div class="col-md-4 mb-3">
                                     <label class="form-label" for="seo_description">SEO Description</label>
                                     <input class="form-control" id="seo_description" type="text" name="seo_description" placeholder="Write SEO Description....">
-
-                                    <span id="seo_description_validate" class="text-danger mt-1"></span>
                                 </div>
 
                                 <div class="col-md-4 mb-3">
                                     <label class="form-label" for="status">Status</label>
-                                    <select class="form-select" id="status" name="status">
+                                    <select class="form-select" name="status">
                                         <option value="" disabled selected>Select</option>
                                         <option value="1">Active</option>
                                         <option value="0">Inactive</option>
                                     </select>
-    
+
                                     <span id="status_validate" class="text-danger mt-1"></span>
                                 </div>
                             </div>
@@ -320,7 +319,10 @@
                                     <label class="form-label" for="up_category_id">Category</label>
                                     <select class="form-select" id="up_category_id" name="category_id">
                                         <option value="" disabled selected>Select</option>
-                                        <option>Large select</option>
+
+                                        @foreach ($categories as $row)
+                                             <option value="{{ $row->id }}">{{ $row->category_name }}</option>
+                                        @endforeach
                                     </select>
 
                                     <span id="category_id_validate" class="text-danger mt-1"></span>
@@ -330,7 +332,10 @@
                                     <label class="form-label" for="up_subCategory_id">SubCategory</label>
                                     <select class="form-select" id="up_subCategory_id" name="subCategory_id">
                                         <option value="" disabled selected>Select</option>
-                                        <option>Large select</option>
+
+                                        @foreach ($subCategories as $row)
+                                            <option value="{{ $row->id }}">{{ $row->subcategory_name }}</option>
+                                        @endforeach
                                     </select>
 
                                     <span id="subCategory_id_validate" class="text-danger mt-1"></span>
@@ -340,7 +345,10 @@
                                     <label class="form-label" for="up_childCategory_id">ChildCategory</label>
                                     <select class="form-select" id="up_childCategory_id" name="childCategory_id">
                                         <option value="" disabled selected>Select</option>
-                                        <option>Large select</option>
+
+                                        @foreach ($childCategories as $row)
+                                            <option value="{{ $row->id }}">{{ $row->name }}</option>
+                                        @endforeach
                                     </select>
 
                                     <span id="childCategory_id_validate" class="text-danger mt-1"></span>
@@ -352,7 +360,10 @@
                                     <label class="form-label" for="up_brand_id">Brand</label>
                                     <select class="form-select" id="up_brand_id" name="brand_id">
                                         <option value="" disabled selected>Select</option>
-                                        <option>Large select</option>
+
+                                        @foreach ($brands as $row)
+                                            <option value="{{ $row->id }}">{{ $row->brand_name }}</option>
+                                        @endforeach
                                     </select>
 
                                     <span id="brand_id_validate" class="text-danger mt-1"></span>
@@ -383,14 +394,14 @@
 
                                 <div class="col-md-4 mb-3">
                                     <label class="form-label" for="up_offer_start_date">Offer Start Date</label>
-                                    <input class="form-control" type="date" id="up_offer_start_date" name="offer_start_date">
+                                    <input class="form-control up_offer_start_date" type="date" id="up_offer_start_date" name="offer_start_date" placeholder="Select a date">
 
                                     <span id="up_start_date_validate" class="text-danger mt-1"></span>
                                 </div>
 
                                 <div class="col-md-4 mb-3">
                                     <label class="form-label" for="up_offer_end_date">Offer End Date</label>
-                                    <input class="form-control" type="date" id="up_offer_end_date" name="offer_end_date">
+                                    <input class="form-control up_offer_end_date" type="date" id="up_offer_end_date" name="offer_end_date" placeholder="Select a date">
 
                                     <span id="up_end_date_validate" class="text-danger mt-1"></span>
                                 </div>
@@ -427,7 +438,7 @@
                                         <option value="1">Yes</option>
                                         <option value="0">No</option>
                                     </select>
-    
+
                                     <span id="is_featured_validate" class="text-danger mt-1"></span>
                                 </div>
 
@@ -438,7 +449,7 @@
                                         <option value="1">Yes</option>
                                         <option value="0">No</option>
                                     </select>
-    
+
                                     <span id="is_top_validate" class="text-danger mt-1"></span>
                                 </div>
 
@@ -449,7 +460,7 @@
                                         <option value="1">Yes</option>
                                         <option value="0">No</option>
                                     </select>
-    
+
                                     <span id="is_best_validate" class="text-danger mt-1"></span>
                                 </div>
                             </div>
@@ -476,7 +487,7 @@
                                         <option value="1">Active</option>
                                         <option value="0">Inactive</option>
                                     </select>
-    
+
                                     <span id="up_status_validate" class="text-danger mt-1"></span>
                                 </div>
                             </div>
@@ -499,15 +510,131 @@
 
 @push('add-script')
     {{-- data.setData(res.data.schedules_desc); --}}
-    <script src="{{asset('https://cdn.ckeditor.com/ckeditor5/41.1.0/classic/ckeditor.js')}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/41.1.0/classic/ckeditor.js"></script>
+    <script src="{{ asset('public/backend/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
     <script src="https://cdn.datatables.net/2.1.6/js/dataTables.min.js"></script>
 
     <script>
 
         $(document).ready(function () {
 
+            // Note: This issue occurs because Bootstrap modals tend to steal focus from other elements outside of the modal. Since by default, Select2 attaches the dropdown menu to the <body> element, it is considered "outside of the modal".
+
+            //____ category_id Select2 ____//
+            $('#category_id').select2({
+                dropdownParent: $('#create_Modal'),
+                templateResult: formatState,
+            });
+
+            function formatState (state) {
+                if (!state.id) {
+                    return state.text; // Return text for disabled option
+                }
+
+                var imageUrl = state.element.dataset.imageUrl; // Access image URL from data attribute
+
+                if (!imageUrl) {
+                    return state.text; // Return text if no image URL is available
+                }
+
+                var $state = $(
+                    '<span><img src="' + imageUrl + '" style="width: 45px; margin-right: 8px;" /> ' + state.text + '</span>'
+                );
+                return $state;
+            };
+
+
+             //____ subCategory_id Select2 ____//
+            $('#subCategory_id').select2({
+                dropdownParent: $('#create_Modal'),
+                templateResult: formatState,
+            });
+
+            function formatState (state) {
+                if (!state.id) {
+                    return state.text; // Return text for disabled option
+                }
+
+                var imageUrl = state.element.dataset.imageUrl; // Access image URL from data attribute
+
+                if (!imageUrl) {
+                    return state.text; // Return text if no image URL is available
+                }
+
+                var $state = $(
+                    '<span><img src="' + imageUrl + '" style="width: 45px; margin-right: 8px;" /> ' + state.text + '</span>'
+                );
+                return $state;
+            };
+
+            //____ childCategory_id Select2 ____//
+            $('#childCategory_id').select2({
+                dropdownParent: $('#create_Modal'),
+                templateResult: formatState,
+            });
+
+            function formatState (state) {
+                if (!state.id) {
+                    return state.text; // Return text for disabled option
+                }
+
+                var imageUrl = state.element.dataset.imageUrl; // Access image URL from data attribute
+
+                if (!imageUrl) {
+                    return state.text; // Return text if no image URL is available
+                }
+
+                var $state = $(
+                    '<span><img src="' + imageUrl + '" style="width: 45px; margin-right: 8px;" /> ' + state.text + '</span>'
+                );
+                return $state;
+            };
+
+            //____ childCategory_id Select2 ____//
+            $('#brand_id').select2({
+                dropdownParent: $('#create_Modal'),
+                templateResult: formatState,
+            });
+
+            function formatState (state) {
+                if (!state.id) {
+                    return state.text; // Return text for disabled option
+                }
+
+                var imageUrl = state.element.dataset.imageUrl; // Access image URL from data attribute
+
+                if (!imageUrl) {
+                    return state.text; // Return text if no image URL is available
+                }
+
+                var $state = $(
+                    '<span><img src="' + imageUrl + '" style="width: 45px; margin-right: 8px;" /> ' + state.text + '</span>'
+                );
+                return $state;
+            };
+
+
+            // Flatpicker Plugin
+            $(".offer_start_date").flatpickr({
+                minDate: "today"
+            });
+
+            $(".offer_end_date").flatpickr({
+                minDate: "today",
+            });
+
+            $(".up_offer_start_date").flatpickr({
+                minDate: "today"
+            });
+
+            $(".up_offer_end_date").flatpickr({
+                minDate: "today",
+            });
+
+
+            // Ckeditor 5 plugin
             let jReq;
-            // Ckeditor 5
             ClassicEditor
                 .create(document.querySelector('#long_description'))
                 .then(newEditor => {
@@ -517,8 +644,8 @@
                     console.error(error);
                 });
 
+
             let data;
-            // Ckeditor 5
             ClassicEditor
                 .create(document.querySelector('#up_long_description'))
                 .then(newEditor => {
@@ -530,14 +657,14 @@
 
 
             // Show Data through Datatable
-            let CategoryTables = $('#categoryTable').DataTable({
+            let productTables = $('#productTables').DataTable({
                 order: [
                     [0, 'desc']
                 ],
                 processing: true,
                 serverSide: true,
 
-                ajax: "{{ route('admin.category-data') }}",
+                ajax: "{{ route('admin.product-data') }}",
                 // pageLength: 30,
 
                 columns: [
@@ -575,14 +702,14 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "{{ route('admin.category.status') }}",
+                    url: "{{ route('admin.product.status') }}",
                     data: {
                         // '_token': token,
                         id: id,
                         status: status
                     },
                     success: function (res) {
-                        CategoryTables.ajax.reload();
+                        productTables.ajax.reload();
 
                         if (res.status == 1) {
                             swal.fire(
@@ -616,7 +743,7 @@
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
-                    url: "{{ route('admin.category.store') }}",
+                    url: "{{ route('admin.product.store') }}",
                     data: formData,
                     processData: false,  // Prevent jQuery from processing the data
                     contentType: false,  // Prevent jQuery from setting contentType
@@ -625,7 +752,7 @@
                         if (res.status === true) {
                             $('#create_Modal').modal('hide');
                             $('#createForm')[0].reset();
-                            CategoryTables.ajax.reload();
+                            productTables.ajax.reload();
 
                             swal.fire({
                                 title: "Success",
@@ -637,8 +764,17 @@
                     error: function (err) {
                         let error = err.responseJSON.errors;
 
-                        $('#name_validate').empty().html(error.category_name);
-                        $('#image_validate').empty().html(error.category_img);
+                        $('#image_validate').empty().html(error.thumb_image);
+                        $('#name_validate').empty().html(error.name);
+                        $('#category_id_validate').empty().html(error.category_id);
+                        $('#brand_id_validate').empty().html(error.brand_id);
+                        $('#price_validate').empty().html(error.price);
+                        $('#quantity_validate').empty().html(error.qty);
+                        $('#short_validate').empty().html(error.short_description);
+                        $('#long_validate').empty().html(error.long_description);
+                        $('#is_featured_validate').empty().html(error.is_featured);
+                        $('#is_top_validate').empty().html(error.is_top);
+                        $('#is_best_validate').empty().html(error.is_best);
                         $('#status_validate').empty().html(error.status);
 
                         swal.fire({
@@ -661,7 +797,7 @@
                     // headers: {
                     //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     // },
-                    url: "{{ url('admin/categories') }}/" + id + "/edit",
+                    url: "{{ url('admin/product') }}/" + id + "/edit",
                     processData: false,  // Prevent jQuery from processing the data
                     contentType: false,  // Prevent jQuery from setting contentType
                     success: function (res) {
@@ -695,7 +831,7 @@
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
-                    url: "{{ url('admin/categories') }}/" + id,
+                    url: "{{ url('admin/product') }}/" + id,
                     data: formData,
                     processData: false,  // Prevent jQuery from processing the data
                     contentType: false,  // Prevent jQuery from setting contentType
@@ -703,13 +839,13 @@
 
                         swal.fire({
                             title: "Success",
-                            text: "Category Edited",
+                            text: "Product Edited",
                             icon: "success"
                         })
 
                         $('#editModal').modal('hide');
                         $('#EditCategory')[0].reset();
-                        CategoryTables.ajax.reload();
+                        productTables.ajax.reload();
                     },
                     error: function (err) {
                         let error = err.responseJSON.errors;
@@ -745,7 +881,7 @@
                         $.ajax({
                             type: 'DELETE',
 
-                            url: "{{ url('admin/categories') }}/" + id,
+                            url: "{{ url('admin/product') }}/" + id,
                             data: {
                                 headers: {
                                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -758,7 +894,7 @@
                                     icon: "success"
                                 });
 
-                                CategoryTables.ajax.reload();
+                                productTables.ajax.reload();
                             },
                             error: function (err) {
                                 console.log('error')

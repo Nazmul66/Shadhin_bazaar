@@ -9,14 +9,19 @@ class Category extends Model
 {
     use HasFactory;
 
-
-    public function products()
+    // For Categories
+    static public function get_data()
     {
-        return $this->hasMany(Product::class);
+            return Self::where('status', 1)->get();
     }
 
-    public function subcategories()
-    {
-        return $this->hasMany(Subcategory::class);
-    }
+    // public function products()
+    // {
+    //     return $this->hasMany(Product::class);
+    // }
+
+    // public function subcategories()
+    // {
+    //     return $this->hasMany(Subcategory::class);
+    // }
 }

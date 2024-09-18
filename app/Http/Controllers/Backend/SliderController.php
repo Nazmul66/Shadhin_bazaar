@@ -134,6 +134,7 @@ class SliderController extends Controller
         $slider->serial                 = $request->serial;
         $slider->status                 = 1;
 
+        // Handle image with ImageUploadTraits function
         $uploadImage                    = $this->imageUpload($request, 'slider_image', 'slider');
         $slider->slider_image           =  $uploadImage;
 
@@ -176,6 +177,7 @@ class SliderController extends Controller
         $slider->serial                     = $request->serial;
         $slider->status                     = 1;
 
+        // Handle image with ImageUploadTraits function
         $uploadImages                       = $this->deleteImageAndUpload($request, 'slider_image', 'slider', $slider->slider_image );
         $slider->slider_image               =  $uploadImages;
 

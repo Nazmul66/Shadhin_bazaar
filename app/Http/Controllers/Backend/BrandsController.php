@@ -101,6 +101,7 @@ class BrandsController extends Controller
         $brand->is_featured            = $request->is_featured;
         $brand->status                 = 1;
 
+        // Handle image with ImageUploadTraits function
         $uploadImage                   = $this->imageUpload($request, 'image', 'brand');
         $brand->image                  =  $uploadImage;
 
@@ -142,6 +143,7 @@ class BrandsController extends Controller
         $brand->is_featured            = $request->is_featured;
         $brand->status                 = 1;
 
+        // Handle image with ImageUploadTraits function
         $uploadImages                  = $this->deleteImageAndUpload($request, 'image', 'brand', $brand->image );
         $brand->image                  =  $uploadImages;
 

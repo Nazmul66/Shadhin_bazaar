@@ -9,9 +9,14 @@ class Brand extends Model
 {
     use HasFactory;
 
-    public function products()
+    static public function get_data()
     {
-        return $this->hasMany(Product::class);
+        return Self::where('status', 1)->get();
     }
-    
+
+    // public function products()
+    // {
+    //     return $this->hasMany(Product::class);
+    // }
+
 }

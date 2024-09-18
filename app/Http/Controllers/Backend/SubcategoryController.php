@@ -95,6 +95,7 @@ class SubcategoryController extends Controller
         $SubCategory->slug                   = Str::slug($request->subcategory_name);
         $SubCategory->status                 = $request->status;
 
+        // Handle image with ImageUploadTraits function
         $uploadImage                         = $this->imageUpload($request, 'subcategory_img', 'subCategory');
         $SubCategory->subcategory_img        =  $uploadImage;
 
@@ -159,6 +160,7 @@ class SubcategoryController extends Controller
         $subcategory->slug                   = Str::slug($request->subcategory_name);
         $subcategory->status                 = $request->status;
 
+        // Handle image with ImageUploadTraits function
         $uploadImages                        = $this->deleteImageAndUpload($request, 'subcategory_img', 'subCategory', $subcategory->subcategory_img );
         $subcategory->subcategory_img        =  $uploadImages;
 

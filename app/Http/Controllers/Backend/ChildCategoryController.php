@@ -102,6 +102,7 @@ class ChildCategoryController extends Controller
         $childCategory->slug                   = Str::slug($request->name);
         $childCategory->status                 = $request->status;
 
+        // Handle image with ImageUploadTraits function
         $uploadImage                           = $this->imageUpload($request, 'img', 'childCategory');
         $childCategory->img                    =  $uploadImage;
 
@@ -167,6 +168,7 @@ class ChildCategoryController extends Controller
         $childCategory->slug                   = Str::slug($request->name);
         $childCategory->status                 = $request->status;
 
+        // Handle image with ImageUploadTraits function
         $uploadImages                          = $this->deleteImageAndUpload($request, 'img', 'childCategory', $childCategory->img );
         $childCategory->img                    =  $uploadImages;
 
