@@ -22,10 +22,10 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $categories = Category::get_data();
-        $subCategories = Subcategory::get_data();
-        $childCategories = ChildCategory::get_data();
-        $brands = Brand::get_data();
+        $categories        = Category::get_data();
+        $subCategories     = Subcategory::get_data();
+        $childCategories   = ChildCategory::get_data();
+        $brands            = Brand::get_data();
 
         return view('backend.pages.products.index', compact('categories', 'subCategories', 'childCategories', 'brands'));
     }

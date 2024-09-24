@@ -9,6 +9,8 @@
 */
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Backend\PermissionController;
+use App\Http\Controllers\Backend\RoleController;
 use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Backend\BrandsController;
 use App\Http\Controllers\Backend\CategoryController;
@@ -27,6 +29,16 @@ Route::match(["get", "post"], '/login', [AdminController::class, "login"]); // l
 
 Route::group(["prefix" => '/admin'], function () {
     Route::get('/dashboards', [AdminController::class, "dashboards"])->name('dashboards');
+
+
+    //______ Role & Permission _____//
+    Route::resource('/permission', PermissionController::class)->names('admin.permission');
+    Route::get('/permission-data', [PermissionController::class, 'getData'])->name('admin.permission-data');
+
+    Route::resource('/role', RoleController::class)->names('admin.role');
+    Route::get('/role-data', [RoleController::class, 'getData'])->name('admin.role-data');
+    Route::get('/role/{role_id}/give-permission', [RoleController::class, 'addPermissionToRole'])->name('admin.add-permission');
+    Route::put('/role/{role_id}/give-permission', [RoleController::class, 'givePermissionToRole'])->name('admin.give-permission');
 
 
     //______ Slider _____//

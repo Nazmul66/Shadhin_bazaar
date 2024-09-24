@@ -16,6 +16,26 @@
                     </a>
                 </li>
 
+                {{-- Role & Permission --}}
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow">
+                        <i class='bx bx-lock'></i>
+                        <span data-key="t-apps">Role & Permission</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li>
+                            <a href="{{ route('admin.permission.index') }}">
+                                <span data-key="t-permission">Permission</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('admin.role.index') }}">
+                                <span data-key="t-role">Role</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
                 {{-- All Products List --}}
                 <li {{ setActive([
                         'admin.category.index',
