@@ -36,7 +36,6 @@ Route::group(["prefix" => '/admin'], function () {
     Route::get('/permission-data', [PermissionController::class, 'getData'])->name('admin.permission-data');
 
     Route::resource('/role', RoleController::class)->names('admin.role');
-    Route::get('/role-data', [RoleController::class, 'getData'])->name('admin.role-data');
     Route::get('/role/{role_id}/give-permission', [RoleController::class, 'addPermissionToRole'])->name('admin.add-permission');
     Route::put('/role/{role_id}/give-permission', [RoleController::class, 'givePermissionToRole'])->name('admin.give-permission');
 

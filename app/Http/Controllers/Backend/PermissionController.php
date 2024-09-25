@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 use Yajra\DataTables\DataTables;
 
 class PermissionController extends Controller
@@ -14,6 +15,7 @@ class PermissionController extends Controller
      */
     public function index()
     {
+
         return view('backend.pages.role_and_permission.permission.index');
     }
 
@@ -57,6 +59,7 @@ class PermissionController extends Controller
         $permission = new Permission();
 
         $permission->name             = $request->name;
+        $permission->guard_name       = "admin";
 
         // dd($permission);
         $permission->save();
@@ -92,6 +95,7 @@ class PermissionController extends Controller
         );
 
         $permission->name             = $request->name;
+        $permission->guard_name       = "admin";
 
         $permission->save();
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Yajra\DataTables\DataTables;
@@ -15,32 +16,24 @@ class RoleController extends Controller
      */
     public function index()
     {
-        return view('backend.pages.role_and_permission.role.index');
+        $roles = Role::where('guard_name', 'admin')->get();
+        return view('backend.pages.role_and_permission.role.index',[
+            "roles" => $roles
+        ]);
     }
 
-    public function getData()
+    public function create()
     {
-        // get all data
-        $roles = Role::all();
-
-        return DataTables::of($roles)
-            ->addColumn('name', function ($role) {
-                return '<span class="badge bg-primary">'. $role->name .'</span>';
-            })
-            ->addColumn('action', function ($role) {
-                return '<div class="d-flex gap-3">
-                    <a class="btn btn-sm btn-primary" id="editButton" href="javascript:void(0)"  data-id="'.$role->id.'" data-bs-toggle="modal" data-bs-target="#editModal"><i class="fas fa-edit"></i></a>
-
-                    <a class="btn btn-sm btn-danger" href="javascript:void(0)" data-id="'.$role->id.'" id="deleteBtn"> <i class="fas fa-trash"></i></a>
-
-                    <a class="btn btn-sm btn-success" href="'. route('admin.add-permission', $role->id) .'" data-id="'.$role->id.'"> <i class="bx bx-lock"></i></a>
-                </div>';
-            })
-
-            ->rawColumns(['name', 'action'])
-            ->make(true);
+        // [ V.V.V.I ] AKhane 2ta bhag a query run kora hoyese, first get porjonto shob gulo loop kore dekhabe then group by ta alada query hisebe show kore dekhabe, example below-->
+        $permissions = Permission::select('id', 'name', 'guard_name', 'group_name')
+                        ->where('guard_name', 'admin') // always define this guard name
+                        ->orderBy('group_name')
+                        ->get()
+                        ->groupBy('group_name');  // Group permissions by 'group_name'
+       return view('backend.pages.role_and_permission.role.create',[
+             'permissions' => $permissions
+       ]);
     }
-
     /**
      * Store a newly created resource in storage.
      */
@@ -60,20 +53,38 @@ class RoleController extends Controller
         $role = new Role();
 
         $role->name             = $request->name;
+        $role->guard_name       = "admin";
 
-        // dd($role);
         $role->save();
 
-        return response()->json(['message'=> "Successfully Role Created!", 'status' => true]);
+        $role->syncPermissions($request->permission);  // multiple permissions
+
+        return redirect()->route('admin.role.index');
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Role $role)
+    public function edit(string $id)
     {
-        // dd($role);
-        return response()->json(['success' => $role]);
+        $role = Role::findOrFail($id);
+        
+        $role_has_permissions = DB::table('role_has_permissions')
+                    ->where('role_id', $role->id)
+                    ->pluck('permission_id')
+                    ->all();
+
+        $permissions = Permission::select('id', 'name', 'guard_name', 'group_name')
+                ->where('guard_name', 'admin') // always define this guard name
+                ->orderBy('group_name')
+                ->get()
+                ->groupBy('group_name');  // Group permissions by 'group_name'
+                
+        return view('backend.pages.role_and_permission.role.edit',[
+            "role" => $role,
+            "permissions" => $permissions,
+            "role_has_permissions" => $role_has_permissions,
+        ]);
     }
 
     /**
@@ -81,7 +92,7 @@ class RoleController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $role  = Role::find($id);
+        $role = Role::findOrFail($id);
 
         $request->validate(
             [
@@ -95,45 +106,23 @@ class RoleController extends Controller
         );
 
         $role->name             = $request->name;
+        $role->guard_name       = "admin";
 
         $role->save();
 
-         return response()->json(['message'=> "success"],200);
+        $role->syncPermissions($request->permission);  // multiple permissions
+
+        return redirect()->route('admin.role.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Role $role)
+    public function destroy(string $id)
     {
-        $role->delete();
+        // dd($id);
+        Role::findOrFail($id)->delete();
         
-        return response()->json(['message' => 'Role has been deleted.'], 200);
-    }
-
-    public function addPermissionToRole(string $role_id)
-    {
-        $permission = Permission::get();
-        $role = Role::findOrFail($role_id);
-        
-       return view('backend.pages.role_and_permission.role.add_permission',[
-           'role' => $role,
-            'permission' => $permission,
-       ]);
-    }
-
-    public function givePermissionToRole(Request $request, string $role_id)
-    {
-        // dd($request->permission);
-
-        $role = Role::findOrFail($role_id);
-
-        // Fetch permission names from IDs to sync by name
-        $permissions = Permission::whereIn('id', $request->permission)
-        ->pluck('name');
-
-        $role->syncPermissions($permissions);  // multiple permissions
-
         return redirect()->back();
     }
 }

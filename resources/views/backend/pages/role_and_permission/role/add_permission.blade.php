@@ -31,7 +31,9 @@
                                     <input 
                                         type="checkbox" 
                                         name="permission[]"
-                                        value="{{ $row->id }}" 
+                                        value="{{ $row->name }}"
+                                        
+                                        {{ in_array($row->id , $role_has_permissions) ? "checked" : "" }} 
                                     />
                                     {{ $row->name }}
                             </label>

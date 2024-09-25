@@ -32,9 +32,9 @@
         <div class="card-header">
             <div class="d-flex justify-content-between align-items-center">
                 <h4 class="card-title">Role List</h4>
-                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create_Modal">
+                <a href="{{ route('admin.role.create') }}" class="btn btn-primary">
                     Create Role
-                </button>
+                </a>
             </div>
         </div>
 
@@ -45,86 +45,52 @@
                         <tr>
                             <th>#SL.</th>
                             <th>Role Name</th>
+                            <th>Guard Name</th>
+                            <th style="width: 600px;">Permission</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach ($roles as $row => $role)
+                            @php
+                               $role_permissions = DB::table('role_has_permissions')
+                                    ->where('role_has_permissions.role_id', $role->id)
+                                    ->leftJoin('permissions', 'permissions.id', 'role_has_permissions.permission_id')
+                                    ->where('permissions.guard_name', 'admin')
+                                    ->select('permissions.name as permission_name')
+                                    ->get(); 
+                            @endphp
 
+                            <tr>
+                                <td>{{ $row + 1 }}</td>
+                                <td><span class="badge bg-primary">{{ $role->name }}</span></td>
+                                <td>
+                                    <span class="badge bg-success">{{ $role->guard_name }}</span>
+                                </td>
+                                <td style="width: 600px;">
+                                    @foreach ($role_permissions as $role_perm)
+                                         <span class="badge bg-secondary">{{ $role_perm->permission_name }}</span>
+                                    @endforeach
+                                </td>
+                                <td>
+                                    <div class="d-flex gap-3">
+                                        <a class="btn btn-sm btn-info" href="{{ route('admin.role.edit', $role->id) }}"><i class='bx bx-lock'></i></i></a>
+
+                                        <form action="{{ route('admin.role.destroy', $role->id) }}" method="POST" style="display:inline;">
+                                            @csrf
+                                            @method('DELETE')
+
+                                            <button type="submit" class="btn btn-sm btn-danger">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
-        </div>
-
-        <!-- Create Modal -->
-        <div id="create_Modal" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" data-bs-scroll="true"
-             style="display: none;" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="myModalLabel">Add New Role</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-
-                    <div class="modal-body">
-                        <form id="createForm" enctype="multipart/form-data">
-                            @csrf
-
-                            <div class="mb-3">
-                                <label for="name" class="form-label">Role Name</label>
-                                <input type="text" class="form-control" id="name" name="name" >
-
-                                <span id="name_validate" class="text-danger mt-1"></span>
-                            </div>
-
-                            <div class="d-flex justify-content-end align-items-center">
-                                <button type="button" class="btn btn-secondary waves-effect me-3"
-                                    data-bs-dismiss="modal">Close </button>
-
-                                <button type="submit" id="btn-store" class="btn btn-primary waves-effect waves-light"> Save changes</button>
-                            </div>
-                        </form>
-                    </div>
-
-
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-        </div>
-
-
-        <!-- Edit Modal -->
-        <div id="editModal" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" data-bs-scroll="true"
-             style="display: none;" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="myModalLabel">Update Role</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-
-                    <div class="modal-body">
-                        <form id="EditForm" enctype="multipart/form-data">
-                            @csrf
-                            @method("PUT")
-
-                            <input type="text" name="id" id="id" hidden>
-
-                            <div class="mb-3">
-                                <label for="up_name" class="form-label">Role Name</label>
-                                <input type="text" class="form-control" id="up_name" name="name" >
-
-                                <span id="up_name_validate" class="text-danger mt-1"></span>
-                            </div>
-
-                            <div class="d-flex justify-content-end align-items-center">
-                                <button type="button" class="btn btn-secondary waves-effect me-3"
-                                    data-bs-dismiss="modal">Close</button>
-
-                                <button type="submit" id="btn-store" class="btn btn-primary waves-effect waves-light"> Save changes </button>
-                            </div>
-                        </form>
-                    </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
         </div>
     </div>
 
@@ -136,193 +102,8 @@
     <script>
 
         $(document).ready(function () {
-
-            // Show Data through Datatable
-            let roleTable  = $('#roleTable ').DataTable({
-                order: [
-                    [0, 'desc']
-                ],
-                processing: true,
-                serverSide: true,
-
-                ajax: "{{ route('admin.role-data') }}",
-                // pageLength: 30,
-
-                columns: [
-                    {
-                        data: 'id',
-                    },
-                    {
-                        data: 'name',
-                    },
-                    {
-                        data: 'action',
-                        orderable: false,
-                        searchable: false
-                    },
-                ]
-            });
-
-
-            // Create
-            $('#createForm').submit(function (e) {
-                e.preventDefault();
-
-                let formData = new FormData(this);
-
-                $.ajax({
-                    type: "POST",
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    url: "{{ route('admin.role.store') }}",
-                    data: formData,
-                    processData: false,  // Prevent jQuery from processing the data
-                    contentType: false,  // Prevent jQuery from setting contentType
-                    success: function (res) {
-                        console.log(res);
-                        if (res.status === true) {
-                            $('#create_Modal').modal('hide');
-                            $('#createForm')[0].reset();
-                            roleTable .ajax.reload();
-
-                            swal.fire({
-                                title: "Success",
-                                text: `${res.message}`,
-                                icon: "success"
-                            })
-                        }
-                    },
-                    error: function (err) {
-                        let error = err.responseJSON.errors;
-
-                        $('#name_validate').empty().html(error.name);
-
-                        swal.fire({
-                            title: "Failed",
-                            text: "Something Went Wrong !",
-                            icon: "error"
-                        })
-                    }
-                });
-            })
-
-
-            // Edit
-            $(document).on("click", '#editButton', function (e) {
-                let id = $(this).attr('data-id');
-                // alert(id);
-
-                $.ajax({
-                    type: 'GET',
-                    // headers: {
-                    //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    // },
-                    url: "{{ url('admin/role') }}/" + id + "/edit",
-                    processData: false,  // Prevent jQuery from processing the data
-                    contentType: false,  // Prevent jQuery from setting contentType
-                    success: function (res) {
-                        let data = res.success;
-
-                        $('#id').val(data.id);
-                        $('#up_name').val(data.name);
-                    },
-                    error: function (error) {
-                        console.log('error');
-                    }
-
-                });
-            })
-
-            // Update 
-            $("#EditForm").submit(function (e) {
-                e.preventDefault();
-
-                let id = $('#id').val();
-                let formData = new FormData(this);
-
-                $.ajax({
-                    type: "POST",
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    url: "{{ url('admin/role') }}/" + id,
-                    data: formData,
-                    processData: false,  // Prevent jQuery from processing the data
-                    contentType: false,  // Prevent jQuery from setting contentType
-                    success: function (res) {
-
-                        swal.fire({
-                            title: "Success",
-                            text: "Role Edited",
-                            icon: "success"
-                        })
-
-                        $('#editModal').modal('hide');
-                        $('#EditForm')[0].reset();
-                        roleTable .ajax.reload();
-                    },
-                    error: function (err) {
-                        let error = err.responseJSON.errors;
-
-                        $('#up_name_validate').empty().html(error.name);
-
-                        swal.fire({
-                            title: "Failed",
-                            text: "Something Went Wrong !",
-                            icon: "error"
-                        })
-                    }
-                });
-
-            });
-
-            // Delete 
-            $(document).on("click", "#deleteBtn", function () {
-                let id = $(this).data('id')
-
-                swal.fire({
-                    title: "Are you sure?",
-                    text: "You won't be able to revert this !",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#d33",
-                    cancelButtonColor: "#3085d6",
-                    confirmButtonText: "Yes, delete it!"
-                })
-                .then((result) => {
-                    if (result.isConfirmed) {
-                        $.ajax({
-                            type: 'DELETE',
-
-                            url: "{{ url('admin/role') }}/" + id,
-                            data: {
-                                headers: {
-                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                }
-                            },
-                            success: function (res) {
-                                Swal.fire({
-                                    title: "Deleted!",
-                                    text: `${res.message}`,
-                                    icon: "success"
-                                });
-
-                                roleTable .ajax.reload();
-                            },
-                            error: function (err) {
-                                console.log('error')
-                            }
-                        })
-
-                    } else {
-                        swal.fire('Your Data is Safe');
-                    }
-
-                })
-            })
+            let table = new DataTable('#roleTable');
         })
-
 
     </script>
 @endpush
