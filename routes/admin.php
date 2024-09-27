@@ -9,8 +9,10 @@
 */
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Backend\PermissionController;
 use App\Http\Controllers\Backend\RoleController;
+use App\Http\Controllers\Backend\AdminRoleController;
 use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Backend\BrandsController;
 use App\Http\Controllers\Backend\CategoryController;
@@ -24,10 +26,10 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
 
 
-Route::post('/set-language', function (Illuminate\Http\Request $request) {
-    $language = $request->input('language'); 
-    Session::put('langName', $language); 
-    App::setLocale($language); 
+// set multi-language
+Route::post('/set-language', function (Request $request) {
+    Session::put('langName', $request->language); 
+    App::setLocale($request->language); 
 
     return redirect()->back(); 
 });
@@ -48,8 +50,7 @@ Route::middleware('setLanguage')->group(function(){
         Route::get('/permission-data', [PermissionController::class, 'getData'])->name('admin.permission-data');
 
         Route::resource('/role', RoleController::class)->names('admin.role');
-        Route::get('/role/{role_id}/give-permission', [RoleController::class, 'addPermissionToRole'])->name('admin.add-permission');
-        Route::put('/role/{role_id}/give-permission', [RoleController::class, 'givePermissionToRole'])->name('admin.give-permission');
+        Route::resource('/admin-role', AdminRoleController::class)->names('admin.admin-role');
 
 
         //______ Slider _____//

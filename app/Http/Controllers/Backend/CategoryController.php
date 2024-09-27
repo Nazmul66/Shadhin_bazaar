@@ -7,10 +7,12 @@ use App\Traits\ImageUploadTraits;
 use App\Models\Category;
 use App\Models\Subcategory;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
 
-class CategoryController extends Controller
+class CategoryController extends Controller 
 {
 
     use ImageUploadTraits;

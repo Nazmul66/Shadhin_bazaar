@@ -20,8 +20,9 @@
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i class='bx bx-lock'></i>
-                        <span data-key="t-apps">Role & Permission</span>
+                        <span data-key="t-apps">Admin Permission</span>
                     </a>
+                    
                     <ul class="sub-menu" aria-expanded="false">
                         <li>
                             <a href="{{ route('admin.permission.index') }}">
@@ -31,6 +32,11 @@
                         <li>
                             <a href="{{ route('admin.role.index') }}">
                                 <span data-key="t-role">Role</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('admin.admin-role.index') }}">
+                                <span data-key="t-role">User</span>
                             </a>
                         </li>
                     </ul>
