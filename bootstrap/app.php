@@ -14,6 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $middleware->alias([
             'admin' => \App\Http\Middleware\Admin::class,
+            'setLanguage' => \App\Http\Middleware\SetLanguage::class,
         ]);
         
     })

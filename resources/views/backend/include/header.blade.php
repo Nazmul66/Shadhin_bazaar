@@ -58,36 +58,15 @@
             </div>
 
             <div class="dropdown d-none d-sm-inline-block">
-                <button type="button" class="btn header-item"
-                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img id="header-lang-img" src="{{ asset('public/backend/assets/images/flags/us.jpg') }}" alt="Header Language" height="16">
-                </button>
-                <div class="dropdown-menu dropdown-menu-end">
+                <!-- item-->
+                <form action="{{ url('/set-language') }}" method="POST">
+                    @csrf <!-- Add CSRF token for security -->
 
-                    <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item notify-item language" data-lang="en">
-                        <img src="{{ asset('public/backend/assets/images/flags/us.jpg') }}" alt="user-image" class="me-1" height="12"> <span class="align-middle">English</span>
-                    </a>
-                    <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item notify-item language" data-lang="sp">
-                        <img src="{{ asset('public/backend/assets/images/flags/spain.jpg') }}" alt="user-image" class="me-1" height="12"> <span class="align-middle">Spanish</span>
-                    </a>
-
-                    <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item notify-item language" data-lang="gr">
-                        <img src="{{ asset('public/backend/assets/images/flags/germany.jpg') }}" alt="user-image" class="me-1" height="12"> <span class="align-middle">German</span>
-                    </a>
-
-                    <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item notify-item language" data-lang="it">
-                        <img src="{{ asset('public/backend/assets/images/flags/italy.jpg') }}" alt="user-image" class="me-1" height="12"> <span class="align-middle">Italian</span>
-                    </a>
-
-                    <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item notify-item language" data-lang="ru">
-                        <img src="{{ asset('public/backend/assets/images/flags/russia.jpg') }}" alt="user-image" class="me-1" height="12"> <span class="align-middle">Russian</span>
-                    </a>
-                </div>
+                    <select class="btn header-item" name="language" onchange="this.form.submit()">
+                        <option value="en" {{ App::getLocale() == 'en' ? 'selected' : '' }}>English</option>
+                        <option value="bn" {{ App::getLocale() == 'bn' ? 'selected' : '' }}>Bangladesh</option>
+                    </select>
+                </form>
             </div>
 
             <div class="dropdown d-none d-sm-inline-block">

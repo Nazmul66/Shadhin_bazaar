@@ -12,7 +12,7 @@
                 <li {{ setActive(['dashboards']) }}>
                     <a href="{{ route('dashboards') }}">
                         <i class='bx bx-home'></i>
-                        <span data-key="t-dashboard">Dashboard</span>
+                        <span data-key="t-dashboard">{{ __('message.dashboard') }}</span>
                     </a>
                 </li>
 
