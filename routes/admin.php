@@ -37,11 +37,11 @@ Route::post('/set-language', function (Request $request) {
 
 Route::middleware('setLanguage')->group(function(){
 
-    Route::get('/logout', [AdminController::class, "logout"]);
-    Route::match(["get", "post"], '/login', [AdminController::class, "login"]); // login page
+    Route::get('/admin/logout', [AdminController::class, "logout"]);
+    Route::match(["get", "post"], '/admin/login', [AdminController::class, "login"]); // login page
 
 
-    Route::group(["prefix" => '/admin'], function () {
+    Route::group(["prefix" => '/admin', 'middleware' => ['admin']], function () {
         Route::get('/dashboards', [AdminController::class, "dashboards"])->name('dashboards');
 
 

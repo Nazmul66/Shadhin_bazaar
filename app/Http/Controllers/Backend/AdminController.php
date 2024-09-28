@@ -40,8 +40,8 @@ class AdminController extends Controller
            $request->validate($rules, $customMessage);
 
 
-           if( Auth::guard('admin')->attempt(["email" => $data['email'], "password" => $data['password']]) ){
-              return redirect('/admin/dashboard');
+           if( $admin = Auth::guard('admin')->attempt(["email" => $data['email'], "password" => $data['password']]) ){
+              return redirect('/admin/dashboards');
            }
            else{
               return redirect()->back()->with('error_message', "Invalid Email or Password");

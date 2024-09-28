@@ -28,6 +28,9 @@ class PermissionController extends Controller
             ->addColumn('name', function ($permission) {
                 return '<span class="badge bg-primary">'. $permission->name .'</span>';
             })
+            ->addColumn('group_name', function ($permission) {
+                return '<span class="badge bg-success">'. $permission->group_name .'</span>';
+            })
             ->addColumn('action', function ($permission) {
                 return '<div class="d-flex gap-3">
                     <a class="btn btn-sm btn-primary" id="editButton" href="javascript:void(0)" data-id="'.$permission->id.'" data-bs-toggle="modal" data-bs-target="#editModal"><i class="fas fa-edit"></i></a>
@@ -36,7 +39,7 @@ class PermissionController extends Controller
                 </div>';
             })
 
-            ->rawColumns(['name', 'action'])
+            ->rawColumns(['name', 'group_name', 'action'])
             ->make(true);
     }
 
@@ -48,17 +51,21 @@ class PermissionController extends Controller
         $request->validate(
             [
                 'name' => ['required', 'unique:permissions,name', 'max:255'],
+                'group_name' => ['required', 'max:255'],
             ],
             [
                 'name.required' => 'Please fill up the name',
                 'name.max' => 'Character might be 255',
                 'name.unique' => 'Character might be unique',
+                'group_name.required' => 'Group Name Required',
+                'group_name.max' => 'Group Name character might be 255',
             ]
         );
 
         $permission = new Permission();
 
-        $permission->name             = $request->name;
+        $permission->name             = strtolower($request->name);
+        $permission->group_name       = strtolower($request->group_name);
         $permission->guard_name       = "admin";
 
         // dd($permission);
@@ -86,15 +93,19 @@ class PermissionController extends Controller
         $request->validate(
             [
                 'name' => ['required', 'unique:permissions,name,'. $permission->id , 'max:255'],
+                'group_name' => ['required', 'max:255'],
             ],
             [
                 'name.required' => 'Please fill up the name',
                 'name.max' => 'Character might be 255 word',
                 'name.unique' => 'Character might be unique',
+                'group_name.required' => 'Group Name Required',
+                'group_name.max' => 'Group Name character might be 255',
             ]
         );
 
-        $permission->name             = $request->name;
+        $permission->name             = strtolower($request->name);
+        $permission->group_name       = strtolower($request->group_name);
         $permission->guard_name       = "admin";
 
         $permission->save();

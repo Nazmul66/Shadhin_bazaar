@@ -45,6 +45,7 @@
                         <tr>
                             <th>#SL.</th>
                             <th>Permission Name</th>
+                            <th>Group Name</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -74,6 +75,13 @@
                                 <input type="text" class="form-control" id="name" name="name" >
 
                                 <span id="name_validate" class="text-danger mt-1"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="group_name" class="form-label">Group Name</label>
+                                <input type="text" class="form-control" id="group_name" name="group_name" >
+
+                                <span id="group_name_validate" class="text-danger mt-1"></span>
                             </div>
 
                             <div class="d-flex justify-content-end align-items-center">
@@ -113,6 +121,13 @@
                                 <input type="text" class="form-control" id="up_name" name="name" >
 
                                 <span id="up_name_validate" class="text-danger mt-1"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="up_group_name" class="form-label">Group Name</label>
+                                <input type="text" class="form-control" id="up_group_name" name="group_name" >
+
+                                <span id="up_group_name_validate" class="text-danger mt-1"></span>
                             </div>
 
                             <div class="d-flex justify-content-end align-items-center">
@@ -156,6 +171,9 @@
                         data: 'name',
                     },
                     {
+                        data: 'group_name',
+                    },
+                    {
                         data: 'action',
                         orderable: false,
                         searchable: false
@@ -197,6 +215,7 @@
                         let error = err.responseJSON.errors;
 
                         $('#name_validate').empty().html(error.name);
+                        $('#group_name_validate').empty().html(error.group_name);
 
                         swal.fire({
                             title: "Failed",
@@ -226,6 +245,7 @@
 
                         $('#id').val(data.id);
                         $('#up_name').val(data.name);
+                        $('#up_group_name').val(data.group_name);
                     },
                     error: function (error) {
                         console.log('error');
@@ -266,6 +286,7 @@
                         let error = err.responseJSON.errors;
 
                         $('#up_name_validate').empty().html(error.name);
+                        $('#up_group_name_validate').empty().html(error.group_name);
 
                         swal.fire({
                             title: "Failed",

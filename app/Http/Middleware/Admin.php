@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class Admin
 {
@@ -17,9 +18,11 @@ class Admin
     public function handle(Request $request, Closure $next): Response
     {
         if( !Auth::guard('admin')->check() ){
-           return redirect('/admin/login');
+            // Log::info('Admin not authenticated.');
+            return redirect('/admin/login');
         }
         else{
+            // Log::info('Admin authenticated.');
             return $next($request);
         }
     }
