@@ -43,11 +43,13 @@
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-bordered mb-0" id="productTables">
-                    <thead>
+                    <thead class="bg-primary text-white">
                         <tr>
                             <th>#SL.</th>
-                            <th>Category Image</th>
-                            <th>Category Name</th>
+                            <th>Product Image</th>
+                            <th>Product Details</th>
+                            <th>Product Categorized</th>
+                            <th>Special Featured</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
@@ -209,8 +211,6 @@
                                         <option value="1">Yes</option>
                                         <option value="0">No</option>
                                     </select>
-
-                                    <span id="is_featured_validate" class="text-danger mt-1"></span>
                                 </div>
 
                                 <div class="col-md-4 mb-3">
@@ -220,8 +220,6 @@
                                         <option value="1">Yes</option>
                                         <option value="0">No</option>
                                     </select>
-
-                                    <span id="is_top_validate" class="text-danger mt-1"></span>
                                 </div>
 
                                 <div class="col-md-4 mb-3">
@@ -231,8 +229,6 @@
                                         <option value="1">Yes</option>
                                         <option value="0">No</option>
                                     </select>
-
-                                    <span id="is_best_validate" class="text-danger mt-1"></span>
                                 </div>
                             </div>
 
@@ -245,17 +241,6 @@
                                 <div class="col-md-4 mb-3">
                                     <label class="form-label" for="seo_description">SEO Description</label>
                                     <input class="form-control" id="seo_description" type="text" name="seo_description" placeholder="Write SEO Description....">
-                                </div>
-
-                                <div class="col-md-4 mb-3">
-                                    <label class="form-label" for="status">Status</label>
-                                    <select class="form-select" name="status">
-                                        <option value="" disabled selected>Select</option>
-                                        <option value="1">Active</option>
-                                        <option value="0">Inactive</option>
-                                    </select>
-
-                                    <span id="status_validate" class="text-danger mt-1"></span>
                                 </div>
                             </div>
 
@@ -277,7 +262,7 @@
         <!-- Edit Modal -->
         <div id="editModal" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" data-bs-scroll="true"
              style="display: none;" aria-hidden="true">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-xl">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="myModalLabel">Update Product</h5>
@@ -285,7 +270,7 @@
                     </div>
 
                     <div class="modal-body">
-                        <form id="EditForm" enctype="multipart/form-data">
+                        <form id="editForm" enctype="multipart/form-data">
                             @csrf
                             @method("PUT")
 
@@ -296,7 +281,7 @@
                                     <label for="thumb_image" class="form-label">Product Image </label>
                                     <input type="file" class="form-control" name="thumb_image" id="thumb_image" >
 
-                                    <div id="showImage"></div>
+                                    <div id="imageShow"></div>
                                 </div>
 
                                 <div class="col-md-4 mb-3">
@@ -309,8 +294,6 @@
                                 <div class="col-md-4 mb-3">
                                     <label for="up_sku" class="form-label">Product Sku</label>
                                     <input class="form-control" id="up_sku" type="text" name="sku" placeholder="Write product sku....">
-
-                                    <span id="up_sku_validate" class="text-danger mt-1"></span>
                                 </div>
                             </div>
 
@@ -325,7 +308,7 @@
                                         @endforeach
                                     </select>
 
-                                    <span id="category_id_validate" class="text-danger mt-1"></span>
+                                    <span id="up_category_id_validate" class="text-danger mt-1"></span>
                                 </div>
 
                                 <div class="col-md-4 mb-3">
@@ -337,8 +320,6 @@
                                             <option value="{{ $row->id }}">{{ $row->subcategory_name }}</option>
                                         @endforeach
                                     </select>
-
-                                    <span id="subCategory_id_validate" class="text-danger mt-1"></span>
                                 </div>
 
                                 <div class="col-md-4 mb-3">
@@ -350,8 +331,6 @@
                                             <option value="{{ $row->id }}">{{ $row->name }}</option>
                                         @endforeach
                                     </select>
-
-                                    <span id="childCategory_id_validate" class="text-danger mt-1"></span>
                                 </div>
                             </div>
 
@@ -365,8 +344,6 @@
                                             <option value="{{ $row->id }}">{{ $row->brand_name }}</option>
                                         @endforeach
                                     </select>
-
-                                    <span id="brand_id_validate" class="text-danger mt-1"></span>
                                 </div>
 
                                 <div class="col-md-4 mb-3">
@@ -379,8 +356,6 @@
                                 <div class="col-md-4 mb-3">
                                     <label class="form-label" for="up_offer_price">Offer Price</label>
                                     <input class="form-control" id="up_offer_price" type="text" name="offer_price" placeholder="Write offer_price....">
-
-                                    <span id="up_offer_price_validate" class="text-danger mt-1"></span>
                                 </div>
                             </div>
 
@@ -395,15 +370,11 @@
                                 <div class="col-md-4 mb-3">
                                     <label class="form-label" for="up_offer_start_date">Offer Start Date</label>
                                     <input class="form-control up_offer_start_date" type="date" id="up_offer_start_date" name="offer_start_date" placeholder="Select a date">
-
-                                    <span id="up_start_date_validate" class="text-danger mt-1"></span>
                                 </div>
 
                                 <div class="col-md-4 mb-3">
                                     <label class="form-label" for="up_offer_end_date">Offer End Date</label>
                                     <input class="form-control up_offer_end_date" type="date" id="up_offer_end_date" name="offer_end_date" placeholder="Select a date">
-
-                                    <span id="up_end_date_validate" class="text-danger mt-1"></span>
                                 </div>
                             </div>
 
@@ -411,8 +382,6 @@
                                 <div class="col-md-6 mb-3">
                                     <label class="form-label" for="up_video_link">Video Link</label>
                                     <textarea class="form-control" id="up_video_link" name="video_link"  rows="4" placeholder="Link Paste Here...."></textarea>
-
-                                    <span id="up_link_validate" class="text-danger mt-1"></span>
                                 </div>
 
                                 <div class="col-md-6 mb-3">
@@ -427,6 +396,8 @@
                                 <div class="mb-3">
                                     <label class="form-label" for="up_long_description">Long Description</label>
                                     <textarea class="form-control" id="up_long_description" name="long_description" rows="8" placeholder="Long Description...."></textarea>
+
+                                    <span id="up_long_validate" class="text-danger mt-1"></span>
                                 </div>
                             </div>
 
@@ -438,8 +409,6 @@
                                         <option value="1">Yes</option>
                                         <option value="0">No</option>
                                     </select>
-
-                                    <span id="is_featured_validate" class="text-danger mt-1"></span>
                                 </div>
 
                                 <div class="col-md-4 mb-3">
@@ -449,8 +418,6 @@
                                         <option value="1">Yes</option>
                                         <option value="0">No</option>
                                     </select>
-
-                                    <span id="is_top_validate" class="text-danger mt-1"></span>
                                 </div>
 
                                 <div class="col-md-4 mb-3">
@@ -460,8 +427,6 @@
                                         <option value="1">Yes</option>
                                         <option value="0">No</option>
                                     </select>
-
-                                    <span id="is_best_validate" class="text-danger mt-1"></span>
                                 </div>
                             </div>
 
@@ -469,26 +434,11 @@
                                 <div class="col-md-4 mb-3">
                                     <label class="form-label" for="up_seo_title">SEO Title</label>
                                     <input class="form-control" id="up_seo_title" type="text" name="seo_title" placeholder="Write SEO Title....">
-
-                                    <span id="up_seo_title_validate" class="text-danger mt-1"></span>
                                 </div>
 
                                 <div class="col-md-4 mb-3">
                                     <label class="form-label" for="up_seo_description">SEO Description</label>
                                     <input class="form-control" id="up_seo_description" type="text" name="seo_description" placeholder="Write SEO Description....">
-
-                                    <span id="up_seo_description_validate" class="text-danger mt-1"></span>
-                                </div>
-
-                                <div class="col-md-4 mb-3">
-                                    <label class="form-label" for="up_status">Status</label>
-                                    <select class="form-select" id="up_status" name="status">
-                                        <option value="" disabled selected>Select</option>
-                                        <option value="1">Active</option>
-                                        <option value="0">Inactive</option>
-                                    </select>
-
-                                    <span id="up_status_validate" class="text-danger mt-1"></span>
                                 </div>
                             </div>
 
@@ -539,7 +489,7 @@
                 }
 
                 var $state = $(
-                    '<span><img src="' + imageUrl + '" style="width: 45px; margin-right: 8px;" /> ' + state.text + '</span>'
+                    '<span><img src="' + imageUrl + '" style="width: 40px; margin-right: 8px;" /> ' + state.text + '</span>'
                 );
                 return $state;
             };
@@ -563,7 +513,7 @@
                 }
 
                 var $state = $(
-                    '<span><img src="' + imageUrl + '" style="width: 45px; margin-right: 8px;" /> ' + state.text + '</span>'
+                    '<span><img src="' + imageUrl + '" style="width: 40px; margin-right: 8px;" /> ' + state.text + '</span>'
                 );
                 return $state;
             };
@@ -586,7 +536,7 @@
                 }
 
                 var $state = $(
-                    '<span><img src="' + imageUrl + '" style="width: 45px; margin-right: 8px;" /> ' + state.text + '</span>'
+                    '<span><img src="' + imageUrl + '" style="width: 40px; margin-right: 8px;" /> ' + state.text + '</span>'
                 );
                 return $state;
             };
@@ -609,7 +559,7 @@
                 }
 
                 var $state = $(
-                    '<span><img src="' + imageUrl + '" style="width: 45px; margin-right: 8px;" /> ' + state.text + '</span>'
+                    '<span><img src="' + imageUrl + '" style="width: 40px; margin-right: 8px;" /> ' + state.text + '</span>'
                 );
                 return $state;
             };
@@ -645,15 +595,15 @@
                 });
 
 
-            let data;
-            ClassicEditor
-                .create(document.querySelector('#up_long_description'))
-                .then(newEditor => {
-                    data = newEditor;
-                })
-                .catch(error => {
-                    console.error(error);
-                });
+                let longDescriptionEditor;
+                ClassicEditor
+                    .create(document.querySelector('#up_long_description'))
+                    .then(newEditor => {
+                        longDescriptionEditor = newEditor; // Store the editor instance
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
 
 
             // Show Data through Datatable
@@ -672,12 +622,18 @@
                         data: 'id',
                     },
                     {
-                        data: 'categoryImg',
+                        data: 'product_img',
                         orderable: false,
                         searchable: false,
                     },
                     {
-                        data: 'category_name',
+                        data: 'product_details',
+                    },
+                    {
+                        data: 'categorized',
+                    },
+                    {
+                        data: 'special_featured',
                     },
                     {
                         data: 'status',
@@ -801,15 +757,39 @@
                     processData: false,  // Prevent jQuery from processing the data
                     contentType: false,  // Prevent jQuery from setting contentType
                     success: function (res) {
+                        // console.log(res.success);
                         let data = res.success;
 
                         $('#id').val(data.id);
-                        $('#up_category_name').val(data.category_name);
+                        $('#up_name').val(data.name);
+                        $('#up_sku').val(data.sku);
+                        $('#up_category_id').val(data.category_id);
+                        $('#up_subCategory_id').val(data.subCategory_id);
+                        $('#up_childCategory_id').val(data.childCategory_id);
+                        $('#up_brand_id').val(data.brand_id);
+                        $('#up_price').val(data.price);
+                        $('#up_offer_price').val(data.offer_price);
+                        $('#up_qty').val(data.qty);
+                        $('#up_offer_start_date').val(data.offer_start_date);
+                        $('#up_offer_end_date').val(data.offer_end_date);
+                        $('#up_video_link').val(data.video_link);
+                        $('#up_short').val(data.short_description);
+
+                        // Set CKEditor content
+                        if (longDescriptionEditor) {
+                            longDescriptionEditor.setData(data.long_description); // Set long_description
+                        }
+
+                        $('#up_is_featured').val(data.is_featured);
+                        $('#up_is_top').val(data.is_top);
+                        $('#up_is_best').val(data.is_best);
+                        $('#up_seo_title').val(data.seo_title);
+                        $('#up_seo_description').val(data.seo_description);
+                        // Set image
                         $('#imageShow').html('');
                         $('#imageShow').append(`
-                         <img src={{ asset("`+ data.category_img +`") }} alt="" style="width: 75px;">
-                    `);
-                        $('#up_status').val(data.status);
+                            <img src="{{ asset("`+ data.thumb_image +`") }}" alt="Product Image" style="width: 75px;">
+                        `);
                     },
                     error: function (error) {
                         console.log('error');
@@ -820,7 +800,7 @@
 
 
             // Update Category
-            $("#EditForm").submit(function (e) {
+            $("#editForm").submit(function (e) {
                 e.preventDefault();
 
                 let id = $('#id').val();
@@ -844,13 +824,18 @@
                         })
 
                         $('#editModal').modal('hide');
-                        $('#EditCategory')[0].reset();
+                        $('#editForm')[0].reset();
                         productTables.ajax.reload();
                     },
                     error: function (err) {
                         let error = err.responseJSON.errors;
 
-                        $('#up_name_validate').empty().html(error.category_name);
+                        $('#up_name_validate').empty().html(error.name);
+                        $('#up_category_id_validate').empty().html(error.category_id);
+                        $('#up_price_validate').empty().html(error.price);
+                        $('#up_quantity_validate').empty().html(error.qty);
+                        $('#up_short_validate').empty().html(error.short_description);
+                        $('#up_long_validate').empty().html(error.long_description);
 
                         swal.fire({
                             title: "Failed",
@@ -859,11 +844,10 @@
                         })
                     }
                 });
-
             });
 
 
-            // Delete Category
+            // Delete
             $(document).on("click", "#deleteBtn", function () {
                 let id = $(this).data('id')
 
@@ -904,11 +888,9 @@
                     } else {
                         swal.fire('Your Data is Safe');
                     }
-
                 })
             })
         })
-
 
     </script>
 @endpush

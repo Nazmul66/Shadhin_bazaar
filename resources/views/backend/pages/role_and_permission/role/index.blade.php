@@ -41,7 +41,7 @@
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-bordered mb-0" id="roleTable">
-                    <thead>
+                    <thead class="bg-primary text-white">
                         <tr>
                             <th>#SL.</th>
                             <th>Role Name</th>
@@ -50,6 +50,7 @@
                             <th>Actions</th>
                         </tr>
                     </thead>
+                    
                     <tbody>
                         @foreach ($roles as $row => $role)
                             @php

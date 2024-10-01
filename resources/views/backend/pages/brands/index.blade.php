@@ -41,7 +41,7 @@
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-bordered mb-0" id="brandTable">
-                    <thead>
+                    <thead class="bg-primary text-white">
                         <tr>
                             <th>#SL.</th>
                             <th>Brand Image</th>

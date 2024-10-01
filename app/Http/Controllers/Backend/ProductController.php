@@ -10,6 +10,8 @@ use App\Models\Subcategory;
 use App\Models\ChildCategory;
 use App\Models\Product;
 use App\Models\Brand;
+use Exception;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
 
@@ -33,35 +35,77 @@ class ProductController extends Controller
     public function getData()
     {
         // get all data
-        $categories= Category::all();
+        $products = Product::leftJoin('categories', 'categories.id', 'products.category_id')
+                    ->leftJoin('subcategories', 'subcategories.id', 'products.subCategory_id')
+                    ->leftJoin('child_categories', 'child_categories.id', 'products.childCategory_id')
+                    ->leftJoin('brands', 'brands.id', 'products.brand_id')
+                    ->select('products.*', 'categories.category_name as cat_name', 'subcategories.subcategory_name as subCat_name', 'child_categories.name as childCat_name', 'brands.brand_name')
+                    ->get();
 
-        return DataTables::of($categories)
-            ->addColumn('categoryImg', function ($category) {
-                return '<img src="'.asset( $category->category_img ).'" width="50px" height="50px">';
+        return DataTables::of($products)
+            ->addColumn('product_img', function ($product) {
+                return '<img src="'.asset( $product->thumb_image ).'" width="100px" height="100px">';
             })
-            ->addColumn('status', function ($category) {
-                if ($category->status == 1) {
+            ->addColumn('categorized', function ($product) {
+                $subCat = $product->subCat_name ?? 'N/A';
+                $childCat = $product->childCat_name ?? 'N/A';
+
+                return '<div class="">
+                       <h6>Category Name: <span class="badge bg-success">'. $product->cat_name .'</span></h6> 
+                       <h6>SubCategory Name : <span class="badge bg-success">'. $subCat .'</span></h6>
+                       <h6>ChildCategory Name : <span class="badge bg-success">'. $childCat .'</span></h6>
+                </div>';
+            })
+            ->addColumn('special_featured', function ($product) {
+                $is_top = $product->is_top == 1 ? "Yes" : 'No';
+                $is_best = $product->is_best == 1 ? "Yes" : 'No';
+                $is_featured = $product->is_featured == 1 ? "Yes" : 'No';
+                $start_date = $product->offer_start_date ?? 'N/A';
+                $end_date = $product->offer_end_date ?? 'N/A';
+
+                return '<div class="">
+                       <h6>Top Product: <span class="badge bg-success">'. $is_top .'</span></h6> 
+                       <h6>Best Product : <span class="badge bg-success">'. $is_best .'</span></h6>
+                       <h6>Featured Product : <span class="badge bg-success">'. $is_featured .'</span></h6>
+                       <h6>Start Product Offer : <span class="badge bg-success">'. $start_date .'</span></h6>
+                       <h6>End Product Offer : <span class="badge bg-success">'. $end_date .'</span></h6>
+                </div>';
+            })
+            ->addColumn('product_details', function ($product) {
+                $sku = $product->sku ?? 'N/A';
+                $offer_price = $product->offer_price ?? 'N/A';
+
+                return '<div class="">
+                       <h6>Product Name : <span class="badge bg-success">'. $product->name .'</span></h6> 
+                       <h6>Product Quantity : <span class="badge bg-success">'. $product->qty .'</span></h6>
+                       <h6>Product Sku : <span class="badge bg-success">'. $sku .'</span></h6>
+                       <h6>Brand Name : <span class="badge bg-success">'. $product->brand_name .'</span></h6>
+                       <h6>Product Price : <span class="badge bg-success">'. $product->price .'</span></h6>
+                       <h6>Offer Price : <span class="badge bg-success">'. $offer_price .'</span></h6>
+                </div>';
+            })
+            ->addColumn('status', function ($product) {
+                if ($product->status == 1) {
                     return ' <a class="status" id="status" href="javascript:void(0)"
-                        data-id="'.$category->id.'" data-status="'.$category->status.'"> <i
+                        data-id="'.$product->id.'" data-status="'.$product->status.'"> <i
                             class="fa-solid fa-toggle-on fa-2x"></i>
                     </a>';
                 } else {
                     return '<a class="status" id="status" href="javascript:void(0)"
-                        data-id="'.$category->id.'" data-status="'.$category->status.'"> <i
+                        data-id="'.$product->id.'" data-status="'.$product->status.'"> <i
                             class="fa-solid fa-toggle-off fa-2x" style="color: grey"></i>
                     </a>';
                 }
             })
-
-            ->addColumn('action', function ($category) {
+            ->addColumn('action', function ($product) {
                 return '<div class="d-flex gap-3">
-                    <a class="btn btn-sm btn-primary" id="editButton" href="javascript:void(0)" data-id="'.$category->id.'" data-bs-toggle="modal" data-bs-target="#editModal"><i class="fas fa-edit"></i></a>
+                    <a class="btn btn-sm btn-primary" id="editButton" href="javascript:void(0)" data-id="'.$product->id.'" data-bs-toggle="modal" data-bs-target="#editModal"><i class="fas fa-edit"></i></a>
 
-                    <a class="btn btn-sm btn-danger" href="javascript:void(0)" data-id="'.$category->id.'" id="deleteBtn"> <i class="fas fa-trash"></i></a>
+                    <a class="btn btn-sm btn-danger" href="javascript:void(0)" data-id="'.$product->id.'" id="deleteBtn"> <i class="fas fa-trash"></i></a>
                 </div>';
             })
 
-            ->rawColumns(['categoryImg', 'status', 'action'])
+            ->rawColumns(['categorized', 'special_featured', 'product_details', 'product_img', 'status', 'action'])
             ->make(true);
     }
 
@@ -101,10 +145,6 @@ class ProductController extends Controller
                 'qty' => ['required'],
                 'short_description' => ['required'],
                 'long_description' => ['required'],
-                'is_featured' => ['required'],
-                'is_top' => ['required'],
-                'is_best' => ['required'],
-                'status' => ['required'],
             ],
             [
                 'thumb_image.required' => 'Product Image is required',
@@ -117,57 +157,64 @@ class ProductController extends Controller
                 'qty.required' => 'Please add product quantity',
                 'short_description.required' => 'Please add short description',
                 'long_description.required' => 'Please add long description',
-                'is_featured.required' => 'Please Select the dropdown list',
-                'is_top.required' => 'Please Select the dropdown list',
-                'is_best.required' => 'Please Select the dropdown list',
-                'status.required' => 'status is required',
             ]
         );
 
+        DB::beginTransaction();
+        try {
 
-        $product = new Product();
+            $product = new Product();
 
-        $product->name                      = $request->name;
-        $product->slug                      = Str::slug($request->name);
-        $product->vender_id                 = 0;  // Note
-        $product->category_id               = $request->category_id;
-        $product->subCategory_id            = $request->subCategory_id;
-        $product->childCategory_id          = $request->childCategory_id;
-        $product->brand_id                  = $request->brand_id;
-        $product->qty                       = $request->qty;
-        $product->short_description         = $request->short_description;
-        $product->long_description          = $request->long_description;
-        $product->video_link                = $request->video_link;
-        $product->sku                       = $request->sku;
-        $product->price                     = $request->price;
-        $product->offer_price               = $request->offer_price;
-        $product->offer_start_date          = $request->offer_start_date;
-        $product->offer_end_date            = $request->offer_end_date;
-        $product->is_top                    = $request->is_top;
-        $product->is_best                   = $request->is_best;
-        $product->is_featured               = $request->is_featured;
-        $product->is_approved               = 0;
-        $product->seo_title                 = $request->seo_title;
-        $product->seo_description           = $request->seo_description;
-        $product->status                    = $request->status;
+            $product->name                      = $request->name;
+            $product->slug                      = Str::slug($request->name);
+            $product->vender_id                 = 0;  // Note
+            $product->category_id               = $request->category_id;
+            $product->subCategory_id            = $request->subCategory_id;
+            $product->childCategory_id          = $request->childCategory_id;
+            $product->brand_id                  = $request->brand_id;
+            $product->qty                       = $request->qty;
+            $product->short_description         = $request->short_description;
+            $product->long_description          = $request->long_description;
+            $product->video_link                = $request->video_link;
+            $product->sku                       = $request->sku;
+            $product->price                     = $request->price;
+            $product->offer_price               = $request->offer_price;
+            $product->offer_start_date          = $request->offer_start_date;
+            $product->offer_end_date            = $request->offer_end_date;
+            $product->is_top                    = $request->is_top;
+            $product->is_best                   = $request->is_best;
+            $product->is_featured               = $request->is_featured;
+            $product->is_approved               = 0;
+            $product->seo_title                 = $request->seo_title;
+            $product->seo_description           = $request->seo_description;
+            $product->status                    = 1;
+    
+            // Handle image with ImageUploadTraits function
+            $uploadImage                        = $this->imageUpload($request, 'thumb_image', 'product');
+            $product->thumb_image               =  $uploadImage;
+    
+            // dd($product);
+            $product->save();
+    
+            DB::commit();
+            
+            return response()->json(['message'=> "Successfully Product Created!", 'status' => true]);
+        }
 
-        // Handle image with ImageUploadTraits function
-        $uploadImage                        = $this->imageUpload($request, 'thumb_image', 'product');
-        $product->thumb_image               =  $uploadImage;
-
-        // dd($product);
-        $product->save();
-
-        return response()->json(['message'=> "Successfully Product Created!", 'status' => true]);
+        catch(Exception $ex){
+            DB::rollBack();
+            // throw $ex;
+            dd($ex->getMessage());
+        }
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Category $category)
+    public function edit(Product $product)
     {
-        // dd($category);
-        return response()->json(['success' => $category]);
+        // dd($product);
+        return response()->json(['success' => $product]);
     }
 
     /**
@@ -175,47 +222,90 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $category  = Category::find($id);
-
-        // dd($category);
+        $product  = Product::find($id);
 
         $request->validate(
             [
-                'category_name' => ['required', 'max:255', 'unique:categories,category_name,'. $category->id ],
+                'name' => ['required', 'unique:products,name,' . $product->id, 'max:255'],
+                'category_id' => ['required'],
+                'brand_id' => ['required'],
+                'price' => ['required'],
+                'qty' => ['required'],
+                'short_description' => ['required'],
+                'long_description' => ['required'],
             ],
             [
-                'category_name.required' => 'Please fill up Category name',
-                'category_name.max' => 'Character might be 255 words',
-                'category_name.unique' => 'Character might be unique',
+                'name.required' => 'Please fill up Product name',
+                'name.max' => 'Character might be 255 word',
+                'name.unique' => 'Character might be unique',
+                'name.unique' => 'Character might be unique',
+                'category_id.required' => 'Please Select the Category Name',
+                'brand_id.required' => 'Please Select the Brand Name',
+                'qty.required' => 'Please add product quantity',
+                'short_description.required' => 'Please add short description',
+                'long_description.required' => 'Please add long description',
             ]
         );
 
-         $category->category_name          = $request->category_name;
-         $category->slug                   = Str::slug($request->category_name);
-         $category->status                 = $request->status;
+        DB::beginTransaction();
+        try {
 
-         $uploadImages                     = $this->deleteImageAndUpload($request, 'category_img', 'category', $category->category_img );
-         $category->category_img           =  $uploadImages;
+            $product->name                      = $request->name;
+            $product->slug                      = Str::slug($request->name);
+            $product->vender_id                 = 0;  // Note
+            $product->category_id               = $request->category_id;
+            $product->subCategory_id            = $request->subCategory_id;
+            $product->childCategory_id          = $request->childCategory_id;
+            $product->brand_id                  = $request->brand_id;
+            $product->qty                       = $request->qty;
+            $product->short_description         = $request->short_description;
+            $product->long_description          = $request->long_description;
+            $product->video_link                = $request->video_link;
+            $product->sku                       = $request->sku;
+            $product->price                     = $request->price;
+            $product->offer_price               = $request->offer_price;
+            $product->offer_start_date          = $request->offer_start_date;
+            $product->offer_end_date            = $request->offer_end_date;
+            $product->is_top                    = $request->is_top;
+            $product->is_best                   = $request->is_best;
+            $product->is_featured               = $request->is_featured;
+            $product->is_approved               = 0;
+            $product->seo_title                 = $request->seo_title;
+            $product->seo_description           = $request->seo_description;
+    
+            // Handle image with ImageUploadTraits function
+            $uploadImages                     = $this->deleteImageAndUpload($request, 'thumb_image', 'product', $product->thumb_image );
+            $product->thumb_image           =  $uploadImages;
+        
+            // dd($product);
+            $product->save();
+    
+            DB::commit();
 
-         $category->save();
+            return response()->json(['message'=> "Successfully Product Updated!", 'status' => true]);
+        }
 
-         return response()->json(['message'=> "success"],200);
+        catch(Exception $ex){
+            DB::rollBack();
+            // throw $ex;
+            dd($ex->getMessage());
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Category $category)
+    public function destroy(Product $product)
     {
-        if ($category->category_img) {
-            if (file_exists($category->category_img)) {
-                unlink($category->category_img);
+        if ($product->thumb_image) {
+            if (file_exists($product->thumb_image)) {
+                unlink($product->thumb_image);
             }
         }
 
-        $category->delete();
+        $product->delete();
 
-        return response()->json(['message' => 'Category has been deleted.'], 200);
+        return response()->json(['message' => 'Product has been deleted.'], 200);
     }
 
     public function getSubCategories(Request $request, Category $category)

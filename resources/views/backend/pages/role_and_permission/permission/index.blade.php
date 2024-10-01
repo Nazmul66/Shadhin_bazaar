@@ -41,7 +41,7 @@
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-bordered mb-0" id="permissionTable">
-                    <thead>
+                    <thead class="bg-primary text-white">
                         <tr>
                             <th>#SL.</th>
                             <th>Permission Name</th>

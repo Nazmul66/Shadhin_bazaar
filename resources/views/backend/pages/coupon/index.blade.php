@@ -52,7 +52,7 @@
             <div class="table-responsive">
                 <table class="table table-bordered mb-0" id="couponTable">
 
-                    <thead>
+                    <thead class="bg-primary text-white">
                     <tr>
                         <th>#SL.</th>
                         <th>Coupon Code</th>
