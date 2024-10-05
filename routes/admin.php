@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Backend\PermissionController;
 use App\Http\Controllers\Backend\RoleController;
+use App\Http\Controllers\Backend\ProductImageController;
+use App\Http\Controllers\Backend\AttributeNameController;
+use App\Http\Controllers\Backend\AttributeValueController;
 use App\Http\Controllers\Backend\AdminRoleController;
 use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Backend\BrandsController;
@@ -86,10 +89,16 @@ Route::middleware('setLanguage')->group(function(){
         Route::post('/change-brand-status', [BrandsController::class, 'changeBrandStatus'])->name('admin.brand.status');
 
 
-        //______ Attribute Name & Values _____//
-        Route::resource('/product', ProductController::class)->names('admin.product');
-        Route::get('/product-data', [ProductController::class, 'getData'])->name('admin.product-data');
-        Route::post('/change-product-status', [ProductController::class, 'changeProductStatus'])->name('admin.product.status');
+        //______ Attribute Name _____//
+        Route::resource('/attribute-name', AttributeNameController::class)->names('admin.attribute.name')->except(['show']);
+        Route::get('/attribute-name/data', [AttributeNameController::class, 'getData'])->name('admin.attribute-name.data');
+        Route::post('/attribute-name-status', [AttributeNameController::class, 'changeStatus'])->name('admin.attribute-name.status');
+
+
+        //______ Attribute Values _____//
+        Route::resource('/attribute-name', AttributeValueController::class)->names('admin.attribute.name')->except(['show']);
+        Route::get('/attribute-name/data', [AttributeValueController::class, 'getData'])->name('admin.attribute-name.data');
+        Route::post('/attribute-name-status', [AttributeValueController::class, 'changeStatus'])->name('admin.attribute-name.status');
 
         //______ Product _____//
         Route::resource('/product', ProductController::class)->names('admin.product');

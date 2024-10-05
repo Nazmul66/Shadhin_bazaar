@@ -50,7 +50,7 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li>
-                            <a href="{{ route('admin.slider.index') }}">
+                            <a href="{{ route('admin.attribute.name.index') }}">
                                 <span data-key="t-slider">Attribute Name</span>
                             </a>
                         </li>

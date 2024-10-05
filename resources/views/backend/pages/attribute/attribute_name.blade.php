@@ -26,26 +26,24 @@
         </div>
     </div>
 
-
     <!-- Content part Start -->
     <div class="card">
         <div class="card-header">
             <div class="d-flex justify-content-between align-items-center">
-                <h4 class="card-title">Brand List</h4>
+                <h4 class="card-title">Attribute Name List</h4>
                 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create_Modal">
-                    Create Brand
+                    Create Attribute Name
                 </button>
             </div>
         </div>
 
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered mb-0" id="brandTable">
+                <table class="table table-bordered mb-0" id="mainTables">
                     <thead class="bg-primary text-white">
                         <tr>
                             <th>#SL.</th>
-                            <th>Brand Image</th>
-                            <th>Brand Name</th>
+                            <th>Attribute Name</th>
                             <th>Status</th>
                             <th>Actions</th>
                         </tr>
@@ -60,10 +58,10 @@
         <!-- Create Modal -->
         <div id="create_Modal" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" data-bs-scroll="true"
              style="display: none;" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
+            <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="myModalLabel">Add New Brand</h5>
+                        <h5 class="modal-title" id="myModalLabel">Add New Attribute</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
 
@@ -72,28 +70,10 @@
                             @csrf
 
                             <div class="mb-3">
-                                <label for="brand_name" class="form-label">Brand Name <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="brand_name" name="brand_name" >
+                                <label for="name" class="form-label">Attribute Name <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="name" name="name" >
 
                                 <span id="name_validate" class="text-danger mt-1"></span>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="image" class="form-label">Brand Image <sup class="text-danger" style="font-size: 12px;">* resolution(100 x 100)</sup></label>
-                                <input type="file" class="form-control" name="image" id="image" >
-
-                                <span id="image_validate" class="text-danger mt-1"></span>
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label">Is Featured <span class="text-danger">*</span></label>
-                                <select class="form-select" name="is_featured">
-                                    <option value="" disabled selected>Select</option>
-                                    <option value="1">Yes</option>
-                                    <option value="0">No</option>
-                                </select>
-
-                                <span id="featured_validate" class="text-danger mt-1"></span>
                             </div>
 
                             <div class="d-flex justify-content-end align-items-center">
@@ -105,7 +85,6 @@
                         </form>
                     </div>
 
-
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div>
@@ -114,46 +93,29 @@
         <!-- Edit Modal -->
         <div id="editModal" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" data-bs-scroll="true"
              style="display: none;" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
+            <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="myModalLabel">Update Category</h5>
+                        <h5 class="modal-title" id="myModalLabel">Update Attribute</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
 
                     <div class="modal-body">
-                        <form id="EditCategory" enctype="multipart/form-data">
+                        <form id="EditForm" enctype="multipart/form-data">
                             @csrf
                             @method("PUT")
 
                             <input type="text" name="id" id="id" hidden>
 
                             <div class="mb-3">
-                                <label for="up_brand_name" class="form-label">Brand Name <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="up_brand_name" name="brand_name" >
+                                <label for="up_name" class="form-label">Attribute Name <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="up_name" name="name" >
 
                                 <span id="up_name_validate" class="text-danger mt-1"></span>
                             </div>
 
-                            <div class="mb-3">
-                                <label for="image" class="form-label">Brand Image <sup class="text-danger" style="font-size: 12px;">* resolution(100 x 100)</sup></label>
-                                <input type="file" class="form-control" name="image" id="image" >
-
-                                <div id="imageShow"></div>
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label">Is Featured <span class="text-danger">*</span></label>
-                                <select class="form-select" id="up_is_featured" name="is_featured">
-                                    <option value="" disabled selected>Select</option>
-                                    <option value="1">Yes</option>
-                                    <option value="0">No</option>
-                                </select>
-                            </div>
-
                             <div class="d-flex justify-content-end align-items-center">
-                                <button type="button" class="btn btn-secondary waves-effect me-3"
-                                    data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-secondary waves-effect me-3" data-bs-dismiss="modal">Close</button>
 
                                 <button type="submit" id="btn-store" class="btn btn-primary waves-effect waves-light"> Save changes </button>
                             </div>
@@ -174,14 +136,14 @@
         $(document).ready(function () {
 
             // Show Data through Datatable
-            let brandTable = $('#brandTable').DataTable({
+            let mainTables = $('#mainTables').DataTable({
                 order: [
                     [0, 'desc']
                 ],
                 processing: true,
                 serverSide: true,
 
-                ajax: "{{ route('admin.brand-data') }}",
+                ajax: "{{ route('admin.attribute-name.data') }}",
                 // pageLength: 30,
 
                 columns: [
@@ -189,12 +151,7 @@
                         data: 'id',
                     },
                     {
-                        data: 'brandImage',
-                        orderable: false,
-                        searchable: false,
-                    },
-                    {
-                        data: 'brand_name',
+                        data: 'name',
                     },
                     {
                         data: 'status',
@@ -219,14 +176,14 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "{{ route('admin.brand.status') }}",
+                    url: "{{ route('admin.attribute-name.status') }}",
                     data: {
                         // '_token': token,
                         id: id,
                         status: status
                     },
                     success: function (res) {
-                        brandTable.ajax.reload();
+                        mainTables.ajax.reload();
 
                         if (res.status == 1) {
                             swal.fire(
@@ -261,7 +218,7 @@
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
-                    url: "{{ route('admin.brand.store') }}",
+                    url: "{{ route('admin.attribute.name.store') }}",
                     data: formData,
                     processData: false,  // Prevent jQuery from processing the data
                     contentType: false,  // Prevent jQuery from setting contentType
@@ -270,7 +227,7 @@
                         if (res.status === true) {
                             $('#create_Modal').modal('hide');
                             $('#createForm')[0].reset();
-                            brandTable.ajax.reload();
+                            mainTables.ajax.reload();
 
                             swal.fire({
                                 title: "Success",
@@ -282,9 +239,7 @@
                     error: function (err) {
                         let error = err.responseJSON.errors;
 
-                        $('#name_validate').empty().html(error.brand_name);
-                        $('#image_validate').empty().html(error.image);
-                        $('#featured_validate').empty().html(error.is_featured);
+                        $('#name_validate').empty().html(error.name);
 
                         swal.fire({
                             title: "Failed",
@@ -306,19 +261,14 @@
                     // headers: {
                     //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     // },
-                    url: "{{ url('admin/brands') }}/" + id + "/edit",
+                    url: "{{ url('admin/attribute-name') }}/" + id + "/edit",
                     processData: false,  // Prevent jQuery from processing the data
                     contentType: false,  // Prevent jQuery from setting contentType
                     success: function (res) {
                         let data = res.success;
 
                         $('#id').val(data.id);
-                        $('#up_brand_name').val(data.brand_name);
-                        $('#imageShow').html('');
-                        $('#imageShow').append(`
-                         <img src={{ asset("`+ data.image +`") }} alt="" style="width: 75px;">
-                    `);
-                        $('#up_is_featured').val(data.is_featured);
+                        $('#up_name').val(data.name);
                     },
                     error: function (error) {
                         console.log('error');
@@ -328,8 +278,8 @@
             })
 
 
-            // Update Category
-            $("#EditCategory").submit(function (e) {
+            // Update
+            $("#EditForm").submit(function (e) {
                 e.preventDefault();
 
                 let id = $('#id').val();
@@ -340,7 +290,7 @@
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
-                    url: "{{ url('admin/brands') }}/" + id,
+                    url: "{{ url('admin/attribute-name') }}/" + id,
                     data: formData,
                     processData: false,  // Prevent jQuery from processing the data
                     contentType: false,  // Prevent jQuery from setting contentType
@@ -348,18 +298,18 @@
 
                         swal.fire({
                             title: "Success",
-                            text: "Brand Edited",
+                            text: "Attribute Name Edited",
                             icon: "success"
                         })
 
                         $('#editModal').modal('hide');
-                        $('#EditCategory')[0].reset();
-                        brandTable.ajax.reload();
+                        $('#EditForm')[0].reset();
+                        mainTables.ajax.reload();
                     },
                     error: function (err) {
                         let error = err.responseJSON.errors;
 
-                        $('#up_name_validate').empty().html(error.brand_name);
+                        $('#up_name_validate').empty().html(error.name);
 
                         swal.fire({
                             title: "Failed",
@@ -372,7 +322,7 @@
             });
 
 
-            // Delete Category
+            // Delete
             $(document).on("click", "#deleteBtn", function () {
                 let id = $(this).data('id')
 
@@ -390,7 +340,7 @@
                         $.ajax({
                             type: 'DELETE',
 
-                            url: "{{ url('admin/brands') }}/" + id,
+                            url: "{{ url('admin/attribute-name') }}/" + id,
                             data: {
                                 headers: {
                                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -403,7 +353,7 @@
                                     icon: "success"
                                 });
 
-                                brandTable.ajax.reload();
+                                mainTables.ajax.reload();
                             },
                             error: function (err) {
                                 console.log('error')
