@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
 use App\Models\Slider;
+use Illuminate\Support\Facades\DB;
 
 class SliderController extends Controller
 {
@@ -125,22 +126,31 @@ class SliderController extends Controller
             ]
         );
 
-        $slider = new Slider();
+        DB::beginTransaction();
+        try {
+            $slider = new Slider();
 
-        $slider->type                   = $request->type;
-        $slider->title                  = $request->title;
-        $slider->starting_price         = $request->starting_price;
-        $slider->btn_url                = $request->btn_url;
-        $slider->serial                 = $request->serial;
-        $slider->status                 = 1;
+            $slider->type                   = $request->type;
+            $slider->title                  = $request->title;
+            $slider->starting_price         = $request->starting_price;
+            $slider->btn_url                = $request->btn_url;
+            $slider->serial                 = $request->serial;
+            $slider->status                 = 1;
 
-        // Handle image with ImageUploadTraits function
-        $uploadImage                    = $this->imageUpload($request, 'slider_image', 'slider');
-        $slider->slider_image           =  $uploadImage;
+            // Handle image with ImageUploadTraits function
+            $uploadImage                    = $this->imageUpload($request, 'slider_image', 'slider');
+            $slider->slider_image           =  $uploadImage;
 
-        // dd($slider);
-        $slider->save();
+            // dd($slider);
+            $slider->save();
+        }
+        catch(\Exception $ex){
+            DB::rollBack();
+            throw $ex;
+            // dd($ex->getMessage());
+        }
 
+        DB::commit();
         return response()->json(['message'=> "Successfully Slider Created!", 'status' => true]);
     }
 
@@ -170,19 +180,28 @@ class SliderController extends Controller
             ]
         );
 
-        $slider->type                       = $request->type;
-        $slider->title                      = $request->title;
-        $slider->starting_price             = $request->starting_price;
-        $slider->btn_url                    = $request->btn_url;
-        $slider->serial                     = $request->serial;
-        $slider->status                     = 1;
+        DB::beginTransaction();
+        try {
+            $slider->type                       = $request->type;
+            $slider->title                      = $request->title;
+            $slider->starting_price             = $request->starting_price;
+            $slider->btn_url                    = $request->btn_url;
+            $slider->serial                     = $request->serial;
+            $slider->status                     = 1;
 
-        // Handle image with ImageUploadTraits function
-        $uploadImages                       = $this->deleteImageAndUpload($request, 'slider_image', 'slider', $slider->slider_image );
-        $slider->slider_image               =  $uploadImages;
+            // Handle image with ImageUploadTraits function
+            $uploadImages                       = $this->deleteImageAndUpload($request, 'slider_image', 'slider', $slider->slider_image );
+            $slider->slider_image               =  $uploadImages;
 
-        $slider->save();
+            $slider->save();
+        }
+        catch(\Exception $ex){
+            DB::rollBack();
+            throw $ex;
+            // dd($ex->getMessage());
+        }
 
+        DB::commit();
         return response()->json(['message'=> "success"],200);
     }
 

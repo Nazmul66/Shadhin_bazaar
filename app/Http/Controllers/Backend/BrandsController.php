@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Traits\ImageUploadTraits;
 use App\Models\Brand;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
 
@@ -94,20 +95,30 @@ class BrandsController extends Controller
             ]
         );
 
-        $brand = new Brand();
+        DB::beginTransaction();
+        try {
 
-        $brand->brand_name             = $request->brand_name;
-        $brand->slug                   = Str::slug($request->brand_name);
-        $brand->is_featured            = $request->is_featured;
-        $brand->status                 = 1;
+            $brand = new Brand();
 
-        // Handle image with ImageUploadTraits function
-        $uploadImage                   = $this->imageUpload($request, 'image', 'brand');
-        $brand->image                  =  $uploadImage;
+            $brand->brand_name             = $request->brand_name;
+            $brand->slug                   = Str::slug($request->brand_name);
+            $brand->is_featured            = $request->is_featured;
+            $brand->status                 = 1;
 
-        // dd($brand);
-        $brand->save();
+            // Handle image with ImageUploadTraits function
+            $uploadImage                   = $this->imageUpload($request, 'image', 'brand');
+            $brand->image                  =  $uploadImage;
 
+            // dd($brand);
+            $brand->save();
+        }
+        catch(\Exception $ex){
+            DB::rollBack();
+            throw $ex;
+            // dd($ex->getMessage());
+        }
+
+        DB::commit();
         return response()->json(['message'=> "Successfully Brand Created!", 'status' => true]);
     }
 
@@ -138,18 +149,27 @@ class BrandsController extends Controller
             ]
         );
 
-        $brand->brand_name             = $request->brand_name;
-        $brand->slug                   = Str::slug($request->brand_name);
-        $brand->is_featured            = $request->is_featured;
-        $brand->status                 = 1;
+        DB::beginTransaction();
+        try {
+            $brand->brand_name             = $request->brand_name;
+            $brand->slug                   = Str::slug($request->brand_name);
+            $brand->is_featured            = $request->is_featured;
+            $brand->status                 = 1;
 
-        // Handle image with ImageUploadTraits function
-        $uploadImages                  = $this->deleteImageAndUpload($request, 'image', 'brand', $brand->image );
-        $brand->image                  =  $uploadImages;
+            // Handle image with ImageUploadTraits function
+            $uploadImages                  = $this->deleteImageAndUpload($request, 'image', 'brand', $brand->image );
+            $brand->image                  =  $uploadImages;
 
-         $brand->save();
+            $brand->save();
+        }
+        catch(\Exception $ex){
+            DB::rollBack();
+            throw $ex;
+            // dd($ex->getMessage());
+        }
 
-         return response()->json(['message'=> "success"],200);
+        DB::commit();
+        return response()->json(['message'=> "success"],200);
     }
 
     /**

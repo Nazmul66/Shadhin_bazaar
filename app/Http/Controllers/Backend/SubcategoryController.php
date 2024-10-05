@@ -7,6 +7,7 @@ use App\Traits\ImageUploadTraits;
 use App\Models\Category;
 use App\Models\Subcategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
 
@@ -31,8 +32,8 @@ class SubcategoryController extends Controller
     {
         // get all data
         $subCategories= Category::join('subcategories', 'subcategories.category_id', '=', 'categories.id')
-                        ->select('categories.category_name', 'subcategories.subcategory_name', 'subcategories.*')
-                        ->get();
+                ->select('categories.category_name', 'subcategories.subcategory_name', 'subcategories.*')
+                ->get();
 
         return DataTables::of($subCategories)
 
@@ -88,20 +89,30 @@ class SubcategoryController extends Controller
             ]
         );
 
-        $SubCategory = new Subcategory();
+        DB::beginTransaction();
+        try {
+            $SubCategory = new Subcategory();
 
-        $SubCategory->category_id            = $request->category_id;
-        $SubCategory->subcategory_name       = $request->subcategory_name;
-        $SubCategory->slug                   = Str::slug($request->subcategory_name);
-        $SubCategory->status                 = $request->status;
+            $SubCategory->category_id            = $request->category_id;
+            $SubCategory->subcategory_name       = $request->subcategory_name;
+            $SubCategory->slug                   = Str::slug($request->subcategory_name);
+            $SubCategory->status                 = $request->status;
 
-        // Handle image with ImageUploadTraits function
-        $uploadImage                         = $this->imageUpload($request, 'subcategory_img', 'subCategory');
-        $SubCategory->subcategory_img        =  $uploadImage;
+            // Handle image with ImageUploadTraits function
+            $uploadImage                         = $this->imageUpload($request, 'subcategory_img', 'subCategory');
+            $SubCategory->subcategory_img        =  $uploadImage;
 
-        // dd($SubCategory);
-        $SubCategory->save();
+            // dd($SubCategory);
+            $SubCategory->save();
 
+        }
+        catch(\Exception $ex){
+            DB::rollBack();
+            throw $ex;
+            // dd($ex->getMessage());
+        }
+
+        DB::commit();
         return response()->json(['message'=> "Successfully SubCategory Created!", 'status' => true]);
     }
 
@@ -155,16 +166,27 @@ class SubcategoryController extends Controller
             ]
         );
 
-        $subcategory->category_id            = $request->category_id;
-        $subcategory->subcategory_name       = $request->subcategory_name;
-        $subcategory->slug                   = Str::slug($request->subcategory_name);
-        $subcategory->status                 = $request->status;
+        DB::beginTransaction();
+        try {
+            $subcategory->category_id            = $request->category_id;
+            $subcategory->subcategory_name       = $request->subcategory_name;
+            $subcategory->slug                   = Str::slug($request->subcategory_name);
+            $subcategory->status                 = $request->status;
 
-        // Handle image with ImageUploadTraits function
-        $uploadImages                        = $this->deleteImageAndUpload($request, 'subcategory_img', 'subCategory', $subcategory->subcategory_img );
-        $subcategory->subcategory_img        =  $uploadImages;
+            // Handle image with ImageUploadTraits function
+            $uploadImages                        = $this->deleteImageAndUpload($request, 'subcategory_img', 'subCategory', $subcategory->subcategory_img );
+            $subcategory->subcategory_img        =  $uploadImages;
 
-        $subcategory->save();
+            $subcategory->save();
+
+        }
+        catch(\Exception $ex){
+            DB::rollBack();
+            throw $ex;
+            // dd($ex->getMessage());
+        }
+
+        DB::commit();
 
         return response()->json(['message'=> "success"],200);
     }

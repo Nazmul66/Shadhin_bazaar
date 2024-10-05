@@ -1,7 +1,7 @@
 @extends('backend.layout.master')
 
 @push('title')
-    Create Category
+    Create Attribute Name
 @endpush
 
 @push('add-css')
@@ -14,12 +14,12 @@
     <div class="row">
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                <h4 class="mb-sm-0 font-size-18">Slider</h4>
+                <h4 class="mb-sm-0 font-size-18">Attribute Name</h4>
 
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="{{ route('dashboards') }}">Dashboard</a></li>
-                        <li class="breadcrumb-item active">Slider</li>
+                        <li class="breadcrumb-item active">Attribute Name</li>
                     </ol>
                 </div>
             </div>
@@ -31,31 +31,25 @@
     <div class="card">
         <div class="card-header">
             <div class="d-flex justify-content-between align-items-center">
-                <h4 class="card-title">Sliders List</h4>
+                <h4 class="card-title">Brand List</h4>
                 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create_Modal">
-                    Create Slider
+                    Create Brand
                 </button>
             </div>
         </div>
 
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered mb-0" id="slidersTable">
-
+                <table class="table table-bordered mb-0" id="brandTable">
                     <thead class="bg-primary text-white">
                         <tr>
-                            <th>SL</th>
-                            <th>Slider Image</th>
-                            <th>Slider Type</th>
-                            <th>Slider Title</th>
-                            <th>Price</th>
-                            <th>Url</th>
-                            <th>Serial</th>
+                            <th>#SL.</th>
+                            <th>Brand Image</th>
+                            <th>Brand Name</th>
                             <th>Status</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
-
                     <tbody>
 
                     </tbody>
@@ -69,62 +63,49 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="myModalLabel">Add New Slider</h5>
+                        <h5 class="modal-title" id="myModalLabel">Add New Brand</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
 
                     <div class="modal-body">
-                        {{-- method="POST" action="{{ route('admin.category.store') }}" --}}
                         <form id="createForm" enctype="multipart/form-data">
                             @csrf
 
-                            <div class="row">
-                                <div class="col mb-3">
-                                    <label for="slider_image" class="form-label">Slider Image <sup class="text-danger" style="font-size: 12px;">* resolution(1920 x 1080)</sup></label>
-                                    <input type="file" class="form-control" name="slider_image" id="slider_image" >
+                            <div class="mb-3">
+                                <label for="brand_name" class="form-label">Brand Name <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="brand_name" name="brand_name" >
 
-                                    <span id="image_validate" class="text-danger mt-1"></span>
-                                </div>
-
-                                <div class="col mb-3">
-                                    <label for="title" class="form-label">Slider Title</label>
-                                    <input class="form-control" id="title" type="text" name="title" >
-
-                                    <span id="title_validate" class="text-danger mt-1"></span>
-                                </div>
+                                <span id="name_validate" class="text-danger mt-1"></span>
                             </div>
 
-                            <div class="row">
-                                <div class="col mb-3">
-                                    <label for="type" class="form-label">Slider Type</label>
-                                    <input class="form-control" id="type" type="text" name="type" >
-                                </div>
+                            <div class="mb-3">
+                                <label for="image" class="form-label">Brand Image <sup class="text-danger" style="font-size: 12px;">* resolution(100 x 100)</sup></label>
+                                <input type="file" class="form-control" name="image" id="image" >
 
-                                <div class="col mb-3">
-                                    <label for="starting_price" class="form-label">Price</label>
-                                    <input class="form-control" id="starting_price" type="number" name="starting_price">
-                                </div>
+                                <span id="image_validate" class="text-danger mt-1"></span>
                             </div>
 
-                            <div class="row">
-                                <div class="col mb-3">
-                                    <label for="btn_url" class="form-label">Button Url</label>
-                                    <input class="form-control" id="btn_url" type="text" name="btn_url">
-                                </div>
+                            <div class="mb-3">
+                                <label class="form-label">Is Featured <span class="text-danger">*</span></label>
+                                <select class="form-select" name="is_featured">
+                                    <option value="" disabled selected>Select</option>
+                                    <option value="1">Yes</option>
+                                    <option value="0">No</option>
+                                </select>
 
-                                <div class="col mb-3">
-                                    <label for="serial" class="form-label">Serial</label>
-                                    <input class="form-control" id="serial" type="text" name="serial" >
-                                </div>
+                                <span id="featured_validate" class="text-danger mt-1"></span>
                             </div>
 
                             <div class="d-flex justify-content-end align-items-center">
                                 <button type="button" class="btn btn-secondary waves-effect me-3"
-                                    data-bs-dismiss="modal">Close</button>
+                                    data-bs-dismiss="modal">Close </button>
+
                                 <button type="submit" id="btn-store" class="btn btn-primary waves-effect waves-light"> Save changes</button>
                             </div>
                         </form>
                     </div>
+
+
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div>
@@ -133,71 +114,51 @@
         <!-- Edit Modal -->
         <div id="editModal" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" data-bs-scroll="true"
              style="display: none;" aria-hidden="true">
-            <div class="modal-dialog modal-lg" >
+            <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="myModalLabel">Update Slider</h5>
+                        <h5 class="modal-title" id="myModalLabel">Update Category</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
 
                     <div class="modal-body">
-                        <form id="editForm" enctype="multipart/form-data">
+                        <form id="EditCategory" enctype="multipart/form-data">
                             @csrf
                             @method("PUT")
 
-                            <input type="text" name="id" id="up_id" hidden>
+                            <input type="text" name="id" id="id" hidden>
 
-                            <div class="row">
-                                <div class="col mb-3">
-                                    <label for="slider_image" class="form-label">Slider Image <sup class="text-danger" style="font-size: 12px;">* resolution(1920 x 1080)</sup></label>
-                                    <input type="file" class="form-control" name="slider_image" id="slider_image">
+                            <div class="mb-3">
+                                <label for="up_brand_name" class="form-label">Brand Name <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="up_brand_name" name="brand_name" >
 
-                                    <div id="imageShow"></div>
-                                </div>
-
-                                <div class="col mb-3">
-                                    <label for="up_title" class="form-label">Slider Title</label>
-                                    <input class="form-control" id="up_title" type="text" name="title">
-
-                                    <span id="up_title_validate" class="text-danger mt-1"></span>
-                                </div>
+                                <span id="up_name_validate" class="text-danger mt-1"></span>
                             </div>
 
-                            <div class="row">
-                                <div class="col mb-3">
-                                    <label for="up_type" class="form-label">Slider Type</label>
-                                    <input class="form-control" id="up_type" type="text" name="type">
-                                </div>
+                            <div class="mb-3">
+                                <label for="image" class="form-label">Brand Image <sup class="text-danger" style="font-size: 12px;">* resolution(100 x 100)</sup></label>
+                                <input type="file" class="form-control" name="image" id="image" >
 
-                                <div class="col mb-3">
-                                    <label for="up_starting_price" class="form-label">Price</label>
-                                    <input class="form-control" id="up_starting_price" type="number" name="starting_price">
-                                </div>
+                                <div id="imageShow"></div>
                             </div>
 
-                            <div class="row">
-                                <div class="col mb-3">
-                                    <label for="up_btn_url" class="form-label">Button Url</label>
-                                    <input class="form-control" id="up_btn_url" type="text" name="btn_url">
-                                </div>
-
-                                <div class="col mb-3">
-                                    <label for="up_serial" class="form-label">Serial</label>
-                                    <input class="form-control" id="up_serial" type="text" name="serial">
-                                </div>
+                            <div class="mb-3">
+                                <label class="form-label">Is Featured <span class="text-danger">*</span></label>
+                                <select class="form-select" id="up_is_featured" name="is_featured">
+                                    <option value="" disabled selected>Select</option>
+                                    <option value="1">Yes</option>
+                                    <option value="0">No</option>
+                                </select>
                             </div>
 
                             <div class="d-flex justify-content-end align-items-center">
                                 <button type="button" class="btn btn-secondary waves-effect me-3"
                                     data-bs-dismiss="modal">Close</button>
 
-                                <button type="submit" id="btn-store" class="btn btn-primary waves-effect waves-light">
-                                    Save changes </button>
+                                <button type="submit" id="btn-store" class="btn btn-primary waves-effect waves-light"> Save changes </button>
                             </div>
                         </form>
                     </div>
-
-
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div>
@@ -213,46 +174,27 @@
         $(document).ready(function () {
 
             // Show Data through Datatable
-            let slidersTable = $('#slidersTable').DataTable({
+            let brandTable = $('#brandTable').DataTable({
                 order: [
                     [0, 'desc']
                 ],
                 processing: true,
                 serverSide: true,
 
-                ajax: "{{ route('admin.slider-data') }}",
+                ajax: "{{ route('admin.brand-data') }}",
                 // pageLength: 30,
 
                 columns: [
                     {
-                        data: 'DT_RowIndex',
-                        name: 'DT_RowIndex',
+                        data: 'id',
+                    },
+                    {
+                        data: 'brandImage',
                         orderable: false,
                         searchable: false,
                     },
                     {
-                        data: 'slider_image',
-                        orderable: false,
-                        searchable: false,
-                    },
-                    {
-                        data: 'type',
-                    },
-                    {
-                        data: 'title',
-                    },
-                    {
-                        data: 'starting_price',
-                    },
-                    {
-                        data: 'btn_url',
-                        orderable: false,
-                        searchable: false,
-                    },
-                    {
-                        data: 'serial',
-                        orderable: false,
-                        searchable: false,
+                        data: 'brand_name',
                     },
                     {
                         data: 'status',
@@ -267,7 +209,8 @@
                 ]
             });
 
-            //  status updates
+
+            // status updates
             $(document).on('click', '#status', function () {
                 var id = $(this).data('id');
                 var status = $(this).data('status');
@@ -276,14 +219,14 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "{{ route('admin.slider.status') }}",
+                    url: "{{ route('admin.brand.status') }}",
                     data: {
                         // '_token': token,
                         id: id,
                         status: status
                     },
                     success: function (res) {
-                        slidersTable.ajax.reload();
+                        brandTable.ajax.reload();
 
                         if (res.status == 1) {
                             swal.fire(
@@ -306,7 +249,8 @@
                 })
             })
 
-            // Create Slider
+
+            // Create
             $('#createForm').submit(function (e) {
                 e.preventDefault();
 
@@ -317,16 +261,16 @@
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
-                    url: "{{ route('admin.slider.store') }}",
+                    url: "{{ route('admin.brand.store') }}",
                     data: formData,
                     processData: false,  // Prevent jQuery from processing the data
                     contentType: false,  // Prevent jQuery from setting contentType
                     success: function (res) {
-                        // console.log(res);
+                        console.log(res);
                         if (res.status === true) {
                             $('#create_Modal').modal('hide');
                             $('#createForm')[0].reset();
-                            slidersTable.ajax.reload();
+                            brandTable.ajax.reload();
 
                             swal.fire({
                                 title: "Success",
@@ -338,8 +282,9 @@
                     error: function (err) {
                         let error = err.responseJSON.errors;
 
-                        $('#title_validate').empty().html(error.title);
-                        $('#image_validate').empty().html(error.slider_image);
+                        $('#name_validate').empty().html(error.brand_name);
+                        $('#image_validate').empty().html(error.image);
+                        $('#featured_validate').empty().html(error.is_featured);
 
                         swal.fire({
                             title: "Failed",
@@ -350,7 +295,8 @@
                 });
             })
 
-            // Edit Slider
+
+            // Edit
             $(document).on("click", '#editButton', function (e) {
                 let id = $(this).attr('data-id');
                 // alert(id);
@@ -360,25 +306,19 @@
                     // headers: {
                     //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     // },
-                    url: "{{ url('admin/slider') }}/" + id + "/edit",
+                    url: "{{ url('admin/brands') }}/" + id + "/edit",
                     processData: false,  // Prevent jQuery from processing the data
                     contentType: false,  // Prevent jQuery from setting contentType
                     success: function (res) {
                         let data = res.success;
 
-                        $('#up_id').val(data.id);
-                        $('#up_title').val(data.title);
-                        $('#up_type').val(data.type);
-                        $('#up_starting_price').val(data.starting_price);
-                        $('#up_btn_url').val(data.btn_url);
-                        $('#up_serial').val(data.serial);
+                        $('#id').val(data.id);
+                        $('#up_brand_name').val(data.brand_name);
                         $('#imageShow').html('');
                         $('#imageShow').append(`
-                         <img src={{ asset("`+ data.slider_image +`") }} alt="" style="width: 75px;">
+                         <img src={{ asset("`+ data.image +`") }} alt="" style="width: 75px;">
                     `);
-                        $('#up_status').val(data.status);
-
-
+                        $('#up_is_featured').val(data.is_featured);
                     },
                     error: function (error) {
                         console.log('error');
@@ -387,11 +327,12 @@
                 });
             })
 
-            // Update Slider
-            $("#editForm").submit(function (e) {
+
+            // Update Category
+            $("#EditCategory").submit(function (e) {
                 e.preventDefault();
 
-                let id = $('#up_id').val();
+                let id = $('#id').val();
                 let formData = new FormData(this);
 
                 $.ajax({
@@ -399,7 +340,7 @@
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
-                    url: "{{ url('admin/slider') }}/" + id,
+                    url: "{{ url('admin/brands') }}/" + id,
                     data: formData,
                     processData: false,  // Prevent jQuery from processing the data
                     contentType: false,  // Prevent jQuery from setting contentType
@@ -407,18 +348,18 @@
 
                         swal.fire({
                             title: "Success",
-                            text: "Slider Edited",
+                            text: "Brand Edited",
                             icon: "success"
                         })
 
                         $('#editModal').modal('hide');
-                        $('#editForm')[0].reset();
-                        slidersTable.ajax.reload();
+                        $('#EditCategory')[0].reset();
+                        brandTable.ajax.reload();
                     },
                     error: function (err) {
                         let error = err.responseJSON.errors;
 
-                        $('#up_title_validate').empty().html(error.title);
+                        $('#up_name_validate').empty().html(error.brand_name);
 
                         swal.fire({
                             title: "Failed",
@@ -430,7 +371,8 @@
 
             });
 
-            // Delete Slider
+
+            // Delete Category
             $(document).on("click", "#deleteBtn", function () {
                 let id = $(this).data('id')
 
@@ -443,36 +385,36 @@
                     cancelButtonColor: "#3085d6",
                     confirmButtonText: "Yes, delete it!"
                 })
-                    .then((result) => {
-                        if (result.isConfirmed) {
-                            $.ajax({
-                                type: 'DELETE',
+                .then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: 'DELETE',
 
-                                url: "{{ url('admin/slider') }}/" + id,
-                                data: {
-                                    headers: {
-                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                    }
-                                },
-                                success: function (res) {
-                                    Swal.fire({
-                                        title: "Deleted!",
-                                        text: `${res.message}`,
-                                        icon: "success"
-                                    });
-
-                                    slidersTable.ajax.reload();
-                                },
-                                error: function (err) {
-                                    console.log('error')
+                            url: "{{ url('admin/brands') }}/" + id,
+                            data: {
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                 }
-                            })
+                            },
+                            success: function (res) {
+                                Swal.fire({
+                                    title: "Deleted!",
+                                    text: `${res.message}`,
+                                    icon: "success"
+                                });
 
-                        } else {
-                            swal.fire('Your Data is Safe');
-                        }
+                                brandTable.ajax.reload();
+                            },
+                            error: function (err) {
+                                console.log('error')
+                            }
+                        })
 
-                    })
+                    } else {
+                        swal.fire('Your Data is Safe');
+                    }
+
+                })
             })
         })
 

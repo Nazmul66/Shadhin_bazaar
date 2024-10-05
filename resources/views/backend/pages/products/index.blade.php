@@ -20,7 +20,7 @@
 
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">Pages</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('dashboards') }}">Dashboard</a></li>
                         <li class="breadcrumb-item active">Product</li>
                     </ol>
                 </div>
@@ -77,14 +77,14 @@
 
                             <div class="row">
                                 <div class="col-md-4 mb-3">
-                                    <label for="thumb_image" class="form-label">Product Image </label>
+                                    <label for="thumb_image" class="form-label">Product Image <sup class="text-danger" style="font-size: 12px;">* resolution (200 x 320)</sup></label>
                                     <input type="file" class="form-control" name="thumb_image" id="thumb_image" >
 
                                     <span id="image_validate" class="text-danger mt-1"></span>
                                 </div>
 
                                 <div class="col-md-4 mb-3">
-                                    <label for="name" class="form-label">Product Name</label>
+                                    <label for="name" class="form-label">Product Name <span class="text-danger">*</span></label>
                                     <input class="form-control" id="name" type="text" name="name" placeholder="Write product name....">
 
                                     <span id="name_validate" class="text-danger mt-1"></span>
@@ -98,7 +98,7 @@
 
                             <div class="row">
                                 <div class="col-md-4 mb-3">
-                                    <label class="form-label" for="category_id">Category</label>
+                                    <label class="form-label" for="category_id">Category <span class="text-danger">*</span></label>
                                     <select class="form-select " id="category_id" name="category_id">
                                         <option value="" disabled selected>Select</option>
 
@@ -136,7 +136,7 @@
 
                             <div class="row">
                                 <div class="col-md-4 mb-3">
-                                    <label class="form-label" for="brand_id">Brand</label>
+                                    <label class="form-label" for="brand_id">Brand <span class="text-danger">*</span></label>
                                     <select class="form-select" id="brand_id" name="brand_id">
                                         <option value="" disabled selected>Select</option>
 
@@ -149,7 +149,7 @@
                                 </div>
 
                                 <div class="col-md-4 mb-3">
-                                    <label class="form-label" for="price">Price</label>
+                                    <label class="form-label" for="price">Price <span class="text-danger">*</span></label>
                                     <input class="form-control" id="price" type="number" name="price" placeholder="Write price....">
 
                                     <span id="price_validate" class="text-danger mt-1"></span>
@@ -163,7 +163,7 @@
 
                             <div class="row">
                                 <div class="col-md-4 mb-3">
-                                    <label class="form-label" for="qty">Stock Quantity</label>
+                                    <label class="form-label" for="qty">Stock Quantity <span class="text-danger">*</span></label>
                                     <input class="form-control" id="qty" type="number" name="qty" placeholder="Product Quantity....">
 
                                     <span id="quantity_validate" class="text-danger mt-1"></span>
@@ -187,7 +187,7 @@
                                 </div>
 
                                 <div class="col-md-6 mb-3">
-                                    <label class="form-label" for="short">Short Description</label>
+                                    <label class="form-label" for="short">Short Description <span class="text-danger">*</span></label>
                                     <textarea class="form-control" id="short" class="" name="short_description" rows="4" placeholder="Short Description...."></textarea>
 
                                     <span id="short_validate" class="text-danger mt-1"></span>
@@ -196,7 +196,7 @@
 
                             <div class="col-md-12">
                                 <div class="mb-3">
-                                    <label class="form-label" for="long_description">Long Description</label>
+                                    <label class="form-label" for="long_description">Long Description <span class="text-danger">*</span></label>
                                     <textarea class="form-control" id="long_description" name="long_description" rows="8" placeholder="Long Description...."></textarea>
                                 </div>
 
@@ -278,14 +278,14 @@
 
                             <div class="row">
                                 <div class="col-md-4 mb-3">
-                                    <label for="thumb_image" class="form-label">Product Image </label>
+                                    <label for="thumb_image" class="form-label">Product Image <sup class="text-danger" style="font-size: 12px;">* resolution (200 x 320)</sup></label>
                                     <input type="file" class="form-control" name="thumb_image" id="thumb_image" >
 
                                     <div id="imageShow"></div>
                                 </div>
 
                                 <div class="col-md-4 mb-3">
-                                    <label for="up_name" class="form-label">Product Name</label>
+                                    <label for="up_name" class="form-label">Product Name <span class="text-danger">*</span></label>
                                     <input class="form-control" id="up_name" type="text" name="name" placeholder="Write product name....">
 
                                     <span id="up_name_validate" class="text-danger mt-1"></span>
@@ -299,12 +299,12 @@
 
                             <div class="row">
                                 <div class="col-md-4 mb-3">
-                                    <label class="form-label" for="up_category_id">Category</label>
-                                    <select class="form-select" id="up_category_id" name="category_id">
+                                    <label class="form-label" for="up_category_id">Category <span class="text-danger">*</span></label>
+                                    <select class="form-select" id="up_category_id"  name="category_id">
                                         <option value="" disabled selected>Select</option>
 
                                         @foreach ($categories as $row)
-                                             <option value="{{ $row->id }}">{{ $row->category_name }}</option>
+                                             <option value="{{ $row->id }}" data-image-url="{{ asset($row->category_img) }}">{{ $row->category_name }}</option>
                                         @endforeach
                                     </select>
 
@@ -317,7 +317,7 @@
                                         <option value="" disabled selected>Select</option>
 
                                         @foreach ($subCategories as $row)
-                                            <option value="{{ $row->id }}">{{ $row->subcategory_name }}</option>
+                                            <option value="{{ $row->id }}" data-image-url="{{ asset($row->subcategory_img ) }}">{{ $row->subcategory_name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -328,7 +328,7 @@
                                         <option value="" disabled selected>Select</option>
 
                                         @foreach ($childCategories as $row)
-                                            <option value="{{ $row->id }}">{{ $row->name }}</option>
+                                            <option value="{{ $row->id }}" data-image-url="{{ asset($row->img) }}">{{ $row->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -336,18 +336,18 @@
 
                             <div class="row">
                                 <div class="col-md-4 mb-3">
-                                    <label class="form-label" for="up_brand_id">Brand</label>
+                                    <label class="form-label" for="up_brand_id">Brand <span class="text-danger">*</span></label>
                                     <select class="form-select" id="up_brand_id" name="brand_id">
                                         <option value="" disabled selected>Select</option>
 
                                         @foreach ($brands as $row)
-                                            <option value="{{ $row->id }}">{{ $row->brand_name }}</option>
+                                            <option value="{{ $row->id }}" data-image-url="{{ asset($row->image) }}">{{ $row->brand_name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
 
                                 <div class="col-md-4 mb-3">
-                                    <label class="form-label" for="up_price">Price</label>
+                                    <label class="form-label" for="up_price">Price <span class="text-danger">*</span></label>
                                     <input class="form-control" id="up_price" type="text" name="price" placeholder="Write price....">
 
                                     <span id="up_price_validate" class="text-danger mt-1"></span>
@@ -361,7 +361,7 @@
 
                             <div class="row">
                                 <div class="col-md-4 mb-3">
-                                    <label class="form-label" for="up_qty">Stock Quantity</label>
+                                    <label class="form-label" for="up_qty">Stock Quantity <span class="text-danger">*</span></label>
                                     <input class="form-control" id="up_qty" type="number" name="qty" placeholder="Product Quantity....">
 
                                     <span id="up_quantity_validate" class="text-danger mt-1"></span>
@@ -385,7 +385,7 @@
                                 </div>
 
                                 <div class="col-md-6 mb-3">
-                                    <label class="form-label" for="up_short">Short Description</label>
+                                    <label class="form-label" for="up_short">Short Description <span class="text-danger">*</span></label>
                                     <textarea class="form-control" id="up_short" class="" name="short_description" rows="4" placeholder="Short Description...."></textarea>
 
                                     <span id="up_short_validate" class="text-danger mt-1"></span>
@@ -394,7 +394,7 @@
 
                             <div class="col-md-12">
                                 <div class="mb-3">
-                                    <label class="form-label" for="up_long_description">Long Description</label>
+                                    <label class="form-label" for="up_long_description">Long Description <span class="text-danger">*</span></label>
                                     <textarea class="form-control" id="up_long_description" name="long_description" rows="8" placeholder="Long Description...."></textarea>
 
                                     <span id="up_long_validate" class="text-danger mt-1"></span>
@@ -464,146 +464,33 @@
     <script src="https://cdn.ckeditor.com/ckeditor5/41.1.0/classic/ckeditor.js"></script>
     <script src="{{ asset('public/backend/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
     <script src="https://cdn.datatables.net/2.1.6/js/dataTables.min.js"></script>
+    <script src="{{ asset('public/backend/assets/js/all_plugins.js') }}"></script>
 
     <script>
 
         $(document).ready(function () {
 
-            // Note: This issue occurs because Bootstrap modals tend to steal focus from other elements outside of the modal. Since by default, Select2 attaches the dropdown menu to the <body> element, it is considered "outside of the modal".
-
-            //____ category_id Select2 ____//
-            $('#category_id').select2({
-                dropdownParent: $('#create_Modal'),
-                templateResult: formatState,
-            });
-
-            function formatState (state) {
-                if (!state.id) {
-                    return state.text; // Return text for disabled option
-                }
-
-                var imageUrl = state.element.dataset.imageUrl; // Access image URL from data attribute
-
-                if (!imageUrl) {
-                    return state.text; // Return text if no image URL is available
-                }
-
-                var $state = $(
-                    '<span><img src="' + imageUrl + '" style="width: 40px; margin-right: 8px;" /> ' + state.text + '</span>'
-                );
-                return $state;
-            };
-
-
-             //____ subCategory_id Select2 ____//
-            $('#subCategory_id').select2({
-                dropdownParent: $('#create_Modal'),
-                templateResult: formatState,
-            });
-
-            function formatState (state) {
-                if (!state.id) {
-                    return state.text; // Return text for disabled option
-                }
-
-                var imageUrl = state.element.dataset.imageUrl; // Access image URL from data attribute
-
-                if (!imageUrl) {
-                    return state.text; // Return text if no image URL is available
-                }
-
-                var $state = $(
-                    '<span><img src="' + imageUrl + '" style="width: 40px; margin-right: 8px;" /> ' + state.text + '</span>'
-                );
-                return $state;
-            };
-
-            //____ childCategory_id Select2 ____//
-            $('#childCategory_id').select2({
-                dropdownParent: $('#create_Modal'),
-                templateResult: formatState,
-            });
-
-            function formatState (state) {
-                if (!state.id) {
-                    return state.text; // Return text for disabled option
-                }
-
-                var imageUrl = state.element.dataset.imageUrl; // Access image URL from data attribute
-
-                if (!imageUrl) {
-                    return state.text; // Return text if no image URL is available
-                }
-
-                var $state = $(
-                    '<span><img src="' + imageUrl + '" style="width: 40px; margin-right: 8px;" /> ' + state.text + '</span>'
-                );
-                return $state;
-            };
-
-            //____ childCategory_id Select2 ____//
-            $('#brand_id').select2({
-                dropdownParent: $('#create_Modal'),
-                templateResult: formatState,
-            });
-
-            function formatState (state) {
-                if (!state.id) {
-                    return state.text; // Return text for disabled option
-                }
-
-                var imageUrl = state.element.dataset.imageUrl; // Access image URL from data attribute
-
-                if (!imageUrl) {
-                    return state.text; // Return text if no image URL is available
-                }
-
-                var $state = $(
-                    '<span><img src="' + imageUrl + '" style="width: 40px; margin-right: 8px;" /> ' + state.text + '</span>'
-                );
-                return $state;
-            };
-
-
-            // Flatpicker Plugin
-            $(".offer_start_date").flatpickr({
-                minDate: "today"
-            });
-
-            $(".offer_end_date").flatpickr({
-                minDate: "today",
-            });
-
-            $(".up_offer_start_date").flatpickr({
-                minDate: "today"
-            });
-
-            $(".up_offer_end_date").flatpickr({
-                minDate: "today",
+        // Ckeditor 5 plugin
+        let jReq;
+        ClassicEditor
+            .create(document.querySelector('#long_description'))
+            .then(newEditor => {
+                jReq = newEditor;
+            })
+            .catch(error => {
+                console.error(error);
             });
 
 
-            // Ckeditor 5 plugin
-            let jReq;
+            let longDescriptionEditor;
             ClassicEditor
-                .create(document.querySelector('#long_description'))
+                .create(document.querySelector('#up_long_description'))
                 .then(newEditor => {
-                    jReq = newEditor;
+                    longDescriptionEditor = newEditor; // Store the editor instance
                 })
                 .catch(error => {
                     console.error(error);
-                });
-
-
-                let longDescriptionEditor;
-                ClassicEditor
-                    .create(document.querySelector('#up_long_description'))
-                    .then(newEditor => {
-                        longDescriptionEditor = newEditor; // Store the editor instance
-                    })
-                    .catch(error => {
-                        console.error(error);
-                    });
+            });
 
 
             // Show Data through Datatable
@@ -763,10 +650,10 @@
                         $('#id').val(data.id);
                         $('#up_name').val(data.name);
                         $('#up_sku').val(data.sku);
-                        $('#up_category_id').val(data.category_id);
-                        $('#up_subCategory_id').val(data.subCategory_id);
-                        $('#up_childCategory_id').val(data.childCategory_id);
-                        $('#up_brand_id').val(data.brand_id);
+                        $('#up_category_id').val(data.category_id).trigger('change');  // <-- This is important for select2
+                        $('#up_subCategory_id').val(data.subCategory_id).trigger('change');  // <-- This is important for select2
+                        $('#up_childCategory_id').val(data.childCategory_id).trigger('change');  // <-- This is important for select2
+                        $('#up_brand_id').val(data.brand_id).trigger('change');  // <-- This is important for select2
                         $('#up_price').val(data.price);
                         $('#up_offer_price').val(data.offer_price);
                         $('#up_qty').val(data.qty);

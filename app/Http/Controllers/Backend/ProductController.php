@@ -102,6 +102,8 @@ class ProductController extends Controller
                     <a class="btn btn-sm btn-primary" id="editButton" href="javascript:void(0)" data-id="'.$product->id.'" data-bs-toggle="modal" data-bs-target="#editModal"><i class="fas fa-edit"></i></a>
 
                     <a class="btn btn-sm btn-danger" href="javascript:void(0)" data-id="'.$product->id.'" id="deleteBtn"> <i class="fas fa-trash"></i></a>
+
+                    <a class="btn btn-sm btn-info" href="'. route('admin.product-variant', $product->id) .'" ><i class="bx bx-cog"></i></a>
                 </div>';
             })
 
@@ -132,9 +134,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-
         // dd($request->all());
-
         $request->validate(
             [
                 'thumb_image' => ['required', 'image'],
@@ -195,17 +195,16 @@ class ProductController extends Controller
     
             // dd($product);
             $product->save();
-    
-            DB::commit();
-            
-            return response()->json(['message'=> "Successfully Product Created!", 'status' => true]);
         }
 
         catch(Exception $ex){
             DB::rollBack();
-            // throw $ex;
-            dd($ex->getMessage());
+            throw $ex;
+            // dd($ex->getMessage());
         }
+
+        DB::commit();
+        return response()->json(['message'=> "Successfully Product Created!", 'status' => true]);
     }
 
     /**
@@ -280,16 +279,15 @@ class ProductController extends Controller
             // dd($product);
             $product->save();
     
-            DB::commit();
-
-            return response()->json(['message'=> "Successfully Product Updated!", 'status' => true]);
         }
-
         catch(Exception $ex){
             DB::rollBack();
             // throw $ex;
             dd($ex->getMessage());
         }
+
+        DB::commit();
+        return response()->json(['message'=> "Successfully Product Updated!", 'status' => true]);
     }
 
     /**
@@ -311,7 +309,13 @@ class ProductController extends Controller
     public function getSubCategories(Request $request, Category $category)
     {
         $subcats= SubCategory::where('category_id', $category->id)->get();
-
+        
         return response()->json(['message' => 'success', 'data' => $subcats], 200);
+    }
+
+    public function product_variant($id)
+    {
+        // dd($id);
+        return view('backend.pages.products.product_variant');
     }
 }

@@ -18,7 +18,7 @@
 
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">Pages</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('dashboards') }}">Dashboard</a></li>
                         <li class="breadcrumb-item active">Child Category</li>
                     </ol>
                 </div>
@@ -63,7 +63,7 @@
         <!-- Create Modal -->
         <div id="create_Modal" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" data-bs-scroll="true"
              style="display: none;" aria-hidden="true">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="myModalLabel">Add New Child-Category</h5>
@@ -75,7 +75,7 @@
                             @csrf
 
                             <div class="mb-3">
-                                <label class="form-label">Category Name</label>
+                                <label class="form-label">Category Name <span class="text-danger">*</span></label>
                                 <select class="form-select" name="category_id">
                                     <option value="" disabled selected>Select</option>
                                         @foreach ($categories as $category)
@@ -87,7 +87,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <label class="form-label">SubCategory Name</label>
+                                <label class="form-label">SubCategory Name <span class="text-danger">*</span></label>
                                 <select class="form-select" name="subCategory_id">
                                     <option value="" disabled selected>Select</option>
                                         @foreach ($subCategories as $subCat)
@@ -99,21 +99,21 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="childCategory_name" class="form-label">ChildCategory Name</label>
+                                <label for="childCategory_name" class="form-label">ChildCategory Name <span class="text-danger">*</span></label>
                                 <input class="form-control" id="childCategory_name" type="text" name="name" >
 
                                 <span id="childCat_name_validate" class="text-danger mt-1"></span>
                             </div>
 
                             <div class="mb-3">
-                                <label for="childCategory_img" class="form-label">Category Image </label>
+                                <label for="childCategory_img" class="form-label">Image <sup class="text-danger" style="font-size: 12px;">* resolution(100 x 100)</sup></label>
                                 <input type="file" class="form-control" name="img" id="childCategory_img">
 
                                 <span id="image_validate" class="text-danger mt-1"></span>
                             </div>
 
                             <div class="mb-3">
-                                <label class="form-label">Status</label>
+                                <label class="form-label">Status <span class="text-danger">*</span></label>
                                 <select class="form-select" name="status">
                                     <option value="" disabled selected>Select</option>
                                     <option value="1">Active</option>
@@ -143,7 +143,7 @@
         <!-- Edit Modal -->
         <div id="editModal" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" data-bs-scroll="true"
              style="display: none;" aria-hidden="true">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="myModalLabel">Update Child Category</h5>
@@ -158,7 +158,7 @@
                             <input type="text" name="id" id="up_id" hidden>
 
                             <div class="mb-3">
-                                <label class="form-label">Category Name</label>
+                                <label class="form-label">Category Name <span class="text-danger">*</span></label>
                                 <select class="form-select" name="category_id" id="up_category_id">
                                     <option value="" disabled selected>Select</option>
                                         @foreach ($categories as $category)
@@ -168,7 +168,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <label class="form-label">SubCategory Name</label>
+                                <label class="form-label">SubCategory Name <span class="text-danger">*</span></label>
                                 <select class="form-select" name="subCategory_id" id="up_subCategory_id">
                                     <option value="" disabled selected>Select</option>
                                         @foreach ($subCategories as $subCat)
@@ -178,21 +178,21 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="childCategory_name" class="form-label">ChildCategory Name</label>
+                                <label for="childCategory_name" class="form-label">ChildCategory Name <span class="text-danger">*</span></label>
                                 <input class="form-control" id="up_childCategory_name" type="text" name="name">
 
                                 <span id="up_childCat_name_validate" class="text-danger mt-1"></span>
                             </div>
 
                             <div class="mb-3">
-                                <label for="childCategory_img" class="form-label">Category Image </label>
+                                <label for="childCategory_img" class="form-label">Category Image  <sup class="text-danger" style="font-size: 12px;">* resolution(100 x 100)</sup></label>
                                 <input type="file" class="form-control" name="img" id="childCategory_img">
 
                                 <div id="imageShow"></div>
                             </div>
 
                             <div class="mb-3">
-                                <label class="form-label">Status</label>
+                                <label class="form-label">Status <span class="text-danger">*</span></label>
                                 <select class="form-select" id="up_status" name="status">
                                     <option value="" disabled selected>Select</option>
                                     <option value="1">Active</option>

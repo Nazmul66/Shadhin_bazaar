@@ -18,7 +18,7 @@
 
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">Pages</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('dashboards') }}">Dashboard</a></li>
                         <li class="breadcrumb-item active">Brand</li>
                     </ol>
                 </div>
@@ -60,7 +60,7 @@
         <!-- Create Modal -->
         <div id="create_Modal" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" data-bs-scroll="true"
              style="display: none;" aria-hidden="true">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="myModalLabel">Add New Brand</h5>
@@ -72,21 +72,21 @@
                             @csrf
 
                             <div class="mb-3">
-                                <label for="brand_name" class="form-label">Brand Name</label>
+                                <label for="brand_name" class="form-label">Brand Name <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="brand_name" name="brand_name" >
 
                                 <span id="name_validate" class="text-danger mt-1"></span>
                             </div>
 
                             <div class="mb-3">
-                                <label for="image" class="form-label">Brand Image </label>
+                                <label for="image" class="form-label">Brand Image <sup class="text-danger" style="font-size: 12px;">* resolution(100 x 100)</sup></label>
                                 <input type="file" class="form-control" name="image" id="image" >
 
                                 <span id="image_validate" class="text-danger mt-1"></span>
                             </div>
 
                             <div class="mb-3">
-                                <label class="form-label">Is Featured</label>
+                                <label class="form-label">Is Featured <span class="text-danger">*</span></label>
                                 <select class="form-select" name="is_featured">
                                     <option value="" disabled selected>Select</option>
                                     <option value="1">Yes</option>
@@ -114,7 +114,7 @@
         <!-- Edit Modal -->
         <div id="editModal" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" data-bs-scroll="true"
              style="display: none;" aria-hidden="true">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="myModalLabel">Update Category</h5>
@@ -129,21 +129,21 @@
                             <input type="text" name="id" id="id" hidden>
 
                             <div class="mb-3">
-                                <label for="up_brand_name" class="form-label">Brand Name</label>
+                                <label for="up_brand_name" class="form-label">Brand Name <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="up_brand_name" name="brand_name" >
 
                                 <span id="up_name_validate" class="text-danger mt-1"></span>
                             </div>
 
                             <div class="mb-3">
-                                <label for="image" class="form-label">Brand Image </label>
+                                <label for="image" class="form-label">Brand Image <sup class="text-danger" style="font-size: 12px;">* resolution(100 x 100)</sup></label>
                                 <input type="file" class="form-control" name="image" id="image" >
 
                                 <div id="imageShow"></div>
                             </div>
 
                             <div class="mb-3">
-                                <label class="form-label">Is Featured</label>
+                                <label class="form-label">Is Featured <span class="text-danger">*</span></label>
                                 <select class="form-select" id="up_is_featured" name="is_featured">
                                     <option value="" disabled selected>Select</option>
                                     <option value="1">Yes</option>

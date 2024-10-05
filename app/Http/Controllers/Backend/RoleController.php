@@ -50,15 +50,23 @@ class RoleController extends Controller
             ]
         );
 
-        $role = new Role();
+        DB::beginTransaction();
+        try {
+            $role = new Role();
 
-        $role->name             = $request->name;
-        $role->guard_name       = "admin";
+            $role->name             = $request->name;
+            $role->guard_name       = "admin";
+            $role->save();
 
-        $role->save();
+            $role->syncPermissions($request->permission);  // multiple permissions
+        }
+        catch(\Exception $ex){
+            DB::rollBack();
+            throw $ex;
+            // dd($ex->getMessage());
+        }
 
-        $role->syncPermissions($request->permission);  // multiple permissions
-
+        DB::commit();
         return redirect()->route('admin.role.index');
     }
 
@@ -75,11 +83,11 @@ class RoleController extends Controller
                     ->all();
 
         $permissions = Permission::select('id', 'name', 'guard_name', 'group_name')
-                ->where('guard_name', 'admin') // always define this guard name
-                ->orderBy('group_name')
-                ->get()
-                ->groupBy('group_name');  // Group permissions by 'group_name'
-                
+                    ->where('guard_name', 'admin') // always define this guard name
+                    ->orderBy('group_name')
+                    ->get()
+                    ->groupBy('group_name');  // Group permissions by 'group_name'
+                    
         return view('backend.pages.role_and_permission.role.edit',[
             "role" => $role,
             "permissions" => $permissions,
@@ -105,13 +113,22 @@ class RoleController extends Controller
             ]
         );
 
-        $role->name             = $request->name;
-        $role->guard_name       = "admin";
+        
+        DB::beginTransaction();
+        try {
+            $role->name             = $request->name;
+            $role->guard_name       = "admin";
+            $role->save();
 
-        $role->save();
+            $role->syncPermissions($request->permission);  // multiple permissions
+        }
+        catch(\Exception $ex){
+            DB::rollBack();
+            throw $ex;
+            // dd($ex->getMessage());
+        }
 
-        $role->syncPermissions($request->permission);  // multiple permissions
-
+        DB::commit();
         return redirect()->route('admin.role.index');
     }
 

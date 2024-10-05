@@ -42,6 +42,26 @@
                     </ul>
                 </li>
 
+                {{-- Attribute --}}
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow">
+                        <i class='bx bx-grid-alt'></i>
+                        <span data-key="t-apps">Attribute</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li>
+                            <a href="{{ route('admin.slider.index') }}">
+                                <span data-key="t-slider">Attribute Name</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('admin.slider.index') }}">
+                                <span data-key="t-slider">Attribute Values</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
                 {{-- All Products List --}}
                 <li {{ setActive([
                         'admin.category.index',

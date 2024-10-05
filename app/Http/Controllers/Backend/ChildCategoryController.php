@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Subcategory;
 use App\Models\ChildCategory;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
 
@@ -94,20 +95,32 @@ class ChildCategoryController extends Controller
             ]
         );
 
-        $childCategory = new ChildCategory();
+        
+        DB::beginTransaction();
+        try {
 
-        $childCategory->category_id            = $request->category_id;
-        $childCategory->subCategory_id         = $request->subCategory_id;
-        $childCategory->name                   = $request->name;
-        $childCategory->slug                   = Str::slug($request->name);
-        $childCategory->status                 = $request->status;
+            $childCategory = new ChildCategory();
 
-        // Handle image with ImageUploadTraits function
-        $uploadImage                           = $this->imageUpload($request, 'img', 'childCategory');
-        $childCategory->img                    =  $uploadImage;
+            $childCategory->category_id            = $request->category_id;
+            $childCategory->subCategory_id         = $request->subCategory_id;
+            $childCategory->name                   = $request->name;
+            $childCategory->slug                   = Str::slug($request->name);
+            $childCategory->status                 = $request->status;
 
-        // dd($childCategory);
-        $childCategory->save();
+            // Handle image with ImageUploadTraits function
+            $uploadImage                           = $this->imageUpload($request, 'img', 'childCategory');
+            $childCategory->img                    =  $uploadImage;
+
+            // dd($childCategory);
+            $childCategory->save();
+        }
+        catch(\Exception $ex){
+            DB::rollBack();
+            throw $ex;
+            // dd($ex->getMessage());
+        }
+
+        DB::commit();
 
         return response()->json(['message'=> "Successfully ChildCategory Created!", 'status' => true]);
     }
@@ -162,17 +175,28 @@ class ChildCategoryController extends Controller
             ]
         );
 
-        $childCategory->category_id            = $request->category_id;
-        $childCategory->subCategory_id         = $request->subCategory_id;
-        $childCategory->name                   = $request->name;
-        $childCategory->slug                   = Str::slug($request->name);
-        $childCategory->status                 = $request->status;
+        DB::beginTransaction();
+        try {
 
-        // Handle image with ImageUploadTraits function
-        $uploadImages                          = $this->deleteImageAndUpload($request, 'img', 'childCategory', $childCategory->img );
-        $childCategory->img                    =  $uploadImages;
+            $childCategory->category_id            = $request->category_id;
+            $childCategory->subCategory_id         = $request->subCategory_id;
+            $childCategory->name                   = $request->name;
+            $childCategory->slug                   = Str::slug($request->name);
+            $childCategory->status                 = $request->status;
 
-        $childCategory->save();
+            // Handle image with ImageUploadTraits function
+            $uploadImages                          = $this->deleteImageAndUpload($request, 'img', 'childCategory', $childCategory->img );
+            $childCategory->img                    =  $uploadImages;
+
+            $childCategory->save();
+        }
+        catch(\Exception $ex){
+            DB::rollBack();
+            throw $ex;
+            // dd($ex->getMessage());
+        }
+
+        DB::commit();
 
         return response()->json(['message'=> "success"],200);
     }

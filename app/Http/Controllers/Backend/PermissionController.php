@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Yajra\DataTables\DataTables;
@@ -15,7 +16,6 @@ class PermissionController extends Controller
      */
     public function index()
     {
-
         return view('backend.pages.role_and_permission.permission.index');
     }
 
@@ -62,14 +62,24 @@ class PermissionController extends Controller
             ]
         );
 
-        $permission = new Permission();
+        DB::beginTransaction();
+        try {
+            $permission = new Permission();
 
-        $permission->name             = strtolower($request->name);
-        $permission->group_name       = strtolower($request->group_name);
-        $permission->guard_name       = "admin";
+            $permission->name             = strtolower($request->name);
+            $permission->group_name       = strtolower($request->group_name);
+            $permission->guard_name       = "admin";
 
-        // dd($permission);
-        $permission->save();
+            // dd($permission);
+            $permission->save();
+        }
+        catch(\Exception $ex){
+            DB::rollBack();
+            throw $ex;
+            // dd($ex->getMessage());
+        }
+
+        DB::commit();
 
         return response()->json(['message'=> "Successfully Permission Created!", 'status' => true]);
     }
@@ -104,13 +114,22 @@ class PermissionController extends Controller
             ]
         );
 
-        $permission->name             = strtolower($request->name);
-        $permission->group_name       = strtolower($request->group_name);
-        $permission->guard_name       = "admin";
+        DB::beginTransaction();
+        try {
+            $permission->name             = strtolower($request->name);
+            $permission->group_name       = strtolower($request->group_name);
+            $permission->guard_name       = "admin";
 
-        $permission->save();
+            $permission->save();
+        }
+        catch(\Exception $ex){
+            DB::rollBack();
+            throw $ex;
+            // dd($ex->getMessage());
+        }
 
-         return response()->json(['message'=> "success"],200);
+        DB::commit();
+        return response()->json(['message'=> "success"],200);
     }
 
     /**

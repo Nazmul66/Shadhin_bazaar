@@ -9,6 +9,7 @@ use App\Models\Subcategory;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
 
@@ -100,20 +101,29 @@ class CategoryController extends Controller
             ]
         );
 
+        DB::beginTransaction();
+        try {
 
-        $category = new Category();
+            $category = new Category();
 
-        $category->category_name          = $request->category_name;
-        $category->slug                   = Str::slug($request->category_name);
-        $category->status                 = $request->status;
+            $category->category_name          = $request->category_name;
+            $category->slug                   = Str::slug($request->category_name);
+            $category->status                 = $request->status;
 
-        // Handle image with ImageUploadTraits function
-        $uploadImage                      = $this->imageUpload($request, 'category_img', 'category');
-        $category->category_img           =  $uploadImage;
+            // Handle image with ImageUploadTraits function
+            $uploadImage                      = $this->imageUpload($request, 'category_img', 'category');
+            $category->category_img           =  $uploadImage;
 
-        // dd($category);
-        $category->save();
+            // dd($category);
+            $category->save();
+        }
+        catch(\Exception $ex){
+            DB::rollBack();
+            throw $ex;
+            // dd($ex->getMessage());
+        }
 
+        DB::commit();
         return response()->json(['message'=> "Successfully Category Created!", 'status' => true]);
     }
 
@@ -146,17 +156,26 @@ class CategoryController extends Controller
             ]
         );
 
-        // Handle image with ImageUploadTraits function
-         $category->category_name          = $request->category_name;
-         $category->slug                   = Str::slug($request->category_name);
-         $category->status                 = $request->status;
+        DB::beginTransaction();
+        try {
+            // Handle image with ImageUploadTraits function
+            $category->category_name          = $request->category_name;
+            $category->slug                   = Str::slug($request->category_name);
+            $category->status                 = $request->status;
 
-         $uploadImages                     = $this->deleteImageAndUpload($request, 'category_img', 'category', $category->category_img );
-         $category->category_img           =  $uploadImages;
+            $uploadImages                     = $this->deleteImageAndUpload($request, 'category_img', 'category', $category->category_img );
+            $category->category_img           =  $uploadImages;
 
-         $category->save();
+            $category->save();
+        }
+        catch(\Exception $ex){
+            DB::rollBack();
+            throw $ex;
+            // dd($ex->getMessage());
+        }
 
-         return response()->json(['message'=> "success"],200);
+        DB::commit();
+        return response()->json(['message'=> "success"],200);
     }
 
     /**

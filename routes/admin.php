@@ -86,10 +86,16 @@ Route::middleware('setLanguage')->group(function(){
         Route::post('/change-brand-status', [BrandsController::class, 'changeBrandStatus'])->name('admin.brand.status');
 
 
+        //______ Attribute Name & Values _____//
+        Route::resource('/product', ProductController::class)->names('admin.product');
+        Route::get('/product-data', [ProductController::class, 'getData'])->name('admin.product-data');
+        Route::post('/change-product-status', [ProductController::class, 'changeProductStatus'])->name('admin.product.status');
+
         //______ Product _____//
         Route::resource('/product', ProductController::class)->names('admin.product');
         Route::get('/product-data', [ProductController::class, 'getData'])->name('admin.product-data');
         Route::post('/change-product-status', [ProductController::class, 'changeProductStatus'])->name('admin.product.status');
+        Route::get('/product/variant/{id}', [ProductController::class, 'product_variant'])->name('admin.product-variant');
 
 
         //______ Coupon _____//

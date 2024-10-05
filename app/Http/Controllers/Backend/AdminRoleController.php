@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Admin;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 
@@ -50,16 +51,24 @@ class AdminRoleController extends Controller
             ]
         );
 
-        $admin = new Admin();
+        DB::beginTransaction();
+        try {
+            $admin = new Admin();
 
-        $admin->name             = $request->name;
-        $admin->email            = $request->email;
-        $admin->password         = Hash::make($request->password);
+            $admin->name             = $request->name;
+            $admin->email            = $request->email;
+            $admin->password         = Hash::make($request->password);
+            $admin->save();
 
-        $admin->save();
+            $admin->syncRoles($request->role); // sync roles
+        }
+        catch(\Exception $ex){
+            DB::rollBack();
+            throw $ex;
+            // dd($ex->getMessage());
+        }
 
-        $admin->syncRoles($request->role); // sync roles
-
+        DB::commit();
         return redirect()->route('admin.admin-role.index');
     }
 
@@ -97,15 +106,25 @@ class AdminRoleController extends Controller
             ]
         );
 
-        $admin->name             = $request->name;
-        $admin->email            = $request->email;
+        DB::beginTransaction();
+        try {
+            $admin->name             = $request->name;
+            $admin->email            = $request->email;
 
-        if( !empty($request->password) ){
-            $admin->password         = Hash::make($request->password);
+            if( !empty($request->password) ){
+                $admin->password         = Hash::make($request->password);
+            }
+            $admin->update();
+
+            $admin->syncRoles($request->role); // sync roles
         }
-        $admin->update();
+        catch(\Exception $ex){
+            DB::rollBack();
+            throw $ex;
+            // dd($ex->getMessage());
+        }
 
-        $admin->syncRoles($request->role); // sync roles
+        DB::commit();
 
         return redirect()->route('admin.admin-role.index');
     }
