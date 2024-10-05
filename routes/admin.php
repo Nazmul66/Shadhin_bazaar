@@ -96,9 +96,9 @@ Route::middleware('setLanguage')->group(function(){
 
 
         //______ Attribute Values _____//
-        Route::resource('/attribute-name', AttributeValueController::class)->names('admin.attribute.name')->except(['show']);
-        Route::get('/attribute-name/data', [AttributeValueController::class, 'getData'])->name('admin.attribute-name.data');
-        Route::post('/attribute-name-status', [AttributeValueController::class, 'changeStatus'])->name('admin.attribute-name.status');
+        Route::resource('/attribute-value', AttributeValueController::class)->names('admin.attribute.value')->except(['show']);
+        Route::get('/attribute-value/data', [AttributeValueController::class, 'getData'])->name('admin.attribute-value.data');
+        Route::post('/attribute-value-status', [AttributeValueController::class, 'changeStatus'])->name('admin.attribute-value.status');
 
         //______ Product _____//
         Route::resource('/product', ProductController::class)->names('admin.product');

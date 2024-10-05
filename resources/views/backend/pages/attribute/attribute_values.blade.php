@@ -1,7 +1,7 @@
 @extends('backend.layout.master')
 
 @push('title')
-    Create Attribute Name
+    Create Attribute Values
 @endpush
 
 @push('add-css')
@@ -14,12 +14,12 @@
     <div class="row">
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                <h4 class="mb-sm-0 font-size-18">Attribute Name</h4>
+                <h4 class="mb-sm-0 font-size-18">Attribute Values</h4>
 
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="{{ route('dashboards') }}">Dashboard</a></li>
-                        <li class="breadcrumb-item active">Attribute Name</li>
+                        <li class="breadcrumb-item active">Attribute Values</li>
                     </ol>
                 </div>
             </div>
@@ -30,9 +30,9 @@
     <div class="card">
         <div class="card-header">
             <div class="d-flex justify-content-between align-items-center">
-                <h4 class="card-title">Attribute Name List</h4>
+                <h4 class="card-title">Attribute Values List</h4>
                 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create_Modal">
-                    Create Attribute Name
+                    Create Attribute Values
                 </button>
             </div>
         </div>
@@ -44,6 +44,7 @@
                         <tr>
                             <th>#SL.</th>
                             <th>Attribute Name</th>
+                            <th>Attribute Value</th>
                             <th>Status</th>
                             <th>Actions</th>
                         </tr>
@@ -70,10 +71,23 @@
                             @csrf
 
                             <div class="mb-3">
-                                <label for="name" class="form-label">Attribute Name <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="name" name="name" >
+                                <label for="name" class="form-label">Attribute  Name <span class="text-danger">*</span></label>
+                                <select class="form-control" name="name" id="name">
+                                    <option value="" selected disabled>Select</option>
+
+                                    @foreach ($attrNames as $row)
+                                        <option value="{{ $row->id }}">{{ $row->name }}</option>
+                                    @endforeach
+                                </select>
 
                                 <span id="name_validate" class="text-danger mt-1"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="value" class="form-label">Attribute Value <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="value" name="value" >
+
+                                <span id="value_validate" class="text-danger mt-1"></span>
                             </div>
 
                             <div class="d-flex justify-content-end align-items-center">
@@ -108,10 +122,23 @@
                             <input type="text" name="id" id="id" hidden>
 
                             <div class="mb-3">
-                                <label for="up_name" class="form-label">Attribute Name <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="up_name" name="name" >
+                                <label for="up_name" class="form-label">Attribute  Name <span class="text-danger">*</span></label>
+                                <select class="form-control" name="name" id="up_name">
+                                    <option value="" selected disabled>Select</option>
+
+                                    @foreach ($attrNames as $row)
+                                        <option value="{{ $row->id }}">{{ $row->name }}</option>
+                                    @endforeach
+                                </select>
 
                                 <span id="up_name_validate" class="text-danger mt-1"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="up_value" class="form-label">Attribute Value <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="up_value" name="value" >
+
+                                <span id="up_value_validate" class="text-danger mt-1"></span>
                             </div>
 
                             <div class="d-flex justify-content-end align-items-center">
@@ -143,7 +170,7 @@
                 processing: true,
                 serverSide: true,
 
-                ajax: "{{ route('admin.attribute-name.data') }}",
+                ajax: "{{ route('admin.attribute-value.data') }}",
                 // pageLength: 30,
 
                 columns: [
@@ -152,6 +179,9 @@
                     },
                     {
                         data: 'name',
+                    },
+                    {
+                        data: 'value',
                     },
                     {
                         data: 'status',
@@ -176,7 +206,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "{{ route('admin.attribute-name.status') }}",
+                    url: "{{ route('admin.attribute-value.status') }}",
                     data: {
                         // '_token': token,
                         id: id,
@@ -218,7 +248,7 @@
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
-                    url: "{{ route('admin.attribute.name.store') }}",
+                    url: "{{ route('admin.attribute.value.store') }}",
                     data: formData,
                     processData: false,  // Prevent jQuery from processing the data
                     contentType: false,  // Prevent jQuery from setting contentType
@@ -240,6 +270,7 @@
                         let error = err.responseJSON.errors;
 
                         $('#name_validate').empty().html(error.name);
+                        $('#value_validate').empty().html(error.value);
 
                         swal.fire({
                             title: "Failed",
@@ -261,7 +292,7 @@
                     // headers: {
                     //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     // },
-                    url: "{{ url('admin/attribute-name') }}/" + id + "/edit",
+                    url: "{{ url('admin/attribute-value') }}/" + id + "/edit",
                     processData: false,  // Prevent jQuery from processing the data
                     contentType: false,  // Prevent jQuery from setting contentType
                     success: function (res) {
@@ -269,6 +300,7 @@
 
                         $('#id').val(data.id);
                         $('#up_name').val(data.name);
+                        $('#up_value').val(data.value);
                     },
                     error: function (error) {
                         console.log('error');
@@ -290,7 +322,7 @@
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
-                    url: "{{ url('admin/attribute-name') }}/" + id,
+                    url: "{{ url('admin/attribute-value') }}/" + id,
                     data: formData,
                     processData: false,  // Prevent jQuery from processing the data
                     contentType: false,  // Prevent jQuery from setting contentType
@@ -298,7 +330,7 @@
 
                         swal.fire({
                             title: "Success",
-                            text: "Attribute Name Edited",
+                            text: "Attribute Value Edited",
                             icon: "success"
                         })
 
@@ -310,6 +342,7 @@
                         let error = err.responseJSON.errors;
 
                         $('#up_name_validate').empty().html(error.name);
+                        $('#up_value_validate').empty().html(error.value);
 
                         swal.fire({
                             title: "Failed",
@@ -340,7 +373,7 @@
                         $.ajax({
                             type: 'DELETE',
 
-                            url: "{{ url('admin/attribute-name') }}/" + id,
+                            url: "{{ url('admin/attribute-value') }}/" + id,
                             data: {
                                 headers: {
                                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

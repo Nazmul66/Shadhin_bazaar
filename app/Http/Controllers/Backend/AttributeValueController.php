@@ -16,17 +16,24 @@ class AttributeValueController extends Controller
      */
     public function index()
     {
-        return view('backend.pages.attribute.attribute_name');
+        $attrNames = AttributeName::where('status', 1)->get();
+        return view('backend.pages.attribute.attribute_values', compact('attrNames'));
     }
 
     public function getData()
     {
         // get all data
-        $attrNames= AttributeName::all();
+        $attrValues = AttributeValue::
+                        leftJoin('attribute_names', 'attribute_names.id', 'attribute_values.attribute_name_id')
+                        ->select('attribute_values.*', "attribute_names.name as attr_name")
+                        ->get();
 
-        return DataTables::of($attrNames)
-            ->addColumn('name', function ($attrName) {
-                return '<span class="btn btn-info">'. $attrName->name .'</span>';
+        return DataTables::of($attrValues)
+            ->addColumn('name', function ($attrValue) {
+                return '<span class="btn btn-info">'. $attrValue->attr_name .'</span>';
+            })
+            ->addColumn('value', function ($attrValue) {
+                return '<span class="btn btn-info">'. $attrValue->attribute_value .'</span>';
             })
             ->addColumn('status', function ($attrName) {
                 if ($attrName->status == 1) {
@@ -50,7 +57,7 @@ class AttributeValueController extends Controller
                 </div>';
             })
 
-            ->rawColumns(['name', 'status', 'action'])
+            ->rawColumns(['name', 'value', 'status', 'action'])
             ->make(true);
     }
 
@@ -65,7 +72,7 @@ class AttributeValueController extends Controller
             $status = 1;
         }
 
-        $page = AttributeName::findOrFail($id);
+        $page = AttributeValue::findOrFail($id);
         $page->status = $status;
         $page->save();
 
@@ -80,12 +87,14 @@ class AttributeValueController extends Controller
     {
         $request->validate(
             [
-                'name' => ['required', 'unique:attribute_names,name', 'max:255'],
+                'value' => ['required', 'unique:attribute_values,attribute_value', 'max:255'],
+                'name' => ['required'],
             ],
             [
-                'name.required' => 'Please fill up the name',
-                'name.max' => 'Character might be 255 word',
-                'name.unique' => 'Character might be unique',
+                'value.required' => 'Please fill up the value',
+                'value.max' => 'Character might be 255 word',
+                'value.unique' => 'Character might be unique',
+                'name.required' => 'The field is required',
             ]
         );
 

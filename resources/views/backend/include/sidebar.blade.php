@@ -55,7 +55,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('admin.slider.index') }}">
+                            <a href="{{ route('admin.attribute.value.index') }}">
                                 <span data-key="t-slider">Attribute Values</span>
                             </a>
                         </li>
