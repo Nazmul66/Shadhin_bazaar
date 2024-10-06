@@ -20,3 +20,178 @@
 }
 
 
+
+
+/* yajra datatables pagination design */
+
+label:not(.form-check-label):not(.custom-file-label) {
+    text-transform: capitalize;
+}
+div.dt-container select.dt-input {
+    border: 2px solid #dee2e6 !important;
+    outline: none;
+    margin-right: 12px;
+    cursor: pointer;
+}
+div.dt-container .dt-search input {
+    border: 2px solid #dee2e6 !important;
+    border-radius: 4px !important;
+    margin-left: 16px !important;
+    outline: none !important;
+    caret-color: darkblue;
+}
+.dt-container .dt-paging .dt-paging-button {
+    border-radius: 10px !important;
+    border: 2px solid #f1f1f1 !important;
+    font-weight: 700;
+    cursor: pointer !important;
+}
+
+body div.dt-container .dt-paging .dt-paging-button.current,
+body div.dt-container .dt-paging .dt-paging-button.current:hover{
+    color: #fff !important;
+    background: #5156be !important; 
+    cursor: pointer !important;
+}
+div.dt-container .dt-paging .dt-paging-button:active{
+    box-shadow: none;
+    outline: none;
+    cursor: pointer;
+}
+.dt-container .dt-paging .dt-paging-button:hover{
+    background: #5156be !important;
+    cursor: pointer !important; 
+}
+ div.dt-container .dt-paging .dt-paging-button.disabled
+{
+    color: #000 !important;
+    cursor: pointer !important;
+}
+body div.dt-container .dt-paging .dt-paging-button.disabled:hover, 
+body div.dt-container .dt-paging .dt-paging-button.disabled:active{
+    color: #FFF !important;
+    cursor: pointer !important;
+}
+button:focus {
+    outline: 1px dotted;
+    outline: none !important;
+    cursor: pointer !important;
+}
+table.dataTable td.dt-type-numeric,
+table.dataTable th.dt-type-numeric{
+    text-align: left !important;
+}
+
+
+/* Bootstrap CSS */
+.btn-close{
+    border: none !important;
+    background: transparent !important;;
+    color: #FFF !important;;
+    font-size: 20px !important;;
+}
+.view_modal_content{
+    display: flex;
+    border-bottom: 1px solid #d1d1d1;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+}
+.message_content{
+    display: flex;
+    border-bottom: 1px solid #d1d1d1;
+    margin-bottom: 20px;
+    padding-bottom: 16px;   
+}
+.message_content label{
+    width: 25%;
+    margin: 0;
+}
+.view_modal_content label{
+    width: 25%;
+    margin: 0;
+}
+.message_content span,
+.message_content a{
+    width: 75%;
+}
+.view_modal_content span,
+.view_modal_content a{
+    width: 75%;
+}
+.modal-footer {
+    padding: 0 .75rem .75rem .75rem !important;
+    border-top: none;
+}
+
+
+@media ( min-width: 320px ) and ( max-width: 576px ){
+    .message_content {
+        flex-direction: column;
+    }
+    .message_content label{
+        width: 100%;
+        margin-bottom: 8px;
+    }
+    .view_modal_content label{
+        width: 20%;
+        font-size: 14px;
+    }
+    .view_modal_content span,
+    .view_modal_content a{
+        font-size: 14px;
+        width: 80%;
+    }
+    .message_content span,
+    .message_content a{
+        width: 100%;
+    }
+
+
+    div.dt-container div.dt-layout-row:not(.dt-layout-table) {
+        display: flex !important;
+    }
+    div.dt-container select.dt-input {
+        font-size: 13px;
+    }
+    label:not(.form-check-label):not(.custom-file-label) {
+        font-size: 13px;
+        /* display: none; */
+    }
+    div.dt-container .dt-search input {
+        margin-left: 8px !important;
+        padding: 8px !important;
+    }
+    div.dt-container select.dt-input {
+        padding: 8px !important;
+    }
+    table.dataTable thead > tr > th{
+        white-space: nowrap;
+    }
+    table.dataTable > tbody > tr {
+        white-space: nowrap;
+    }
+    div.dt-container div.dt-layout-row div.dt-layout-cell {
+        overflow-x: scroll;
+    }
+    div.dt-container div.dt-layout-row:not(.dt-layout-table) div.dt-layout-cell > * {
+        font-size: 12px;
+    }
+    div.dt-container .dt-paging .dt-paging-button.disabled {
+        font-size: 12px;
+    }
+    body div.dt-container .dt-paging .dt-paging-button.current, body div.dt-container .dt-paging .dt-paging-button.current:hover {
+        font-size: 12px;
+    }
+    .dt-length label,
+    .dt-search label{
+        display: none !important;
+    }
+    .breadcrumb {
+        padding: .40rem 1rem !important;
+        margin-bottom: 0;
+    }
+}
+
+
+
+

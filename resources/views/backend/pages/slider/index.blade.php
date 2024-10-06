@@ -14,7 +14,7 @@
     <div class="row">
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                <h4 class="mb-sm-0 font-size-18">Slider</h4>
+                <h4 class="mb-sm-0 font-size-18">Sliders List</h4>
 
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
@@ -32,15 +32,15 @@
         <div class="card-header">
             <div class="d-flex justify-content-between align-items-center">
                 <h4 class="card-title">Sliders List</h4>
-                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create_Modal">
-                    Create Slider
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">
+                    Create New
                 </button>
             </div>
         </div>
 
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered mb-0" id="slidersTable">
+                <table class="table table-bordered mb-0" id="datatables">
 
                     <thead class="bg-primary text-white">
                         <tr>
@@ -64,12 +64,12 @@
         </div>
 
         <!-- Create Modal -->
-        <div id="create_Modal" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" data-bs-scroll="true"
+        <div id="createModal" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" data-bs-scroll="true"
              style="display: none;" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="myModalLabel">Add New Slider</h5>
+                        <h5 class="modal-title" id="myModalLabel">Create Slider</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
 
@@ -141,7 +141,7 @@
                     </div>
 
                     <div class="modal-body">
-                        <form id="editForm" enctype="multipart/form-data">
+                        <form id="EditForm" enctype="multipart/form-data">
                             @csrf
                             @method("PUT")
 
@@ -192,7 +192,7 @@
                                     data-bs-dismiss="modal">Close</button>
 
                                 <button type="submit" id="btn-store" class="btn btn-primary waves-effect waves-light">
-                                    Save changes </button>
+                                    Update </button>
                             </div>
                         </form>
                     </div>
@@ -213,7 +213,7 @@
         $(document).ready(function () {
 
             // Show Data through Datatable
-            let slidersTable = $('#slidersTable').DataTable({
+            let datatables = $('#datatables').DataTable({
                 order: [
                     [0, 'desc']
                 ],
@@ -283,7 +283,7 @@
                         status: status
                     },
                     success: function (res) {
-                        slidersTable.ajax.reload();
+                        datatables.ajax.reload();
 
                         if (res.status == 1) {
                             swal.fire(
@@ -324,9 +324,9 @@
                     success: function (res) {
                         // console.log(res);
                         if (res.status === true) {
-                            $('#create_Modal').modal('hide');
+                            $('#createModal').modal('hide');
                             $('#createForm')[0].reset();
-                            slidersTable.ajax.reload();
+                            datatables.ajax.reload();
 
                             swal.fire({
                                 title: "Success",
@@ -374,8 +374,10 @@
                         $('#up_serial').val(data.serial);
                         $('#imageShow').html('');
                         $('#imageShow').append(`
-                         <img src={{ asset("`+ data.slider_image +`") }} alt="" style="width: 75px;">
-                    `);
+                            <a href={{ asset("`+ data.slider_image +`") }} target="__blank">
+                                <img src={{ asset("`+ data.slider_image +`") }} alt="" style="width: 75px;">
+                            </a>
+                       `);
                         $('#up_status').val(data.status);
 
 
@@ -388,7 +390,7 @@
             })
 
             // Update Slider
-            $("#editForm").submit(function (e) {
+            $("#EditForm").submit(function (e) {
                 e.preventDefault();
 
                 let id = $('#up_id').val();
@@ -412,8 +414,8 @@
                         })
 
                         $('#editModal').modal('hide');
-                        $('#editForm')[0].reset();
-                        slidersTable.ajax.reload();
+                        $('#EditForm')[0].reset();
+                        datatables.ajax.reload();
                     },
                     error: function (err) {
                         let error = err.responseJSON.errors;
@@ -461,7 +463,7 @@
                                         icon: "success"
                                     });
 
-                                    slidersTable.ajax.reload();
+                                    datatables.ajax.reload();
                                 },
                                 error: function (err) {
                                     console.log('error')

@@ -30,7 +30,9 @@ class SliderController extends Controller
         return DataTables::of($sliders)
             ->addIndexColumn()
             ->addColumn('slider_image', function ($slider) {
-                return '<img src="'. asset( $slider->slider_image ) .'" width="75px">';
+                return '<a href="'. asset( $slider->slider_image ) .'" target="__blank">
+                     <img src="'. asset( $slider->slider_image ) .'" width="75px">
+                    </a>';
             })
             ->addColumn('type', function ($slider) {
                 if( !is_null($slider->type) ){

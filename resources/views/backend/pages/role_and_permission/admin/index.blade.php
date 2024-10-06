@@ -20,7 +20,7 @@
 
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">Pages</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('dashboards') }}">Dashboard</a></li>
                         <li class="breadcrumb-item active">User List</li>
                     </ol>
                 </div>
@@ -58,7 +58,7 @@
                                 <td>{{ $row + 1 }}</td>
                                 <td><span class="badge bg-primary">{{ $admin->name }}</span></td>
                                 <td>
-                                    <span class="badge bg-success">{{ $admin->email }}</span>
+                                    <a href="mailto: {{ $admin->email }}" class="badge bg-success">{{ $admin->email }}</a>
                                 </td>
                                 <td style="width: 600px;">
                                     @foreach ($admin->getRoleNames() as $role)
