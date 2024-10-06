@@ -14,11 +14,11 @@
     <div class="row">
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                <h4 class="mb-sm-0 font-size-18">Permission</h4>
+                <h4 class="mb-sm-0 font-size-18">Permission List</h4>
 
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">Pages</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('dashboards') }}">Dashboard</a></li>
                         <li class="breadcrumb-item active">Permission</li>
                     </ol>
                 </div>
@@ -32,15 +32,15 @@
         <div class="card-header">
             <div class="d-flex justify-content-between align-items-center">
                 <h4 class="card-title">Permission List</h4>
-                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create_Modal">
-                    Create Permission
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">
+                    Create New
                 </button>
             </div>
         </div>
 
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered mb-0" id="permissionTable">
+                <table class="table table-bordered mb-0" id="datatables">
                     <thead class="bg-primary text-white">
                         <tr>
                             <th>#SL.</th>
@@ -57,12 +57,12 @@
         </div>
 
         <!-- Create Modal -->
-        <div id="create_Modal" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" data-bs-scroll="true"
+        <div id="createModal" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" data-bs-scroll="true"
              style="display: none;" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="myModalLabel">Add New Permission</h5>
+                        <h5 class="modal-title" id="myModalLabel">Create Permission</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
 
@@ -71,14 +71,14 @@
                             @csrf
 
                             <div class="mb-3">
-                                <label for="name" class="form-label">Permission Name</label>
+                                <label for="name" class="form-label">Permission Name <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="name" name="name" >
 
                                 <span id="name_validate" class="text-danger mt-1"></span>
                             </div>
 
                             <div class="mb-3">
-                                <label for="group_name" class="form-label">Group Name</label>
+                                <label for="group_name" class="form-label">Group Name <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="group_name" name="group_name" >
 
                                 <span id="group_name_validate" class="text-danger mt-1"></span>
@@ -117,14 +117,14 @@
                             <input type="text" name="id" id="id" hidden>
 
                             <div class="mb-3">
-                                <label for="up_name" class="form-label">Permission Name</label>
+                                <label for="up_name" class="form-label">Permission Name <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="up_name" name="name" >
 
                                 <span id="up_name_validate" class="text-danger mt-1"></span>
                             </div>
 
                             <div class="mb-3">
-                                <label for="up_group_name" class="form-label">Group Name</label>
+                                <label for="up_group_name" class="form-label">Group Name <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="up_group_name" name="group_name" >
 
                                 <span id="up_group_name_validate" class="text-danger mt-1"></span>
@@ -134,7 +134,7 @@
                                 <button type="button" class="btn btn-secondary waves-effect me-3"
                                     data-bs-dismiss="modal">Close</button>
 
-                                <button type="submit" id="btn-store" class="btn btn-primary waves-effect waves-light"> Save changes </button>
+                                <button type="submit" id="btn-store" class="btn btn-primary waves-effect waves-light"> Update </button>
                             </div>
                         </form>
                     </div>
@@ -153,7 +153,7 @@
         $(document).ready(function () {
 
             // Show Data through Datatable
-            let permissionTable = $('#permissionTable').DataTable({
+            let datatables = $('#datatables').DataTable({
                 order: [
                     [0, 'desc']
                 ],
@@ -200,9 +200,9 @@
                     success: function (res) {
                         console.log(res);
                         if (res.status === true) {
-                            $('#create_Modal').modal('hide');
+                            $('#createModal').modal('hide');
                             $('#createForm')[0].reset();
-                            permissionTable.ajax.reload();
+                            datatables.ajax.reload();
 
                             swal.fire({
                                 title: "Success",
@@ -280,7 +280,7 @@
 
                         $('#editModal').modal('hide');
                         $('#EditForm')[0].reset();
-                        permissionTable.ajax.reload();
+                        datatables.ajax.reload();
                     },
                     error: function (err) {
                         let error = err.responseJSON.errors;
@@ -329,7 +329,7 @@
                                     icon: "success"
                                 });
 
-                                permissionTable.ajax.reload();
+                                datatables.ajax.reload();
                             },
                             error: function (err) {
                                 console.log('error')

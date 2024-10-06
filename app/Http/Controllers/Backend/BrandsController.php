@@ -29,7 +29,9 @@ class BrandsController extends Controller
 
         return DataTables::of($brands)
             ->addColumn('brandImage', function ($brand) {
-                return '<img src="'.asset( $brand->image ).'" width="50px" height="50px">';
+                return '<a href="'.asset( $brand->image ).'" target="__blank">
+                     <img src="'.asset( $brand->image ).'" width="50px" height="50px">
+                </a>';
             })
             ->addColumn('status', function ($brand) {
                 if ($brand->status == 1) {

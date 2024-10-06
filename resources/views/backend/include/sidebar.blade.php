@@ -9,10 +9,10 @@
                 <li class="menu-title" data-key="t-menu">Menu</li>
 
                 {{-- Dashboard --}}
-                <li {{ setActive(['dashboards']) }}>
+                <li >
                     <a href="{{ route('dashboards') }}">
                         <i class='bx bx-home'></i>
-                        <span data-key="t-dashboard">{{ __('message.dashboard') }}</span>
+                        <span>{{ __('message.dashboard') }}</span>
                     </a>
                 </li>
 
@@ -20,23 +20,23 @@
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i class='bx bx-lock'></i>
-                        <span data-key="t-apps">Admin Permission</span>
+                        <span>Admin Permission</span>
                     </a>
                     
                     <ul class="sub-menu" aria-expanded="false">
                         <li>
                             <a href="{{ route('admin.permission.index') }}">
-                                <span data-key="t-permission">Permission</span>
+                                <span >Permission</span>
                             </a>
                         </li>
-                        <li>
+                        <li class="@yield('edit_role')">
                             <a href="{{ route('admin.role.index') }}">
-                                <span data-key="t-role">Role</span>
+                                <span >Role</span>
                             </a>
                         </li>
                         <li>
                             <a href="{{ route('admin.admin-role.index') }}">
-                                <span data-key="t-role">User</span>
+                                <span >User</span>
                             </a>
                         </li>
                     </ul>
@@ -46,95 +46,86 @@
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i class='bx bx-grid-alt'></i>
-                        <span data-key="t-apps">Attribute</span>
+                        <span >Attribute</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li>
+                        <li >
                             <a href="{{ route('admin.attribute.name.index') }}">
-                                <span data-key="t-slider">Attribute Name</span>
+                                <span >Attribute Name</span>
                             </a>
                         </li>
                         <li>
                             <a href="{{ route('admin.attribute.value.index') }}">
-                                <span data-key="t-slider">Attribute Values</span>
+                                <span >Attribute Values</span>
                             </a>
                         </li>
                     </ul>
                 </li>
 
                 {{-- All Products List --}}
-                <li {{ setActive([
-                        'admin.category.index',
-                        'admin.subcategory.index',
-                        'admin.childCategory.index',
-                        'admin.brand.index',
-                        'admin.product.index',
-                        'admin.coupons.index',
-                        'admin.reviews.index',
-                     ]) }}>
+                <li >
                     <a href="javascript: void(0);" class="has-arrow">
                         <i class='bx bx-package'></i>
-                        <span data-key="t-apps">Products</span>
+                        <span >Products</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li {{ setActive(['admin.category.index']) }}>
+                        <li>
                             <a href="{{ route('admin.category.index') }}">
-                                <span data-key="t-categories">Categories</span>
+                                <span >Categories</span>
                             </a>
                         </li>
 
-                        <li {{ setActive(['admin.subcategory.index']) }}>
+                        <li >
                             <a href="{{ route('admin.subcategory.index') }}">
-                                <span data-key="t-subCat">Sub-Categories</span>
+                                <span >Sub-Categories</span>
                             </a>
                         </li>
 
-                        <li {{ setActive(['admin.childCategory.index']) }}>
+                        <li >
                             <a href="{{ route('admin.childCategory.index') }}">
-                                <span data-key="t-childCat">child-Categories</span>
+                                <span >child-Categories</span>
                             </a>
                         </li>
 
-                        <li {{ setActive(['admin.brand.index']) }}>
+                        <li >
                             <a href="{{ route('admin.brand.index') }}">
-                                <span data-key="t-brand">Brands</span>
+                                <span>Brands</span>
                             </a>
                         </li>
 
-                        <li {{ setActive(['admin.product.index']) }}>
+                        <li >
                             <a href="{{ route('admin.product.index') }}">
-                                <span data-key="t-product">Products</span>
+                                <span >Products</span>
                             </a>
                         </li>
 
-                        <li {{ setActive(['admin.coupons.index']) }}>
+                        <li >
                             <a href="{{ route('admin.coupons.index') }}">
-                                <span data-key="t-coupon">Coupons</span>
+                                <span >Coupons</span>
                             </a>
                         </li>
-                        <li {{ setActive(['admin.reviews.index']) }}>
+                        <li >
                             <a href="{{ route('admin.reviews.index') }}">
-                                <span data-key="t-review">Reviews</span>
+                                <span >Reviews</span>
                             </a>
                         </li>
                     </ul>
                 </li>
 
                 {{-- Manage Website --}}
-                <li {{ setActive(['admin.slider.index']) }}>
+                <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i class='bx bx-grid-alt'></i>
-                        <span data-key="t-apps">Manage Website</span>
+                        <span >Manage Website</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li {{ setActive(['admin.slider.index']) }}>
+                        <li>
                             <a href="{{ route('admin.slider.index') }}">
-                                <span data-key="t-slider">Slider</span>
+                                <span >Slider</span>
                             </a>
                         </li>
                     </ul>
                 </li>
-
             </ul>
         </div>
         <!-- Sidebar -->

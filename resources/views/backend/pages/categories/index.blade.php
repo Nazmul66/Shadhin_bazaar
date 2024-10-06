@@ -14,7 +14,7 @@
     <div class="row">
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                <h4 class="mb-sm-0 font-size-18">Category</h4>
+                <h4 class="mb-sm-0 font-size-18">Categories List</h4>
 
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
@@ -32,8 +32,8 @@
         <div class="card-header">
             <div class="d-flex justify-content-between align-items-center">
                 <h4 class="card-title">Categories List</h4>
-                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create_Modal">
-                    Create Category
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">
+                    Create New
                 </button>
             </div>
         </div>
@@ -58,12 +58,12 @@
         </div>
 
         <!-- Create Modal -->
-        <div id="create_Modal" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" data-bs-scroll="true"
+        <div id="createModal" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" data-bs-scroll="true"
              style="display: none;" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="myModalLabel">Add New Category</h5>
+                        <h5 class="modal-title" id="myModalLabel">Create Category</h5>
 
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
@@ -73,7 +73,7 @@
                             @csrf
 
                             <div class="mb-3">
-                                <label for="category_name" class="form-label">Category Name <span class="text-danger">*</span></label>
+                                <label for="category_name" class="form-label">Name <span class="text-danger">*</span></label>
                                 <input class="form-control" id="category_name" type="text" name="category_name" >
 
                                 <span id="name_validate" class="text-danger mt-1"></span>
@@ -126,14 +126,14 @@
                     </div>
 
                     <div class="modal-body">
-                        <form id="EditCategory" enctype="multipart/form-data">
+                        <form id="EditForm" enctype="multipart/form-data">
                             @csrf
                             @method("PUT")
 
                             <input type="text" name="id" id="id" hidden>
 
                             <div class="mb-3">
-                                <label for="up_category_name" class="form-label">Category Name <span class="text-danger">*</span></label>
+                                <label for="up_category_name" class="form-label">Name <span class="text-danger">*</span></label>
                                 <input class="form-control" id="up_category_name" type="text" name="category_name" >
 
                                 <span id="up_name_validate" class="text-danger mt-1"></span>
@@ -161,7 +161,7 @@
                                 </button>
 
                                 <button type="submit" id="btn-store" class="btn btn-primary waves-effect waves-light">
-                                    Save changes
+                                   Update
                                 </button>
                             </div>
                         </form>
@@ -183,7 +183,7 @@
         $(document).ready(function () {
 
             // Show Data through Datatable
-            let CategoryTables = $('#categoryTable').DataTable({
+            let datatables = $('#categoryTable').DataTable({
                 order: [
                     [0, 'desc']
                 ],
@@ -235,7 +235,7 @@
                         status: status
                     },
                     success: function (res) {
-                        CategoryTables.ajax.reload();
+                        datatables.ajax.reload();
 
                         if (res.status == 1) {
                             swal.fire(
@@ -276,9 +276,9 @@
                     success: function (res) {
                         console.log(res);
                         if (res.status === true) {
-                            $('#create_Modal').modal('hide');
+                            $('#createModal').modal('hide');
                             $('#createForm')[0].reset();
-                            CategoryTables.ajax.reload();
+                            datatables.ajax.reload();
 
                             swal.fire({
                                 title: "Success",
@@ -324,7 +324,9 @@
                         $('#up_category_name').val(data.category_name);
                         $('#imageShow').html('');
                         $('#imageShow').append(`
-                         <img src={{ asset("`+ data.category_img +`") }} alt="" style="width: 75px;">
+                          <a href="{{ asset("`+ data.category_img +`") }}" target="__blank">
+                            <img src={{ asset("`+ data.category_img +`") }} alt="" style="width: 75px;">    
+                          </a>
                     `);
                         $('#up_status').val(data.status);
                     },
@@ -337,7 +339,7 @@
 
 
             // Update Category
-            $("#EditCategory").submit(function (e) {
+            $("#EditForm").submit(function (e) {
                 e.preventDefault();
 
                 let id = $('#id').val();
@@ -361,8 +363,8 @@
                         })
 
                         $('#editModal').modal('hide');
-                        $('#EditCategory')[0].reset();
-                        CategoryTables.ajax.reload();
+                        $('#EditForm')[0].reset();
+                        datatables.ajax.reload();
                     },
                     error: function (err) {
                         let error = err.responseJSON.errors;
@@ -411,7 +413,7 @@
                                     icon: "success"
                                 });
 
-                                CategoryTables.ajax.reload();
+                                datatables.ajax.reload();
                             },
                             error: function (err) {
                                 console.log('error')

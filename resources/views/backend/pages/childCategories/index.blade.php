@@ -14,7 +14,7 @@
     <div class="row">
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                <h4 class="mb-sm-0 font-size-18">Child Category</h4>
+                <h4 class="mb-sm-0 font-size-18">Child Categories List</h4>
 
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
@@ -32,15 +32,15 @@
         <div class="card-header">
             <div class="d-flex justify-content-between align-items-center">
                 <h4 class="card-title">Child Categories List</h4>
-                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create_Modal">
-                    Create Child Category
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">
+                    Create New
                 </button>
             </div>
         </div>
 
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered mb-0" id="childCategoryTable">
+                <table class="table table-bordered mb-0" id="datatables">
                     <thead class="bg-primary text-white">
                     <tr>
                         <th>#SL.</th>
@@ -61,12 +61,12 @@
         </div>
 
         <!-- Create Modal -->
-        <div id="create_Modal" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" data-bs-scroll="true"
+        <div id="createModal" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" data-bs-scroll="true"
              style="display: none;" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="myModalLabel">Add New Child-Category</h5>
+                        <h5 class="modal-title" id="myModalLabel">Create Child-Category</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
 
@@ -151,7 +151,7 @@
                     </div>
 
                     <div class="modal-body">
-                        <form id="EditChildCategory" enctype="multipart/form-data">
+                        <form id="EditForm" enctype="multipart/form-data">
                             @csrf
                             @method("PUT")
 
@@ -227,7 +227,7 @@
         $(document).ready(function () {
 
             // Show Data through Datatable
-            let childCategoryTable = $('#childCategoryTable').DataTable({
+            let datatables = $('#datatables').DataTable({
                 order: [
                     [0, 'desc']
                 ],
@@ -284,7 +284,7 @@
                         status: status
                     },
                     success: function (res) {
-                        childCategoryTable.ajax.reload();
+                        datatables.ajax.reload();
 
                         if (res.status == 1) {
                             swal.fire(
@@ -325,9 +325,9 @@
                     success: function (res) {
                         console.log(res);
                         if (res.status === true) {
-                            $('#create_Modal').modal('hide');
+                            $('#createModal').modal('hide');
                             $('#createForm')[0].reset();
-                            childCategoryTable.ajax.reload();
+                            datatables.ajax.reload();
 
                             swal.fire({
                                 title: "Success",
@@ -377,7 +377,9 @@
                         $('#up_childCategory_name').val(data.name);
                         $('#imageShow').html('');
                         $('#imageShow').append(`
-                         <img src={{ asset("`+ data.img +`") }} alt="" style="width: 75px;">
+                          <a href={{ asset("`+ data.img +`") }} target="__blank">
+                            <img src={{ asset("`+ data.img +`") }} alt="" style="width: 75px;">  
+                          </a>
                     `);
                         $('#up_status').val(data.status);
 
@@ -392,7 +394,7 @@
 
 
             // Update Category
-            $("#EditChildCategory").submit(function (e) {
+            $("#EditForm").submit(function (e) {
                 e.preventDefault();
 
                 let id = $('#up_id').val();
@@ -416,8 +418,8 @@
                         })
 
                         $('#editModal').modal('hide');
-                        $('#EditChildCategory')[0].reset();
-                        childCategoryTable.ajax.reload();
+                        $('#EditForm')[0].reset();
+                        datatables.ajax.reload();
                     },
                     error: function (err) {
                         let error = err.responseJSON.errors;
@@ -466,7 +468,7 @@
                                         icon: "success"
                                     });
 
-                                    childCategoryTable.ajax.reload();
+                                    datatables.ajax.reload();
                                 },
                                 error: function (err) {
                                     console.log('error')

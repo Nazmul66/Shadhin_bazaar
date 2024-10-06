@@ -34,15 +34,16 @@ class ChildCategoryController extends Controller
     public function getData()
     {
         // get all data
-        $childCategories= ChildCategory::join('categories', 'child_categories.category_id', '=', 'categories.id')
-                ->join('subcategories', 'child_categories.subCategory_id', '=', 'subcategories.id')
-                ->select('categories.category_name', 'subcategories.subcategory_name', 'child_categories.name', 'child_categories.*')
-                ->get();
+        $childCategories= ChildCategory::join('categories', 'child_categories.category_id', '=', 'categories.id')->join('subcategories', 'child_categories.subCategory_id', '=', 'subcategories.id')
+            ->select('categories.category_name', 'subcategories.subcategory_name', 'child_categories.name', 'child_categories.*')
+            ->get();
 
         return DataTables::of($childCategories)
 
         ->addColumn('childCategoryImg', function ($childCategory) {
-            return '<img src="'.asset( $childCategory->img ).'" width="50px" height="50px">';
+            return '<a href="'.asset( $childCategory->img ).'" target="__blank">
+                <img src="'.asset( $childCategory->img ).'" width="50px" height="50px">
+            </a>';
         })
 
         ->addColumn('status', function ($childCategory) {

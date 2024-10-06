@@ -19,7 +19,7 @@
     <div class="row">
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                <h4 class="mb-sm-0 font-size-18">SubCategory</h4>
+                <h4 class="mb-sm-0 font-size-18">SubCategories List </h4>
 
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
@@ -36,15 +36,15 @@
         <div class="card-header">
             <div class="d-flex justify-content-between align-items-center">
                 <h4 class="card-title">SubCategories List</h4>
-                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create_Modal">
-                    Create SubCategory
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">
+                    Create New
                 </button>
             </div>
         </div>
 
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered mb-0" id="subCategoryTable">
+                <table class="table table-bordered mb-0" id="datatables">
                     <thead class="bg-primary text-white">
                         <tr>
                             <th>#SL.</th>
@@ -64,12 +64,12 @@
         </div>
 
         <!-- Create Modal -->
-        <div id="create_Modal" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" data-bs-scroll="true"
+        <div id="createModal" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" data-bs-scroll="true"
              style="display: none;" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="myModalLabel">Add New SubCategory</h5>
+                        <h5 class="modal-title" id="myModalLabel">Create SubCategory</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
 
@@ -100,7 +100,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="subcategory_img" class="form-label">SubCategory Image <sup class="text-danger" style="font-size: 12px;">* resolution(100 x 100)</sup></label>
+                                <label for="subcategory_img" class="form-label">Image <sup class="text-danger" style="font-size: 12px;">* resolution(100 x 100)</sup></label>
                                 <input type="file" class="form-control" name="subcategory_img" id="subcategory_img">
 
                                 <span id="image_validate" class="text-danger mt-1"></span>
@@ -143,7 +143,7 @@
 
                     <div class="modal-body">
                         {{-- method="POST" action="{{ route('admin.category.store') }}" --}}
-                        <form id="EditSubCategory" enctype="multipart/form-data">
+                        <form id="EditForm" enctype="multipart/form-data">
                             @csrf
                             @method("PUT")
 
@@ -169,7 +169,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="subcategory_img" class="form-label">SubCategory Image <sup class="text-danger" style="font-size: 12px;">* resolution(100 x 100)</sup></label>
+                                <label for="subcategory_img" class="form-label">Image <sup class="text-danger" style="font-size: 12px;">* resolution(100 x 100)</sup></label>
                                 <input type="file" class="form-control" name="subcategory_img" id="subcategory_img">
 
                                 <div id="imageShow"></div>
@@ -190,9 +190,7 @@
                                         data-bs-dismiss="modal">Close
                                 </button>
 
-                                <button type="submit" id="btn-store" class="btn btn-primary waves-effect waves-light">
-                                    Save changes
-                                </button>
+                                <button type="submit" id="btn-store" class="btn btn-primary waves-effect waves-light"> Update</button>
                             </div>
                         </form>
                     </div>
@@ -213,7 +211,7 @@
         $(document).ready(function () {
 
             // Show Data through Datatable
-            let subCategoryTables = $('#subCategoryTable').DataTable({
+            let datatables = $('#datatables').DataTable({
                 order: [
                     [0, 'desc']
                 ],
@@ -268,7 +266,7 @@
                         status: status
                     },
                     success: function (res) {
-                        subCategoryTables.ajax.reload();
+                        datatables.ajax.reload();
 
                         if (res.status == 1) {
                             swal.fire(
@@ -309,9 +307,9 @@
                     success: function (res) {
                         console.log(res);
                         if (res.status === true) {
-                            $('#create_Modal').modal('hide');
+                            $('#createModal').modal('hide');
                             $('#createForm')[0].reset();
-                            subCategoryTables.ajax.reload();
+                            datatables.ajax.reload();
 
                             swal.fire({
                                 title: "Success",
@@ -360,8 +358,10 @@
                         $('#up_subcat_name').val(data.subcategory_name);
                         $('#imageShow').html('');
                         $('#imageShow').append(`
-                            <img src={{ asset("`+ data.subcategory_img +`") }} alt="" style="width: 75px;">
-                        `);
+                          <a href="{{ asset("`+ data.subcategory_img +`") }}" target="__blank">
+                            <img src={{ asset("`+ data.subcategory_img +`") }} alt="" style="width: 75px;">    
+                          </a>
+                       `);
                         $('#up_status').val(data.status);
 
                     },
@@ -374,7 +374,7 @@
 
 
             // Update Category
-            $("#EditSubCategory").submit(function (e) {
+            $("#EditForm").submit(function (e) {
                 e.preventDefault();
 
                 let id = $('#id').val();
@@ -398,8 +398,8 @@
                         })
 
                         $('#editModal').modal('hide');
-                        $('#EditSubCategory')[0].reset();
-                        subCategoryTables.ajax.reload();
+                        $('#EditForm')[0].reset();
+                        datatables.ajax.reload();
                     },
                     error: function (err) {
                         let error = err.responseJSON.errors;
@@ -448,7 +448,7 @@
                                         icon: "success"
                                     });
 
-                                    subCategoryTables.ajax.reload();
+                                    datatables.ajax.reload();
                                 },
                                 error: function (err) {
                                     console.log('error')

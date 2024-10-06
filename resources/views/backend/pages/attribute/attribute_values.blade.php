@@ -1,7 +1,7 @@
 @extends('backend.layout.master')
 
 @push('title')
-    Create Attribute Values
+    List Attribute Values
 @endpush
 
 @push('add-css')
@@ -14,7 +14,7 @@
     <div class="row">
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                <h4 class="mb-sm-0 font-size-18">Attribute Values</h4>
+                <h4 class="mb-sm-0 font-size-18">Attribute Values List</h4>
 
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
@@ -31,15 +31,15 @@
         <div class="card-header">
             <div class="d-flex justify-content-between align-items-center">
                 <h4 class="card-title">Attribute Values List</h4>
-                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create_Modal">
-                    Create Attribute Values
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">
+                    Create New
                 </button>
             </div>
         </div>
 
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered mb-0" id="mainTables">
+                <table class="table table-bordered mb-0" id="datatables">
                     <thead class="bg-primary text-white">
                         <tr>
                             <th>#SL.</th>
@@ -57,12 +57,12 @@
         </div>
 
         <!-- Create Modal -->
-        <div id="create_Modal" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" data-bs-scroll="true"
+        <div id="createModal" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" data-bs-scroll="true"
              style="display: none;" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="myModalLabel">Add New Attribute</h5>
+                        <h5 class="modal-title" id="myModalLabel">Create Attribute Values</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
 
@@ -71,8 +71,8 @@
                             @csrf
 
                             <div class="mb-3">
-                                <label for="name" class="form-label">Attribute  Name <span class="text-danger">*</span></label>
-                                <select class="form-control" name="name" id="name">
+                                <label for="name" class="form-label">Name <span class="text-danger">*</span></label>
+                                <select class="form-select" name="name" id="name">
                                     <option value="" selected disabled>Select</option>
 
                                     @foreach ($attrNames as $row)
@@ -84,7 +84,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="value" class="form-label">Attribute Value <span class="text-danger">*</span></label>
+                                <label for="value" class="form-label">Value <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="value" name="value" >
 
                                 <span id="value_validate" class="text-danger mt-1"></span>
@@ -110,7 +110,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="myModalLabel">Update Attribute</h5>
+                        <h5 class="modal-title" id="myModalLabel">Update Attribute Values</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
 
@@ -122,8 +122,8 @@
                             <input type="text" name="id" id="id" hidden>
 
                             <div class="mb-3">
-                                <label for="up_name" class="form-label">Attribute  Name <span class="text-danger">*</span></label>
-                                <select class="form-control" name="name" id="up_name">
+                                <label for="up_name" class="form-label">Name <span class="text-danger">*</span></label>
+                                <select class="form-select" name="name" id="up_name">
                                     <option value="" selected disabled>Select</option>
 
                                     @foreach ($attrNames as $row)
@@ -135,7 +135,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="up_value" class="form-label">Attribute Value <span class="text-danger">*</span></label>
+                                <label for="up_value" class="form-label">Value <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="up_value" name="value" >
 
                                 <span id="up_value_validate" class="text-danger mt-1"></span>
@@ -144,7 +144,7 @@
                             <div class="d-flex justify-content-end align-items-center">
                                 <button type="button" class="btn btn-secondary waves-effect me-3" data-bs-dismiss="modal">Close</button>
 
-                                <button type="submit" id="btn-store" class="btn btn-primary waves-effect waves-light"> Save changes </button>
+                                <button type="submit" id="btn-store" class="btn btn-primary waves-effect waves-light"> Update </button>
                             </div>
                         </form>
                     </div>
@@ -163,7 +163,7 @@
         $(document).ready(function () {
 
             // Show Data through Datatable
-            let mainTables = $('#mainTables').DataTable({
+            let datatables = $('#datatables').DataTable({
                 order: [
                     [0, 'desc']
                 ],
@@ -213,7 +213,7 @@
                         status: status
                     },
                     success: function (res) {
-                        mainTables.ajax.reload();
+                        datatables.ajax.reload();
 
                         if (res.status == 1) {
                             swal.fire(
@@ -255,9 +255,9 @@
                     success: function (res) {
                         console.log(res);
                         if (res.status === true) {
-                            $('#create_Modal').modal('hide');
+                            $('#createModal').modal('hide');
                             $('#createForm')[0].reset();
-                            mainTables.ajax.reload();
+                            datatables.ajax.reload();
 
                             swal.fire({
                                 title: "Success",
@@ -299,8 +299,8 @@
                         let data = res.success;
 
                         $('#id').val(data.id);
-                        $('#up_name').val(data.name);
-                        $('#up_value').val(data.value);
+                        $('#up_name').val(data.attribute_name_id);
+                        $('#up_value').val(data.attribute_value);
                     },
                     error: function (error) {
                         console.log('error');
@@ -336,12 +336,12 @@
 
                         $('#editModal').modal('hide');
                         $('#EditForm')[0].reset();
-                        mainTables.ajax.reload();
+                        datatables.ajax.reload();
                     },
                     error: function (err) {
                         let error = err.responseJSON.errors;
+                        console.log(error);
 
-                        $('#up_name_validate').empty().html(error.name);
                         $('#up_value_validate').empty().html(error.value);
 
                         swal.fire({
@@ -386,7 +386,7 @@
                                     icon: "success"
                                 });
 
-                                mainTables.ajax.reload();
+                                datatables.ajax.reload();
                             },
                             error: function (err) {
                                 console.log('error')

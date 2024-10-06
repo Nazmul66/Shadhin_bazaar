@@ -44,7 +44,9 @@ class ProductController extends Controller
 
         return DataTables::of($products)
             ->addColumn('product_img', function ($product) {
-                return '<img src="'.asset( $product->thumb_image ).'" width="100px" height="100px">';
+                return ' <a href="'.asset( $product->thumb_image ).'" target="__blank">
+                      <img src="'.asset( $product->thumb_image ).'" width="100px" height="100px">
+                </a>';
             })
             ->addColumn('categorized', function ($product) {
                 $subCat = $product->subCat_name ?? 'N/A';

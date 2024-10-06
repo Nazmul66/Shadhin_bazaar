@@ -33,7 +33,9 @@ class CategoryController extends Controller
 
         return DataTables::of($categories)
             ->addColumn('categoryImg', function ($category) {
-                return '<img src="'.asset( $category->category_img ).'" width="50px" height="50px">';
+                return '<a href="'.asset( $category->category_img ).'" target="__target">
+                     <img src="'.asset( $category->category_img ).'" width="50px" height="50px">
+                </a>';
             })
             ->addColumn('status', function ($category) {
                 if ($category->status == 1) {

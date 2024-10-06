@@ -1,5 +1,7 @@
 @extends('backend.layout.master')
 
+@section('edit_role', 'mm-active')
+
 @push('title')
     Update Role
 @endpush
@@ -18,7 +20,7 @@
 
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('dashboards') }}">Dashboard</a></li>
                         <li class="breadcrumb-item active">Role</li>
                     </ol>
                 </div>

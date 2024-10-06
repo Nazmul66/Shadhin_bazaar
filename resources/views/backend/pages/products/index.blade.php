@@ -34,7 +34,7 @@
         <div class="card-header">
             <div class="d-flex justify-content-between align-items-center">
                 <h4 class="card-title">Products List</h4>
-                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create_Modal">
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">
                     Create Product
                 </button>
             </div>
@@ -42,7 +42,7 @@
 
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered mb-0" id="productTables">
+                <table class="table table-bordered mb-0" id="datatables">
                     <thead class="bg-primary text-white">
                         <tr>
                             <th>#SL.</th>
@@ -62,7 +62,7 @@
         </div>
 
         <!-- Create Modal -->
-        <div id="create_Modal" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" data-bs-scroll="true"
+        <div id="createModal" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" data-bs-scroll="true"
              style="display: none;" aria-hidden="true">
             <div class="modal-dialog modal-xl">
                 <div class="modal-content">
@@ -270,7 +270,7 @@
                     </div>
 
                     <div class="modal-body">
-                        <form id="editForm" enctype="multipart/form-data">
+                        <form id="EditForm" enctype="multipart/form-data">
                             @csrf
                             @method("PUT")
 
@@ -494,7 +494,7 @@
 
 
             // Show Data through Datatable
-            let productTables = $('#productTables').DataTable({
+            let datatables = $('#datatables').DataTable({
                 order: [
                     [0, 'desc']
                 ],
@@ -552,7 +552,7 @@
                         status: status
                     },
                     success: function (res) {
-                        productTables.ajax.reload();
+                        datatables.ajax.reload();
 
                         if (res.status == 1) {
                             swal.fire(
@@ -593,9 +593,9 @@
                     success: function (res) {
                         console.log(res);
                         if (res.status === true) {
-                            $('#create_Modal').modal('hide');
+                            $('#createModal').modal('hide');
                             $('#createForm')[0].reset();
-                            productTables.ajax.reload();
+                            datatables.ajax.reload();
 
                             swal.fire({
                                 title: "Success",
@@ -675,7 +675,9 @@
                         // Set image
                         $('#imageShow').html('');
                         $('#imageShow').append(`
-                            <img src="{{ asset("`+ data.thumb_image +`") }}" alt="Product Image" style="width: 75px;">
+                         <a href="{{ asset("`+ data.thumb_image +`") }}" target="__blank">
+                             <img src="{{ asset("`+ data.thumb_image +`") }}" alt="Product Image" style="width: 75px;"> 
+                          </a>
                         `);
                     },
                     error: function (error) {
@@ -687,7 +689,7 @@
 
 
             // Update Category
-            $("#editForm").submit(function (e) {
+            $("#EditForm").submit(function (e) {
                 e.preventDefault();
 
                 let id = $('#id').val();
@@ -711,8 +713,8 @@
                         })
 
                         $('#editModal').modal('hide');
-                        $('#editForm')[0].reset();
-                        productTables.ajax.reload();
+                        $('#EditForm')[0].reset();
+                        datatables.ajax.reload();
                     },
                     error: function (err) {
                         let error = err.responseJSON.errors;
@@ -765,7 +767,7 @@
                                     icon: "success"
                                 });
 
-                                productTables.ajax.reload();
+                                datatables.ajax.reload();
                             },
                             error: function (err) {
                                 console.log('error')

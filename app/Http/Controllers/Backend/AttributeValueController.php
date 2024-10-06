@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\AttributeName;
 use App\Models\AttributeValue;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
 
 class AttributeValueController extends Controller
@@ -33,7 +34,7 @@ class AttributeValueController extends Controller
                 return '<span class="btn btn-info">'. $attrValue->attr_name .'</span>';
             })
             ->addColumn('value', function ($attrValue) {
-                return '<span class="btn btn-info">'. $attrValue->attribute_value .'</span>';
+                return '<span class="btn btn-success">'. $attrValue->attribute_value .'</span>';
             })
             ->addColumn('status', function ($attrName) {
                 if ($attrName->status == 1) {
@@ -91,23 +92,24 @@ class AttributeValueController extends Controller
                 'name' => ['required'],
             ],
             [
+                'name.required' => 'The field is required',
                 'value.required' => 'Please fill up the value',
                 'value.max' => 'Character might be 255 word',
                 'value.unique' => 'Character might be unique',
-                'name.required' => 'The field is required',
             ]
         );
 
         DB::beginTransaction();
         try {
 
-            $attributeName = new AttributeName();
+            $attributeValue = new AttributeValue();
 
-            $attributeName->name                   = $request->name;
-            $attributeName->status                 = 1;
+            $attributeValue->attribute_name_id      = $request->name;
+            $attributeValue->attribute_value	    = Str::title($request->value);
+            $attributeValue->status                 = 1;
 
-            // dd($category);
-            $attributeName->save();
+            // dd($attributeValue);
+            $attributeValue->save();
         }
         catch(\Exception $ex){
             DB::rollBack();
@@ -116,14 +118,14 @@ class AttributeValueController extends Controller
         }
 
         DB::commit();
-        return response()->json(['message'=> "Successfully Attribute Name Created!", 'status' => true]);
+        return response()->json(['message'=> "Successfully Attribute Value Created!", 'status' => true]);
     }
 
 
-    public function edit(AttributeName $attributeName)
+    public function edit(AttributeValue $attributeValue)
     {
-        // dd($attributeName);
-        return response()->json(['success' => $attributeName]);
+        // dd($attributeValue);
+        return response()->json(['success' => $attributeValue]);
     }
 
     /**
@@ -131,28 +133,29 @@ class AttributeValueController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $attributeName  = AttributeName::find($id);
+        $attributeValue  = AttributeValue::find($id);
 
         // dd($attributeName);
 
         $request->validate(
             [
-                'name' => ['required', 'max:255', 'unique:attribute_names,name,'. $attributeName->id ],
+                'value' => ['required', 'max:255', 'unique:attribute_names,name,'. $attributeValue->id ],
             ],
             [
-                'name.required' => 'Please fill up the name',
-                'name.max' => 'Character might be 255 words',
-                'name.unique' => 'Character might be unique',
+                'value.required' => 'Please fill up the value',
+                'value.max' => 'Character might be 255 word',
+                'value.unique' => 'Character might be unique',
             ]
         );
 
         DB::beginTransaction();
         try {
             // Handle image with ImageUploadTraits function
-            $attributeName->name                   = $request->name;
-            $attributeName->status                 = 1;
+            $attributeValue->attribute_name_id      = $request->name;
+            $attributeValue->attribute_value	    = Str::title($request->value);
+            $attributeValue->status                 = 1;
 
-            $attributeName->save();
+            $attributeValue->save();
         }
         catch(\Exception $ex){
             DB::rollBack();
@@ -167,11 +170,11 @@ class AttributeValueController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(AttributeName $attributeName)
+    public function destroy(AttributeValue $attributeValue)
     {
-        $attributeName->delete();
+        $attributeValue->delete();
 
-        return response()->json(['message' => 'Attribute Name has been deleted.'], 200);
+        return response()->json(['message' => 'Attribute Value has been deleted.'], 200);
     }
 
 }

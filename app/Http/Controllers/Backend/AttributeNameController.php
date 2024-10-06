@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\AttributeName;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
 
 class AttributeNameController extends Controller
@@ -93,7 +94,7 @@ class AttributeNameController extends Controller
 
             $attributeName = new AttributeName();
 
-            $attributeName->name                   = $request->name;
+            $attributeName->name                   = Str::title($request->name);
             $attributeName->status                 = 1;
 
             // dd($category);
@@ -139,7 +140,7 @@ class AttributeNameController extends Controller
         DB::beginTransaction();
         try {
             // Handle image with ImageUploadTraits function
-            $attributeName->name                   = $request->name;
+            $attributeName->name                   = Str::title($request->name);
             $attributeName->status                 = 1;
 
             $attributeName->save();
