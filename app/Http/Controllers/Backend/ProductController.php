@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\AttributeName;
+use App\Models\AttributeValue;
 use Illuminate\Http\Request;
 use App\Traits\ImageUploadTraits;
 use App\Models\Category;
@@ -10,6 +12,8 @@ use App\Models\Subcategory;
 use App\Models\ChildCategory;
 use App\Models\Product;
 use App\Models\Brand;
+use App\Models\ProductImage;
+use Attribute;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -317,7 +321,57 @@ class ProductController extends Controller
 
     public function product_variant($id)
     {
-        // dd($id);
-        return view('backend.pages.products.product_variant');
+
+        $size_value    = AttributeValue::where('attribute_name', "size")->get();
+        $productImages = ProductImage::where('product_id', $id)->get();
+
+        return view('backend.pages.products.product_variant', [
+            'id' => $id,
+            'size_value' => $size_value,
+            'productImages' => $productImages,
+        ]);
+    }
+    
+    
+    public function update_product_variant(Request $request, $id)
+    {
+
+        dd($request->all());
+
+        // Multiple images store
+        if($request->hasFile('images')) {
+            foreach($request->file('images') as $image) {
+
+                $productImages = new ProductImage();
+                $productImages->product_id = $id;
+    
+                // Generate unique image name
+                $imageName = $request->slug . rand(1, 99999999) . '.' . $image->getClientOriginalExtension();
+
+                $imagePath = 'public/backend/images/multiple-image/';
+                $image->move($imagePath, $imageName);
+    
+                $productImages->images   =  $imagePath . $imageName;
+
+                $productImages->save();
+            }
+       }
+
+       return redirect()->back();
+
+    }
+
+    public function delete_multiple_image($id)
+    {
+       $productImg = ProductImage::findOrFail($id);
+
+       if( !is_null( $productImg ) ){
+            if( file_exists( $productImg->images )){
+                unlink($productImg->images);
+            }
+            $productImg->delete();
+       }
+
+       return redirect()->back();
     }
 }

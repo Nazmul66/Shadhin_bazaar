@@ -1,7 +1,7 @@
 @extends('backend.layout.master')
 
 @push('title')
-    Create Product
+    List Product
 @endpush
 
 @push('add-css')
@@ -76,28 +76,26 @@
                             @csrf
 
                             <div class="row">
-                                <div class="col-md-4 mb-3">
+                                <div class="col-md-3 mb-3">
                                     <label for="thumb_image" class="form-label">Product Image <sup class="text-danger" style="font-size: 12px;">* resolution (200 x 320)</sup></label>
                                     <input type="file" class="form-control" name="thumb_image" id="thumb_image" >
 
                                     <span id="image_validate" class="text-danger mt-1"></span>
                                 </div>
 
-                                <div class="col-md-4 mb-3">
+                                <div class="col-md-3 mb-3">
                                     <label for="name" class="form-label">Product Name <span class="text-danger">*</span></label>
                                     <input class="form-control" id="name" type="text" name="name" placeholder="Write product name....">
 
                                     <span id="name_validate" class="text-danger mt-1"></span>
                                 </div>
 
-                                <div class="col-md-4 mb-3">
+                                <div class="col-md-3 mb-3">
                                     <label for="sku" class="form-label">Product Sku</label>
                                     <input class="form-control" id="sku" type="text" name="sku" placeholder="Write product sku....">
                                 </div>
-                            </div>
 
-                            <div class="row">
-                                <div class="col-md-4 mb-3">
+                                <div class="col-md-3 mb-3">
                                     <label class="form-label" for="category_id">Category <span class="text-danger">*</span></label>
                                     <select class="form-select " id="category_id" name="category_id">
                                         <option value="" disabled selected>Select</option>
@@ -110,8 +108,10 @@
 
                                     <span id="category_id_validate" class="text-danger mt-1"></span>
                                 </div>
+                            </div>
 
-                                <div class="col-md-4 mb-3">
+                            <div class="row">
+                                <div class="col-md-3 mb-3">
                                     <label class="form-label" for="subCategory_id">SubCategory</label>
                                     <select class="form-select" id="subCategory_id" name="subCategory_id">
                                         <option value="" disabled selected>Select</option>
@@ -122,7 +122,7 @@
                                     </select>
                                 </div>
 
-                                <div class="col-md-4 mb-3">
+                                <div class="col-md-3 mb-3">
                                     <label class="form-label" for="childCategory_id">ChildCategory</label>
                                     <select class="form-select" id="childCategory_id" name="childCategory_id">
                                         <option value="" disabled selected>Select</option>
@@ -132,10 +132,8 @@
                                         @endforeach
                                     </select>
                                 </div>
-                            </div>
 
-                            <div class="row">
-                                <div class="col-md-4 mb-3">
+                                <div class="col-md-3 mb-3">
                                     <label class="form-label" for="brand_id">Brand <span class="text-danger">*</span></label>
                                     <select class="form-select" id="brand_id" name="brand_id">
                                         <option value="" disabled selected>Select</option>
@@ -148,33 +146,34 @@
                                     <span id="brand_id_validate" class="text-danger mt-1"></span>
                                 </div>
 
-                                <div class="col-md-4 mb-3">
+                                <div class="col-md-3 mb-3">
                                     <label class="form-label" for="price">Price <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="price" type="number" name="price" placeholder="Write price....">
+                                    <input class="form-control" id="price" type="number" name="price" min="0" placeholder="Write price....">
 
                                     <span id="price_validate" class="text-danger mt-1"></span>
                                 </div>
 
-                                <div class="col-md-4 mb-3">
-                                    <label class="form-label" for="offer_price">Offer Price</label>
-                                    <input class="form-control" id="offer_price" type="number" name="offer_price" placeholder="Write offer_price....">
-                                </div>
                             </div>
 
                             <div class="row">
-                                <div class="col-md-4 mb-3">
+                                <div class="col-md-3 mb-3">
+                                    <label class="form-label" for="offer_price">Offer Price</label>
+                                    <input class="form-control" id="offer_price" type="number" name="offer_price" min="0"  placeholder="Write offer_price....">
+                                </div>
+
+                                <div class="col-md-3 mb-3">
                                     <label class="form-label" for="qty">Stock Quantity <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="qty" type="number" name="qty" placeholder="Product Quantity....">
+                                    <input class="form-control" min="0" id="qty" type="number" name="qty" placeholder="Product Quantity....">
 
                                     <span id="quantity_validate" class="text-danger mt-1"></span>
                                 </div>
 
-                                <div class="col-md-4 mb-3">
+                                <div class="col-md-3 mb-3">
                                     <label class="form-label" for="offer_start_date">Offer Start Date</label>
                                     <input class="form-control offer_start_date" type="date" id="offer_start_date" name="offer_start_date" placeholder="Select a date....">
                                 </div>
 
-                                <div class="col-md-4 mb-3">
+                                <div class="col-md-3 mb-3">
                                     <label class="form-label" for="offer_end_date">Offer End Date</label>
                                     <input class="form-control offer_end_date" type="date" id="offer_end_date" name="offer_end_date"  placeholder="Select a date....">
                                 </div>
@@ -630,7 +629,7 @@
             })
 
 
-            // Edit Category
+            // Edit 
             $(document).on("click", '#editButton', function (e) {
                 let id = $(this).attr('data-id');
                 // alert(id);
@@ -688,7 +687,7 @@
             })
 
 
-            // Update Category
+            // Update 
             $("#EditForm").submit(function (e) {
                 e.preventDefault();
 

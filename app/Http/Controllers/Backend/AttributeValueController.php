@@ -25,7 +25,7 @@ class AttributeValueController extends Controller
     {
         // get all data
         $attrValues = AttributeValue::
-                        leftJoin('attribute_names', 'attribute_names.id', 'attribute_values.attribute_name_id')
+                        leftJoin('attribute_names', 'attribute_names.name', 'attribute_values.attribute_name')
                         ->select('attribute_values.*', "attribute_names.name as attr_name")
                         ->get();
 
@@ -104,7 +104,7 @@ class AttributeValueController extends Controller
 
             $attributeValue = new AttributeValue();
 
-            $attributeValue->attribute_name_id      = $request->name;
+            $attributeValue->attribute_name         = $request->name;
             $attributeValue->attribute_value	    = Str::title($request->value);
             $attributeValue->status                 = 1;
 
@@ -151,7 +151,7 @@ class AttributeValueController extends Controller
         DB::beginTransaction();
         try {
             // Handle image with ImageUploadTraits function
-            $attributeValue->attribute_name_id      = $request->name;
+            $attributeValue->attribute_name         = $request->name;
             $attributeValue->attribute_value	    = Str::title($request->value);
             $attributeValue->status                 = 1;
 

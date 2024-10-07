@@ -76,7 +76,7 @@
                                     <option value="" selected disabled>Select</option>
 
                                     @foreach ($attrNames as $row)
-                                        <option value="{{ $row->id }}">{{ $row->name }}</option>
+                                        <option value="{{ $row->name }}">{{ $row->name }}</option>
                                     @endforeach
                                 </select>
 
@@ -127,7 +127,7 @@
                                     <option value="" selected disabled>Select</option>
 
                                     @foreach ($attrNames as $row)
-                                        <option value="{{ $row->id }}">{{ $row->name }}</option>
+                                        <option value="{{ $row->name }}">{{ $row->name }}</option>
                                     @endforeach
                                 </select>
 
@@ -299,7 +299,7 @@
                         let data = res.success;
 
                         $('#id').val(data.id);
-                        $('#up_name').val(data.attribute_name_id);
+                        $('#up_name').val(data.attribute_name);
                         $('#up_value').val(data.attribute_value);
                     },
                     error: function (error) {

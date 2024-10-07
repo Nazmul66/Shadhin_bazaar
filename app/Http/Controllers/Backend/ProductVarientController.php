@@ -4,8 +4,9 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\ProductImage;
 
-class ProductImageController extends Controller
+class ProductVarientController extends Controller
 {
     /**
      * Display a listing of the resource.

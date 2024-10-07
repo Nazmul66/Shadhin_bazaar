@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('attribute_values', function (Blueprint $table) {
             $table->id();
-            $table->integer('attribute_name_id');
+            $table->string('attribute_name');
             $table->string('attribute_value');
             $table->integer('status')->default(1)->comment("1=active, 2=inactive");
             $table->timestamps();

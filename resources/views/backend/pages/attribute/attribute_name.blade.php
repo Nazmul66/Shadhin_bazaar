@@ -71,7 +71,12 @@
 
                             <div class="mb-3">
                                 <label for="name" class="form-label">Name <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="name" name="name" >
+                                <select name="name" class="form-select" id="name">
+                                    <option value="" disabled selected>Select The Name</option>
+                                    <option value="Size">Size</option>
+                                    <option value="Colour">Colour</option>
+                                    <option value="Tag">Tag</option>
+                                </select>
 
                                 <span id="name_validate" class="text-danger mt-1"></span>
                             </div>
@@ -109,7 +114,12 @@
 
                             <div class="mb-3">
                                 <label for="up_name" class="form-label">Name <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="up_name" name="name" >
+                                <select name="name" class="form-select" id="name">
+                                    <option value="" disabled selected>Select The Name</option>
+                                    <option value="Size">Size</option>
+                                    <option value="Colour">Colour</option>
+                                    <option value="Tag">Tag</option>
+                                </select>
 
                                 <span id="up_name_validate" class="text-danger mt-1"></span>
                             </div>
