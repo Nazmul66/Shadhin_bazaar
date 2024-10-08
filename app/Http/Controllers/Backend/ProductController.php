@@ -12,7 +12,9 @@ use App\Models\Subcategory;
 use App\Models\ChildCategory;
 use App\Models\Product;
 use App\Models\Brand;
+use App\Models\ProductColor;
 use App\Models\ProductImage;
+use App\Models\ProductSize;
 use Attribute;
 use Exception;
 use Illuminate\Support\Facades\DB;
@@ -183,6 +185,7 @@ class ProductController extends Controller
             $product->long_description          = $request->long_description;
             $product->video_link                = $request->video_link;
             $product->sku                       = $request->sku;
+            $product->tags                      = $request->tags;
             $product->price                     = $request->price;
             $product->offer_price               = $request->offer_price;
             $product->offer_start_date          = $request->offer_start_date;
@@ -267,6 +270,7 @@ class ProductController extends Controller
             $product->long_description          = $request->long_description;
             $product->video_link                = $request->video_link;
             $product->sku                       = $request->sku;
+            $product->tags                      = $request->tags;
             $product->price                     = $request->price;
             $product->offer_price               = $request->offer_price;
             $product->offer_start_date          = $request->offer_start_date;
@@ -321,22 +325,27 @@ class ProductController extends Controller
 
     public function product_variant($id)
     {
-
-        $size_value    = AttributeValue::where('attribute_name', "size")->get();
-        $productImages = ProductImage::where('product_id', $id)->get();
+        // ProductColour
+        $size_value       = AttributeValue::where('attribute_name', "size")->get();
+        $color_value      = AttributeValue::where('attribute_name', "colour")->get();
+        $productImages    = ProductImage::where('product_id', $id)->get();
+        $productSizes     = ProductSize::where('product_id', $id)->get();
+        $productColors    = ProductColor::where('product_id', $id)->get();
 
         return view('backend.pages.products.product_variant', [
             'id' => $id,
-            'size_value' => $size_value,
-            'productImages' => $productImages,
+            'size_value'     => $size_value,
+            'color_value'    => $color_value,
+            'productImages'  => $productImages,
+            'productSizes'   => $productSizes,
+            'productColors'  => $productColors,
         ]);
     }
     
     
     public function update_product_variant(Request $request, $id)
     {
-
-        dd($request->all());
+        // dd($request->all());
 
         // Multiple images store
         if($request->hasFile('images')) {
@@ -355,12 +364,52 @@ class ProductController extends Controller
 
                 $productImages->save();
             }
-       }
+        }
+
+
+        // Delete existing product size for the product ID
+        ProductSize::where('product_id', $id)->delete();
+
+        // Handle Product Sizes
+        if ($request->has('size_name') && $request->has('size_price')) {
+            foreach ($request->size_name as $index => $sizeName) {
+
+                if (!empty($sizeName)) {
+                    $productSize = new ProductSize(); // Assuming ProductSize model exists
+
+                    $productSize->product_id = $id;
+                    $productSize->size_name  = $sizeName;
+                    $productSize->size_price = $request->size_price[$index]; // Match price with size name
+                    $productSize->save();
+                }
+            }
+        }
+
+
+        // Delete existing product colors for the product ID
+        ProductColor::where('product_id', $id)->delete();  
+
+        // Handle Product Colors
+        if ($request->has('color_name')) {
+            foreach ($request->color_name as $row => $colorName) {
+
+                if (!empty($colorName)) {
+                    $productColor = new ProductColor(); // Assuming ProductColor model exists
+
+                    $productColor->product_id     = $id;
+                    $productColor->color_name     = $colorName;
+                    $productColor->color_price    = $request->color_price[$row];
+                    $productColor->save();
+                }
+            }
+        }
+
 
        return redirect()->back();
 
     }
 
+    // Delete Multiple Product images variants
     public function delete_multiple_image($id)
     {
        $productImg = ProductImage::findOrFail($id);
@@ -370,6 +419,28 @@ class ProductController extends Controller
                 unlink($productImg->images);
             }
             $productImg->delete();
+       }
+
+       return redirect()->back();
+    }
+
+    // Delete Multiple Product size variants
+    public function delete_product_size($id)
+    {
+       $productSize = ProductSize::findOrFail($id);
+       if( !is_null( $productSize ) ){
+            $productSize->delete();
+       }
+
+       return redirect()->back();
+    }
+
+    // Delete Multiple Product color variants
+    public function delete_product_color($id)
+    {
+       $productColor = ProductColor::findOrFail($id);
+       if( !is_null( $productColor ) ){
+            $productColor->delete();
        }
 
        return redirect()->back();

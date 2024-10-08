@@ -7,6 +7,7 @@
 @push('add-css')
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('public/backend/assets/libs/flatpickr/flatpickr.min.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
     <link rel="stylesheet" href="https://cdn.datatables.net/2.1.6/css/dataTables.dataTables.min.css">
 @endpush
 
@@ -200,6 +201,11 @@
                                 </div>
 
                                 <span id="long_validate" class="text-danger mt-1"></span>
+                            </div>
+
+                            <div class="col-md-12 mb-3">
+                                <label class="form-label" for="product_size"><strong>Multiple Products Tag</strong></label>
+                                <input type="text" class="product-tags" name="tags" />
                             </div>
 
                             <div class="row">
@@ -400,6 +406,11 @@
                                 </div>
                             </div>
 
+                            <div class="col-md-12 mb-3">
+                                <label class="form-label" for="up_tags"><strong>Multiple Products Tag</strong></label>
+                                <input type="text" class="up_product_tags" id="up_tags" name="tags" />
+                            </div>
+
                             <div class="row">
                                 <div class="col-md-4 mb-3">
                                     <label class="form-label" for="up_is_featured">Is Featured</label>
@@ -461,13 +472,30 @@
     {{-- data.setData(res.data.schedules_desc); --}}
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="https://cdn.ckeditor.com/ckeditor5/41.1.0/classic/ckeditor.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/choices.js@9.0.1/public/assets/scripts/choices.min.js"></script>
     <script src="{{ asset('public/backend/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
     <script src="https://cdn.datatables.net/2.1.6/js/dataTables.min.js"></script>
     <script src="{{ asset('public/backend/assets/js/all_plugins.js') }}"></script>
 
     <script>
 
-        $(document).ready(function () {
+     $(document).ready(function () {
+
+        // Choice.js plugin
+        const product_tags = new Choices('.product-tags',{
+            removeItems: true,
+            duplicateItemsAllowed: false,
+            removeItemButton: true,
+            delimiter: ',',
+        });
+
+        let tagChoices = new Choices('.up_product_tags',{
+            removeItems: true,
+            duplicateItemsAllowed: false,
+            removeItemButton: true,
+            delimiter: ',',
+        });
+
 
         // Ckeditor 5 plugin
         let jReq;
@@ -643,7 +671,7 @@
                     processData: false,  // Prevent jQuery from processing the data
                     contentType: false,  // Prevent jQuery from setting contentType
                     success: function (res) {
-                        // console.log(res.success);
+                        console.log(res.success);
                         let data = res.success;
 
                         $('#id').val(data.id);
@@ -665,6 +693,9 @@
                         if (longDescriptionEditor) {
                             longDescriptionEditor.setData(data.long_description); // Set long_description
                         }
+
+                        // Reinitialize Choices after setting the value
+                        tagChoices.setValue(data.tags.split(','));
 
                         $('#up_is_featured').val(data.is_featured);
                         $('#up_is_top').val(data.is_top);

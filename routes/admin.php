@@ -107,7 +107,10 @@ Route::middleware('setLanguage')->group(function(){
         Route::post('/change-product-status', [ProductController::class, 'changeProductStatus'])->name('admin.product.status');
         Route::get('/product/variant/{id}', [ProductController::class, 'product_variant'])->name('admin.product-variant');
         Route::put('/product/variant/{id}', [ProductController::class, 'update_product_variant'])->name('admin.product-variant.update');
+
         Route::get('/delete/images/{id}', [ProductController::class, 'delete_multiple_image'])->name('admin.multiple-image.delete');
+        Route::get('/delete/sizes/{id}', [ProductController::class, 'delete_product_size'])->name('admin.product-size.delete');
+        Route::get('/delete/colors/{id}', [ProductController::class, 'delete_product_color'])->name('admin.product-color.delete');
 
 
         //______ Coupon _____//
