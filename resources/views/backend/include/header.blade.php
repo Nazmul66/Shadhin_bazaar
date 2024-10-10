@@ -129,6 +129,14 @@
             </div>
 
             <div class="dropdown d-inline-block">
+                <a href="{{ route('cacheClear') }}">
+                    <button type="button" class="btn header-item">
+                        <i data-feather="refresh-ccw" class="icon-lg cache_rotate"></i>
+                    </button>
+                </a>
+            </div>
+
+            <div class="dropdown d-inline-block">
                 <button type="button" class="btn header-item noti-icon position-relative" id="page-header-notifications-dropdown"
                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i data-feather="bell" class="icon-lg"></i>
@@ -218,10 +226,11 @@
             </div>
 
             <div class="dropdown d-inline-block">
-                <button type="button" class="btn header-item right-bar-toggle me-2">
+                <button type="button" class="btn header-item right-bar-toggle ">
                     <i data-feather="settings" class="icon-lg"></i>
                 </button>
             </div>
+        
 
             <div class="dropdown d-inline-block">
                 <button type="button" class="btn header-item bg-soft-light border-start border-end" id="page-header-user-dropdown"

@@ -6,12 +6,31 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Validator;
+use Illuminate\Support\Facades\Artisan;
 
 class AdminController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function cacheClear()
+    {
+        Artisan::call('config:cache');
+        Artisan::call('config:clear');
+        Artisan::call('route:cache');
+        Artisan::call('route:clear');
+        Artisan::call('view:cache');
+        Artisan::call('view:clear');
+        Artisan::call('cache:clear');
+        Artisan::call('optimize');
+        Artisan::call('optimize:clear');
+    
+        $notifications = [
+            'alert-type' => 'success',
+            'message' => "Cache Cleared Successfully",
+        ];
+    
+        return redirect()->back()->with($notifications);
+    }
+
+
     public function dashboards()
     {
         return view('backend.pages.dashboard');

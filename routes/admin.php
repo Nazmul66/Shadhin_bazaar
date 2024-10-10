@@ -40,6 +40,7 @@ Route::post('/set-language', function (Request $request) {
 
 Route::middleware('setLanguage')->group(function(){
 
+    Route::get('/cc', [AdminController::class, "cacheClear"])->name('cacheClear');
     Route::get('/admin/logout', [AdminController::class, "logout"]);
     Route::match(["get", "post"], '/admin/login', [AdminController::class, "login"]); // login page
 
@@ -113,7 +114,7 @@ Route::middleware('setLanguage')->group(function(){
 
         //______ Flash Sale _____//
         Route::put('/flash-sale', [FlashSaleController::class, 'flashSale_index'])->name('flashSale.index');
-        Route::resource('/flash-sale-item', FlashSaleController::class)->names('flashSale.item');
+        Route::resource('/flash-sale-item', FlashSaleController::class)->names('flashSale.item')->except(['show']);
         Route::get('/flash-sale-item-data', [FlashSaleController::class, 'getData'])->name('flashSale.item-data');
         Route::post('/flash-sale-item/status', [FlashSaleController::class, 'changeFlashSaleItemStatus'])->name('flashSale.item.status');
         Route::post('/flash-sale-item/show-home', [FlashSaleController::class, 'showFlashSaleItem'])->name('flashSale.item.show');
