@@ -196,7 +196,7 @@ class CategoryController extends Controller
         return response()->json(['message' => 'Category has been deleted.'], 200);
     }
 
-    public function getSubCategories(Request $request, Category $category)
+    public function getSubCategories(Category $category)
     {
         $subcats= SubCategory::where('category_id', $category->id)->get();
 

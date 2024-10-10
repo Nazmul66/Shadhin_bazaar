@@ -404,8 +404,12 @@ class ProductController extends Controller
             }
         }
 
+        $notification = [
+            'alert-type' => 'success', 
+            'message' => "Product variation successfully updated", 
+        ];
 
-       return redirect()->back();
+       return redirect()->back()->with($notification);
 
     }
 
@@ -421,7 +425,12 @@ class ProductController extends Controller
             $productImg->delete();
        }
 
-       return redirect()->back();
+       $notification = [
+         'alert-type' => 'success', 
+         'message' => "Delete Product Images"
+      ];
+
+       return redirect()->back()->with($notification);
     }
 
     // Delete Multiple Product size variants
@@ -432,7 +441,12 @@ class ProductController extends Controller
             $productSize->delete();
        }
 
-       return redirect()->back();
+       $notification = [
+        'alert-type' => 'success', 
+        'message' => "Delete Product Size", 
+      ];
+
+       return redirect()->back()->with($notification);
     }
 
     // Delete Multiple Product color variants
@@ -443,6 +457,11 @@ class ProductController extends Controller
             $productColor->delete();
        }
 
-       return redirect()->back();
+       $notification = [
+        'alert-type' => 'success', 
+        'message' => "Delete Product Colors", 
+      ];
+
+       return redirect()->back()->with($notification);
     }
 }

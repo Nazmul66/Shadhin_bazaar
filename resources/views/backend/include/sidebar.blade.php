@@ -10,7 +10,7 @@
 
                 {{-- Dashboard --}}
                 <li >
-                    <a href="{{ route('dashboards') }}">
+                    <a href="{{ route('admin.dashboards') }}">
                         <i class='bx bx-home'></i>
                         <span>{{ __('message.dashboard') }}</span>
                     </a>
@@ -61,6 +61,23 @@
                         </li>
                     </ul>
                 </li>
+
+
+                {{-- E-commerce --}}
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow">
+                        <i class='bx bx-grid-alt'></i>
+                        <span >E-commerce</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li>
+                            <a href="{{ route('admin.flashSale.item.index') }}">
+                                <span >Flash Sale Product</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                
 
                 {{-- All Products List --}}
                 <li >
