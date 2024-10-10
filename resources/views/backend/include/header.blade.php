@@ -226,9 +226,11 @@
             </div>
 
             <div class="dropdown d-inline-block">
-                <button type="button" class="btn header-item right-bar-toggle ">
-                    <i data-feather="settings" class="icon-lg"></i>
-                </button>
+                <a href="{{ url('/') }}">
+                    <button type="button" class="btn header-item">
+                        <i data-feather="globe" class="icon-lg"></i>
+                    </button>
+                </a>
             </div>
         
 
