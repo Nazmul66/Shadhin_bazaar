@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Backend\PermissionController;
 use App\Http\Controllers\Backend\RoleController;
 use App\Http\Controllers\Backend\AttributeNameController;
+use App\Http\Controllers\Backend\SettingController;
 use App\Http\Controllers\Backend\AttributeValueController;
 use App\Http\Controllers\Backend\AdminRoleController;
 use App\Http\Controllers\Backend\AdminController;
@@ -130,6 +131,10 @@ Route::middleware('setLanguage')->group(function(){
         Route::resource('/reviews', ReviewController::class)->names('reviews');
         Route::get('/review-data', [ReviewController::class, 'getData'])->name('review-data');
         Route::post('/change-review-status', [ReviewController::class, 'changeReviewStatus'])->name('review.status');
+
+
+        //______ Settings _____//
+        Route::resource('/settings', SettingController::class)->names('settings');
     });
 
 });

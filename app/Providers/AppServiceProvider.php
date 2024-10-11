@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Setting;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -17,8 +19,11 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      */
-    public function boot(): void
+    public function boot(): void   // It can change whole config file s
     {
-        //
+        $generalSetting = Setting::first();
+        if( !empty($generalSetting->timeZone) ){
+            Config::set('app.timezone', $generalSetting->timeZone);
+        }
     }
 }

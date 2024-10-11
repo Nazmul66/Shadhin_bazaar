@@ -45,7 +45,7 @@
                 {{-- Attribute --}}
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
-                        <i class='bx bx-grid-alt'></i>
+                        <i class='bx bx-message-square-dots'></i>
                         <span >Attribute</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -66,7 +66,7 @@
                 {{-- E-commerce --}}
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
-                        <i class='bx bx-grid-alt'></i>
+                        <i class='bx bx-cart'></i>
                         <span >E-commerce</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -142,6 +142,15 @@
                             </a>
                         </li>
                     </ul>
+                </li>
+
+
+                {{-- Setting Website --}}
+                <li>
+                    <a href="{{ route('admin.settings.index') }}" >
+                        <i class='bx bx-cog'></i>
+                        <span >Settings</span>
+                    </a>
                 </li>
             </ul>
         </div>
