@@ -82,17 +82,17 @@ class SettingController extends Controller
 
 
         // Handle image with ImageUploadTraits function
-        $uploadImage                   = $this->imageUpload($request, 'logo', 'setting');
+        $uploadImage                   = $this->imageUpload($request, 'logo', 'settings');
         $setting->logo                 =  $uploadImage;
 
 
         // Handle image with ImageUploadTraits function
-        $uploadImage                   = $this->imageUpload($request, 'footer_logo', 'setting');
+        $uploadImage                   = $this->imageUpload($request, 'footer_logo', 'settings');
         $setting->footer_logo          =  $uploadImage;
 
 
         // Handle image with ImageUploadTraits function
-        $uploadImage                   = $this->imageUpload($request, 'favicon', 'setting');
+        $uploadImage                   = $this->imageUpload($request, 'favicon', 'settings');
         $setting->favicon              =  $uploadImage;
 
         $setting->save();
@@ -175,17 +175,17 @@ class SettingController extends Controller
 
             
             // existing logo delete with ImageUploadTraits function
-            $uploadImages                  = $this->deleteImageAndUpload($request, 'logo', 'setting', $setting->logo );
+            $uploadImages                  = $this->deleteImageAndUpload($request, 'logo', 'settings', $setting->logo );
             $setting->logo                 =  $uploadImages;
 
 
              // existing footer_logo delete with ImageUploadTraits function
-            $uploadImages                  = $this->deleteImageAndUpload($request, 'footer_logo', 'setting', $setting->footer_logo );
+            $uploadImages                  = $this->deleteImageAndUpload($request, 'footer_logo', 'settings', $setting->footer_logo );
             $setting->footer_logo          =  $uploadImages;
     
     
             // existing favicon delete with ImageUploadTraits function
-            $uploadImages                  = $this->deleteImageAndUpload($request, 'favicon', 'setting', $setting->favicon );
+            $uploadImages                  = $this->deleteImageAndUpload($request, 'favicon', 'settings', $setting->favicon );
             $setting->favicon              =  $uploadImages;
 
 

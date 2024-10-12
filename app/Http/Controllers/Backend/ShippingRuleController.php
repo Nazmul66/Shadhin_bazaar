@@ -28,7 +28,7 @@ class ShippingRuleController extends Controller
                 return '<span class="badge bg-primary">'. $shippingRule->name .'</span>';
             })
             ->addColumn('type', function ($shippingRule) {
-                return '<h6 style="white-space: wrap;">Coupon Name: <span class="badge bg-success">'. $shippingRule->type .'</span></h6>';
+                return '<h6 style="white-space: wrap;"><span class="badge bg-success">'. $shippingRule->type .'</span></h6>';
             })
             ->addColumn('min_cost', function ($shippingRule) {
                 return '<h6 style="white-space: wrap;">Min Cost: <span class="badge bg-success">'. $shippingRule->min_cost .'</span></h6>';

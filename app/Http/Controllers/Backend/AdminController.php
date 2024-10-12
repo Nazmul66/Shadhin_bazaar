@@ -3,13 +3,20 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Validator;
 use Illuminate\Support\Facades\Artisan;
+use App\Traits\ImageUploadTraits;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
+
+    use ImageUploadTraits;
+
+
     public function cacheClear()
     {
         Artisan::call('config:cache');
@@ -29,7 +36,6 @@ class AdminController extends Controller
     
         return redirect()->back()->with($notifications);
     }
-
 
     public function dashboards()
     {
@@ -78,31 +84,80 @@ class AdminController extends Controller
     public function logout()
     {
         Auth::guard('admin')->logout();
-
         return redirect('/admin/login');
     }
 
-    /**
-     * Show the form for editing the specified resource.
+     /**
+     * Admin Profile update
      */
-    public function edit(string $id)
+    public function profileUpdate()
     {
-        //
+        $admin = Admin::where('id', Auth::guard('admin')->user()->id)->first();
+        return view('backend.pages.profile-update.index', compact('admin'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function changeProfile(Request $request)
     {
-        //
+        // dd($request->all());
+        $admin  =  Admin::where('id', Auth::guard('admin')->user()->id)->first();
+
+        $admin->name =  $request->name;
+
+        // Handle image with ImageUploadTraits function
+         if( $request->hasFile('image') ){
+
+            if( !empty($admin->image) && file_exists($admin->image)){
+                  unlink($admin->image);
+            }
+
+            $uploadImage           = $this->imageUpload($request, 'image', 'settings');
+            $admin->image          =  $uploadImage;
+        }
+
+        $admin->save();
+
+
+        // Password Update
+        if( Hash::check($request->current_password, Auth::guard('admin')->user()->password) ){
+
+            if( $request->new_password === $request->confirm_password ){
+                Admin::where('id', Auth::guard('admin')->user()->id)->update([
+                    'password' => bcrypt($request->new_password)
+                ]);
+
+                $notification = [
+                    'alert-type' => 'success', 
+                    'message' => "Profile updated successfully", 
+                ];
+        
+               return redirect()->route('admin.dashboards')->with($notification);
+           }
+
+           else{
+            $notification = [
+                'alert-type' => 'error', 
+                'message' => "Your New password & Confirm Password not matched", 
+            ];
+    
+           return redirect()->back()->with($notification);
+           }
+        }
+
+        else{
+            $notification = [
+                'alert-type' => 'error', 
+                'message' => "Your Current password is incorrect", 
+            ];
+    
+           return redirect()->back()->with($notification);
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function checkCurrentPassword(Request $request)
     {
-        //
+        // dd($request->all());
+        return response()->json([
+            'match' => Hash::check($request->current_password, Auth::guard('admin')->user()->password)
+        ]);
     }
 }

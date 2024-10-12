@@ -154,10 +154,22 @@
 
                 {{-- Setting Website --}}
                 <li>
-                    <a href="{{ route('admin.settings.index') }}" >
+                    <a href="javascript: void(0);" class="has-arrow">
                         <i class='bx bx-cog'></i>
                         <span >Settings</span>
                     </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li>
+                            <a href="{{ route('admin.settings.index') }}">
+                                <span >General Settings</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('admin.profile-update') }}">
+                                <span >Profile Update</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
             </ul>
         </div>

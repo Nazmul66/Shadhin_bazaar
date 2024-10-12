@@ -49,6 +49,10 @@ Route::middleware('setLanguage')->group(function(){
 
     Route::group(["as" => 'admin.',"prefix" => '/admin', 'middleware' => ['admin']], function () {
         Route::get('/dashboards', [AdminController::class, "dashboards"])->name('dashboards');
+        Route::get('/profile-update', [AdminController::class, "profileUpdate"])->name('profile-update');
+        Route::post('/profile-update', [AdminController::class, "changeProfile"])->name('change-profile');
+        Route::post('/current-password', [AdminController::class, "checkCurrentPassword"])->name('current-password');
+
 
 
         //______ Role & Permission _____//
