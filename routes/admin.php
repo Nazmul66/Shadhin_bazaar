@@ -16,6 +16,7 @@ use App\Http\Controllers\Backend\AttributeNameController;
 use App\Http\Controllers\Backend\SettingController;
 use App\Http\Controllers\Backend\AttributeValueController;
 use App\Http\Controllers\Backend\AdminRoleController;
+use App\Http\Controllers\Backend\ShippingRuleController;
 use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Backend\BrandsController;
 use App\Http\Controllers\Backend\CategoryController;
@@ -125,6 +126,12 @@ Route::middleware('setLanguage')->group(function(){
         Route::resource('/coupons', CouponController::class)->names('coupons');
         Route::get('/coupon-data', [CouponController::class, 'getData'])->name('coupon-data');
         Route::post('/change-coupon-status', [CouponController::class, 'changeCouponStatus'])->name('coupon.status');
+
+
+        //______ Shipping-Rule _____//
+        Route::resource('/shipping-rule', ShippingRuleController::class)->names('shipping-rule');
+        Route::get('/shipping-rule-data', [ShippingRuleController::class, 'getData'])->name('shipping-rule-data');
+        Route::post('/change-shipping-rule-status', [ShippingRuleController::class, 'changeShippingRuleStatus'])->name('shipping-rule.status');
 
 
         //______ Review _____//

@@ -2,14 +2,13 @@
 
 
 @push('title')
-    List Coupon
+    List Shipping Rules
 @endpush
 
 
 @push('add-css')
 
     <link rel="stylesheet" href="https://cdn.datatables.net/2.1.6/css/dataTables.dataTables.min.css">
-    <link rel="stylesheet" href="{{ asset('public/backend/assets/libs/flatpickr/flatpickr.min.css') }}">
 
 @endpush
 
@@ -20,12 +19,12 @@
     <div class="row">
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                <h4 class="mb-sm-0 font-size-18">Coupon List</h4>
+                <h4 class="mb-sm-0 font-size-18">Shipping Rules List</h4>
 
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="{{ route('admin.dashboards') }}">Dashboard</a></li>
-                        <li class="breadcrumb-item active">Coupon</li>
+                        <li class="breadcrumb-item active">Shipping Rules</li>
                     </ol>
                 </div>
             </div>
@@ -38,7 +37,7 @@
 
         <div class="card-header">
             <div class="d-flex justify-content-between align-items-center">
-                <h4 class="card-title">Coupons List</h4>
+                <h4 class="card-title">Shipping Rules List</h4>
                 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create_Modal">
                     Create New
                 </button>
@@ -52,12 +51,10 @@
                     <thead class="bg-primary text-white">
                     <tr>
                         <th>#SL.</th>
-                        <th>Info</th>
-                        <th>Discount Type</th>
-                        <th>Discount</th>
-                        <th>End Date</th>
-                        <th>Start Date</th>
-                        <th>Used</th>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Min Cost</th>
+                        <th>Cost</th>
                         <th>Status</th>
                         <th>Action</th>
                     </tr>
@@ -76,7 +73,7 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="myModalLabel">Create Coupon</h5>
+                        <h5 class="modal-title" id="myModalLabel">Create Shipping Rules</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
 
@@ -86,66 +83,37 @@
 
                             <div class="row">
                                 <div class="col mb-3">
-                                    <label class="form-label" for="name">Coupon Name</label>
+                                    <label class="form-label" for="name">Name</label>
                                     <input class="form-control"  value="{{ old('name') }}" id="name" type="text" name="name">
     
                                     <span id="name_validate" class="text-danger mt-1"></span>
                                 </div>
     
                                 <div class="col mb-3">
-                                    <label class="form-label" for="code">Coupon Code</label>
-                                    <input class="form-control"  value="{{ old('code') }}" id="code" type="text" name="code" >
-    
-                                    <span id="code_validate" class="text-danger mt-1"></span>
-                                </div>
-    
-                                <div class="col mb-3">
-                                    <label class="form-label" for="quantity">Quantity</label>
-                                    <input class="form-control"  value="{{ old('quantity') }}" id="quantity" min="0" type="number" name="quantity" >
-    
-                                    <span id="quantity_validate" class="text-danger mt-1"></span>
-                                </div>
-                            </div>
-
-
-                            <div class="row">
-                                <div class="col mb-3">
-                                    <label class="form-label" for="max_used">Max Used</label>
-                                    <input class="form-control" id="max_used" value="{{ old('max_used') }}" min="0" type="number" name="max_used" >
-    
-                                    <span id="max_used_validate" class="text-danger mt-1"></span>
-                                </div>
-
-                                <div class="col mb-3">
-                                    <label for="discount_type" for="discount_type" class="form-label">Discount Type</label>
-                                    <select class="form-select" name="discount_type" id="discount_type">
-                                        <option value="percent" selected>Percentage (%)</option>
-                                        <option value="amount">Amount {{ $settings->currency_symbol }}</option>
+                                    <label class="form-label" for="type">Type</label>
+                                    <select class="form-select" name="type" id="type">
+                                        <option value="flat_cost" selected>Flat Cost</option>
+                                        <option value="min_cost">Minimum Order Amount</option>
                                     </select>
-                                </div>
-
-                                <div class=" col mb-3">
-                                    <label for="discount" class="form-label">Discount</label>
-                                    <input type="number" class="form-control" value="{{ old('discount') }}" name="discount" id="discount" >
-
-                                    <span id="discount_validate" class="text-danger mt-1"></span>
+    
+                                    <span id="type_validate" class="text-danger mt-1"></span>
                                 </div>
                             </div>
 
 
                             <div class="row">
-                                <div class="col mb-3">
-                                    <label class="form-label" for="start_date">Offer Start Date</label>
-                                    <input class="form-control start_date"  value="{{ old('start_date') }}" type="date" id="start_date" name="start_date" placeholder="Select a date....">
-
-                                    <span id="start_date_validate" class="text-danger mt-1"></span>
+                                <div class="col mb-3 main_min_cost d-none">
+                                    <label class="form-label" for="min_cost">Min Cost</label>
+                                    <input class="form-control" value="{{ old('min_cost') }}" min="0" id="min_cost" type="number" name="min_cost">
+    
+                                    <span id="min_cost_validate" class="text-danger mt-1"></span>
                                 </div>
-
+    
                                 <div class="col mb-3">
-                                    <label class="form-label" for="end_date">Offer End Date</label>
-                                    <input class="form-control end_date" value="{{ old('end_date') }}" type="date" id="end_date" name="end_date"  placeholder="Select a date....">
-
-                                    <span id="end_date_validate" class="text-danger mt-1"></span>
+                                    <label class="form-label" for="cost">Cost</label>
+                                    <input class="form-control"  value="{{ old('cost') }}" min="0" id="cost" type="number" name="cost" >
+    
+                                    <span id="cost_validate" class="text-danger mt-1"></span>
                                 </div>
                             </div>
 
@@ -184,7 +152,7 @@
                     </div>
 
                     <div class="modal-body">
-                        <form id="EditCoupon" enctype="multipart/form-data">
+                        <form id="EditForm" enctype="multipart/form-data">
                             @csrf
                             @method("PUT")
 
@@ -192,66 +160,37 @@
 
                             <div class="row">
                                 <div class="col mb-3">
-                                    <label class="form-label" for="up_name">Coupon Name</label>
+                                    <label class="form-label" for="up_name">Name</label>
                                     <input class="form-control" id="up_name" type="text" name="name">
     
                                     <span id="up_name_validate" class="text-danger mt-1"></span>
                                 </div>
     
                                 <div class="col mb-3">
-                                    <label class="form-label" for="up_code">Coupon Code</label>
-                                    <input class="form-control" id="up_code" type="text" name="code" >
-    
-                                    <span id="up_code_validate" class="text-danger mt-1"></span>
-                                </div>
-    
-                                <div class="col mb-3">
-                                    <label class="form-label" for="up_quantity">Quantity</label>
-                                    <input class="form-control" id="up_quantity" min="0" type="number" name="quantity" >
-    
-                                    <span id="up_quantity_validate" class="text-danger mt-1"></span>
-                                </div>
-                            </div>
-
-
-                            <div class="row">
-                                <div class="col mb-3">
-                                    <label class="form-label" for="up_max_used">Max Used</label>
-                                    <input class="form-control" id="up_max_used" min="0" type="number" name="max_used" >
-    
-                                    <span id="up_max_used_validate" class="text-danger mt-1"></span>
-                                </div>
-
-                                <div class="col mb-3">
-                                    <label for="up_discount_type" class="form-label">Discount Type</label>
-                                    <select class="form-select" name="discount_type" id="up_discount_type">
-                                        <option value="percent" selected>Percentage (%)</option>
-                                        <option value="amount">Amount {{ $settings->currency_symbol }}</option>
+                                    <label class="form-label" for="up_type">Type</label>
+                                    <select class="form-select" name="type" id="up_type">
+                                        <option value="flat_cost" selected>Flat Cost</option>
+                                        <option value="min_cost">Minimum Order Amount</option>
                                     </select>
-                                </div>
-
-                                <div class=" col mb-3">
-                                    <label for="up_discount" class="form-label">Discount</label>
-                                    <input min="0" type="number" class="form-control" name="discount" id="up_discount" >
-
-                                    <span id="up_discount_validate" class="text-danger mt-1"></span>
+    
+                                    <span id="up_type_validate" class="text-danger mt-1"></span>
                                 </div>
                             </div>
 
 
                             <div class="row">
-                                <div class="col mb-3">
-                                    <label class="form-label" for="up_start_date">Offer Start Date</label>
-                                    <input class="form-control up_start_date" type="date" id="up_start_date" name="start_date" placeholder="Select a date....">
-
-                                    <span id="up_start_date_validate" class="text-danger mt-1"></span>
+                                <div class="col mb-3 up_main_min_cost d-none">
+                                    <label class="form-label" for="up_min_cost">Min Cost</label>
+                                    <input class="form-control" id="up_min_cost" min="0" type="number" name="min_cost">
+    
+                                    <span id="up_min_cost_validate" class="text-danger mt-1"></span>
                                 </div>
-
+    
                                 <div class="col mb-3">
-                                    <label class="form-label" for="up_end_date">Offer End Date</label>
-                                    <input class="form-control up_end_date" type="date" id="up_end_date" name="end_date"  placeholder="Select a date....">
-
-                                    <span id="up_end_date_validate" class="text-danger mt-1"></span>
+                                    <label class="form-label" for="up_cost">Cost</label>
+                                    <input class="form-control" id="up_cost" min="0" type="number" name="cost" >
+    
+                                    <span id="up_cost_validate" class="text-danger mt-1"></span>
                                 </div>
                             </div>
 
@@ -284,28 +223,34 @@
 @push('add-script')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.datatables.net/2.1.6/js/dataTables.min.js"></script>
-    <script src="{{ asset('public/backend/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
 
     <script>
 
-        // Flatpicker Plugin
-        $(".start_date").flatpickr({
-            minDate: "today"
-        });
-
-        $(".end_date").flatpickr({
-            minDate: "today",
-        });
-
-        $(".up_start_date").flatpickr({
-            // minDate: "today"
-        });
-
-        $(".up_end_date").flatpickr({
-            // minDate: "today",
-        });
-
         $(document).ready(function () {
+
+            $('#type').change(function(e){
+                var val = $(this).val();
+
+                if (val !== "min_cost") {
+                // Hide if not 'min_cost'
+                    $('.main_min_cost').addClass('d-none').removeClass('d-block');
+                } else {
+                    // Show if it is 'min_cost'
+                    $('.main_min_cost').removeClass('d-none').addClass('d-block');
+                }
+            })
+
+            $('#up_type').change(function(e){
+                var val = $(this).val();
+                
+                if (val !== "min_cost") {
+                // Hide if not 'min_cost'
+                    $('.up_main_min_cost').addClass('d-none').removeClass('d-block');
+                } else {
+                    // Show if it is 'min_cost'
+                    $('.up_main_min_cost').removeClass('d-none').addClass('d-block');
+                }
+            })
 
             // Show Data through Datatable
             let dataTabless = $('#dataTables').DataTable({
@@ -315,7 +260,7 @@
                 processing: true,
                 serverSide: true,
 
-                ajax: "{{ route('admin.coupon-data') }}",
+                ajax: "{{ route('admin.shipping-rule-data') }}",
                 // pageLength: 30,
 
                 columns: [
@@ -323,22 +268,16 @@
                         data: 'id',
                     },
                     {
-                        data: 'info',
+                        data: 'name',
                     },
                     {
-                        data: 'discount_type',
+                        data: 'type',
                     },
                     {
-                        data: 'discount',
+                        data: 'min_cost',
                     },
                     {
-                        data: 'start_date',
-                    },
-                    {
-                        data: 'end_date',
-                    },
-                    {
-                        data: 'used',
+                        data: 'cost',
                     },
                     {
                         data: 'status',
@@ -363,7 +302,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "{{ route('admin.coupon.status') }}",
+                    url: "{{ route('admin.shipping-rule.status') }}",
                     data: {
                         // '_token': token,
                         id: id,
@@ -405,7 +344,7 @@
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
-                    url: "{{ route('admin.coupons.store') }}",
+                    url: "{{ route('admin.shipping-rule.store') }}",
                     data: formData,
                     processData: false,  // Prevent jQuery from processing the data
                     contentType: false,  // Prevent jQuery from setting contentType
@@ -427,12 +366,8 @@
                         let error = err.responseJSON.errors;
 
                         $('#name_validate').empty().html(error.name);
-                        $('#code_validate').empty().html(error.code);
-                        $('#quantity_validate').empty().html(error.quantity);
-                        $('#max_used_validate').empty().html(error.max_used);
-                        $('#discount_validate').empty().html(error.discount);
-                        $('#start_date_validate').empty().html(error.start_date);
-                        $('#end_date_validate').empty().html(error.end_date);
+                        $('#type_validate').empty().html(error.type);
+                        $('#cost_validate').empty().html(error.cost);
 
                         swal.fire({
                             title: "Failed",
@@ -454,7 +389,7 @@
                     // headers: {
                     //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     // },
-                    url: "{{ url('admin/coupons/') }}/" + id + "/edit",
+                    url: "{{ url('admin/shipping-rule/') }}/" + id + "/edit",
                     processData: false,  // Prevent jQuery from processing the data
                     contentType: false,  // Prevent jQuery from setting contentType
                     success: function (res) {
@@ -463,13 +398,9 @@
                         
                         $('#id').val(data.id);
                         $('#up_name').val(data.name);
-                        $('#up_code').val(data.code);
-                        $('#up_quantity').val(data.quantity);
-                        $('#up_max_used').val(data.max_used);
-                        $('#up_discount_type').val(data.discount_type);
-                        $('#up_discount').val(data.discount);
-                        $('#up_start_date').val(data.start_date);
-                        $('#up_end_date').val(data.end_date);
+                        $('#up_type').val(data.type);
+                        $('#up_min_cost').val(data.min_cost);
+                        $('#up_cost').val(data.cost);
                         $('#up_status').val(data.status);
 
                     },
@@ -482,7 +413,7 @@
 
 
             // Update 
-            $("#EditCoupon").submit(function (e) {
+            $("#EditForm").submit(function (e) {
                 e.preventDefault();
 
                 let id = $('#id').val();
@@ -493,7 +424,7 @@
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
-                    url: "{{ url('admin/coupons') }}/" + id,
+                    url: "{{ url('admin/shipping-rule') }}/" + id,
                     data: formData,
                     processData: false,  // Prevent jQuery from processing the data
                     contentType: false,  // Prevent jQuery from setting contentType
@@ -501,22 +432,20 @@
 
                         swal.fire({
                             title: "Success",
-                            text: "Coupon Edited",
+                            text: "Shipping Rule Edited",
                             icon: "success"
                         })
 
                         $('#editModal').modal('hide');
-                        $('#EditCoupon')[0].reset();
+                        $('#EditForm')[0].reset();
                         dataTabless.ajax.reload();
                     },
                     error: function (err) {
                         let error = err.responseJSON.errors;
 
                         $('#up_name_validate').empty().html(error.name);
-                        $('#up_code_validate').empty().html(error.code);
-                        $('#up_quantity_validate').empty().html(error.quantity);
-                        $('#up_max_used_validate').empty().html(error.max_used);
-                        $('#up_discount_validate').empty().html(error.discount);
+                        $('#up_type_validate').empty().html(error.type);
+                        $('#up_cost_validate').empty().html(error.cost);
 
                         swal.fire({
                             title: "Failed",
@@ -547,7 +476,7 @@
                             $.ajax({
                                 type: 'DELETE',
 
-                                url: "{{ url('admin/coupons/') }}/" + id,
+                                url: "{{ url('admin/shipping-rule/') }}/" + id,
                                 data: {
                                     headers: {
                                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
