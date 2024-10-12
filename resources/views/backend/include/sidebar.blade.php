@@ -75,6 +75,11 @@
                                 <span >Flash Sale Product</span>
                             </a>
                         </li>
+                        <li >
+                            <a href="{{ route('admin.coupons.index') }}">
+                                <span >Coupons</span>
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 
@@ -116,11 +121,6 @@
                             </a>
                         </li>
 
-                        <li >
-                            <a href="{{ route('admin.coupons.index') }}">
-                                <span >Coupons</span>
-                            </a>
-                        </li>
                         <li >
                             <a href="{{ route('admin.reviews.index') }}">
                                 <span >Reviews</span>

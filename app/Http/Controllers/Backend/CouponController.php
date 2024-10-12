@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Coupon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
 
@@ -18,21 +19,46 @@ class CouponController extends Controller
         return view('backend.pages.coupon.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
     public function getData()
     {
         $coupons= Coupon::all();
         
         return DataTables::of($coupons)
+            ->addColumn('info', function ($coupon) {
+                $name = $coupon->name ?? 'N/A';
+                $code = $coupon->code ?? 'N/A';
+                $quantity = $coupon->quantity ?? 'N/A';
+
+                return '<div class="">
+                       <h6 style="white-space: wrap;">Coupon Name: <span class="badge bg-success">'. $name .'</span></h6> 
+                       <h6 style="white-space: wrap;">Coupon Code : <span class="badge bg-success">'. $code .'</span></h6>
+                       <h6 style="white-space: wrap;">Quantity : <span class="badge bg-success">'. $quantity .'</span></h6>
+                </div>';
+            })
             ->addColumn('discount', function ($coupon) {
-                    return '<span class="badge bg-primary">'. $coupon->discount .'%</span>';
+                if( $coupon->discount_type === 'percent' ){
+                    return '<span class="badge bg-primary">'. $coupon->discount . '%' .'</span>';
+                }
+                else if ( $coupon->discount_type === 'amount' ){
+                    return '<span class="badge bg-info">'. $coupon->discount  .'</span>';
+                }
+            })
+            ->addColumn('discount_type', function ($coupon) {
+                return '<span class="badge bg-primary">'. $coupon->discount_type .'</span>';
+            })
+            ->addColumn('start_date', function ($coupon) {
+                return '<span class="text-secondary">'. date('Y-m-d', strtotime($coupon->start_date)) .'</span>';
+            })
+            ->addColumn('end_date', function ($coupon) {
+                return '<span class="text-secondary">'. date('Y-m-d', strtotime($coupon->end_date)) .'</span>';
+            })
+            ->addColumn('used', function ($coupon) {
+                $max_used = $coupon->max_used ?? 'N/A';
+
+                return '<div class="">
+                       <h6 style="white-space: wrap;">Max Used : <span class="badge bg-success">'. $max_used .'</span></h6> 
+                       <h6 style="white-space: wrap;">Total Used : <span class="badge bg-success">'. $coupon->total_used .'</span></h6>
+                </div>';
             })
             ->addColumn('status', function ($coupon) {
                 if ($coupon->status == 1) {
@@ -55,7 +81,7 @@ class CouponController extends Controller
                 </div>';
             })
             
-            ->rawColumns(['discount','status','action'])
+            ->rawColumns(['info', 'discount_type', 'discount', 'start_date', 'end_date', 'used', 'status', 'action'])
             ->make(true);
     }
 
@@ -64,26 +90,52 @@ class CouponController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate(
+            [
+                'name' => ['required', 'unique:coupons,name', 'max:200'],
+                'code' => ['required', 'max:200'],
+                'quantity' => ['required', 'integer'],
+                'max_used' => ['required', 'integer'],
+                'discount' => ['required', 'integer'],
+                'start_date' => ['required'],
+                'end_date' => ['required'],
+            ],
+            [
+                'name.required' => 'Coupon Name is required',
+                'name.unique' => 'Character might be unique',
+                'code.required' => 'Coupon code is required',
+                'max_used.required' => 'Max Used is required',
+                'discount.required' => 'Discount is required',
+                'start_date.required' => 'Start Date is required',
+                'end_date.required' => 'End Date is required',
+            ]
+        );
+
         $coupon = new Coupon();
 
-        $coupon->code            = Str::lower($request->code);
-        $coupon->discount        = $request->discount;
-        $coupon->amount          = $request->amount;
-        $coupon->expire_date     = $request->expire_date;
-        $coupon->status          = $request->status;
-        
-        // dd($coupon);
-        $coupon->save();
-        
-        return response()->json(['message'=> "Successfully Coupon Created!", 'status' => true]);
-    }
+        DB::beginTransaction();
+        try {
+            $coupon->name            = $request->name;
+            $coupon->code            = Str::lower($request->code);
+            $coupon->quantity        = $request->quantity;
+            $coupon->max_used        = $request->max_used;
+            $coupon->discount_type   = $request->discount_type;
+            $coupon->discount        = $request->discount;
+            $coupon->start_date      = $request->start_date;
+            $coupon->end_date        = $request->end_date;
+            $coupon->status          = $request->status;
+            
+            // dd($coupon);
+            $coupon->save();
+        }
+        catch(\Exception $ex){
+            DB::rollBack();
+            throw $ex;
+            // dd($ex->getMessage());
+        }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
+        DB::commit();        
+        return response()->json(['message'=> "Successfully Coupon Created!", 'status' => true]);
     }
 
     public function changeCouponStatus(Request $request)
@@ -119,15 +171,48 @@ class CouponController extends Controller
      */
     public function update(Request $request, Coupon $coupon)
     {
-        $coupon->code            = Str::lower($request->code);
-        $coupon->discount        = $request->discount;
-        $coupon->amount          = $request->amount;
-        $coupon->expire_date     = $request->expire_date;
-        $coupon->status          = $request->status;
-        
-        $coupon->save();
 
-        return response()->json(['message'=> "success"],200);
+        $request->validate(
+            [
+                'name' => ['required', 'unique:coupons,name,'. $coupon->id, 'max:200'],
+                'code' => ['required', 'max:200'],
+                'quantity' => ['required', 'integer'],
+                'max_used' => ['required', 'integer'],
+                'discount' => ['required', 'integer'],
+            ],
+            [
+                'name.required' => 'Coupon Name is required',
+                'name.unique' => 'Character might be unique',
+                'code.required' => 'Coupon code is required',
+                'max_used.required' => 'Max Used is required',
+                'discount.required' => 'Discount is required',
+            ]
+        );
+    
+        DB::beginTransaction();
+        try {
+            $coupon->name            = $request->name;
+            $coupon->code            = Str::lower($request->code);
+            $coupon->quantity        = $request->quantity;
+            $coupon->max_used        = $request->max_used;
+            $coupon->discount_type   = $request->discount_type;
+            $coupon->discount        = $request->discount;
+            $coupon->start_date      = $request->start_date;
+            $coupon->end_date        = $request->end_date;
+            $coupon->status          = $request->status;
+            
+            $coupon->save();
+
+            return response()->json(['message'=> "success"],200);
+        }
+        catch(\Exception $ex){
+            DB::rollBack();
+            throw $ex;
+            // dd($ex->getMessage());
+        }
+
+        DB::commit();        
+        return response()->json(['message'=> "Successfully Coupon Updated!", 'status' => true]);
     }
 
     /**

@@ -19,11 +19,23 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      */
-    public function boot(): void   // It can change whole config file s
+    public function boot(): void   
     {
+        // It can change whole config files
         $generalSetting = Setting::first();
         if( !empty($generalSetting->timeZone) ){
             Config::set('app.timezone', $generalSetting->timeZone);
         }
+
+
+        view()->composer('*', function ($view)
+        {
+            $settings                = Setting::first();
+
+            $view->with([
+                'settings'               => $settings,
+            ]);
+    
+        });
     }
 }

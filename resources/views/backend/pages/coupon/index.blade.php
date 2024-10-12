@@ -1,5 +1,3 @@
-
-
 @extends('backend.layout.master')
 
 
@@ -10,9 +8,8 @@
 
 @push('add-css')
 
-    <link href="{{ asset('public/backend') }}/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css">
-
-    <link href="{{ asset('public/backend') }}/assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.6/css/dataTables.dataTables.min.css">
+    <link rel="stylesheet" href="{{ asset('public/backend/assets/libs/flatpickr/flatpickr.min.css') }}">
 
 @endpush
 
@@ -55,9 +52,12 @@
                     <thead class="bg-primary text-white">
                     <tr>
                         <th>#SL.</th>
-                        <th>Coupon Code</th>
-                        <th>Coupon Expire</th>
-                        <th>Coupon Discount</th>
+                        <th>Info</th>
+                        <th>Discount Type</th>
+                        <th>Discount</th>
+                        <th>End Date</th>
+                        <th>Start Date</th>
+                        <th>Used</th>
                         <th>Status</th>
                         <th>Action</th>
                     </tr>
@@ -73,38 +73,87 @@
         <!-- Create Modal -->
         <div id="create_Modal" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" data-bs-scroll="true"
              style="display: none;" aria-hidden="true">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="myModalLabel">Add New Coupon</h5>
+                        <h5 class="modal-title" id="myModalLabel">Create New</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
 
                     <div class="modal-body">
-                        {{-- method="POST" action="{{ route('admin.category.store') }}" --}}
                         <form id="createForm" enctype="multipart/form-data">
                             @csrf
 
-                            <div class="mb-3">
-                                <label class="form-label" id="code">Coupon Code</label>
-                                <input class="form-control" id="code" type="text" name="code" required>
+                            <div class="row">
+                                <div class="col mb-3">
+                                    <label class="form-label" id="name">Coupon Name</label>
+                                    <input class="form-control"  value="{{ old('name') }}" id="name" type="text" name="name">
+    
+                                    <span id="name_validate" class="text-danger mt-1"></span>
+                                </div>
+    
+                                <div class="col mb-3">
+                                    <label class="form-label" id="code">Coupon Code</label>
+                                    <input class="form-control"  value="{{ old('code') }}" id="code" type="text" name="code" >
+    
+                                    <span id="code_validate" class="text-danger mt-1"></span>
+                                </div>
+    
+                                <div class="col mb-3">
+                                    <label class="form-label" id="quantity">Quantity</label>
+                                    <input class="form-control"  value="{{ old('quantity') }}" id="quantity" type="number" name="quantity" >
+    
+                                    <span id="quantity_validate" class="text-danger mt-1"></span>
+                                </div>
                             </div>
 
-                            <div class="mb-3">
-                                <label class="form-label" id="discount">Coupon Discount</label>
-                                <input class="form-control" id="discount" type="text" name="discount" required>
+
+                            <div class="row">
+                                <div class="col mb-3">
+                                    <label class="form-label" id="max_used">Max Used</label>
+                                    <input class="form-control" id="max_used"  value="{{ old('max_used') }}" type="number" name="max_used" >
+    
+                                    <span id="max_used_validate" class="text-danger mt-1"></span>
+                                </div>
+
+                                <div class="col mb-3">
+                                    <label for="discount_type" class="form-label">Discount Type</label>
+                                    <select class="form-select" name="discount_type" id="discount_type">
+                                        <option value="percent" selected>Percentage (%)</option>
+                                        <option value="amount">Amount {{ $settings->currency_symbol }}</option>
+                                    </select>
+                                </div>
+
+                                <div class=" col mb-3">
+                                    <label for="discount" class="form-label">Discount</label>
+                                    <input type="number" class="form-control"  value="{{ old('discount') }}" name="discount" id="discount" >
+
+                                    <span id="discount_validate" class="text-danger mt-1"></span>
+                                </div>
                             </div>
 
-                            <div class="mb-3">
-                                <label for="expire_date" class="form-label">Expire Date</label>
-                                <input type="date" class="form-control" name="expire_date" id="expire_date" required>
+
+                            <div class="row">
+                                <div class="col mb-3">
+                                    <label class="form-label" for="start_date">Offer Start Date</label>
+                                    <input class="form-control start_date"  value="{{ old('start_date') }}" type="date" id="start_date" name="start_date" placeholder="Select a date....">
+
+                                    <span id="start_date_validate" class="text-danger mt-1"></span>
+                                </div>
+
+                                <div class="col mb-3">
+                                    <label class="form-label" for="end_date">Offer End Date</label>
+                                    <input class="form-control end_date"  value="{{ old('end_date') }}" type="date" id="end_date" name="end_date"  placeholder="Select a date....">
+
+                                    <span id="end_date_validate" class="text-danger mt-1"></span>
+                                </div>
                             </div>
+
 
                             <div class="mb-3">
                                 <label class="form-label">Status</label>
                                 <select class="form-select" name="status">
-                                    <option value="" disabled selected>Select</option>
-                                    <option value="1">Active</option>
+                                    <option value="1" selected>Active</option>
                                     <option value="0">Inactive</option>
                                 </select>
                             </div>
@@ -127,34 +176,83 @@
         <!-- Edit Modal -->
         <div id="editModal" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" data-bs-scroll="true"
              style="display: none;" aria-hidden="true">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="myModalLabel">Update SubCategory</h5>
+                        <h5 class="modal-title" id="myModalLabel">Update Coupon</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
 
                     <div class="modal-body">
-                        {{-- method="POST" action="{{ route('admin.category.store') }}" --}}
                         <form id="EditCoupon" enctype="multipart/form-data">
                             @csrf
                             @method("PUT")
 
                             <input type="text" name="id" id="id" hidden>
 
-                            <div class="mb-3">
-                                <label class="form-label" for="code">Coupon Code</label>
-                                <input class="form-control" id="up_code" type="text" name="code" required>
+                            <div class="row">
+                                <div class="col mb-3">
+                                    <label class="form-label" for="up_name">Coupon Name</label>
+                                    <input class="form-control" id="up_name" type="text" name="name">
+    
+                                    <span id="up_name_validate" class="text-danger mt-1"></span>
+                                </div>
+    
+                                <div class="col mb-3">
+                                    <label class="form-label" for="up_code">Coupon Code</label>
+                                    <input class="form-control" id="up_code" type="text" name="code" >
+    
+                                    <span id="up_code_validate" class="text-danger mt-1"></span>
+                                </div>
+    
+                                <div class="col mb-3">
+                                    <label class="form-label" for="up_quantity">Quantity</label>
+                                    <input class="form-control" id="up_quantity" type="number" name="quantity" >
+    
+                                    <span id="up_quantity_validate" class="text-danger mt-1"></span>
+                                </div>
                             </div>
 
-                            <div class="mb-3">
-                                <label class="form-label" for="discount">Coupon Discount</label>
-                                <input class="form-control" id="up_discount" type="text" name="discount" required>
+
+                            <div class="row">
+                                <div class="col mb-3">
+                                    <label class="form-label" for="up_max_used">Max Used</label>
+                                    <input class="form-control" id="up_max_used" type="number" name="max_used" >
+    
+                                    <span id="up_max_used_validate" class="text-danger mt-1"></span>
+                                </div>
+
+                                <div class="col mb-3">
+                                    <label for="up_discount_type" class="form-label">Discount Type</label>
+                                    <select class="form-select" name="discount_type" id="up_discount_type">
+                                        <option value="percent" selected>Percentage (%)</option>
+                                        <option value="amount">Amount {{ $settings->currency_symbol }}</option>
+                                    </select>
+                                </div>
+
+                                <div class=" col mb-3">
+                                    <label for="up_discount" class="form-label">Discount</label>
+                                    <input type="number" class="form-control" name="discount" id="up_discount" >
+
+                                    <span id="up_discount_validate" class="text-danger mt-1"></span>
+                                </div>
                             </div>
 
-                            <div class="mb-3">
-                                <label for="expire_date" class="form-label">Expire Date</label>
-                                <input type="date" class="form-control" name="expire_date" id="up_expire_date" required>
+
+                            <div class="row">
+                                <div class="col mb-3">
+                                    <label class="form-label" for="up_start_date">Offer Start Date</label>
+                                    <input class="form-control up_start_date" type="date" id="up_start_date" name="start_date" placeholder="Select a date....">
+
+                                    <span id="up_start_date_validate" class="text-danger mt-1"></span>
+                                </div>
+
+                                <div class="col mb-3">
+                                    <label class="form-label" for="up_end_date">Offer End Date</label>
+                                    <input class="form-control up_end_date" type="date" id="up_end_date" name="end_date"  placeholder="Select a date....">
+
+                                    <span id="up_end_date_validate" class="text-danger mt-1"></span>
+                                </div>
                             </div>
 
                             <div class="mb-3">
@@ -168,12 +266,9 @@
 
                             <div class="d-flex justify-content-end align-items-center">
                                 <button type="button" class="btn btn-secondary waves-effect me-3"
-                                        data-bs-dismiss="modal">Close
-                                </button>
+                                        data-bs-dismiss="modal">Close</button>
 
-                                <button type="submit" id="btn-store" class="btn btn-primary waves-effect waves-light">
-                                    Save changes
-                                </button>
+                                <button type="submit" id="btn-store" class="btn btn-primary waves-effect waves-light"> Save changes </button>
                             </div>
                         </form>
                     </div>
@@ -188,10 +283,27 @@
 
 @push('add-script')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="{{asset('public/backend')}}/assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
-    <script src="{{asset('public/backend')}}/assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/2.1.6/js/dataTables.min.js"></script>
+    <script src="{{ asset('public/backend/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
 
     <script>
+
+        // Flatpicker Plugin
+        $(".start_date").flatpickr({
+            minDate: "today"
+        });
+
+        $(".end_date").flatpickr({
+            minDate: "today",
+        });
+
+        $(".up_start_date").flatpickr({
+            minDate: "today"
+        });
+
+        $(".up_end_date").flatpickr({
+            minDate: "today",
+        });
 
         $(document).ready(function () {
 
@@ -211,13 +323,22 @@
                         data: 'id',
                     },
                     {
-                        data: 'code',
+                        data: 'info',
                     },
                     {
-                        data: 'expire_date',
+                        data: 'discount_type',
                     },
                     {
                         data: 'discount',
+                    },
+                    {
+                        data: 'start_date',
+                    },
+                    {
+                        data: 'end_date',
+                    },
+                    {
+                        data: 'used',
                     },
                     {
                         data: 'status',
@@ -273,7 +394,7 @@
             })
 
 
-            // Create Coupon
+            // Create 
             $('#createForm').submit(function (e) {
                 e.preventDefault();
 
@@ -303,7 +424,16 @@
                         }
                     },
                     error: function (err) {
-                        console.error('Error:', err);
+                        let error = err.responseJSON.errors;
+
+                        $('#name_validate').empty().html(error.name);
+                        $('#code_validate').empty().html(error.code);
+                        $('#quantity_validate').empty().html(error.quantity);
+                        $('#max_used_validate').empty().html(error.max_used);
+                        $('#discount_validate').empty().html(error.discount);
+                        $('#start_date_validate').empty().html(error.start_date);
+                        $('#end_date_validate').empty().html(error.end_date);
+
                         swal.fire({
                             title: "Failed",
                             text: "Something Went Wrong !",
@@ -314,7 +444,7 @@
             })
 
 
-            // Edit Category
+            // Edit 
             $(document).on("click", '#editButton', function (e) {
                 let id = $(this).attr('data-id');
                 // alert(id);
@@ -329,13 +459,17 @@
                     contentType: false,  // Prevent jQuery from setting contentType
                     success: function (res) {
                         let data = res.success;
-                        // console.log(res)
+                        console.log(res)
                         
                         $('#id').val(data.id);
+                        $('#up_name').val(data.name);
                         $('#up_code').val(data.code);
+                        $('#up_quantity').val(data.quantity);
+                        $('#up_max_used').val(data.max_used);
+                        $('#up_discount_type').val(data.discount_type);
                         $('#up_discount').val(data.discount);
-                        $('#up_amount').val(data.amount);
-                        $('#up_expire_date').val(data.expire_date);
+                        $('#up_start_date').val(data.start_date);
+                        $('#up_end_date').val(data.end_date);
                         $('#up_status').val(data.status);
 
                     },
@@ -347,7 +481,7 @@
             })
 
 
-            // Update Category
+            // Update 
             $("#EditCoupon").submit(function (e) {
                 e.preventDefault();
 
@@ -376,7 +510,14 @@
                         couponTables.ajax.reload();
                     },
                     error: function (err) {
-                        console.error('Error:', err);
+                        let error = err.responseJSON.errors;
+
+                        $('#up_name_validate').empty().html(error.name);
+                        $('#up_code_validate').empty().html(error.code);
+                        $('#up_quantity_validate').empty().html(error.quantity);
+                        $('#up_max_used_validate').empty().html(error.max_used);
+                        $('#up_discount_validate').empty().html(error.discount);
+
                         swal.fire({
                             title: "Failed",
                             text: "Something Went Wrong !",
