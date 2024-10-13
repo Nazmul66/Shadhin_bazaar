@@ -39,8 +39,7 @@ use App\Http\Controllers\Frontend\HomeController;
     
     Route::get('/register-login', [HomeController::class, "register_login"])->name('register.login');
     Route::get('/change-password', [HomeController::class, "changePassword"])->name('change.password');
-    Route::get('/forget-password', [HomeController::class, "forgetPassword"])->name('forget.password');
-    
+    Route::get('/forget-password', [HomeController::class, "forgetPassword"])->name('forget.password');    
 
 
 
@@ -58,3 +57,4 @@ use App\Http\Controllers\Frontend\HomeController;
 
 require __DIR__.'/auth.php';
 require __DIR__.'/admin.php';
+require __DIR__.'/user.php';
