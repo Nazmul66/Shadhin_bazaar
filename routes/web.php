@@ -29,6 +29,7 @@ use App\Http\Controllers\Frontend\HomeController;
     
     
     Route::get('/change-password', [HomeController::class, "changePassword"])->name('change.password');
+    Route::get('/forget-password', [HomeController::class, "forgetPassword"])->name('forget.password');
     
 
 

@@ -46,6 +46,11 @@ class HomeController extends Controller
         return view('frontend.pages.auth.changePassword');
     }
 
+    public function forgetPassword()
+    {
+        return view('frontend.pages.auth.forgetPassword');
+    }
+
 
 
 
