@@ -72,7 +72,7 @@
                                         </th>
                                     </tr>
                                     <tr class="d-flex">
-                                        <td class="wsus__pro_img"><img src="images/pro9_9.jpg" alt="product"
+                                        <td class="wsus__pro_img"><img src="{{ asset('public/frontend/images/pro9_9.jpg') }}" alt="product"
                                                 class="img-fluid w-100">
                                             <a href="#"><i class="far fa-times"></i></a>
                                         </td>
@@ -101,7 +101,7 @@
                                     </tr>
                                     <tr class="d-flex">
                                         <td class="wsus__pro_img">
-                                            <img src="images/pro4.jpg" alt="product" class="img-fluid w-100">
+                                            <img src="{{ asset('public/frontend/images/pro4.jpg') }}" alt="product" class="img-fluid w-100">
                                             <a href="#"><i class="far fa-times"></i></a>
                                         </td>
 
@@ -129,7 +129,7 @@
                                     </tr>
                                     <tr class="d-flex">
                                         <td class="wsus__pro_img">
-                                            <img src="images/blazer_1.jpg" alt="product" class="img-fluid w-100">
+                                            <img src="{{ asset('public/frontend/images/blazer_1.jpg') }}" alt="product" class="img-fluid w-100">
                                             <a href="#"><i class="far fa-times"></i></a>
                                         </td>
 
@@ -157,7 +157,7 @@
                                     </tr>
                                     <tr class="d-flex">
                                         <td class="wsus__pro_img">
-                                            <img src="images/pro2.jpg" alt="product" class="img-fluid w-100">
+                                            <img src="{{ asset('public/frontend/images/pro2.jpg') }}" alt="product" class="img-fluid w-100">
                                             <a href="#"><i class="far fa-times"></i></a>
                                         </td>
                                         <td class="wsus__pro_name">
