@@ -19,7 +19,6 @@ Route::middleware('setLanguage')->group(function(){
         Route::get('/dashboard/address', [UserController::class, "dashboard_address"])->name('dashboard.address');
         Route::get('/dashboard/new-address', [UserController::class, "dashboard_new_address"])->name('dashboard.new.address');
         Route::get('/dashboard/chat', [UserController::class, "dashboard_chat"])->name('dashboard.chat');
-
     });
 
 });
