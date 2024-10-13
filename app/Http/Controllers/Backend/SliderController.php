@@ -118,8 +118,8 @@ class SliderController extends Controller
     {
         $request->validate(
             [
+                'title' => ['required', 'unique:sliders,title', 'max:200' ],
                 'slider_image' => ['required', 'image' ],
-                'title' => ['required', 'max:200' ],
             ],
             [
                 'title.required' => 'Please fill up title name',
@@ -136,7 +136,7 @@ class SliderController extends Controller
             $slider->title                  = $request->title;
             $slider->starting_price         = $request->starting_price;
             $slider->btn_url                = $request->btn_url;
-            $slider->serial                 = $request->serial;
+            $slider->serial                 = Slider::max($request->serial) ? Slider::max($request->serial) + 1 : 1;
             $slider->status                 = 1;
 
             // Handle image with ImageUploadTraits function
@@ -174,7 +174,8 @@ class SliderController extends Controller
 
         $request->validate(
             [
-                'title' => ['required', 'max:200' ],
+                'title' => ['required', 'unique:sliders,title,'. $slider->id, 'max:200' ],
+                'serial' => ['unique:sliders,serial,'. $slider->id ],
             ],
             [
                 'title.required' => 'Please fill up title name',
