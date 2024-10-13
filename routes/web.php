@@ -26,6 +26,7 @@ use App\Http\Controllers\Frontend\HomeController;
 
 
     Route::get('/checkout', [HomeController::class, "checkout"])->name('checkout');
+    Route::get('/product-category', [HomeController::class, "product_category"])->name('product.category');
     
     
     Route::get('/change-password', [HomeController::class, "changePassword"])->name('change.password');
