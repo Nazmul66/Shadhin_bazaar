@@ -50,6 +50,11 @@ class HomeController extends Controller
         return view('frontend.pages.frontend_pages.blogs_details');
     }
 
+    public function track_order()
+    {
+        return view('frontend.pages.frontend_pages.track_order');
+    }
+
 
 
     /**

@@ -25,6 +25,7 @@ use App\Http\Controllers\Frontend\HomeController;
     Route::get('/privacy-policy', [HomeController::class, "privacy_policy"])->name('privacy.policy');
     Route::get('/blogs', [HomeController::class, "blogs"])->name('blogs');
     Route::get('/blogs-details', [HomeController::class, "blogs_details"])->name('blogs.details');
+    Route::get('/track-order', [HomeController::class, "track_order"])->name('track.order');
 
 
     Route::get('/products', [HomeController::class, "products"])->name('products');
