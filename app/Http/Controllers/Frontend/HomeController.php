@@ -15,21 +15,24 @@ class HomeController extends Controller
         return view('frontend.pages.home');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function about_us()
     {
         return view('frontend.pages.frontend_pages.about_us');
     }
 
-
-    /**
-     * Show the form for creating a new resource.
-     */
     public function contact_us()
     {
         return view('frontend.pages.frontend_pages.contact_us');
+    }
+    
+    public function faq_page()
+    {
+        return view('frontend.pages.frontend_pages.faq');
+    }
+
+    public function team_page()
+    {
+        return view('frontend.pages.frontend_pages.team');
     }
 
     /**

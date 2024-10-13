@@ -20,6 +20,8 @@ use App\Http\Controllers\Frontend\HomeController;
     Route::get('/', [HomeController::class, "home"])->name('home');
     Route::get('/about-us', [HomeController::class, "about_us"])->name('about.us');
     Route::get('/contact-us', [HomeController::class, "contact_us"])->name('contact.us');
+    Route::get('/faq', [HomeController::class, "faq_page"])->name('faq');
+    Route::get('/team', [HomeController::class, "team_page"])->name('team');
 
 
 
