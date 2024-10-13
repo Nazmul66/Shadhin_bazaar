@@ -25,6 +25,7 @@ use App\Http\Controllers\Frontend\HomeController;
     Route::get('/privacy-policy', [HomeController::class, "privacy_policy"])->name('privacy.policy');
 
 
+    Route::get('/products', [HomeController::class, "products"])->name('products');
     Route::get('/checkout', [HomeController::class, "checkout"])->name('checkout');
     Route::get('/product-category', [HomeController::class, "product_category"])->name('product.category');
     Route::get('/product-brands', [HomeController::class, "product_brands"])->name('product.brands');

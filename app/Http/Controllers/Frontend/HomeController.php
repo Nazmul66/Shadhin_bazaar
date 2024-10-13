@@ -64,6 +64,16 @@ class HomeController extends Controller
      *  All Product Pages template shown
     */
 
+    public function products()
+    {
+        return view('frontend.pages.product_pages.products');
+    }
+
+    public function checkout()
+    {
+        return view('frontend.pages.product_pages.checkout');
+    }
+
     public function product_category()
     {
         return view('frontend.pages.product_pages.product_category');
@@ -74,8 +84,5 @@ class HomeController extends Controller
         return view('frontend.pages.product_pages.brands');
     }
 
-    public function checkout()
-    {
-        return view('frontend.pages.product_pages.checkout');
-    }
+
 }
