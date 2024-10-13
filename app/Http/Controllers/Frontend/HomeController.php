@@ -98,6 +98,11 @@ class HomeController extends Controller
     {
         return view('frontend.pages.product_pages.wishlist_view');
     }
+    
+    public function compare_view()
+    {
+        return view('frontend.pages.product_pages.compare');
+    }
 
     public function checkout()
     {
