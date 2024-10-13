@@ -36,6 +36,31 @@ class UserController extends Controller
         return view('users.pages.dashboard_download');
     }
 
+    public function dashboard_reviews()
+    {
+        return view('users.pages.dashboard_reviews');
+    }
+
+    public function dashboard_wishlist()
+    {
+        return view('users.pages.dashboard_wishlist');
+    }
+    
+    public function dashboard_address()
+    {
+        return view('users.pages.dashboard_addresses');
+    }
+
+    public function dashboard_new_address()
+    {
+        return view('users.pages.dashboard_new_address');
+    }
+
+    public function dashboard_chat()
+    {
+        return view('users.pages.dashboard_chat');
+    }
+
 
     /**
      * Store a newly created resource in storage.
