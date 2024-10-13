@@ -55,6 +55,11 @@ class HomeController extends Controller
         return view('frontend.pages.frontend_pages.track_order');
     }
 
+    public function register_login()
+    {
+        return view('frontend.pages.auth.login_register');
+    }
+
 
 
     /**
