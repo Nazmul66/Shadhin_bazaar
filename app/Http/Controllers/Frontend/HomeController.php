@@ -35,6 +35,11 @@ class HomeController extends Controller
         return view('frontend.pages.frontend_pages.team');
     }
 
+    public function privacy_policy()
+    {
+        return view('frontend.pages.frontend_pages.privacy_policy');
+    }
+
 
 
     /**

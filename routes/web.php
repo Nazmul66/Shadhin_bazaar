@@ -22,7 +22,7 @@ use App\Http\Controllers\Frontend\HomeController;
     Route::get('/contact-us', [HomeController::class, "contact_us"])->name('contact.us');
     Route::get('/faq', [HomeController::class, "faq_page"])->name('faq');
     Route::get('/team', [HomeController::class, "team_page"])->name('team');
-    Route::get('/team', [HomeController::class, "team_page"])->name('team');
+    Route::get('/privacy-policy', [HomeController::class, "privacy_policy"])->name('privacy.policy');
 
 
     Route::get('/checkout', [HomeController::class, "checkout"])->name('checkout');
