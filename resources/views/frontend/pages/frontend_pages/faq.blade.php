@@ -224,7 +224,5 @@
 
 @push('add-js')
 
-    <!-- simplyCountdown js-->
-    <script src="{{ asset('public/frontend/js/simplyCountdown.js') }}"></script>
 
 @endpush
