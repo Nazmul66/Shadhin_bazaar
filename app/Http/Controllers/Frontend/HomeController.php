@@ -40,6 +40,16 @@ class HomeController extends Controller
         return view('frontend.pages.frontend_pages.privacy_policy');
     }
 
+    public function blogs()
+    {
+        return view('frontend.pages.frontend_pages.blogs');
+    }
+
+    public function blogs_details()
+    {
+        return view('frontend.pages.frontend_pages.blogs_details');
+    }
+
 
 
     /**
