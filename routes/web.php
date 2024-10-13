@@ -29,6 +29,8 @@ use App\Http\Controllers\Frontend\HomeController;
 
 
     Route::get('/products', [HomeController::class, "products"])->name('products');
+    Route::get('/cart', [HomeController::class, "cart_view"])->name('cart');
+    Route::get('/wishlist', [HomeController::class, "wishlist_view"])->name('wishlist');
     Route::get('/checkout', [HomeController::class, "checkout"])->name('checkout');
     Route::get('/product-category', [HomeController::class, "product_category"])->name('product.category');
     Route::get('/product-brands', [HomeController::class, "product_brands"])->name('product.brands');

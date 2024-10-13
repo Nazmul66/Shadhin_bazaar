@@ -89,6 +89,16 @@ class HomeController extends Controller
         return view('frontend.pages.product_pages.products');
     }
 
+    public function cart_view()
+    {
+        return view('frontend.pages.product_pages.cart_view');
+    }
+
+    public function wishlist_view()
+    {
+        return view('frontend.pages.product_pages.wishlist_view');
+    }
+
     public function checkout()
     {
         return view('frontend.pages.product_pages.checkout');
