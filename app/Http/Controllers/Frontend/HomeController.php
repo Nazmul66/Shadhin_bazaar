@@ -37,9 +37,21 @@ class HomeController extends Controller
 
 
 
+    /**
+    *   Authentication template
+    */
+
+    public function changePassword()
+    {
+        return view('frontend.pages.auth.changePassword');
+    }
+
+
+
+
 
     /**
-     * All Product Pages template shown
+     *  All Product Pages template shown
     */
 
     public function checkout()
