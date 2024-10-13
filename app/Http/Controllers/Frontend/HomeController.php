@@ -69,6 +69,11 @@ class HomeController extends Controller
         return view('frontend.pages.product_pages.product_category');
     }
 
+    public function product_brands()
+    {
+        return view('frontend.pages.product_pages.brands');
+    }
+
     public function checkout()
     {
         return view('frontend.pages.product_pages.checkout');
