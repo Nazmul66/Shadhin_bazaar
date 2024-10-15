@@ -39,8 +39,11 @@ use App\Http\Controllers\Frontend\HomeController;
     
     Route::get('/register-login', [HomeController::class, "register_login"])->name('register.login');
     Route::get('/change-password', [HomeController::class, "changePassword"])->name('change.password');
-    Route::get('/forget-password', [HomeController::class, "forgetPassword"])->name('forget.password');    
+    Route::get('/forget-password', [HomeController::class, "forgetPassword"])->name('forget.password');   
+    
+    
 
+Route::view('/call', 'frontend.pages.demo420');
 
 
 

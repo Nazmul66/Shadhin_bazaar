@@ -728,6 +728,11 @@ header {
 .wsus_menu_cat_item li a i {
   width: 25px;
 }
+.wsus_menu_cat_item li a img {
+  width: 24px;
+  display: inline-block;
+  margin-right: 10px;
+}
 
 .wsus_menu_cat_item li:last-child a {
   border-bottom: 0;

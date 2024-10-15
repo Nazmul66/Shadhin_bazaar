@@ -1,12 +1,13 @@
-   
-
+    <!--============================
+        FOOTER PART START
+    ==============================-->
     <footer class="footer_2">
         <div class="container">
             <div class="row justify-content-between">
                 <div class="col-xl-3 col-sm-7 col-md-6 col-lg-3">
                     <div class="wsus__footer_content">
                         <a class="wsus__footer_2_logo" href="#">
-                            <img src="{{ asset('public/frontend/images/logo_2.png') }}" alt="logo">
+                            <img src="images/logo_2.png" alt="logo">
                         </a>
                         <a class="action" href="callto:+8896254857456"><i class="fas fa-phone-alt"></i>
                             +8896254857456</a>
@@ -61,7 +62,7 @@
                         </form>
                         <div class="footer_payment">
                             <p>We're using safe payment for :</p>
-                            <img src="{{ asset('public/frontend/images/credit2.png') }}" alt="card" class="img-fluid">
+                            <img src="images/credit2.png" alt="card" class="img-fluid">
                         </div>
                     </div>
                 </div>

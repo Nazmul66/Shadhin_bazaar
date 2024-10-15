@@ -1,36 +1,25 @@
 
+<!DOCTYPE html>
+<html lang="en">
 
-@include('frontend.include.css')
+<head>
+    @include('frontend.include.css')
+</head>
 
 <body>
 
-    <!--============================
-                HEADER START
-    ==============================-->
-    @include('frontend.include.header')
+
+       @include('frontend.include.header')
 
 
-       <!--============================
-              BODY CONTENT START
-       ==============================-->
+             @yield('body-content')
 
-                @yield('body-content')
 
-        <!--============================
-              BODY CONTENT END
-       ==============================-->
+       @include('frontend.include.footer')
 
 
 
-    <!--============================
-           FOOTER PART START
-    ==============================-->
-    @include('frontend.include.footer')
 
-
-    <!--============================
-        SCROLL BUTTON & SCRIPT TAG
-    ==============================-->
     @include('frontend.include.script')
 
 
