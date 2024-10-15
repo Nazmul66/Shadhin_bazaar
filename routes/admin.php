@@ -86,6 +86,8 @@ Route::middleware('setLanguage')->group(function(){
         Route::get('/childCategory-data', [ChildCategoryController::class, 'getData'])->name('childCategory-data');
         Route::post('/childCategory/status', [ChildCategoryController::class, 'changeChildCategoryStatus'])->name('childCategory.status');
 
+        Route::post('/get/subCategory-data', [ChildCategoryController::class, 'get_subCategory_data'])->name('childCategory.subCategory.data');
+
 
         //______ Brand _____//
         Route::resource('/brands', BrandsController::class)->names('brand');
@@ -109,6 +111,10 @@ Route::middleware('setLanguage')->group(function(){
         Route::resource('/product', ProductController::class)->names('product');
         Route::get('/product-data', [ProductController::class, 'getData'])->name('product-data');
         Route::post('/change-product-status', [ProductController::class, 'changeProductStatus'])->name('product.status');
+
+        Route::post('/get/product/subCategory-data', [ProductController::class, 'get_product_subCategory_data'])->name('get.product.subCategory.data');
+        Route::post('/get/product/childCategory-data', [ProductController::class, 'get_product_childCategory_data'])->name('get.product.childCategory.data');
+
         Route::get('/product/variant/{id}', [ProductController::class, 'product_variant'])->name('product-variant');
         Route::put('/product/variant/{id}', [ProductController::class, 'update_product_variant'])->name('product-variant.update'); 
 

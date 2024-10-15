@@ -6,6 +6,7 @@
 
 @push('add-css')
     <link rel="stylesheet" href="https://cdn.datatables.net/2.1.6/css/dataTables.dataTables.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 @endpush
 
 @section('body-content')
@@ -76,7 +77,7 @@
 
                             <div class="mb-3">
                                 <label class="form-label">Category Name <span class="text-danger">*</span></label>
-                                <select class="form-select" name="category_id">
+                                <select class="form-select category_id" name="category_id" id="category_id">
                                     <option value="" disabled selected>Select</option>
                                         @foreach ($categories as $category)
                                             <option value="{{ $category->id }}">{{ $category->category_name }}</option>
@@ -88,8 +89,8 @@
 
                             <div class="mb-3">
                                 <label class="form-label">SubCategory Name <span class="text-danger">*</span></label>
-                                <select class="form-select" name="subCategory_id">
-                                    <option value="" disabled selected>Select</option>
+                                <select class="form-select subCategory_id" name="subCategory_id" id="subCategory_id">
+                                    <option value="" disabled selected>Select </option>
                                         @foreach ($subCategories as $subCat)
                                             <option value="{{ $subCat->id }}">{{ $subCat->subcategory_name }}</option>
                                         @endforeach
@@ -159,7 +160,7 @@
 
                             <div class="mb-3">
                                 <label class="form-label">Category Name <span class="text-danger">*</span></label>
-                                <select class="form-select" name="category_id" id="up_category_id">
+                                <select class="form-select category_id" name="category_id" id="up_category_id">
                                     <option value="" disabled selected>Select</option>
                                         @foreach ($categories as $category)
                                             <option value="{{ $category->id }}">{{ $category->category_name }}</option>
@@ -169,7 +170,7 @@
 
                             <div class="mb-3">
                                 <label class="form-label">SubCategory Name <span class="text-danger">*</span></label>
-                                <select class="form-select" name="subCategory_id" id="up_subCategory_id">
+                                <select class="form-select subCategory_id" name="subCategory_id" id="up_subCategory_id">
                                     <option value="" disabled selected>Select</option>
                                         @foreach ($subCategories as $subCat)
                                             <option value="{{ $subCat->id }}">{{ $subCat->subcategory_name }}</option>
@@ -221,10 +222,63 @@
 
 @push('add-script')
     <script src="https://cdn.datatables.net/2.1.6/js/dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     <script>
-
         $(document).ready(function () {
+
+            //____ Category_id Select2 ____//
+            $('#category_id').select2({
+                dropdownParent: $('#createModal'),
+            });
+
+            //____ subCategory_id Select2 ____//
+            $('#subCategory_id').select2({
+                dropdownParent: $('#createModal'),
+            });
+
+            //____ up_category_id Select2 ____//
+            $('#up_category_id').select2({
+                dropdownParent: $('#editModal'),
+            });
+
+            //____ up_subCategory_id Select2 ____//
+            $('#up_subCategory_id').select2({
+                dropdownParent: $('#editModal'),
+            });
+
+
+            // Fetching subcategory information
+            $(document).on('input', '.category_id', function(){
+                var category_id = $(this).val();
+                // console.log(category_id);
+
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('admin.childCategory.subCategory.data') }}",
+                    data: {
+                        id: category_id
+                    },
+                    success: function (res) {
+                        // console.log(res.data);
+                        if (res.status) {
+                            // Clear any previous subcategory options
+                            $('.subCategory_id').empty();
+                            // Add default "Select" option
+                            $('.subCategory_id').append('<option value="" disabled selected>Select</option>');
+
+                            // Append new subcategories
+                            $.each(res.data, function (key, subCategory) {
+                                $('.subCategory_id').append('<option value="' + subCategory.id + '">' + subCategory.subcategory_name + '</option>');
+                            });
+                        }
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+
+                })
+            })
 
             // Show Data through Datatable
             let datatables = $('#datatables').DataTable({

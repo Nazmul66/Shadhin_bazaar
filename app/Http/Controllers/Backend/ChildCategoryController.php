@@ -213,7 +213,15 @@ class ChildCategoryController extends Controller
             }
         }
         $childCategory->delete();
-
+        
         return response()->json(['message' => 'ChildCategory has been deleted.'], 200);
+    }
+
+    public function get_subCategory_data(Request $request)
+    {
+        // dd($request->all());
+        $subCategories = Subcategory::where('category_id', $request->id)->where('status', 1)->get();
+
+        return response()->json(['status' => true, 'data' => $subCategories]);
     }
 }

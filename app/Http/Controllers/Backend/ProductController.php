@@ -464,4 +464,30 @@ class ProductController extends Controller
 
        return redirect()->back()->with($notification);
     }
+
+    public function get_product_subCategory_data(Request $request)
+    {
+        // dd($request->all());
+        $subCategories = Subcategory::where('category_id', $request->id)->where('status', 1)->get();
+
+        // 'subcategory_img' is the column name where image filename is stored
+        foreach ($subCategories as $subCategory) {
+            $subCategory->image_url = asset($subCategory->subcategory_img); 
+        }
+
+        return response()->json(['status' => true, 'data' => $subCategories]);
+    }
+
+    public function get_product_childCategory_data(Request $request)
+    {
+        // dd($request->all());
+        $childCategories = ChildCategory::where('subCategory_id', $request->id)->where('status', 1)->get();
+
+        // 'subcategory_img' is the column name where image filename is stored
+        foreach ($childCategories as $childCategory) {
+            $childCategory->image_url = asset($childCategory->img); 
+        }
+
+        return response()->json(['status' => true, 'data' => $childCategories]);
+    }
 }

@@ -98,7 +98,7 @@
 
                                 <div class="col-md-3 mb-3">
                                     <label class="form-label" for="category_id">Category <span class="text-danger">*</span></label>
-                                    <select class="form-select " id="category_id" name="category_id">
+                                    <select class="form-select category_id" id="category_id" name="category_id">
                                         <option value="" disabled selected>Select</option>
 
                                         @foreach ($categories as $row)
@@ -114,7 +114,7 @@
                             <div class="row">
                                 <div class="col-md-3 mb-3">
                                     <label class="form-label" for="subCategory_id">SubCategory</label>
-                                    <select class="form-select" id="subCategory_id" name="subCategory_id">
+                                    <select class="form-select subCategory_id" id="subCategory_id" name="subCategory_id">
                                         <option value="" disabled selected>Select</option>
 
                                         @foreach ($subCategories as $row)
@@ -125,7 +125,7 @@
 
                                 <div class="col-md-3 mb-3">
                                     <label class="form-label" for="childCategory_id">ChildCategory</label>
-                                    <select class="form-select" id="childCategory_id" name="childCategory_id">
+                                    <select class="form-select childCategory_id" id="childCategory_id" name="childCategory_id">
                                         <option value="" disabled selected>Select</option>
 
                                         @foreach ($childCategories as $row)
@@ -305,7 +305,7 @@
                             <div class="row">
                                 <div class="col-md-4 mb-3">
                                     <label class="form-label" for="up_category_id">Category <span class="text-danger">*</span></label>
-                                    <select class="form-select" id="up_category_id"  name="category_id">
+                                    <select class="form-select category_id" id="up_category_id"  name="category_id">
                                         <option value="" disabled selected>Select</option>
 
                                         @foreach ($categories as $row)
@@ -318,7 +318,7 @@
 
                                 <div class="col-md-4 mb-3">
                                     <label class="form-label" for="up_subCategory_id">SubCategory</label>
-                                    <select class="form-select" id="up_subCategory_id" name="subCategory_id">
+                                    <select class="form-select subCategory_id" id="up_subCategory_id" name="subCategory_id">
                                         <option value="" disabled selected>Select</option>
 
                                         @foreach ($subCategories as $row)
@@ -329,7 +329,7 @@
 
                                 <div class="col-md-4 mb-3">
                                     <label class="form-label" for="up_childCategory_id">ChildCategory</label>
-                                    <select class="form-select" id="up_childCategory_id" name="childCategory_id">
+                                    <select class="form-select childCategory_id" id="up_childCategory_id" name="childCategory_id">
                                         <option value="" disabled selected>Select</option>
 
                                         @foreach ($childCategories as $row)
@@ -518,6 +518,91 @@
                 .catch(error => {
                     console.error(error);
             });
+
+
+            // Fetching subcategory information
+            $(document).on('input', '.category_id', function(){
+                var category_id = $(this).val();
+                // console.log(category_id);
+
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('admin.get.product.subCategory.data') }}",
+                    data: {
+                        id: category_id
+                    },
+                    success: function (res) {
+                        console.log(res.data);
+                        if (res.status) {
+                            // Clear any previous subcategory options
+                            $('.subCategory_id').empty();
+                            // Add default "Select" option
+                            $('.subCategory_id').append('<option value="" disabled selected>Select</option>');
+
+                            // Append new subcategories with images
+                            $.each(res.data, function (key, subCategory) {
+                                var option = '<option value="' + subCategory.id + '" data-image-url="' + subCategory.image_url + '">' + subCategory.subcategory_name + '</option>';
+                                $('.subCategory_id').append(option);
+                            });
+
+
+                            // Trigger select2 to reinitialize so the images appear
+                            $('#subCategory_id').select2({
+                                dropdownParent: $('#createModal'),
+                                templateResult: formatState,
+                                templateSelection: formatState,
+                            });
+                        }
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+
+                })
+            })
+
+
+
+             // Fetching Child-subcategory information
+             $(document).on('input', '.subCategory_id', function(){
+                var subCategory_id = $(this).val();
+                // console.log(category_id);
+
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('admin.get.product.childCategory.data') }}",
+                    data: {
+                        id: subCategory_id
+                    },
+                    success: function (res) {
+                        console.log(res.data);
+                        if (res.status) {
+                            // Clear any previous subcategory options
+                            $('.childCategory_id').empty();
+                            // Add default "Select" option
+                            $('.childCategory_id').append('<option value="" disabled selected>Select</option>');
+
+                            // Append new subcategories with images
+                            $.each(res.data, function (key, childCategory) {
+                                var option = '<option value="' + childCategory.id + '" data-image-url="' + childCategory.image_url + '">' + childCategory.name + '</option>';
+                                $('.childCategory_id').append(option);
+                            });
+
+
+                            // Trigger select2 to reinitialize so the images appear
+                            $('#childCategory_id').select2({
+                                dropdownParent: $('#createModal'),
+                                templateResult: formatState,
+                                templateSelection: formatState,
+                            });
+                        }
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+
+                })
+            })
 
 
             // Show Data through Datatable
