@@ -1,5 +1,6 @@
 @php
     $categories = App\Models\Category::where('status', 1)->take(9)->get();
+    $mobile_cats = App\Models\Category::where('status', 1)->get();
 @endphp   
    
    <!--============================
@@ -329,28 +330,44 @@
                     role="tab" aria-controls="pills-profile" aria-selected="false">main menu</button>
             </li>
         </ul>
+
+
         <div class="tab-content" id="pills-tabContent">
+
+            {{-- Show All Categories --}}
             <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
                 <div class="wsus__mobile_menu_main_menu">
                     <div class="accordion accordion-flush" id="accordionFlushExample">
                         <ul class="wsus_mobile_menu_category">
                             <li><a href="#"><i class="fas fa-star"></i> hot promotions</a></li>
-                            <li><a href="#" class="accordion-button collapsed" data-bs-toggle="collapse"
-                                    data-bs-target="#flush-collapseThreew" aria-expanded="false"
-                                    aria-controls="flush-collapseThreew"><i class="fal fa-tshirt"></i> fashion</a>
-                                <div id="flush-collapseThreew" class="accordion-collapse collapse"
-                                    data-bs-parent="#accordionFlushExample">
-                                    <div class="accordion-body">
-                                        <ul>
-                                            <li><a href="#">men's</a></li>
-                                            <li><a href="#">wemen's</a></li>
-                                            <li><a href="#">kid's</a></li>
-                                            <li><a href="#">others</a></li>
-                                        </ul>
+
+                            @foreach ($mobile_cats as $row => $category)
+                                <li>
+                                    @php
+                                        $mobile_subCats = App\Models\SubCategory::where('category_id', $category->id)
+                                            ->where('status', 1)
+                                            ->get()
+                                    @endphp
+                                    <a href="#" @if( $mobile_subCats->count() > 0 ) class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#flush-collapse{{ $row }}" aria-expanded="false"
+                                    aria-controls="flush-collapse{{ $row }}  @endif">
+                                        <img src="{{ $category->category_img }}" alt=""> {{ $category->category_name }}
+                                    </a>
+
+                                    <div id="flush-collapse{{ $row }}" class="accordion-collapse collapse"
+                                        data-bs-parent="#accordionFlushExample">
+                                        <div class="accordion-body">
+                                            <ul>
+                                                @foreach ($mobile_subCats as $row => $subCat)
+                                                    <li><a href="#">{{ $subCat->subcategory_name }}</a></li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
                                     </div>
-                                </div>
-                            </li>
-                            <li><a href="#" class="accordion-button collapsed" data-bs-toggle="collapse"
+                                </li>
+                            @endforeach
+
+
+                            {{-- <li><a href="#" class="accordion-button collapsed" data-bs-toggle="collapse"
                                     data-bs-target="#flush-collapseThreer" aria-expanded="false"
                                     aria-controls="flush-collapseThreer"><i class="fas fa-tv"></i> electronics</a>
                                 <div id="flush-collapseThreer" class="accordion-collapse collapse"
@@ -364,6 +381,7 @@
                                     </div>
                                 </div>
                             </li>
+
                             <li><a href="#" class="accordion-button collapsed" data-bs-toggle="collapse"
                                     data-bs-target="#flush-collapseThreerrp" aria-expanded="false"
                                     aria-controls="flush-collapseThreerrp"><i class="fas fa-chair-office"></i>
@@ -379,6 +397,7 @@
                                     </div>
                                 </div>
                             </li>
+
                             <li><a href="#" class="accordion-button collapsed" data-bs-toggle="collapse"
                                     data-bs-target="#flush-collapseThreerrw" aria-expanded="false"
                                     aria-controls="flush-collapseThreerrw"><i class="fal fa-mobile"></i> Smart
@@ -396,17 +415,21 @@
                                         </ul>
                                     </div>
                                 </div>
-                            </li>
-                            <li><a href="#"><i class="fas fa-home-lg-alt"></i> Home & Garden</a></li>
+                            </li> --}}
+
+                            {{-- <li><a href="#"><i class="fas fa-home-lg-alt"></i> Home & Garden</a></li>
                             <li><a href="#"><i class="far fa-camera"></i> Accessories</a></li>
                             <li><a href="#"><i class="fas fa-heartbeat"></i> healthy & Beauty</a></li>
                             <li><a href="#"><i class="fal fa-gift-card"></i> Gift Ideas</a></li>
-                            <li><a href="#"><i class="fal fa-gamepad-alt"></i> Toy & Games</a></li>
-                            <li><a href="#"><i class="fal fa-gem"></i> View All Categories</a></li>
+                            <li><a href="#"><i class="fal fa-gamepad-alt"></i> Toy & Games</a></li> --}}
+                            {{-- <li><a href="#"><i class="fal fa-gem"></i> View All Categories</a></li> --}}
                         </ul>
                     </div>
                 </div>
             </div>
+
+
+            {{-- Main Menu --}}
             <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
                 <div class="wsus__mobile_menu_main_menu">
                     <div class="accordion accordion-flush" id="accordionFlushExample2">

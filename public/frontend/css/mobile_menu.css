@@ -277,6 +277,11 @@ a {
 .wsus_mobile_menu_category li a i {
   width: 25px;
 }
+.wsus_mobile_menu_category li a img {
+  width: 25px;
+  height: 25px;
+  margin-right: 16px;
+}
 
 .wsus_mobile_menu_category li:hover > a,
 .wsus__mobile_menu_main_menu li:hover > a,
