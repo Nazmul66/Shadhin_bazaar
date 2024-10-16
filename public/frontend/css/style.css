@@ -703,7 +703,7 @@ header {
   position: absolute;
   content: "\f105";
   top: 1px;
-  right: 30px;
+  right: 12px;
   color: #575757;
   font-size: 14px;
   border: none;
@@ -729,7 +729,7 @@ header {
   width: 25px;
 }
 .wsus_menu_cat_item li a img {
-  width: 24px;
+  width: 30px;
   display: inline-block;
   margin-right: 10px;
 }
@@ -810,7 +810,7 @@ header {
   -moz-transition: all linear 0.3s ease;
   -ms-transition: all linear 0.3s ease;
   -o-transition: all linear 0.3s ease;
-  height: 570px;
+  height: 100%;
 }
 
 .wsus_menu_cat_droapdown li:hover .wsus__sub_category {
@@ -8611,7 +8611,7 @@ header .wsus__call_text a:hover {
 
 .wsus_menu_cat_item {
   width: 250px;
-  height: 575px;
+  height: auto;
   position: absolute;
   top: 99%;
   left: 0;

@@ -1,4 +1,8 @@
-    <!--============================
+@php
+    $categories = App\Models\Category::where('status', 1)->take(9)->get();
+@endphp   
+   
+   <!--============================
         HEADER START
     ==============================-->
     <header>
@@ -123,210 +127,74 @@
                         <div class="wsus_menu_category_bar">
                             <i class="far fa-bars"></i>
                         </div>
+
                         <ul class="wsus_menu_cat_item show_home toggle_menu">
-                            <li><a href="#"><i class="fas fa-star"></i> hot promotions</a></li>
-                            <li><a class="wsus__droap_arrow" href="#"><i class="fal fa-tshirt"></i> Fashion </a>
-                                <ul class="wsus_menu_cat_droapdown">
-                                    <li><a href="#">New Arrivals <i class="fas fa-angle-right"></i></a>
-                                        <ul class="wsus__sub_category">
-                                            <li><a href="#">New Arrivals</a> </li>
-                                            <li><a href="#">Best Sellers</a></li>
-                                            <li><a href="#">Trending</a></li>
-                                            <li><a href="#">Clothing</a></li>
-                                            <li><a href="#">Bags</a></li>
-                                            <li><a href="#">Home Audio & Theaters</a></li>
-                                            <li><a href="#">TV & Videos</a></li>
-                                            <li><a href="#">Camera</a></li>
-                                            <li><a href="#">Photos & Videos</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="#">Best Sellers</a></li>
-                                    <li><a href="#">Trending <i class="fas fa-angle-right"></i></a>
-                                        <ul class="wsus__sub_category">
-                                            <li><a href="#">New Arrivals</a> </li>
-                                            <li><a href="#">Best Sellers</a></li>
-                                            <li><a href="#">Trending</a></li>
-                                            <li><a href="#">Clothing</a></li>
-                                            <li><a href="#">Bags</a></li>
-                                            <li><a href="#">Home Audio & Theaters</a></li>
-                                            <li><a href="#">TV & Videos</a></li>
-                                            <li><a href="#">Camera</a></li>
-                                            <li><a href="#">Photos & Videos</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="#">Clothing</a></li>
-                                    <li><a href="#">Bags</a></li>
-                                    <li><a href="#">Home Audio & Theaters</a></li>
-                                    <li><a href="#">TV & Videos</a></li>
-                                    <li><a href="#">Camera</a></li>
-                                    <li><a href="#">Photos & Videos <i class="fas fa-angle-right"></i></a>
-                                        <ul class="wsus__sub_category">
-                                            <li><a href="#">New Arrivals</a> </li>
-                                            <li><a href="#">Best Sellers</a></li>
-                                            <li><a href="#">Trending</a></li>
-                                            <li><a href="#">Clothing</a></li>
-                                            <li><a href="#">Bags</a></li>
-                                            <li><a href="#">Home Audio & Theaters</a></li>
-                                            <li><a href="#">TV & Videos</a></li>
-                                            <li><a href="#">Camera</a></li>
-                                            <li><a href="#">Photos & Videos</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
+                            @foreach ($categories as $category)
+                            <li>
+                                @php
+                                    $sub_cats = App\Models\SubCategory::where('category_id', $category->id)
+                                        ->where('status', 1)
+                                        ->take(9)
+                                        ->get()
+                                @endphp
+                                <a class="{{ $sub_cats->count() > 0 ? "wsus__droap_arrow" : "" }}" href="#">
+                                    <img src="{{ asset($category->category_img) }}" alt="">  {{ $category->category_name }} 
+                                </a>
+                                @if ( $sub_cats->count() > 0 )
+                                    <ul class="wsus_menu_cat_droapdown">
+                                        @foreach ( $sub_cats as $subCat )
+                                            <li>
+                                                @php
+                                                $child_Cat = App\Models\ChildCategory::where('subCategory_id', $subCat->id)
+                                                        ->where('status', 1)
+                                                        ->take(9)
+                                                        ->get()
+                                                @endphp
+                                                <a href="#">
+                                                    {{ $subCat->subcategory_name }} 
+                                                    @if ( $child_Cat->count() > 0 )
+                                                        <i class="fas fa-angle-right"></i>
+                                                    @endif
+                                                </a>
+
+                                                @if ( $child_Cat->count() > 0 )
+                                                    <ul class="wsus__sub_category">
+                                                        @foreach ($child_Cat as $childCat )
+                                                            <li><a href="#">{{ $childCat->name }}</a> </li>
+                                                        @endforeach
+
+                                                        @if ( $child_Cat->count() >= 9 )
+                                                             <li>
+                                                                <a href="#">
+                                                                    View All ChildCategories 
+                                                                    <i class="fas fa-angle-right"></i>
+                                                                </a>
+                                                            </li>
+                                                        @endif
+                                                    </ul>
+                                                @endif
+
+                                            </li>
+                                        @endforeach
+
+                                        @if ( $sub_cats->count() >= 9 )
+                                            <li>
+                                                <a href="#">
+                                                   View All SubCategories
+                                                   <i class="fas fa-angle-right"></i>
+                                                </a>
+                                            </li>
+                                        @endif
+                                    </ul>
+                                @endif
                             </li>
-                            <li><a class="wsus__droap_arrow" href="#"><i class="fas fa-tv"></i> Electronics</a>
-                                <ul class="wsus_menu_cat_droapdown">
-                                    <li><a href="#">New Arrivals <i class="fas fa-angle-right"></i></a>
-                                        <ul class="wsus__sub_category">
-                                            <li><a href="#">New Arrivals</a> </li>
-                                            <li><a href="#">Best Sellers</a></li>
-                                            <li><a href="#">Trending</a></li>
-                                            <li><a href="#">Clothing</a></li>
-                                            <li><a href="#">Bags</a></li>
-                                            <li><a href="#">Home Audio & Theaters</a></li>
-                                            <li><a href="#">TV & Videos</a></li>
-                                            <li><a href="#">Camera</a></li>
-                                            <li><a href="#">Photos & Videos</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="#">Best Sellers</a></li>
-                                    <li><a href="#">Trending <i class="fas fa-angle-right"></i></a>
-                                        <ul class="wsus__sub_category">
-                                            <li><a href="#">New Arrivals</a> </li>
-                                            <li><a href="#">Best Sellers</a></li>
-                                            <li><a href="#">Trending</a></li>
-                                            <li><a href="#">Clothing</a></li>
-                                            <li><a href="#">Bags</a></li>
-                                            <li><a href="#">Home Audio & Theaters</a></li>
-                                            <li><a href="#">TV & Videos</a></li>
-                                            <li><a href="#">Camera</a></li>
-                                            <li><a href="#">Photos & Videos</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="#">Clothing</a></li>
-                                    <li><a href="#">Bags</a></li>
-                                    <li><a href="#">Home Audio & Theaters</a></li>
-                                    <li><a href="#">TV & Videos</a></li>
-                                    <li><a href="#">Camera</a></li>
-                                    <li><a href="#">Photos & Videos <i class="fas fa-angle-right"></i></a>
-                                        <ul class="wsus__sub_category">
-                                            <li><a href="#">New Arrivals</a> </li>
-                                            <li><a href="#">Best Sellers</a></li>
-                                            <li><a href="#">Trending</a></li>
-                                            <li><a href="#">Clothing</a></li>
-                                            <li><a href="#">Bags</a></li>
-                                            <li><a href="#">Home Audio & Theaters</a></li>
-                                            <li><a href="#">TV & Videos</a></li>
-                                            <li><a href="#">Camera</a></li>
-                                            <li><a href="#">Photos & Videos</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li><a class="wsus__droap_arrow" href="#"><i class="fas fa-chair-office"></i> Furniture</a>
-                                <ul class="wsus_menu_cat_droapdown">
-                                    <li><a href="#">New Arrivals <i class="fas fa-angle-right"></i></a>
-                                        <ul class="wsus__sub_category">
-                                            <li><a href="#">New Arrivals</a> </li>
-                                            <li><a href="#">Best Sellers</a></li>
-                                            <li><a href="#">Trending</a></li>
-                                            <li><a href="#">Clothing</a></li>
-                                            <li><a href="#">Bags</a></li>
-                                            <li><a href="#">Home Audio & Theaters</a></li>
-                                            <li><a href="#">TV & Videos</a></li>
-                                            <li><a href="#">Camera</a></li>
-                                            <li><a href="#">Photos & Videos</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="#">Best Sellers</a></li>
-                                    <li><a href="#">Trending <i class="fas fa-angle-right"></i></a>
-                                        <ul class="wsus__sub_category">
-                                            <li><a href="#">New Arrivals</a> </li>
-                                            <li><a href="#">Best Sellers</a></li>
-                                            <li><a href="#">Trending</a></li>
-                                            <li><a href="#">Clothing</a></li>
-                                            <li><a href="#">Bags</a></li>
-                                            <li><a href="#">Home Audio & Theaters</a></li>
-                                            <li><a href="#">TV & Videos</a></li>
-                                            <li><a href="#">Camera</a></li>
-                                            <li><a href="#">Photos & Videos</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="#">Clothing</a></li>
-                                    <li><a href="#">Bags</a></li>
-                                    <li><a href="#">Home Audio & Theaters</a></li>
-                                    <li><a href="#">TV & Videos</a></li>
-                                    <li><a href="#">Camera</a></li>
-                                    <li><a href="#">Photos & Videos <i class="fas fa-angle-right"></i></a>
-                                        <ul class="wsus__sub_category">
-                                            <li><a href="#">New Arrivals</a> </li>
-                                            <li><a href="#">Best Sellers</a></li>
-                                            <li><a href="#">Trending</a></li>
-                                            <li><a href="#">Clothing</a></li>
-                                            <li><a href="#">Bags</a></li>
-                                            <li><a href="#">Home Audio & Theaters</a></li>
-                                            <li><a href="#">TV & Videos</a></li>
-                                            <li><a href="#">Camera</a></li>
-                                            <li><a href="#">Photos & Videos</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li><a class="wsus__droap_arrow" href="#"><i class="fal fa-mobile"></i> Smart Phones</a>
-                                <ul class="wsus_menu_cat_droapdown">
-                                    <li><a href="#">New Arrivals <i class="fas fa-angle-right"></i></a>
-                                        <ul class="wsus__sub_category">
-                                            <li><a href="#">New Arrivals</a> </li>
-                                            <li><a href="#">Best Sellers</a></li>
-                                            <li><a href="#">Trending</a></li>
-                                            <li><a href="#">Clothing</a></li>
-                                            <li><a href="#">Bags</a></li>
-                                            <li><a href="#">Home Audio & Theaters</a></li>
-                                            <li><a href="#">TV & Videos</a></li>
-                                            <li><a href="#">Camera</a></li>
-                                            <li><a href="#">Photos & Videos</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="#">Best Sellers</a></li>
-                                    <li><a href="#">Trending <i class="fas fa-angle-right"></i></a>
-                                        <ul class="wsus__sub_category">
-                                            <li><a href="#">New Arrivals</a> </li>
-                                            <li><a href="#">Best Sellers</a></li>
-                                            <li><a href="#">Trending</a></li>
-                                            <li><a href="#">Clothing</a></li>
-                                            <li><a href="#">Bags</a></li>
-                                            <li><a href="#">Home Audio & Theaters</a></li>
-                                            <li><a href="#">TV & Videos</a></li>
-                                            <li><a href="#">Camera</a></li>
-                                            <li><a href="#">Photos & Videos</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="#">Clothing</a></li>
-                                    <li><a href="#">Bags</a></li>
-                                    <li><a href="#">Home Audio & Theaters</a></li>
-                                    <li><a href="#">TV & Videos</a></li>
-                                    <li><a href="#">Camera</a></li>
-                                    <li><a href="#">Photos & Videos <i class="fas fa-angle-right"></i></a>
-                                        <ul class="wsus__sub_category">
-                                            <li><a href="#">New Arrivals</a> </li>
-                                            <li><a href="#">Best Sellers</a></li>
-                                            <li><a href="#">Trending</a></li>
-                                            <li><a href="#">Clothing</a></li>
-                                            <li><a href="#">Bags</a></li>
-                                            <li><a href="#">Home Audio & Theaters</a></li>
-                                            <li><a href="#">TV & Videos</a></li>
-                                            <li><a href="#">Camera</a></li>
-                                            <li><a href="#">Photos & Videos</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li><a href="#"><i class="fas fa-home-lg-alt"></i> Home & Garden</a></li>
-                            <li><a href="#"><i class="far fa-camera"></i> Accessories</a></li>
-                            <li><a href="#"><i class="fas fa-heartbeat"></i> Healthy & Beauty</a></li>
-                            <li><a href="#"><i class="fal fa-gift-card"></i> Gift Ideas</a></li>
-                            <li><a href="#"><i class="fal fa-gamepad-alt"></i> Toy & Games</a></li>
-                            <li><a href="#"><i class="fal fa-gem"></i> View All Categories</a></li>
+                            @endforeach
+                            
+                            @if ( $categories->count() >= 9 )
+                                <li>
+                                    <a class="wsus__droap_arrow" href="#"><i class="fas fa-bars"></i> View All Categories</a>
+                                </li>
+                            @endif
                         </ul>
 
                         <ul class="wsus__menu_item">
