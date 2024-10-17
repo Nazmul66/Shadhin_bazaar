@@ -210,6 +210,17 @@
 
                             <div class="row">
                                 <div class="col-md-4 mb-3">
+                                    <label class="form-label" for="type">Product Type</label>
+                                    <select class="form-select" id="type" name="type">
+                                        <option value="" disabled selected>Select</option>
+                                        <option value="new_arrived">New Arrived</option>
+                                        <option value="featured">Featured</option>
+                                        <option value="best">Best</option>
+                                        <option value="top">Top</option>
+                                    </select>
+                                </div>
+
+                                {{-- <div class="col-md-4 mb-3">
                                     <label class="form-label" for="is_featured">Is Featured</label>
                                     <select class="form-select" id="is_featured" name="is_featured">
                                         <option value="" disabled selected>Select</option>
@@ -234,10 +245,8 @@
                                         <option value="1">Yes</option>
                                         <option value="0">No</option>
                                     </select>
-                                </div>
-                            </div>
+                                </div> --}}
 
-                            <div class="row">
                                 <div class="col-md-4 mb-3">
                                     <label class="form-label" for="seo_title">SEO Title</label>
                                     <input class="form-control" id="seo_title" type="text" name="seo_title" placeholder="Write SEO Title....">
@@ -413,6 +422,16 @@
 
                             <div class="row">
                                 <div class="col-md-4 mb-3">
+                                    <label class="form-label" for="up_type">Product Type</label>
+                                    <select class="form-select" id="up_type" name="type">
+                                        <option value="" disabled selected>Select</option>
+                                        <option value="new_arrived">New Arrived</option>
+                                        <option value="featured">Featured</option>
+                                        <option value="best">Best</option>
+                                        <option value="top">Top</option>
+                                    </select>
+                                </div>
+                                {{-- <div class="col-md-4 mb-3">
                                     <label class="form-label" for="up_is_featured">Is Featured</label>
                                     <select class="form-select" id="up_is_featured" name="is_featured">
                                         <option value="" disabled selected>Select</option>
@@ -437,10 +456,8 @@
                                         <option value="1">Yes</option>
                                         <option value="0">No</option>
                                     </select>
-                                </div>
-                            </div>
+                                </div> --}}
 
-                            <div class="row">
                                 <div class="col-md-4 mb-3">
                                     <label class="form-label" for="up_seo_title">SEO Title</label>
                                     <input class="form-control" id="up_seo_title" type="text" name="seo_title" placeholder="Write SEO Title....">
@@ -560,7 +577,6 @@
 
                 })
             })
-
 
 
              // Fetching Child-subcategory information
@@ -782,9 +798,10 @@
                         // Reinitialize Choices after setting the value
                         tagChoices.setValue(data.tags.split(','));
 
-                        $('#up_is_featured').val(data.is_featured);
-                        $('#up_is_top').val(data.is_top);
-                        $('#up_is_best').val(data.is_best);
+                        $('#up_type').val(data.type);
+                        // $('#up_is_featured').val(data.is_featured);
+                        // $('#up_is_top').val(data.is_top);
+                        // $('#up_is_best').val(data.is_best);
                         $('#up_seo_title').val(data.seo_title);
                         $('#up_seo_description').val(data.seo_description);
                         // Set image

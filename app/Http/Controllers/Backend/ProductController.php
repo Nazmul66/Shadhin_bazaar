@@ -190,9 +190,10 @@ class ProductController extends Controller
             $product->offer_price               = $request->offer_price;
             $product->offer_start_date          = $request->offer_start_date;
             $product->offer_end_date            = $request->offer_end_date;
-            $product->is_top                    = $request->is_top;
-            $product->is_best                   = $request->is_best;
-            $product->is_featured               = $request->is_featured;
+            $product->type                      = $request->type ?? 1;
+            // $product->is_top                    = $request->is_top;
+            // $product->is_best                   = $request->is_best;
+            // $product->is_featured               = $request->is_featured;
             $product->is_approved               = 0;
             $product->seo_title                 = $request->seo_title;
             $product->seo_description           = $request->seo_description;
@@ -275,9 +276,10 @@ class ProductController extends Controller
             $product->offer_price               = $request->offer_price;
             $product->offer_start_date          = $request->offer_start_date;
             $product->offer_end_date            = $request->offer_end_date;
-            $product->is_top                    = $request->is_top;
-            $product->is_best                   = $request->is_best;
-            $product->is_featured               = $request->is_featured;
+            $product->type                      = $request->type ?? 1;
+            // $product->is_top                    = $request->is_top;
+            // $product->is_best                   = $request->is_best;
+            // $product->is_featured               = $request->is_featured;
             $product->is_approved               = 0;
             $product->seo_title                 = $request->seo_title;
             $product->seo_description           = $request->seo_description;

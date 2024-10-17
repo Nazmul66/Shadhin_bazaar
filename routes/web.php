@@ -22,6 +22,7 @@ use App\Http\Controllers\Frontend\HomeController;
     Route::get('/contact-us', [HomeController::class, "contact_us"])->name('contact.us');
     Route::get('/faq', [HomeController::class, "faq_page"])->name('faq');
     Route::get('/team', [HomeController::class, "team_page"])->name('team');
+    Route::get('/flash-sale', [HomeController::class, "flash_sale"])->name('flash.sale');
     Route::get('/privacy-policy', [HomeController::class, "privacy_policy"])->name('privacy.policy');
     Route::get('/blogs', [HomeController::class, "blogs"])->name('blogs');
     Route::get('/blogs-details', [HomeController::class, "blogs_details"])->name('blogs.details');

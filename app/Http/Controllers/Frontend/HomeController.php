@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\FlashSale;
+use App\Models\FlashSaleItem;
 use App\Models\Slider;
 use Illuminate\Http\Request;
 
@@ -13,10 +15,11 @@ class HomeController extends Controller
      */
     public function home()
     {
-        $sliders = Slider::where('status', 1)->orderBy('serial', 'desc')->get();
-        return view('frontend.pages.home', [
-            'sliders' => $sliders,
-        ]);
+        $data['sliders'] = Slider::where('status', 1)->orderBy('serial', 'desc')->get();
+        $data['flashSaleDate'] = FlashSale::first();
+        $data['flashSaleItems'] = FlashSaleItem::where('show_at_home', 1)->where('status', 1)->get();
+
+        return view('frontend.pages.home', $data);
     }
 
     public function about_us()
@@ -29,6 +32,15 @@ class HomeController extends Controller
         return view('frontend.pages.frontend_pages.contact_us');
     }
     
+    public function flash_sale()
+    {
+        $data['sliders'] = Slider::where('status', 1)->orderBy('serial', 'desc')->get();
+        $data['flashSaleDate'] = FlashSale::first();
+        $data['flashSaleItems'] = FlashSaleItem::where('show_at_home', 1)->where('status', 1)->get();
+
+        return view('frontend.pages.frontend_pages.flash_sale', $data);
+    }
+
     public function faq_page()
     {
         return view('frontend.pages.frontend_pages.faq');
