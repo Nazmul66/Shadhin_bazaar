@@ -329,7 +329,7 @@ class ProductController extends Controller
     {
         // ProductColour
         $size_value       = AttributeValue::where('attribute_name', "size")->get();
-        $color_value      = AttributeValue::where('attribute_name', "colour")->get();
+        $color_value      = AttributeValue::where('attribute_name', "color")->get();
         $productImages    = ProductImage::where('product_id', $id)->get();
         $productSizes     = ProductSize::where('product_id', $id)->get();
         $productColors    = ProductColor::where('product_id', $id)->get();

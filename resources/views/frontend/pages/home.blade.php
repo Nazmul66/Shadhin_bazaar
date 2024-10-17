@@ -267,7 +267,7 @@
                                     <i class="fas fa-star-half-alt"></i>
                                     <span>(133 review)</span>
                                 </p>
-                                <a class="wsus__pro_name" href="#">{{ $product->name }}</a>
+                                <a class="wsus__pro_name" href="{{ route('product.details', $product->slug) }}">{{ $product->name }}</a>
                                 <p class="wsus__price">
                                     @if ( !empty(checkDiscount($product)) )
                                         ${{ $product->offer_price }} <del>${{ $product->price }}</del>

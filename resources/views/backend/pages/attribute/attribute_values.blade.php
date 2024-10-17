@@ -72,7 +72,7 @@
 
                             <div class="mb-3">
                                 <label for="name" class="form-label">Name <span class="text-danger">*</span></label>
-                                <select class="form-select" name="name" id="name">
+                                <select class="form-select name" name="name" id="name">
                                     <option value="" selected disabled>Select</option>
 
                                     @foreach ($attrNames as $row)
@@ -83,12 +83,13 @@
                                 <span id="name_validate" class="text-danger mt-1"></span>
                             </div>
 
-                            <div class="mb-3">
+                            <div class="mb-3 attr_val">
                                 <label for="value" class="form-label">Value <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="value" name="value" >
 
                                 <span id="value_validate" class="text-danger mt-1"></span>
                             </div>
+
 
                             <div class="d-flex justify-content-end align-items-center">
                                 <button type="button" class="btn btn-secondary waves-effect me-3"
@@ -123,7 +124,7 @@
 
                             <div class="mb-3">
                                 <label for="up_name" class="form-label">Name <span class="text-danger">*</span></label>
-                                <select class="form-select" name="name" id="up_name">
+                                <select class="form-select name" name="name" id="up_name">
                                     <option value="" selected disabled>Select</option>
 
                                     @foreach ($attrNames as $row)
@@ -134,7 +135,7 @@
                                 <span id="up_name_validate" class="text-danger mt-1"></span>
                             </div>
 
-                            <div class="mb-3">
+                            <div class="mb-3 attr_val">
                                 <label for="up_value" class="form-label">Value <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="up_value" name="value" >
 
@@ -160,6 +161,19 @@
 
     <script>
 
+        $('.name').change(function(){
+            // attr_val, color_code
+            var value = $(this).val();
+            console.log(value);
+
+            if (value === "color") {
+                $('.attr_val input').attr('type', 'color');  
+            } else {
+                $('.attr_val input').attr('type', 'text');  
+            }
+        })
+
+        // yajra datatables
         $(document).ready(function () {
 
             // Show Data through Datatable
@@ -301,6 +315,17 @@
                         $('#id').val(data.id);
                         $('#up_name').val(data.attribute_name);
                         $('#up_value').val(data.attribute_value);
+
+                        // Check the selected name
+                        if (data.attribute_name === "color") {
+                            // Change input type to 'color' and set the color value
+                            $('#up_value').attr('type', 'color');
+                            $('#up_value').val(data.attribute_value); // Ensure the color value is set correctly
+                        } else {
+                            // Change input type to 'text' for any other name
+                            $('#up_value').attr('type', 'text');
+                            $('#up_value').val(data.attribute_value);
+                        }
                     },
                     error: function (error) {
                         console.log('error');

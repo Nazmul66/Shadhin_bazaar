@@ -32,14 +32,7 @@ class HomeController extends Controller
         return view('frontend.pages.frontend_pages.contact_us');
     }
     
-    public function flash_sale()
-    {
-        $data['sliders'] = Slider::where('status', 1)->orderBy('serial', 'desc')->get();
-        $data['flashSaleDate'] = FlashSale::first();
-        $data['flashSaleItems'] = FlashSaleItem::where('show_at_home', 1)->where('status', 1)->get();
 
-        return view('frontend.pages.frontend_pages.flash_sale', $data);
-    }
 
     public function faq_page()
     {
@@ -100,10 +93,7 @@ class HomeController extends Controller
      *  All Product Pages template shown
     */
 
-    public function products()
-    {
-        return view('frontend.pages.product_pages.products');
-    }
+
 
     public function cart_view()
     {
@@ -125,15 +115,7 @@ class HomeController extends Controller
         return view('frontend.pages.product_pages.checkout');
     }
 
-    public function product_category()
-    {
-        return view('frontend.pages.product_pages.product_category');
-    }
 
-    public function product_brands()
-    {
-        return view('frontend.pages.product_pages.brands');
-    }
 
 
 }
