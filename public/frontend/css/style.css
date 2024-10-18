@@ -1818,7 +1818,7 @@ PRODUCT MODAL VIEW END
   border-radius: 0;
 }
 
-/* .wsus__product_item:hover 
+.wsus__product_item:hover 
 .wsus__product_details .add_cart {
   opacity: 1;
 }
@@ -1827,7 +1827,7 @@ PRODUCT MODAL VIEW END
 .wsus__product_details .wsus__price {
   opacity: 0;
   visibility: hidden;
-} */
+}
 
 #wsus__flash_sell .wsus__product_item {
   margin: 25px 12px 0px 12px;
@@ -8662,7 +8662,7 @@ header .wsus__call_text a:hover {
 /* product start */
 .wsus__new,
 .wsus__minus {
-  width: 50px;
+  max-width: 100%;
   border-radius: 30px;
   opacity: 0.3;
   transition: all linear 0.3s;

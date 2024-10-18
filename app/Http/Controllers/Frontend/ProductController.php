@@ -10,8 +10,12 @@ class ProductController extends Controller
 {
     public function show_product_details(string $slug)
     {
-        $product = Product::where('slug', $slug)->first();
-        return view('frontend.pages.product_pages.product_details', compact('product'));
+        $data['product'] = Product::where('slug', $slug)->first();
+        $data['related_products'] = Product::where('category_id', '=', $data['product']->category_id)
+                                ->where('id', '!=', $data['product']->id)
+                                ->where('status', 1)
+                                ->get();
+        return view('frontend.pages.product_pages.product_details', $data);
     }
 
     public function product_category()

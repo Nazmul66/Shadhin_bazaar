@@ -2,6 +2,7 @@
     $multi_images = App\Models\ProductImage::where('product_id', $product->id)->get();       
     $product_colors = App\Models\ProductColor::where('product_id', $product->id)->get();
     $product_sizes = App\Models\ProductSize::where('product_id', $product->id)->get();
+    $brand = App\Models\Brand::where('id', $product->brand_id)->first();
 @endphp
 
 
@@ -326,16 +327,9 @@
                             </div>
                             <div class="wsus__quentity">
                                 <h5>quentity :</h5>
-                                <form class="select_number">
+                                <div class="select_number">
                                     <input class="number_area" type="text" min="1" max="100" value="1" />
-                                </form>
-                                <h3>
-                                    @if ( !empty(checkDiscount($product)) )
-                                        ${{ $product->offer_price }}
-                                    @else
-                                        ${{ $product->price }}
-                                    @endif
-                                </h3>
+                                </div>
                             </div>
                             <div class="wsus__selectbox">
                                 <div class="row">
@@ -367,8 +361,12 @@
                                 <li><a href="#"><i class="fal fa-heart"></i></a></li>
                                 <li><a href="#"><i class="far fa-random"></i></a></li>
                             </ul>
-                            <p class="brand_model"><span>model :</span> 12345670</p>
-                            <p class="brand_model"><span>brand :</span> The Northland</p>
+                            @if ( !empty($product->sku) )
+                                <p class="brand_model"><span>Product Sku :</span> <span class="badge bg-danger text-white">{{ $product->sku }}</span></p>
+                            @endif
+                            
+                            <p class="brand_model"><span>brand :</span> <span class="badge bg-primary text-white">{{ $brand->brand_name }}</span></p>
+
                             <div class="wsus__pro_det_share">
                                 <h5>share :</h5>
                                 <ul class="d-flex">
@@ -378,9 +376,8 @@
                                     <li><a class="instagram" href="#"><i class="fab fa-instagram"></i></a></li>
                                 </ul>
                             </div>
-                            <a class="wsus__pro_report" href="#" data-bs-toggle="modal"
-                                data-bs-target="#exampleModal"><i class="fal fa-comment-alt-smile"></i> Report incorrect
-                                product information.</a>
+
+                            <p><strong>Products Tag :</strong> <span style="font-size: 14px;">{{ productTags($product->tags) }}</span></p>
                         </div>
                     </div>
                     <div class="col-xl-3 col-md-12 mt-md-5 mt-lg-0">
@@ -434,11 +431,6 @@
                                         aria-controls="pills-home" aria-selected="true">Description</button>
                                 </li>
                                 <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="pills-profile-tab7" data-bs-toggle="pill"
-                                        data-bs-target="#pills-profile22" type="button" role="tab"
-                                        aria-controls="pills-profile" aria-selected="false">Information</button>
-                                </li>
-                                <li class="nav-item" role="presentation">
                                     <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill"
                                         data-bs-target="#pills-contact" type="button" role="tab"
                                         aria-controls="pills-contact" aria-selected="false">Vendor Info</button>
@@ -453,19 +445,20 @@
                                         data-bs-target="#pills-contact23" type="button" role="tab"
                                         aria-controls="pills-contact23" aria-selected="false">comment</button>
                                 </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="pills-contact-tab239" data-bs-toggle="pill"
-                                        data-bs-target="#pills-contact239" type="button" role="tab"
-                                        aria-controls="pills-contact239" aria-selected="false">faqs</button>
-                                </li>
                             </ul>
+
+
                             <div class="tab-content" id="pills-tabContent4">
+                                {{-- Descriptions --}}
                                 <div class="tab-pane fade  show active " id="pills-home22" role="tabpanel"
                                     aria-labelledby="pills-home-tab7">
                                     <div class="row">
                                         <div class="col-xl-12">
                                             <div class="wsus__description_area">
-                                                <h1>Heading</h1>
+
+                                                {!! $product->long_description !!}
+
+                                                {{-- <h1>Heading</h1>
                                                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatum
                                                     sapiente aliquam ut neque voluptatibus inventore odit nesciunt.
                                                     Nobis quas saepe repellat repudiandae qui sint? Delectus dignissimos
@@ -517,7 +510,7 @@
                                                     maiores fuga doloremque magni, ratione provident exercitationem
                                                     aliquam tempore velit facere autem magnam, architecto inventore
                                                     recusandae dolorum, illo sequi officiis dolore! Unde enim,
-                                                    exercitationem. Lorem ipsum</p>
+                                                    exercitationem. Lorem ipsum</p> --}}
                                             </div>
                                         </div>
                                         <div class="row">
@@ -546,37 +539,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="tab-pane fade" id="pills-profile22" role="tabpanel"
-                                    aria-labelledby="pills-profile-tab7">
-                                    <div class="row">
-                                        <div class="col-xl-6 col-lg-6 mb-4 mb-lg-0">
-                                            <div class="wsus__pro_det_info">
-                                                <h4>Additional Information</h4>
-                                                <p><span>Fabric</span> 100% Cotton</p>
-                                                <p><span>Materials</span> Yearn</p>
-                                                <p><span>Packaging</span> 1 pice poly</p>
-                                                <p><span>Cleaning</span> Washable</p>
-                                                <p><span>Cash on Delivery</span> yes</p>
-                                                <p><span>Payment Method</span> Cash / Credit Card</p>
-                                                <p><span>Other Paymen Method</span> Wire Transfer</p>
-                                                <p><span>Order Tracking</span> Yes </p>
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-6 col-lg-6">
-                                            <div class="wsus__pro_det_info">
-                                                <h4>Additional Information</h4>
-                                                <p><span>Fabric</span> 100% Cotton</p>
-                                                <p><span>Materials</span> Yearn</p>
-                                                <p><span>Packaging</span> 1 pice poly</p>
-                                                <p><span>Cleaning</span> Washable</p>
-                                                <p><span>Cash on Delivery</span> yes</p>
-                                                <p><span>Payment Method</span> Cash / Credit Card</p>
-                                                <p><span>Other Paymen Method</span> Wire Transfer</p>
-                                                <p><span>Order Tracking</span> Yes </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+
+                                {{-- Vendor Info --}}
                                 <div class="tab-pane fade" id="pills-contact" role="tabpanel"
                                     aria-labelledby="pills-contact-tab">
                                     <div class="wsus__pro_det_vendor">
@@ -637,6 +601,8 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                {{-- Reviews --}}
                                 <div class="tab-pane fade" id="pills-contact2" role="tabpanel"
                                     aria-labelledby="pills-contact-tab2">
                                     <div class="wsus__pro_det_review">
@@ -647,7 +613,7 @@
                                                         <h4>Reviews <span>02</span></h4>
                                                         <div class="wsus__main_comment">
                                                             <div class="wsus__comment_img">
-                                                                <img src="images/client_img_3.jpg" alt="user"
+                                                                <img src="{{ asset('public/frontend/images/client_img_3.jpg') }}" alt="user"
                                                                     class="img-fluid w-100">
                                                             </div>
                                                             <div class="wsus__comment_text reply">
@@ -659,11 +625,11 @@
                                                                     Cupiditate sint molestiae eos? Officia, fuga eaque.
                                                                 </p>
                                                                 <ul class="">
-                                                                    <li><img src="images/headphone_1.jpg" alt="product"
+                                                                    <li><img src="{{ asset('public/frontend/images/headphone_1.jpg') }}" alt="product"
                                                                             class="img-fluid w-100"></li>
-                                                                    <li><img src="images/headphone_2.jpg" alt="product"
+                                                                    <li><img src="{{ asset('public/frontend/images/headphone_2.jpg') }}" alt="product"
                                                                             class="img-fluid w-100"></li>
-                                                                    <li><img src="images/kids_1.jpg" alt="product"
+                                                                    <li><img src="{{ asset('public/frontend/images/kids_1.jpg') }}" alt="product"
                                                                             class="img-fluid w-100"></li>
                                                                 </ul>
                                                                 <a href="#" data-bs-toggle="collapse"
@@ -694,7 +660,7 @@
                                                         </div>
                                                         <div class="wsus__main_comment">
                                                             <div class="wsus__comment_img">
-                                                                <img src="images/client_img_1.jpg" alt="user"
+                                                                <img src="{{ asset('public/frontend/images/client_img_1.jpg') }}" alt="user"
                                                                     class="img-fluid w-100">
                                                             </div>
                                                             <div class="wsus__comment_text reply">
@@ -795,7 +761,7 @@
                                                             <div class="img_upload">
                                                                 <div class="gallery">
                                                                     <a class="cam" href="javascript:void(0)"><span><i
-                                                                                class="fas fa-image"></i></span>
+                                                                        class="fas fa-image"></i></span>
                                                                     </a>
                                                                 </div>
                                                             </div>
@@ -808,6 +774,8 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                {{-- Comments --}}
                                 <div class="tab-pane fade" id="pills-contact23" role="tabpanel"
                                     aria-labelledby="pills-contact-tab23">
                                     <div class="wsus__pro_det_comment">
@@ -817,7 +785,7 @@
                                                     <h4>comment <span>03</span></h4>
                                                     <div class="wsus__main_comment">
                                                         <div class="wsus__comment_img">
-                                                            <img src="images/dashboard_user.jpg" alt="user"
+                                                            <img src="{{ asset('public/frontend/images/dashboard_user.jpg') }}" alt="user"
                                                                 class="img-fluid w-100">
                                                         </div>
                                                         <div class="wsus__comment_text reply">
@@ -852,7 +820,7 @@
                                                     </div>
                                                     <div class="wsus__main_comment wsus__com_reply">
                                                         <div class="wsus__comment_img">
-                                                            <img src="images/ts-3.jpg" alt="user"
+                                                            <img src="{{ asset('public/frontend/images/ts-3.jpg') }}" alt="user"
                                                                 class="img-fluid w-100">
                                                         </div>
                                                         <div class="wsus__comment_text reply">
@@ -887,7 +855,7 @@
                                                     </div>
                                                     <div class="wsus__main_comment">
                                                         <div class="wsus__comment_img">
-                                                            <img src="images/team_1.jpg" alt="user"
+                                                            <img src="{{ asset('public/frontend/images/team_1.jpg') }}" alt="user"
                                                                 class="img-fluid w-100">
                                                         </div>
                                                         <div class="wsus__comment_text reply">
@@ -978,136 +946,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="tab-pane fade" id="pills-contact239" role="tabpanel"
-                                    aria-labelledby="pills-contact-tab239">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="wsus__contact_question">
-                                                <h5>People usually ask these</h5>
-                                                <div class="accordion" id="accordionExample">
-                                                    <div class="accordion-item">
-                                                        <h2 class="accordion-header" id="headingOne">
-                                                            <button class="accordion-button" type="button"
-                                                                data-bs-toggle="collapse" data-bs-target="#collapseOne"
-                                                                aria-expanded="true" aria-controls="collapseOne">
-                                                                How can I cancel my order?
-                                                            </button>
-                                                        </h2>
-                                                        <div id="collapseOne" class="accordion-collapse collapse show"
-                                                            aria-labelledby="headingOne"
-                                                            data-bs-parent="#accordionExample">
-                                                            <div class="accordion-body">
-                                                                <p>Lorem ipsum dolor sit amet consectetur adipisicing
-                                                                    elit.
-                                                                    Voluptatum voluptas ea hic excepturi sit, sapiente
-                                                                    optio
-                                                                    deleniti pariatur. Dolorum in quos magni?
-                                                                    Necessitatibus
-                                                                    recusandae cupiditate iste expedita amet voluptatem
-                                                                    laudantium.</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="accordion-item">
-                                                        <h2 class="accordion-header" id="headingTwo">
-                                                            <button class="accordion-button collapsed" type="button"
-                                                                data-bs-toggle="collapse" data-bs-target="#collapseTwo"
-                                                                aria-expanded="false" aria-controls="collapseTwo">
-                                                                Why is my registration delayed?
-                                                            </button>
-                                                        </h2>
-                                                        <div id="collapseTwo" class="accordion-collapse collapse"
-                                                            aria-labelledby="headingTwo"
-                                                            data-bs-parent="#accordionExample">
-                                                            <div class="accordion-body">
-                                                                <p>Lorem ipsum dolor sit amet consectetur adipisicing
-                                                                    elit.
-                                                                    Voluptatum voluptas ea hic excepturi sit, sapiente
-                                                                    optio
-                                                                    deleniti pariatur. Dolorum in quos magni?
-                                                                    Necessitatibus
-                                                                    recusandae cupiditate iste expedita amet voluptatem
-                                                                    laudantium.</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="accordion-item">
-                                                        <h2 class="accordion-header" id="headingThree">
-                                                            <button class="accordion-button collapsed" type="button"
-                                                                data-bs-toggle="collapse"
-                                                                data-bs-target="#collapseThree" aria-expanded="false"
-                                                                aria-controls="collapseThree">
-                                                                What do I need to buy products?
-                                                            </button>
-                                                        </h2>
-                                                        <div id="collapseThree" class="accordion-collapse collapse"
-                                                            aria-labelledby="headingThree"
-                                                            data-bs-parent="#accordionExample">
-                                                            <div class="accordion-body">
-                                                                <p>Lorem ipsum dolor sit amet consectetur adipisicing
-                                                                    elit.
-                                                                    Voluptatum voluptas ea hic excepturi sit, sapiente
-                                                                    optio
-                                                                    deleniti pariatur. Dolorum in quos magni?
-                                                                    Necessitatibus
-                                                                    recusandae cupiditate iste expedita amet voluptatem
-                                                                    laudantium.</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="accordion-item">
-                                                        <h2 class="accordion-header" id="headingThreet1">
-                                                            <button class="accordion-button collapsed" type="button"
-                                                                data-bs-toggle="collapse"
-                                                                data-bs-target="#collapseThreet1" aria-expanded="false"
-                                                                aria-controls="collapseThreet1">
-                                                                How can I track an order?
-                                                            </button>
-                                                        </h2>
-                                                        <div id="collapseThreet1" class="accordion-collapse collapse"
-                                                            aria-labelledby="headingThreet1"
-                                                            data-bs-parent="#accordionExample">
-                                                            <div class="accordion-body">
-                                                                <p>Lorem ipsum dolor sit amet consectetur adipisicing
-                                                                    elit.
-                                                                    Voluptatum voluptas ea hic excepturi sit, sapiente
-                                                                    optio
-                                                                    deleniti pariatur. Dolorum in quos magni?
-                                                                    Necessitatibus
-                                                                    recusandae cupiditate iste expedita amet voluptatem
-                                                                    laudantium.</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="accordion-item">
-                                                        <h2 class="accordion-header" id="headingThreet2">
-                                                            <button class="accordion-button collapsed" type="button"
-                                                                data-bs-toggle="collapse"
-                                                                data-bs-target="#collapseThreet2" aria-expanded="false"
-                                                                aria-controls="collapseThreet2">
-                                                                How can I get money back?
-                                                            </button>
-                                                        </h2>
-                                                        <div id="collapseThreet2" class="accordion-collapse collapse"
-                                                            aria-labelledby="headingThreet2"
-                                                            data-bs-parent="#accordionExample">
-                                                            <div class="accordion-body">
-                                                                <p>Lorem ipsum dolor sit amet consectetur adipisicing
-                                                                    elit.
-                                                                    Voluptatum voluptas ea hic excepturi sit, sapiente
-                                                                    optio
-                                                                    deleniti pariatur. Dolorum in quos magni?
-                                                                    Necessitatibus
-                                                                    recusandae cupiditate iste expedita amet voluptatem
-                                                                    laudantium.</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -1135,37 +974,59 @@
                 </div>
             </div>
             <div class="row flash_sell_slider">
-                <div class="col-xl-3 col-sm-6 col-lg-4">
-                    <div class="wsus__product_item">
-                        <span class="wsus__new">New</span>
-                        <span class="wsus__minus">-20%</span>
-                        <a class="wsus__pro_link" href="product_details.html">
-                            <img src="images/pro3.jpg" alt="product" class="img-fluid w-100 img_1" />
-                            <img src="images/pro3_3.jpg" alt="product" class="img-fluid w-100 img_2" />
-                        </a>
-                        <ul class="wsus__single_pro_icon">
-                            <li><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal2"><i
-                                        class="far fa-eye"></i></a></li>
-                            <li><a href="#"><i class="far fa-heart"></i></a></li>
-                            <li><a href="#"><i class="far fa-random"></i></a>
-                        </ul>
-                        <div class="wsus__product_details">
-                            <a class="wsus__category" href="#">Electronics </a>
-                            <p class="wsus__pro_rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                                <span>(133 review)</span>
-                            </p>
-                            <a class="wsus__pro_name" href="#">hp 24" FHD monitore</a>
-                            <p class="wsus__price">$159 <del>$200</del></p>
-                            <a class="add_cart" href="#">add to cart</a>
+
+                @foreach ($related_products as $item)
+                    @php
+                        $category = App\Models\Category::where('id', $item->category_id)->first();
+                        $productImage = App\Models\ProductImage::where('product_id', $item->id)->get();
+                        
+                    @endphp
+
+                    <div class="col-xl-3 col-sm-6 col-lg-4">
+                        <div class="wsus__product_item">
+                            <span class="wsus__new">{{ productType($item->type) }}</span>
+                            <span class="wsus__minus">-{{ calcDiscountPercent($item->price, $item->offer_price) }}%</span>
+                            <a class="wsus__pro_link" href="product_details.html">
+                                <img src="{{ asset($item->thumb_image) }}" alt="{{ $item->name }}" class="img-fluid w-100 img_1" />
+                                @if ( !empty( $productImage[0]->images ) )
+                                   <img src="{{ asset($productImage[0]->images) }}" alt="{{ $item->name }}" class="img-fluid w-100 img_2" />
+                                @else
+                                   <img src="{{ asset($item->thumb_image) }}" alt="{{ $item->name }}" class="img-fluid w-100 img_2" />
+                                @endif
+                               
+                            </a>
+                            <ul class="wsus__single_pro_icon">
+                                <li><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal2"><i
+                                            class="far fa-eye"></i></a></li>
+                                <li><a href="#"><i class="far fa-heart"></i></a></li>
+                                <li><a href="#"><i class="far fa-random"></i></a>
+                            </ul>
+                            <div class="wsus__product_details">
+                                <a class="wsus__category" href="#">{{ $category->category_name }} </a>
+                                <p class="wsus__pro_rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                    <span>(133 review)</span>
+                                </p>
+                                <a class="wsus__pro_name" href="{{ route('product.details', $item->slug) }}">{{ $item->name }}</a>
+                                <p class="wsus__price">
+                                    @if ( !empty(checkDiscount($item)) )
+                                        ${{ $item->offer_price }} <del>${{ $item->price }}</del>
+                                    @else
+                                        ${{ $item->price }}
+                                    @endif
+                                </p>
+                                <a class="add_cart" href="#">add to cart</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-xl-3 col-sm-6 col-lg-4">
+                @endforeach
+
+
+                {{-- <div class="col-xl-3 col-sm-6 col-lg-4">
                     <div class="wsus__product_item">
                         <span class="wsus__new">New</span>
                         <a class="wsus__pro_link" href="product_details.html">
@@ -1281,7 +1142,7 @@
                             <a class="add_cart" href="#">add to cart</a>
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
             </div>
         </div>

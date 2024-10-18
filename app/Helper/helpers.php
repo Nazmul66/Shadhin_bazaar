@@ -56,4 +56,13 @@
     }
 
 
+    //__ Tags measurement __//
+    function productTags(string $tags)
+    {
+        $explode = explode(',', $tags); // 
+        $implode = implode(', ', $explode);
+        return  $implode;
+    }
+
+
 ?>
