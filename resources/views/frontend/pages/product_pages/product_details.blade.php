@@ -281,8 +281,6 @@
                                 @else
                                     <span id="product_offer_price">${{ $product->price }}</span>
                                 @endif
-
-                                <input type="hidden" name="price" id="price" value="">
                             </h4>
 
                             <p class="review">
@@ -303,74 +301,64 @@
                                 <div class="simply-countdown simply-countdown-one"></div>
                             </div>
 
-                            @if ( $product_colors->count() > 0 )
-                                <div class="wsus_pro_det_color">
-                                    <h5>color :</h5>
-                                    <ul>
-                                        <input type="hidden" id="color_id_input" name="color_id" value="">
-                                        @foreach ($product_colors as $item)
-                                            <li class="color-item" data-id="{{ $item->id }}" data-product-id="{{ $product->id }}" style="background: {{ $item->color_name }};">
-                                                <a>
-                                                    <i class="far fa-check"></i>
-                                                </a>
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            @endif
+                            <form class="shopping-cart-form" method="POST">
+                                @csrf
+                                @php
+                                    if( !empty($product->offer_price) ){
+                                        $price = $product->offer_price;
+                                    }
+                                    else{ $price = $product->price; }
+                                @endphp
 
-                            @if ( $product_sizes->count() > 0 )
-                                <div class="wsus_pro__det_size">
-                                    <h5>Size :</h5>
-                                    <ul>
-                                        <input type="hidden" id="size_id_input" name="size_id" value="">
-                                        @foreach ($product_sizes as $item)
-                                            <li class="size-item" data-id="{{ $item->id }}" data-product-id="{{ $product->id }}">
-                                                <a href="javascript:void(0);">{{ $item->size_name }}</a>
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            @endif
+                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                <input type="hidden" name="name" value="{{ $product->name }}">
+                                <input type="hidden" name="price" value="{{ $price }}">
 
-                            <div class="wsus__quentity">
-                                <h5>quentity :</h5>
-                                <div class="select_number">
-                                    <input class="number_area" type="number" name="qty" id="qty" min="1" max="100" value="1" />
-                                </div>
-                            </div>
-
-
-                            <div class="wsus__selectbox">
-                                <div class="row">
-                                    {{-- <div class="col-xl-6 col-sm-6">
-                                        <h5 class="mb-2">select:</h5>
-                                        <select class="select_2" name="state">
-                                            <option>default select</option>
-                                            <option>select 1</option>
-                                            <option>select 2</option>
-                                            <option>select 3</option>
-                                            <option>select 4</option>
-                                        </select>
+                                @if ( $product_colors->count() > 0 )
+                                    <div class="wsus_pro_det_color">
+                                        <h5>color :</h5>
+                                        <ul>
+                                            <input type="hidden" id="color_id_input" name="color_id" value="{{ $product_colors[0]->id }}">
+                                            @foreach ($product_colors as $key => $item)
+                                                <li class="color-item " data-id="{{ $item->id }}" data-product-id="{{ $product->id }}" style="background: {{ $item->color_name }};">
+                                                    <a class="{{ $key == 0 ? 'active' : '' }}">
+                                                        <i class="far fa-check"></i>
+                                                    </a>
+                                                </li>
+                                            @endforeach
+                                        </ul>
                                     </div>
-                                    <div class="col-xl-6 col-sm-6">
-                                        <h5 class="mb-2">select:</h5>
-                                        <select class="select_2" name="state">
-                                            <option>default select</option>
-                                            <option>select 1</option>
-                                            <option>select 2</option>
-                                            <option>select 3</option>
-                                            <option>select 4</option>
-                                        </select>
-                                    </div> --}}
+                                @endif
+    
+                                @if ( $product_sizes->count() > 0 )
+                                    <div class="wsus_pro__det_size">
+                                        <h5>Size :</h5>
+                                        <ul>
+                                            <input type="hidden" id="size_id_input" name="size_id" value="{{ $product_sizes[0]->id }}">
+                                            @foreach ($product_sizes as $key => $item)
+                                                <li class="size-item " data-id="{{ $item->id }}" data-product-id="{{ $product->id }}">
+                                                    <a href="javascript:void(0);" class="{{ $key == 0 ? 'active' : '' }}">{{ $item->size_name }}</a>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
+    
+                                <div class="wsus__quentity">
+                                    <h5>quentity :</h5>
+                                    <div class="select_number">
+                                        <input class="number_area" type="number" name="qty" id="qty" min="1" max="100" value="1" />
+                                    </div>
                                 </div>
-                            </div>
-                            <ul class="wsus__button_area">
-                                <li><a class="add_cart" href="#">add to cart</a></li>
-                                <li><a class="buy_now" href="#">buy now</a></li>
-                                <li><a href="#"><i class="fal fa-heart"></i></a></li>
-                                <li><a href="#"><i class="far fa-random"></i></a></li>
-                            </ul>
+    
+                                <ul class="wsus__button_area">
+                                    <li><button type="submit" class="add_cart">add to cart</button></li>
+                                    <li><a class="buy_now" href="#">buy now</a></li>
+                                    <li><a href="#"><i class="fal fa-heart"></i></a></li>
+                                    <li><a href="#"><i class="far fa-random"></i></a></li>
+                                </ul>
+                            </form>
+                           
                             @if ( !empty($product->sku) )
                                 <p class="brand_model"><span>Product Sku :</span> <span class="badge bg-danger text-white">{{ $product->sku }}</span></p>
                             @endif
@@ -1050,10 +1038,17 @@
     $(document).ready(function () {
         $('.select_2').select2();
 
-        let colorId = null;
-        let sizeId = null;
-        let qty = $('#qty').val(); // Initial quantity
-        let productId = "{{ $product->id }}"; // Assuming you pass the product ID to the JavaScript
+        let colorId = $('.color-item.active').data('id') || $('.color-item').first().data('id'); // First color ID
+        let sizeId = $('.size-item.active').data('id') || $('.size-item').first().data('id');   // First size ID
+        let qty = $('#qty').val() || 1; // Initial quantity, fallback to 1 if not set
+        let productId = "{{ $product->id }}"; // Assuming product ID is passed from Blade template
+
+        // Set default hidden input values
+        $('#color_id_input').val(colorId);
+        $('#size_id_input').val(sizeId);
+
+        // Trigger price update on page load
+        updatePrice();
 
         // When a Color is selected
         $('.color-item').click(function() {
@@ -1120,7 +1115,27 @@
         }
 
     });
+</script>
 
+<script>
+     $(document).ready(function () {
+        $('.shopping-cart-form').on('submit', function(e){
+            e.preventDefault();
+            var formData = $(this).serialize();
+
+            $.ajax({
+                url: `{{ route('add.to.cart') }}`,
+                type: 'POST',
+                data: formData,
+                success: function(res) {
+                   console.log(res);
+                },
+                error: function(error) {
+                    console.log('Error:', error);
+                }
+            });
+        })
+     });
 </script>
 
 @endpush

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\ProductColor;
 use App\Models\ProductSize;
+use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -50,6 +51,43 @@ class ProductController extends Controller
             'offer_price' => $final_offer_price
         ]);
     }
+
+    public function productAddToCart(Request $request)
+    {
+    //    dd($request->all());
+
+      $data = [
+        'id' => $request->product_id, 
+        'name' => $request->name,
+        'price' => $request->price,
+        'qty' => $request->qty,
+        'weight' => 10,
+        'attributes' => [
+            'color_id' => $request->color_id,
+            'size_id' => $request->size_id,
+        ]
+      ];
+ 
+    //  dd($data);
+    Cart::add($data);
+    }
+
+    public function cart_clear()
+    {
+        Cart::destroy();
+        return redirect()->back();
+    }
+
+
+
+
+
+
+
+
+
+
+
 
     public function product_category()
     {

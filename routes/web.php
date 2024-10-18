@@ -35,6 +35,7 @@ use App\Http\Controllers\Frontend\FlashSaleController;
     //__ Flash Sales __//
     Route::get('/product-details/{slug}', [ProductController::class, "show_product_details"])->name('product.details');
     Route::post('/get-color-size-price', [ProductController::class, 'getColorSizePrice'])->name('get.color.size.price');
+    Route::post('/product/add-to-cart', [ProductController::class, 'productAddToCart'])->name('add.to.cart');
     Route::get('/product-category', [ProductController::class, "product_category"])->name('product.category');
     Route::get('/product-brands', [ProductController::class, "product_brands"])->name('product.brands');
 
@@ -49,6 +50,9 @@ use App\Http\Controllers\Frontend\FlashSaleController;
     Route::get('/change-password', [HomeController::class, "changePassword"])->name('change.password');
     Route::get('/forget-password', [HomeController::class, "forgetPassword"])->name('forget.password');   
     
+
+    Route::get('clear', [ProductController::class, "cart_clear"])->name('cart.clear');
+
     
 
 Route::view('/call', 'frontend.pages.demo420');
