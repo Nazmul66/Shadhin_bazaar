@@ -34,6 +34,7 @@ use App\Http\Controllers\Frontend\FlashSaleController;
 
     //__ Flash Sales __//
     Route::get('/product-details/{slug}', [ProductController::class, "show_product_details"])->name('product.details');
+    Route::post('/get-color-size-price', [ProductController::class, 'getColorSizePrice'])->name('get.color.size.price');
     Route::get('/product-category', [ProductController::class, "product_category"])->name('product.category');
     Route::get('/product-brands', [ProductController::class, "product_brands"])->name('product.brands');
 

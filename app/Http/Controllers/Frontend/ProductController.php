@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\ProductColor;
+use App\Models\ProductSize;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -16,6 +18,37 @@ class ProductController extends Controller
                                 ->where('status', 1)
                                 ->get();
         return view('frontend.pages.product_pages.product_details', $data);
+    }
+
+    public function getColorSizePrice(Request $request)
+    {
+        // dd($request->all());
+        $product = Product::where('id', $request->productId)->first();
+        $qty = $request->qty ? (int) $request->qty : 1;  // Get quantity, default is 1 if not provided
+
+        // Get the color price if a color is selected
+        $color_price = 0;
+        if ($request->colorId) {
+            $productColor = ProductColor::where('product_id', $product->id)->where('id', $request->colorId)->first();
+            $color_price = $productColor ? $productColor->color_price : 0;
+        }
+
+        // Get the size price if a size is selected
+        $size_price = 0;
+        if ($request->sizeId) {
+            $productSize = ProductSize::where('product_id', $product->id)->where('id', $request->sizeId)->first();
+            $size_price = $productSize ? $productSize->size_price : 0;
+        }
+
+        // Calculate final prices by adding color and size prices
+        $final_price = $color_price + $size_price + ( $product->price * $qty );
+        $final_offer_price = $product->offer_price ? $color_price + $size_price + ( $product->offer_price * $qty ) : null;
+
+        return response()->json([
+            'status' => 'success',
+            'price' => $final_price,
+            'offer_price' => $final_offer_price
+        ]);
     }
 
     public function product_category()

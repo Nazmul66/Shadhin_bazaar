@@ -3630,7 +3630,6 @@ PRODUCT DETAILS START
 }
 
 .wsus_pro_det_color ul li a {
-  margin-right: 7px;
   display: block;
   color: #fff;
   text-transform: capitalize;
@@ -3641,7 +3640,10 @@ PRODUCT DETAILS START
   border-radius: 50%;
   text-align: center;
 }
-
+.wsus_pro_det_color ul .color-item{
+  border-radius: 50px;
+  margin-right: 8px;
+}
 .wsus_pro_det_color ul li a i {
   opacity: 0;
   transition: all linear .3s;
@@ -3651,6 +3653,9 @@ PRODUCT DETAILS START
   -o-transition: all linear .3s;
 }
 
+.wsus_pro_det_color ul li a.active i {
+  opacity: 1;
+}
 .wsus_pro_det_color ul li a:hover i {
   opacity: 1;
 }
@@ -3698,6 +3703,11 @@ PRODUCT DETAILS START
 }
 
 .wsus_pro__det_size ul li a:hover {
+  color: #fff;
+  border-color: #08C;
+  background: #08C;
+}
+.wsus_pro__det_size ul li a.active {
   color: #fff;
   border-color: #08C;
   background: #08C;
@@ -9451,7 +9461,8 @@ DASHBOARD CHAT END
 
 a:not([href]):not([class]),
 a:not([href]):not([class]):hover {
-  color: #08C;
+  color: #FFF;
+  margin: 0;
 }
 
 /* extra css end here */
