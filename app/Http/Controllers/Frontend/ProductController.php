@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Cart;
 use App\Models\Product;
 use App\Models\ProductColor;
 use App\Models\ProductSize;
-use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -21,6 +22,51 @@ class ProductController extends Controller
         return view('frontend.pages.product_pages.product_details', $data);
     }
 
+
+    // add to cart 
+    public function productAddToCart(Request $request)
+    {
+    //  dd($request->all());
+        $exist_cart = Cart::where('product_id', $request->product_id)
+        ->where('color_id', $request->color_id)
+        ->where('size_id', $request->size_id)
+        ->whereNull('order_id')
+        ->where('user_id', Auth::user()->id ?? 1)  // Use authenticated user's ID or default to 1 for testing
+        ->first();
+
+        if (!empty($exist_cart)) {
+            // Check if quantity is provided, else increment by 1
+            if ($request->qty) {
+                // If the quantity is provided, add it to the existing quantity
+                $exist_cart->qty += $request->qty;
+            } else {
+                // If no quantity is provided, increment by 1
+                $exist_cart->increment('qty');
+            }
+            // Save or update the cart item with the new quantity
+            $exist_cart->save();
+        } else {
+            // Create a new cart entry for different product/color/size combinations
+            $cart = new Cart();
+
+            $cart->product_id = $request->product_id;
+            $cart->color_id   = $request->color_id;
+            $cart->size_id    = $request->size_id;
+            $cart->user_id    = Auth::user()->id ?? 1;
+            $cart->price      = $request->price;
+            $cart->qty        = $request->qty ?? 1;  // Default to 1 if no quantity is provided
+
+            $cart->save();
+        }
+
+        // Get the updated cart count
+        $total_cart = Cart::where('user_id', Auth::user()->id ?? 1)->count();
+
+        // Return a response
+        return response()->json(['status' => 'success', 'data' => $cart ?? $exist_cart, 'total' => $total_cart]);
+    }
+
+    // ajax call for realtime price update
     public function getColorSizePrice(Request $request)
     {
         // dd($request->all());
@@ -51,37 +97,6 @@ class ProductController extends Controller
             'offer_price' => $final_offer_price
         ]);
     }
-
-    public function productAddToCart(Request $request)
-    {
-    //    dd($request->all());
-
-      $data = [
-        'id' => $request->product_id, 
-        'name' => $request->name,
-        'price' => $request->price,
-        'qty' => $request->qty,
-        'weight' => 10,
-        'attributes' => [
-            'color_id' => $request->color_id,
-            'size_id' => $request->size_id,
-        ]
-      ];
- 
-    //  dd($data);
-    Cart::add($data);
-    }
-
-    public function cart_clear()
-    {
-        Cart::destroy();
-        return redirect()->back();
-    }
-
-
-
-
-
 
 
 

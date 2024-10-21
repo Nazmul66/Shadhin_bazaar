@@ -1124,11 +1124,13 @@
             var formData = $(this).serialize();
 
             $.ajax({
-                url: `{{ route('add.to.cart') }}`,
+                url: `{{ route('addToCart') }}`,
                 type: 'POST',
                 data: formData,
                 success: function(res) {
-                   console.log(res);
+                   console.log(res.total);
+
+                   $('#cart_count').text(`${res.total}`);
                 },
                 error: function(error) {
                     console.log('Error:', error);

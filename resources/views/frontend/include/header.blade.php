@@ -43,13 +43,15 @@
                         <ul class="wsus__icon_area">
                             <li><a href="wishlist.html"><i class="fal fa-heart"></i><span>05</span></a></li>
                             <li><a href="compare.html"><i class="fal fa-random"></i><span>03</span></a></li>
-                            <li><a class="wsus__cart_icon" href="#"><i
-                                        class="fal fa-shopping-bag"></i><span>04</span></a></li>
+                            <li><a class="wsus__cart_icon" href="#"><i class="fal fa-shopping-bag"></i><span id="cart_count">
+                                {{ App\Models\Cart::count() }}</span></a></li>
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
+
+        {{-- Shopping cart sidebar Start --}}
         <div class="wsus__mini_cart">
             <h4>shopping cart <span class="wsus_close_mini_cart"><i class="far fa-times"></i></span></h4>
             <ul>
@@ -110,6 +112,7 @@
                 <a class="common_btn" href="check_out.html">checkout</a>
             </div>
         </div>
+        {{-- Shopping cart sidebar End --}}
 
     </header>
     <!--============================
@@ -129,6 +132,7 @@
                             <i class="far fa-bars"></i>
                         </div>
 
+                        {{-- Category start --}}
                         <ul class="wsus_menu_cat_item show_home toggle_menu">
                             @foreach ($categories as $category)
                             <li>
@@ -197,6 +201,7 @@
                                 </li>
                             @endif
                         </ul>
+                         {{-- Category end --}}
 
                         <ul class="wsus__menu_item">
                             <li><a class="active" href="index.html">home</a></li>

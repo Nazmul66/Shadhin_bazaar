@@ -32,34 +32,28 @@ use App\Http\Controllers\Frontend\FlashSaleController;
     //__ Flash Sales __//
     Route::get('/flash-sale', [FlashSaleController::class, "index"])->name('flash.sale');
 
-    //__ Flash Sales __//
+    //__ Products __//
     Route::get('/product-details/{slug}', [ProductController::class, "show_product_details"])->name('product.details');
     Route::post('/get-color-size-price', [ProductController::class, 'getColorSizePrice'])->name('get.color.size.price');
-    Route::post('/product/add-to-cart', [ProductController::class, 'productAddToCart'])->name('add.to.cart');
+    Route::post('/product/add-to-cart', [ProductController::class, 'productAddToCart'])->name('addToCart');
+
+
+
+
     Route::get('/product-category', [ProductController::class, "product_category"])->name('product.category');
     Route::get('/product-brands', [ProductController::class, "product_brands"])->name('product.brands');
 
 
-    Route::get('/cart', [HomeController::class, "cart_view"])->name('cart');
-    Route::get('/wishlist', [HomeController::class, "wishlist_view"])->name('wishlist');
-    Route::get('/compare', [HomeController::class, "compare_view"])->name('compare');
-    Route::get('/checkout', [HomeController::class, "checkout"])->name('checkout');
+    // Route::get('/cart', [HomeController::class, "cart_view"])->name('cart');
+    // Route::get('/wishlist', [HomeController::class, "wishlist_view"])->name('wishlist');
+    // Route::get('/compare', [HomeController::class, "compare_view"])->name('compare');
+    // Route::get('/checkout', [HomeController::class, "checkout"])->name('checkout');
     
     
-    Route::get('/register-login', [HomeController::class, "register_login"])->name('register.login');
-    Route::get('/change-password', [HomeController::class, "changePassword"])->name('change.password');
-    Route::get('/forget-password', [HomeController::class, "forgetPassword"])->name('forget.password');   
+    // Route::get('/register-login', [HomeController::class, "register_login"])->name('register.login');
+    // Route::get('/change-password', [HomeController::class, "changePassword"])->name('change.password');
+    // Route::get('/forget-password', [HomeController::class, "forgetPassword"])->name('forget.password');   
     
-
-    Route::get('clear', [ProductController::class, "cart_clear"])->name('cart.clear');
-
-    
-
-Route::view('/call', 'frontend.pages.demo420');
-
-
-
-
 
 
 /*
