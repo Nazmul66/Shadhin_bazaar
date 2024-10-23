@@ -54,65 +54,62 @@
         {{-- Shopping cart sidebar Start --}}
         <div class="wsus__mini_cart">
             <h4>shopping cart <span class="wsus_close_mini_cart"><i class="far fa-times"></i></span></h4>
-            <ul>
-                <li>
-                    <div class="wsus__cart_img">
-                        <a href="#"><img src="images/tab_2.jpg" alt="product" class="img-fluid w-100"></a>
-                        <a class="wsis__del_icon" href="#"><i class="fas fa-minus-circle"></i></a>
-                    </div>
-                    <div class="wsus__cart_text">
-                        <a class="wsus__cart_title" href="#">apple 9.5" 7 serise tab with full view display</a>
-                        <p>$140 <del>$150</del></p>
-                    </div>
-                </li>
-                <li>
-                    <div class="wsus__cart_img">
-                        <a href="#"><img src="images/pro4.jpg" alt="product" class="img-fluid w-100"></a>
-                        <a class="wsis__del_icon" href="#"><i class="fas fa-minus-circle"></i></a>
-                    </div>
-                    <div class="wsus__cart_text">
-                        <a class="wsus__cart_title" href="#">men's fashion casual watch</a>
-                        <p>$130</p>
-                    </div>
-                </li>
-                <li>
-                    <div class="wsus__cart_img">
-                        <a href="#"><img src="images/pro2.jpg" alt="product" class="img-fluid w-100"></a>
-                        <a class="wsis__del_icon" href="#"><i class="fas fa-minus-circle"></i></a>
-                    </div>
-                    <div class="wsus__cart_text">
-                        <a class="wsus__cart_title" href="#">men's casual shoes</a>
-                        <p>$140 <del>$150</del></p>
-                    </div>
-                </li>
-                <li>
-                    <div class="wsus__cart_img">
-                        <a href="#"><img src="images/pro9.jpg" alt="product" class="img-fluid w-100"></a>
-                        <a class="wsis__del_icon" href="#"><i class="fas fa-minus-circle"></i></a>
-                    </div>
-                    <div class="wsus__cart_text">
-                        <a class="wsus__cart_title" href="#">men's fashion casual sholder bag</a>
-                        <p>$140</p>
-                    </div>
-                </li>
-                <li>
-                    <div class="wsus__cart_img">
-                        <a href="#"><img src="images/tab_2.jpg" alt="product" class="img-fluid w-100"></a>
-                        <a class="wsis__del_icon" href="#"><i class="fas fa-minus-circle"></i></a>
-                    </div>
-                    <div class="wsus__cart_text">
-                        <a class="wsus__cart_title" href="#">apple 9.5" 7 serise tab with full view display</a>
-                        <p>$140 <del>$150</del></p>
-                    </div>
-                </li>
-            </ul>
-            <h5>sub total <span>$3540</span></h5>
-            <div class="wsus__minicart_btn_area">
-                <a class="common_btn" href="cart_view.html">view cart</a>
-                <a class="common_btn" href="check_out.html">checkout</a>
-            </div>
+
+                <ul id="cart-items">
+                    @if ( $all_carts->count() > 0 )
+                        @foreach ($all_carts as $item)
+                            <li>
+                                <div class="wsus__cart_img">
+                                    <a href="{{ route('product.details', $item->slug) }}">
+                                        <img src="{{ asset($item->thumb_image) }}" alt="product" class="img-fluid w-100">
+                                    </a>
+                                    <a class="wsis__del_icon removeCart" data-colorId="{{ $item->color_id }}" data-sizeId="{{ $item->size_id }}" data-prdtId="{{ $item->pdt_id }}" style="cursor: pointer;"><i class="fas fa-minus-circle"></i></a>
+                                </div>
+
+                                <div class="wsus__cart_text">
+                                    <a class="wsus__cart_title" href="{{ route('product.details', $item->slug) }}">{{ $item->name }}</a>
+                                    <p>
+                                        @if ( !empty($item->offer_price) )
+                                            ${{ $item->offer_price }} <del>${{ $item->price }}</del> x {{ $item->qty }} Qty
+                                        @else
+                                            ${{ $item->price }} x {{ $item->qty }} Qty
+                                        @endif
+                                    </p>
+
+                                    @if ( !empty($item->size_name) )
+                                        <span class="variant_item"> Size: <span class="size_content">{{ $item->size_name }} </span>  ({{ '$'.$item->size_price }})</span>
+                                    @endif
+
+                                    @if ( !empty($item->color_name) )
+                                        <span class="variant_item "> Color: <span class="color_content" style="background: {{ $item->color_name }}"></span>  ({{ '$'.$item->color_price }})</span>
+                                    @endif
+                                </div>
+                            </li>
+                        @endforeach
+                    @else
+                        <span class="mt-5 d-block alert alert-danger text-center">Cart is empty</span>
+                    @endif
+                </ul>
+
+                <h5>sub total <span id="cart-subtotal">${{ number_format(cart_subTotal(), 2) }}</span></h5>
+
+                <div class="wsus__minicart_btn_area">
+                    <a class="common_btn" href="cart_view.html">view cart</a>
+                    <a class="common_btn" href="check_out.html">checkout</a>
+                </div>
         </div>
         {{-- Shopping cart sidebar End --}}
+
+        {{-- @if ( !empty($item->size_name) )
+            <span class="variant_item"> Size: <span class="size_content">{{ $item->size_name }} </span>  ({{ '$'.$item->size_price }})</span>
+        @endif
+
+        @if ( !empty($item->color_name) )
+            <span class="variant_item "> Color: <span class="color_content" style="background: {{ $item->color_name }}"></span>  ({{ '$'.$item->color_price }})</span>
+        @endif --}}
+
+
+
 
     </header>
     <!--============================

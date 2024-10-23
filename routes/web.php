@@ -36,6 +36,8 @@ use App\Http\Controllers\Frontend\FlashSaleController;
     Route::get('/product-details/{slug}', [ProductController::class, "show_product_details"])->name('product.details');
     Route::post('/get-color-size-price', [ProductController::class, 'getColorSizePrice'])->name('get.color.size.price');
     Route::post('/product/add-to-cart', [ProductController::class, 'productAddToCart'])->name('addToCart');
+    Route::get('/remove-cart/{id}/{color_id?}/{size_id?}', [ProductController::class, 'removeCart'])->name('remove.cart');
+    Route::get('/get-cart', [ProductController::class, 'getCart'])->name('get.cart');
 
 
 

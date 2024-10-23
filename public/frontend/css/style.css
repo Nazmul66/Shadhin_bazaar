@@ -534,6 +534,8 @@ header {
   margin-top: 20px;
   width: 100%;
   float: left;
+  display: flex;
+  align-items: center;
 }
 
 .wsus__mini_cart .wsus__cart_img {
@@ -577,6 +579,39 @@ header {
   width: 200px;
   float: left;
   margin-left: 20px;
+}
+.wsus__mini_cart .wsus__cart_text .variant_item{
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  line-height: 20px;
+}
+.wsus__mini_cart .wsus__cart_text .variant_item .size_content{
+    text-transform: capitalize;
+    font-weight: 600;
+    border-radius: 50%;
+    color: #fff;
+    border: 1px solid #08C;
+    background: #08C;
+    font-size: 12px;
+    display: flex;
+    width: 20px;
+    height: 20px;
+    justify-content: center;
+    align-items: center;
+    margin-left: 8px;
+    margin-right: 4px;
+} 
+ .wsus__mini_cart .wsus__cart_text .variant_item .color_content{
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-left: 8px;
+  margin-right: 4px;
+}
+.wsus__mini_cart .wsus__cart_text .product_qty
+{
+    font-size: 13px;
 }
 
 .wsus__mini_cart .wsus__cart_text a {

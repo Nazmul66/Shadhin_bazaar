@@ -1,6 +1,10 @@
 <?php
 
   //__ Set Sidebar Item Active __// 
+
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+
   function setActive(array $route)
   {
       if( is_array($route) ){
@@ -62,6 +66,33 @@
         $explode = explode(',', $tags); // 
         $implode = implode(', ', $explode);
         return  $implode;
+    }
+
+    
+    // Calculate Cart subTotal
+    function cart_subTotal(){
+          $all_carts = DB::table('carts')
+                ->leftJoin('products', 'products.id', 'carts.product_id')
+                ->leftJoin('product_colors', 'product_colors.id', 'carts.color_id')
+                ->leftJoin('product_sizes', 'product_sizes.id', 'carts.size_id')
+                ->select('carts.*', 'products.thumb_image', 'products.name', 'products.id as pdt_id', 'products.slug', 'products.price', 'products.offer_price', 'product_sizes.size_name', 'product_sizes.size_price', 'product_colors.color_name', 'product_colors.color_price')
+                ->whereNull('carts.order_id')
+                ->where('carts.user_id', Auth::user()->id ?? 1)
+                ->get();
+
+
+          // calculate data
+          $subtotal = 0;
+          foreach ($all_carts as $data) {
+            // Calculate item price (base price + size price + color price) * quantity
+            $itemBasePrice = $data->offer_price ? $data->offer_price : $data->price;
+            $itemTotalPrice = ($itemBasePrice + $data->size_price + $data->color_price) * $data->qty;
+
+            // Add this item's total to the subtotal
+            $subtotal += $itemTotalPrice;
+          }
+
+          return $subtotal;
     }
 
 

@@ -9,6 +9,7 @@ use App\Models\ProductColor;
 use App\Models\ProductSize;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -26,45 +27,66 @@ class ProductController extends Controller
     // add to cart 
     public function productAddToCart(Request $request)
     {
-    //  dd($request->all());
+        $userId = Auth::user()->id ?? 1; 
+    
         $exist_cart = Cart::where('product_id', $request->product_id)
-        ->where('color_id', $request->color_id)
-        ->where('size_id', $request->size_id)
-        ->whereNull('order_id')
-        ->where('user_id', Auth::user()->id ?? 1)  // Use authenticated user's ID or default to 1 for testing
-        ->first();
-
+                ->where('color_id', $request->color_id)
+                ->where('size_id', $request->size_id)
+                ->whereNull('order_id')
+                ->where('user_id', $userId)
+                ->first();
+    
         if (!empty($exist_cart)) {
-            // Check if quantity is provided, else increment by 1
             if ($request->qty) {
-                // If the quantity is provided, add it to the existing quantity
                 $exist_cart->qty += $request->qty;
             } else {
-                // If no quantity is provided, increment by 1
                 $exist_cart->increment('qty');
             }
-            // Save or update the cart item with the new quantity
+            // $exist_cart->price = $totalPrice;  
             $exist_cart->save();
-        } else {
-            // Create a new cart entry for different product/color/size combinations
-            $cart = new Cart();
 
+        } else {
+            $cart = new Cart();
+    
             $cart->product_id = $request->product_id;
             $cart->color_id   = $request->color_id;
             $cart->size_id    = $request->size_id;
-            $cart->user_id    = Auth::user()->id ?? 1;
-            $cart->price      = $request->price;
+            $cart->user_id    = $userId;
+            $cart->price      = $request->price;   // Set the total price including color and size adjustments
             $cart->qty        = $request->qty ?? 1;  // Default to 1 if no quantity is provided
-
+    
             $cart->save();
         }
-
-        // Get the updated cart count
-        $total_cart = Cart::where('user_id', Auth::user()->id ?? 1)->count();
-
-        // Return a response
-        return response()->json(['status' => 'success', 'data' => $cart ?? $exist_cart, 'total' => $total_cart]);
+    
+        $total_cart = Cart::where('user_id', $userId)->count();
+    
+        $all_carts = DB::table('carts')
+                    ->leftJoin('products', 'products.id', 'carts.product_id')
+                    ->leftJoin('product_colors', 'product_colors.id', 'carts.color_id')
+                    ->leftJoin('product_sizes', 'product_sizes.id', 'carts.size_id')
+                    ->select('carts.*', 'products.thumb_image', 'products.name', 'products.id as pdt_id', 'products.slug', 'products.price', 'products.offer_price', 'product_sizes.size_name', 'product_sizes.size_price', 'product_colors.color_name', 'product_colors.color_price')
+                    ->whereNull('carts.order_id')
+                    ->where('carts.user_id', $userId)
+                    ->get();
+        
+        
+        // calculate data
+        $subtotal = 0;
+        foreach ($all_carts as $data) {
+            // Set the product image URL
+            $data->image_url = asset($data->thumb_image);
+    
+            // Calculate item price (base price + size price + color price) * quantity
+            $itemBasePrice = $data->offer_price ? $data->offer_price : $data->price;
+            $itemTotalPrice = ($itemBasePrice + $data->size_price + $data->color_price) * $data->qty;
+    
+            // Add this item's total to the subtotal
+            $subtotal += $itemTotalPrice;
+        }
+    
+        return response()->json(['status' => 'success', 'total' => $total_cart, "carts" => $all_carts, 'subtotal' => $subtotal]);
     }
+
 
     // ajax call for realtime price update
     public function getColorSizePrice(Request $request)
@@ -99,6 +121,60 @@ class ProductController extends Controller
     }
 
 
+    // delete cart data
+    public function removeCart($prdtId, $colorId = null, $sizeId = null)
+    {
+        // Find the cart item with the product_id, and optionally match color_id and size_id
+        $cartQuery = Cart::where('product_id', $prdtId);
+    
+        if (!empty($colorId)) {
+            $cartQuery->where('color_id', $colorId);
+        }
+    
+        if (!empty($sizeId)) {
+            $cartQuery->where('size_id', $sizeId);
+        }
+    
+        $cart = $cartQuery->first();
+    
+        if ($cart) {
+            // Delete the cart item
+            $cart->delete();
+            
+            return response()->json(['success' => true]);
+        }
+        else{
+            return response()->json(['success' => false, 'message' => 'Item not found'], 404);
+        }
+    
+    }
+
+
+    // get subtotal card items
+    public function getCart(Request $request)
+    {
+        $userId = Auth::user()->id ?? 1;
+
+        $all_carts = DB::table('carts')
+                    ->leftJoin('products', 'products.id', 'carts.product_id')
+                    ->leftJoin('product_colors', 'product_colors.id', 'carts.color_id')
+                    ->leftJoin('product_sizes', 'product_sizes.id', 'carts.size_id')
+                    ->select('carts.*', 'products.thumb_image', 'products.name', 'products.id as pdt_id', 'products.slug', 'products.price', 'products.offer_price', 'product_sizes.size_name', 'product_sizes.size_price', 'product_colors.color_name', 'product_colors.color_price')
+                    ->whereNull('carts.order_id')
+                    ->where('carts.user_id', $userId)
+                    ->get();
+
+        $subtotal = 0;
+        foreach ($all_carts as $data) {
+            $data->image_url = asset($data->thumb_image);
+            
+            $itemPrice = $data->offer_price ? $data->offer_price : $data->price;
+            $itemTotal = ($itemPrice * $data->qty) + ($data->color_price ?? 0) + ($data->size_price ?? 0);
+            $subtotal += $itemTotal;
+        }
+
+        return response()->json(['success' => true, 'carts' => $all_carts, 'subtotal' => $subtotal, 'total' => count($all_carts)]);
+    }
 
 
 

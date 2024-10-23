@@ -1118,26 +1118,130 @@
 </script>
 
 <script>
-     $(document).ready(function () {
-        $('.shopping-cart-form').on('submit', function(e){
-            e.preventDefault();
-            var formData = $(this).serialize();
-
+    $(document).ready(function () {
+        //__ Add to cart __// 
+        $('.shopping-cart-form').on('submit', function(e) {
+            e.preventDefault(); // Prevent default form submission
+            var formData = $(this).serialize(); // Serialize form data
+    
             $.ajax({
-                url: `{{ route('addToCart') }}`,
-                type: 'POST',
-                data: formData,
+                url: `{{ route('addToCart') }}`, // Laravel route to add product to cart
+                type: 'POST', 
+                data: formData, 
                 success: function(res) {
-                   console.log(res.total);
+                    // Update cart count
+                    $('#cart_count').text(res.total); // Update cart count badge
 
-                   $('#cart_count').text(`${res.total}`);
+                    $('.wsus__mini_cart').addClass('.show_cart'); // Show mini-cart (corrected class addition)
+
+                    updateCartUI(res.carts); // Update cart UI
+                    updateCartSubtotal(); // Call to update subtotal after adding item
                 },
                 error: function(error) {
                     console.log('Error:', error);
                 }
             });
-        })
-     });
+        });
+    
+        //__ Remove cart items __// 
+        $(document).on('click', '.removeCart', function() {
+            var colorId = $(this).attr('data-colorId');
+            var sizeId = $(this).attr('data-sizeId');
+            var prdtId = $(this).attr('data-prdtId');
+            var cartItem = $(this).closest('li'); // Get the closest cart item element
+    
+            $.ajax({
+                url: `{{ url('/remove-cart') }}/${prdtId}/${colorId}/${sizeId}`,
+                type: 'GET', 
+                success: function(res) {
+                    if (res.success === true) {
+                        // Remove the cart item from the UI
+                        cartItem.remove(); // Remove the item from the UI
+    
+                        // Update cart data
+                        updateCartSubtotal(); // Call function to update subtotal
+                    } else {
+                        console.log('Error removing item');
+                    }
+                },
+                error: function(error) {
+                    console.log('Error:', error);
+                }
+            });
+        });
+    
+        //__ Function to update cart UI __//
+        function updateCartUI(carts) {
+            var cartItemsHtml = '';
+    
+            // Loop through each cart item and update the cart
+            $.each(carts, function(index, item) {
+                cartItemsHtml += `
+                    <li>
+                        <div class="wsus__cart_img">
+                            <a href="{{ url('product/details') }}/${item.id}">
+                                <img src="${item.image_url}" alt="product" class="img-fluid w-100">
+                            </a>
+                            <a class="wsis__del_icon removeCart" data-colorId="${item.color_id}" data-sizeId="${item.size_id}" data-prdtId="${item.pdt_id}" style="cursor: pointer;">
+                                <i class="fas fa-minus-circle"></i>
+                            </a>
+                        </div>
+                        <div class="wsus__cart_text">
+                            <a class="wsus__cart_title" href="{{ url('product/details') }}/${item.slug}">${item.name}</a>
+                            <p>
+                                ${item.offer_price ? `$${item.offer_price} <del>$${item.price}</del>` : `$${item.price}`} x ${item.qty} Qty
+                            </p>
+                `;
+    
+                // Check and append size details if available
+                if (item.size_name && item.size_price) {
+                    cartItemsHtml += `
+                        <span class="variant_item"> Size: <span class="size_content">${item.size_name}</span>  ($${item.size_price})</span>
+                    `;
+                }
+    
+                // Check and append color details if available
+                if (item.color_name && item.color_price) {
+                    cartItemsHtml += `
+                        <span class="variant_item"> Color: <span class="color_content" style="background: ${item.color_name}; width: 20px; height: 20px; display: inline-block; border-radius: 50%;"></span>  ($${item.color_price})</span>
+                    `;
+                }
+    
+                cartItemsHtml += `</div> </li>`;
+            });
+    
+            // Update cart items in the mini-cart
+            $('#cart-items').html(cartItemsHtml);
+
+            // Update subtotal in the mini-cart
+            $('#cart-subtotal').text(`$${res.subtotal.toFixed(2)}`);
+        }
+    
+        //__ Update cart price calculation __//
+        function updateCartSubtotal() {
+            $.ajax({
+                url: `{{ url('/get-cart') }}`, // Add the route to get updated cart
+                type: 'GET',
+                success: function(res) {
+                    if (res.success) {
+                        var subtotal = 0;
+                        $.each(res.carts, function(index, item) {
+                            let price = item.offer_price ? item.offer_price : item.price;
+                            subtotal += (price * item.qty) + (item.color_price || 0) + (item.size_price || 0);
+                        });
+                        $('#cart-subtotal').text(`$${subtotal.toFixed(2)}`); // Update subtotal display
+                        $('#cart_count').text(res.total); // Update cart count
+                    }
+                },
+                error: function(error) {
+                    console.log('Error fetching updated cart:', error);
+                }
+            });
+        }
+    });
 </script>
+    
+    
+
 
 @endpush
