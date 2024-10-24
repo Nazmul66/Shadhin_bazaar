@@ -1160,6 +1160,14 @@
     
                         // Update cart data
                         updateCartSubtotal(); // Call function to update subtotal
+
+                        // Check if the cart is empty
+                        if (res.total === 0) {
+                            // If the cart is empty, show an empty cart message and reset the subtotal
+                            $('#cart-items').html('<li>Your cart is empty.</li>');
+                            $('#cart-subtotal').text('$0.00'); // Reset the subtotal
+                            $('#cart_count').text('0'); // Reset the cart count
+                        }
                     } else {
                         console.log('Error removing item');
                     }
@@ -1206,7 +1214,6 @@
                         <span class="variant_item"> Color: <span class="color_content" style="background: ${item.color_name}; width: 20px; height: 20px; display: inline-block; border-radius: 50%;"></span>  ($${item.color_price})</span>
                     `;
                 }
-    
                 cartItemsHtml += `</div> </li>`;
             });
     
@@ -1224,13 +1231,21 @@
                 type: 'GET',
                 success: function(res) {
                     if (res.success) {
-                        var subtotal = 0;
-                        $.each(res.carts, function(index, item) {
-                            let price = item.offer_price ? item.offer_price : item.price;
-                            subtotal += (price * item.qty) + (item.color_price || 0) + (item.size_price || 0);
-                        });
-                        $('#cart-subtotal').text(`$${subtotal.toFixed(2)}`); // Update subtotal display
-                        $('#cart_count').text(res.total); // Update cart count
+                        if (res.carts.length === 0) {
+                            // If no items are in the cart
+                            $('#cart-items').html('<span class="mt-4 d-block alert alert-danger text-center">Cart is empty</span>');
+                            $('#cart-subtotal').text('$0.00'); // Reset subtotal display
+                            $('#cart_count').text('0'); // Reset cart count
+                        } else {
+                            // Update subtotal and cart items as usual
+                            var subtotal = 0;
+                            $.each(res.carts, function(index, item) {
+                                let price = item.offer_price ? item.offer_price : item.price;
+                                subtotal += (price * item.qty) + (item.color_price || 0) + (item.size_price || 0);
+                            });
+                            $('#cart-subtotal').text(`$${subtotal.toFixed(2)}`); // Update subtotal display
+                            $('#cart_count').text(res.total); // Update cart count
+                        }
                     }
                 },
                 error: function(error) {
@@ -1241,7 +1256,5 @@
     });
 </script>
     
-    
-
 
 @endpush

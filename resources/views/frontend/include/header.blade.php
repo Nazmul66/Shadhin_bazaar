@@ -87,7 +87,7 @@
                             </li>
                         @endforeach
                     @else
-                        <span class="mt-5 d-block alert alert-danger text-center">Cart is empty</span>
+                        <span class="mt-4 d-block alert alert-danger text-center">Cart is empty</span>
                     @endif
                 </ul>
 
