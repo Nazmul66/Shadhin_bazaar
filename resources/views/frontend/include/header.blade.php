@@ -94,7 +94,7 @@
                 <h5>sub total <span id="cart-subtotal">${{ number_format(cart_subTotal(), 2) }}</span></h5>
 
                 <div class="wsus__minicart_btn_area">
-                    <a class="common_btn" href="cart_view.html">view cart</a>
+                    <a class="common_btn" href="{{ route('show-cart') }}">view cart</a>
                     <a class="common_btn" href="check_out.html">checkout</a>
                 </div>
         </div>

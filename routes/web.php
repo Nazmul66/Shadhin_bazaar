@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\ProductController;
+use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\FlashSaleController;
 
 /*
@@ -37,7 +38,14 @@ use App\Http\Controllers\Frontend\FlashSaleController;
     Route::post('/get-color-size-price', [ProductController::class, 'getColorSizePrice'])->name('get.color.size.price');
     Route::post('/product/add-to-cart', [ProductController::class, 'productAddToCart'])->name('addToCart');
     Route::get('/remove-cart/{id}/{color_id?}/{size_id?}', [ProductController::class, 'removeCart'])->name('remove.cart');
-    Route::get('/get-cart', [ProductController::class, 'getCart'])->name('get.cart');
+    Route::get('/get-cart-data', [ProductController::class, 'getCart'])->name('get.cart.data');
+    
+    
+    //__ Carts __//
+    Route::get('/show-cart', [CartController::class, 'cart_view'])->name('show-cart');
+    Route::post('/update-cart-quantity', [CartController::class, 'update_cart_quantity'])->name('update.cart.quantity');
+    Route::post('/cart/delete-item', [CartController::class, 'deleteCartItem'])->name('delete.cart.item');
+    Route::post('/clear-cart', [CartController::class, 'clearCart'])->name('clear.cart');
 
 
 

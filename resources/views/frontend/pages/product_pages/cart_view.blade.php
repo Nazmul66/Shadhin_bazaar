@@ -45,14 +45,10 @@
                     <div class="wsus__cart_list">
                         <div class="table-responsive">
                             <table>
-                                <tbody>
+                                <thead>
                                     <tr class="d-flex">
                                         <th class="wsus__pro_img">
                                             product item
-                                        </th>
-
-                                        <th class="wsus__pro_name">
-                                            product details
                                         </th>
 
                                         <th class="wsus__pro_status">
@@ -63,128 +59,86 @@
                                             quantity
                                         </th>
 
+                                        <th class="wsus__pro_name">
+                                            Price
+                                        </th>
+
                                         <th class="wsus__pro_tk">
-                                            price
+                                           Total price
                                         </th>
 
                                         <th class="wsus__pro_icon">
-                                            <a href="#" class="common_btn">clear cart</a>
+                                            <a href="javascript:void();" class="common_btn clear_cart">clear cart</a>
                                         </th>
                                     </tr>
-                                    <tr class="d-flex">
-                                        <td class="wsus__pro_img"><img src="{{ asset('public/frontend/images/pro9_9.jpg') }}" alt="product"
-                                                class="img-fluid w-100">
-                                        </td>
+                                </thead>
 
-                                        <td class="wsus__pro_name">
-                                            <p>men's fashion sholder leather bag</p>
-                                            <span>color: red</span>
-                                            <span>size: XL</span>
-                                        </td>
-
-                                        <td class="wsus__pro_status">
-                                            <p>in stock</p>
-                                        </td>
-
-                                        <td class="wsus__pro_select">
-                                            <form class="select_number">
-                                                <input class="number_area" type="text" min="1" max="100" value="1" />
-                                            </form>
-                                        </td>
-
-                                        <td class="wsus__pro_tk">
-                                            <h6>$180,00</h6>
-                                        </td>
-
-                                        <td class="wsus__pro_icon">
-                                            <a href="#"><i class="far fa-times"></i></a>
-                                        </td>
-                                    </tr>
-                                    <tr class="d-flex">
-                                        <td class="wsus__pro_img">
-                                            <img src="{{ asset('public/frontend/images/pro4.jpg') }}" alt="product" class="img-fluid w-100">
-                                        </td>
-
-                                        <td class="wsus__pro_name">
-                                            <p>mean's casula fashion watch</p>
-                                            <span>color: black</span>
-                                        </td>
-
-                                        <td class="wsus__pro_status">
-                                            <p>in stock</p>
-                                        </td>
-
-                                        <td class="wsus__pro_select">
-                                            <form class="select_number">
-                                                <input class="number_area" type="text" min="1" max="100" value="1" />
-                                            </form>
-                                        </td>
-
-                                        <td class="wsus__pro_tk">
-                                            <h6>$140,00</h6>
-                                        </td>
-
-                                        <td class="wsus__pro_icon">
-                                            <a href="#"><i class="far fa-times"></i></a>
-                                        </td>
-                                    </tr>
-                                    <tr class="d-flex">
-                                        <td class="wsus__pro_img">
-                                            <img src="{{ asset('public/frontend/images/blazer_1.jpg') }}" alt="product" class="img-fluid w-100">
-                                        </td>
-
-                                        <td class="wsus__pro_name">
-                                            <p>product name and details</p>
-                                            <span>color: black</span>
-                                            <span>size: M</span>
-                                        </td>
-
-                                        <td class="wsus__pro_status">
-                                            <span>almost gone</span>
-                                        </td>
-
-                                        <td class="wsus__pro_select">
-                                            <form class="select_number">
-                                                <input class="number_area" type="text" min="1" max="100" value="1" />
-                                            </form>
-                                        </td>
-
-                                        <td class="wsus__pro_tk">
-                                            <h6>$220,00</h6>
-                                        </td>
-
-                                        <td class="wsus__pro_icon">
-                                            <a href="#"><i class="far fa-times"></i></a>
-                                        </td>
-                                    </tr>
-                                    <tr class="d-flex">
-                                        <td class="wsus__pro_img">
-                                            <img src="{{ asset('public/frontend/images/pro2.jpg') }}" alt="product" class="img-fluid w-100">
-                                        </td>
-                                        <td class="wsus__pro_name">
-                                            <p>product name and details</p>
-                                            <span>color: black</span>
-                                            <span>size: L</span>
-                                        </td>
-
-                                        <td class="wsus__pro_status">
-                                            <p>in stock</p>
-                                        </td>
-
-                                        <td class="wsus__pro_select">
-                                            <form class="select_number">
-                                                <input class="number_area" type="text" min="1" max="100" value="1" />
-                                            </form>
-                                        </td>
-
-                                        <td class="wsus__pro_tk">
-                                            <h6>$180.00</h6>
-                                        </td>
-
-                                        <td class="wsus__pro_icon">
-                                            <a href="#"><i class="far fa-times"></i></a>
-                                        </td>
-                                    </tr>
+                                <tbody id="cart_data_update">
+                                    @if ( $all_carts->count() > 0 )
+                                        @foreach ($all_carts as $cart)
+                                            <tr class="d-flex" id="cart-item-{{ $cart->id }}">
+                                                <td class="wsus__pro_img">
+                                                    <img src="{{ asset($cart->thumb_image) }}" alt="product" class="img-fluid w-100">
+                                                </td>
+                                    
+                                                <td class="wsus__pro_name">
+                                                    <p>{{ $cart->name }}</p>
+                                                    @if ( !empty($cart->color_name) )
+                                                        <span class="variant_item mb-2"> Color: 
+                                                            <span class="color_content" style="background: {{ $cart->color_name }}"></span> 
+                                                            (${{ $cart->color_price }})
+                                                        </span>
+                                                    @endif
+                                                    @if ( !empty($cart->size_name))
+                                                        <span class="variant_item"> Size: 
+                                                            <span class="size_content">{{ $cart->size_name }}</span> 
+                                                            (${{ $cart->size_price }})
+                                                        </span>
+                                                    @endif
+                                                </td>
+                                    
+                                                <td class="wsus__pro_select">
+                                                    <div class="select_number">
+                                                        <span class="increment" data-cart-id="{{ $cart->id }}" data-prdt-id="{{ $cart->product_id }}">-</span>
+                                                        <input type="number" class="qty_field" name="qty" min="1" max="20" data-cart-id="{{ $cart->id }}" value="{{ $cart->qty }}">
+                                                        <span class="decrement" data-cart-id="{{ $cart->id }}" data-prdt-id="{{ $cart->product_id }}">+</span>
+                                                    </div>
+                                                </td>
+                                    
+                                                <td class="wsus__pro_status">
+                                                    <h6 id="item-price-{{ $cart->id }}">
+                                                        @if (!empty($cart->offer_price))
+                                                            ${{ number_format($cart->qty * $cart->offer_price, 2) }}
+                                                        @else
+                                                            ${{ number_format($cart->qty * $cart->color_price, 2) }}
+                                                        @endif
+                                                    </h6>
+                                                </td>
+                                    
+                                                <td class="wsus__pro_tk">
+                                                    <h6 id="main-price-{{ $cart->id }}">
+                                                        @if (!empty($cart->offer_price))
+                                                            ${{ number_format($cart->qty * ( $cart->offer_price + $cart->color_price + $cart->size_price ), 2) }}
+                                                        @else
+                                                            ${{ number_format($cart->qty * ( $cart->color_price + $cart->size_price + $cart->price ), 2) }}
+                                                        @endif
+                                                    </h6>
+                                                </td>
+                                    
+                                                <td class="wsus__pro_icon">
+                                                    <a href="#" class="delete_cart_item" data-cart-id="{{ $cart->id }}" data-prdt-id="{{ $cart->product_id }}">
+                                                        <i class="far fa-times"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                       <tr>
+                                          <td colspan="6">
+                                            <a class="common_btn mt-3 mb-3 text-center " href=""><i class="fab fa-shopify" aria-hidden="true"></i> go shop</a>
+                                          </td>
+                                       </tr>
+                                    @endif
                                 </tbody>
                             </table>
                         </div>
@@ -193,7 +147,7 @@
                 <div class="col-xl-3">
                     <div class="wsus__cart_list_footer_button" id="sticky_sidebar">
                         <h6>total cart</h6>
-                        <p>subtotal: <span>$124.00</span></p>
+                        <p>subtotal: <span id="subtotal">${{ number_format($subTotal, 2) ?? 0 }}</span></p>
                         <p>delivery: <span>$00.00</span></p>
                         <p>discount: <span>$10.00</span></p>
                         <p class="total"><span>total:</span> <span>$134.00</span></p>
@@ -202,14 +156,15 @@
                             <input type="text" placeholder="Coupon Code">
                             <button type="submit" class="common_btn">apply</button>
                         </form>
-                        <a class="common_btn mt-4 w-100 text-center" href="check_out.html">checkout</a>
-                        <a class="common_btn mt-1 w-100 text-center" href="product_grid_view.html"><i
-                                class="fab fa-shopify"></i> go shop</a>
+                        <a class="common_btn mt-4 w-100 text-center" href="">checkout</a>
+                        <a class="common_btn mt-1 w-100 text-center" href=""><i class="fab fa-shopify"></i> go shop</a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
+
     <section id="wsus__single_banner">
         <div class="container">
             <div class="row">
@@ -247,5 +202,225 @@
 @endsection
 
 @push('add-js')
+<script>
+
+    $(document).ready(function() {
+        // Handle Increment button click (for increasing the quantity)
+        $(document).on('click', '.decrement', function() {
+            // Find the input field next to the clicked button
+            var qtyInput = $(this).siblings('.qty_field');
+            var currentQty = parseInt(qtyInput.val());
+            var maxQty = parseInt(qtyInput.attr('max'));
+            var cartId = $(this).data('cart-id');
+            var productId = $(this).data('prdt-id');
+
+            // Increase the quantity
+            if (currentQty < maxQty) {
+                qtyInput.val(currentQty + 1);
+                updateCartQuantity(cartId, productId, currentQty + 1);  // Call the update function
+            }
+        });
+
+         // Handle Decrement button click (for decreasing the quantity)
+        $(document).on('click', '.increment', function() {
+            // Find the input field next to the clicked button
+            var qtyInput = $(this).siblings('.qty_field');
+            var currentQty = parseInt(qtyInput.val());
+            var minQty = parseInt(qtyInput.attr('min'));
+            var cartId = $(this).data('cart-id');
+            var productId = $(this).data('prdt-id');
+
+            // Decrease the quantity but not below the minimum allowed value
+            if (currentQty > minQty) {
+                qtyInput.val(currentQty - 1);
+                updateCartQuantity(cartId, productId, currentQty - 1);  // Call the update function
+            }
+        });
+
+        // Function to update cart quantity
+        function updateCartQuantity(cartId, productId, newQty) {
+            // console.log("Updating cart with cartId:", cartId, "productId:", productId, "newQty:", newQty); // 
+
+            $.ajax({
+                url: `{{ route('update.cart.quantity') }}`,
+                type: 'POST',
+                data: {
+                    cart_id: cartId,
+                    product_id: productId,
+                    qty: newQty,
+                    _token: "{{ csrf_token() }}" // Include CSRF token
+                },
+                success: function(res) {
+                    if (res.status === 'success') {
+                        // Update the item price
+                        $('#item-price-' + cartId).text('$' + res.price.toFixed(2));
+
+                        // Update the main price
+                        $('#main-price-' + cartId).text('$' + res.mainPrice.toFixed(2));
+
+                        // Update the subtotal
+                        $('#subtotal').text('$' + res.subtotal.toFixed(2));
+                        $('#cart-subtotal').text('$' + res.subtotal.toFixed(2));
+                    }
+                },
+                error: function(error) {
+                    console.error('AJAX Error:', error); // Log AJAX errors
+                }
+            });
+        }
+
+
+        // Delete cart item on click
+        function cart_table(){
+            $(document).on('click', '.delete_cart_item', function(e) {
+                e.preventDefault();
+                
+                let cartId = $(this).data('cart-id');
+                let prdtId = $(this).data('prdt-id');
+                let row = $('#cart-item-' + cartId); // Get the row to remove it later
+
+                $.ajax({
+                    url: '{{ route("delete.cart.item") }}', // Update with the correct route
+                    type: 'POST',
+                    data: {
+                        cart_id: cartId,
+                        prdtId: prdtId,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(res) {
+                        if (res.status === 'success') {
+                            // Remove the row from the DOM
+                            row.remove();
+
+                            // Update the subtotal
+                            $('#subtotal').text('$' + res.subtotal.toFixed(2));
+
+                            $('#cart_count').text(`${res.total?.length}`);
+
+                            // Check if the cart is empty
+                            if (res.total?.length === 0) {
+                                // Display the "Go to Shop" button when cart is empty
+                                $('#cart_data_update').html(`
+                                    <tr>
+                                        <td colspan="6" class="text-center">
+                                            <a class="common_btn mt-3 mb-3 text-center " href="#">
+                                                <i class="fab fa-shopify" aria-hidden="true"></i> Go to Shop
+                                            </a>
+                                        </td>
+                                    </tr>
+                                `);
+                            }
+                        }
+                    },
+                    error: function(error) {
+                        console.error('AJAX Error:', error);
+                    }
+                });
+            });
+        }
+
+
+        // Clear cart button click event
+        $(document).on('click', '.clear_cart', function(e) {
+            e.preventDefault(); // Prevent default action
+
+            $.ajax({
+                url: '{{ route("clear.cart") }}', // Route to clear cart
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}' // Include CSRF token
+                },
+                success: function(response) {
+                    if (response.status === 'success') {
+                        // Clear the cart items from the DOM
+                        $('#cart_data_update').html(`
+                            <tr>
+                                <td colspan="6" class="text-center">
+                                    <a class="common_btn mt-3 mb-3 text-center" href="#">
+                                        <i class="fab fa-shopify" aria-hidden="true"></i> Go to Shop
+                                    </a>
+                                </td>
+                            </tr>
+                        `);
+
+                        // Update the subtotal to zero
+                        $('#subtotal').text('$0.00');
+                        $('#cart_count').text('0');
+                    }
+                },
+                error: function(error) {
+                    console.error('AJAX Error:', error);
+                }
+            });
+        });
+
+
+        //__ Remove cart items sidebar __// 
+        $(document).on('click', '.removeCart', function() {
+            var colorId = $(this).attr('data-colorId');
+            var sizeId = $(this).attr('data-sizeId');
+            var prdtId = $(this).attr('data-prdtId');
+            var cartItem = $(this).closest('li'); // Get the closest cart item element
     
+            $.ajax({
+                url: `{{ url('/remove-cart') }}/${prdtId}/${colorId}/${sizeId}`,
+                type: 'GET', 
+                success: function(res) {
+                    if (res.success === true) {
+                        // Remove the cart item from the UI
+                        cartItem.remove(); // Remove the item from the UI
+    
+                        // Update cart data
+                        updateCartSubtotal(); // Call function to update subtotal
+
+                        // Check if the cart is empty
+                        if (res.total === 0) {
+                            // If the cart is empty, show an empty cart message and reset the subtotal
+                            $('#cart-items').html('<li>Your cart is empty.</li>');
+                            $('#cart-subtotal').text('$0.00'); // Reset the subtotal
+                            $('#cart_count').text('0'); // Reset the cart count
+                        }
+                    } else {
+                        console.log('Error removing item');
+                    }
+                },
+                error: function(error) {
+                    console.log('Error:', error);
+                }
+            });
+        });
+
+
+        //__ Update cart price calculation __//
+        function updateCartSubtotal() {
+            $.ajax({
+                url: `{{ url('/get-cart') }}`, // Add the route to get updated cart
+                type: 'GET',
+                success: function(res) {
+                    if (res.success) {
+                        if (res.carts.length === 0) {
+                            // If no items are in the cart
+                            $('#cart-items').html('<span class="mt-4 d-block alert alert-danger text-center">Cart is empty</span>');
+                            $('#cart-subtotal').text('$0.00'); // Reset subtotal display
+                            $('#cart_count').text('0'); // Reset cart count
+                        } else {
+                            // Update subtotal and cart items as usual
+                            var subtotal = 0;
+                            $.each(res.carts, function(index, item) {
+                                let price = item.offer_price ? item.offer_price : item.price;
+                                subtotal += (price * item.qty) + (item.color_price || 0) + (item.size_price || 0);
+                            });
+                            $('#cart-subtotal').text(`$${subtotal.toFixed(2)}`); // Update subtotal display
+                            $('#cart_count').text(res.total); // Update cart count
+                        }
+                    }
+                },
+                error: function(error) {
+                    console.log('Error fetching updated cart:', error);
+                }
+            });
+        }
+    });
+
+</script>
 @endpush
