@@ -9556,3 +9556,13 @@ a:not([href]):not([class]):hover {
   background: #08C;
   border-color: #08C;
 }
+.qty_field::-webkit-outer-spin-button,
+.qty_field::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+.qty_field[type='number'] {
+    -moz-appearance: textfield;
+}

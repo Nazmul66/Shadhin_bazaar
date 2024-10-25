@@ -46,6 +46,8 @@ use App\Http\Controllers\Frontend\FlashSaleController;
     Route::post('/update-cart-quantity', [CartController::class, 'update_cart_quantity'])->name('update.cart.quantity');
     Route::post('/cart/delete-item', [CartController::class, 'deleteCartItem'])->name('delete.cart.item');
     Route::post('/clear-cart', [CartController::class, 'clearCart'])->name('clear.cart');
+    Route::get('/get-sidebar-cart', [CartController::class, 'get_sidebar_cart'])->name('get.sidebar.cart');
+    Route::get('/get-main-cart', [CartController::class, 'get_main_cart'])->name('get.main.cart');
 
 
 

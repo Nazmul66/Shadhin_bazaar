@@ -126,7 +126,7 @@
                                                 </td>
                                     
                                                 <td class="wsus__pro_icon">
-                                                    <a href="#" class="delete_cart_item" data-cart-id="{{ $cart->id }}" data-prdt-id="{{ $cart->product_id }}">
+                                                    <a type="button" class="delete_cart_item" data-cart-id="{{ $cart->id }}" data-prdt-id="{{ $cart->product_id }}">
                                                         <i class="far fa-times"></i>
                                                     </a>
                                                 </td>
@@ -205,6 +205,150 @@
 <script>
 
     $(document).ready(function() {
+
+        //__ Function to update cart sidebar UI __//
+        function refreshSidebarCart() {
+            $.ajax({
+                url: '{{ route("get.sidebar.cart") }}', // Your route to fetch sidebar cart data
+                type: 'GET',
+                success: function(res) {
+                    var cartItemsHtml = '';
+    
+                     // Check if the cart has items
+                    if (res.carts.length > 0) {
+                        // Loop through each cart item and update the cart
+                        $.each(res.carts, function(index, item) {
+                            cartItemsHtml += `
+                                <li>
+                                    <div class="wsus__cart_img">
+                                        <a href="{{ url('product/details') }}/${item.id}">
+                                            <img src="${item.image_url}" alt="product" class="img-fluid w-100">
+                                        </a>
+                                        <a class="wsis__del_icon removeCart" data-colorId="${item.color_id}" data-sizeId="${item.size_id}" data-prdtId="${item.pdt_id}" style="cursor: pointer;">
+                                            <i class="fas fa-minus-circle"></i>
+                                        </a>
+                                    </div>
+                                    <div class="wsus__cart_text">
+                                        <a class="wsus__cart_title" href="{{ url('product/details') }}/${item.slug}">${item.name}</a>
+                                        <p>
+                                            ${item.offer_price ? `$${item.offer_price} <del>$${item.price}</del>` : `$${item.price}`} x ${item.qty} Qty
+                                        </p>
+                            `;
+                
+                            // Check and append size details if available
+                            if (item.size_name && item.size_price) {
+                                cartItemsHtml += `
+                                    <span class="variant_item"> Size: <span class="size_content">${item.size_name}</span>  ($${item.size_price})</span>
+                                `;
+                            }
+                
+                            // Check and append color details if available
+                            if (item.color_name && item.color_price) {
+                                cartItemsHtml += `
+                                    <span class="variant_item"> Color: <span class="color_content" style="background: ${item.color_name}; width: 20px; height: 20px; display: inline-block; border-radius: 50%;"></span>  ($${item.color_price})</span>
+                                `;
+                            }
+                            cartItemsHtml += `</div> </li>`;
+                        });
+
+                        // Update cart items in the mini-cart
+                        $('#cart-items').html(cartItemsHtml);
+
+                        // Update subtotal in the mini-cart
+                        $('#cart-subtotal').text(`$${res.subtotal.toFixed(2)}`);
+                    } else {
+                        window.location.reload();
+                        // If no items are in the cart, display a message
+                        $('#cart-items').html('<a class="common_btn mt-4 mb-3 text-center " href="#"><i class="fab fa-shopify" aria-hidden="true"></i> go shop</a>');
+                        $('#cart-subtotal').text('$0.00');
+                    }
+                
+                },
+                error: function (err){
+                    console.log('error', err)
+                }
+           });
+        }
+
+        // Function to refresh the main cart table
+        function refreshMainCartData() {
+            $.ajax({
+                url: '{{ route("get.main.cart") }}', // Make sure this route is correct
+                type: 'GET',
+                success: function(res) {
+                    if (res.status === 'success') {
+                        let cartDataHtml = '';
+
+                        // Loop through each cart item to build HTML rows
+                        $.each(res.carts, function(index, cart) {
+                            cartDataHtml += `
+                                <tr class="d-flex" id="cart-item-${cart.id}">
+                                    <td class="wsus__pro_img">
+                                        <img src="${cart.thumb_image}" alt="product" class="img-fluid w-100">
+                                    </td>
+                                    <td class="wsus__pro_name">
+                                        <p>${cart.name}</p>
+                                        ${cart.color_name ? `
+                                            <span class="variant_item mb-2"> Color: 
+                                                <span class="color_content" style="background: ${cart.color_name}"></span> 
+                                                ($${cart.color_price})
+                                            </span>` : ''}
+                                        ${cart.size_name ? `
+                                            <span class="variant_item"> Size: 
+                                                <span class="size_content">${cart.size_name}</span> 
+                                                ($${cart.size_price})
+                                            </span>` : ''}
+                                    </td>
+                                    <td class="wsus__pro_select">
+                                        <div class="select_number">
+                                            <span class="increment" data-cart-id="${cart.id}" data-prdt-id="${cart.pdt_id}">-</span>
+                                            <input type="number" class="qty_field" name="qty" min="1" max="20" data-cart-id="${cart.id}" value="${cart.qty}">
+                                            <span class="decrement" data-cart-id="${cart.id}" data-prdt-id="${cart.pdt_id}">+</span>
+                                        </div>
+                                    </td>
+                                    <td class="wsus__pro_status">
+                                        <h6 id="item-price-${cart.id}">
+                                            $${(cart.offer_price || cart.price) * cart.qty}
+                                        </h6>
+                                    </td>
+                                    <td class="wsus__pro_tk">
+                                        <h6 id="main-price-${cart.id}">
+                                            $${(cart.offer_price + cart.color_price + cart.size_price) * cart.qty}
+                                        </h6>
+                                    </td>
+                                    <td class="wsus__pro_icon">
+                                        <a type="button" class="delete_cart_item" data-cart-id="${cart.id}" data-prdt-id="${cart.pdt_id}">
+                                            <i class="far fa-times"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            `;
+                        });
+
+                        // If cart is empty, display "go shop" button
+                        if (res.carts.length === 0) {
+                            cartDataHtml = `
+                                <tr>
+                                    <td colspan="6">
+                                        <a class="common_btn mt-3 mb-3 text-center " href="#"><i class="fab fa-shopify" aria-hidden="true"></i> go shop</a>
+                                    </td>
+                                </tr>
+                            `;
+                        }
+
+                        // Update main cart table and subtotal
+                        $('#cart_data_update').html(cartDataHtml);
+                        $('#cart_count').text(`${res.total_count}`);
+                        $('#cart-subtotal').text(`$${res.subtotal.toFixed(2)}`);
+                        $('#subtotal').text(`$${res.subtotal.toFixed(2)}`);
+                    }
+                },
+                error: function(error) {
+                    console.log('Error refreshing main cart:', error);
+                }
+            });
+        }
+
         // Handle Increment button click (for increasing the quantity)
         $(document).on('click', '.decrement', function() {
             // Find the input field next to the clicked button
@@ -251,6 +395,10 @@
                     _token: "{{ csrf_token() }}" // Include CSRF token
                 },
                 success: function(res) {
+
+                     // Refresh the sidebar cart data
+                    refreshSidebarCart();
+
                     if (res.status === 'success') {
                         // Update the item price
                         $('#item-price-' + cartId).text('$' + res.price.toFixed(2));
@@ -271,53 +419,55 @@
 
 
         // Delete cart item on click
-        function cart_table(){
-            $(document).on('click', '.delete_cart_item', function(e) {
-                e.preventDefault();
-                
-                let cartId = $(this).data('cart-id');
-                let prdtId = $(this).data('prdt-id');
-                let row = $('#cart-item-' + cartId); // Get the row to remove it later
+        $(document).on('click', '.delete_cart_item', function(e) {
+            // e.preventDefault();
+            
+            let cartId = $(this).data('cart-id');
+            let prdtId = $(this).data('prdt-id');
+            let row = $('#cart-item-' + cartId); // Get the row to remove it later
 
-                $.ajax({
-                    url: '{{ route("delete.cart.item") }}', // Update with the correct route
-                    type: 'POST',
-                    data: {
-                        cart_id: cartId,
-                        prdtId: prdtId,
-                        _token: '{{ csrf_token() }}'
-                    },
-                    success: function(res) {
-                        if (res.status === 'success') {
-                            // Remove the row from the DOM
-                            row.remove();
+            $.ajax({
+                url: '{{ route("delete.cart.item") }}', // Update with the correct route
+                type: 'POST',
+                data: {
+                    cart_id: cartId,
+                    prdtId: prdtId,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(res) {
+                    if (res.status === 'success') {
 
-                            // Update the subtotal
-                            $('#subtotal').text('$' + res.subtotal.toFixed(2));
+                        // Refresh the sidebar cart data
+                        refreshSidebarCart();
 
-                            $('#cart_count').text(`${res.total?.length}`);
+                        // Remove the row from the DOM
+                        row.remove();
 
-                            // Check if the cart is empty
-                            if (res.total?.length === 0) {
-                                // Display the "Go to Shop" button when cart is empty
-                                $('#cart_data_update').html(`
-                                    <tr>
-                                        <td colspan="6" class="text-center">
-                                            <a class="common_btn mt-3 mb-3 text-center " href="#">
-                                                <i class="fab fa-shopify" aria-hidden="true"></i> Go to Shop
-                                            </a>
-                                        </td>
-                                    </tr>
-                                `);
-                            }
+                        // Update the subtotal
+                        $('#subtotal').text('$' + res.subtotal.toFixed(2));
+
+                        $('#cart_count').text(`${res.total?.length}`);
+
+                        // Check if the cart is empty
+                        if (res.total?.length === 0) {
+                            // Display the "Go to Shop" button when cart is empty
+                            $('#cart_data_update').html(`
+                                <tr>
+                                    <td colspan="6" class="text-center">
+                                        <a class="common_btn mt-3 mb-3 text-center " href="#">
+                                            <i class="fab fa-shopify" aria-hidden="true"></i> Go to Shop
+                                        </a>
+                                    </td>
+                                </tr>
+                            `);
                         }
-                    },
-                    error: function(error) {
-                        console.error('AJAX Error:', error);
                     }
-                });
+                },
+                error: function(error) {
+                    console.error('AJAX Error:', error);
+                }
             });
-        }
+        });
 
 
         // Clear cart button click event
@@ -355,13 +505,13 @@
         });
 
 
-        //__ Remove cart items sidebar __// 
+        //__ Remove cart items [ sidebar ] __// 
         $(document).on('click', '.removeCart', function() {
             var colorId = $(this).attr('data-colorId');
             var sizeId = $(this).attr('data-sizeId');
             var prdtId = $(this).attr('data-prdtId');
             var cartItem = $(this).closest('li'); // Get the closest cart item element
-    
+
             $.ajax({
                 url: `{{ url('/remove-cart') }}/${prdtId}/${colorId}/${sizeId}`,
                 type: 'GET', 
@@ -370,13 +520,17 @@
                         // Remove the cart item from the UI
                         cartItem.remove(); // Remove the item from the UI
     
+                        // Refresh the cart data after deletion
+                        refreshMainCartData();
+
                         // Update cart data
                         updateCartSubtotal(); // Call function to update subtotal
 
                         // Check if the cart is empty
                         if (res.total === 0) {
+                            window.location.reload();
                             // If the cart is empty, show an empty cart message and reset the subtotal
-                            $('#cart-items').html('<li>Your cart is empty.</li>');
+                            $('#cart-items').html('<div class="text-center"><a class="common_btn mt-4 mb-3 text-center " href="#"><i class="fab fa-shopify" aria-hidden="true"></i> go shop</a></div>');
                             $('#cart-subtotal').text('$0.00'); // Reset the subtotal
                             $('#cart_count').text('0'); // Reset the cart count
                         }

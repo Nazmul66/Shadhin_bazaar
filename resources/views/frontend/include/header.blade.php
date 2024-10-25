@@ -87,16 +87,21 @@
                             </li>
                         @endforeach
                     @else
-                        <span class="mt-4 d-block alert alert-danger text-center">Cart is empty</span>
+                       <div class="text-center">
+                           <a class="common_btn mt-4 mb-3 text-center" href="#"><i class="fab fa-shopify" aria-hidden="true"></i> go shop</a>
+                       </div>
                     @endif
                 </ul>
 
-                <h5>sub total <span id="cart-subtotal">${{ number_format(cart_subTotal(), 2) }}</span></h5>
+                @if ( $all_carts->count() > 0 )
+                    <h5>sub total <span id="cart-subtotal">${{ number_format(cart_subTotal(), 2) }}</span></h5>
 
-                <div class="wsus__minicart_btn_area">
-                    <a class="common_btn" href="{{ route('show-cart') }}">view cart</a>
-                    <a class="common_btn" href="check_out.html">checkout</a>
-                </div>
+                    <div class="wsus__minicart_btn_area">
+                        <a class="common_btn" href="{{ route('show-cart') }}">view cart</a>
+                        <a class="common_btn" href="check_out.html">checkout</a>
+                    </div>
+                @endif
+
         </div>
         {{-- Shopping cart sidebar End --}}
 

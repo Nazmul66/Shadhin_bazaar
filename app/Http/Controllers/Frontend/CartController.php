@@ -31,6 +31,60 @@ class CartController extends Controller
     }
 
 
+    public function get_sidebar_cart()
+    {
+        $userId = Auth::user()->id ?? 1; 
+    
+        $all_carts = DB::table('carts')
+                ->leftJoin('products', 'products.id', 'carts.product_id')
+                ->leftJoin('product_colors', 'product_colors.id', 'carts.color_id')
+                ->leftJoin('product_sizes', 'product_sizes.id', 'carts.size_id')
+                ->select('carts.*', 'products.thumb_image', 'products.name', 'products.id as pdt_id', 'products.slug', 'products.price', 'products.offer_price', 'product_sizes.size_name', 'product_sizes.size_price', 'product_colors.color_name', 'product_colors.color_price')
+                ->whereNull('carts.order_id')
+                ->where('carts.user_id', $userId)
+                ->get();
+
+        $subtotal = 0;
+        foreach ($all_carts as $item) {
+            $item->image_url = asset($item->thumb_image);
+
+            $basePrice = $item->offer_price ? $item->offer_price : $item->price;
+            $subtotal += ($basePrice + $item->color_price + $item->size_price) * $item->qty;
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'carts' => $all_carts,
+            'subtotal' => $subtotal 
+        ]);
+    }
+
+
+    public function get_main_cart()
+    {
+        $all_carts = DB::table('carts')
+                ->leftJoin('products', 'products.id', 'carts.product_id')
+                ->leftJoin('product_colors', 'product_colors.id', 'carts.color_id')
+                ->leftJoin('product_sizes', 'product_sizes.id', 'carts.size_id')
+                ->select('carts.*', 'products.thumb_image', 'products.name', 'products.id as pdt_id', 'products.slug', 'products.price', 'products.offer_price', 'product_sizes.size_name', 'product_sizes.size_price', 'product_colors.color_name', 'product_colors.color_price')
+                ->whereNull('carts.order_id')
+                ->where('carts.user_id', Auth::user()->id ?? 1)
+                ->get();
+        
+        $subTotal = 0;
+        foreach( $all_carts as $item  ){
+            $item->image_url = asset($item->thumb_image);
+
+            $subTotal += ( ($item->offer_price ? $item->offer_price : $item->price) + $item->color_price + $item->size_price ) * $item->qty;
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'carts' => $all_carts,
+            'total_count' => $all_carts->count(),
+            'subtotal' => $subTotal 
+        ]);
+    }
 
     public function update_cart_quantity(Request $request)
     {

@@ -1178,7 +1178,7 @@
             });
         });
     
-        //__ Function to update cart UI __//
+        //__ Function to update cart sidebar UI __//
         function updateCartUI(carts) {
             var cartItemsHtml = '';
     
