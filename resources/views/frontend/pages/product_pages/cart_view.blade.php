@@ -82,15 +82,18 @@
                                                 </td>
                                     
                                                 <td class="wsus__pro_name">
-                                                    <p>{{ $cart->name }}</p>
+                                                    <p class="mb-1">{{ $cart->name }}</p>
+                                                    <span class="variant_item mb-2">  
+                                                        <strong>Product Price : </strong> ${{ $cart->price }}
+                                                    </span>
                                                     @if ( !empty($cart->color_name) )
-                                                        <span class="variant_item mb-2"> Color: 
+                                                        <span class="variant_item mb-2"> <strong>Color:</strong> 
                                                             <span class="color_content" style="background: {{ $cart->color_name }}"></span> 
                                                             (${{ $cart->color_price }})
                                                         </span>
                                                     @endif
                                                     @if ( !empty($cart->size_name))
-                                                        <span class="variant_item"> Size: 
+                                                        <span class="variant_item"> <strong>Size: </strong>
                                                             <span class="size_content">{{ $cart->size_name }}</span> 
                                                             (${{ $cart->size_price }})
                                                         </span>
@@ -148,12 +151,30 @@
                     <div class="wsus__cart_list_footer_button" id="sticky_sidebar">
                         <h6>total cart</h6>
                         <p>subtotal: <span id="subtotal">${{ number_format($subTotal, 2) ?? 0 }}</span></p>
-                        <p>delivery: <span>$00.00</span></p>
-                        <p>discount: <span>$10.00</span></p>
-                        <p class="total"><span>total:</span> <span>$134.00</span></p>
+                        <p>Coupon (-): <span id="discount">
+                                @if(Session::has('coupon'))
+                                    ${{ number_format(Session::get('coupon')['discount'], 2) }}
+                                @else
+                                    $0.00
+                                @endif
+                            </span>
+                        </p>
 
-                        <form>
-                            <input type="text" placeholder="Coupon Code">
+                        @php
+                            if ( session()->has('coupon') ) {
+                              $coupons = session()->get('coupon')['discount'];
+                            }
+                            else{
+                                $coupons = 0;
+                            }
+                        @endphp
+
+                        <p class="total"><span>total:</span> <span id="total_price">${{ number_format($subTotal - $coupons, 2)  }} </span></p>
+
+                        <form id="apply_coupon" method="GET">
+                            @csrf
+
+                            <input type="text" id="coupon_code" name="coupon_code" value="{{ session()->has('coupon') ? session()->get('coupon')['coupon_name'] : ""}}" placeholder="Coupon Code">
                             <button type="submit" class="common_btn">apply</button>
                         </form>
                         <a class="common_btn mt-4 w-100 text-center" href="">checkout</a>
@@ -396,8 +417,14 @@
                 },
                 success: function(res) {
 
+                    var total = res.subtotal - {{ session()->has('coupon') ? session()->get('coupon')['discount'] : 0 }}
+                    $('#total_price').text(`$${total.toFixed(2)}`);
+
                      // Refresh the sidebar cart data
                     refreshSidebarCart();
+
+                    // update the discount amount
+                    calculateCouponDiscount()
 
                     if (res.status === 'success') {
                         // Update the item price
@@ -436,6 +463,9 @@
                 },
                 success: function(res) {
                     if (res.status === 'success') {
+                         // Calculate the new total after discount
+                        let totalAfterDiscount = res.subtotal - res.discount;
+                        $('#total_price').text(`$${totalAfterDiscount.toFixed(2)}`);
 
                         // Refresh the sidebar cart data
                         refreshSidebarCart();
@@ -450,6 +480,8 @@
 
                         // Check if the cart is empty
                         if (res.total?.length === 0) {
+                            window.location.reload();
+                            
                             // Display the "Go to Shop" button when cart is empty
                             $('#cart_data_update').html(`
                                 <tr>
@@ -482,6 +514,9 @@
                 },
                 success: function(response) {
                     if (response.status === 'success') {
+                        refreshMainCartData();
+                        refreshSidebarCart()
+
                         // Clear the cart items from the DOM
                         $('#cart_data_update').html(`
                             <tr>
@@ -517,9 +552,13 @@
                 type: 'GET', 
                 success: function(res) {
                     if (res.success === true) {
+
                         // Remove the cart item from the UI
                         cartItem.remove(); // Remove the item from the UI
-    
+                        
+                        var total = res.subtotal - {{ session()->has('coupon') ? session()->get('coupon')['discount'] : 0 }}
+                        $('#total_price').text(`$${total.toFixed(2)}`);
+
                         // Refresh the cart data after deletion
                         refreshMainCartData();
 
@@ -571,6 +610,43 @@
                 },
                 error: function(error) {
                     console.log('Error fetching updated cart:', error);
+                }
+            });
+        }
+
+        //__ Coupon Apply __//
+        $('#apply_coupon').on('submit', function(e){
+            e.preventDefault();
+
+            let formData = $(this).serialize();
+
+            $.ajax({
+                url: `{{ route('apply.coupon') }}`,
+                type: 'POST',
+                data: formData,
+                success: function(res) {
+                    // console.log(res.message);
+                    calculateCouponDiscount()
+                },
+                error: function(error) {
+                    console.error('AJAX Error:', error);
+                }
+            });
+        })
+
+
+        function calculateCouponDiscount()
+        {
+            $.ajax({
+                url: `{{ route('coupon.calculation') }}`,
+                type: 'GET',
+                success: function(res) {
+                    // console.log(res);
+                    $('#discount').text(`$${res.discount.toFixed(2)}`);
+                    $('#total_price').text(`$${res.cart_total.toFixed(2)}`);
+                },
+                error: function(error) {
+                    console.error('AJAX Error:', error);
                 }
             });
         }

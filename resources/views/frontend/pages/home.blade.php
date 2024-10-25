@@ -2055,6 +2055,9 @@
 
 
 @push('add-js')
+
+    @include('frontend.include.cart_sidebar_js_code')
+
     <script>
         $(document).ready(function(){
             //=======COUNTDOWN======   

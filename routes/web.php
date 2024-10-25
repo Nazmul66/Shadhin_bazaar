@@ -5,6 +5,7 @@ use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\ProductController;
 use App\Http\Controllers\Frontend\CartController;
+use App\Http\Controllers\Frontend\CouponController;
 use App\Http\Controllers\Frontend\FlashSaleController;
 
 /*
@@ -40,7 +41,6 @@ use App\Http\Controllers\Frontend\FlashSaleController;
     Route::get('/remove-cart/{id}/{color_id?}/{size_id?}', [ProductController::class, 'removeCart'])->name('remove.cart');
     Route::get('/get-cart-data', [ProductController::class, 'getCart'])->name('get.cart.data');
     
-    
     //__ Carts __//
     Route::get('/show-cart', [CartController::class, 'cart_view'])->name('show-cart');
     Route::post('/update-cart-quantity', [CartController::class, 'update_cart_quantity'])->name('update.cart.quantity');
@@ -50,6 +50,9 @@ use App\Http\Controllers\Frontend\FlashSaleController;
     Route::get('/get-main-cart', [CartController::class, 'get_main_cart'])->name('get.main.cart');
 
 
+    //__ Coupon __//
+    Route::post('/apply-coupon', [CouponController::class, 'apply_coupon'])->name('apply.coupon');
+    Route::get('/coupon-calculation', [CouponController::class, 'coupon_calculation'])->name('coupon.calculation');
 
 
     Route::get('/product-category', [ProductController::class, "product_category"])->name('product.category');

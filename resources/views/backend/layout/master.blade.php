@@ -1,4 +1,6 @@
-
+<!doctype html>
+<html lang="en">
+    
 <!-- Meta-Titles Head Tag -->
 @include("backend.include.meta-titles")
 

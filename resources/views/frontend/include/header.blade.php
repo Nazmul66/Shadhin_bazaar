@@ -93,14 +93,16 @@
                     @endif
                 </ul>
 
-                @if ( $all_carts->count() > 0 )
-                    <h5>sub total <span id="cart-subtotal">${{ number_format(cart_subTotal(), 2) }}</span></h5>
+               <div class="cart_redirect">
+                    @if ( $all_carts->count() > 0 )
+                        <h5>sub total <span id="cart-subtotal">${{ number_format(cart_subTotal(), 2) }}</span></h5>
 
-                    <div class="wsus__minicart_btn_area">
-                        <a class="common_btn" href="{{ route('show-cart') }}">view cart</a>
-                        <a class="common_btn" href="check_out.html">checkout</a>
-                    </div>
-                @endif
+                        <div class="wsus__minicart_btn_area">
+                            <a class="common_btn" href="{{ route('show-cart') }}">view cart</a>
+                            <a class="common_btn" href="check_out.html">checkout</a>
+                        </div>
+                    @endif
+               </div>
 
         </div>
         {{-- Shopping cart sidebar End --}}

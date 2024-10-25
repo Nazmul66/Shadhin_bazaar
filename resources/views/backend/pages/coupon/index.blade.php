@@ -298,11 +298,11 @@
         });
 
         $(".up_start_date").flatpickr({
-            // minDate: "today"
+            minDate: "today"
         });
 
         $(".up_end_date").flatpickr({
-            // minDate: "today",
+            minDate: "today",
         });
 
         $(document).ready(function () {

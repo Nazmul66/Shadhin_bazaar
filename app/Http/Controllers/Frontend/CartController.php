@@ -171,12 +171,22 @@ class CartController extends Controller
                 $basePrice = $item->offer_price ? $item->offer_price : $item->price;
                 $subtotal += ($basePrice + $item->color_price + $item->size_price) * $item->qty;
             }
+
+            // If the cart is now empty, forget the coupon session
+            $discount = session('coupon')['discount'] ?? 0;
+
+            if ($all_carts->isEmpty()) {
+                session()->forget('coupon');
+                $couponRemoved = true;
+                $discount = 0; // No discount if coupon session is forgotten
+            }
     
             // Return a success response
             return response()->json([
                 'status' => 'success',
                 'subtotal' => $subtotal,
                 'total' => $all_carts,
+                'discount' => $discount,
             ]);
         } else {
             return response()->json(['status' => 'error', 'message' => 'Cart item not found'], 404);
@@ -186,11 +196,24 @@ class CartController extends Controller
 
     public function clearCart()
     {
-        // Assuming you are using a cart model, update this logic based on your cart storage method
         $userId = Auth::user()->id ?? 1; // or any logic to get the user/cart owner
 
         // Delete all cart items for this user
         Cart::where('user_id', $userId)->delete();
+
+        $all_carts = DB::table('carts')
+                ->leftJoin('products', 'products.id', 'carts.product_id')
+                ->leftJoin('product_colors', 'product_colors.id', 'carts.color_id')
+                ->leftJoin('product_sizes', 'product_sizes.id', 'carts.size_id')
+                ->select('carts.*', 'products.thumb_image', 'products.name', 'products.id as pdt_id', 'products.slug', 'products.price', 'products.offer_price', 'product_sizes.size_name', 'product_sizes.size_price', 'product_colors.color_name', 'product_colors.color_price')
+                ->whereNull('carts.order_id')
+                ->where('carts.user_id', Auth::user()->id ?? 1)
+                ->get();
+
+        // If the cart is now empty, forget the coupon session
+        if ($all_carts->isEmpty()) {
+            session()->forget('coupon');
+        }
 
         return response()->json([
             'status' => 'success',

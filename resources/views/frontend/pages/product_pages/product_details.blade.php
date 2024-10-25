@@ -274,7 +274,13 @@
                     <div class="col-xl-5 col-md-7 col-lg-7">
                         <div class="wsus__pro_details_text">
                             <a class="title" href="#">{{ $product->name }}</a>
-                            <p class="wsus__stock_area"><span class="in_stock">in stock</span> ({{ $product->qty }} item)</p>
+                            <p class="wsus__stock_area">
+                               @if ( $product->qty > 0 )
+                                  <span class="in_stock">in stock</span> ({{ $product->qty }} item)
+                               @else
+                                  <span class="in_stock" style="background: red">Out of stock</span>
+                               @endif
+                            </p>
                             <h4>
                                 @if ( !empty(checkDiscount($product)) )
                                     <span id="product_offer_price">${{ $product->offer_price }}</span> <del id="product_price">${{ $product->price }}</del>
@@ -352,8 +358,8 @@
                                 </div>
     
                                 <ul class="wsus__button_area">
-                                    <li><button type="submit" class="add_cart">add to cart</button></li>
-                                    <li><a class="buy_now" href="#">buy now</a></li>
+                                    <li><button type="submit" class="add_cart" {{ $product->qty > 0 ? '' : 'disabled' }} style="{{ $product->qty > 0 ? '' : 'background: #aaa; color: #FFF; cursor: not-allowed;' }}" >add to cart</button></li>
+                                    <li><button type="submit" class="buy_now" {{ $product->qty > 0 ? '' : 'disabled' }} style="    border: none;{{ $product->qty > 0 ? '' : 'background: #aaa; color: #FFF; cursor: not-allowed;' }}" >Buy Now</button></li>
                                     <li><a href="#"><i class="fal fa-heart"></i></a></li>
                                     <li><a href="#"><i class="far fa-random"></i></a></li>
                                 </ul>
@@ -410,7 +416,7 @@
                                     <div class="wsus__det_sidebar_banner_text">
                                         <p>Black Friday Sale</p>
                                         <h4>Up To 70% Off</h4>
-                                        <a href="#" class="common_btn">shope now</a>
+                                        <a href="#" class="common_btn">shop now</a>
                                     </div>
                                 </div>
                             </div>
@@ -1163,8 +1169,9 @@
 
                         // Check if the cart is empty
                         if (res.total === 0) {
+                            window.location.reload();
                             // If the cart is empty, show an empty cart message and reset the subtotal
-                            $('#cart-items').html('<li>Your cart is empty.</li>');
+                            $('#cart-items').html('<div class="text-center"><a class="common_btn mt-4 mb-3 text-center " href="#"><i class="fab fa-shopify" aria-hidden="true"></i> go shop</a></div>');
                             $('#cart-subtotal').text('$0.00'); // Reset the subtotal
                             $('#cart_count').text('0'); // Reset the cart count
                         }
@@ -1217,8 +1224,31 @@
                 cartItemsHtml += `</div> </li>`;
             });
     
-            // Update cart items in the mini-cart
+            // Check if there are items in the cart
+            if (carts.length > 0) {
+                    // Calculate the subtotal
+                    let subtotal = carts.reduce((total, item) => {
+                        let price = item.offer_price ? item.offer_price : item.price;
+                        return total + (price * item.qty) + (item.color_price || 0) + (item.size_price || 0);
+                    }, 0);
+
+                    // Set cart content and subtotal HTML
+                    cartSubtotalHtml = `
+                        <h5>Sub Total: <span id="cart-subtotal">$${subtotal.toFixed(2)}</span></h5>
+                        <div class="wsus__minicart_btn_area">
+                            <a class="common_btn" href="{{ route('show-cart') }}">View Cart</a>
+                            <a class="common_btn" href="check_out.html">Checkout</a>
+                        </div>
+                    `;
+            } else {
+                // Show empty cart message
+                cartItemsHtml = '<li>Your cart is empty.</li>';
+                cartSubtotalHtml = ''; // Clear subtotal and buttons if cart is empty
+            }
+
+            // Update the cart items and subtotal sections
             $('#cart-items').html(cartItemsHtml);
+            $('.cart_redirect').html(cartSubtotalHtml);
 
             // Update subtotal in the mini-cart
             $('#cart-subtotal').text(`$${res.subtotal.toFixed(2)}`);

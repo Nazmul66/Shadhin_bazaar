@@ -90,6 +90,7 @@ class CouponController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
         $request->validate(
             [
                 'name' => ['required', 'unique:coupons,name', 'max:200'],
@@ -171,49 +172,64 @@ class CouponController extends Controller
      */
     public function update(Request $request, Coupon $coupon)
     {
-
+        // Log the incoming request data for debugging
+        // \Log::info('Incoming request data:', $request->all());
+    
+        // Validation
         $request->validate(
             [
-                'name' => ['required', 'unique:coupons,name,'. $coupon->id, 'max:200'],
+                'name' => ['required', 'unique:coupons,name,' . $coupon->id, 'max:200'],
                 'code' => ['required', 'max:200'],
                 'quantity' => ['required', 'integer'],
                 'max_used' => ['required', 'integer'],
                 'discount' => ['required', 'integer'],
+                'start_date' => ['required', 'date'], // Ensure date validation
+                'end_date' => ['required', 'date'],   // Ensure date validation
             ],
             [
                 'name.required' => 'Coupon Name is required',
-                'name.unique' => 'Character might be unique',
+                'name.unique' => 'Character must be unique',
                 'code.required' => 'Coupon code is required',
                 'max_used.required' => 'Max Used is required',
                 'discount.required' => 'Discount is required',
+                'start_date.required' => 'Start date is required', // Add specific error messages
+                'end_date.required' => 'End date is required',
             ]
         );
     
         DB::beginTransaction();
         try {
-            $coupon->name            = $request->name;
-            $coupon->code            = Str::lower($request->code);
-            $coupon->quantity        = $request->quantity;
-            $coupon->max_used        = $request->max_used;
-            $coupon->discount_type   = $request->discount_type;
-            $coupon->discount        = $request->discount;
-            $coupon->start_date      = $request->start_date;
-            $coupon->end_date        = $request->end_date;
-            $coupon->status          = $request->status;
-            
+            // Updating coupon details
+            $coupon->name = $request->name;
+            $coupon->code = Str::lower($request->code);
+            $coupon->quantity = $request->quantity;
+            $coupon->max_used = $request->max_used;
+            $coupon->discount_type = $request->discount_type;
+            $coupon->discount = $request->discount;
+            $coupon->start_date = $request->start_date;
+            $coupon->end_date = $request->end_date;
+            $coupon->status = $request->status;
+    
+            // Save coupon
             $coupon->save();
-
-            return response()->json(['message'=> "success"],200);
-        }
-        catch(\Exception $ex){
+    
+            // Commit the transaction
+            DB::commit();
+    
+            // Return success response
+            return response()->json(['message' => "Successfully Coupon Updated!", 'status' => true], 200);
+        } catch (\Exception $ex) {
+            // Rollback if there is an error
             DB::rollBack();
-            throw $ex;
-            // dd($ex->getMessage());
+            
+            // Log the exception for debugging
+            // \Log::error('Update failed: ' . $ex->getMessage());
+    
+            // Return error response
+            return response()->json(['message' => "Failed to update coupon!", 'error' => $ex->getMessage()], 500);
         }
-
-        DB::commit();        
-        return response()->json(['message'=> "Successfully Coupon Updated!", 'status' => true]);
     }
+    
 
     /**
      * Remove the specified resource from storage.

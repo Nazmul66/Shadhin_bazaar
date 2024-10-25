@@ -124,6 +124,7 @@ class ProductController extends Controller
     // delete cart data
     public function removeCart($prdtId, $colorId = null, $sizeId = null)
     {
+        // dd($prdtId, $colorId , $sizeId);
         // Find the cart item with the product_id, and optionally match color_id and size_id
         $cartQuery = Cart::where('product_id', $prdtId);
     
@@ -149,8 +150,28 @@ class ProductController extends Controller
                     ->whereNull('carts.order_id')
                     ->where('carts.user_id', Auth::user()->id ?? 1)
                     ->get();
+
+                    // calculate data
+        $subtotal = 0;
+        foreach ($all_carts as $data) {
+            // Calculate item price (base price + size price + color price) * quantity
+            $itemBasePrice = $data->offer_price ? $data->offer_price : $data->price;
+            $itemTotalPrice = ($itemBasePrice + $data->size_price + $data->color_price) * $data->qty;
+    
+            // Add this item's total to the subtotal
+            $subtotal += $itemTotalPrice;
+        }
+
+            // If the cart is now empty, forget the coupon session
+            if ($all_carts->isEmpty()) {
+                session()->forget('coupon');
+            }
             
-            return response()->json(['success' => true, 'total' => $all_carts->count()]);
+            return response()->json([
+                'success' => true, 
+                'total' => $all_carts->count(), 
+                'subtotal' => $subtotal
+            ]);
         }
         else{
             return response()->json(['success' => false, 'message' => 'Item not found'], 404);
@@ -162,6 +183,7 @@ class ProductController extends Controller
     // get subtotal card items
     public function getCart(Request $request)
     {
+        // dd($request->all());
         $userId = Auth::user()->id ?? 1;
 
         $all_carts = DB::table('carts')

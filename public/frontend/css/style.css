@@ -9524,6 +9524,7 @@ a:not([href]):not([class]):hover {
   height: 35px;
   padding: 0;
   font-family: Lato;
+  margin: 0 6px;
   font-size: 1.2em;
   border-radius: 20px;
   text-transform: uppercase;
