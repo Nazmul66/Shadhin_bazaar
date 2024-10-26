@@ -1136,12 +1136,18 @@
                 data: formData, 
                 success: function(res) {
                     // Update cart count
-                    $('#cart_count').text(res.total); // Update cart count badge
+                    if( res.status === 'success' ){
+                        $('#cart_count').text(res.total); // Update cart count badge
 
-                    $('.wsus__mini_cart').addClass('.show_cart'); // Show mini-cart (corrected class addition)
+                        $('.wsus__mini_cart').addClass('.show_cart'); // Show mini-cart (corrected class addition)
 
-                    updateCartUI(res.carts); // Update cart UI
-                    updateCartSubtotal(); // Call to update subtotal after adding item
+                        updateCartUI(res.carts); // Update cart UI
+                        updateCartSubtotal(); // Call to update subtotal after adding item
+                    }
+                    else{
+                        window.location.href = "{{ route('register.login') }}";
+                    }
+
                 },
                 error: function(error) {
                     console.log('Error:', error);

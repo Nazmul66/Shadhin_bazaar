@@ -21,7 +21,7 @@
                     <div class="col-12">
                         <h4>login / register</h4>
                         <ul>
-                            <li><a href="#">home</a></li>
+                            <li><a href="{{ url('/') }}">home</a></li>
                             <li><a href="#">login / register</a></li>
                         </ul>
                     </div>
@@ -55,18 +55,28 @@
                             </li>
                         </ul>
                         <div class="tab-content" id="pills-tabContent2">
+                            {{-- Login Form --}}
                             <div class="tab-pane fade show active" id="pills-homes" role="tabpanel"
                                 aria-labelledby="pills-home-tab2">
                                 <div class="wsus__login">
-                                    <form>
+                                    
+                                    <form method="POST" action="{{ route('login') }}">
+                                        @csrf
+
                                         <div class="wsus__login_input">
                                             <i class="fas fa-user-tie"></i>
-                                            <input type="text" placeholder="User Name">
+                                            <input type="email" name="email" value="{{ old('email') }}" required autofocus autocomplete="off" placeholder="Email">
+
+                                            <x-input-error :messages="$errors->get('email')" class="mt-2" />
                                         </div>
+
                                         <div class="wsus__login_input">
                                             <i class="fas fa-key"></i>
-                                            <input type="password" placeholder="Password">
+                                            <input type="password" type="password" name="password" required autocomplete="off" placeholder="Password">
+
+                                            <x-input-error :messages="$errors->get('password')" class="mt-2" />
                                         </div>
+
                                         <div class="wsus__login_save">
                                             <div class="form-check form-switch">
                                                 <input class="form-check-input" type="checkbox"
@@ -87,26 +97,42 @@
                                     </form>
                                 </div>
                             </div>
+
+                            {{-- Register Form --}}
                             <div class="tab-pane fade" id="pills-profiles" role="tabpanel"
                                 aria-labelledby="pills-profile-tab2">
                                 <div class="wsus__login">
-                                    <form>
+                                    <form action="{{ route('register') }}" method="POST">
+                                        @csrf
+
                                         <div class="wsus__login_input">
                                             <i class="fas fa-user-tie"></i>
-                                            <input type="text" placeholder="Name">
+                                            <input class="block mt-1 w-full" type="text" name="name" placeholder="Full Name" value="{{ old('name') }}" required autofocus autocomplete="off">
+
+                                            <x-input-error :messages="$errors->get('name')" class="mt-2" />
                                         </div>
+
                                         <div class="wsus__login_input">
                                             <i class="far fa-envelope"></i>
-                                            <input type="text" placeholder="Email">
+                                            <input class="block mt-1 w-full" type="email" name="email" value="{{ old('email') }}" required autocomplete="off" placeholder="Email"> 
+
+                                            <x-input-error :messages="$errors->get('email')" class="mt-2" />
                                         </div>
+
                                         <div class="wsus__login_input">
                                             <i class="fas fa-key"></i>
-                                            <input type="text" placeholder="Password">
+                                            <input type="text" type="password" name="password" required autocomplete="off" placeholder="Password">
+
+                                            <x-input-error :messages="$errors->get('password')" class="mt-2" />
                                         </div>
+
                                         <div class="wsus__login_input">
                                             <i class="fas fa-key"></i>
-                                            <input type="text" placeholder="Confirm Password">
+                                            <input type="text" type="password" name="password_confirmation" required autocomplete="off" placeholder="Confirm Password">
+
+                                            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
                                         </div>
+
                                         <div class="wsus__login_save">
                                             <div class="form-check form-switch">
                                                 <input class="form-check-input" type="checkbox"
@@ -115,6 +141,7 @@
                                                     to the privacy policy</label>
                                             </div>
                                         </div>
+
                                         <button class="common_btn" type="submit">signup</button>
                                     </form>
                                 </div>

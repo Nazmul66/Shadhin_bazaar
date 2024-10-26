@@ -13,13 +13,17 @@ class CartController extends Controller
 
     public function cart_view()
     {
+        if( !Auth::Check() ){
+            return redirect()->route('register.login');
+        }
+
         $all_carts = DB::table('carts')
                 ->leftJoin('products', 'products.id', 'carts.product_id')
                 ->leftJoin('product_colors', 'product_colors.id', 'carts.color_id')
                 ->leftJoin('product_sizes', 'product_sizes.id', 'carts.size_id')
                 ->select('carts.*', 'products.thumb_image', 'products.name', 'products.id as pdt_id', 'products.slug', 'products.price', 'products.offer_price', 'product_sizes.size_name', 'product_sizes.size_price', 'product_colors.color_name', 'product_colors.color_price')
                 ->whereNull('carts.order_id')
-                ->where('carts.user_id', Auth::user()->id ?? 1)
+                ->where('carts.user_id', Auth::user()->id)
                 ->get();
         
         $subTotal = 0;
@@ -33,7 +37,7 @@ class CartController extends Controller
 
     public function get_sidebar_cart()
     {
-        $userId = Auth::user()->id ?? 1; 
+        $userId = Auth::user()->id; 
     
         $all_carts = DB::table('carts')
                 ->leftJoin('products', 'products.id', 'carts.product_id')
@@ -68,7 +72,7 @@ class CartController extends Controller
                 ->leftJoin('product_sizes', 'product_sizes.id', 'carts.size_id')
                 ->select('carts.*', 'products.thumb_image', 'products.name', 'products.id as pdt_id', 'products.slug', 'products.price', 'products.offer_price', 'product_sizes.size_name', 'product_sizes.size_price', 'product_colors.color_name', 'product_colors.color_price')
                 ->whereNull('carts.order_id')
-                ->where('carts.user_id', Auth::user()->id ?? 1)
+                ->where('carts.user_id', Auth::user()->id)
                 ->get();
         
         $subTotal = 0;
@@ -90,7 +94,7 @@ class CartController extends Controller
     {
         // dd($request->all());
 
-        $userId = Auth::user()->id ?? 1;
+        $userId = Auth::user()->id;
     
         // // Find the cart item by its ID and check if it belongs to the current user
         $cart = Cart::leftJoin('products', 'products.id', 'carts.product_id')
@@ -122,7 +126,7 @@ class CartController extends Controller
                     ->leftJoin('product_sizes', 'product_sizes.id', 'carts.size_id')
                     ->select('carts.*', 'products.thumb_image', 'products.name', 'products.id as pdt_id', 'products.slug', 'products.price', 'products.offer_price', 'product_sizes.size_name', 'product_sizes.size_price', 'product_colors.color_name', 'product_colors.color_price')
                     ->whereNull('carts.order_id')
-                    ->where('carts.user_id', Auth::user()->id ?? 1)
+                    ->where('carts.user_id', Auth::user()->id)
                     ->get();
             
             $subtotal = 0;
@@ -149,7 +153,7 @@ class CartController extends Controller
     {
         $cartItem = Cart::where('id', $request->cart_id)
                         ->where('product_id', $request->prdtId)
-                        ->where('user_id', Auth::user()->id ?? 1)
+                        ->where('user_id', Auth::user()->id)
                         ->whereNull('order_id')
                         ->first();
     
@@ -163,7 +167,7 @@ class CartController extends Controller
                     ->leftJoin('product_sizes', 'product_sizes.id', 'carts.size_id')
                     ->select('carts.*', 'products.thumb_image', 'products.name', 'products.id as pdt_id', 'products.slug', 'products.price', 'products.offer_price', 'product_sizes.size_name', 'product_sizes.size_price', 'product_colors.color_name', 'product_colors.color_price')
                     ->whereNull('carts.order_id')
-                    ->where('carts.user_id', Auth::user()->id ?? 1)
+                    ->where('carts.user_id', Auth::user()->id)
                     ->get();
     
             $subtotal = 0;
@@ -196,10 +200,8 @@ class CartController extends Controller
 
     public function clearCart()
     {
-        $userId = Auth::user()->id ?? 1; // or any logic to get the user/cart owner
-
         // Delete all cart items for this user
-        Cart::where('user_id', $userId)->delete();
+        Cart::where('user_id', Auth::user()->id)->delete();
 
         $all_carts = DB::table('carts')
                 ->leftJoin('products', 'products.id', 'carts.product_id')
@@ -207,7 +209,7 @@ class CartController extends Controller
                 ->leftJoin('product_sizes', 'product_sizes.id', 'carts.size_id')
                 ->select('carts.*', 'products.thumb_image', 'products.name', 'products.id as pdt_id', 'products.slug', 'products.price', 'products.offer_price', 'product_sizes.size_name', 'product_sizes.size_price', 'product_colors.color_name', 'product_colors.color_price')
                 ->whereNull('carts.order_id')
-                ->where('carts.user_id', Auth::user()->id ?? 1)
+                ->where('carts.user_id', Auth::user()->id)
                 ->get();
 
         // If the cart is now empty, forget the coupon session

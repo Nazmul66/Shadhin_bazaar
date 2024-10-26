@@ -26,12 +26,17 @@ class ProductController extends Controller
 
     // add to cart 
     public function productAddToCart(Request $request)
-    {    
+    {  
+        if( !Auth::Check() ){
+            return response()->json(['status' => 'warning', ]);
+            // return redirect()->route('register.login');
+        }
+
         $exist_cart = Cart::where('product_id', $request->product_id)
                 ->where('color_id', $request->color_id)
                 ->where('size_id', $request->size_id)
                 ->whereNull('order_id')
-                ->where('user_id', Auth::user()->id ?? 1)
+                ->where('user_id', Auth::user()->id)
                 ->first();
     
         if (!empty($exist_cart)) {
@@ -49,7 +54,7 @@ class ProductController extends Controller
             $cart->product_id = $request->product_id;
             $cart->color_id   = $request->color_id;
             $cart->size_id    = $request->size_id;
-            $cart->user_id    = Auth::user()->id ?? 1;
+            $cart->user_id    = Auth::user()->id ;
             $cart->price      = $request->price;   // Set the total price including color and size adjustments
             $cart->qty        = $request->qty ?? 1;  // Default to 1 if no quantity is provided
     
@@ -62,7 +67,7 @@ class ProductController extends Controller
                     ->leftJoin('product_sizes', 'product_sizes.id', 'carts.size_id')
                     ->select('carts.*', 'products.thumb_image', 'products.name', 'products.id as pdt_id', 'products.slug', 'products.price', 'products.offer_price', 'product_sizes.size_name', 'product_sizes.size_price', 'product_colors.color_name', 'product_colors.color_price')
                     ->whereNull('carts.order_id')
-                    ->where('carts.user_id', Auth::user()->id ?? 1)
+                    ->where('carts.user_id', Auth::user()->id )
                     ->get();
         
         // calculate data
@@ -147,7 +152,7 @@ class ProductController extends Controller
                     ->leftJoin('product_sizes', 'product_sizes.id', 'carts.size_id')
                     ->select('carts.*', 'products.thumb_image', 'products.name', 'products.id as pdt_id', 'products.slug', 'products.price', 'products.offer_price', 'product_sizes.size_name', 'product_sizes.size_price', 'product_colors.color_name', 'product_colors.color_price')
                     ->whereNull('carts.order_id')
-                    ->where('carts.user_id', Auth::user()->id ?? 1)
+                    ->where('carts.user_id', Auth::user()->id)
                     ->get();
 
                     // calculate data
@@ -183,7 +188,7 @@ class ProductController extends Controller
     public function getCart(Request $request)
     {
         // dd($request->all());
-        $userId = Auth::user()->id ?? 1;
+        $userId = Auth::user()->id;
 
         $all_carts = DB::table('carts')
                     ->leftJoin('products', 'products.id', 'carts.product_id')

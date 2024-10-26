@@ -299,8 +299,29 @@
                         </ul>
                         <ul class="wsus__menu_item wsus__menu_item_right">
                             <li><a href="contact.html">contact</a></li>
-                            <li><a href="dsahboard.html">my account</a></li>
-                            <li><a href="{{ route('register.login') }}">login / Register</a></li>
+                            {{-- <li><a href="dsahboard.html">my account</a></li> --}}
+                            <li>
+                                @if ( !Auth::check() )
+                                    <a href="{{ route('register.login') }}">login / Register</a>
+                                @else
+ 
+                                  
+                                <li class="wsus__relative_li">
+                                    <a href="#">My Account <i class="fas fa-caret-down"></i></a>
+                                    <ul class="wsus__menu_droapdown">
+                                        <li><a href="{{ url('/') }}">User Profile</a></li>
+                                        <li><a href="{{ url('/') }}">Dashboard</a></li>
+                                        <li>
+                                            <form action="{{ route('logout') }}" method="POST">
+                                                @csrf
+                                                
+                                                <button type="submit">Logout</button>
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </li>
+                                @endif
+                            </li>
                         </ul>
                     </div>
                 </div>

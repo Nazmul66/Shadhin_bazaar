@@ -44,7 +44,7 @@ use App\Http\Controllers\Frontend\CheckoutController;
     Route::get('/get-cart-data', [ProductController::class, 'getCart'])->name('get.cart.data');
     
     //__ Carts __//
-    Route::get('/show-cart', [CartController::class, 'cart_view'])->name('show-cart');
+    Route::get('/cart', [CartController::class, 'cart_view'])->name('show-cart');
     Route::post('/update-cart-quantity', [CartController::class, 'update_cart_quantity'])->name('update.cart.quantity');
     Route::post('/cart/delete-item', [CartController::class, 'deleteCartItem'])->name('delete.cart.item');
     Route::post('/clear-cart', [CartController::class, 'clearCart'])->name('clear.cart');
