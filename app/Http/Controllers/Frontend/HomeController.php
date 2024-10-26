@@ -110,10 +110,10 @@ class HomeController extends Controller
         return view('frontend.pages.product_pages.compare');
     }
 
-    public function checkout()
-    {
-        return view('frontend.pages.product_pages.checkout');
-    }
+    // public function checkout()
+    // {
+    //     return view('frontend.pages.product_pages.checkout');
+    // }
 
 
 

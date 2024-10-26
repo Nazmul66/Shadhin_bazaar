@@ -1237,7 +1237,7 @@
                         <h5>Sub Total: <span id="cart-subtotal">$${subtotal.toFixed(2)}</span></h5>
                         <div class="wsus__minicart_btn_area">
                             <a class="common_btn" href="{{ route('show-cart') }}">View Cart</a>
-                            <a class="common_btn" href="check_out.html">Checkout</a>
+                            <a class="common_btn" href="{{ route('checkout') }}">Checkout</a>
                         </div>
                     `;
             } else {

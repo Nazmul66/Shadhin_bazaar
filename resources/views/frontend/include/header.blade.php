@@ -43,8 +43,7 @@
                         <ul class="wsus__icon_area">
                             <li><a href="wishlist.html"><i class="fal fa-heart"></i><span>05</span></a></li>
                             <li><a href="compare.html"><i class="fal fa-random"></i><span>03</span></a></li>
-                            <li><a class="wsus__cart_icon" href="#"><i class="fal fa-shopping-bag"></i><span id="cart_count">
-                                {{ App\Models\Cart::count() }}</span></a></li>
+                            <li><a class="wsus__cart_icon" href="#"><i class="fal fa-shopping-bag"></i><span id="cart_count"> {{ App\Models\Cart::count() }}</span></a></li>
                         </ul>
                     </div>
                 </div>
@@ -99,7 +98,7 @@
 
                         <div class="wsus__minicart_btn_area">
                             <a class="common_btn" href="{{ route('show-cart') }}">view cart</a>
-                            <a class="common_btn" href="check_out.html">checkout</a>
+                            <a class="common_btn" href="{{ route('checkout') }}">checkout</a>
                         </div>
                     @endif
                </div>
@@ -301,7 +300,7 @@
                         <ul class="wsus__menu_item wsus__menu_item_right">
                             <li><a href="contact.html">contact</a></li>
                             <li><a href="dsahboard.html">my account</a></li>
-                            <li><a href="login.html">login</a></li>
+                            <li><a href="{{ route('register.login') }}">login / Register</a></li>
                         </ul>
                     </div>
                 </div>

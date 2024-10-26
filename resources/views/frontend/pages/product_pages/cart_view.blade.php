@@ -177,7 +177,7 @@
                             <input type="text" id="coupon_code" name="coupon_code" value="{{ session()->has('coupon') ? session()->get('coupon')['coupon_name'] : ""}}" placeholder="Coupon Code">
                             <button type="submit" class="common_btn">apply</button>
                         </form>
-                        <a class="common_btn mt-4 w-100 text-center" href="">checkout</a>
+                        <a class="common_btn mt-4 w-100 text-center" href="{{ route('checkout') }}">checkout</a>
                         <a class="common_btn mt-1 w-100 text-center" href=""><i class="fab fa-shopify"></i> go shop</a>
                     </div>
                 </div>

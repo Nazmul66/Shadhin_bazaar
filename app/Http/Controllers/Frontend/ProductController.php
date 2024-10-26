@@ -26,14 +26,12 @@ class ProductController extends Controller
 
     // add to cart 
     public function productAddToCart(Request $request)
-    {
-        $userId = Auth::user()->id ?? 1; 
-    
+    {    
         $exist_cart = Cart::where('product_id', $request->product_id)
                 ->where('color_id', $request->color_id)
                 ->where('size_id', $request->size_id)
                 ->whereNull('order_id')
-                ->where('user_id', $userId)
+                ->where('user_id', Auth::user()->id ?? 1)
                 ->first();
     
         if (!empty($exist_cart)) {
@@ -51,14 +49,12 @@ class ProductController extends Controller
             $cart->product_id = $request->product_id;
             $cart->color_id   = $request->color_id;
             $cart->size_id    = $request->size_id;
-            $cart->user_id    = $userId;
+            $cart->user_id    = Auth::user()->id ?? 1;
             $cart->price      = $request->price;   // Set the total price including color and size adjustments
             $cart->qty        = $request->qty ?? 1;  // Default to 1 if no quantity is provided
     
             $cart->save();
         }
-    
-        $total_cart = Cart::where('user_id', $userId)->count();
     
         $all_carts = DB::table('carts')
                     ->leftJoin('products', 'products.id', 'carts.product_id')
@@ -66,9 +62,8 @@ class ProductController extends Controller
                     ->leftJoin('product_sizes', 'product_sizes.id', 'carts.size_id')
                     ->select('carts.*', 'products.thumb_image', 'products.name', 'products.id as pdt_id', 'products.slug', 'products.price', 'products.offer_price', 'product_sizes.size_name', 'product_sizes.size_price', 'product_colors.color_name', 'product_colors.color_price')
                     ->whereNull('carts.order_id')
-                    ->where('carts.user_id', $userId)
+                    ->where('carts.user_id', Auth::user()->id ?? 1)
                     ->get();
-        
         
         // calculate data
         $subtotal = 0;
@@ -76,7 +71,6 @@ class ProductController extends Controller
             // Set the product image URL
             $data->image_url = asset($data->thumb_image);
     
-            // Calculate item price (base price + size price + color price) * quantity
             $itemBasePrice = $data->offer_price ? $data->offer_price : $data->price;
             $itemTotalPrice = ($itemBasePrice + $data->size_price + $data->color_price) * $data->qty;
     
@@ -84,7 +78,12 @@ class ProductController extends Controller
             $subtotal += $itemTotalPrice;
         }
     
-        return response()->json(['status' => 'success', 'total' => $total_cart, "carts" => $all_carts, 'subtotal' => $subtotal]);
+        return response()->json([
+            'status' => 'success', 
+            'total' => $all_carts->count(), 
+            "carts" => $all_carts, 
+            'subtotal' => $subtotal
+        ]);
     }
 
 

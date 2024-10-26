@@ -7,6 +7,7 @@ use App\Http\Controllers\Frontend\ProductController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\CouponController;
 use App\Http\Controllers\Frontend\FlashSaleController;
+use App\Http\Controllers\Frontend\CheckoutController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +31,7 @@ use App\Http\Controllers\Frontend\FlashSaleController;
     Route::get('/blogs', [HomeController::class, "blogs"])->name('blogs');
     Route::get('/blogs-details', [HomeController::class, "blogs_details"])->name('blogs.details');
     Route::get('/track-order', [HomeController::class, "track_order"])->name('track.order');
+    Route::get('/register-login', [HomeController::class, "register_login"])->name('register.login');
 
     //__ Flash Sales __//
     Route::get('/flash-sale', [FlashSaleController::class, "index"])->name('flash.sale');
@@ -54,18 +56,19 @@ use App\Http\Controllers\Frontend\FlashSaleController;
     Route::post('/apply-coupon', [CouponController::class, 'apply_coupon'])->name('apply.coupon');
     Route::get('/coupon-calculation', [CouponController::class, 'coupon_calculation'])->name('coupon.calculation');
 
+    //__ Checkout __//
+    Route::get('/checkout', [CheckoutController::class, 'checkout'])->name('checkout');
+
 
     Route::get('/product-category', [ProductController::class, "product_category"])->name('product.category');
     Route::get('/product-brands', [ProductController::class, "product_brands"])->name('product.brands');
 
 
-    // Route::get('/cart', [HomeController::class, "cart_view"])->name('cart');
     // Route::get('/wishlist', [HomeController::class, "wishlist_view"])->name('wishlist');
     // Route::get('/compare', [HomeController::class, "compare_view"])->name('compare');
-    // Route::get('/checkout', [HomeController::class, "checkout"])->name('checkout');
     
     
-    // Route::get('/register-login', [HomeController::class, "register_login"])->name('register.login');
+
     // Route::get('/change-password', [HomeController::class, "changePassword"])->name('change.password');
     // Route::get('/forget-password', [HomeController::class, "forgetPassword"])->name('forget.password');   
     
