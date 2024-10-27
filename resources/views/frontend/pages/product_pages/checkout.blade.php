@@ -44,8 +44,9 @@
                 <div class="row">
                     <div class="col-xl-8 col-lg-7">
                         <div class="wsus__check_form">
-                            <h5>Billing Details <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">add
-                                    new address</a></h5>
+                            {{-- <h5>Billing Details <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">add
+                                    new address</a></h5> --}}
+
                             <div class="row">
                                 <div class="col-md-6 col-lg-12 col-xl-6">
                                     <div class="wsus__check_single_form">
@@ -211,94 +212,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-xl-6">
-                                    <div class="wsus__checkout_single_address">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                                id="flexRadioDefault1" checked>
-                                            <label class="form-check-label" for="flexRadioDefault1">
-                                                Select Address
-                                            </label>
-                                        </div>
-                                        <ul>
-                                            <li><span>Name :</span> Anik Roy</li>
-                                            <li><span>Phone :</span> +66954581322222</li>
-                                            <li><span>Email :</span> Example@Gmail.Com</li>
-                                            <li><span>Country :</span> Bangladesh</li>
-                                            <li><span>City :</span> Dhaka</li>
-                                            <li><span>Zip Code :</span> 8320</li>
-                                            <li><span>Company :</span> N/A</li>
-                                            <li><span>Address :</span> Bashindhara P/A, Dhaka</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="col-xl-6">
-                                    <div class="wsus__checkout_single_address">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                                id="flexRadioDefault11">
-                                            <label class="form-check-label" for="flexRadioDefault11">
-                                                Select Address
-                                            </label>
-                                        </div>
-                                        <ul>
-                                            <li><span>Name :</span> Anik Roy</li>
-                                            <li><span>Phone :</span> +66954581322222</li>
-                                            <li><span>Email :</span> Example@Gmail.Com</li>
-                                            <li><span>Country :</span> Bangladesh</li>
-                                            <li><span>City :</span> Dhaka</li>
-                                            <li><span>Zip Code :</span> 8320</li>
-                                            <li><span>Company :</span> N/A</li>
-                                            <li><span>Address :</span> Bashindhara P/A, Dhaka</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="col-xl-6">
-                                    <div class="wsus__checkout_single_address">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                                id="flexRadioDefault12">
-                                            <label class="form-check-label" for="flexRadioDefault12">
-                                                Select Address
-                                            </label>
-                                        </div>
-                                        <ul>
-                                            <li><span>Name :</span> Anik Roy</li>
-                                            <li><span>Phone :</span> +66954581322222</li>
-                                            <li><span>Email :</span> Example@Gmail.Com</li>
-                                            <li><span>Country :</span> Bangladesh</li>
-                                            <li><span>City :</span> Dhaka</li>
-                                            <li><span>Zip Code :</span> 8320</li>
-                                            <li><span>Company :</span> N/A</li>
-                                            <li><span>Address :</span> Bashindhara P/A, Dhaka</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="col-xl-6">
-                                    <div class="wsus__checkout_single_address">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                                id="flexRadioDefault13">
-                                            <label class="form-check-label" for="flexRadioDefault13">
-                                                Select Address
-                                            </label>
-                                        </div>
-                                        <ul>
-                                            <li><span>Name :</span> Anik Roy</li>
-                                            <li><span>Phone :</span> +66954581322222</li>
-                                            <li><span>Email :</span> Example@Gmail.Com</li>
-                                            <li><span>Country :</span> Bangladesh</li>
-                                            <li><span>City :</span> Dhaka</li>
-                                            <li><span>Zip Code :</span> 8320</li>
-                                            <li><span>Company :</span> N/A</li>
-                                            <li><span>Address :</span> Bashindhara P/A, Dhaka</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
+
                     <div class="col-xl-4 col-lg-5">
                         <div class="wsus__order_details" id="sticky_sidebar">
                             <p class="wsus__product">shipping Methods</p>
@@ -310,6 +226,7 @@
                                     <span>(10 - 12 days)</span>
                                 </label>
                             </div>
+
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2"
                                     value="option2">
@@ -318,11 +235,16 @@
                                     <span>(5 - 10 days)</span>
                                 </label>
                             </div>
+
+                            @php
+                                $coupons = session()->has('coupon') ? session()->get('coupon')['discount'] : 0.00;
+                            @endphp
+
                             <div class="wsus__order_details_summery">
-                                <p>subtotal: <span>$120.00</span></p>
+                                <p>subtotal: <span>${{ number_format(cart_subTotal(), 2) }}</span></p>
                                 <p>shipping fee: <span>$20.00</span></p>
-                                <p>tax: <span>$00.00</span></p>
-                                <p><b>total:</b> <span><b>$140.00</b></span></p>
+                                <p>Coupon(-): <span>${{ number_format($coupons, 2) }}</span></p>
+                                <p><b>total:</b> <span><b>${{ number_format(cart_subTotal() - $coupons, 2) }}</b></span></p>
                             </div>
                             <div class="terms_area">
                                 <div class="form-check">
@@ -341,7 +263,7 @@
         </div>
     </section>
 
-    <div class="wsus__popup_address">
+    {{-- <div class="wsus__popup_address">
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -425,7 +347,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     <!--============================
         CHECK OUT PAGE END
     ==============================-->

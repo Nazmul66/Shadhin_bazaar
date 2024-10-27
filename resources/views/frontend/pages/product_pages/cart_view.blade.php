@@ -169,7 +169,7 @@
                             }
                         @endphp
 
-                        <p class="total"><span>total:</span> <span id="total_price">${{ number_format($subTotal - $coupons, 2)  }} </span></p>
+                        <p class="total"><span>total:</span> <span id="total_price">${{ number_format($subTotal - $coupons, 2) }} </span></p>
 
                         <form id="apply_coupon" method="GET">
                             @csrf

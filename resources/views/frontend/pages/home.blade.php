@@ -1636,7 +1636,7 @@
 
 
     <!--============================
-        LARGE BANNER  START  
+           LARGE BANNER  START  
     ==============================-->
     <section id="wsus__large_banner">
         <div class="container">
@@ -1670,7 +1670,7 @@
         </div>
     </section>
     <!--============================
-        LARGE BANNER  END  
+           LARGE BANNER  END  
     ==============================-->
 
 
@@ -2060,7 +2060,7 @@
 
     <script>
         $(document).ready(function(){
-            //=======COUNTDOWN======   
+            //======= COUNTDOWN ======//   
             var d = new Date(), 
                 countUpDate = new Date();
                 d.setDate(d.getDate() + 90);
