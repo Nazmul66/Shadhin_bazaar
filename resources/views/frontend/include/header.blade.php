@@ -43,7 +43,18 @@
                         <ul class="wsus__icon_area">
                             <li><a href="wishlist.html"><i class="fal fa-heart"></i><span>05</span></a></li>
                             <li><a href="compare.html"><i class="fal fa-random"></i><span>03</span></a></li>
-                            <li><a class="wsus__cart_icon" href="#"><i class="fal fa-shopping-bag"></i><span id="cart_count"> {{ App\Models\Cart::count() }}</span></a></li>
+                            <li>
+                                <a class="wsus__cart_icon" href="#">
+                                    <i class="fal fa-shopping-bag"></i>
+                                    <span id="cart_count"> 
+                                        @if ( Auth::check() )
+                                            {{ App\Models\Cart::where('user_id', Auth::user()->id)->count() }}
+                                        @else
+                                            0
+                                        @endif
+                                    </span>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -55,51 +66,59 @@
             <h4>shopping cart <span class="wsus_close_mini_cart"><i class="far fa-times"></i></span></h4>
 
                 <ul id="cart-items">
-                    @if ( $all_carts->count() > 0 )
-                        @foreach ($all_carts as $item)
-                            <li>
-                                <div class="wsus__cart_img">
-                                    <a href="{{ route('product.details', $item->slug) }}">
-                                        <img src="{{ asset($item->thumb_image) }}" alt="product" class="img-fluid w-100">
-                                    </a>
-                                    <a class="wsis__del_icon removeCart" data-colorId="{{ $item->color_id }}" data-sizeId="{{ $item->size_id }}" data-prdtId="{{ $item->pdt_id }}" style="cursor: pointer;"><i class="fas fa-minus-circle"></i></a>
-                                </div>
+                    @if ( Auth::Check() )
+                        @if ( all_carts()->count() > 0 )
+                            @foreach (all_carts() as $item)
+                                <li>
+                                    <div class="wsus__cart_img">
+                                        <a href="{{ route('product.details', $item->slug) }}">
+                                            <img src="{{ asset($item->thumb_image) }}" alt="product" class="img-fluid w-100">
+                                        </a>
+                                        <a class="wsis__del_icon removeCart" data-colorId="{{ $item->color_id }}" data-sizeId="{{ $item->size_id }}" data-prdtId="{{ $item->pdt_id }}" style="cursor: pointer;"><i class="fas fa-minus-circle"></i></a>
+                                    </div>
 
-                                <div class="wsus__cart_text">
-                                    <a class="wsus__cart_title" href="{{ route('product.details', $item->slug) }}">{{ $item->name }}</a>
-                                    <p>
-                                        @if ( !empty($item->offer_price) )
-                                            ${{ $item->offer_price }} <del>${{ $item->price }}</del> x {{ $item->qty }} Qty
-                                        @else
-                                            ${{ $item->price }} x {{ $item->qty }} Qty
+                                    <div class="wsus__cart_text">
+                                        <a class="wsus__cart_title" href="{{ route('product.details', $item->slug) }}">{{ $item->name }}</a>
+                                        <p>
+                                            @if ( !empty($item->offer_price) )
+                                                ${{ $item->offer_price }} <del>${{ $item->price }}</del> x {{ $item->qty }} Qty
+                                            @else
+                                                ${{ $item->price }} x {{ $item->qty }} Qty
+                                            @endif
+                                        </p>
+
+                                        @if ( !empty($item->size_name) )
+                                            <span class="variant_item"> Size: <span class="size_content">{{ $item->size_name }} </span>  ({{ '$'.$item->size_price }})</span>
                                         @endif
-                                    </p>
 
-                                    @if ( !empty($item->size_name) )
-                                        <span class="variant_item"> Size: <span class="size_content">{{ $item->size_name }} </span>  ({{ '$'.$item->size_price }})</span>
-                                    @endif
-
-                                    @if ( !empty($item->color_name) )
-                                        <span class="variant_item "> Color: <span class="color_content" style="background: {{ $item->color_name }}"></span>  ({{ '$'.$item->color_price }})</span>
-                                    @endif
-                                </div>
-                            </li>
-                        @endforeach
+                                        @if ( !empty($item->color_name) )
+                                            <span class="variant_item "> Color: <span class="color_content" style="background: {{ $item->color_name }}"></span>  ({{ '$'.$item->color_price }})</span>
+                                        @endif
+                                    </div>
+                                </li>
+                            @endforeach
+                        @else
+                        <div class="text-center">
+                            <a class="common_btn mt-4 mb-3 text-center" href="#"><i class="fab fa-shopify" aria-hidden="true"></i> go shop</a>
+                        </div>
+                        @endif
                     @else
-                       <div class="text-center">
-                           <a class="common_btn mt-4 mb-3 text-center" href="#"><i class="fab fa-shopify" aria-hidden="true"></i> go shop</a>
-                       </div>
+                        <div class="text-center">
+                            <a class="common_btn mt-4 mb-3 text-center" href="#"><i class="fab fa-shopify" aria-hidden="true"></i> go shop</a>
+                        </div>
                     @endif
                 </ul>
 
                <div class="cart_redirect">
-                    @if ( $all_carts->count() > 0 )
-                        <h5>sub total <span id="cart-subtotal">${{ number_format(cart_subTotal(), 2) }}</span></h5>
+                    @if ( Auth::check() )
+                        @if ( all_carts()->count() > 0 )
+                            <h5>sub total <span id="cart-subtotal">${{ number_format(cart_subTotal(), 2) }}</span></h5>
 
-                        <div class="wsus__minicart_btn_area">
-                            <a class="common_btn" href="{{ route('show-cart') }}">view cart</a>
-                            <a class="common_btn" href="{{ route('checkout') }}">checkout</a>
-                        </div>
+                            <div class="wsus__minicart_btn_area">
+                                <a class="common_btn" href="{{ route('show-cart') }}">view cart</a>
+                                <a class="common_btn" href="{{ route('checkout') }}">checkout</a>
+                            </div>
+                        @endif
                     @endif
                </div>
 
