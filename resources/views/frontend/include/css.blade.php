@@ -18,6 +18,9 @@
 <link rel="stylesheet" href="{{ asset('public/frontend/css/add_row_custon.css') }}">
 <link rel="stylesheet" href="{{ asset('public/frontend/css/mobile_menu.css') }}">
 <link rel="stylesheet" href="{{ asset('public/frontend/css/jquery.exzoom.css') }}">
+<!--Toaster Notification Css-->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
+
 <link rel="stylesheet" href="{{ asset('public/frontend/css/multiple-image-video.css') }}">
 <link rel="stylesheet" href="{{ asset('public/frontend/css/ranger_style.css') }}">
 <link rel="stylesheet" href="{{ asset('public/frontend/css/jquery.classycountdown.css') }}">

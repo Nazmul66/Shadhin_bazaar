@@ -218,23 +218,27 @@
                     <div class="col-xl-4 col-lg-5">
                         <div class="wsus__order_details" id="sticky_sidebar">
                             <p class="wsus__product">shipping Methods</p>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1"
-                                    value="option1" checked>
-                                <label class="form-check-label" for="exampleRadios1">
-                                    free shipping
-                                    <span>(10 - 12 days)</span>
-                                </label>
-                            </div>
 
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2"
-                                    value="option2">
-                                <label class="form-check-label" for="exampleRadios2">
-                                    express shipping
-                                    <span>(5 - 10 days)</span>
-                                </label>
-                            </div>
+                            @foreach ($shipping_rules as $row)
+                                @if ( $row->type == 'min_cost' && cart_subTotal() >= $row->min_cost )
+                                    <div class="form-check">
+                                        <input class="form-check-input shipping_rules" type="radio" name="shipping" data-id="{{ $row->cost }}" value="{{ $row->id }}" required>
+                                        <label class="form-check-label" for="exampleRadios2">
+                                            {{ $row->name }}
+                                            <span>cost: (${{ $row->cost }})</span>
+                                        </label>
+                                    </div>
+
+                                @elseif ( $row->type === 'flat_cost' )
+                                    <div class="form-check">
+                                        <input class="form-check-input shipping_rules" type="radio" name="shipping" data-id="{{ $row->cost }}" value="{{ $row->id }}" required>
+                                        <label class="form-check-label" for="exampleRadios2">
+                                            {{ $row->name }}
+                                            <span>cost: (${{ $row->cost }})</span>
+                                        </label>
+                                    </div>
+                                @endif
+                            @endforeach
 
                             @php
                                 $coupons = session()->has('coupon') ? session()->get('coupon')['discount'] : 0.00;
@@ -242,9 +246,9 @@
 
                             <div class="wsus__order_details_summery">
                                 <p>subtotal: <span>${{ number_format(cart_subTotal(), 2) }}</span></p>
-                                <p>shipping fee: <span>$20.00</span></p>
-                                <p>Coupon(-): <span>${{ number_format($coupons, 2) }}</span></p>
-                                <p><b>total:</b> <span><b>${{ number_format(cart_subTotal() - $coupons, 2) }}</b></span></p>
+                                <p>shipping fee: <span id="shipping_fee">$0.00</span></p>
+                                <p>Coupon(-): <span id="coupon_amount" data-id="{{ $coupons }}">${{ number_format($coupons, 2) }}</span></p>
+                                <p><b>total:</b> <span ><b id="total_amount" data-id="{{ cart_subTotal() }}">${{ number_format(cart_subTotal() - $coupons, 2) }}</b></span></p>
                             </div>
                             <div class="terms_area">
                                 <div class="form-check">
@@ -255,6 +259,9 @@
                                     </label>
                                 </div>
                             </div>
+
+                            <input type="hidden" name="shipping_method" id="shipping_method_id" value="">
+
                             <a href="payment.html" class="common_btn">Place Order</a>
                         </div>
                     </div>
@@ -355,12 +362,29 @@
 @endsection
 
 @push('add-js')
-
     <script src="{{ asset('public/frontend/js/select2.min.js') }}"></script>
+    <script>
+         $(document).ready(function () {
+            $('.select_2').select2();
+        });
+    </script>
 
     <script>
-        $(document).ready(function () {
-            $('.select_2').select2();
+       
+        $(document).ready(function () { 
+
+            // select the shipping charges
+            $('.shipping_rules').on('click', function () {
+                $('#shipping_method_id').val($(this).val());
+                $('#shipping_fee').text('$'+$(this).data('id').toFixed(2));
+                var shipping_fee = $(this).data('id').toFixed(2);
+                var coupon_amount = $('#coupon_amount').data('id');
+                var total_amount = $('#total_amount').data('id');
+                // console.log(coupon_amount, total_amount);
+                $('#total_amount').text('$'+ (shipping_fee - coupon_amount + total_amount).toFixed(2));
+
+                // toastr.success('Shipping method setup successful')
+            })
         });
     </script>
 

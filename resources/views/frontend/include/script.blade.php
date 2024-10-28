@@ -34,6 +34,9 @@
     <script src="{{ asset('public/frontend/js/multiple-image-video.js') }}"></script>
     <!--sticky sidebar js-->
     <script src="{{ asset('public/frontend/js/sticky_sidebar.js') }}"></script>
+    <!--Toaster Notification Js-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
     <!--price ranger js-->
     <script src="{{ asset('public/frontend/js/ranger_jquery-ui.min.js') }}"></script>
     <script src="{{ asset('public/frontend/js/ranger_slider.js') }}"></script>
@@ -50,60 +53,20 @@
 
     @stack('add-js')
 
-    <script type="text/javascript">
-        toastr.options = {
-            "closeButton": true,
-            "debug": false,
-            "newestOnTop": false,
-            "progressBar": true,
-            "positionClass": "toast-top-right",
-            "preventDuplicates": false,
-            "showDuration": "300",
-            "hideDuration": "1000",
-            "timeOut": "5000",
-            "extendedTimeOut": "1000",
-            "showEasing": "swing",
-            "hideEasing": "linear",
-            "showMethod": "fadeIn",
-            "hideMethod": "fadeOut"
-            }
-    </script>
-    
-    <script type="text/javascript">
-        @if ( Session::has('message') )
-    
-            var type = "{{ Session::get('alert-type') }}";
-    
-            switch(type){
-                case "info":
-                   toastr.info("{{ Session::get('message') }}");
-                break; 
-    
-                case "success":
-                   toastr.success("{{ Session::get('message') }}");
-                break;
-                
-                case "warning":
-                   toastr.warning("{{ Session::get('message') }}");
-                break;
-    
-                case "error":
-                   toastr.error("{{ Session::get('message') }}");
-                break;
-            }
-        @endif
-    
+    // Toaster Notification
+    {!! Toastr::message() !!}
+
+    <script>
         @if ($errors->any())
             @foreach ($errors->all() as $error)
-                toastr.error("{!! $error !!}");
+                Toastr.error("{!! $error !!}");
             @endforeach
         @endif
-
-
-    // Ajax Setup
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-</script>
+    
+        // Ajax Setup
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+    </script>
