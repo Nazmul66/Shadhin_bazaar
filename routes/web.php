@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Frontend\SslCommerzPaymentController;
+use App\Http\Controllers\Frontend\StripPaymentController;
 use App\Http\Controllers\Frontend\ProductController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\CouponController;
@@ -73,6 +75,24 @@ use App\Http\Controllers\Frontend\CheckoutController;
     // Route::get('/forget-password', [HomeController::class, "forgetPassword"])->name('forget.password');   
     
 
+// Stripe Start
+    Route::post('/stripe-pay', [StripPaymentController::class, 'index']);
+// Stripe end
+
+
+// SSLCOMMERZ Start
+    Route::get('/example1', [SslCommerzPaymentController::class, 'exampleEasyCheckout']);
+    Route::get('/example2', [SslCommerzPaymentController::class, 'exampleHostedCheckout']);
+
+    Route::post('/ssl_commercz-pay', [SslCommerzPaymentController::class, 'index']);
+    Route::post('/pay-via-ajax', [SslCommerzPaymentController::class, 'payViaAjax']);
+
+    Route::post('/success', [SslCommerzPaymentController::class, 'success']);
+    Route::post('/fail', [SslCommerzPaymentController::class, 'fail']);
+    Route::post('/cancel', [SslCommerzPaymentController::class, 'cancel']);
+
+    Route::post('/ipn', [SslCommerzPaymentController::class, 'ipn']);
+//SSLCOMMERZ END
 
 /*
 |--------------------------------------------------------------------------

@@ -40,7 +40,9 @@
     ==============================-->
     <section id="wsus__cart_view">
         <div class="container">
-            <form class="wsus__checkout_form">
+            <form class="wsus__checkout_form" id="payment_data" method="POST">
+                @csrf
+
                 <div class="row">
                     <div class="col-xl-8 col-lg-7">
                         <div class="wsus__check_form">
@@ -50,22 +52,19 @@
                             <div class="row">
                                 <div class="col-md-6 col-lg-12 col-xl-6">
                                     <div class="wsus__check_single_form">
-                                        <input type="text" placeholder="First Name">
+                                        <input type="text" name="first_name" placeholder="First Name" required>
                                     </div>
                                 </div>
+
                                 <div class="col-md-6 col-lg-12 col-xl-6">
                                     <div class="wsus__check_single_form">
-                                        <input type="text" placeholder="Last Name">
+                                        <input type="text" name="last_name" placeholder="Last Name" required>
                                     </div>
                                 </div>
-                                <div class="col-md-12 col-lg-12 col-xl-12">
-                                    <div class="wsus__check_single_form">
-                                        <input type="text" placeholder="Company Name (Optional)">
-                                    </div>
-                                </div>
+
                                 <div class="col-md-6 col-lg-12 col-xl-6">
                                     <div class="wsus__check_single_form">
-                                        <select class="select_2" name="state">
+                                        <select class="select_2" name="state" name="country" required>
                                             <option value="AL">Country / Region *</option>
                                             <option value="">dhaka</option>
                                             <option value="">barisal</option>
@@ -75,139 +74,54 @@
                                         </select>
                                     </div>
                                 </div>
+
                                 <div class="col-md-6 col-lg-12 col-xl-6">
                                     <div class="wsus__check_single_form">
-                                        <input type="text" placeholder="Street Address *">
+                                        <input type="text" name="city" placeholder="Town / City *" required>
                                     </div>
                                 </div>
+
                                 <div class="col-md-6 col-lg-12 col-xl-6">
                                     <div class="wsus__check_single_form">
-                                        <input type="text" placeholder="Apartment, suite, unit, etc. (optional)">
+                                        <input type="email" name="email" placeholder="Email *" required>
                                     </div>
                                 </div>
+
                                 <div class="col-md-6 col-lg-12 col-xl-6">
                                     <div class="wsus__check_single_form">
-                                        <input type="text" placeholder="Town / City *">
+                                        <input type="text" name="address_optional" placeholder="Apartment, suite, unit, etc. (optional)">
                                     </div>
                                 </div>
+
                                 <div class="col-md-6 col-lg-12 col-xl-6">
                                     <div class="wsus__check_single_form">
-                                        <input type="text" placeholder="State *">
+                                        <input type="text" name="state" placeholder="State *" required>
                                     </div>
                                 </div>
+
                                 <div class="col-md-6 col-lg-12 col-xl-6">
                                     <div class="wsus__check_single_form">
-                                        <input type="text" placeholder="Zip *">
+                                        <input type="number" name="zip" placeholder="Zip *" required>
                                     </div>
                                 </div>
+
                                 <div class="col-md-6 col-lg-12 col-xl-6">
                                     <div class="wsus__check_single_form">
-                                        <input type="text" placeholder="Phone *">
+                                        <input type="text" name="phone" placeholder="Phone *" required>
                                     </div>
                                 </div>
-                                <div class="col-md-6 col-lg-12 col-xl-6">
-                                    <div class="wsus__check_single_form">
-                                        <input type="email" placeholder="Email *">
-                                    </div>
-                                </div>
+
                                 <div class="col-md-12 col-lg-12 col-xl-12">
-                                    <div class="accordion checkout_accordian" id="accordionExample">
-                                        <div class="accordion-item">
-                                            <h2 class="accordion-header" id="headingThree">
-                                                <button class="accordion-button collapsed" type="button"
-                                                    data-bs-toggle="collapse" data-bs-target="#collapseThree"
-                                                    aria-expanded="false" aria-controls="collapseThree">
-                                                    <div class="wsus__check_single_form">
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" value=""
-                                                                id="flexCheckDefault">
-                                                            <label class="form-check-label" for="flexCheckDefault">
-                                                                Same as shipping address
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </button>
-                                            </h2>
-                                            <div id="collapseThree" class="accordion-collapse collapse"
-                                                aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-                                                <div class="accordion-body p-0">
-                                                    <div class="wsus__check_form p-0" style="box-shadow: none;">
-                                                        <div class="row">
-                                                            <div class="col-md-6 col-lg-12 col-xl-6">
-                                                                <div class="wsus__check_single_form">
-                                                                    <input type="text" placeholder="First Name">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6 col-lg-12 col-xl-6">
-                                                                <div class="wsus__check_single_form">
-                                                                    <input type="text" placeholder="Last Name">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-12 col-lg-12 col-xl-12">
-                                                                <div class="wsus__check_single_form">
-                                                                    <input type="text"
-                                                                        placeholder="Company Name (Optional)">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6 col-lg-12 col-xl-6">
-                                                                <div class="wsus__check_single_form">
-                                                                    <select class="select_2" name="state">
-                                                                        <option value="AL">Country / Region *</option>
-                                                                        <option value="">dhaka</option>
-                                                                        <option value="">barisal</option>
-                                                                        <option value="">khulna</option>
-                                                                        <option value="">rajshahi</option>
-                                                                        <option value="">bogura</option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6 col-lg-12 col-xl-6">
-                                                                <div class="wsus__check_single_form">
-                                                                    <input type="text" placeholder="Street Address *">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6 col-lg-12 col-xl-6">
-                                                                <div class="wsus__check_single_form">
-                                                                    <input type="text"
-                                                                        placeholder="Apartment, suite, unit, etc. (optional)">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6 col-lg-12 col-xl-6">
-                                                                <div class="wsus__check_single_form">
-                                                                    <input type="text" placeholder="Town / City *">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6 col-lg-12 col-xl-6">
-                                                                <div class="wsus__check_single_form">
-                                                                    <input type="text" placeholder="State *">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6 col-lg-12 col-xl-6">
-                                                                <div class="wsus__check_single_form">
-                                                                    <input type="text" placeholder="Zip *">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6 col-lg-12 col-xl-6">
-                                                                <div class="wsus__check_single_form">
-                                                                    <input type="text" placeholder="Phone *">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6 col-lg-12 col-xl-6">
-                                                                <div class="wsus__check_single_form">
-                                                                    <input type="email" placeholder="Email *">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                    <div class="wsus__check_single_form">
+                                        <input type="text" name="address" placeholder="Street Address *" required>
                                     </div>
                                 </div>
+
                                 <div class="col-md-12 col-lg-12 col-xl-12">
                                     <div class="wsus__check_single_form">
                                         <h5>Additional Information</h5>
-                                        <textarea cols="3" rows="4"
+                                        <textarea cols="3" rows="4" name="notes"
+                                        
                                             placeholder="Notes about your order, e.g. special notes for delivery"></textarea>
                                     </div>
                                 </div>
@@ -250,6 +164,25 @@
                                 <p>Coupon(-): <span id="coupon_amount" data-id="{{ $coupons }}">${{ number_format($coupons, 2) }}</span></p>
                                 <p><b>total:</b> <span ><b id="total_amount" data-id="{{ cart_subTotal() }}">${{ number_format(cart_subTotal() - $coupons, 2) }}</b></span></p>
                             </div>
+
+                            <div class="">
+                                <p class="wsus__product">Payment Methods</p>
+
+                                <div class="form-check">
+                                    <input class="form-check-input shipping_rules" id="payment_method" type="radio" name="payment_method" value="ssl_commercz" checked required>
+                                    <label class="form-check-label" for="exampleRadios2">
+                                        Ssl_commercz
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input shipping_rules" id="payment_method" type="radio" name="payment_method" value="stripe" required>
+                                    <label class="form-check-label" for="exampleRadios2">
+                                        Stripe
+                                    </label>
+                                </div>
+                            </div>
+                            
                             <div class="terms_area">
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked3"
@@ -260,9 +193,9 @@
                                 </div>
                             </div>
 
-                            <input type="hidden" name="shipping_method" id="shipping_method_id" value="">
+                            {{-- <input type="hidden" name="shipping_method" id="shipping_method_id" value=""> --}}
 
-                            <a href="payment.html" class="common_btn">Place Order</a>
+                            <button type="submit" class="common_btn">Place Order</button>
                         </div>
                     </div>
                 </div>
@@ -363,15 +296,57 @@
 
 @push('add-js')
     <script src="{{ asset('public/frontend/js/select2.min.js') }}"></script>
+
     <script>
-         $(document).ready(function () {
-            $('.select_2').select2();
+        $(document).ready(function () {
+            $('#payment_data').on('submit', function(e) {
+                e.preventDefault();
+
+                // Serialize form data
+                var formData = $(this).serializeArray();
+
+                // Add additional data manually
+                formData.push(
+                    { name: 'shipping_fee', value: $('#shipping_fee').data('id') || 0 },
+                    { name: 'coupon_amount', value: $('#coupon_amount').data('id') || 0 },
+                    { name: 'total_amount', value: $('#total_amount').data('id') || 0 }
+                );
+                var paymentMethod = $('#payment_method').val();
+
+                console.log(formData);
+                // Now you can use formData for your AJAX request
+
+                $.ajax({
+                    type: 'POST',
+                    url: `{{ url('/') }}/${paymentMethod}-pay`,
+                    dataType: 'json',
+                    data: formData,
+                    success: function (data) {
+                        console.log(data);
+                    },
+                    error: function (err){
+                        console.log(err);
+                    }
+                })
+            });
         });
     </script>
 
     <script>
-       
-        $(document).ready(function () { 
+        (function (window, document) {
+            var loader = function () {
+                var script = document.createElement("script"), tag = document.getElementsByTagName("script")[0];
+                script.src = "https://seamless-epay.sslcommerz.com/embed.min.js?" + Math.random().toString(36).substring(7);
+                tag.parentNode.insertBefore(script, tag);
+            };
+        
+            window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
+        })(window, document);
+
+
+
+        $(document).ready(function () {
+            $('.select_2').select2();
 
             // select the shipping charges
             $('.shipping_rules').on('click', function () {
