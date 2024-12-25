@@ -28,8 +28,8 @@ trait ImageUploadTraits {
         if( $request->file($fileName) ){
             $images = $request->file($fileName);
 
-            if ( !is_null($existingImg) && file_exists($existingImg))  {
-                unlink($existingImg); // Delete the existing category_img
+            if ( !empty($existingImg) && file_exists($existingImg))  {
+                    @unlink($existingImg); 
             }
 
             $imageName          = $request->slug . rand(1, 99999999) . '.' . $images->getClientOriginalExtension();

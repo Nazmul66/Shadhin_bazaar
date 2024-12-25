@@ -263,19 +263,17 @@
                         <div class="row">
                             <div class="col mb-3">
                                 <label class="form-label" for="facebook_pixel">Facebook Pixel</label>
-                                 <textarea id="facebook_pixel" class="form-control" name="facebook_pixel" placeholder="Link paste here...." > @if( !empty( $setting ) ) {{ $setting->facebook_pixel }} @else {{ old('facebook_pixel')}}  @endif
-                                </textarea>
+                                 <textarea id="facebook_pixel" class="form-control" name="facebook_pixel" placeholder="Link paste here...." >{{ old('facebook_pixel', $setting->facebook_pixel)}}</textarea>
                              </div>
 
                              <div class="col mb-3">
                                 <label class="form-label" for="google_analytics">Google Analytics</label>
-                                 <textarea id="google_analytics" class="form-control" name="google_analytics" placeholder="Link paste here...." > @if( !empty( $setting ) ) {{ $setting->google_analytics }} @else {{ old('google_analytics')}} @endif</textarea>
+                                 <textarea id="google_analytics" class="form-control" name="google_analytics" placeholder="Link paste here...." >{{ old('google_analytics', $setting->google_analytics)}}</textarea>
                              </div>
 
                             <div class="col-12 mb-3">
                                 <label class="form-label" for="google_map">Google Map </label>
-                                 <textarea id="google_map" class="form-control" name="google_map" placeholder="Embeded link paste here...." > @if( !empty( $setting ) ) {{ $setting->google_map }} @else {{ old('google_map')}} @endif
-                                </textarea>
+                                 <textarea id="google_map" class="form-control" name="google_map" placeholder="Embeded link paste here...." >{{ old('google_map', $setting->google_map)}} </textarea>
                              </div>
                         </div>
                 </div>

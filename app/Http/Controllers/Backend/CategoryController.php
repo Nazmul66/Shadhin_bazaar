@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\CreateCategoryRequest;
+use App\Http\Requests\Admin\UpdateCategoryRequest;
 use App\Traits\ImageUploadTraits;
 use App\Models\Category;
 use App\Models\Subcategory;
@@ -32,9 +34,10 @@ class CategoryController extends Controller
         $categories= Category::all();
 
         return DataTables::of($categories)
+            ->addIndexColumn()
             ->addColumn('categoryImg', function ($category) {
                 return '<a href="'.asset( $category->category_img ).'" target="__target">
-                     <img src="'.asset( $category->category_img ).'" width="50px" height="50px">
+                     <img src="'.asset( $category->category_img ).'" width="50px" height="50px" >
                 </a>';
             })
             ->addColumn('status', function ($category) {
@@ -52,11 +55,25 @@ class CategoryController extends Controller
             })
 
             ->addColumn('action', function ($category) {
-                return '<div class="d-flex gap-3">
-                    <a class="btn btn-sm btn-primary" id="editButton" href="javascript:void(0)" data-id="'.$category->id.'" data-bs-toggle="modal" data-bs-target="#editModal"><i class="fas fa-edit"></i></a>
+                return '
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Actions <i class="mdi mdi-chevron-down"></i>
+                        </button>
 
-                    <a class="btn btn-sm btn-danger" href="javascript:void(0)" data-id="'.$category->id.'" id="deleteBtn"> <i class="fas fa-trash"></i></a>
-                </div>';
+                        <div class="dropdown-menu dropdownmenu-primary" style="">
+                            <a class="dropdown-item text-info" id="viewButton" href="javascript:void(0)" data-id="'.$category->id.'" data-bs-toggle="modal" data-bs-target="#viewModal">
+                                <i class="fas fa-eye"></i> View
+                            </a>
+
+                            <a class="dropdown-item text-success" id="editButton" href="javascript:void(0)" data-id="'.$category->id.'" data-bs-toggle="modal" data-bs-target="#editModal">
+                                <i class="fas fa-edit"></i> Edit
+                            </a>
+
+                            <a class="dropdown-item text-danger" href="javascript:void(0)" data-id="'.$category->id.'" id="deleteBtn">
+                                <i class="fas fa-trash"></i> Delete
+                            </a>
+                        </div>
+                    </div>';
             })
 
             ->rawColumns(['categoryImg', 'status', 'action'])
@@ -85,24 +102,9 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateCategoryRequest $request)
     {
-
-        $request->validate(
-            [
-                'category_name' => ['required', 'unique:categories,category_name', 'max:255'],
-                'category_img' => ['required', 'image'],
-                'status' => ['required'],
-            ],
-            [
-                'category_name.required' => 'Please fill up Category name',
-                'category_name.max' => 'Character might be 255 word',
-                'category_name.unique' => 'Character might be unique',
-                'category_img.required' => 'Category Image is required',
-                'status.required' => 'status is required',
-            ]
-        );
-
+        
         DB::beginTransaction();
         try {
 
@@ -141,28 +143,16 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateCategoryRequest $request, $id)
     {
         $category  = Category::find($id);
-
-        // dd($category);
-
-        $request->validate(
-            [
-                'category_name' => ['required', 'max:255', 'unique:categories,category_name,'. $category->id ],
-            ],
-            [
-                'category_name.required' => 'Please fill up Category name',
-                'category_name.max' => 'Character might be 255 words',
-                'category_name.unique' => 'Character might be unique',
-            ]
-        );
 
         DB::beginTransaction();
         try {
             // Handle image with ImageUploadTraits function
             $category->category_name          = $request->category_name;
             $category->slug                   = Str::slug($request->category_name);
+            $category->front_status           = $request->front_status;
             $category->status                 = $request->status;
 
             $uploadImages                     = $this->deleteImageAndUpload($request, 'category_img', 'category', $category->category_img );
@@ -196,10 +186,36 @@ class CategoryController extends Controller
         return response()->json(['message' => 'Category has been deleted.'], 200);
     }
 
-    public function getSubCategories(Category $category)
-    {
-        $subcats= SubCategory::where('category_id', $category->id)->get();
+    // public function getSubCategories(Category $category)
+    // {
+    //     $subcats= SubCategory::where('category_id', $category->id)->get();
 
-        return response()->json(['message' => 'success', 'data' => $subcats], 200);
+    //     return response()->json(['message' => 'success', 'data' => $subcats], 200);
+    // }
+
+    public function CategoryView($id)
+    {
+        $category  = Category::find($id);
+        // dd($category);
+
+        $front_status_html = '';
+        if ($category->front_status === 1) {
+            $front_status_html = '<span class="text-success">Active</span>';
+        } else {
+            $front_status_html = '<span class="text-danger">Inactive</span>';
+        }
+
+        $statusHtml = '';
+        if ($category->status === 1) {
+            $statusHtml = '<span class="text-success">Active</span>';
+        } else {
+            $statusHtml = '<span class="text-danger">Inactive</span>';
+        }
+
+        return response()->json([
+            'success'           => $category,
+            'statusHtml'        => $statusHtml,
+            'front_status_html' => $front_status_html,
+        ]);
     }
 }

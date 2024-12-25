@@ -31,3 +31,5 @@
 {{-- <link rel="stylesheet" href="{{ asset('public/frontend/css/rtl.css') }}">  --}}
 
 @stack('add-css')
+
+{!! getSetting()->facebook_pixel ?? "" !!}

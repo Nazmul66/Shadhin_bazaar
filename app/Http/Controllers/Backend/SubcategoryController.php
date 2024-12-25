@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\CreateSubCategoryRequest;
+use App\Http\Requests\Admin\UpdateSubCategoryRequest;
 use App\Traits\ImageUploadTraits;
 use App\Models\Category;
 use App\Models\Subcategory;
@@ -32,64 +34,63 @@ class SubcategoryController extends Controller
     {
         // get all data
         $subCategories= Category::join('subcategories', 'subcategories.category_id', '=', 'categories.id')
-                ->select('categories.category_name', 'subcategories.subcategory_name', 'subcategories.*')
+                ->select('categories.category_name', 'subcategories.*')
                 ->get();
 
         return DataTables::of($subCategories)
 
-        ->addColumn('subCategoryImg', function ($subCategory) {
-            return '<a href="'.asset( $subCategory->subcategory_img ).'" target="__blank">
-                <img src="'.asset( $subCategory->subcategory_img ).'" width="50px" height="50px">
-            </a>';
-        })
-
-        ->addColumn('status', function ($subCategory) {
-            if ($subCategory->status == 1) {
-                return ' <a class="status" id="status" href="javascript:void(0)"
-                    data-id="'.$subCategory->id.'" data-status="'.$subCategory->status.'"> <i
-                        class="fa-solid fa-toggle-on fa-2x"></i>
+            ->addIndexColumn()
+            ->addColumn('subCategoryImg', function ($subCategory) {
+                return '<a href="'.asset( $subCategory->subcategory_img ).'" target="__blank">
+                    <img src="'.asset( $subCategory->subcategory_img ).'" width="50px" height="50px">
                 </a>';
-            } else {
-                return '<a class="status" id="status" href="javascript:void(0)"
-                    data-id="'.$subCategory->id.'" data-status="'.$subCategory->status.'"> <i
-                        class="fa-solid fa-toggle-off fa-2x" style="color: grey"></i>
-                </a>';
-            }
-        })
+            })
 
-        ->addColumn('action', function ($subCategory) {
-            return '<div class="d-flex gap-3">
-                <a class="btn btn-sm btn-primary" id="editButton" href="javascript:void(0)" data-id="'.$subCategory->id.'" data-bs-toggle="modal" data-bs-target="#editModal"><i class="fas fa-edit"></i></a>
+            ->addColumn('status', function ($subCategory) {
+                if ($subCategory->status == 1) {
+                    return ' <a class="status" id="status" href="javascript:void(0)"
+                        data-id="'.$subCategory->id.'" data-status="'.$subCategory->status.'"> <i
+                            class="fa-solid fa-toggle-on fa-2x"></i>
+                    </a>';
+                } else {
+                    return '<a class="status" id="status" href="javascript:void(0)"
+                        data-id="'.$subCategory->id.'" data-status="'.$subCategory->status.'"> <i
+                            class="fa-solid fa-toggle-off fa-2x" style="color: grey"></i>
+                    </a>';
+                }
+            })
 
-                <a class="btn btn-sm btn-danger" href="javascript:void(0)" data-id="'.$subCategory->id.'" id="deleteBtn"> <i class="fas fa-trash"></i></a>
-            </div>';
-        })
+            ->addColumn('action', function ($subCategory) {
+                return '
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Actions <i class="mdi mdi-chevron-down"></i>
+                        </button>
 
-        ->rawColumns(['subCategoryImg','status','action'])
-        ->make(true);
+                        <div class="dropdown-menu dropdownmenu-primary" style="">
+                            <a class="dropdown-item text-info" id="viewButton" href="javascript:void(0)" data-id="'.$subCategory->id.'" data-bs-toggle="modal" data-bs-target="#viewModal">
+                                <i class="fas fa-eye"></i> View
+                            </a>
+
+                            <a class="dropdown-item text-success" id="editButton" href="javascript:void(0)" data-id="'.$subCategory->id.'" data-bs-toggle="modal" data-bs-target="#editModal">
+                                <i class="fas fa-edit"></i> Edit
+                            </a>
+
+                            <a class="dropdown-item text-danger" href="javascript:void(0)" data-id="'.$subCategory->id.'" id="deleteBtn">
+                                <i class="fas fa-trash"></i> Delete
+                            </a>
+                        </div>
+                    </div>';
+            })
+
+            ->rawColumns(['subCategoryImg','status','action'])
+            ->make(true);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateSubCategoryRequest $request)
     {
-        $request->validate(
-            [
-                'category_id' => ['required'],
-                'subcategory_name' => ['required', 'unique:subcategories', 'max:255'],
-                'subcategory_img' => ['required', 'image'],
-                'status' => ['required'],
-            ],
-            [
-                'category_id.required' => 'Please select category name',
-                'subcategory_name.required' => 'Please fill up subCategory name',
-                'subcategory_name.max' => 'Character might be 255 words',
-                'subcategory_name.unique' => 'Character might be unique',
-                'subcategory_img.required' => 'Image is required',
-                'status.required' => 'status is required',
-            ]
-        );
 
         DB::beginTransaction();
         try {
@@ -152,21 +153,9 @@ class SubcategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateSubCategoryRequest $request, string $id)
     {
         $subcategory  = Subcategory::find($id);
-        // dd($subCategory);
-
-        $request->validate(
-            [
-                'subcategory_name' => ['required', 'max:255', 'unique:subcategories,subcategory_name,'. $subcategory->id ],
-            ],
-            [
-                'subcategory_name.required' => 'Please fill up subCategory name',
-                'subcategory_name.max' => 'Character might be 255 words',
-                'subcategory_name.unique' => 'Character might be unique',
-            ]
-        );
 
         DB::beginTransaction();
         try {
@@ -206,5 +195,28 @@ class SubcategoryController extends Controller
         $subcategory->delete();
 
         return response()->json(['message' => 'SubCategory has been deleted.'], 200);
+    }
+
+    
+    public function subCategoryView($id)
+    {
+        $subcategory  =  
+                    Category::join('subcategories', 'subcategories.category_id', '=', 'categories.id')
+                    ->select('categories.category_name', 'subcategories.*')
+                    ->where('subcategories.id', $id)
+                    ->first();
+        // dd($subcategory);
+
+        $statusHtml = '';
+        if ($subcategory->status === 1) {
+            $statusHtml = '<span class="text-success">Active</span>';
+        } else {
+            $statusHtml = '<span class="text-danger">Inactive</span>';
+        }
+
+        return response()->json([
+            'success'           => $subcategory,
+            'statusHtml'        => $statusHtml,
+        ]);
     }
 }

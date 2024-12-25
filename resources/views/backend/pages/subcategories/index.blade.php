@@ -9,6 +9,7 @@
 
 
 @push('add-css')
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.datatables.net/2.1.6/css/dataTables.dataTables.min.css">
 @endpush
 
@@ -37,7 +38,7 @@
             <div class="d-flex justify-content-between align-items-center">
                 <h4 class="card-title">SubCategories List</h4>
                 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">
-                    Create New
+                    Add New
                 </button>
             </div>
         </div>
@@ -68,9 +69,9 @@
              style="display: none;" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-header bg-primary">
                         <h5 class="modal-title" id="myModalLabel">Create SubCategory</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
                     </div>
 
                     <div class="modal-body">
@@ -81,10 +82,10 @@
                             <div class="mb-3">
                                 <label class="form-label">Category Name <span class="text-danger">*</span>
                                 </label>
-                                <select class="form-select" name="category_id">
+                                <select class="form-select" name="category_id" id="category_id">
                                     <option value="" disabled selected>Select</option>
                                         @foreach ($categories as $category)
-                                            <option value="{{ $category->id }}">{{ $category->category_name }}</option>
+                                            <option value="{{ $category->id }}" data-image-url="{{ asset($category->category_img) }}">{{ $category->category_name }}</option>
                                         @endforeach
                                 </select>
 
@@ -94,24 +95,27 @@
                             <div class="mb-3">
                                 <label for="subcategory_name" class="form-label">SubCategory Name <span class="text-danger">*</span>
                                 </label>
-                                <input class="form-control" id="subcategory_name" type="text" name="subcategory_name">
+                                <input class="form-control" id="subcategory_name" type="text" name="subcategory_name" placeholder="SubCategory Name">
 
                                 <span id="subCat_name_validate" class="text-danger mt-1"></span>
                             </div>
 
                             <div class="mb-3">
                                 <label for="subcategory_img" class="form-label">Image <sup class="text-danger" style="font-size: 12px;">* resolution(100 x 100)</sup></label>
-                                <input type="file" class="form-control" name="subcategory_img" id="subcategory_img">
+                                <input type="file" class="form-control" name="subcategory_img" id="subcategory_img" accept=".png, .jpeg, .jpg, .webp" onchange="previewImage(event)">
 
                                 <span id="image_validate" class="text-danger mt-1"></span>
+
+                                 <div id="image_preview" class="mt-3">
+                                    <img src="{{ asset('public/backend/assets/images/no_Image_available.jpg') }}" width="100" height="100">
+                                </div>
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label">Status <span class="text-danger">*</span>
                                 </label>
                                 <select class="form-select" name="status">
-                                    <option value="" disabled selected>Select</option>
-                                    <option value="1">Active</option>
+                                    <option value="1" selected>Active</option>
                                     <option value="0">Inactive</option>
                                 </select>
 
@@ -119,10 +123,10 @@
                             </div>
 
                             <div class="d-flex justify-content-end align-items-center">
-                                <button type="button" class="btn btn-secondary waves-effect me-3"
+                                <button type="button" class="btn btn-danger waves-effect me-3"
                                   data-bs-dismiss="modal">Close </button>
 
-                                <button type="submit" id="btn-store" class="btn btn-primary waves-effect waves-light"> Save changes </button>
+                                <button type="submit" id="btn-store" class="btn btn-primary waves-effect waves-light"> Save Changes </button>
                             </div>
                         </form>
                     </div>
@@ -136,9 +140,9 @@
              style="display: none;" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-header bg-primary">
                         <h5 class="modal-title" id="myModalLabel">Update SubCategory</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
                     </div>
 
                     <div class="modal-body">
@@ -155,7 +159,7 @@
                                 <select class="form-select" name="category_id" id="up_category_id">
                                     <option value="" disabled selected>Select</option>
                                         @foreach ($categories as $row)
-                                            <option value="{{ $row->id }}">{{ $row->category_name }}</option>
+                                            <option value="{{ $row->id }}" data-image-url="{{ asset($row->category_img) }}">{{ $row->category_name }}</option>
                                         @endforeach
                                 </select>
                             </div>
@@ -163,30 +167,29 @@
                             <div class="mb-3">
                                 <label for="up_subcat_name" class="form-label">SubCategory Name <span class="text-danger">*</span>
                                 </label>
-                                <input class="form-control" id="up_subcat_name" type="text" name="subcategory_name" >
+                                <input class="form-control" id="up_subcat_name" type="text" name="subcategory_name" placeholder="SubCategory Name">
 
                                 <span id="up_subCat_name_validate" class="text-danger mt-1"></span>
                             </div>
 
                             <div class="mb-3">
                                 <label for="subcategory_img" class="form-label">Image <sup class="text-danger" style="font-size: 12px;">* resolution(100 x 100)</sup></label>
-                                <input type="file" class="form-control" name="subcategory_img" id="subcategory_img">
+                                <input type="file" class="form-control" name="subcategory_img" id="subcategory_img" accept=".png, .jpeg, .jpg, .webp" onchange="imageShow(event)">
 
-                                <div id="imageShow"></div>
+                                <div id="imageShow" class="mt-3"></div>
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label">Status <span class="text-danger">*</span>
                                 </label>
                                 <select class="form-select" id="up_status" name="status">
-                                    <option value="" disabled selected>Select</option>
                                     <option value="1">Active</option>
                                     <option value="0">Inactive</option>
                                 </select>
                             </div>
 
                             <div class="d-flex justify-content-end align-items-center">
-                                <button type="button" class="btn btn-secondary waves-effect me-3"
+                                <button type="button" class="btn btn-danger waves-effect me-3"
                                         data-bs-dismiss="modal">Close
                                 </button>
 
@@ -199,16 +202,125 @@
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div>
+
+
+        <div id="viewModal" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" data-bs-scroll="true"
+        style="display: none;" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header bg-primary">
+                        <h5 class="modal-title" id="myModalLabel">View SubCategory List</h5>
+
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="view_modal_content">
+                            <label>Category Name : </label>
+                            <span class="text-dark" id="view_category_name"></span>
+                        </div>
+
+                        <div class="view_modal_content">
+                            <label>SubCategory Name : </label>
+                            <span class="text-dark" id="view_subCategory_name"></span>
+                        </div>
+
+                        <div class="view_modal_content">
+                            <label>Image : </label>
+                            <div id="viewImageShow"></div>
+                        </div>
+
+                        <div class="view_modal_content">
+                            <label>Status : </label>
+                            <div id="view_status"></div>
+                        </div>
+                    </div>
+
+
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
     </div>
 
 @endsection
 
 @push('add-script')
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="https://cdn.datatables.net/2.1.6/js/dataTables.min.js"></script>
 
     <script>
+        function previewImage(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = e => document.getElementById('image_preview').innerHTML = `
+                <img src="${e.target.result}" width="100" height="100">`;
+                reader.readAsDataURL(file);
+            }
+        }
 
+        function imageShow(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = e => document.getElementById('imageShow').innerHTML = `
+                <img src="${e.target.result}" width="100" height="100">`;
+                reader.readAsDataURL(file);
+            }
+        }
+    </script>
+
+    <script>
         $(document).ready(function () {
+            //____ For Create Modal ____//
+            $('#category_id').select2({
+                dropdownParent: $('#createModal'),
+                templateResult: formatState, // Only Text content when select, it will be shown 
+                templateSelection: formatState,    // When select any option, it will be display image and text both
+            });
+
+            function formatState (state) {
+                if (!state.id) {
+                    return state.text; // Return text for disabled option
+                }
+
+                var imageUrl = $(state.element).data('image-url'); // Access image URL from data attribute
+
+                if (!imageUrl) {
+                    return state.text; // Return text if no image URL is available
+                }
+
+                var $state = $(
+                    '<span><img src="' + imageUrl + '" style="width: 35px; height: 30px; margin-right: 8px;" /> ' + state.text + '</span>'
+                );
+                return $state;
+            };
+            
+
+            //____ For Create Modal ____//
+            $('#up_category_id').select2({
+                dropdownParent: $('#editModal'),
+                templateResult: formatState, // Only Text content when select, it will be shown 
+                templateSelection: formatState,    // When select any option, it will be display image and text both
+            });
+
+            function formatState (state) {
+                if (!state.id) {
+                    return state.text; // Return text for disabled option
+                }
+
+                var imageUrl = $(state.element).data('image-url'); // Access image URL from data attribute
+
+                if (!imageUrl) {
+                    return state.text; // Return text if no image URL is available
+                }
+
+                var $state = $(
+                    '<span><img src="' + imageUrl + '" style="width: 35px; height: 30px; margin-right: 8px;" /> ' + state.text + '</span>'
+                );
+                return $state;
+            };
+
 
             // Show Data through Datatable
             let datatables = $('#datatables').DataTable({
@@ -222,8 +334,11 @@
                 // pageLength: 30,
 
                 columns: [
-                    {
-                        data: 'id',
+                    { 
+                        data: 'DT_RowIndex', 
+                        name: 'DT_RowIndex', 
+                        orderable: false, 
+                        searchable: false 
                     },
                     {
                         data: 'subCategoryImg',
@@ -289,7 +404,7 @@
                 })
             })
 
-            // Create
+            // Create Data
             $('#createForm').submit(function (e) {
                 e.preventDefault();
 
@@ -336,7 +451,7 @@
             })
 
 
-            // Edit Category
+            // Edit Data
             $(document).on("click", '#editButton', function (e) {
                 let id = $(this).attr('data-id');
                 // alert(id);
@@ -354,7 +469,7 @@
                         // console.log(res)
 
                         $('#id').val(data.id);
-                        $('#up_category_id').val(data.category_id);
+                        $('#up_category_id').val(data.category_id).trigger('change');
                         $('#up_subcat_name').val(data.subcategory_name);
                         $('#imageShow').html('');
                         $('#imageShow').append(`
@@ -373,7 +488,7 @@
             })
 
 
-            // Update Category
+            // Update Data
             $("#EditForm").submit(function (e) {
                 e.preventDefault();
 
@@ -417,7 +532,7 @@
             });
 
 
-            // Delete Category
+            // Delete Data
             $(document).on("click", "#deleteBtn", function () {
                 let id = $(this).data('id')
 
@@ -460,6 +575,42 @@
                         }
 
                     })
+            })
+
+
+            // View Data
+            $(document).on("click", '#viewButton', function (e) {
+                let id = $(this).attr('data-id');
+                // alert(id);
+
+                $.ajax({
+                    type: 'GET',
+                    // headers: {
+                    //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    // },
+                    url: "{{ url('admin/subcategories/view') }}/" + id,
+                    processData: false,  // Prevent jQuery from processing the data
+                    contentType: false,  // Prevent jQuery from setting contentType
+                    success: function (res) {
+                        let data = res.success;
+
+                        $('#view_category_name').html(data.category_name);
+                        $('#view_subCategory_name').html(data.subcategory_name);
+                        $('#viewImageShow').html('');
+                        $('#viewImageShow').append(`
+                          <a href="{{ asset("`+ data.subcategory_img +`") }}" target="__blank">
+                            <img src={{ asset("`+ data.subcategory_img +`") }} alt="" style="width: 75px;">    
+                          </a>
+                       `);
+
+                        $('#view_status').html(res.statusHtml);
+
+                    },
+                    error: function (error) {
+                        console.log('error');
+                    }
+
+                });
             })
         })
 

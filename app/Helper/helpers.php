@@ -2,6 +2,7 @@
 
   //__ Set Sidebar Item Active __// 
 
+use App\Models\Setting;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -16,6 +17,16 @@ use Illuminate\Support\Facades\DB;
       }
   }
   
+  if (!function_exists('getSetting')) {
+    /**
+     * @return mixed
+     */
+    function getSetting()
+    {
+        $setting = Setting::first();
+        return $setting;
+    }
+}
 
   //__ Check discount for products __//  
   function checkDiscount($product)

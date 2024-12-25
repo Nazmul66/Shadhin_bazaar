@@ -33,7 +33,7 @@
             <div class="d-flex justify-content-between align-items-center">
                 <h4 class="card-title">Categories List</h4>
                 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">
-                    Create New
+                    Add New
                 </button>
             </div>
         </div>
@@ -44,8 +44,8 @@
                     <thead class="bg-primary text-white">
                         <tr>
                             <th>#SL.</th>
-                            <th>Category Image</th>
-                            <th>Category Name</th>
+                            <th>Image</th>
+                            <th>Name</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
@@ -62,10 +62,10 @@
              style="display: none;" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-header bg-primary">
                         <h5 class="modal-title" id="myModalLabel">Create Category</h5>
 
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
                     </div>
 
                     <div class="modal-body">
@@ -74,23 +74,26 @@
 
                             <div class="mb-3">
                                 <label for="category_name" class="form-label">Name <span class="text-danger">*</span></label>
-                                <input class="form-control" id="category_name" type="text" name="category_name" >
+                                <input class="form-control" id="category_name" type="text" name="category_name" placeholder="Category Name">
 
                                 <span id="name_validate" class="text-danger mt-1"></span>
                             </div>
 
                             <div class="mb-3">
                                 <label for="category_img" class="form-label">Image <sup class="text-danger" style="font-size: 12px;">* resolution(100 x 100)</sup></label>
-                                <input type="file" class="form-control" name="category_img" id="category_img" >
+                                <input type="file" class="form-control" name="category_img" id="category_img" accept=".png, .jpeg, .jpg, .webp" onchange="previewImage(event)">
 
                                 <span id="image_validate" class="text-danger mt-1"></span>
+
+                                <div id="image_preview" class="mt-3">
+                                    <img src="{{ asset('public/backend/assets/images/no_Image_available.jpg') }}" width="100" height="100">
+                                </div>
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label">Status <span class="text-danger">*</span></label>
                                 <select class="form-select" name="status">
-                                    <option value="" disabled selected>Select</option>
-                                    <option value="1">Active</option>
+                                    <option value="1" selected>Active</option>
                                     <option value="0">Inactive</option>
                                 </select>
 
@@ -98,12 +101,12 @@
                             </div>
 
                             <div class="d-flex justify-content-end align-items-center">
-                                <button type="button" class="btn btn-secondary waves-effect me-3"
+                                <button type="button" class="btn btn-danger waves-effect me-3"
                                         data-bs-dismiss="modal">Close
                                 </button>
 
                                 <button type="submit" id="btn-store" class="btn btn-primary waves-effect waves-light">
-                                    Save changes
+                                    Save Changes
                                 </button>
                             </div>
                         </form>
@@ -120,9 +123,9 @@
              style="display: none;" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-header bg-primary">
                         <h5 class="modal-title" id="myModalLabel">Update Category</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
                     </div>
 
                     <div class="modal-body">
@@ -134,29 +137,36 @@
 
                             <div class="mb-3">
                                 <label for="up_category_name" class="form-label">Name <span class="text-danger">*</span></label>
-                                <input class="form-control" id="up_category_name" type="text" name="category_name" >
+                                <input class="form-control" id="up_category_name" type="text" name="category_name" placeholder="Category Name">
 
                                 <span id="up_name_validate" class="text-danger mt-1"></span>
                             </div>
 
                             <div class="mb-3">
                                 <label for="category_img" class="form-label">Image <sup class="text-danger" style="font-size: 12px;">* resolution(100 x 100)</sup></label>
-                                <input type="file" class="form-control" name="category_img" id="up_cat_img">
+                                <input type="file" class="form-control" name="category_img" id="up_cat_img" accept=".png, .jpeg, .jpg, .webp" onchange="imageShow(event)">
 
-                                <div id="imageShow"></div>
+                                <div id="imageShow" class="mt-3"></div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Front Status <span class="text-danger">*</span></label>
+                                <select class="form-select" id="up_front_status" name="front_status">
+                                    <option value="1">Active</option>
+                                    <option value="0">Inactive</option>
+                                </select>
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label">Status <span class="text-danger">*</span></label>
                                 <select class="form-select" id="up_status" name="status">
-                                    <option value="" disabled selected>Select</option>
                                     <option value="1">Active</option>
                                     <option value="0">Inactive</option>
                                 </select>
                             </div>
 
                             <div class="d-flex justify-content-end align-items-center">
-                                <button type="button" class="btn btn-secondary waves-effect me-3"
+                                <button type="button" class="btn btn-danger waves-effect me-3"
                                         data-bs-dismiss="modal">Close
                                 </button>
 
@@ -165,6 +175,43 @@
                                 </button>
                             </div>
                         </form>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+
+
+        <!-- View Modal -->
+        <div id="viewModal" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" data-bs-scroll="true"
+        style="display: none;" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header bg-primary">
+                        <h5 class="modal-title" id="myModalLabel">View Category List</h5>
+
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="view_modal_content">
+                            <label>Name : </label>
+                            <span class="text-dark" id="view_category_name"></span>
+                        </div>
+
+                        <div class="view_modal_content">
+                            <label>Image : </label>
+                            <div id="viewImageShow"></div>
+                        </div>
+
+                        <div class="view_modal_content">
+                            <label>Front Status : </label>
+                            <div id="view_front_status"></div>
+                        </div>
+
+                        <div class="view_modal_content">
+                            <label>Status : </label>
+                            <div id="view_status"></div>
+                        </div>
                     </div>
 
 
@@ -179,7 +226,28 @@
     <script src="https://cdn.datatables.net/2.1.6/js/dataTables.min.js"></script>
 
     <script>
+        function previewImage(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = e => document.getElementById('image_preview').innerHTML = `
+                <img src="${e.target.result}" width="100" height="100">`;
+                reader.readAsDataURL(file);
+            }
+        }
 
+        function imageShow(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = e => document.getElementById('imageShow').innerHTML = `
+                <img src="${e.target.result}" width="100" height="100">`;
+                reader.readAsDataURL(file);
+            }
+        }
+    </script>
+
+    <script>
         $(document).ready(function () {
 
             // Show Data through Datatable
@@ -194,8 +262,11 @@
                 // pageLength: 30,
 
                 columns: [
-                    {
-                        data: 'id',
+                    { 
+                        data: 'DT_RowIndex', 
+                        name: 'DT_RowIndex', 
+                        orderable: false, 
+                        searchable: false 
                     },
                     {
                         data: 'categoryImg',
@@ -217,7 +288,6 @@
                     },
                 ]
             });
-
 
             // status updates
             $(document).on('click', '#status', function () {
@@ -304,17 +374,17 @@
             })
 
 
-            // Edit Category
+            // Edit Data
             $(document).on("click", '#editButton', function (e) {
-                let categoryId = $(this).attr('data-id');
-                // alert(categoryId);
+                let id = $(this).attr('data-id');
+                // alert(id);
 
                 $.ajax({
                     type: 'GET',
                     // headers: {
                     //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     // },
-                    url: "{{ url('admin/categories') }}/" + categoryId + "/edit",
+                    url: "{{ url('admin/categories') }}/" + id + "/edit",
                     processData: false,  // Prevent jQuery from processing the data
                     contentType: false,  // Prevent jQuery from setting contentType
                     success: function (res) {
@@ -325,9 +395,10 @@
                         $('#imageShow').html('');
                         $('#imageShow').append(`
                           <a href="{{ asset("`+ data.category_img +`") }}" target="__blank">
-                            <img src={{ asset("`+ data.category_img +`") }} alt="" style="width: 75px;">    
+                            <img src='{{ asset("`+ data.category_img +`") }}' alt="" style="width: 100px; height: 100px;">    
                           </a>
-                    `);
+                        `);
+                        $('#up_front_status').val(data.front_status);
                         $('#up_status').val(data.status);
                     },
                     error: function (error) {
@@ -338,7 +409,7 @@
             })
 
 
-            // Update Category
+            // Update Data
             $("#EditForm").submit(function (e) {
                 e.preventDefault();
 
@@ -358,7 +429,7 @@
 
                         swal.fire({
                             title: "Success",
-                            text: "Category Edited",
+                            text: "Category Updated Successfully",
                             icon: "success"
                         })
 
@@ -382,7 +453,7 @@
             });
 
 
-            // Delete Category
+            // Delete Data
             $(document).on("click", "#deleteBtn", function () {
                 let id = $(this).data('id')
 
@@ -426,8 +497,42 @@
 
                 })
             })
-        })
 
+
+            // View Data
+            $(document).on("click", '#viewButton', function (e) {
+                let id = $(this).attr('data-id');
+                // alert(id);
+
+                $.ajax({
+                    type: 'GET',
+                    // headers: {
+                    //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    // },
+                    url: "{{ url('admin/categories/view') }}/" + id,
+                    processData: false,  // Prevent jQuery from processing the data
+                    contentType: false,  // Prevent jQuery from setting contentType
+                    success: function (res) {
+                        let data = res.success;
+
+                        $('#view_category_name').html(data.category_name);
+                        $('#viewImageShow').html('');
+                        $('#viewImageShow').append(`
+                          <a href="{{ asset("`+ data.category_img +`") }}" target="__blank">
+                            <img src={{ asset("`+ data.category_img +`") }} alt="" style="width: 75px;">    
+                          </a>
+                       `);
+
+                        $('#view_status').html(res.statusHtml);
+                        $('#view_front_status').html(res.front_status_html);
+                    },
+                    error: function (error) {
+                        console.log('error');
+                    }
+
+                });
+            })
+        })
 
     </script>
 @endpush
