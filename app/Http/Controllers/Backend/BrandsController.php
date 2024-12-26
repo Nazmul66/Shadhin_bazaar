@@ -30,6 +30,7 @@ class BrandsController extends Controller
         $brands= Brand::all();
 
         return DataTables::of($brands)
+            ->addIndexColumn()
             ->addColumn('brandImage', function ($brand) {
                 return '<a href="'.asset( $brand->image ).'" target="__blank">
                      <img src="'.asset( $brand->image ).'" width="50px" height="50px">
@@ -106,6 +107,8 @@ class BrandsController extends Controller
             $brand->brand_name             = $request->brand_name;
             $brand->slug                   = Str::slug($request->brand_name);
             $brand->status                 = $request->status;
+            $brand->created_at             = now();
+            $brand->updated_at             = now();
 
             // Handle image with ImageUploadTraits function
             $uploadImage                   = $this->imageUpload($request, 'image', 'brand');
@@ -145,6 +148,7 @@ class BrandsController extends Controller
             $brand->brand_name             = $request->brand_name;
             $brand->slug                   = Str::slug($request->brand_name);
             $brand->status                 = $request->status;
+            $brand->updated_at             = now();
 
             // Handle image with ImageUploadTraits function
             $uploadImages                  = $this->deleteImageAndUpload($request, 'image', 'brand', $brand->image );
@@ -190,8 +194,8 @@ class BrandsController extends Controller
             $statusHtml = '<span class="text-danger">Inactive</span>';
         }
 
-        $created_date = date('d F, Y H:i:s A', strtotime($brand->created_at));
-        $updated_date = date('d F, Y H:i:s A', strtotime($brand->updated_at));
+        $created_date = date('d F, Y', strtotime($brand->created_at));
+        $updated_date = date('d F, Y', strtotime($brand->updated_at));
 
         return response()->json([
             'success'           => $brand,

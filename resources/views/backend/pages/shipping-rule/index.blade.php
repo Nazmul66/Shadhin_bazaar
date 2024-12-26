@@ -85,7 +85,7 @@
                                     <label class="form-label" for="name">Name <span class="text-danger">*</span></label>
                                     <input class="form-control"  value="{{ old('name') }}" id="name" type="text" name="name" placeholder="Name write here">
     
-                                    <span id="name_validate" class="text-danger mt-1"></span>
+                                    <span id="name_validate" class="text-danger validation-error mt-1"></span>
                                 </div>
     
                                 <div class="col mb-3">
@@ -95,7 +95,7 @@
                                         <option value="min_cost">Minimum Order Amount</option>
                                     </select>
     
-                                    <span id="type_validate" class="text-danger mt-1"></span>
+                                    <span id="type_validate" class="text-danger validation-error mt-1"></span>
                                 </div>
                             </div>
 
@@ -105,14 +105,14 @@
                                     <label class="form-label" for="min_cost">Min Cost </label>
                                     <input class="form-control" value="{{ old('min_cost') }}" min="0" id="min_cost" type="number" name="min_cost" placeholder="Min Cost Price">
     
-                                    <span id="min_cost_validate" class="text-danger mt-1"></span>
+                                    <span id="min_cost_validate" class="text-danger validation-error mt-1"></span>
                                 </div>
     
                                 <div class="col mb-3">
                                     <label class="form-label" for="cost">Cost <span class="text-danger">*</span></label>
                                     <input class="form-control"  value="{{ old('cost') }}" min="0" id="cost" type="number" name="cost" placeholder="Cost Price">
     
-                                    <span id="cost_validate" class="text-danger mt-1"></span>
+                                    <span id="cost_validate" class="text-danger validation-error mt-1"></span>
                                 </div>
                             </div>
 
@@ -160,7 +160,7 @@
                                     <label class="form-label" for="up_name">Name <span class="text-danger">*</span></label>
                                     <input class="form-control" id="up_name" type="text" name="name">
     
-                                    <span id="up_name_validate" class="text-danger mt-1"></span>
+                                    <span id="up_name_validate" class="text-danger validation-error mt-1"></span>
                                 </div>
     
                                 <div class="col mb-3">
@@ -170,7 +170,7 @@
                                         <option value="min_cost">Minimum Order Amount</option>
                                     </select>
     
-                                    <span id="up_type_validate" class="text-danger mt-1"></span>
+                                    <span id="up_type_validate" class="text-danger validation-error mt-1"></span>
                                 </div>
                             </div>
 
@@ -180,14 +180,14 @@
                                     <label class="form-label" for="up_min_cost">Min Cost</label>
                                     <input class="form-control" id="up_min_cost" min="0" type="number" name="min_cost">
     
-                                    <span id="up_min_cost_validate" class="text-danger mt-1"></span>
+                                    <span id="up_min_cost_validate" class="text-danger validation-error mt-1"></span>
                                 </div>
     
                                 <div class="col mb-3">
                                     <label class="form-label" for="up_cost">Cost <span class="text-danger">*</span></label>
                                     <input class="form-control" id="up_cost" min="0" type="number" name="cost" >
     
-                                    <span id="up_cost_validate" class="text-danger mt-1"></span>
+                                    <span id="up_cost_validate" class="text-danger validation-error mt-1"></span>
                                 </div>
                             </div>
 
@@ -402,6 +402,7 @@
                         if (res.status === true) {
                             $('#create_Modal').modal('hide');
                             $('#createForm')[0].reset();
+                            $('.validation-error').html('');
                             dataTabless.ajax.reload();
 
                             swal.fire({
@@ -493,6 +494,7 @@
 
                         $('#editModal').modal('hide');
                         $('#EditForm')[0].reset();
+                        $('.validation-error').html('');
                         dataTabless.ajax.reload();
                     },
                     error: function (err) {

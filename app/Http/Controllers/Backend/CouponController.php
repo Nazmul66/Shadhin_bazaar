@@ -213,4 +213,32 @@ class CouponController extends Controller
         
         return response()->json(['message' => 'Coupon has been deleted.'], 200);
     }
+    
+
+    public function couponView($id)
+    {
+        $coupon  = Coupon::find($id);
+        // dd($coupon);
+
+        $statusHtml = '';
+        if ($coupon->status === 1) {
+            $statusHtml = '<span class="text-success">Active</span>';
+        } else {
+            $statusHtml = '<span class="text-danger">Inactive</span>';
+        }
+
+        $created_date   = date('d F, Y', strtotime($coupon->created_at));
+        $updated_date   = date('d F, Y', strtotime($coupon->updated_at));
+        $start_date     = date('d F, Y', strtotime($coupon->start_date));
+        $end_date       = date('d F, Y', strtotime($coupon->end_date));
+
+        return response()->json([
+            'success'           => $coupon,
+            'statusHtml'        => $statusHtml,
+            'start_date'        => $start_date,
+            'end_date'          => $end_date,
+            'created_date'      => $created_date,
+            'updated_date'      => $updated_date,
+        ]);
+    }
 }

@@ -75,14 +75,14 @@
                                 <label for="brand_name" class="form-label">Brand Name <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="brand_name" name="brand_name" placeholder="Brand name">
 
-                                <span id="name_validate" class="text-danger mt-1"></span>
+                                <span id="name_validate" class="text-danger validation-error mt-1"></span>
                             </div>
 
                             <div class="mb-3">
                                 <label for="image" class="form-label">Brand Image <sup class="text-danger" style="font-size: 12px;">* resolution(100 x 100)</sup></label>
                                 <input type="file" class="form-control" name="image" id="image"  accept=".png, .jpeg, .jpg, .webp" onchange="previewImage(event)">
 
-                                <span id="image_validate" class="text-danger mt-1"></span>
+                                <span id="image_validate" class="text-danger validation-error mt-1"></span>
 
                                 <div id="image_preview" class="mt-3">
                                     <img src="{{ asset('public/backend/assets/images/no_Image_available.jpg') }}" width="100" height="100">
@@ -96,7 +96,7 @@
                                     <option value="0">No</option>
                                 </select>
 
-                                <span id="featured_validate" class="text-danger mt-1"></span>
+                                <span id="featured_validate" class="text-danger validation-error mt-1"></span>
                             </div>
 
                             <div class="d-flex justify-content-end align-items-center">
@@ -135,7 +135,7 @@
                                 <label for="up_brand_name" class="form-label">Brand Name <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="up_brand_name" name="brand_name" placeholder="Brand Name">
 
-                                <span id="up_name_validate" class="text-danger mt-1"></span>
+                                <span id="up_name_validate" class="text-danger validation-error mt-1"></span>
                             </div>
 
                             <div class="mb-3">
@@ -203,8 +203,6 @@
                             <div id="view_status"></div>
                         </div>
                     </div>
-
-
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div>
@@ -252,8 +250,11 @@
                 // pageLength: 30,
 
                 columns: [
-                    {
-                        data: 'id',
+                    { 
+                        data: 'DT_RowIndex', 
+                        name: 'DT_RowIndex', 
+                        orderable: false, 
+                        searchable: false 
                     },
                     {
                         data: 'brandImage',
@@ -337,6 +338,7 @@
                         if (res.status === true) {
                             $('#createModal').modal('hide');
                             $('#createForm')[0].reset();
+                            $('.validation-error').html('');
                             datatables.ajax.reload();
 
                             swal.fire({
@@ -363,7 +365,7 @@
             })
 
 
-            // Edit
+            // Edit Data
             $(document).on("click", '#editButton', function (e) {
                 let id = $(this).attr('data-id');
                 // alert(id);
@@ -397,7 +399,7 @@
             })
 
 
-            // Update
+            // Update Data
             $("#EditForm").submit(function (e) {
                 e.preventDefault();
 
@@ -423,6 +425,7 @@
 
                         $('#editModal').modal('hide');
                         $('#EditForm')[0].reset();
+                        $('.validation-error').html('');
                         datatables.ajax.reload();
                     },
                     error: function (err) {

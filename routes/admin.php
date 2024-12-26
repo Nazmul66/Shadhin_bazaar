@@ -141,6 +141,7 @@ Route::middleware('setLanguage')->group(function(){
         Route::resource('/coupons', CouponController::class)->names('coupons');
         Route::get('/coupon-data', [CouponController::class, 'getData'])->name('coupon-data');
         Route::post('/change-coupon-status', [CouponController::class, 'changeCouponStatus'])->name('coupon.status');
+        Route::get('/coupons/view/{id}', [CouponController::class, 'couponView'])->name('coupon.view');
 
 
         //______ Shipping-Rule _____//

@@ -89,7 +89,7 @@
                                         @endforeach
                                 </select>
 
-                                <span id="cat_name_validate" class="text-danger mt-1"></span>
+                                <span id="cat_name_validate" class="text-danger validation-error mt-1"></span>
                             </div>
 
                             <div class="mb-3">
@@ -97,14 +97,14 @@
                                 </label>
                                 <input class="form-control" id="subcategory_name" type="text" name="subcategory_name" placeholder="SubCategory Name">
 
-                                <span id="subCat_name_validate" class="text-danger mt-1"></span>
+                                <span id="subCat_name_validate" class="text-danger validation-error mt-1"></span>
                             </div>
 
                             <div class="mb-3">
                                 <label for="subcategory_img" class="form-label">Image <sup class="text-danger" style="font-size: 12px;">* resolution(100 x 100)</sup></label>
                                 <input type="file" class="form-control" name="subcategory_img" id="subcategory_img" accept=".png, .jpeg, .jpg, .webp" onchange="previewImage(event)">
 
-                                <span id="image_validate" class="text-danger mt-1"></span>
+                                <span id="image_validate" class="text-danger validation-error mt-1"></span>
 
                                  <div id="image_preview" class="mt-3">
                                     <img src="{{ asset('public/backend/assets/images/no_Image_available.jpg') }}" width="100" height="100">
@@ -119,7 +119,7 @@
                                     <option value="0">Inactive</option>
                                 </select>
 
-                                <span id="status_validate" class="text-danger mt-1"></span>
+                                <span id="status_validate" class="text-danger validation-error mt-1"></span>
                             </div>
 
                             <div class="d-flex justify-content-end align-items-center">
@@ -169,7 +169,7 @@
                                 </label>
                                 <input class="form-control" id="up_subcat_name" type="text" name="subcategory_name" placeholder="SubCategory Name">
 
-                                <span id="up_subCat_name_validate" class="text-danger mt-1"></span>
+                                <span id="up_subCat_name_validate" class="text-danger validation-error mt-1"></span>
                             </div>
 
                             <div class="mb-3">
@@ -202,6 +202,7 @@
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div>
+
 
         <!-- View Modal -->
         <div id="viewModal" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" data-bs-scroll="true"
@@ -396,6 +397,7 @@
                 })
             })
 
+
             // Create Data
             $('#createForm').submit(function (e) {
                 e.preventDefault();
@@ -416,6 +418,7 @@
                         if (res.status === true) {
                             $('#createModal').modal('hide');
                             $('#createForm')[0].reset();
+                            $('.validation-error').html('');
                             datatables.ajax.reload();
 
                             swal.fire({
@@ -503,9 +506,9 @@
                             text: "SubCategory Edited",
                             icon: "success"
                         })
-
                         $('#editModal').modal('hide');
                         $('#EditForm')[0].reset();
+                        $('.validation-error').html('');
                         datatables.ajax.reload();
                     },
                     error: function (err) {

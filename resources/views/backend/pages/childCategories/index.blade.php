@@ -84,7 +84,7 @@
                                         @endforeach
                                 </select>
 
-                                <span id="cat_name_validate" class="text-danger mt-1"></span>
+                                <span id="cat_name_validate" class="text-danger validation-error mt-1"></span>
                             </div>
 
                             <div class="mb-3">
@@ -96,21 +96,21 @@
                                         @endforeach
                                 </select>
 
-                                <span id="subCat_name_validate" class="text-danger mt-1"></span>
+                                <span id="subCat_name_validate" class="text-danger validation-error mt-1"></span>
                             </div>
 
                             <div class="mb-3">
                                 <label for="childCategory_name" class="form-label">ChildCategory Name <span class="text-danger">*</span></label>
                                 <input class="form-control" id="childCategory_name" type="text" name="name" placeholder="ChildCategory Name">
 
-                                <span id="childCat_name_validate" class="text-danger mt-1"></span>
+                                <span id="childCat_name_validate" class="text-danger validation-error mt-1"></span>
                             </div>
 
                             <div class="mb-3">
                                 <label for="childCategory_img" class="form-label">Image <sup class="text-danger" style="font-size: 12px;">* resolution(100 x 100)</sup></label>
                                 <input type="file" class="form-control" name="img" id="childCategory_img" accept=".png, .jpeg, .jpg, .webp" onchange="previewImage(event)">
 
-                                <span id="image_validate" class="text-danger mt-1"></span>
+                                <span id="image_validate" class="text-danger validation-error mt-1"></span>
 
                                 <div id="image_preview" class="mt-3">
                                     <img src="{{ asset('public/backend/assets/images/no_Image_available.jpg') }}" width="100" height="100">
@@ -124,7 +124,7 @@
                                     <option value="0">Inactive</option>
                                 </select>
 
-                                <span id="status_validate" class="text-danger mt-1"></span>
+                                <span id="status_validate" class="text-danger validation-error mt-1"></span>
                             </div>
 
                             <div class="d-flex justify-content-end align-items-center">
@@ -185,7 +185,7 @@
                                 <label for="childCategory_name" class="form-label">ChildCategory Name <span class="text-danger">*</span></label>
                                 <input class="form-control" id="up_childCategory_name" type="text" name="name" placeholder="ChildCategory Name">
 
-                                <span id="up_childCat_name_validate" class="text-danger mt-1"></span>
+                                <span id="up_childCat_name_validate" class="text-danger validation-error mt-1"></span>
                             </div>
 
                             <div class="mb-3">
@@ -493,6 +493,7 @@
                         if (res.status === true) {
                             $('#createModal').modal('hide');
                             $('#createForm')[0].reset();
+                            $('.validation-error').html('');
                             datatables.ajax.reload();
 
                             swal.fire({
@@ -583,6 +584,7 @@
 
                         $('#editModal').modal('hide');
                         $('#EditForm')[0].reset();
+                        $('.validation-error').html('');
                         datatables.ajax.reload();
                     },
                     error: function (err) {

@@ -265,9 +265,81 @@
                                 <button type="button" class="btn btn-danger waves-effect me-3"
                                         data-bs-dismiss="modal">Close</button>
 
-                                <button type="submit" id="btn-store" class="btn btn-primary waves-effect waves-light"> Save changes </button>
+                                <button type="submit" id="btn-store" class="btn btn-primary waves-effect waves-light"> Update </button>
                             </div>
                         </form>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+
+
+        <!-- View Modal -->
+        <div id="viewModal" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" data-bs-scroll="true"
+        style="display: none;" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header bg-primary">
+                        <h5 class="modal-title" id="myModalLabel">View Coupon List</h5>
+
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="view_modal_content">
+                            <label>Coupon Name : </label>
+                            <span class="text-dark" id="view_coupon_name"></span>
+                        </div>
+
+                        <div class="view_modal_content">
+                            <label>Coupon Code : </label>
+                            <span class="text-dark" id="view_coupon_code"></span>
+                        </div>
+
+                        <div class="view_modal_content">
+                            <label>Quantity : </label>
+                            <span class="text-dark" id="view_coupon_quantity"></span>
+                        </div>
+
+                        <div class="view_modal_content">
+                            <label>Max Used : </label>
+                            <span class="text-dark" id="view_coupon_max_used"></span>
+                        </div>
+                        
+                        <div class="view_modal_content">
+                            <label>Discount Type : </label>
+                            <span class="text-info" id="view_coupon_discount_type"></span>
+                        </div>
+
+                        <div class="view_modal_content">
+                            <label>Discount : </label>
+                            <span class="text-dark" id="view_coupon_discount"></span>
+                        </div>
+
+                        <div class="view_modal_content">
+                            <label>Start Coupon Date : </label>
+                            <span class="text-dark" id="view_coupon_start_date"></span>
+                        </div>
+
+                        <div class="view_modal_content">
+                            <label>Expire Coupon Date : </label>
+                            <span class="text-dark" id="view_coupon_end_date"></span>
+                        </div>
+
+                        <div class="view_modal_content">
+                            <label>Created Date : </label>
+                            <div id="created_date"></div>
+                        </div>
+
+                        <div class="view_modal_content">
+                            <label>Updated Date : </label>
+                            <div id="updated_date"></div>
+                        </div>
+
+                        <div class="view_modal_content">
+                            <label>Status : </label>
+                            <div id="view_status"></div>
+                        </div>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
@@ -299,8 +371,8 @@
             minDate: "today",
         });
 
-        $(document).ready(function () {
 
+        $(document).ready(function () {
             // Show Data through Datatable
             let dataTabless = $('#dataTables').DataTable({
                 order: [
@@ -391,7 +463,7 @@
             })
 
 
-            // Create 
+            // Create Data
             $('#createForm').submit(function (e) {
                 e.preventDefault();
 
@@ -458,7 +530,7 @@
                     contentType: false,  // Prevent jQuery from setting contentType
                     success: function (res) {
                         let data = res.success;
-                        console.log(res)
+                        // console.log(res)
                         
                         $('#id').val(data.id);
                         $('#up_name').val(data.name);
@@ -470,12 +542,10 @@
                         $('#up_start_date').val(data.start_date);
                         $('#up_end_date').val(data.end_date);
                         $('#up_status').val(data.status);
-
                     },
                     error: function (error) {
                         console.log('error');
                     }
-
                 });
             })
 
@@ -517,6 +587,8 @@
                         $('#up_quantity_validate').empty().html(error.quantity);
                         $('#up_max_used_validate').empty().html(error.max_used);
                         $('#up_discount_validate').empty().html(error.discount);
+                        $('#up_start_date_validate').empty().html(error.start_date);
+                        $('#up_end_date_validate').empty().html(error.end_date);
 
                         swal.fire({
                             title: "Failed",
@@ -529,7 +601,7 @@
             });
 
 
-            // Delete Coupon
+            // Delete Data
             $(document).on("click", "#deleteBtn", function () {
                 let id = $(this).data('id')
 
@@ -542,41 +614,77 @@
                     cancelButtonColor: "#3085d6",
                     confirmButtonText: "Yes, delete it!"
                 })
-                    .then((result) => {
-                        if (result.isConfirmed) {
-                            $.ajax({
-                                type: 'DELETE',
+                .then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: 'DELETE',
 
-                                url: "{{ url('admin/coupons/') }}/" + id,
-                                data: {
-                                    headers: {
-                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                    }
-                                },
-                                success: function (res) {
-                                    Swal.fire({
-                                        title: "Deleted!",
-                                        text: `${res.message}`,
-                                        icon: "success"
-                                    });
-
-                                    dataTabless.ajax.reload();
-
-                                },
-                                error: function (err) {
-                                    console.log('error')
+                            url: "{{ url('admin/coupons/') }}/" + id,
+                            data: {
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                 }
-                            })
+                            },
+                            success: function (res) {
+                                Swal.fire({
+                                    title: "Deleted!",
+                                    text: `${res.message}`,
+                                    icon: "success"
+                                });
 
-                        } else {
-                            swal.fire('Your Data is Safe');
+                                dataTabless.ajax.reload();
+                            },
+                            error: function (err) {
+                                console.log('error')
+                            }
+                        })
+                    } else {
+                        swal.fire('Your Data is Safe');
+                    }
+                })
+            })
+
+
+            // View Data
+            $(document).on("click", '#viewButton', function (e) {
+                let id = $(this).attr('data-id');
+                // alert(id);
+
+                $.ajax({
+                    type: 'GET',
+                    // headers: {
+                    //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    // },
+                    url: "{{ url('admin/coupons/view') }}/" + id,
+                    processData: false,  // Prevent jQuery from processing the data
+                    contentType: false,  // Prevent jQuery from setting contentType
+                    success: function (res) {
+                        let data = res.success;
+
+                        $('#view_coupon_name').html(data.name);
+                        $('#view_coupon_code').html(data.code);
+                        $('#view_coupon_quantity').html(data.quantity);
+                        $('#view_coupon_max_used').html(data.max_used);
+                        $('#view_coupon_discount_type').html(data.discount_type);
+                        if( data.discount_type === "amount" ){
+                            $('#view_coupon_discount').html(data.discount + 'TK');
                         }
+                        else{
+                            $('#view_coupon_discount').html(data.discount + '%');
+                        }
+                        $('#view_coupon_start_date').html(res.start_date);
+                        $('#view_coupon_end_date').html(res.end_date);
+                        $('#created_date').html(res.created_date);
+                        $('#updated_date').html(res.updated_date);
+                        $('#view_status').html(res.statusHtml);
+                    },
+                    error: function (error) {
+                        console.log('error');
+                    }
 
-                    })
+                });
             })
         })
-
-
     </script>
 @endpush
 

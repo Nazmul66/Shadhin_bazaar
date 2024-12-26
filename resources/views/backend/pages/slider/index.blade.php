@@ -82,7 +82,7 @@
                                     <label for="slider_image" class="form-label">Slider Image <sup class="text-danger" style="font-size: 12px;">* resolution(1920 x 1080)</sup></label>
                                     <input type="file" class="form-control" name="slider_image" id="slider_image" accept=".png, .jpeg, .jpg, .webp" onchange="previewImage(event)">
 
-                                    <span id="image_validate" class="text-danger mt-1"></span>
+                                    <span id="image_validate" class="text-danger validation-error mt-1"></span>
 
                                     <div id="image_preview" class="mt-3">
                                         <img src="{{ asset('public/backend/assets/images/no_Image_available.jpg') }}" width="100" height="100">
@@ -93,7 +93,7 @@
                                     <label for="title" class="form-label">Slider Title</label>
                                     <input class="form-control" id="title" type="text" name="title" placeholder="Write here">
 
-                                    <span id="title_validate" placeholder="Write Here" class="text-danger mt-1"></span>
+                                    <span id="title_validate" placeholder="Write Here" class="text-danger validation-error mt-1"></span>
                                 </div>
                             </div>
 
@@ -122,7 +122,7 @@
                                         <option value="0">Inactive</option>
                                     </select>
     
-                                    <span id="status_validate" class="text-danger mt-1"></span>
+                                    <span id="status_validate" class="text-danger validation-error mt-1"></span>
                                 </div>
                             </div>
 
@@ -167,7 +167,7 @@
                                     <label for="up_title" class="form-label">Slider Title</label>
                                     <input class="form-control" id="up_title" type="text" name="title" placeholder="Write here">
 
-                                    <span id="up_title_validate" class="text-danger mt-1"></span>
+                                    <span id="up_title_validate" class="text-danger validation-error mt-1"></span>
                                 </div>
                             </div>
 
@@ -379,7 +379,7 @@
                 })
             })
 
-            // Create Slider
+            // Create Data
             $('#createForm').submit(function (e) {
                 e.preventDefault();
 
@@ -399,6 +399,7 @@
                         if (res.status === true) {
                             $('#createModal').modal('hide');
                             $('#createForm')[0].reset();
+                            $('.validation-error').html('');
                             datatables.ajax.reload();
 
                             swal.fire({
@@ -423,7 +424,7 @@
                 });
             })
 
-            // Edit Slider
+            // Edit Data
             $(document).on("click", '#editButton', function (e) {
                 let id = $(this).attr('data-id');
                 // alert(id);
@@ -462,7 +463,7 @@
                 });
             })
 
-            // Update Slider
+            // Update Data
             $("#EditForm").submit(function (e) {
                 e.preventDefault();
 
@@ -488,6 +489,7 @@
 
                         $('#editModal').modal('hide');
                         $('#EditForm')[0].reset();
+                        $('.validation-error').html('');
                         datatables.ajax.reload();
                     },
                     error: function (err) {
@@ -551,8 +553,8 @@
             })
 
 
-                        // View Data
-                        $(document).on("click", '#viewButton', function (e) {
+            // View Data
+            $(document).on("click", '#viewButton', function (e) {
                 let id = $(this).attr('data-id');
                 // alert(id);
 
@@ -585,7 +587,6 @@
                     error: function (error) {
                         console.log('error');
                     }
-
                 });
             })
         })

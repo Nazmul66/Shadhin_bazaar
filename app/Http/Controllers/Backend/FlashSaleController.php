@@ -61,7 +61,7 @@ class FlashSaleController extends Controller
                             ->get();
 
         return DataTables::of($flashSaleItems)
-
+            ->addIndexColumn()
             ->addColumn('product_img', function ($flashSaleItem) {
                 return '<a href="'.asset( $flashSaleItem->thumb_image ).'" target="__target">
                      <img src="'.asset( $flashSaleItem->thumb_image ).'" width="50px" height="50px">

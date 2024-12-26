@@ -76,14 +76,14 @@
                                 <label for="category_name" class="form-label">Name <span class="text-danger">*</span></label>
                                 <input class="form-control" id="category_name" type="text" name="category_name" placeholder="Category Name">
 
-                                <span id="name_validate" class="text-danger mt-1"></span>
+                                <span id="name_validate" class="text-danger validation-error mt-1"></span>
                             </div>
 
                             <div class="mb-3">
                                 <label for="category_img" class="form-label">Image <sup class="text-danger" style="font-size: 12px;">* resolution(100 x 100)</sup></label>
                                 <input type="file" class="form-control" name="category_img" id="category_img" accept=".png, .jpeg, .jpg, .webp" onchange="previewImage(event)">
 
-                                <span id="image_validate" class="text-danger mt-1"></span>
+                                <span id="image_validate" class="text-danger validation-error mt-1"></span>
 
                                 <div id="image_preview" class="mt-3">
                                     <img src="{{ asset('public/backend/assets/images/no_Image_available.jpg') }}" width="100" height="100">
@@ -139,7 +139,7 @@
                                 <label for="up_category_name" class="form-label">Name <span class="text-danger">*</span></label>
                                 <input class="form-control" id="up_category_name" type="text" name="category_name" placeholder="Category Name">
 
-                                <span id="up_name_validate" class="text-danger mt-1"></span>
+                                <span id="up_name_validate" class="text-danger validation-error mt-1"></span>
                             </div>
 
                             <div class="mb-3">
@@ -358,6 +358,7 @@
                         if (res.status === true) {
                             $('#createModal').modal('hide');
                             $('#createForm')[0].reset();
+                            $('.validation-error').html('');
                             datatables.ajax.reload();
 
                             swal.fire({
@@ -445,6 +446,7 @@
 
                         $('#editModal').modal('hide');
                         $('#EditForm')[0].reset();
+                        $('.validation-error').html('');
                         datatables.ajax.reload();
                     },
                     error: function (err) {

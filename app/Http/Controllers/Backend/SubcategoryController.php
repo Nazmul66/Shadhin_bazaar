@@ -100,8 +100,8 @@ class SubcategoryController extends Controller
             $SubCategory->subcategory_name       = $request->subcategory_name;
             $SubCategory->slug                   = Str::slug($request->subcategory_name);
             $SubCategory->status                 = $request->status;
-            $SubCategory->created_at             = date('d F, Y H:i:s');
-            $SubCategory->updated_at             = date('d F, Y H:i:s');
+            $SubCategory->created_at             = now();
+            $SubCategory->updated_at             = now();
 
             // Handle image with ImageUploadTraits function
             $uploadImage                         = $this->imageUpload($request, 'subcategory_img', 'subCategory');
@@ -165,14 +165,13 @@ class SubcategoryController extends Controller
             $subcategory->subcategory_name       = $request->subcategory_name;
             $subcategory->slug                   = Str::slug($request->subcategory_name);
             $subcategory->status                 = $request->status;
-            $subcategory->updated_at             = date('d F, Y H:i:s');
+            $subcategory->updated_at             = now();
 
             // Handle image with ImageUploadTraits function
             $uploadImages                        = $this->deleteImageAndUpload($request, 'subcategory_img', 'subCategory', $subcategory->subcategory_img );
             $subcategory->subcategory_img        =  $uploadImages;
 
             $subcategory->save();
-
         }
         catch(\Exception $ex){
             DB::rollBack();

@@ -19,6 +19,8 @@ class CreateCouponRequest extends FormRequest
     public function rules(): array
     {
         $discountType = $this->input('discount_type'); // Access input directly
+        $startDate = $this->input('start_date');   // Access the start date
+        $endDate = $this->input('end_date'); // Access the end date
 
         return [
             'name'          => ['required', 'unique:coupons,name', 'max:155'],
@@ -35,8 +37,25 @@ class CreateCouponRequest extends FormRequest
                     }
                 },
             ],            
-            'start_date' => ['required', 'date'],
-            'end_date'   => ['required', 'date'],
+            'start_date' => [
+                'required',
+                'date',
+                function ($attribute, $value, $fail) use ($endDate) {
+                    if (date('d', strtotime($value)) >= date('d', strtotime($endDate)) ) {
+                        $fail('The start date must be at least one day before the end date.');
+                    }
+                },
+            ],
+            'end_date' => [
+                'required',
+                'date',
+                function ($attribute, $value, $fail) use ($startDate) {
+                    // Ensure at least a 1-day gap between start_date and end_date
+                    if (date('d', strtotime($value)) <= date('d', strtotime($startDate)) )  {
+                        $fail('The end date must be at least one day after the start date.');
+                    }
+                },
+            ],
         ];
     }
 

@@ -71,7 +71,7 @@
                                 @endforeach
                             </select>
 
-                            <span id="product_id_validate" class="text-danger mt-1"></span>
+                            <span id="product_id_validate" class="text-danger validation-error mt-1"></span>
                         </div>
 
                         <button type="submit" class="btn btn-primary">Save</button>
@@ -80,7 +80,6 @@
             </div>
         </div>
     @endif
-
 
 
     <!-- Content part Start -->
@@ -164,8 +163,11 @@
                 // pageLength: 30,
 
                 columns: [
-                    {
-                        data: 'id',
+                    { 
+                        data: 'DT_RowIndex', 
+                        name: 'DT_RowIndex', 
+                        orderable: false, 
+                        searchable: false 
                     },
                     {
                         data: 'product_img',
@@ -342,6 +344,7 @@
                         console.log(res);
                         if (res.status === true) {
                             $('#createForm')[0].reset();
+                            $('.validation-error').html('');
                             datatables.ajax.reload();
 
                             swal.fire({
