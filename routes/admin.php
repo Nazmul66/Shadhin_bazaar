@@ -147,6 +147,7 @@ Route::middleware('setLanguage')->group(function(){
         Route::resource('/shipping-rule', ShippingRuleController::class)->names('shipping-rule');
         Route::get('/shipping-rule-data', [ShippingRuleController::class, 'getData'])->name('shipping-rule-data');
         Route::post('/change-shipping-rule-status', [ShippingRuleController::class, 'changeShippingRuleStatus'])->name('shipping-rule.status');
+        Route::get('/shipping-rule/view/{id}', [ShippingRuleController::class, 'shippingRuleView'])->name('shipping-rule.view');
 
 
         //______ Review _____//

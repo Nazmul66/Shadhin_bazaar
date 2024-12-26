@@ -191,7 +191,7 @@
 
                                 <div class="col mb-3">
                                     <label for="up_serial" class="form-label">Serial</label>
-                                    <input class="form-control" id="up_serial" type="text" name="serial">
+                                    <input class="form-control" id="up_serial" type="text" name="serial" readonly>
                                 </div>
                             </div>
 

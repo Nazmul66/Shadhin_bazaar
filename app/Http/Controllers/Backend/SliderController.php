@@ -183,7 +183,7 @@ class SliderController extends Controller
             $slider->title                      = $request->title;
             $slider->starting_price             = $request->starting_price;
             $slider->btn_url                    = $request->btn_url;
-            $slider->serial                     = $request->serial;
+            // $slider->serial                     = $request->serial;
             $slider->status                     = 1;
 
             // Handle image with ImageUploadTraits function
