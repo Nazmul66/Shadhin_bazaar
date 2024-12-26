@@ -39,7 +39,7 @@
         </div>
 
         <div class="card-body">
-            <div class="table-responsive">
+            <div class="">
                 <table class="table table-bordered mb-0" id="categoryTable">
                     <thead class="bg-primary text-white">
                         <tr>
@@ -203,6 +203,16 @@
                             <div id="viewImageShow"></div>
                         </div>
 
+                        <div class="view_modal_content">
+                            <label>Created Date : </label>
+                            <div id="created_date"></div>
+                        </div>
+
+                        <div class="view_modal_content">
+                            <label>Updated Date : </label>
+                            <div id="updated_date"></div>
+                        </div>
+                        
                         <div class="view_modal_content">
                             <label>Front Status : </label>
                             <div id="view_front_status"></div>
@@ -523,6 +533,8 @@
                           </a>
                        `);
 
+                        $('#created_date').html(res.created_date);
+                        $('#updated_date').html(res.updated_date);
                         $('#view_status').html(res.statusHtml);
                         $('#view_front_status').html(res.front_status_html);
                     },

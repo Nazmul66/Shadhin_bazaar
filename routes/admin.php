@@ -87,6 +87,7 @@ Route::middleware('setLanguage')->group(function(){
         Route::resource('/childCategories', ChildCategoryController::class)->names('childCategory');
         Route::get('/childCategory-data', [ChildCategoryController::class, 'getData'])->name('childCategory-data');
         Route::post('/childCategory/status', [ChildCategoryController::class, 'changeChildCategoryStatus'])->name('childCategory.status');
+        Route::get('/childCategories/view/{id}', [ChildCategoryController::class, 'childSubCategoryView'])->name('childCategory.view');
 
         Route::post('/get/subCategory-data', [ChildCategoryController::class, 'get_subCategory_data'])->name('childCategory.subCategory.data');
 

@@ -33,8 +33,8 @@ class UpdateSubCategoryRequest extends FormRequest
         return [
             'subcategory_name.required' => 'Please fill up subCategory name',
             'subcategory_name.max' => 'Character might be 255 words',
-            'category_img.image' => 'The uploaded file must be an image',
-            'category_img.mimes' => 'The image must be a file of type: ( png, jpg, jpeg, webp )',
+            'subcategory_img.image' => 'The uploaded file must be an image',
+            'subcategory_img.mimes' => 'The image must be a file of type: ( png, jpg, jpeg, webp )',
             'subcategory_name.unique' => 'Character might be unique',
         ];
     }

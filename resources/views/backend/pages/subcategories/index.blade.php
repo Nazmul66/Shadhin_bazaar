@@ -44,7 +44,7 @@
         </div>
 
         <div class="card-body">
-            <div class="table-responsive">
+            <div class="">
                 <table class="table table-bordered mb-0" id="datatables">
                     <thead class="bg-primary text-white">
                         <tr>
@@ -203,7 +203,7 @@
             </div><!-- /.modal-dialog -->
         </div>
 
-
+        <!-- View Modal -->
         <div id="viewModal" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" data-bs-scroll="true"
         style="display: none;" aria-hidden="true">
             <div class="modal-dialog modal-lg">
@@ -228,6 +228,16 @@
                         <div class="view_modal_content">
                             <label>Image : </label>
                             <div id="viewImageShow"></div>
+                        </div>
+
+                        <div class="view_modal_content">
+                            <label>Created Date : </label>
+                            <div id="created_date"></div>
+                        </div>
+
+                        <div class="view_modal_content">
+                            <label>Updated Date : </label>
+                            <div id="updated_date"></div>
                         </div>
 
                         <div class="view_modal_content">
@@ -278,25 +288,7 @@
                 templateResult: formatState, // Only Text content when select, it will be shown 
                 templateSelection: formatState,    // When select any option, it will be display image and text both
             });
-
-            function formatState (state) {
-                if (!state.id) {
-                    return state.text; // Return text for disabled option
-                }
-
-                var imageUrl = $(state.element).data('image-url'); // Access image URL from data attribute
-
-                if (!imageUrl) {
-                    return state.text; // Return text if no image URL is available
-                }
-
-                var $state = $(
-                    '<span><img src="' + imageUrl + '" style="width: 35px; height: 30px; margin-right: 8px;" /> ' + state.text + '</span>'
-                );
-                return $state;
-            };
             
-
             //____ For Create Modal ____//
             $('#up_category_id').select2({
                 dropdownParent: $('#editModal'),
@@ -603,6 +595,8 @@
                           </a>
                        `);
 
+                        $('#created_date').html(res.created_date);
+                        $('#updated_date').html(res.updated_date);
                         $('#view_status').html(res.statusHtml);
 
                     },
@@ -613,7 +607,6 @@
                 });
             })
         })
-
 
     </script>
 @endpush

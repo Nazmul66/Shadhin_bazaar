@@ -100,6 +100,8 @@ class SubcategoryController extends Controller
             $SubCategory->subcategory_name       = $request->subcategory_name;
             $SubCategory->slug                   = Str::slug($request->subcategory_name);
             $SubCategory->status                 = $request->status;
+            $SubCategory->created_at             = date('d F, Y H:i:s');
+            $SubCategory->updated_at             = date('d F, Y H:i:s');
 
             // Handle image with ImageUploadTraits function
             $uploadImage                         = $this->imageUpload($request, 'subcategory_img', 'subCategory');
@@ -163,6 +165,7 @@ class SubcategoryController extends Controller
             $subcategory->subcategory_name       = $request->subcategory_name;
             $subcategory->slug                   = Str::slug($request->subcategory_name);
             $subcategory->status                 = $request->status;
+            $subcategory->updated_at             = date('d F, Y H:i:s');
 
             // Handle image with ImageUploadTraits function
             $uploadImages                        = $this->deleteImageAndUpload($request, 'subcategory_img', 'subCategory', $subcategory->subcategory_img );
@@ -214,9 +217,14 @@ class SubcategoryController extends Controller
             $statusHtml = '<span class="text-danger">Inactive</span>';
         }
 
+        $created_date = date('d F, Y H:i:s A', strtotime($subcategory->created_at));
+        $updated_date = date('d F, Y H:i:s A', strtotime($subcategory->updated_at));
+
         return response()->json([
             'success'           => $subcategory,
             'statusHtml'        => $statusHtml,
+            'created_date'      => $created_date,
+            'updated_date'      => $updated_date,
         ]);
     }
 }

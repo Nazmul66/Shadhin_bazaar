@@ -212,10 +212,15 @@ class CategoryController extends Controller
             $statusHtml = '<span class="text-danger">Inactive</span>';
         }
 
+        $created_date = date('d F, Y H:i:s A', strtotime($category->created_at));
+        $updated_date = date('d F, Y H:i:s A', strtotime($category->updated_at));
+
         return response()->json([
             'success'           => $category,
             'statusHtml'        => $statusHtml,
             'front_status_html' => $front_status_html,
+            'created_date'      => $created_date,
+            'updated_date'      => $updated_date,
         ]);
     }
 }
