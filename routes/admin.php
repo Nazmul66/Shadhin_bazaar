@@ -96,6 +96,7 @@ Route::middleware('setLanguage')->group(function(){
         Route::resource('/brands', BrandsController::class)->names('brand');
         Route::get('/brand-data', [BrandsController::class, 'getData'])->name('brand-data');
         Route::post('/change-brand-status', [BrandsController::class, 'changeBrandStatus'])->name('brand.status');
+        Route::get('/brands/view/{id}', [BrandsController::class, 'brandView'])->name('brand.view');
 
 
         //______ Attribute Name _____//

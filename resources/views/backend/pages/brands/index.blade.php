@@ -33,19 +33,19 @@
             <div class="d-flex justify-content-between align-items-center">
                 <h4 class="card-title">Brand List</h4>
                 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">
-                    Create New
+                    Add New
                 </button>
             </div>
         </div>
 
         <div class="card-body">
-            <div class="table-responsive">
+            <div class="">
                 <table class="table table-bordered mb-0" id="datatables">
                     <thead class="bg-primary text-white">
                         <tr>
                             <th>#SL.</th>
-                            <th>Brand Image</th>
-                            <th>Brand Name</th>
+                            <th>Image</th>
+                            <th>Name</th>
                             <th>Status</th>
                             <th>Actions</th>
                         </tr>
@@ -62,9 +62,9 @@
              style="display: none;" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-header bg-primary">
                         <h5 class="modal-title" id="myModalLabel">Create Brand</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
                     </div>
 
                     <div class="modal-body">
@@ -73,23 +73,26 @@
 
                             <div class="mb-3">
                                 <label for="brand_name" class="form-label">Brand Name <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="brand_name" name="brand_name" >
+                                <input type="text" class="form-control" id="brand_name" name="brand_name" placeholder="Brand name">
 
                                 <span id="name_validate" class="text-danger mt-1"></span>
                             </div>
 
                             <div class="mb-3">
                                 <label for="image" class="form-label">Brand Image <sup class="text-danger" style="font-size: 12px;">* resolution(100 x 100)</sup></label>
-                                <input type="file" class="form-control" name="image" id="image" >
+                                <input type="file" class="form-control" name="image" id="image"  accept=".png, .jpeg, .jpg, .webp" onchange="previewImage(event)">
 
                                 <span id="image_validate" class="text-danger mt-1"></span>
+
+                                <div id="image_preview" class="mt-3">
+                                    <img src="{{ asset('public/backend/assets/images/no_Image_available.jpg') }}" width="100" height="100">
+                                </div>
                             </div>
 
                             <div class="mb-3">
-                                <label class="form-label">Is Featured <span class="text-danger">*</span></label>
-                                <select class="form-select" name="is_featured">
-                                    <option value="" disabled selected>Select</option>
-                                    <option value="1">Yes</option>
+                                <label class="form-label">Status <span class="text-danger">*</span></label>
+                                <select class="form-select" name="status">
+                                    <option value="1" selected>Yes</option>
                                     <option value="0">No</option>
                                 </select>
 
@@ -97,7 +100,7 @@
                             </div>
 
                             <div class="d-flex justify-content-end align-items-center">
-                                <button type="button" class="btn btn-secondary waves-effect me-3"
+                                <button type="button" class="btn btn-danger waves-effect me-3"
                                     data-bs-dismiss="modal">Close </button>
 
                                 <button type="submit" id="btn-store" class="btn btn-primary waves-effect waves-light"> Save changes</button>
@@ -116,9 +119,9 @@
              style="display: none;" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-header bg-primary">
                         <h5 class="modal-title" id="myModalLabel">Update Brand</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
                     </div>
 
                     <div class="modal-body">
@@ -130,35 +133,78 @@
 
                             <div class="mb-3">
                                 <label for="up_brand_name" class="form-label">Brand Name <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="up_brand_name" name="brand_name" >
+                                <input type="text" class="form-control" id="up_brand_name" name="brand_name" placeholder="Brand Name">
 
                                 <span id="up_name_validate" class="text-danger mt-1"></span>
                             </div>
 
                             <div class="mb-3">
                                 <label for="image" class="form-label">Brand Image <sup class="text-danger" style="font-size: 12px;">* resolution(100 x 100)</sup></label>
-                                <input type="file" class="form-control" name="image" id="image" >
+                                <input type="file" class="form-control" name="image" id="image" accept=".png, .jpeg, .jpg, .webp" onchange="imageShow(event)">
 
-                                <div id="imageShow"></div>
+                                <div id="imageShow" class="mt-3"></div>
                             </div>
 
                             <div class="mb-3">
-                                <label class="form-label">Is Featured <span class="text-danger">*</span></label>
-                                <select class="form-select" id="up_is_featured" name="is_featured">
-                                    <option value="" disabled selected>Select</option>
-                                    <option value="1">Yes</option>
+                                <label class="form-label">Status <span class="text-danger">*</span></label>
+                                <select class="form-select" id="up_status" name="status">
+                                    <option value="1" selected>Yes</option>
                                     <option value="0">No</option>
                                 </select>
                             </div>
 
                             <div class="d-flex justify-content-end align-items-center">
-                                <button type="button" class="btn btn-secondary waves-effect me-3"
+                                <button type="button" class="btn btn-danger waves-effect me-3"
                                     data-bs-dismiss="modal">Close</button>
 
                                 <button type="submit" id="btn-store" class="btn btn-primary waves-effect waves-light"> Update </button>
                             </div>
                         </form>
                     </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+
+
+        <!-- View Modal -->
+        <div id="viewModal" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" data-bs-scroll="true"
+        style="display: none;" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header bg-primary">
+                        <h5 class="modal-title" id="myModalLabel">View Category List</h5>
+
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="view_modal_content">
+                            <label>Name : </label>
+                            <span class="text-dark" id="view_brand_name"></span>
+                        </div>
+
+                        <div class="view_modal_content">
+                            <label>Image : </label>
+                            <div id="viewImageShow"></div>
+                        </div>
+
+                        <div class="view_modal_content">
+                            <label>Created Date : </label>
+                            <div id="created_date"></div>
+                        </div>
+
+                        <div class="view_modal_content">
+                            <label>Updated Date : </label>
+                            <div id="updated_date"></div>
+                        </div>
+
+                        <div class="view_modal_content">
+                            <label>Status : </label>
+                            <div id="view_status"></div>
+                        </div>
+                    </div>
+
+
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div>
@@ -170,7 +216,28 @@
     <script src="https://cdn.datatables.net/2.1.6/js/dataTables.min.js"></script>
 
     <script>
+        function previewImage(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = e => document.getElementById('image_preview').innerHTML = `
+                <img src="${e.target.result}" width="100" height="100">`;
+                reader.readAsDataURL(file);
+            }
+        }
 
+        function imageShow(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = e => document.getElementById('imageShow').innerHTML = `
+                <img src="${e.target.result}" width="100" height="100">`;
+                reader.readAsDataURL(file);
+            }
+        }
+    </script>
+
+    <script>
         $(document).ready(function () {
 
             // Show Data through Datatable
@@ -320,7 +387,7 @@
                                  <img src={{ asset("`+ data.image +`") }} alt="" style="width: 75px;">
                             </a>
                         `);
-                        $('#up_is_featured').val(data.is_featured);
+                        $('#up_status').val(data.status);
                     },
                     error: function (error) {
                         console.log('error');
@@ -350,7 +417,7 @@
 
                         swal.fire({
                             title: "Success",
-                            text: "Brand Edited",
+                            text: "Brand Updated Successfully",
                             icon: "success"
                         })
 
@@ -374,7 +441,7 @@
             });
 
 
-            // Delete
+            // Delete Data
             $(document).on("click", "#deleteBtn", function () {
                 let id = $(this).data('id')
 
@@ -418,8 +485,42 @@
 
                 })
             })
-        })
 
+            // View Data
+            $(document).on("click", '#viewButton', function (e) {
+                let id = $(this).attr('data-id');
+                // alert(id);
+
+                $.ajax({
+                    type: 'GET',
+                    // headers: {
+                    //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    // },
+                    url: "{{ url('admin/brands/view') }}/" + id,
+                    processData: false,  // Prevent jQuery from processing the data
+                    contentType: false,  // Prevent jQuery from setting contentType
+                    success: function (res) {
+                        let data = res.success;
+
+                        $('#view_brand_name').html(data.brand_name);
+                        $('#viewImageShow').html('');
+                        $('#viewImageShow').append(`
+                          <a href="{{ asset("`+ data.image +`") }}" target="__blank">
+                            <img src={{ asset("`+ data.image +`") }} alt="" style="width: 75px;">    
+                          </a>
+                       `);
+
+                        $('#created_date').html(res.created_date);
+                        $('#updated_date').html(res.updated_date);
+                        $('#view_status').html(res.statusHtml);
+                    },
+                    error: function (error) {
+                        console.log('error');
+                    }
+
+                });
+            })
+        })
 
     </script>
 @endpush

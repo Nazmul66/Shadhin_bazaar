@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\CreateBrandRequest;
+use App\Http\Requests\Admin\UpdateBrandRequest;
 use App\Traits\ImageUploadTraits;
 use App\Models\Brand;
 use Illuminate\Http\Request;
@@ -48,10 +50,24 @@ class BrandsController extends Controller
             })
 
             ->addColumn('action', function ($brand) {
-                return '<div class="d-flex gap-3">
-                    <a class="btn btn-sm btn-primary" id="editButton" href="javascript:void(0)" data-id="'.$brand->id.'" data-bs-toggle="modal" data-bs-target="#editModal"><i class="fas fa-edit"></i></a>
+                return '
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Actions <i class="mdi mdi-chevron-down"></i>
+                    </button>
 
-                    <a class="btn btn-sm btn-danger" href="javascript:void(0)" data-id="'.$brand->id.'" id="deleteBtn"> <i class="fas fa-trash"></i></a>
+                    <div class="dropdown-menu dropdownmenu-primary" style="">
+                        <a class="dropdown-item text-info" id="viewButton" href="javascript:void(0)" data-id="'.$brand->id.'" data-bs-toggle="modal" data-bs-target="#viewModal">
+                            <i class="fas fa-eye"></i> View
+                        </a>
+
+                        <a class="dropdown-item text-success" id="editButton" href="javascript:void(0)" data-id="'.$brand->id.'" data-bs-toggle="modal" data-bs-target="#editModal">
+                            <i class="fas fa-edit"></i> Edit
+                        </a>
+
+                        <a class="dropdown-item text-danger" href="javascript:void(0)" data-id="'.$brand->id.'" id="deleteBtn">
+                            <i class="fas fa-trash"></i> Delete
+                        </a>
+                    </div>
                 </div>';
             })
 
@@ -80,23 +96,8 @@ class BrandsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateBrandRequest $request)
     {
-        $request->validate(
-            [
-                'image' => ['required'],
-                'brand_name' => ['required', 'unique:brands,brand_name', 'max:255'],
-                'is_featured' => ['required'],
-            ],
-            [
-                'image.required' => 'Brand logo is required',
-                'brand_name.required' => 'Please fill up brand name',
-                'brand_name.max' => 'Character might be 255',
-                'brand_name.unique' => 'Character might be unique',
-                'is_featured.required' => 'Is_featured this field',
-            ]
-        );
-
         DB::beginTransaction();
         try {
 
@@ -104,8 +105,7 @@ class BrandsController extends Controller
 
             $brand->brand_name             = $request->brand_name;
             $brand->slug                   = Str::slug($request->brand_name);
-            $brand->is_featured            = $request->is_featured;
-            $brand->status                 = 1;
+            $brand->status                 = $request->status;
 
             // Handle image with ImageUploadTraits function
             $uploadImage                   = $this->imageUpload($request, 'image', 'brand');
@@ -136,27 +136,15 @@ class BrandsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateBrandRequest $request, string $id)
     {
         $brand  = Brand::find($id);
-
-        $request->validate(
-            [
-                'brand_name' => ['required', 'unique:brands,brand_name,'. $brand->id , 'max:255'],
-            ],
-            [
-                'brand_name.required' => 'Please fill up brand name',
-                'brand_name.max' => 'Character might be 255 word',
-                'brand_name.unique' => 'Character might be unique',
-            ]
-        );
 
         DB::beginTransaction();
         try {
             $brand->brand_name             = $request->brand_name;
             $brand->slug                   = Str::slug($request->brand_name);
-            $brand->is_featured            = $request->is_featured;
-            $brand->status                 = 1;
+            $brand->status                 = $request->status;
 
             // Handle image with ImageUploadTraits function
             $uploadImages                  = $this->deleteImageAndUpload($request, 'image', 'brand', $brand->image );
@@ -187,6 +175,30 @@ class BrandsController extends Controller
         $brand->delete();
 
         return response()->json(['message' => 'Brand has been deleted.'], 200);
+    }
+
+
+    public function brandView($id)
+    {
+        $brand  = Brand::find($id);
+        // dd($brand);
+
+        $statusHtml = '';
+        if ($brand->status == 1) {
+            $statusHtml = '<span class="text-success">Active</span>';
+        } else {
+            $statusHtml = '<span class="text-danger">Inactive</span>';
+        }
+
+        $created_date = date('d F, Y H:i:s A', strtotime($brand->created_at));
+        $updated_date = date('d F, Y H:i:s A', strtotime($brand->updated_at));
+
+        return response()->json([
+            'success'           => $brand,
+            'statusHtml'        => $statusHtml,
+            'created_date'      => $created_date,
+            'updated_date'      => $updated_date,
+        ]);
     }
 
 }

@@ -577,7 +577,7 @@
 
                         swal.fire({
                             title: "Success",
-                            text: "Child-Category Edited",
+                            text: "Child-Category Updated Successfully",
                             icon: "success"
                         })
 
