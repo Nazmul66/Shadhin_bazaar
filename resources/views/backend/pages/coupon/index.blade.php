@@ -40,15 +40,14 @@
             <div class="d-flex justify-content-between align-items-center">
                 <h4 class="card-title">Coupons List</h4>
                 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create_Modal">
-                    Create New
+                    Add New
                 </button>
             </div>
         </div>
 
         <div class="card-body">
-            <div class="table-responsive">
+            <div class="">
                 <table class="table table-bordered mb-0" id="dataTables">
-
                     <thead class="bg-primary text-white">
                     <tr>
                         <th>#SL.</th>
@@ -75,9 +74,9 @@
              style="display: none;" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-header bg-primary">
                         <h5 class="modal-title" id="myModalLabel">Create Coupon</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
                     </div>
 
                     <div class="modal-body">
@@ -86,38 +85,38 @@
 
                             <div class="row">
                                 <div class="col mb-3">
-                                    <label class="form-label" for="name">Coupon Name</label>
-                                    <input class="form-control"  value="{{ old('name') }}" id="name" type="text" name="name">
+                                    <label class="form-label" for="name">Coupon Name <span class="text-danger">*</span></label>
+                                    <input class="form-control"  value="{{ old('name') }}" id="name" type="text" name="name" placeholder="Coupon Name">
     
-                                    <span id="name_validate" class="text-danger mt-1"></span>
+                                    <span id="name_validate" class="text-danger validation-error mt-1"></span>
                                 </div>
     
                                 <div class="col mb-3">
-                                    <label class="form-label" for="code">Coupon Code</label>
-                                    <input class="form-control"  value="{{ old('code') }}" id="code" type="text" name="code" >
+                                    <label class="form-label" for="code">Coupon Code <span class="text-danger">*</span></label>
+                                    <input class="form-control"  value="{{ old('code') }}" id="code" type="text" name="code" placeholder="Coupon Code">
     
-                                    <span id="code_validate" class="text-danger mt-1"></span>
+                                    <span id="code_validate" class="text-danger validation-error mt-1"></span>
                                 </div>
     
                                 <div class="col mb-3">
-                                    <label class="form-label" for="quantity">Quantity</label>
-                                    <input class="form-control"  value="{{ old('quantity') }}" id="quantity" min="0" type="number" name="quantity" >
+                                    <label class="form-label" for="quantity">Quantity <span class="text-danger">*</span></label>
+                                    <input class="form-control"  value="{{ old('quantity') }}" id="quantity" min="0" type="number" name="quantity" placeholder="quantity">
     
-                                    <span id="quantity_validate" class="text-danger mt-1"></span>
+                                    <span id="quantity_validate" class="text-danger validation-error mt-1"></span>
                                 </div>
                             </div>
 
 
                             <div class="row">
                                 <div class="col mb-3">
-                                    <label class="form-label" for="max_used">Max Used</label>
-                                    <input class="form-control" id="max_used" value="{{ old('max_used') }}" min="0" type="number" name="max_used" >
+                                    <label class="form-label" for="max_used">Max Used <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="max_used" value="{{ old('max_used') }}" min="0" type="number" name="max_used" placeholder="Max Coupon Used">
     
-                                    <span id="max_used_validate" class="text-danger mt-1"></span>
+                                    <span id="max_used_validate" class="text-danger validation-error mt-1"></span>
                                 </div>
 
                                 <div class="col mb-3">
-                                    <label for="discount_type" for="discount_type" class="form-label">Discount Type</label>
+                                    <label for="discount_type" for="discount_type" class="form-label">Discount Type <span class="text-danger">*</span></label>
                                     <select class="form-select" name="discount_type" id="discount_type">
                                         <option value="percent" selected>Percentage (%)</option>
                                         <option value="amount">Amount {{ $settings->currency_symbol }}</option>
@@ -125,30 +124,29 @@
                                 </div>
 
                                 <div class=" col mb-3">
-                                    <label for="discount" class="form-label">Discount</label>
-                                    <input type="number" class="form-control" value="{{ old('discount') }}" name="discount" id="discount" >
+                                    <label for="discount" class="form-label">Discount <span class="text-danger">*</span></label>
+                                    <input type="number" class="form-control" value="{{ old('discount') }}" name="discount" id="discount" placeholder="Discount">
 
-                                    <span id="discount_validate" class="text-danger mt-1"></span>
+                                    <span id="discount_validate" class="text-danger validation-error mt-1"></span>
                                 </div>
                             </div>
 
 
                             <div class="row">
                                 <div class="col mb-3">
-                                    <label class="form-label" for="start_date">Offer Start Date</label>
+                                    <label class="form-label" for="start_date">Offer Start Date <span class="text-danger">*</span></label>
                                     <input class="form-control start_date"  value="{{ old('start_date') }}" type="date" id="start_date" name="start_date" placeholder="Select a date....">
 
-                                    <span id="start_date_validate" class="text-danger mt-1"></span>
+                                    <span id="start_date_validate" class="text-danger validation-error mt-1"></span>
                                 </div>
 
                                 <div class="col mb-3">
-                                    <label class="form-label" for="end_date">Offer End Date</label>
+                                    <label class="form-label" for="end_date">Offer End Date <span class="text-danger">*</span></label>
                                     <input class="form-control end_date" value="{{ old('end_date') }}" type="date" id="end_date" name="end_date"  placeholder="Select a date....">
 
-                                    <span id="end_date_validate" class="text-danger mt-1"></span>
+                                    <span id="end_date_validate" class="text-danger validation-error mt-1"></span>
                                 </div>
                             </div>
-
 
                             <div class="mb-3">
                                 <label class="form-label">Status</label>
@@ -159,7 +157,7 @@
                             </div>
 
                             <div class="d-flex justify-content-end align-items-center">
-                                <button type="button" class="btn btn-secondary waves-effect me-3"
+                                <button type="button" class="btn btn-danger waves-effect me-3"
                                   data-bs-dismiss="modal">Close </button>
 
                                 <button type="submit" id="btn-store" class="btn btn-primary waves-effect waves-light"> Save changes </button>
@@ -177,10 +175,10 @@
         <div id="editModal" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" data-bs-scroll="true"
              style="display: none;" aria-hidden="true">
             <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
+                <div class="modal-content ">
+                    <div class="modal-header bg-primary">
                         <h5 class="modal-title" id="myModalLabel">Update Coupon</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
                     </div>
 
                     <div class="modal-body">
@@ -192,38 +190,38 @@
 
                             <div class="row">
                                 <div class="col mb-3">
-                                    <label class="form-label" for="up_name">Coupon Name</label>
-                                    <input class="form-control" id="up_name" type="text" name="name">
+                                    <label class="form-label" for="up_name">Coupon Name <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="up_name" type="text" name="name" placeholder="Coupon Name">
     
-                                    <span id="up_name_validate" class="text-danger mt-1"></span>
+                                    <span id="up_name_validate" class="text-danger validation-error mt-1"></span>
                                 </div>
     
                                 <div class="col mb-3">
-                                    <label class="form-label" for="up_code">Coupon Code</label>
-                                    <input class="form-control" id="up_code" type="text" name="code" >
+                                    <label class="form-label" for="up_code">Coupon Code <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="up_code" type="text" name="code" placeholder="Coupon Code">
     
-                                    <span id="up_code_validate" class="text-danger mt-1"></span>
+                                    <span id="up_code_validate" class="text-danger validation-error mt-1"></span>
                                 </div>
     
                                 <div class="col mb-3">
-                                    <label class="form-label" for="up_quantity">Quantity</label>
-                                    <input class="form-control" id="up_quantity" min="0" type="number" name="quantity" >
+                                    <label class="form-label" for="up_quantity">Quantity <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="up_quantity" min="0" type="number" name="quantity" placeholder="Quantity">
     
-                                    <span id="up_quantity_validate" class="text-danger mt-1"></span>
+                                    <span id="up_quantity_validate" class="text-danger validation-error mt-1"></span>
                                 </div>
                             </div>
 
 
                             <div class="row">
                                 <div class="col mb-3">
-                                    <label class="form-label" for="up_max_used">Max Used</label>
-                                    <input class="form-control" id="up_max_used" min="0" type="number" name="max_used" >
+                                    <label class="form-label" for="up_max_used">Max Used <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="up_max_used" min="0" type="number" name="max_used" placeholder="Max Coupon Used">
     
-                                    <span id="up_max_used_validate" class="text-danger mt-1"></span>
+                                    <span id="up_max_used_validate" class="text-danger validation-error mt-1"></span>
                                 </div>
 
                                 <div class="col mb-3">
-                                    <label for="up_discount_type" class="form-label">Discount Type</label>
+                                    <label for="up_discount_type" class="form-label">Discount Type <span class="text-danger">*</span></label>
                                     <select class="form-select" name="discount_type" id="up_discount_type">
                                         <option value="percent" selected>Percentage (%)</option>
                                         <option value="amount">Amount {{ $settings->currency_symbol }}</option>
@@ -231,49 +229,46 @@
                                 </div>
 
                                 <div class=" col mb-3">
-                                    <label for="up_discount" class="form-label">Discount</label>
-                                    <input min="0" type="number" class="form-control" name="discount" id="up_discount" >
+                                    <label for="up_discount" class="form-label">Discount <span class="text-danger">*</span></label>
+                                    <input min="0" type="number" class="form-control" name="discount" id="up_discount" placeholder="Discount">
 
-                                    <span id="up_discount_validate" class="text-danger mt-1"></span>
+                                    <span id="up_discount_validate" class="text-danger validation-error mt-1"></span>
                                 </div>
                             </div>
 
 
                             <div class="row">
                                 <div class="col mb-3">
-                                    <label class="form-label" for="up_start_date">Offer Start Date</label>
+                                    <label class="form-label" for="up_start_date">Offer Start Date <span class="text-danger">*</span></label>
                                     <input class="form-control up_start_date" type="date" id="up_start_date" name="start_date" placeholder="Select a date....">
 
-                                    <span id="up_start_date_validate" class="text-danger mt-1"></span>
+                                    <span id="up_start_date_validate" class="text-danger validation-error mt-1"></span>
                                 </div>
 
                                 <div class="col mb-3">
-                                    <label class="form-label" for="up_end_date">Offer End Date</label>
+                                    <label class="form-label" for="up_end_date">Offer End Date <span class="text-danger">*</span></label>
                                     <input class="form-control up_end_date" type="date" id="up_end_date" name="end_date"  placeholder="Select a date....">
 
-                                    <span id="up_end_date_validate" class="text-danger mt-1"></span>
+                                    <span id="up_end_date_validate" class="text-danger validation-error mt-1"></span>
                                 </div>
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label">Status</label>
                                 <select class="form-select" id="up_status" name="status">
-                                    <option value="" disabled selected>Select</option>
-                                    <option value="1">Active</option>
+                                    <option value="1" selected>Active</option>
                                     <option value="0">Inactive</option>
                                 </select>
                             </div>
 
                             <div class="d-flex justify-content-end align-items-center">
-                                <button type="button" class="btn btn-secondary waves-effect me-3"
+                                <button type="button" class="btn btn-danger waves-effect me-3"
                                         data-bs-dismiss="modal">Close</button>
 
                                 <button type="submit" id="btn-store" class="btn btn-primary waves-effect waves-light"> Save changes </button>
                             </div>
                         </form>
                     </div>
-
-
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div>
@@ -287,7 +282,6 @@
     <script src="{{ asset('public/backend/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
 
     <script>
-
         // Flatpicker Plugin
         $(".start_date").flatpickr({
             minDate: "today"
@@ -319,8 +313,11 @@
                 // pageLength: 30,
 
                 columns: [
-                    {
-                        data: 'id',
+                    { 
+                        data: 'DT_RowIndex', 
+                        name: 'DT_RowIndex', 
+                        orderable: false, 
+                        searchable: false 
                     },
                     {
                         data: 'info',
@@ -421,6 +418,8 @@
                                 text: `${res.message}`,
                                 icon: "success"
                             })
+
+                            $('.validation-error').html('');
                         }
                     },
                     error: function (err) {
@@ -444,7 +443,7 @@
             })
 
 
-            // Edit 
+            // Edit Data
             $(document).on("click", '#editButton', function (e) {
                 let id = $(this).attr('data-id');
                 // alert(id);
@@ -481,7 +480,7 @@
             })
 
 
-            // Update 
+            // Update Data
             $("#EditCoupon").submit(function (e) {
                 e.preventDefault();
 
@@ -501,12 +500,13 @@
 
                         swal.fire({
                             title: "Success",
-                            text: "Coupon Edited",
+                            text: "Coupon Updated Successfully",
                             icon: "success"
                         })
 
                         $('#editModal').modal('hide');
                         $('#EditCoupon')[0].reset();
+                        $('.validation-error').html('');
                         dataTabless.ajax.reload();
                     },
                     error: function (err) {
@@ -561,6 +561,7 @@
                                     });
 
                                     dataTabless.ajax.reload();
+
                                 },
                                 error: function (err) {
                                     console.log('error')

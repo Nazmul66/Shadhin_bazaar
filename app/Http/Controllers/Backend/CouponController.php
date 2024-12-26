@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\CreateCouponRequest;
+use App\Http\Requests\Admin\UpdateCouponRequest;
 use Illuminate\Http\Request;
 use App\Models\Coupon;
 use Illuminate\Support\Facades\DB;
@@ -24,15 +26,14 @@ class CouponController extends Controller
         $coupons= Coupon::all();
         
         return DataTables::of($coupons)
+            ->addIndexColumn()
             ->addColumn('info', function ($coupon) {
                 $name = $coupon->name ?? 'N/A';
                 $code = $coupon->code ?? 'N/A';
-                $quantity = $coupon->quantity ?? 'N/A';
 
                 return '<div class="">
                        <h6 style="white-space: wrap;">Coupon Name: <span class="badge bg-success">'. $name .'</span></h6> 
                        <h6 style="white-space: wrap;">Coupon Code : <span class="badge bg-success">'. $code .'</span></h6>
-                       <h6 style="white-space: wrap;">Quantity : <span class="badge bg-success">'. $quantity .'</span></h6>
                 </div>';
             })
             ->addColumn('discount', function ($coupon) {
@@ -40,7 +41,7 @@ class CouponController extends Controller
                     return '<span class="badge bg-primary">'. $coupon->discount . '%' .'</span>';
                 }
                 else if ( $coupon->discount_type === 'amount' ){
-                    return '<span class="badge bg-info">'. $coupon->discount  .'</span>';
+                    return '<span class="badge bg-info">'. $coupon->discount .' Tk</span>';
                 }
             })
             ->addColumn('discount_type', function ($coupon) {
@@ -53,9 +54,11 @@ class CouponController extends Controller
                 return '<span class="text-secondary">'. date('Y-m-d', strtotime($coupon->end_date)) .'</span>';
             })
             ->addColumn('used', function ($coupon) {
+                $quantity = $coupon->quantity ?? 'N/A';
                 $max_used = $coupon->max_used ?? 'N/A';
 
                 return '<div class="">
+                       <h6 style="white-space: wrap;">Quantity : <span class="badge bg-success">'. $quantity .'</span></h6> 
                        <h6 style="white-space: wrap;">Max Used : <span class="badge bg-success">'. $max_used .'</span></h6> 
                        <h6 style="white-space: wrap;">Total Used : <span class="badge bg-success">'. $coupon->total_used .'</span></h6>
                 </div>';
@@ -75,10 +78,25 @@ class CouponController extends Controller
             })
 
             ->addColumn('action', function ($coupon) {
-                return '<div class="d-flex gap-3"> 
-                    <a class="btn btn-sm btn-primary" id="editButton" href="javascript:void(0)" data-id="'.$coupon->id.'" data-bs-toggle="modal" data-bs-target="#editModal"><i class="fas fa-edit"></i></a>
-                    <a class="btn btn-sm btn-danger" href="javascript:void(0)" data-id="'.$coupon->id.'" id="deleteBtn"> <i class="fas fa-trash"></i></a>
-                </div>';
+                return '
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Actions <i class="mdi mdi-chevron-down"></i>
+                        </button>
+
+                        <div class="dropdown-menu dropdownmenu-primary" style="">
+                            <a class="dropdown-item text-info" id="viewButton" href="javascript:void(0)" data-id="'.$coupon->id.'" data-bs-toggle="modal" data-bs-target="#viewModal">
+                                <i class="fas fa-eye"></i> View
+                            </a>
+
+                            <a class="dropdown-item text-success" id="editButton" href="javascript:void(0)" data-id="'.$coupon->id.'" data-bs-toggle="modal" data-bs-target="#editModal">
+                                <i class="fas fa-edit"></i> Edit
+                            </a>
+
+                            <a class="dropdown-item text-danger" href="javascript:void(0)" data-id="'.$coupon->id.'" id="deleteBtn">
+                                <i class="fas fa-trash"></i> Delete
+                            </a>
+                        </div>
+                    </div>';
             })
             
             ->rawColumns(['info', 'discount_type', 'discount', 'start_date', 'end_date', 'used', 'status', 'action'])
@@ -88,30 +106,9 @@ class CouponController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateCouponRequest $request)
     {
         // dd($request->all());
-        $request->validate(
-            [
-                'name' => ['required', 'unique:coupons,name', 'max:200'],
-                'code' => ['required', 'max:200'],
-                'quantity' => ['required', 'integer'],
-                'max_used' => ['required', 'integer'],
-                'discount' => ['required', 'integer'],
-                'start_date' => ['required'],
-                'end_date' => ['required'],
-            ],
-            [
-                'name.required' => 'Coupon Name is required',
-                'name.unique' => 'Character might be unique',
-                'code.required' => 'Coupon code is required',
-                'max_used.required' => 'Max Used is required',
-                'discount.required' => 'Discount is required',
-                'start_date.required' => 'Start Date is required',
-                'end_date.required' => 'End Date is required',
-            ]
-        );
-
         $coupon = new Coupon();
 
         DB::beginTransaction();
@@ -126,7 +123,6 @@ class CouponController extends Controller
             $coupon->end_date        = $request->end_date;
             $coupon->status          = $request->status;
             
-            // dd($coupon);
             $coupon->save();
         }
         catch(\Exception $ex){
@@ -170,32 +166,9 @@ class CouponController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Coupon $coupon)
+    public function update(UpdateCouponRequest $request, $id)
     {
-        // Log the incoming request data for debugging
-        // \Log::info('Incoming request data:', $request->all());
-    
-        // Validation
-        $request->validate(
-            [
-                'name' => ['required', 'unique:coupons,name,' . $coupon->id, 'max:200'],
-                'code' => ['required', 'max:200'],
-                'quantity' => ['required', 'integer'],
-                'max_used' => ['required', 'integer'],
-                'discount' => ['required', 'integer'],
-                'start_date' => ['required', 'date'], // Ensure date validation
-                'end_date' => ['required', 'date'],   // Ensure date validation
-            ],
-            [
-                'name.required' => 'Coupon Name is required',
-                'name.unique' => 'Character must be unique',
-                'code.required' => 'Coupon code is required',
-                'max_used.required' => 'Max Used is required',
-                'discount.required' => 'Discount is required',
-                'start_date.required' => 'Start date is required', // Add specific error messages
-                'end_date.required' => 'End date is required',
-            ]
-        );
+        $coupon = Coupon::findOrFail($id);
     
         DB::beginTransaction();
         try {
