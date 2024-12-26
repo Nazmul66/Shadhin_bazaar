@@ -172,7 +172,7 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header bg-primary">
-                        <h5 class="modal-title" id="myModalLabel">View Category List</h5>
+                        <h5 class="modal-title" id="myModalLabel">View Brand List</h5>
 
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
                     </div>

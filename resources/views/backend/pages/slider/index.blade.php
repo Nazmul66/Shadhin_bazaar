@@ -33,24 +33,24 @@
             <div class="d-flex justify-content-between align-items-center">
                 <h4 class="card-title">Sliders List</h4>
                 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">
-                    Create New
+                    Add New
                 </button>
             </div>
         </div>
 
         <div class="card-body">
-            <div class="table-responsive">
+            <div class="">
                 <table class="table table-bordered mb-0" id="datatables">
 
                     <thead class="bg-primary text-white">
                         <tr>
                             <th>SL</th>
                             <th>Slider Image</th>
-                            <th>Slider Type</th>
+                            {{-- <th>Slider Type</th> --}}
                             <th>Slider Title</th>
                             <th>Price</th>
-                            <th>Url</th>
-                            <th>Serial</th>
+                            {{-- <th>Url</th>
+                            <th>Serial</th> --}}
                             <th>Status</th>
                             <th>Actions</th>
                         </tr>
@@ -68,60 +68,68 @@
              style="display: none;" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-header bg-primary">
                         <h5 class="modal-title" id="myModalLabel">Create Slider</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
                     </div>
 
                     <div class="modal-body">
-                        {{-- method="POST" action="{{ route('admin.category.store') }}" --}}
                         <form id="createForm" enctype="multipart/form-data">
                             @csrf
 
                             <div class="row">
                                 <div class="col mb-3">
                                     <label for="slider_image" class="form-label">Slider Image <sup class="text-danger" style="font-size: 12px;">* resolution(1920 x 1080)</sup></label>
-                                    <input type="file" class="form-control" name="slider_image" id="slider_image" >
+                                    <input type="file" class="form-control" name="slider_image" id="slider_image" accept=".png, .jpeg, .jpg, .webp" onchange="previewImage(event)">
 
                                     <span id="image_validate" class="text-danger mt-1"></span>
+
+                                    <div id="image_preview" class="mt-3">
+                                        <img src="{{ asset('public/backend/assets/images/no_Image_available.jpg') }}" width="100" height="100">
+                                    </div>
                                 </div>
 
                                 <div class="col mb-3">
                                     <label for="title" class="form-label">Slider Title</label>
-                                    <input class="form-control" id="title" type="text" name="title" >
+                                    <input class="form-control" id="title" type="text" name="title" placeholder="Write here">
 
-                                    <span id="title_validate" class="text-danger mt-1"></span>
+                                    <span id="title_validate" placeholder="Write Here" class="text-danger mt-1"></span>
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="col mb-3">
                                     <label for="type" class="form-label">Slider Type</label>
-                                    <input class="form-control" id="type" type="text" name="type" >
+                                    <input class="form-control" placeholder="Write Here" id="type" type="text" name="type" >
                                 </div>
 
                                 <div class="col mb-3">
                                     <label for="starting_price" class="form-label">Price</label>
-                                    <input class="form-control" id="starting_price" type="number" name="starting_price">
+                                    <input class="form-control" id="starting_price" type="number" name="starting_price" placeholder="Price">
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="col mb-3">
                                     <label for="btn_url" class="form-label">Button Url</label>
-                                    <input class="form-control" id="btn_url" type="text" name="btn_url">
+                                    <input class="form-control" id="btn_url" type="url" name="btn_url" placeholder="Link here">
                                 </div>
 
-                                <div class="col mb-3">
-                                    <label for="serial" class="form-label">Serial</label>
-                                    <input class="form-control" id="serial" type="text" name="serial" >
+                                <div class="mb-3">
+                                    <label class="form-label">Status <span class="text-danger">*</span></label>
+                                    <select class="form-select" name="status">
+                                        <option value="1" selected>Active</option>
+                                        <option value="0">Inactive</option>
+                                    </select>
+    
+                                    <span id="status_validate" class="text-danger mt-1"></span>
                                 </div>
                             </div>
 
                             <div class="d-flex justify-content-end align-items-center">
-                                <button type="button" class="btn btn-secondary waves-effect me-3"
+                                <button type="button" class="btn btn-danger waves-effect me-3"
                                     data-bs-dismiss="modal">Close</button>
-                                <button type="submit" id="btn-store" class="btn btn-primary waves-effect waves-light"> Save changes</button>
+                                <button type="submit" id="btn-store" class="btn btn-primary waves-effect waves-light"> Save Changes</button>
                             </div>
                         </form>
                     </div>
@@ -135,9 +143,9 @@
              style="display: none;" aria-hidden="true">
             <div class="modal-dialog modal-lg" >
                 <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-header bg-primary">
                         <h5 class="modal-title" id="myModalLabel">Update Slider</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
                     </div>
 
                     <div class="modal-body">
@@ -150,14 +158,14 @@
                             <div class="row">
                                 <div class="col mb-3">
                                     <label for="slider_image" class="form-label">Slider Image <sup class="text-danger" style="font-size: 12px;">* resolution(1920 x 1080)</sup></label>
-                                    <input type="file" class="form-control" name="slider_image" id="slider_image">
+                                    <input type="file" class="form-control" name="slider_image" id="slider_image" accept=".png, .jpeg, .jpg, .webp" onchange="imageShow(event)">
 
-                                    <div id="imageShow"></div>
+                                    <div id="imageShow" class="mt-3"></div>
                                 </div>
 
                                 <div class="col mb-3">
                                     <label for="up_title" class="form-label">Slider Title</label>
-                                    <input class="form-control" id="up_title" type="text" name="title">
+                                    <input class="form-control" id="up_title" type="text" name="title" placeholder="Write here">
 
                                     <span id="up_title_validate" class="text-danger mt-1"></span>
                                 </div>
@@ -166,19 +174,19 @@
                             <div class="row">
                                 <div class="col mb-3">
                                     <label for="up_type" class="form-label">Slider Type</label>
-                                    <input class="form-control" id="up_type" type="text" name="type">
+                                    <input class="form-control" id="up_type" type="text" name="type" placeholder="Write here">
                                 </div>
 
                                 <div class="col mb-3">
                                     <label for="up_starting_price" class="form-label">Price</label>
-                                    <input class="form-control" id="up_starting_price" type="number" name="starting_price">
+                                    <input class="form-control" id="up_starting_price" type="number" name="starting_price" placeholder="Price">
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="col mb-3">
                                     <label for="up_btn_url" class="form-label">Button Url</label>
-                                    <input class="form-control" id="up_btn_url" type="text" name="btn_url">
+                                    <input class="form-control" id="up_btn_url" type="url" name="btn_url" placeholder="Link here">
                                 </div>
 
                                 <div class="col mb-3">
@@ -188,13 +196,70 @@
                             </div>
 
                             <div class="d-flex justify-content-end align-items-center">
-                                <button type="button" class="btn btn-secondary waves-effect me-3"
+                                <button type="button" class="btn btn-danger waves-effect me-3"
                                     data-bs-dismiss="modal">Close</button>
 
-                                <button type="submit" id="btn-store" class="btn btn-primary waves-effect waves-light">
-                                    Update </button>
+                                <button type="submit" id="btn-store" class="btn btn-primary waves-effect waves-light">Update</button>
                             </div>
                         </form>
+                    </div>
+
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+
+
+        <!-- View Modal -->
+        <div id="viewModal" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" data-bs-scroll="true"
+        style="display: none;" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header bg-primary">
+                        <h5 class="modal-title" id="myModalLabel">View Slider List</h5>
+
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="view_modal_content">
+                            <label>Image : </label>
+                            <div id="viewImageShow"></div>
+                        </div>
+
+                        <div class="view_modal_content">
+                            <label>Title : </label>
+                            <span class="text-dark" id="view_slider_title"></span>
+                        </div>
+
+                        <div class="view_modal_content">
+                            <label>Type : </label>
+                            <span class="text-dark" id="view_slider_type"></span>
+                        </div>
+
+                        <div class="view_modal_content">
+                            <label>Price : </label>
+                            <span class="text-dark" id="view_slider_price"></span>
+                        </div>
+
+                        <div class="view_modal_content">
+                            <label>Url : </label>
+                            <span class="text-dark" id="view_slider_url"></span>
+                        </div>
+
+                        <div class="view_modal_content">
+                            <label>Created Date : </label>
+                            <div id="created_date"></div>
+                        </div>
+
+                        <div class="view_modal_content">
+                            <label>Updated Date : </label>
+                            <div id="updated_date"></div>
+                        </div>
+
+                        <div class="view_modal_content">
+                            <label>Status : </label>
+                            <div id="view_status"></div>
+                        </div>
                     </div>
 
 
@@ -209,7 +274,28 @@
     <script src="https://cdn.datatables.net/2.1.6/js/dataTables.min.js"></script>
 
     <script>
+        function previewImage(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = e => document.getElementById('image_preview').innerHTML = `
+                <img src="${e.target.result}" width="100" height="100">`;
+                reader.readAsDataURL(file);
+            }
+        }
 
+        function imageShow(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = e => document.getElementById('imageShow').innerHTML = `
+                <img src="${e.target.result}" width="100" height="100">`;
+                reader.readAsDataURL(file);
+            }
+        }
+    </script>
+
+    <script>
         $(document).ready(function () {
 
             // Show Data through Datatable
@@ -236,23 +322,10 @@
                         searchable: false,
                     },
                     {
-                        data: 'type',
-                    },
-                    {
                         data: 'title',
                     },
                     {
                         data: 'starting_price',
-                    },
-                    {
-                        data: 'btn_url',
-                        orderable: false,
-                        searchable: false,
-                    },
-                    {
-                        data: 'serial',
-                        orderable: false,
-                        searchable: false,
                     },
                     {
                         data: 'status',
@@ -287,16 +360,16 @@
 
                         if (res.status == 1) {
                             swal.fire(
-                                {
-                                    title: 'Status Changed to Active',
-                                    icon: 'success'
-                                })
+                            {
+                                title: 'Status Changed to Active',
+                                icon: 'success'
+                            })
                         } else {
                             swal.fire(
-                                {
-                                    title: 'Status Changed to Inactive',
-                                    icon: 'success'
-                                })
+                            {
+                                title: 'Status Changed to Inactive',
+                                icon: 'success'
+                            })
                         }
                     },
                     error: function (err) {
@@ -432,7 +505,7 @@
 
             });
 
-            // Delete Slider
+            // Delete Data
             $(document).on("click", "#deleteBtn", function () {
                 let id = $(this).data('id')
 
@@ -445,40 +518,77 @@
                     cancelButtonColor: "#3085d6",
                     confirmButtonText: "Yes, delete it!"
                 })
-                    .then((result) => {
-                        if (result.isConfirmed) {
-                            $.ajax({
-                                type: 'DELETE',
+                .then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: 'DELETE',
 
-                                url: "{{ url('admin/slider') }}/" + id,
-                                data: {
-                                    headers: {
-                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                    }
-                                },
-                                success: function (res) {
-                                    Swal.fire({
-                                        title: "Deleted!",
-                                        text: `${res.message}`,
-                                        icon: "success"
-                                    });
-
-                                    datatables.ajax.reload();
-                                },
-                                error: function (err) {
-                                    console.log('error')
+                            url: "{{ url('admin/slider') }}/" + id,
+                            data: {
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                 }
-                            })
+                            },
+                            success: function (res) {
+                                Swal.fire({
+                                    title: "Deleted!",
+                                    text: `${res.message}`,
+                                    icon: "success"
+                                });
 
-                        } else {
-                            swal.fire('Your Data is Safe');
-                        }
+                                datatables.ajax.reload();
+                            },
+                            error: function (err) {
+                                console.log('error')
+                            }
+                        })
 
-                    })
+                    } else {
+                        swal.fire('Your Data is Safe');
+                    }
+
+                })
+            })
+
+
+                        // View Data
+                        $(document).on("click", '#viewButton', function (e) {
+                let id = $(this).attr('data-id');
+                // alert(id);
+
+                $.ajax({
+                    type: 'GET',
+                    // headers: {
+                    //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    // },
+                    url: "{{ url('admin/slider/view') }}/" + id,
+                    processData: false,  // Prevent jQuery from processing the data
+                    contentType: false,  // Prevent jQuery from setting contentType
+                    success: function (res) {
+                        let data = res.success;
+
+                        $('#view_slider_title').html(data.title);
+                        $('#view_slider_type').html(data.type);
+                        $('#view_slider_price').html(data.starting_price);
+                        $('#view_slider_url').html(data.btn_url);
+                        $('#viewImageShow').html('');
+                        $('#viewImageShow').append(`
+                          <a href="{{ asset("`+ data.slider_image +`") }}" target="__blank">
+                            <img src={{ asset("`+ data.slider_image +`") }} alt="" style="width: 75px;">    
+                          </a>
+                       `);
+
+                        $('#created_date').html(res.created_date);
+                        $('#updated_date').html(res.updated_date);
+                        $('#view_status').html(res.statusHtml);
+                    },
+                    error: function (error) {
+                        console.log('error');
+                    }
+
+                });
             })
         })
-
-
     </script>
 @endpush
 

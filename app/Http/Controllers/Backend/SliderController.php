@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\CreateSliderRequest;
+use App\Http\Requests\Admin\UpdateSliderRequest;
 use App\Traits\ImageUploadTraits;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -34,25 +36,25 @@ class SliderController extends Controller
                      <img src="'. asset( $slider->slider_image ) .'" width="75px">
                     </a>';
             })
-            ->addColumn('type', function ($slider) {
-                if( !is_null($slider->type) ){
-                    return '<span class="badge bg-primary">'. $slider->type .'</span>';
-                }
-                else{
-                    return '<span class="badge bg-primary">N/A</span>';
-                }
-            })
+            // ->addColumn('type', function ($slider) {
+            //     if( !is_null($slider->type) ){
+            //         return '<span class="badge bg-primary">'. $slider->type .'</span>';
+            //     }
+            //     else{
+            //         return '<span class="badge bg-primary">N/A</span>';
+            //     }
+            // })
             ->addColumn('title', function ($slider) {
                 return '<span class="badge bg-primary">'. $slider->title .'</span>';
             })
-            ->addColumn('btn_url', function ($slider) {
-                if( !is_null($slider->starting_price) ){
-                     return '<span class="badge bg-info">'. $slider->btn_url .'</span>';
-                }
-                else{
-                    return '<span class="badge bg-info">N/A</span>';
-                }
-            })
+            // ->addColumn('btn_url', function ($slider) {
+            //     if( !is_null($slider->starting_price) ){
+            //          return '<span class="badge bg-info">'. $slider->btn_url .'</span>';
+            //     }
+            //     else{
+            //         return '<span class="badge bg-info">N/A</span>';
+            //     }
+            // })
             ->addColumn('starting_price', function ($slider) {
                 if( !is_null($slider->starting_price) ){
                     return '<span class="badge bg-success">'. $slider->starting_price .' TK</span>';
@@ -61,14 +63,14 @@ class SliderController extends Controller
                     return '<span class="badge bg-success">N/A</span>';
                 }
             })
-            ->addColumn('serial', function ($slider) {
-                if( !is_null($slider->serial) ){
-                    return '<span class="badge bg-success">'. $slider->serial .' TK</span>';
-                }
-                else{
-                    return '<span class="badge bg-success">N/A</span>';
-                }
-            })
+            // ->addColumn('serial', function ($slider) {
+            //     if( !is_null($slider->serial) ){
+            //         return '<span class="badge bg-success">'. $slider->serial .' TK</span>';
+            //     }
+            //     else{
+            //         return '<span class="badge bg-success">N/A</span>';
+            //     }
+            // })
             ->addColumn('status', function ($slider) {
                 if ($slider->status == 1) {
                     return ' <a class="status" id="status" href="javascript:void(0)"
@@ -83,13 +85,28 @@ class SliderController extends Controller
                 }
             })
             ->addColumn('action', function ($slider) {
-                return '<div class="d-flex gap-3">
-                    <a class="btn btn-sm btn-primary" id="editButton" href="javascript:void(0)" data-id="'.$slider->id.'" data-bs-toggle="modal" data-bs-target="#editModal"><i class="fas fa-edit"></i></a>
-                    <a class="btn btn-sm btn-danger" href="javascript:void(0)" data-id="'.$slider->id.'" id="deleteBtn"> <i class="fas fa-trash"></i></a>
+                return '
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Actions <i class="mdi mdi-chevron-down"></i>
+                    </button>
+
+                    <div class="dropdown-menu dropdownmenu-primary" style="">
+                        <a class="dropdown-item text-info" id="viewButton" href="javascript:void(0)" data-id="'.$slider->id.'" data-bs-toggle="modal" data-bs-target="#viewModal">
+                            <i class="fas fa-eye"></i> View
+                        </a>
+
+                        <a class="dropdown-item text-success" id="editButton" href="javascript:void(0)" data-id="'.$slider->id.'" data-bs-toggle="modal" data-bs-target="#editModal">
+                            <i class="fas fa-edit"></i> Edit
+                        </a>
+
+                        <a class="dropdown-item text-danger" href="javascript:void(0)" data-id="'.$slider->id.'" id="deleteBtn">
+                            <i class="fas fa-trash"></i> Delete
+                        </a>
+                    </div>
                 </div>';
             })
 
-            ->rawColumns(['slider_image', 'starting_price', 'serial', 'type', 'btn_url', 'title', 'status','action'])
+            ->rawColumns(['slider_image', 'starting_price', 'title', 'status','action'])
             ->make(true);
     }
 
@@ -114,30 +131,18 @@ class SliderController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateSliderRequest $request)
     {
-        $request->validate(
-            [
-                'title' => ['required', 'unique:sliders,title', 'max:200' ],
-                'slider_image' => ['required', 'image' ],
-            ],
-            [
-                'title.required' => 'Please fill up title name',
-                'title.max' => 'Character might be 255 words',
-                'slider_image.required' => 'Slider image required',
-            ]
-        );
-
         DB::beginTransaction();
         try {
             $slider = new Slider();
 
-            $slider->type                   = $request->type;
             $slider->title                  = $request->title;
+            $slider->type                   = $request->type;
             $slider->starting_price         = $request->starting_price;
             $slider->btn_url                = $request->btn_url;
-            $slider->serial                 = Slider::max($request->serial) ? Slider::max($request->serial) + 1 : 1;
-            $slider->status                 = 1;
+            $slider->serial                 = Slider::max('serial') ? Slider::max('serial') + 1 : 1;
+            $slider->status                 =  $request->status;
 
             // Handle image with ImageUploadTraits function
             $uploadImage                    = $this->imageUpload($request, 'slider_image', 'slider');
@@ -168,20 +173,9 @@ class SliderController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateSliderRequest $request, string $id)
     {
         $slider =  Slider::find($id);
-
-        $request->validate(
-            [
-                'title' => ['required', 'unique:sliders,title,'. $slider->id, 'max:200' ],
-                'serial' => ['unique:sliders,serial,'. $slider->id ],
-            ],
-            [
-                'title.required' => 'Please fill up title name',
-                'title.max' => 'Character might be 255 words',
-            ]
-        );
 
         DB::beginTransaction();
         try {
@@ -221,5 +215,28 @@ class SliderController extends Controller
         $slider->delete();
 
         return response()->json(['message' => 'Slider has been deleted.'], 200);
+    }
+
+    public function sliderView($id)
+    {
+        $slider  = Slider::find($id);
+        // dd($slider);
+
+        $statusHtml = '';
+        if ($slider->status === 1) {
+            $statusHtml = '<span class="text-success">Active</span>';
+        } else {
+            $statusHtml = '<span class="text-danger">Inactive</span>';
+        }
+
+        $created_date = date('d F, Y H:i:s A', strtotime($slider->created_at));
+        $updated_date = date('d F, Y H:i:s A', strtotime($slider->updated_at));
+
+        return response()->json([
+            'success'           => $slider,
+            'statusHtml'        => $statusHtml,
+            'created_date'      => $created_date,
+            'updated_date'      => $updated_date,
+        ]);
     }
 }

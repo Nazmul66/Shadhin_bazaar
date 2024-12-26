@@ -66,6 +66,7 @@ Route::middleware('setLanguage')->group(function(){
         Route::resource('/slider', SliderController::class)->names('slider');
         Route::get('/slider-data', [SliderController::class, 'getData'])->name('slider-data');
         Route::post('/slider/status', [SliderController::class, 'changeSliderStatus'])->name('slider.status');
+        Route::get('/slider/view/{id}', [SliderController::class, 'sliderView'])->name('slider.view');
 
 
         //______ Category _____//
