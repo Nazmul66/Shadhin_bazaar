@@ -115,6 +115,7 @@ Route::middleware('setLanguage')->group(function(){
         //______ Product _____//
         Route::resource('/product', ProductController::class)->names('product');
         Route::get('/product-data', [ProductController::class, 'getData'])->name('product-data');
+        // Route::get('/creates', [ProductController::class, 'creates']);
         Route::post('/change-product-status', [ProductController::class, 'changeProductStatus'])->name('product.status');
 
         Route::post('/get/product/subCategory-data', [ProductController::class, 'get_product_subCategory_data'])->name('get.product.subCategory.data');

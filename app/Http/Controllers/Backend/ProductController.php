@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\CreateProductRequest;
+use App\Http\Requests\Admin\UpdateProductRequest;
 use App\Models\AttributeName;
 use App\Models\AttributeValue;
 use Illuminate\Http\Request;
@@ -16,6 +18,7 @@ use App\Models\ProductColor;
 use App\Models\ProductImage;
 use App\Models\ProductSize;
 use Attribute;
+use Brian2694\Toastr\Facades\Toastr;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -28,6 +31,7 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
+
     public function index()
     {
         $categories        = Category::get_data();
@@ -36,6 +40,15 @@ class ProductController extends Controller
         $brands            = Brand::get_data();
 
         return view('backend.pages.products.index', compact('categories', 'subCategories', 'childCategories', 'brands'));
+    }
+
+    public function create()
+    {
+        $categories        = Category::get_data();
+        $subCategories     = Subcategory::get_data();
+        $childCategories   = ChildCategory::get_data();
+        $brands            = Brand::get_data();
+        return view('backend.pages.products.create', compact('categories', 'subCategories', 'childCategories', 'brands'));
     }
 
     public function getData()
@@ -49,6 +62,7 @@ class ProductController extends Controller
                     ->get();
 
         return DataTables::of($products)
+            ->addIndexColumn()
             ->addColumn('product_img', function ($product) {
                 return ' <a href="'.asset( $product->thumb_image ).'" target="__blank">
                       <img src="'.asset( $product->thumb_image ).'" width="100px" height="100px">
@@ -56,40 +70,26 @@ class ProductController extends Controller
             })
             ->addColumn('categorized', function ($product) {
                 $subCat = $product->subCat_name ?? 'N/A';
-                $childCat = $product->childCat_name ?? 'N/A';
-
                 return '<div class="">
                        <h6>Category Name: <span class="badge bg-success">'. $product->cat_name .'</span></h6> 
                        <h6>SubCategory Name : <span class="badge bg-success">'. $subCat .'</span></h6>
-                       <h6>ChildCategory Name : <span class="badge bg-success">'. $childCat .'</span></h6>
                 </div>';
             })
             ->addColumn('special_featured', function ($product) {
                 $is_top = $product->is_top == 1 ? "Yes" : 'No';
                 $is_best = $product->is_best == 1 ? "Yes" : 'No';
                 $is_featured = $product->is_featured == 1 ? "Yes" : 'No';
-                $start_date = $product->offer_start_date ?? 'N/A';
-                $end_date = $product->offer_end_date ?? 'N/A';
 
                 return '<div class="">
                        <h6>Top Product: <span class="badge bg-success">'. $is_top .'</span></h6> 
                        <h6>Best Product : <span class="badge bg-success">'. $is_best .'</span></h6>
                        <h6>Featured Product : <span class="badge bg-success">'. $is_featured .'</span></h6>
-                       <h6>Start Product Offer : <span class="badge bg-success">'. $start_date .'</span></h6>
-                       <h6>End Product Offer : <span class="badge bg-success">'. $end_date .'</span></h6>
                 </div>';
             })
             ->addColumn('product_details', function ($product) {
-                $sku = $product->sku ?? 'N/A';
-                $offer_price = $product->offer_price ?? 'N/A';
-
                 return '<div class="">
                        <h6>Product Name : <span class="badge bg-success">'. $product->name .'</span></h6> 
                        <h6>Product Quantity : <span class="badge bg-success">'. $product->qty .'</span></h6>
-                       <h6>Product Sku : <span class="badge bg-success">'. $sku .'</span></h6>
-                       <h6>Brand Name : <span class="badge bg-success">'. $product->brand_name .'</span></h6>
-                       <h6>Product Price : <span class="badge bg-success">'. $product->price .'</span></h6>
-                       <h6>Offer Price : <span class="badge bg-success">'. $offer_price .'</span></h6>
                 </div>';
             })
             ->addColumn('status', function ($product) {
@@ -106,13 +106,34 @@ class ProductController extends Controller
                 }
             })
             ->addColumn('action', function ($product) {
-                return '<div class="d-flex gap-3">
-                    <a class="btn btn-sm btn-primary" id="editButton" href="javascript:void(0)" data-id="'.$product->id.'" data-bs-toggle="modal" data-bs-target="#editModal"><i class="fas fa-edit"></i></a>
+                 return '
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Actions <i class="mdi mdi-chevron-down"></i>
+                    </button>
 
-                    <a class="btn btn-sm btn-danger" href="javascript:void(0)" data-id="'.$product->id.'" id="deleteBtn"> <i class="fas fa-trash"></i></a>
+                    <div class="dropdown-menu dropdownmenu-primary" style="">
+                        <a class="dropdown-item text-info" id="viewButton" href="javascript:void(0)" data-id="'.$product->id.'" data-bs-toggle="modal" data-bs-target="#viewModal">
+                            <i class="fas fa-eye"></i> View
+                        </a>
 
-                    <a class="btn btn-sm btn-info" href="'. route('admin.product-variant', $product->id) .'" ><i class="bx bx-cog"></i></a>
+                        <a class="dropdown-item text-primary" href="'. route('admin.product.edit', $product->id) .'"><i class="fas fa-edit"></i> Edit</a>
+
+                        <a class="dropdown-item text-danger" href="javascript:void(0)" data-id="'.$product->id.'" id="deleteBtn">
+                            <i class="fas fa-trash"></i> Delete
+                        </a>
+
+                        <a class="dropdown-item text-success" href="'. route('admin.product-variant', $product->id) .'" ><i class="bx bx-cog"></i>
+                           Product Variants
+                        </a>
+                    </div>
                 </div>';
+                // return '<div class="d-flex gap-3">
+                //     <a class="btn btn-sm btn-primary" href="'. route('admin.product.edit', $product->id) .'"><i class="fas fa-edit"></i></a>
+
+                //     <a class="btn btn-sm btn-danger" href="javascript:void(0)" data-id="'.$product->id.'" id="deleteBtn"> <i class="fas fa-trash"></i></a>
+
+                //     <a class="btn btn-sm btn-info" href="'. route('admin.product-variant', $product->id) .'" ><i class="bx bx-cog"></i></a>
+                // </div>';
             })
 
             ->rawColumns(['categorized', 'special_featured', 'product_details', 'product_img', 'status', 'action'])
@@ -140,61 +161,45 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateProductRequest $request)
     {
         // dd($request->all());
-        $request->validate(
-            [
-                'thumb_image' => ['required', 'image'],
-                'name' => ['required', 'unique:products,name', 'max:255'],
-                'category_id' => ['required'],
-                'brand_id' => ['required'],
-                'price' => ['required'],
-                'qty' => ['required'],
-                'short_description' => ['required'],
-                'long_description' => ['required'],
-            ],
-            [
-                'thumb_image.required' => 'Product Image is required',
-                'name.required' => 'Please fill up Product name',
-                'name.max' => 'Character might be 255 word',
-                'name.unique' => 'Character might be unique',
-                'name.unique' => 'Character might be unique',
-                'category_id.required' => 'Please Select the Category Name',
-                'brand_id.required' => 'Please Select the Brand Name',
-                'qty.required' => 'Please add product quantity',
-                'short_description.required' => 'Please add short description',
-                'long_description.required' => 'Please add long description',
-            ]
-        );
-
         DB::beginTransaction();
         try {
-
             $product = new Product();
 
             $product->name                      = $request->name;
             $product->slug                      = Str::slug($request->name);
-            $product->vender_id                 = 0;  // Note
+            $product->sku                       = $request->sku;
+            $product->barcode                   = time() . rand(1000, 99999);
+            $product->vender_id                 = 1;  // Note 1=admin, 2=vendor
             $product->category_id               = $request->category_id;
             $product->subCategory_id            = $request->subCategory_id;
             $product->childCategory_id          = $request->childCategory_id;
             $product->brand_id                  = $request->brand_id;
             $product->qty                       = $request->qty;
-            $product->short_description         = $request->short_description;
-            $product->long_description          = $request->long_description;
             $product->video_link                = $request->video_link;
-            $product->sku                       = $request->sku;
             $product->tags                      = $request->tags;
-            $product->price                     = $request->price;
-            $product->offer_price               = $request->offer_price;
+            $product->purchase_price            = $request->purchase_price;
+            $product->selling_price             = $request->selling_price;
+            $product->discount_type             = $request->discount_type;
+
+            if( $request->discount_type === "none" ){
+                $product->discount_value            = null;
+            }
+
+            $product->discount_value            = $request->discount_value;
             $product->offer_start_date          = $request->offer_start_date;
             $product->offer_end_date            = $request->offer_end_date;
-            $product->type                      = $request->type ?? 1;
-            // $product->is_top                    = $request->is_top;
-            // $product->is_best                   = $request->is_best;
-            // $product->is_featured               = $request->is_featured;
-            $product->is_approved               = 0;
+            $product->short_description         = $request->short_description;
+            $product->long_description          = $request->long_description;
+            $product->return_policy             = $request->return_policy;
+            $product->shipping_return           = $request->shipping_return;
+            // $product->type                      = $request->type ?? 1;
+            $product->is_top                    = $request->is_top;
+            $product->is_best                   = $request->is_best;
+            $product->is_featured               = $request->is_featured;
+            $product->is_approved               = 1;  // Note 0=Not Approve, 1=Approve
             $product->seo_title                 = $request->seo_title;
             $product->seo_description           = $request->seo_description;
             $product->status                    = 1;
@@ -210,96 +215,93 @@ class ProductController extends Controller
         catch(Exception $ex){
             DB::rollBack();
             throw $ex;
-            // dd($ex->getMessage());
+            Toastr::error('Product create error', 'Error', ["positionClass" => "toast-top-right"]);
         }
 
         DB::commit();
-        return response()->json(['message'=> "Successfully Product Created!", 'status' => true]);
+        // return response()->json(['message'=> "Successfully Product Created!", 'status' => true]);
+        Toastr::success('Product Create Successfully', 'Success', ["positionClass" => "toast-top-right"]);
+        return redirect()->route('admin.product.index');
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Product $product)
+    public function edit($id)
     {
         // dd($product);
-        return response()->json(['success' => $product]);
+        $categories        = Category::get_data();
+        $subCategories     = Subcategory::get_data();
+        $childCategories   = ChildCategory::get_data();
+        $brands            = Brand::get_data();
+        $product           = Product::findOrFail($id);
+
+        return view('backend.pages.products.edit', compact('categories', 'subCategories', 'childCategories', 'brands', 'product'));
+        
+        // return response()->json(['success' => $product]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateProductRequest $request, string $id)
     {
         $product  = Product::find($id);
-
-        $request->validate(
-            [
-                'name' => ['required', 'unique:products,name,' . $product->id, 'max:255'],
-                'category_id' => ['required'],
-                'brand_id' => ['required'],
-                'price' => ['required'],
-                'qty' => ['required'],
-                'short_description' => ['required'],
-                'long_description' => ['required'],
-            ],
-            [
-                'name.required' => 'Please fill up Product name',
-                'name.max' => 'Character might be 255 word',
-                'name.unique' => 'Character might be unique',
-                'name.unique' => 'Character might be unique',
-                'category_id.required' => 'Please Select the Category Name',
-                'brand_id.required' => 'Please Select the Brand Name',
-                'qty.required' => 'Please add product quantity',
-                'short_description.required' => 'Please add short description',
-                'long_description.required' => 'Please add long description',
-            ]
-        );
 
         DB::beginTransaction();
         try {
 
             $product->name                      = $request->name;
             $product->slug                      = Str::slug($request->name);
-            $product->vender_id                 = 0;  // Note
+            $product->sku                       = $request->sku;
+            $product->barcode                   = time() . rand(1000, 99999);
+            $product->vender_id                 = 1;  // Note 1=admin, 2=vendor
             $product->category_id               = $request->category_id;
             $product->subCategory_id            = $request->subCategory_id;
             $product->childCategory_id          = $request->childCategory_id;
             $product->brand_id                  = $request->brand_id;
             $product->qty                       = $request->qty;
-            $product->short_description         = $request->short_description;
-            $product->long_description          = $request->long_description;
             $product->video_link                = $request->video_link;
-            $product->sku                       = $request->sku;
             $product->tags                      = $request->tags;
-            $product->price                     = $request->price;
-            $product->offer_price               = $request->offer_price;
+            $product->purchase_price            = $request->purchase_price;
+            $product->selling_price             = $request->selling_price;
+            $product->discount_type             = $request->discount_type;
+            if( $request->discount_type === "none" ){
+                $product->discount_value            = null;
+            }
+            $product->discount_value            = $request->discount_value;
             $product->offer_start_date          = $request->offer_start_date;
             $product->offer_end_date            = $request->offer_end_date;
-            $product->type                      = $request->type ?? 1;
-            // $product->is_top                    = $request->is_top;
-            // $product->is_best                   = $request->is_best;
-            // $product->is_featured               = $request->is_featured;
-            $product->is_approved               = 0;
+            $product->short_description         = $request->short_description;
+            $product->long_description          = $request->long_description;
+            $product->return_policy             = $request->return_policy;
+            $product->shipping_return           = $request->shipping_return;
+            // $product->type                      = $request->type ?? 1;
+            $product->is_top                    = $request->is_top;
+            $product->is_best                   = $request->is_best;
+            $product->is_featured               = $request->is_featured;
+            $product->is_approved               = 1;  // Note 0=Not Approve, 1=Approve
             $product->seo_title                 = $request->seo_title;
             $product->seo_description           = $request->seo_description;
+            $product->status                    = 1;
     
             // Handle image with ImageUploadTraits function
             $uploadImages                     = $this->deleteImageAndUpload($request, 'thumb_image', 'product', $product->thumb_image );
             $product->thumb_image           =  $uploadImages;
         
             // dd($product);
-            $product->save();
-    
+            $product->update();
         }
         catch(Exception $ex){
             DB::rollBack();
             // throw $ex;
-            dd($ex->getMessage());
+            Toastr::error('Product updated error', 'Error', ["positionClass" => "toast-top-right"]);
         }
 
         DB::commit();
-        return response()->json(['message'=> "Successfully Product Updated!", 'status' => true]);
+        Toastr::success('Product updated successfully', 'Success', ["positionClass" => "toast-top-right"]);
+        return redirect()->route('admin.product.index');
+        // return response()->json(['message'=> "Successfully Product Updated!", 'status' => true]);
     }
 
     /**

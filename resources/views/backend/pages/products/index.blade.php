@@ -35,14 +35,14 @@
         <div class="card-header">
             <div class="d-flex justify-content-between align-items-center">
                 <h4 class="card-title">Products List</h4>
-                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">
-                    Create Product
-                </button>
+                <a href="{{ route('admin.product.create') }}" class="btn btn-primary">
+                    Add Product
+                </a>
             </div>
         </div>
 
         <div class="card-body">
-            <div class="table-responsive">
+            <div class="">
                 <table class="table table-bordered mb-0" id="datatables">
                     <thead class="bg-primary text-white">
                         <tr>
@@ -75,141 +75,182 @@
                     <div class="modal-body">
                         <form id="createForm" enctype="multipart/form-data">
                             @csrf
-
-                            <div class="row">
-                                <div class="col-md-3 mb-3">
-                                    <label for="thumb_image" class="form-label">Product Image <sup class="text-danger" style="font-size: 12px;">* resolution (200 x 320)</sup></label>
-                                    <input type="file" class="form-control" name="thumb_image" id="thumb_image" >
-
+                
+                            <div class="row align-items-end">
+                                <div class="col-md-4 mb-3">
+                                    <div class="d-flex gap-3 align-items-end">
+                                        <div id="image_preview">
+                                            <img src="{{ asset('public/backend/assets/images/no_Image_available.jpg') }}" width="100" height="100">
+                                        </div>
+                
+                                        <div class="">
+                                            <label for="thumb_image" class="form-label">Product Image <sup class="text-danger" style="font-size: 12px;">* resolution (520 x 680)</sup></label>
+                                            <input type="file" class="form-control" name="thumb_image" id="thumb_image" accept=".png, .jpeg, .jpg, .webp" onchange="previewImage(event)">
+                                        </div>
+                                    </div>
+                
                                     <span id="image_validate" class="text-danger mt-1"></span>
                                 </div>
-
-                                <div class="col-md-3 mb-3">
+                
+                                <div class="col-md-4 mb-3">
                                     <label for="name" class="form-label">Product Name <span class="text-danger">*</span></label>
                                     <input class="form-control" id="name" type="text" name="name" placeholder="Write product name....">
-
+                
                                     <span id="name_validate" class="text-danger mt-1"></span>
                                 </div>
-
-                                <div class="col-md-3 mb-3">
-                                    <label for="sku" class="form-label">Product Sku</label>
+                
+                                <div class="col-md-4 mb-3">
+                                    <label for="sku" class="form-label">Product Sku <span class="text-danger">*</span></label>
                                     <input class="form-control" id="sku" type="text" name="sku" placeholder="Write product sku....">
                                 </div>
-
-                                <div class="col-md-3 mb-3">
+                            </div>
+                
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
                                     <label class="form-label" for="category_id">Category <span class="text-danger">*</span></label>
                                     <select class="form-select category_id" id="category_id" name="category_id">
                                         <option value="" disabled selected>Select</option>
-
+                
                                         @foreach ($categories as $row)
                                              <option value="{{ $row->id }}" data-image-url="{{ asset($row->category_img) }}">{{ $row->category_name }}</option>
                                         @endforeach
-
                                     </select>
-
+                
                                     <span id="category_id_validate" class="text-danger mt-1"></span>
                                 </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-3 mb-3">
-                                    <label class="form-label" for="subCategory_id">SubCategory</label>
+            
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label" for="subCategory_id">SubCategory <span class="text-danger">*</span></label>
                                     <select class="form-select subCategory_id" id="subCategory_id" name="subCategory_id">
                                         <option value="" disabled selected>Select</option>
-
                                         @foreach ($subCategories as $row)
                                             <option value="{{ $row->id }}" data-image-url="{{ asset($row->subcategory_img) }}">{{ $row->subcategory_name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
-
-                                <div class="col-md-3 mb-3">
+                
+                                <div class="col-md-4 mb-3">
                                     <label class="form-label" for="childCategory_id">ChildCategory</label>
                                     <select class="form-select childCategory_id" id="childCategory_id" name="childCategory_id">
                                         <option value="" disabled selected>Select</option>
-
+                
                                         @foreach ($childCategories as $row)
                                             <option value="{{ $row->id }}" data-image-url="{{ asset($row->img) }}">{{ $row->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
-
-                                <div class="col-md-3 mb-3">
+                            </div>
+                
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
                                     <label class="form-label" for="brand_id">Brand <span class="text-danger">*</span></label>
                                     <select class="form-select" id="brand_id" name="brand_id">
                                         <option value="" disabled selected>Select</option>
-
+                
                                         @foreach ($brands as $row)
                                             <option value="{{ $row->id }}" data-image-url="{{ asset($row->image) }}">{{ $row->brand_name }}</option>
                                         @endforeach
                                     </select>
-
+                
                                     <span id="brand_id_validate" class="text-danger mt-1"></span>
                                 </div>
-
-                                <div class="col-md-3 mb-3">
-                                    <label class="form-label" for="price">Price <span class="text-danger">*</span></label>
+                
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label" for="price">Purchase Price <span class="text-danger">*</span></label>
                                     <input class="form-control" id="price" type="number" name="price" min="0" placeholder="Write price....">
-
+                
                                     <span id="price_validate" class="text-danger mt-1"></span>
                                 </div>
-
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-3 mb-3">
-                                    <label class="form-label" for="offer_price">Offer Price</label>
+            
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label" for="offer_price">Selling Price</label>
                                     <input class="form-control" id="offer_price" type="number" name="offer_price" min="0"  placeholder="Write offer_price....">
                                 </div>
-
-                                <div class="col-md-3 mb-3">
+                            </div>
+            
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label" for="discount_type">Discount Type</label>
+                                    <select class="form-select" id="discount_type" name="discount_type">
+                                        <option value="none" selected>Select Discount Type</option>
+                                        <option value="amount">Amount ( TK )</option>
+                                        <option value="percent">Percent ( % )</option>
+                                    </select>
+                                </div>
+                
+                                <div class="col-md-4 mb-3 discount_value d-none">
+                                    <label class="form-label" for="discount_value">Discount Value</label>
+                                    <input class="form-control" type="number" id="discount_value" name="discount_value"  placeholder="Discount Value....">
+                                </div>
+            
+                                <div class="col-md-4 mb-3">
                                     <label class="form-label" for="qty">Stock Quantity <span class="text-danger">*</span></label>
                                     <input class="form-control" min="0" id="qty" type="number" name="qty" placeholder="Product Quantity....">
-
+                
                                     <span id="quantity_validate" class="text-danger mt-1"></span>
                                 </div>
-
-                                <div class="col-md-3 mb-3">
+                            </div>
+            
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
                                     <label class="form-label" for="offer_start_date">Offer Start Date</label>
                                     <input class="form-control offer_start_date" type="date" id="offer_start_date" name="offer_start_date" placeholder="Select a date....">
                                 </div>
-
-                                <div class="col-md-3 mb-3">
+                
+                                <div class="col-md-4 mb-3">
                                     <label class="form-label" for="offer_end_date">Offer End Date</label>
                                     <input class="form-control offer_end_date" type="date" id="offer_end_date" name="offer_end_date"  placeholder="Select a date....">
                                 </div>
                             </div>
-
+                
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label class="form-label" for="video_link">Video Link</label>
-                                    <textarea class="form-control" id="video_link" name="video_link"  rows="4" placeholder="Link Paste Here...."></textarea>
+                                    <textarea class="form-control" id="video_link" name="video_link"  rows="7" placeholder="Link Paste Here...."></textarea>
                                 </div>
-
+                
                                 <div class="col-md-6 mb-3">
                                     <label class="form-label" for="short">Short Description <span class="text-danger">*</span></label>
-                                    <textarea class="form-control" id="short" class="" name="short_description" rows="4" placeholder="Short Description...."></textarea>
-
+                                    <textarea class="form-control" id="short" class="" name="short_description" rows="7" placeholder="Short Description...."></textarea>
+                
                                     <span id="short_validate" class="text-danger mt-1"></span>
                                 </div>
                             </div>
-
+                
                             <div class="col-md-12">
                                 <div class="mb-3">
                                     <label class="form-label" for="long_description">Long Description <span class="text-danger">*</span></label>
                                     <textarea class="form-control" id="long_description" name="long_description" rows="8" placeholder="Long Description...."></textarea>
                                 </div>
-
+                
                                 <span id="long_validate" class="text-danger mt-1"></span>
                             </div>
-
+            
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label class="form-label" for="return_policy">Return Policy </label>
+                                    <textarea class="form-control" id="return_policy" name="return_policy" rows="8" placeholder="Return Policy...."></textarea>
+                                </div>
+                
+                                <span id="long_validate" class="text-danger mt-1"></span>
+                            </div>
+            
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label class="form-label" for="shipping_return">Shipping Return</label>
+                                    <textarea class="form-control" id="shipping_return" name="shipping_return" rows="8" placeholder="Shipping Return...."></textarea>
+                                </div>
+                
+                                <span id="long_validate" class="text-danger mt-1"></span>
+                            </div>
+                
                             <div class="col-md-12 mb-3">
                                 <label class="form-label" for="product_size"><strong>Multiple Products Tag</strong></label>
                                 <input type="text" class="product-tags" name="tags" />
                             </div>
-
+                
                             <div class="row">
-                                <div class="col-md-4 mb-3">
+                                {{-- <div class="col-md-4 mb-3">
                                     <label class="form-label" for="type">Product Type</label>
                                     <select class="form-select" id="type" name="type">
                                         <option value="" disabled selected>Select</option>
@@ -218,50 +259,44 @@
                                         <option value="best">Best</option>
                                         <option value="top">Top</option>
                                     </select>
-                                </div>
-
-                                {{-- <div class="col-md-4 mb-3">
+                                </div> --}}
+                
+                                <div class="col-md-4 mb-3">
                                     <label class="form-label" for="is_featured">Is Featured</label>
                                     <select class="form-select" id="is_featured" name="is_featured">
-                                        <option value="" disabled selected>Select</option>
                                         <option value="1">Yes</option>
-                                        <option value="0">No</option>
+                                        <option value="0" selected>No</option>
                                     </select>
                                 </div>
-
+                
                                 <div class="col-md-4 mb-3">
                                     <label class="form-label" for="is_top">Is Top</label>
                                     <select class="form-select" id="is_top" name="is_top">
-                                        <option value="" disabled selected>Select</option>
                                         <option value="1">Yes</option>
-                                        <option value="0">No</option>
+                                        <option value="0" selected>No</option>
                                     </select>
                                 </div>
-
+                
                                 <div class="col-md-4 mb-3">
                                     <label class="form-label" for="is_best">Is Best</label>
                                     <select class="form-select" id="is_best" name="is_best">
-                                        <option value="" disabled selected>Select</option>
                                         <option value="1">Yes</option>
-                                        <option value="0">No</option>
+                                        <option value="0" selected>No</option>
                                     </select>
-                                </div> --}}
-
+                                </div>
+                
                                 <div class="col-md-4 mb-3">
                                     <label class="form-label" for="seo_title">SEO Title</label>
                                     <input class="form-control" id="seo_title" type="text" name="seo_title" placeholder="Write SEO Title....">
                                 </div>
-
+                
                                 <div class="col-md-4 mb-3">
                                     <label class="form-label" for="seo_description">SEO Description</label>
                                     <input class="form-control" id="seo_description" type="text" name="seo_description" placeholder="Write SEO Description....">
                                 </div>
                             </div>
-
-                            <div class="d-flex justify-content-end align-items-center">
-                                <button type="button" class="btn btn-secondary waves-effect me-3"
-                                    data-bs-dismiss="modal">Close</button>
-
+                
+                            <div class="d-flex justify-content-center align-items-center mt-5">
                                 <button type="submit" id="btn-store" class="btn btn-primary waves-effect waves-light">Save changes</button>
                             </div>
                         </form>
@@ -536,6 +571,25 @@
                     console.error(error);
             });
 
+            function previewImage(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = e => document.getElementById('image_preview').innerHTML = `
+                    <img src="${e.target.result}" width="100" height="100">`;
+                    reader.readAsDataURL(file);
+                }
+            }
+
+            $('#discount_type').on('change', function () {
+                const selectedValue = $(this).val();
+                
+                if (selectedValue === 'amount' || selectedValue === 'percent') {
+                    $('.discount_value').removeClass('d-none'); // Show the discount_value div
+                } else {
+                    $('.discount_value').addClass('d-none'); // Hide the discount_value div
+                }
+            });
 
             // Fetching subcategory information
             $(document).on('input', '.category_id', function(){
@@ -633,8 +687,11 @@
                 // pageLength: 30,
 
                 columns: [
-                    {
-                        data: 'id',
+                    { 
+                        data: 'DT_RowIndex', 
+                        name: 'DT_RowIndex', 
+                        orderable: false, 
+                        searchable: false 
                     },
                     {
                         data: 'product_img',
