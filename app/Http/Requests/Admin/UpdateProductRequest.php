@@ -82,7 +82,7 @@ class UpdateProductRequest extends FormRequest
                     }
                 },
             ],
-            'short_description' => ['required'],
+            'short_description' => ['required', 'max:350'],
             'long_description' => ['required'],
         ];
     }
@@ -106,6 +106,7 @@ class UpdateProductRequest extends FormRequest
             'selling_price.required'     => 'The selling price is required.',
             'selling_price.numeric'      => 'The selling price must be a valid number.',
             'short_description.required' => 'Please add short description',
+            'short_description.max' => 'Short description must be at least 350 character',
             'long_description.required'  => 'Please add long description',
         ];
     }
