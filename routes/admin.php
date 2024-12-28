@@ -110,6 +110,7 @@ Route::middleware('setLanguage')->group(function(){
         Route::resource('/attribute-value', AttributeValueController::class)->names('attribute.value')->except(['show']);
         Route::get('/attribute-value/data', [AttributeValueController::class, 'getData'])->name('attribute-value.data');
         Route::post('/attribute-value-status', [AttributeValueController::class, 'changeStatus'])->name('attribute-value.status');
+        Route::get('/attribute-value/view/{id}', [AttributeValueController::class, 'attributeView'])->name('attribute-value.view');
         
 
         //______ Product _____//

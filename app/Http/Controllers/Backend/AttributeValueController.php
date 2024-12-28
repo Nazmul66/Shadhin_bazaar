@@ -17,24 +17,32 @@ class AttributeValueController extends Controller
      */
     public function index()
     {
-        $attrNames = AttributeName::where('status', 1)->get();
-        return view('backend.pages.attribute.attribute_values', compact('attrNames'));
+        return view('backend.pages.attribute.attribute_values');
     }
 
     public function getData()
     {
         // get all data
-        $attrValues = AttributeValue::
-                        leftJoin('attribute_names', 'attribute_names.name', 'attribute_values.attribute_name')
-                        ->select('attribute_values.*', "attribute_names.name as attr_name")
-                        ->get();
+        $attrValues = AttributeValue::get();
 
         return DataTables::of($attrValues)
-            ->addColumn('name', function ($attrValue) {
-                return '<span class="btn btn-info">'. $attrValue->attr_name .'</span>';
+            ->addIndexColumn()
+            ->addColumn('attribute', function ($attrValue) {
+                return '<span class="btn btn-dark">'. $attrValue->attribute .'</span>';
+            })
+            ->addColumn('color_value', function ($attrValue) {
+                if ($attrValue->attribute === 'color') {
+                    return '<div class="d-flex gap-2 align-items-center">
+                            <div class="circle_rounded" style="background:'. $attrValue->color_value .'"></div>
+                            <span class="text-dark">' . $attrValue->color_value . '</span>
+                        </div>
+                    ';
+                } else {
+                    return '<span class="btn btn-danger">N/A</span>';
+                }
             })
             ->addColumn('value', function ($attrValue) {
-                return '<span class="btn btn-success">'. $attrValue->attribute_value .'</span>';
+                return '<span class="btn btn-secondary">'. $attrValue->value .'</span>';
             })
             ->addColumn('status', function ($attrName) {
                 if ($attrName->status == 1) {
@@ -51,14 +59,28 @@ class AttributeValueController extends Controller
             })
 
             ->addColumn('action', function ($attrName) {
-                return '<div class="d-flex gap-3">
-                    <a class="btn btn-sm btn-primary" id="editButton" href="javascript:void(0)" data-id="'.$attrName->id.'" data-bs-toggle="modal" data-bs-target="#editModal"><i class="fas fa-edit"></i></a>
+                return '
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Actions <i class="mdi mdi-chevron-down"></i>
+                    </button>
 
-                    <a class="btn btn-sm btn-danger" href="javascript:void(0)" data-id="'.$attrName->id.'" id="deleteBtn"> <i class="fas fa-trash"></i></a>
+                    <div class="dropdown-menu dropdownmenu-primary" style="">
+                        <a class="dropdown-item text-info" id="viewButton" href="javascript:void(0)" data-id="'.$attrName->id.'" data-bs-toggle="modal" data-bs-target="#viewModal">
+                            <i class="fas fa-eye"></i> View
+                        </a>
+
+                        <a class="dropdown-item text-success" id="editButton" href="javascript:void(0)" data-id="'.$attrName->id.'" data-bs-toggle="modal" data-bs-target="#editModal">
+                            <i class="fas fa-edit"></i> Edit
+                        </a>
+
+                        <a class="dropdown-item text-danger" href="javascript:void(0)" data-id="'.$attrName->id.'" id="deleteBtn">
+                            <i class="fas fa-trash"></i> Delete
+                        </a>
+                    </div>
                 </div>';
             })
 
-            ->rawColumns(['name', 'value', 'status', 'action'])
+            ->rawColumns(['attribute', 'color_value', 'value', 'status', 'action'])
             ->make(true);
     }
 
@@ -88,11 +110,10 @@ class AttributeValueController extends Controller
     {
         $request->validate(
             [
-                'value' => ['required', 'unique:attribute_values,attribute_value', 'max:255'],
-                'name' => ['required'],
+                'color_value' => ['nullable'],
+                'value' => ['required', 'max:255', 'unique:attribute_values,value' ],
             ],
             [
-                'name.required' => 'The field is required',
                 'value.required' => 'Please fill up the value',
                 'value.max' => 'Character might be 255 word',
                 'value.unique' => 'Character might be unique',
@@ -101,11 +122,16 @@ class AttributeValueController extends Controller
 
         DB::beginTransaction();
         try {
-
             $attributeValue = new AttributeValue();
 
-            $attributeValue->attribute_name         = $request->name;
-            $attributeValue->attribute_value	    = Str::title($request->value);
+            $attributeValue->attribute             = $request->attribute;
+            if( $request->attribute === 'color' ){
+                $attributeValue->color_value	    = $request->color_value;
+            }
+            else{
+                $attributeValue->color_value	    = null;
+            }
+            $attributeValue->value          	    = Str::title($request->value);
             $attributeValue->status                 = 1;
 
             // dd($attributeValue);
@@ -134,12 +160,12 @@ class AttributeValueController extends Controller
     public function update(Request $request, string $id)
     {
         $attributeValue  = AttributeValue::find($id);
-
-        // dd($attributeName);
+        // dd($request->all(), $attributeValue);
 
         $request->validate(
             [
-                'value' => ['required', 'max:255', 'unique:attribute_names,name,'. $attributeValue->id ],
+                'color_value' => ['nullable'],
+                'value' => ['required', 'max:255', 'unique:attribute_values,value,'. $attributeValue->id ],
             ],
             [
                 'value.required' => 'Please fill up the value',
@@ -151,16 +177,21 @@ class AttributeValueController extends Controller
         DB::beginTransaction();
         try {
             // Handle image with ImageUploadTraits function
-            $attributeValue->attribute_name         = $request->name;
-            $attributeValue->attribute_value	    = Str::title($request->value);
-            $attributeValue->status                 = 1;
+            $attributeValue->attribute             = $request->attribute;
+            if( $request->attribute === 'color' ){
+                $attributeValue->color_value	    = $request->color_value;
+            }
+            else{
+                $attributeValue->color_value	    = null;
+            }
+            $attributeValue->value          	    = Str::title($request->value);
 
+            // dd($attributeValue);
             $attributeValue->save();
         }
         catch(\Exception $ex){
             DB::rollBack();
             throw $ex;
-            // dd($ex->getMessage());
         }
 
         DB::commit();
@@ -173,8 +204,43 @@ class AttributeValueController extends Controller
     public function destroy(AttributeValue $attributeValue)
     {
         $attributeValue->delete();
-
         return response()->json(['message' => 'Attribute Value has been deleted.'], 200);
+    }
+
+
+    public function attributeView($id)
+    {
+        $attributeValue  = AttributeValue::find($id);
+        // dd($attributeValue);
+
+        $statusHtml = '';
+        if ($attributeValue->status === 1) {
+            $statusHtml = '<span class="text-success">Active</span>';
+        } else {
+            $statusHtml = '<span class="text-danger">Inactive</span>';
+        }
+
+        $colorValue = '';
+        if (!empty($attributeValue->color_value)) {
+            $safeColorValue = htmlspecialchars($attributeValue->color_value, ENT_QUOTES, 'UTF-8');
+            $colorValue = '<div class="d-flex gap-2 align-items-center">
+                    <div class="circle_rounded" style="background:' . $safeColorValue . '"></div>
+                    <span class="text-dark">' . $safeColorValue . '</span>
+                </div>';
+        } else {
+            $colorValue = '<button class="btn btn-danger">N/A</button>';
+        }
+
+        $created_date = date('d F, Y H:i:s A', strtotime($attributeValue->created_at));
+        $updated_date = date('d F, Y H:i:s A', strtotime($attributeValue->updated_at));
+
+        return response()->json([
+            'success'           => $attributeValue,
+            'colorValue'       => $colorValue,
+            'statusHtml'        => $statusHtml,
+            'created_date'      => $created_date,
+            'updated_date'      => $updated_date,
+        ]);
     }
 
 }

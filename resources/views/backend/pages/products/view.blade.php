@@ -227,6 +227,11 @@
                                         </tr>
         
                                         <tr>
+                                            <td>Short Description</td>
+                                            <td>{{ $product->short_description }}</td>
+                                        </tr>
+
+                                        <tr>
                                             <td>Created Date</td>
                                             <td>{{ date('d M, Y', strtotime($product->created_at)) }}</td>
                                         </tr>

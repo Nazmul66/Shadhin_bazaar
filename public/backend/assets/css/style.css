@@ -21,6 +21,11 @@
     align-items: center;
     justify-content: center;
 }
+.circle_rounded{
+    width: 25px;
+    height: 25px;
+    border-radius: 50px;
+}
 .multi_description{
 
 }
