@@ -338,7 +338,7 @@
                 })
             })
 
-            // Create
+            // Create Data
             $('#createForm').submit(function (e) {
                 e.preventDefault();
 
@@ -504,9 +504,8 @@
                         })
 
                     } else {
-                        swal.fire('Your Data is Safe');
+                        swal.fire('Your Image is Safe');
                     }
-
                 })
             })
 

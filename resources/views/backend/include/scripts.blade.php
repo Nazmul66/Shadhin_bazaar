@@ -1,5 +1,6 @@
  <!-- JAVASCRIPT -->
  <script src="{{ asset('/public/backend/assets/libs/jquery/jquery.min.js') }}"></script>
+ <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
  <script src="{{ asset('/public/backend/assets/libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
  <script src="{{ asset('/public/backend/assets/libs/metismenu/metisMenu.min.js') }}"></script>
@@ -29,8 +30,9 @@
 
 @stack('add-script')
 
+{!! Toastr::message() !!}
 
-<script type="text/javascript">
+{{-- <script type="text/javascript">
     toastr.options = {
         "closeButton": true,
         "debug": false,
@@ -47,31 +49,31 @@
         "showMethod": "fadeIn",
         "hideMethod": "fadeOut"
         }
-</script>
+</script> --}}
 
 <script type="text/javascript">
-    @if ( Session::has('message') )
+    // @if ( Session::has('message') )
 
-        var type = "{{ Session::get('alert-type') }}";
+    //     var type = "{{ Session::get('alert-type') }}";
 
-        switch(type){
-            case "info":
-               toastr.info("{{ Session::get('message') }}");
-            break; 
+    //     switch(type){
+    //         case "info":
+    //            toastr.info("{{ Session::get('message') }}");
+    //         break; 
 
-            case "success":
-               toastr.success("{{ Session::get('message') }}");
-            break;
+    //         case "success":
+    //            toastr.success("{{ Session::get('message') }}");
+    //         break;
             
-            case "warning":
-               toastr.warning("{{ Session::get('message') }}");
-            break;
+    //         case "warning":
+    //            toastr.warning("{{ Session::get('message') }}");
+    //         break;
 
-            case "error":
-               toastr.error("{{ Session::get('message') }}");
-            break;
-        }
-    @endif
+    //         case "error":
+    //            toastr.error("{{ Session::get('message') }}");
+    //         break;
+    //     }
+    // @endif
 
     @if ($errors->any())
         @foreach ($errors->all() as $error)

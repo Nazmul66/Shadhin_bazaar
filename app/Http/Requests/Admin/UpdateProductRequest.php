@@ -67,6 +67,7 @@ class UpdateProductRequest extends FormRequest
                 },
             ],
             'offer_start_date' => [
+                'nullable',
                 'date',
                 function ($attribute, $value, $fail) use ($endDate) {
                     if (date('d', strtotime($value)) >= date('d', strtotime($endDate)) ) {
@@ -75,6 +76,7 @@ class UpdateProductRequest extends FormRequest
                 },
             ],
             'offer_end_date' => [
+                'nullable',
                 'date',
                 function ($attribute, $value, $fail) use ($startDate) {
                     if (date('d', strtotime($value)) <= date('d', strtotime($startDate)) )  {

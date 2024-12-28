@@ -126,7 +126,11 @@ Route::middleware('setLanguage')->group(function(){
         Route::put('/product/variant/{id}', [ProductController::class, 'update_product_variant'])->name('product-variant.update'); 
 
 
-        Route::get('/delete/images/{id}', [ProductController::class, 'delete_multiple_image'])->name('multiple-image.delete'); 
+        Route::put('/product-images-store/{id}', [ProductController::class, 'product_images_store'])->name('product.images.store'); 
+        Route::post('/product-images-sortable', [ProductController::class, 'product_images_sortable'])->name('product.images.sortable'); 
+        Route::delete('/multiple-image/delete/{id}', [ProductController::class, 'delete_multiple_image'])->name('multiple-image.delete'); 
+
+
         Route::get('/delete/sizes/{id}', [ProductController::class, 'delete_product_size'])->name('product-size.delete'); 
         Route::get('/delete/colors/{id}', [ProductController::class, 'delete_product_color'])->name('product-color.delete');
 

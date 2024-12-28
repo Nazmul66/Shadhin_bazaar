@@ -314,151 +314,9 @@ class ProductController extends Controller
     public function getSubCategories(Request $request, Category $category)
     {
         $subcats= SubCategory::where('category_id', $category->id)->get();
-        
         return response()->json(['message' => 'success', 'data' => $subcats], 200);
     }
 
-    public function product_variant($id)
-    {
-        // ProductColour
-        $size_value       = AttributeValue::where('attribute_name', "size")->get();
-        $color_value      = AttributeValue::where('attribute_name', "color")->get();
-        $productImages    = ProductImage::where('product_id', $id)->get();
-        $productSizes     = ProductSize::where('product_id', $id)->get();
-        $productColors    = ProductColor::where('product_id', $id)->get();
-
-        return view('backend.pages.products.product_variant', [
-            'id' => $id,
-            'size_value'     => $size_value,
-            'color_value'    => $color_value,
-            'productImages'  => $productImages,
-            'productSizes'   => $productSizes,
-            'productColors'  => $productColors,
-        ]);
-    }
-    
-    
-    public function update_product_variant(Request $request, $id)
-    {
-        // dd($request->all());
-
-        // Multiple images store
-        if($request->hasFile('images')) {
-            foreach($request->file('images') as $image) {
-
-                $productImages = new ProductImage();
-                $productImages->product_id = $id;
-    
-                // Generate unique image name
-                $imageName = $request->slug . rand(1, 99999999) . '.' . $image->getClientOriginalExtension();
-
-                $imagePath = 'public/backend/images/multiple-image/';
-                $image->move($imagePath, $imageName);
-    
-                $productImages->images   =  $imagePath . $imageName;
-
-                $productImages->save();
-            }
-        }
-
-
-        // Delete existing product size for the product ID
-        ProductSize::where('product_id', $id)->delete();
-
-        // Handle Product Sizes
-        if ($request->has('size_name') && $request->has('size_price')) {
-            foreach ($request->size_name as $index => $sizeName) {
-
-                if (!empty($sizeName)) {
-                    $productSize = new ProductSize(); // Assuming ProductSize model exists
-
-                    $productSize->product_id = $id;
-                    $productSize->size_name  = $sizeName;
-                    $productSize->size_price = $request->size_price[$index]; // Match price with size name
-                    $productSize->save();
-                }
-            }
-        }
-
-
-        // Delete existing product colors for the product ID
-        ProductColor::where('product_id', $id)->delete();  
-
-        // Handle Product Colors
-        if ($request->has('color_name')) {
-            foreach ($request->color_name as $row => $colorName) {
-
-                if (!empty($colorName)) {
-                    $productColor = new ProductColor(); // Assuming ProductColor model exists
-
-                    $productColor->product_id     = $id;
-                    $productColor->color_name     = $colorName;
-                    $productColor->color_price    = $request->color_price[$row];
-                    $productColor->save();
-                }
-            }
-        }
-
-        $notification = [
-            'alert-type' => 'success', 
-            'message' => "Product variation successfully updated", 
-        ];
-
-       return redirect()->back()->with($notification);
-
-    }
-
-    // Delete Multiple Product images variants
-    public function delete_multiple_image($id)
-    {
-       $productImg = ProductImage::findOrFail($id);
-
-       if( !is_null( $productImg ) ){
-            if( file_exists( $productImg->images )){
-                unlink($productImg->images);
-            }
-            $productImg->delete();
-       }
-
-       $notification = [
-         'alert-type' => 'success', 
-         'message' => "Delete Product Images"
-      ];
-
-       return redirect()->back()->with($notification);
-    }
-
-    // Delete Multiple Product size variants
-    public function delete_product_size($id)
-    {
-       $productSize = ProductSize::findOrFail($id);
-       if( !is_null( $productSize ) ){
-            $productSize->delete();
-       }
-
-       $notification = [
-        'alert-type' => 'success', 
-        'message' => "Delete Product Size", 
-      ];
-
-       return redirect()->back()->with($notification);
-    }
-
-    // Delete Multiple Product color variants
-    public function delete_product_color($id)
-    {
-       $productColor = ProductColor::findOrFail($id);
-       if( !is_null( $productColor ) ){
-            $productColor->delete();
-       }
-
-       $notification = [
-        'alert-type' => 'success', 
-        'message' => "Delete Product Colors", 
-      ];
-
-       return redirect()->back()->with($notification);
-    }
 
     public function get_product_subCategory_data(Request $request)
     {
@@ -498,5 +356,162 @@ class ProductController extends Controller
                 ->first();
         // dd($product);
        return view('backend.pages.products.view', compact('product'));
+    }
+
+
+    public function product_variant($id)
+    {
+        // Product Color
+        $data['id']               = $id;
+        $data['size_value']       = AttributeValue::where('attribute', "size")->get();
+        $data['color_value']      = AttributeValue::where('attribute', "color")->get();
+        $data['productImages']    = ProductImage::where('product_id', $id)->orderBy('order_id', 'asc')->get();
+        $data['productSizes']     = ProductSize::where('product_id', $id)->get();
+        $data['productColors']    = ProductColor::where('product_id', $id)->get();
+
+        return view('backend.pages.products.product_variant', $data);
+    }
+    
+    
+    public function update_product_variant(Request $request, $id)
+    {
+        // dd($request->all());
+
+        // Delete existing product size for the product ID
+        ProductSize::where('product_id', $id)->delete();
+
+        // Handle Product Sizes
+        if ($request->has('size_name') && $request->has('size_price')) {
+            foreach ($request->size_name as $index => $sizeName) {
+
+                if (!empty($sizeName)) {
+                    $productSize = new ProductSize(); // Assuming ProductSize model exists
+
+                    $productSize->product_id = $id;
+                    $productSize->size_name  = $sizeName;
+                    $productSize->size_price = $request->size_price[$index]; // Match price with size name
+                    $productSize->stock      = $request->stock[$index]; // Match price with size name
+                    $productSize->save();
+                }
+            }
+        }
+
+
+        // Delete existing product colors for the product ID
+        ProductColor::where('product_id', $id)->delete();  
+
+        // Handle Product Colors
+        if ($request->has('color_name')) {
+            foreach ($request->color_name as $row => $colorName) {
+
+                if (!empty($colorName)) {
+                    $productColor = new ProductColor(); // Assuming ProductColor model exists
+
+                    $productColor->product_id     = $id;
+                    $productColor->color_name     = $colorName;
+                    $productColor->color_price    = $request->color_price[$row];
+                    $productColor->save();
+                }
+            }
+        }
+
+        Toastr::success('Product variation successfully updated', 'Success', ["positionClass" => "toast-top-right"]);
+       return redirect()->back();
+    }
+
+    public function product_images_store(Request $request, $id)
+    {
+        // Multiple images store
+        if($request->hasFile('images')) {
+            foreach($request->file('images') as $image) {
+
+                $productImages = new ProductImage();
+                $productImages->product_id = $id;
+    
+                // Generate unique image name
+                $imageName = $request->slug . rand(1, 99999999) . '.' . $image->getClientOriginalExtension();
+                $imagePath = 'public/backend/images/multiple-image/';
+                $image->move($imagePath, $imageName);
+                $productImages->images   =  $imagePath . $imageName;
+
+                $productImages->save();
+            }
+        }
+
+        Toastr::success('Product image successfully updated', 'Success', ["positionClass" => "toast-top-right"]);
+        return redirect()->back();
+    }
+    public function product_images_sortable(Request $request)
+    {
+        //  dd($request->photo_id);
+        if( !empty($request->photo_id) ){
+            $i = 1;
+            foreach( $request->photo_id as $image_id ){
+                $productImage = ProductImage::findOrFail($image_id);
+
+                $productImage->order_id = $i;
+                $productImage->save();
+
+                $i++;
+            }
+        }
+        return response()->json(['status' => 'success']);
+    }
+
+    // Delete Multiple Product images variants
+    public function delete_multiple_image($id)
+    {
+        try {
+            $productImg = ProductImage::findOrFail($id);
+            if( !is_null( $productImg ) ){
+                if( file_exists( $productImg->images )){
+                    unlink($productImg->images);
+                }
+                $productImg->delete();
+            }
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Image deleted successfully.',
+            ]);
+        } 
+        catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to delete the image.',
+            ]);
+        }
+    }
+
+    // Delete Multiple Product size variants
+    public function delete_product_size($id)
+    {
+       $productSize = ProductSize::findOrFail($id);
+       if( !is_null( $productSize ) ){
+            $productSize->delete();
+       }
+
+       $notification = [
+            'alert-type' => 'success', 
+            'message' => "Delete Product Size", 
+      ];
+
+       return redirect()->back()->with($notification);
+    }
+
+    // Delete Multiple Product color variants
+    public function delete_product_color($id)
+    {
+       $productColor = ProductColor::findOrFail($id);
+       if( !is_null( $productColor ) ){
+            $productColor->delete();
+       }
+
+       $notification = [
+            'alert-type' => 'success', 
+            'message' => "Delete Product Colors", 
+      ];
+
+       return redirect()->back()->with($notification);
     }
 }

@@ -6,6 +6,7 @@
 
 @push('add-css')
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
 @endpush
 
 @section('body-content')
@@ -37,21 +38,28 @@
         </div>
 
         <div class="card-body">
-            <form action="{{ route('admin.product-variant.update', $id) }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('admin.product.images.store', $id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method("PUT")
 
-
                 {{-- Multiple Product Image --}}
                 <div class="multiple-image">
-                    <label for="" class="form-label"><strong>Multiple Product Images</strong> <span class="text-danger">*</span></label>
-                    <input type="file" class="form-control" name="images[]" multiple >
+                    <label class="file_div" for="fileUploader">
+                        {{-- <h2>Upload</h2> --}}
+                        <img src="{{ asset('public/backend/images/Upload_icon.png') }}" alt="" class="img_upload">
+                        <h3>Upload Files or <span>Browse</span></h3>
+                        <p>Supported formates: JPEG, PNG, JPG</p>
+                        <figcaption class="file_name d-none" ></figcaption>
+
+                        <div id="previewContainer" class="preview-container d-flex flex-wrap gap-2 mt-3"></div>
+                    </label>
+                    <input type="file" class="d-none" id="fileUploader" accept=".jpg, .png, .jpeg, .webp" name="images[]" multiple >
                     
-                    <div class="row mt-3">
+                    <div class="row mt-3" id="sortable">
                         @foreach ($productImages as $item)
-                            <div class="images_container">
+                            <div class="images_container image_sortable" id="image-{{ $item->id }}" data-id="{{ $item->id }}">
                                 <img src="{{ asset($item->images) }}" alt="">
-                                <a href="{{ route('admin.multiple-image.delete', $item->id) }}">
+                                <a  href="javascript:void(0);" class="delete-image" data-id="{{ $item->id }}">
                                     <i class='bx bx-x x-image'></i>
                                 </a>
                             </div>
@@ -59,6 +67,13 @@
                     </div>
                 </div>
 
+                <button type="submit" class="btn btn-primary waves-effect waves-light mt-4"> Update</button>
+            </form>
+
+            {{-- All Product Size And Product Color --}}
+            <form action="{{ route('admin.product-variant.update', $id) }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                @method("PUT")
 
                 <div class="row mt-5">
                     {{-- Product Size --}}
@@ -71,6 +86,7 @@
                                     <tr>
                                         <th>Name</th>
                                         <th>Price ($)</th>
+                                        <th>Stock</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -85,6 +101,9 @@
                                                 <input type="number" value="{{ $item->size_price }}" min="0" class="form-control" name="size_price[]" required>
                                             </td>
                                             <td>
+                                                <input type="number" value="{{ $item->stock }}" min="0" class="form-control" name="stock[]" required>
+                                            </td>
+                                            <td>
                                                 <a href="{{ route('admin.product-size.delete', $item->id) }}" type="submit" class="btn btn-danger">Remove</a>
                                             </td>
                                         </tr>
@@ -97,7 +116,7 @@
                                             <select class="form-select" id="product_size">
                                                 <option value="" disabled selected>Select Product Size</option>
                                                 @foreach ($size_value as $item)
-                                                    <option value="{{ $item->attribute_value }}">{{ $item->attribute_value }}</option>
+                                                    <option value="{{ $item->value }}">{{ $item->value }}</option>
                                                 @endforeach
                                             </select>
                                         </th>
@@ -143,7 +162,7 @@
                                             <select class="form-select" id="product_color">
                                                 <option value="" disabled selected>Select Product Color</option>
                                                 @foreach ($color_value as $item)
-                                                    <option value="{{ $item->attribute_value }}">{{ $item->attribute_value }}</option>
+                                                    <option value="{{ $item->value }}">{{ $item->value }}</option>
                                                 @endforeach
                                             </select>
                                         </th>
@@ -154,7 +173,7 @@
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary waves-effect waves-light"> Update</button>
+              <button type="submit" class="btn btn-primary waves-effect waves-light"> Update</button>
             </form>
         </div>
     </div>
@@ -170,6 +189,84 @@
 <script>   
 
 $(document).ready(function() {
+
+    // Image Sortable System
+    $( "#sortable" ).sortable({
+        update : function(event, ui){
+            var photo_id = [];
+           $('.image_sortable').each(function(){
+               var id = $(this).data('id');
+               photo_id.push(id);
+            })
+            // console.log(photo_id);
+
+            $.ajax({
+                type: "POST",
+                url: "{{ route('admin.product.images.sortable') }}",
+                data: {
+                    // '_token': token,
+                    photo_id: photo_id,
+                    "_token": "{{ csrf_token() }}"
+                },
+                success: function (res) {
+                     console.log(res.status);
+                     if( res.status == 'success' ){
+                          console.log('nice')
+                     }
+                },
+
+                error: function (err) {
+                    console.log(err);
+                }
+            })
+        }
+    });
+
+    // Multi Image delete
+    $(document).on('click', '.delete-image', function () {
+        const imageId = $(this).data('id');
+        const imageContainer = $(`#image-${imageId}`);
+
+        swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this !",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Yes, delete it!"
+            })
+            .then((result) => {
+                if (result.isConfirmed) {
+                    // Remove the image container immediately
+                    imageContainer.fadeOut('fast', function () {
+                        $(this).remove();
+                    });
+
+                    // Send the AJAX request
+                    $.ajax({
+                        url: "{{ url('admin/multiple-image/delete') }}/" + imageId,
+                        type: 'DELETE',
+                        data: {
+                            _token: "{{ csrf_token() }}" // Include CSRF token for security
+                        },
+                        success: function (response) {
+                            if (!response.success) {
+                                alert(response.message);
+                            }
+                        },
+                        error: function () {
+                            alert('An error occurred. Please try again.');
+                            // Reinsert the container if deletion fails
+                            $('body').append(imageContainer);
+                        }
+                    });
+                } 
+                else {
+                    swal.fire('Your Data is Safe');
+                }
+            })
+    });
 
     // Disable already selected sizes on page load
     @foreach($productSizes as $item)
@@ -202,6 +299,9 @@ $(document).ready(function() {
                 </td>
                 <td>
                     <input type="number" min="0" value="0" class="form-control" name="size_price[]" required>
+                </td>
+                <td>
+                    <input type="number" min="0" value="0" class="form-control" name="stock[]" required>
                 </td>
                 <td>
                     <button type="button" class="btn btn-danger">Remove</button>
@@ -290,7 +390,64 @@ $(document).ready(function() {
             row.remove();
         });
     });
-    </script>
+</script>
+
+
+
+  {{-- Multiple Image realtime select and delete also --}}
+<script>
+    let selectedFiles = []; // Array to manage selected files
+
+    document.getElementById('fileUploader').addEventListener('change', function (event) {
+        const previewContainer = document.getElementById('previewContainer');
+        const files = Array.from(event.target.files);
+
+        files.forEach((file) => {
+            // Add the new files to the selectedFiles array
+            selectedFiles.push(file);
+
+            // Generate preview for the file
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const imagePreview = document.createElement('div');
+                imagePreview.classList.add('image-preview');
+
+                imagePreview.innerHTML = `
+                    <img src="${e.target.result}" alt="Image Preview" class="img-thumbnail" style="width: 100px; height: 100px; object-fit: cover;"> <br />
+                    <button type="button" class="btn btn-danger btn-sm remove-image mt-2">Remove</button>
+                `;
+
+                // Append the preview to the container
+                previewContainer.appendChild(imagePreview);
+
+                // Add event listener to the remove button
+                imagePreview.querySelector('.remove-image').addEventListener('click', function () {
+                    const index = selectedFiles.indexOf(file);
+                    if (index > -1) {
+                        selectedFiles.splice(index, 1); // Remove file from the array
+                    }
+                    imagePreview.remove(); // Remove the preview element
+                    updateFileInput();
+                });
+            };
+            reader.readAsDataURL(file);
+        });
+
+        // Clear the file input to allow re-selection
+        event.target.value = '';
+    });
+
+    // Update the file input with the remaining files
+    function updateFileInput() {
+        const dataTransfer = new DataTransfer(); // Create a new DataTransfer object
+
+        selectedFiles.forEach((file) => {
+            dataTransfer.items.add(file); // Add each remaining file
+        });
+
+        document.getElementById('fileUploader').files = dataTransfer.files; // Set the updated file list
+}
+</script>
 
 @endpush
 
