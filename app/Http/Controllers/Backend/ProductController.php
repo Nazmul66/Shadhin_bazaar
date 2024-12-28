@@ -112,9 +112,7 @@ class ProductController extends Controller
                     </button>
 
                     <div class="dropdown-menu dropdownmenu-primary" style="">
-                        <a class="dropdown-item text-info" id="viewButton" href="javascript:void(0)" data-id="'.$product->id.'" data-bs-toggle="modal" data-bs-target="#viewModal">
-                            <i class="fas fa-eye"></i> View
-                        </a>
+                        <a class="dropdown-item text-info" href="'. route('admin.product.show', $product->id) .'"><i class="fas fa-eye"></i> View</a>
 
                         <a class="dropdown-item text-primary" href="'. route('admin.product.edit', $product->id) .'"><i class="fas fa-edit"></i> Edit</a>
 
@@ -127,13 +125,6 @@ class ProductController extends Controller
                         </a>
                     </div>
                 </div>';
-                // return '<div class="d-flex gap-3">
-                //     <a class="btn btn-sm btn-primary" href="'. route('admin.product.edit', $product->id) .'"><i class="fas fa-edit"></i></a>
-
-                //     <a class="btn btn-sm btn-danger" href="javascript:void(0)" data-id="'.$product->id.'" id="deleteBtn"> <i class="fas fa-trash"></i></a>
-
-                //     <a class="btn btn-sm btn-info" href="'. route('admin.product-variant', $product->id) .'" ><i class="bx bx-cog"></i></a>
-                // </div>';
             })
 
             ->rawColumns(['categorized', 'special_featured', 'product_details', 'product_img', 'status', 'action'])
@@ -254,7 +245,7 @@ class ProductController extends Controller
             $product->name                      = $request->name;
             $product->slug                      = Str::slug($request->name);
             $product->sku                       = $request->sku;
-            $product->barcode                   = time() . rand(1000, 99999);
+            $product->barcode                   = 730 . rand(100000000, 999999999);
             $product->vender_id                 = 1;  // Note 1=admin, 2=vendor
             $product->category_id               = $request->category_id;
             $product->subCategory_id            = $request->subCategory_id;
@@ -493,5 +484,19 @@ class ProductController extends Controller
         }
 
         return response()->json(['status' => true, 'data' => $childCategories]);
+    }
+
+
+    public function show($id)
+    {
+        $product = Product::leftJoin('categories', 'categories.id', 'products.category_id')
+                ->leftJoin('subcategories', 'subcategories.id', 'products.subCategory_id')
+                ->leftJoin('child_categories', 'child_categories.id', 'products.childCategory_id')
+                ->leftJoin('brands', 'brands.id', 'products.brand_id')
+                ->select('products.*', 'categories.category_name as cat_name', 'subcategories.subcategory_name as subCat_name', 'child_categories.name as childCat_name', 'brands.brand_name')
+                ->where('products.id', $id)
+                ->first();
+        // dd($product);
+       return view('backend.pages.products.view', compact('product'));
     }
 }
