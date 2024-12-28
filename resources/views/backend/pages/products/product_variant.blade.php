@@ -50,10 +50,10 @@
                         <h3>Upload Files or <span>Browse</span></h3>
                         <p>Supported formates: JPEG, PNG, JPG</p>
                         <figcaption class="file_name d-none" ></figcaption>
-
-                        <div id="previewContainer" class="preview-container d-flex flex-wrap gap-2 mt-3"></div>
                     </label>
                     <input type="file" class="d-none" id="fileUploader" accept=".jpg, .png, .jpeg, .webp" name="images[]" multiple >
+
+                    <div id="previewContainer" class="preview-container"></div>
                     
                     <div class="row mt-3" id="sortable">
                         @foreach ($productImages as $item)
@@ -275,10 +275,8 @@ $(document).ready(function() {
         option.prop('disabled', true);  // Disable the option in Select2
     @endforeach
 
-
     // Initialize Select2 plugin
     $('#product_size').select2();
-
 
     // When a new value is selected
     $('#product_size').on('select2:select', function (e) {
@@ -393,60 +391,48 @@ $(document).ready(function() {
 </script>
 
 
-
-  {{-- Multiple Image realtime select and delete also --}}
+ {{-- Realtime image show when multiple select --}}
 <script>
-    let selectedFiles = []; // Array to manage selected files
+let selectedFiles = []; // Array to track selected files
 
-    document.getElementById('fileUploader').addEventListener('change', function (event) {
-        const previewContainer = document.getElementById('previewContainer');
-        const files = Array.from(event.target.files);
+document.getElementById('fileUploader').addEventListener('change', function (event) {
+    const previewContainer = document.getElementById('previewContainer');
+    const files = Array.from(event.target.files);
 
-        files.forEach((file) => {
-            // Add the new files to the selectedFiles array
-            selectedFiles.push(file);
+    // Add new files to the `selectedFiles` array
+    selectedFiles.push(...files);
 
-            // Generate preview for the file
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                const imagePreview = document.createElement('div');
-                imagePreview.classList.add('image-preview');
+    // Clear the preview container and re-render previews
+    renderPreviews(previewContainer);
+});
 
-                imagePreview.innerHTML = `
-                    <img src="${e.target.result}" alt="Image Preview" class="img-thumbnail" style="width: 100px; height: 100px; object-fit: cover;"> <br />
-                    <button type="button" class="btn btn-danger btn-sm remove-image mt-2">Remove</button>
-                `;
+function renderPreviews(previewContainer) {
+    previewContainer.innerHTML = ''; // Clear existing previews
 
-                // Append the preview to the container
-                previewContainer.appendChild(imagePreview);
+    selectedFiles.forEach((file, index) => {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            const preview = document.createElement('div');
+            preview.className = 'preview';
+            preview.innerHTML = `
+                <img src="${e.target.result}" alt="Preview Image">
+                <button class="delete-btn" data-index="${index}">&times;</button>
+            `;
+            previewContainer.appendChild(preview);
 
-                // Add event listener to the remove button
-                imagePreview.querySelector('.remove-image').addEventListener('click', function () {
-                    const index = selectedFiles.indexOf(file);
-                    if (index > -1) {
-                        selectedFiles.splice(index, 1); // Remove file from the array
-                    }
-                    imagePreview.remove(); // Remove the preview element
-                    updateFileInput();
-                });
-            };
-            reader.readAsDataURL(file);
-        });
+            // Handle delete button
+            preview.querySelector('.delete-btn').addEventListener('click', function () {
+                // Remove the file from the `selectedFiles` array
+                selectedFiles.splice(index, 1);
 
-        // Clear the file input to allow re-selection
-        event.target.value = '';
+                // Re-render the previews
+                renderPreviews(previewContainer);
+            });
+        };
+        reader.readAsDataURL(file);
     });
-
-    // Update the file input with the remaining files
-    function updateFileInput() {
-        const dataTransfer = new DataTransfer(); // Create a new DataTransfer object
-
-        selectedFiles.forEach((file) => {
-            dataTransfer.items.add(file); // Add each remaining file
-        });
-
-        document.getElementById('fileUploader').files = dataTransfer.files; // Set the updated file list
 }
+
 </script>
 
 @endpush

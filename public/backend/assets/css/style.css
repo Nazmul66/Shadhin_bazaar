@@ -40,6 +40,41 @@
    border: 2px dashed rgba(56, 78, 183, 0.30);
    padding: 10px 0px;
 }
+.preview-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.preview-container .preview {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.preview .delete-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: red;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    font-size: 12px;
+    cursor: pointer;
+}
 
 .cards{
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.15);

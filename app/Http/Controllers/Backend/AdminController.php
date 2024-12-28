@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Validator;
 use Illuminate\Support\Facades\Artisan;
 use App\Traits\ImageUploadTraits;
+use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
@@ -29,12 +30,8 @@ class AdminController extends Controller
         Artisan::call('optimize');
         Artisan::call('optimize:clear');
     
-        $notifications = [
-            'alert-type' => 'success',
-            'message' => "Cache Cleared Successfully",
-        ];
-    
-        return redirect()->back()->with($notifications);
+        Toastr::success('Cache Cleared Successfully', 'Success', ["positionClass" => "toast-top-right"]);
+        return redirect()->back();
     }
 
     public function dashboards()
