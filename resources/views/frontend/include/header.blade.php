@@ -1,10 +1,14 @@
+@php
+    $categories = App\Models\Category::where('front_status', 1)->where('status', 1)->get();
+@endphp
+
 <header id="header" class="header-default header-style-5 header-white">
     <div class="main-header bg-blue-2">
         <div class="container">
             <div class="row wrapper-header align-items-center line-top-rgba">
                 <div class="col-md-4 col-3 d-xl-none">
                     <a href="#mobileMenu" class="mobile-menu" data-bs-toggle="offcanvas" aria-controls="mobileMenu">
-                        <i class="icon text-white icon-categories"></i>
+                        <i class='bx bx-menu-alt-left text-white' style="font-size: 36px;"></i>
                     </a>
                 </div>
                 <div class="col-xl-8 col-md-4 col-6">
@@ -116,37 +120,38 @@
                         <a href="#" class="categories-title"><i class='bx bxs-dashboard' style="font-size: 24px;"></i><span class="text">Shop By Categories</span> <i class='bx bx-chevron-down' style="font-size: 24px;"></i></a>
                         <div class="list-categories-inner">
                             <ul>
-                                <li class="sub-categories2">
-                                    <a href="#" class="categories-item"><span class="inner-left"><i class="icon icon-laptop"></i> Accessories</span><i class="icon icon-arrRight"></i></a>
-                                    <ul class="list-categories-inner">
-                                        <li><a href="#" class="categories-item"><span class="inner-left"><i class="icon icon-camera"></i> Camera & Photo</span></a></li>
-                                        <li><a href="#" class="categories-item"><span class="inner-left"><i class="icon icon-camera"></i> Camera & Photo</span></a></li>
-                                        <li><a href="#" class="categories-item"><span class="inner-left"><i class="icon icon-camera"></i> Camera & Photo</span></a></li>
-                                    </ul>
-                                </li>
-                                <li class="sub-categories2">
-                                    <a href="#" class="categories-item"><span class="inner-left"><i class="icon icon-camera"></i> Camera & Photo</span><i class="icon icon-arrRight"></i></a>
-                                    <ul class="list-categories-inner">
-                                        <li><a href="#" class="categories-item"><span class="inner-left"><i class="icon icon-camera"></i> Camera & Photo</span></a></li>
-                                        <li><a href="#" class="categories-item"><span class="inner-left"><i class="icon icon-camera"></i> Camera & Photo</span></a></li>
-                                        <li><a href="#" class="categories-item"><span class="inner-left"><i class="icon icon-camera"></i> Camera & Photo</span></a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="#" class="categories-item"><span class="inner-left"><i class="icon icon-smartphone"></i> Smart Phones</span></a></li>
-                                <li><a href="#" class="categories-item"><span class="inner-left"><i class="icon icon-tv"></i> TV & Audio</span><i class="icon icon-arrRight"></i></a></li>
-                                <li><a href="#" class="categories-item"><span class="inner-left"><i class="icon icon-laptop"></i> Computer & Laptop</span><i class="icon icon-arrRight"></i></a></li>
-                                <li><a href="#" class="categories-item"><span class="inner-left"><i class="icon icon-software"></i> Software</span></a></li>
-                                <li><a href="#" class="categories-item"><span class="inner-left"><i class="icon icon-headphones"></i> Headphones</span></a></li>
-                                <li><a href="#" class="categories-item"><span class="inner-left"><i class="icon icon-audio"></i> Home Audio</span></a></li>
-                                <li><a href="#" class="categories-item"><span class="inner-left"><i class="icon icon-security"></i> Security & Surveillance</span><i class="icon icon-arrRight"></i></a></li>
+                                @foreach ($categories as $item)
+                                    @php
+                                        $subCats = App\Models\SubCategory::where('category_id', $item->id)->where('status', 1)->get();
+                                    @endphp
+
+                                    <li class="sub-categories2">
+                                        <a href="#" class="categories-item"><span class="inner-left">
+                                            <img src="{{ asset($item->category_img) }}" alt="{{ $item->slug  }}"> 
+                                            {{ $item->category_name }}</span>
+
+                                            @if ( $subCats->count() > 0 )
+                                                <i class='bx bx-chevron-right' style="font-size: 24px;"></i>
+                                            @endif
+                                        </a>
+
+                                        @if ( $subCats->count() > 0 )
+                                            <ul class="list-categories-inner">
+                                                @foreach ($subCats as $row)
+                                                    <li>
+                                                        <a href="#" class="categories-item">
+                                                            <span class="inner-left">
+                                                                <img src="{{ asset($row->subcategory_img) }}" alt="{{ $row->slug  }}">  
+                                                                {{ $row->subcategory_name }}
+                                                            </span>
+                                                        </a>
+                                                    </li>
+                                                @endforeach
+                                            </ul>
+                                        @endif
+                                    </li>
+                                @endforeach
                             </ul>
-                            <div class="box-cate-bottom">
-                                <ul>
-                                    <li><a href="#" class="categories-item"><span class="inner-left"> Accessories</span><i class="icon icon-arrRight"></i></a></li>
-                                    <li><a href="#" class="categories-item"><span class="inner-left"> Camera & Photo</span><i class="icon icon-arrRight"></i></a></li>
-                                    <li><a href="#" class="categories-item"><span class="inner-left"> Smart Phones</span><i class="icon icon-arrRight"></i></a></li>
-                                </ul>
-                            </div>
                         </div>
                     </div>
                     <nav class="box-navigation">

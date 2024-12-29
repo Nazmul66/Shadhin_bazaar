@@ -1,94 +1,44 @@
+@php
+    $categories = App\Models\Category::where('front_status', 1)->where('status', 1)->get();
+@endphp
+
 <div class="offcanvas offcanvas-start canvas-filter canvas-categories" id="shopCategories">
     <div class="canvas-wrapper">
         <div class="canvas-header">
-            <span class="icon-left icon-filter"></span>
+            <i class='bx bx-slider-alt' style="font-size: 24px;"></i>
             <h5>Categories</h5>
-            <span class="icon-close icon-close-popup" data-bs-dismiss="offcanvas" aria-label="Close"></span>
+            <i class='bx bx-x' style="font-size: 32px;" data-bs-dismiss="offcanvas" aria-label="Close"></i>
         </div>
         <div class="canvas-body">
-            <div class="wd-facet-categories">
-                <div role="dialog" class="facet-title collapsed" data-bs-target="#forWomen" data-bs-toggle="collapse" aria-expanded="true" aria-controls="forWomen">
-                    <img class="avt" src="{{ asset('public/frontend/images/avatar/women.jpg') }}" alt="avt">
-                    <span class="title">For Women</span>
-                    <span class="icon icon-arrow-down"></span>
+            @foreach ($categories as $item)
+                @php
+                    $subCats = App\Models\SubCategory::where('category_id', $item->id)->where('status', 1)->get();
+                @endphp
+                <div class="wd-facet-categories">
+                    <div role="dialog" class="facet-title collapsed" data-bs-target="#{{ $item->slug }}" data-bs-toggle="collapse" aria-expanded="true" aria-controls="{{ $item->slug }}">
+                        <img class="avt" src="{{ asset($item->category_img) }}" alt="{{ $item->slug  }}">
+                        <span class="title">{{ $item->category_name }}</span>
+                        @if ( $subCats->count() > 0 )
+                            <i class='bx bx-chevron-down' style="font-size: 24px;"></i>
+                        @endif
+                    </div>
+
+                    @if ( $subCats->count() > 0 )
+                        <div id="{{ $item->slug }}" class="collapse">
+                            <ul class="facet-body">
+                                @foreach ($subCats as $row)
+                                    <li>
+                                        <a href="#" class="item link">
+                                            <img class="avt" src="{{ asset($row->subcategory_img) }}" alt="{{ $row->slug  }}">
+                                            <span class="title-sub text-caption-1 text-secondary">{{ $row->subcategory_name }}</span>
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                 </div>
-                <div id="forWomen" class="collapse">
-                    <ul class="facet-body">
-                        <li>
-                            <a href="#" class="item link"><img class="avt" src="{{ asset('public/frontend/images/avatar/new-in.jpg') }}" alt="avt"><span class="title-sub text-caption-1 text-secondary">New in</span></a>
-                        </li>
-                        <li>
-                            <a href="#" class="item link"><img class="avt" src="{{ asset('public/frontend/images/avatar/promotion.jpg') }}" alt="avt"><span class="title-sub text-caption-1 text-secondary">Promotion</span></a>
-                        </li>
-                        <li>
-                            <a href="#" class="item link"><img class="avt" src="{{ asset('public/frontend/images/avatar/clothing.jpg') }}" alt="avt"><span class="title-sub text-caption-1 text-secondary">Clothing</span></a>
-                        </li>
-                        <li>
-                            <a href="#" class="item link"><img class="avt" src="{{ asset('public/frontend/images/avatar/shoes.jpg') }}" alt="avt"><span class="title-sub text-caption-1 text-secondary">Shoes</span></a>
-                        </li>
-                        <li>
-                            <a href="#" class="item link"><img class="avt" src="{{ asset('public/frontend/images/avatar/bags.jpg') }}" alt="avt"><span class="title-sub text-caption-1 text-secondary">Bags</span></a>
-                        </li>
-                        <li>
-                            <a href="#" class="item link"><img class="avt" src="{{ asset('public/frontend/images/avatar/accessories.jpg') }}" alt="avt"><span class="title-sub text-caption-1 text-secondary">Accessories</span></a>
-                        </li>
-                        <li>
-                            <a href="#" class="item link"><img class="avt" src="{{ asset('public/frontend/images/avatar/jewelry.jpg') }}" alt="avt"><span class="title-sub text-caption-1 text-secondary">Jewelry</span></a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="wd-facet-categories">
-                <div role="dialog" class="facet-title collapsed" data-bs-target="#forMen" data-bs-toggle="collapse" aria-expanded="true" aria-controls="forMen">
-                    <img class="avt" src="{{ asset('public/frontend/images/avatar/men.jpg') }}" alt="avt">
-                    <span class="title">For Men</span>
-                    <span class="icon icon-arrow-down"></span>
-                </div>
-                <div id="forMen" class="collapse">
-                    <ul class="facet-body">
-                        <li>
-                            <a href="#" class="item link"><img class="avt" src="{{ asset('public/frontend/images/avatar/men.jpg') }}" alt="avt"><span class="title-sub text-caption-1 text-secondary">Men</span></a>
-                        </li>
-                        <li>
-                            <a href="#" class="item link"><img class="avt" src="{{ asset('public/frontend/images/avatar/men.jpg') }}" alt="avt"><span class="title-sub text-caption-1 text-secondary">Men</span></a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="wd-facet-categories">
-                <div role="dialog" class="facet-title collapsed" data-bs-target="#forKid" data-bs-toggle="collapse" aria-expanded="true" aria-controls="forKid">
-                    <img class="avt" src="{{ asset('public/frontend/images/avatar/kid.jpg') }}" alt="avt">
-                    <span class="title">For Kid</span>
-                    <span class="icon icon-arrow-down"></span>
-                </div>
-                <div id="forKid" class="collapse">
-                    <ul class="facet-body">
-                        <li>
-                            <a href="#" class="item link"><img class="avt" src="{{ asset('public/frontend/images/avatar/kid.jpg') }}" alt="avt"><span class="title-sub text-caption-1 text-secondary">Kid</span></a>
-                        </li>
-                        <li>
-                            <a href="#" class="item link"><img class="avt" src="{{ asset('public/frontend/images/avatar/kid.jpg') }}" alt="avt"><span class="title-sub text-caption-1 text-secondary">Kid</span></a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="wd-facet-categories">
-                <div role="dialog" class="facet-title collapsed" data-bs-target="#accessories" data-bs-toggle="collapse" aria-expanded="true" aria-controls="accessories">
-                    <img class="avt" src="{{ asset('public/frontend/images/avatar/accessories.jpg') }}" alt="avt">
-                    <span class="title">Accessories</span>
-                    <span class="icon icon-arrow-down"></span>
-                </div>
-                <div id="accessories" class="collapse">
-                    <ul class="facet-body">
-                        <li>
-                            <a href="#" class="item link"><img class="avt" src="{{ asset('public/frontend/images/avatar/accessories.jpg') }}" alt="avt"><span class="title-sub text-caption-1 text-secondary">Accessories</span></a>
-                        </li>
-                        <li>
-                            <a href="#" class="item link"><img class="avt" src="{{ asset('public/frontend/images/avatar/accessories.jpg') }}" alt="avt"><span class="title-sub text-caption-1 text-secondary">Accessories</span></a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+            @endforeach
         </div>
     </div>
 </div>

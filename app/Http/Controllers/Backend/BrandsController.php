@@ -104,7 +104,7 @@ class BrandsController extends Controller
 
             $brand = new Brand();
 
-            $brand->brand_name             = $request->brand_name;
+            $brand->brand_name             = Str::title($request->brand_name);
             $brand->slug                   = Str::slug($request->brand_name);
             $brand->status                 = $request->status;
             $brand->created_at             = now();
@@ -145,7 +145,7 @@ class BrandsController extends Controller
 
         DB::beginTransaction();
         try {
-            $brand->brand_name             = $request->brand_name;
+            $brand->brand_name             = Str::title($request->brand_name);
             $brand->slug                   = Str::slug($request->brand_name);
             $brand->status                 = $request->status;
             $brand->updated_at             = now();

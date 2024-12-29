@@ -1,5 +1,5 @@
 <div class="offcanvas offcanvas-start canvas-mb" id="mobileMenu">
-    <span class="icon-close icon-close-popup" data-bs-dismiss="offcanvas" aria-label="Close"></span>
+    <i class='bx bx-x icon-close-popup' style="font-size: 32px;" data-bs-dismiss="offcanvas" aria-label="Close"></i>
     <div class="mb-canvas-content">
         <div class="mb-body">
             <div class="mb-content-top">
