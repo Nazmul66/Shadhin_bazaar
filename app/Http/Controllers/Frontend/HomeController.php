@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Brand;
 use App\Models\FlashSale;
 use App\Models\FlashSaleItem;
 use App\Models\Slider;
@@ -15,7 +16,8 @@ class HomeController extends Controller
      */
     public function home()
     {
-        $data['sliders']        = Slider::where('status', 1)->orderBy('serial', 'desc')->get();
+        $data['sliders']        = Slider::where('status', 1)->orderBy('id', 'desc')->get();
+        $data['brands']        = Brand::where('status', 1)->get();
         $data['flashSaleDate']  = FlashSale::first();
         $data['flashSaleItems'] = FlashSaleItem::where('show_at_home', 1)->where('status', 1)->get();
 

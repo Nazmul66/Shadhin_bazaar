@@ -2774,12 +2774,15 @@
 <section class="flat-spacing-5 line-top">
     <div dir="ltr" class="swiper tf-sw-partner sw-auto" data-preview="auto" data-tablet="auto" data-mobile-sm="auto" data-mobile="auto" data-space-lg="74" data-space-md="50" data-space="50" data-loop="true" data-auto-play="true" data-delay="0">
         <div class="swiper-wrapper">
-            <div class="swiper-slide">
-                <a href="#" class="brand-item">
-                    <img src="{{ asset('public/frontend/images/brand/vanfaba.png') }}" alt="brand">
-                </a>
-            </div>
-            <div class="swiper-slide">
+            @foreach ($brands as $row)
+                <div class="swiper-slide">
+                    <a href="{{ asset($row->image) }}" class="brand-item">
+                        <img src="{{ asset($row->image) }}" alt="{{ $row->slug }}">
+                    </a>
+                </div>
+            @endforeach
+
+            {{-- <div class="swiper-slide">
                 <a href="#" class="brand-item">
                     <img src="{{ asset('public/frontend/images/brand/anvouge.png') }}" alt="brand">
                 </a>
@@ -2818,7 +2821,7 @@
                 <a href="#" class="brand-item">
                     <img src="{{ asset('public/frontend/images/brand/panadoxn.png') }}" alt="brand">
                 </a>
-            </div>
+            </div> --}}
         </div>
     </div>
 </section>
