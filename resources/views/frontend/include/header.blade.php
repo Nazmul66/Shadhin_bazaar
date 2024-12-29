@@ -18,7 +18,7 @@
                                     <div class="tf-dropdown-sort" data-bs-toggle="dropdown">
                                         <div class="btn-select">
                                             <span class="text-sort-value">All</span>
-                                            <span class="icon icon-arrow-down"></span>
+                                            <i class='bx bx-chevron-down' style="font-size: 24px;"></i>
                                         </div>
                                         <div class="dropdown-menu">
                                             <div class="select-item active">
@@ -59,7 +59,7 @@
                 <div class="col-xl-4 col-md-4 col-3">
                     <div class="wrapper-header-right">
                         <div class="d-none d-xl-flex box-support">
-                            <span class="text-white icon icon-lifebuoy"></span>
+                            <i class='bx bxs-color text-white ' style="font-size: 32px;"></i>
                             <div>
                                 <div class="text-title text-white">Hotline: +01 1234 8888</div>
                                 <div class="text-white text-caption-2">24/7 Support Center</div>
@@ -70,8 +70,7 @@
                                 <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z" stroke="#181818" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                     <path d="M21.35 21.0004L17 16.6504" stroke="#181818" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                                    
+                                </svg>    
                             </a></li>
                             <li class="nav-account">
                                 <a href="#" class="nav-icon-item">
@@ -114,7 +113,7 @@
             <div class="wrapper-header d-flex justify-content-between align-items-center">
                 <div class="box-left">
                     <div class="tf-list-categories">
-                        <a href="#" class="categories-title"><span class="icon-left icon-squares-four"></span> <span class="text">Shop By Categories</span> <span class="icon icon-arrow-down"></span></a>
+                        <a href="#" class="categories-title"><i class='bx bxs-dashboard' style="font-size: 24px;"></i><span class="text">Shop By Categories</span> <i class='bx bx-chevron-down' style="font-size: 24px;"></i></a>
                         <div class="list-categories-inner">
                             <ul>
                                 <li class="sub-categories2">
@@ -153,7 +152,7 @@
                     <nav class="box-navigation">
                         <ul class="box-nav-ul d-flex align-items-center">
                             <li class="menu-item active">
-                                <a href="#" class="item-link">Home<i class="icon icon-arrow-down"></i></a>
+                                <a href="#" class="item-link">Home<i class='bx bx-chevron-down' style="font-size: 20px;"></i></a>
                                 <div class="sub-menu mega-menu">
                                     <div class="container">
                                         <div class="row-demo">
@@ -275,7 +274,7 @@
                                 </div>
                             </li>
                             <li class="menu-item">
-                                <a href="#" class="item-link">Shop<i class="icon icon-arrow-down"></i></a>
+                                <a href="#" class="item-link">Shop<i class='bx bx-chevron-down' style="font-size: 20px;"></i></a>
                                 <div class="sub-menu mega-menu">
                                     <div class="container">
                                         <div class="row">
@@ -478,7 +477,7 @@
                                 </div>
                             </li>
                             <li class="menu-item">
-                                <a href="#" class="item-link">Products<i class="icon icon-arrow-down"></i></a>
+                                <a href="#" class="item-link">Products<i class='bx bx-chevron-down' style="font-size: 20px;"></i></a>
                                 <div class="sub-menu mega-menu">
                                     <div class="container">
                                         <div class="row">
@@ -559,7 +558,7 @@
                                 </div>
                             </li>
                             <li class="menu-item position-relative">
-                                <a href="#" class="item-link">Blog<i class="icon icon-arrow-down"></i></a>
+                                <a href="#" class="item-link">Blog<i class='bx bx-chevron-down' style="font-size: 20px;"></i></a>
                                 <div class="sub-menu submenu-default">
                                     <ul class="menu-list">
                                         <li><a href="blog-default.html" class="menu-link-text">Blog Default</a></li>
@@ -571,7 +570,7 @@
                                 </div>
                             </li>
                             <li class="menu-item position-relative">
-                                <a href="#" class="item-link">Pages<i class="icon icon-arrow-down"></i></a>
+                                <a href="#" class="item-link">Pages<i class='bx bx-chevron-down' style="font-size: 20px;"></i></a>
                                 <div class="sub-menu submenu-default">
                                     <ul class="menu-list">
                                         <li><a href="about-us.html" class="menu-link-text">About Us</a></li>
@@ -588,29 +587,26 @@
                                     </ul>
                                 </div>
                             </li>
-                            <li class="menu-item"><a href="https://themeforest.net/user/themesflat" class="item-link">Buy Theme</a></li>
                         </ul>
                     </nav>
                 </div>
+
                 <div class="box-right">
                     <div class="tf-dropdown-sort" data-bs-toggle="dropdown">
                         <div class="btn-select">
-                            <span class="icon icon-tag"></span>
-                            <span class="text-sort-value">Supper Sale</span>
-                            <span class="icon icon-arrow-down"></span>
+                            <i class='bx bx-user' style="font-size: 20px;"></i>
+                            <span class="text-sort-value">Nazmul Hassan</span>
+                            <i class='bx bx-chevron-down' style="font-size: 24px;"></i>
                         </div>
                         <div class="dropdown-menu">
                             <div class="select-item active">
-                                <span class="text-value-item">Supper Sale</span>
+                                <span class="text-value-item">My Account</span>
                             </div>
                             <div class="select-item">
-                                <span class="text-value-item">Best selling</span>
+                                <span class="text-value-item">My Profile</span>
                             </div>
                             <div class="select-item">
-                                <span class="text-value-item">Alphabetically, A-Z</span>
-                            </div>
-                            <div class="select-item">
-                                <span class="text-value-item">Alphabetically, Z-A</span>
+                                <span class="text-value-item">Logout</span>
                             </div>
 
                         </div>

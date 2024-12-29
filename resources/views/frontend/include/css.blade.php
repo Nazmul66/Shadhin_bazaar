@@ -19,6 +19,8 @@
 <link rel="stylesheet" href="{{ asset('public/frontend/css/bootstrap.min.css') }}">
 <link rel="stylesheet" href="{{ asset('public/frontend/css/swiper-bundle.min.css') }}">
 <link rel="stylesheet" href="{{ asset('public/frontend/css/animate.css') }}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 <link rel="stylesheet" href="https://sibforms.com/forms/end-form/build/sib-styles.css">
 <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend/css/styles.css') }}" />
 

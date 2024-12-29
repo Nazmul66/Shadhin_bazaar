@@ -15,8 +15,8 @@ class HomeController extends Controller
      */
     public function home()
     {
-        $data['sliders'] = Slider::where('status', 1)->orderBy('serial', 'desc')->get();
-        $data['flashSaleDate'] = FlashSale::first();
+        $data['sliders']        = Slider::where('status', 1)->orderBy('serial', 'desc')->get();
+        $data['flashSaleDate']  = FlashSale::first();
         $data['flashSaleItems'] = FlashSaleItem::where('show_at_home', 1)->where('status', 1)->get();
 
         return view('frontend.pages.home', $data);

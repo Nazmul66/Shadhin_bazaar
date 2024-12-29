@@ -10,8 +10,8 @@
                 <div class="tf-cur justify-content-end">
                     <div class="tf-currencies">
                         <select class="image-select center style-default type-currencies color-white">
-                            <option selected data-thumbnail="images/country/us.svg">USD</option>
-                            <option data-thumbnail="images/country/vn.svg">VND</option>
+                            <option selected data-thumbnail="{{ asset('public/frontend/images/country/us.svg') }}">USD</option>
+                            <option data-thumbnail="{{ asset('public/frontend/images/country/vn.svg') }}">VND</option>
                         </select>
                     </div>
                     <div class="tf-languages">

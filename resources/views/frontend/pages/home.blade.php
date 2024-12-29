@@ -16,28 +16,34 @@
 <div class="tf-slideshow slider-style2 slider-electronic slider-position slider-effect-fade">
     <div dir="ltr" class="swiper tf-sw-slideshow" data-effect="fade" data-preview="1" data-tablet="1" data-mobile="1" data-centered="false" data-space="0" data-space-mb="0" data-loop="true" data-auto-play="true">
         <div class="swiper-wrapper">
-            <div class="swiper-slide">
-                <div class="wrap-slider">
-                    <img src="{{ asset('public/frontend/images/slider/slider-electronic.jpg') }}" alt="slideshow">
-                    <div class="box-content">
-                        <div class="container">
-                            <div class="content-slider">
-                                <div class="box-title-slider">
-                                    <div>
-                                        <p class="fade-item fade-item-1 subtitle text-btn-uppercase text-primary">SALE! UP TO 50% OFF!</p>
-                                        <div class="fade-item fade-item-2 title-display heading">Dji Phantom 3 <br> Professional</div>
+
+            @foreach ($sliders as $row)
+                <div class="swiper-slide">
+                    <div class="wrap-slider">
+                        <img src="{{ asset($row->slider_image) }}" alt="{{ $row->title }}">
+                        <div class="box-content">
+                            <div class="container">
+                                <div class="content-slider">
+                                    <div class="box-title-slider">
+                                        <div>
+                                            <p class="fade-item fade-item-1 subtitle text-btn-uppercase text-primary">{{ $row->type }}</p>
+                                            <div class="fade-item fade-item-2 title-display heading">{{ $row->title }}</div>
+                                        </div>
+                                        <p class="fade-item fade-item-3 body-text-1 subheading"><strong>Price: {{ $row->starting_price }} Tk </strong></p>
                                     </div>
-                                    <p class="fade-item fade-item-3 body-text-1 subheading">Metallic press stud fastening. Beaded detail. Festival Season.</p>
-                                </div>
-                                <div class="fade-item fade-item-4 box-btn-slider">
-                                    <a href="shop-default-grid.html" class="tf-btn btn-fill"><span class="text">Shop Now</span><i class="icon icon-arrowUpRight"></i></a>
+                                    <div class="fade-item fade-item-4 box-btn-slider">
+                                        <a href="{{ url($row->btn_url ?? "/" ) }}" class="tf-btn btn-fill">
+                                            <span class="text">Shop Now</span>
+                                            <i class='bx bx-right-arrow-alt'></i></a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="swiper-slide">
+            @endforeach
+
+            {{-- <div class="swiper-slide">
                 <div class="wrap-slider">
                     <img src="{{ asset('public/frontend/images/slider/slider-electronic2.jpg') }}" alt="slideshow">
                     <div class="box-content">
@@ -51,7 +57,7 @@
                                     <p class="fade-item fade-item-3 body-text-1 subheading">Metallic press stud fastening. Beaded detail. Festival Season.</p>
                                 </div>
                                 <div class="fade-item fade-item-4 box-btn-slider">
-                                    <a href="shop-default-grid.html" class="tf-btn btn-fill"><span class="text">Shop Now</span><i class="icon icon-arrowUpRight"></i></a>
+                                    <a href="shop-default-grid.html" class="tf-btn btn-fill"><span class="text">Shop Now</span><i class='bx bx-right-arrow-alt' style="font-size: 26px;"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -72,13 +78,13 @@
                                     <p class="fade-item fade-item-3 body-text-1 subheading">Metallic press stud fastening. Beaded detail. Festival Season.</p>
                                 </div>
                                 <div class="fade-item fade-item-4 box-btn-slider">
-                                    <a href="shop-default-grid.html" class="tf-btn btn-fill"><span class="text">Shop Now</span><i class="icon icon-arrowUpRight"></i></a>
+                                    <a href="shop-default-grid.html" class="tf-btn btn-fill"><span class="text">Shop Now</span><i class='bx bx-right-arrow-alt' style="font-size: 26px;"></i></a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
     <div class="wrap-pagination d-block">
