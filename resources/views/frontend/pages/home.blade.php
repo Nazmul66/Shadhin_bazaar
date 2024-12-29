@@ -104,134 +104,30 @@
         <div class="flat-collection-circle wow fadeInUp" data-wow-delay="0.1s">
             <div dir="ltr" class="swiper tf-sw-categories" data-preview="7" data-tablet="4" data-mobile-sm="3" data-mobile="2" data-space-lg="30" data-space-md="20" data-space="15" data-pagination="2" data-pagination-md="4" data-pagination-lg="1">
                 <div class="swiper-wrapper">
-                    <!-- item 1 -->
-                    <div class="swiper-slide">
-                        <div class="collection-circle hover-img">
-                            <a href="shop-categories-top.html" class="img-style">
-                                <img class="lazyload" data-src="{{ asset('public/frontend/images/collections/collection-circle/cls-electronic1.jpg') }}" src="{{ asset('public/frontend/images/collections/collection-circle/cls-electronic1.jpg') }}" alt="collection-img">
-                            </a>
-                            <div class="collection-content text-center">
-                                <div>
-                                    <a href="shop-categories-top.html" class="cls-title">
-                                        <h6 class="text">Electronics</h6>
-                                        <i class="icon icon-arrowUpRight"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- item 2 -->
-                    <div class="swiper-slide">
-                        <div class="collection-circle hover-img">
-                            <a href="shop-categories-top.html" class="img-style">
-                                <img class="lazyload" data-src="{{ asset('public/frontend/images/collections/collection-circle/cls-electronic2.jpg') }}" src="{{ asset('public/frontend/images/collections/collection-circle/cls-electronic2.jpg') }}" alt="collection-img">
-                            </a>
-                            <div class="collection-content text-center">
-                                <div>
-                                    <a href="shop-categories-top.html" class="cls-title">
-                                        <h6 class="text">Appliances</h6>
-                                        <i class="icon icon-arrowUpRight"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- item 3 -->
-                    <div class="swiper-slide">
-                        <div class="collection-circle hover-img">
-                            <a href="shop-categories-top.html" class="img-style">
-                                <img class="lazyload" data-src="{{ asset('public/frontend/images/collections/collection-circle/cls-electronic3.jpg') }}" src="{{ asset('public/frontend/images/collections/collection-circle/cls-electronic3.jpg') }}" alt="collection-img">
-                            </a>
-                            <div class="collection-content text-center">
-                                <div>
-                                    <a href="shop-categories-top.html" class="cls-title">
-                                        <h6 class="text">Kitchen </h6>
-                                        <i class="icon icon-arrowUpRight"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- item 4 -->
-                    <div class="swiper-slide">
-                        <div class="collection-circle hover-img">
-                            <a href="shop-categories-top.html" class="img-style">
-                                <img class="lazyload" data-src="{{ asset('public/frontend/images/collections/collection-circle/cls-electronic4.jpg') }}" src="{{ asset('public/frontend/images/collections/collection-circle/cls-electronic4.jpg') }}" alt="collection-img">
-                            </a>
-                            <div class="collection-content text-center">
-                                <a href="shop-categories-top.html" class="cls-title">
-                                    <h6 class="text">Audio</h6>
-                                    <i class="icon icon-arrowUpRight"></i>
+
+                    @foreach ($categories as $row)               
+                        <div class="swiper-slide">
+                            <div class="collection-circle hover-img">
+                                <a href="shop-categories-top.html" class="img-style">
+                                    <img class="lazyload" data-src="{{ asset($row->category_img) }}" src="{{ asset($row->category_img) }}" alt="{{ $row->slug  }}">
                                 </a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- item 5 -->
-                    <div class="swiper-slide">
-                        <div class="collection-circle hover-img">
-                            <a href="shop-categories-top.html" class="img-style">
-                                <img class="lazyload" data-src="{{ asset('public/frontend/images/collections/collection-circle/cls-electronic5.jpg') }}" src="{{ asset('public/frontend/images/collections/collection-circle/cls-electronic5.jpg') }}" alt="collection-img">
-                            </a>
-                            <div class="collection-content text-center">
-                                <a href="shop-categories-top.html" class="cls-title">
-                                    <h6 class="text">Smart Home</h6>
-                                    <i class="icon icon-arrowUpRight"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- item 6 -->
-                    <div class="swiper-slide">
-                        <div class="collection-circle hover-img">
-                            <a href="shop-categories-top.html" class="img-style">
-                                <img class="lazyload" data-src="{{ asset('public/frontend/images/collections/collection-circle/cls-electronic6.jpg') }}" src="{{ asset('public/frontend/images/collections/collection-circle/cls-electronic6.jpg') }}" alt="collection-img">
-                            </a>
-                            <div class="collection-content text-center">
-                                <a href="shop-categories-top.html" class="cls-title">
-                                    <h6 class="text">Game</h6>
-                                    <i class="icon icon-arrowUpRight"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- item 7 -->
-                    <div class="swiper-slide">
-                        <div class="collection-circle hover-img">
-                            <a href="shop-categories-top.html" class="img-style">
-                                <img class="lazyload" data-src="{{ asset('public/frontend/images/collections/collection-circle/cls-electronic7.jpg') }}" src="{{ asset('public/frontend/images/collections/collection-circle/cls-electronic7.jpg') }}" alt="collection-img">
-                            </a>
-                            <div class="collection-content text-center">
-                                <div>
-                                    <a href="shop-categories-top.html" class="cls-title">
-                                        <h6 class="text">Office</h6>
-                                        <i class="icon icon-arrowUpRight"></i>
-                                    </a>
+                                <div class="collection-content text-center">
+                                    <div>
+                                        <a href="shop-categories-top.html" class="cls-title">
+                                            <h6 class="text">{{ $row->category_name }}</h6>
+                                            <i class="icon icon-arrowUpRight"></i>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <!-- item 8 -->
-                    <div class="swiper-slide">
-                        <div class="collection-circle hover-img">
-                            <a href="shop-categories-top.html" class="img-style">
-                                <img class="lazyload" data-src="{{ asset('public/frontend/images/collections/collection-circle/cls-electronic1.jpg') }}" src="{{ asset('public/frontend/images/collections/collection-circle/cls-electronic1.jpg') }}" alt="collection-img">
-                            </a>
-                            <div class="collection-content text-center">
-                                <div>
-                                    <a href="shop-categories-top.html" class="cls-title">
-                                        <h6 class="text">Electronics</h6>
-                                        <i class="icon icon-arrowUpRight"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
                 <div class="d-flex d-lg-none sw-pagination-categories sw-dots type-circle justify-content-center"></div>
 
             </div>
-            <div class="nav-prev-categories d-none d-lg-flex nav-sw style-line nav-sw-left"><i class="icon icon-arrLeft"></i></div>
-            <div class="nav-next-categories d-none d-lg-flex nav-sw style-line nav-sw-right"><i class="icon icon-arrRight"></i></div>
+            <div class="nav-prev-categories d-none d-lg-flex nav-sw style-line nav-sw-left"><i class='bx bx-chevron-left' style="font-size: 24px;"></i></div>
+            <div class="nav-next-categories d-none d-lg-flex nav-sw style-line nav-sw-right"><i class='bx bx-chevron-right' style="font-size: 24px;"></i></div>
         </div>
     </div>
 </section>
@@ -271,15 +167,15 @@
                                         </a>
                                         <div class="list-product-btn">
                                             <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
-                                                <span class="icon icon-heart"></span>
+                                                <i class='bx bx-heart' style="font-size: 24px;"></i>
                                                 <span class="tooltip">Wishlist</span>
                                             </a>
                                             <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
-                                                <span class="icon icon-gitDiff"></span>
+                                                <i class='bx bx-git-compare' style="font-size: 24px;"></i>
                                                 <span class="tooltip">Compare</span>
                                             </a>
                                             <a href="#quickView" data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
-                                                <span class="icon icon-eye"></span>
+                                                <ion-icon name="eye-outline" style="font-size: 24px;"></ion-icon>
                                                 <span class="tooltip">Quick View</span>
                                             </a>
                                         </div>
@@ -333,31 +229,32 @@
                                                         <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
                                                     </div>
                                                     <div class="marquee-child-item">
-                                                        <span class="icon icon-lightning text-critical"></span>
+                                                        {{-- <span class="icon icon-lightning "></span> --}}
+                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
                                                     </div>
                                                     <div class="marquee-child-item">
                                                         <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
                                                     </div>
                                                     <div class="marquee-child-item">
-                                                        <span class="icon icon-lightning text-critical"></span>
+                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
                                                     </div>
                                                     <div class="marquee-child-item">
                                                         <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
                                                     </div>
                                                     <div class="marquee-child-item">
-                                                        <span class="icon icon-lightning text-critical"></span>
+                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
                                                     </div>
                                                     <div class="marquee-child-item">
                                                         <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
                                                     </div>
                                                     <div class="marquee-child-item">
-                                                        <span class="icon icon-lightning text-critical"></span>
+                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
                                                     </div>
                                                     <div class="marquee-child-item">
                                                         <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
                                                     </div>
                                                     <div class="marquee-child-item">
-                                                        <span class="icon icon-lightning text-critical"></span>
+                                                         <ion-icon name="flash-outline" class="text-critical"></ion-icon>
                                                     </div>
                                                 </div>
                                             </div>
@@ -367,46 +264,47 @@
                                                         <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
                                                     </div>
                                                     <div class="marquee-child-item">
-                                                        <span class="icon icon-lightning text-critical"></span>
+                                                        {{-- <span class="icon icon-lightning "></span> --}}
+                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
                                                     </div>
                                                     <div class="marquee-child-item">
                                                         <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
                                                     </div>
                                                     <div class="marquee-child-item">
-                                                        <span class="icon icon-lightning text-critical"></span>
+                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
                                                     </div>
                                                     <div class="marquee-child-item">
                                                         <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
                                                     </div>
                                                     <div class="marquee-child-item">
-                                                        <span class="icon icon-lightning text-critical"></span>
+                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
                                                     </div>
                                                     <div class="marquee-child-item">
                                                         <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
                                                     </div>
                                                     <div class="marquee-child-item">
-                                                        <span class="icon icon-lightning text-critical"></span>
+                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
                                                     </div>
                                                     <div class="marquee-child-item">
                                                         <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
                                                     </div>
                                                     <div class="marquee-child-item">
-                                                        <span class="icon icon-lightning text-critical"></span>
+                                                         <ion-icon name="flash-outline" class="text-critical"></ion-icon>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="list-product-btn">
                                             <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
-                                                <span class="icon icon-heart"></span>
+                                                <i class='bx bx-heart' style="font-size: 24px;"></i>
                                                 <span class="tooltip">Wishlist</span>
                                             </a>
                                             <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
-                                                <span class="icon icon-gitDiff"></span>
+                                                <i class='bx bx-git-compare' style="font-size: 24px;"></i>
                                                 <span class="tooltip">Compare</span>
                                             </a>
                                             <a href="#quickView" data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
-                                                <span class="icon icon-eye"></span>
+                                                <ion-icon name="eye-outline" style="font-size: 24px;"></ion-icon>
                                                 <span class="tooltip">Quick View</span>
                                             </a>
                                         </div>
@@ -418,11 +316,11 @@
                                         <a href="product-detail.html" class="title link">Apple Watch Ultra 2-  Rugged Titanium Case</a>
                                         <div class="box-rating">
                                             <ul class="list-star">
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
+                                                <li class="bx bxs-star" style="color: #F0A750;"></li>
+                                                <li class="bx bxs-star" style="color: #F0A750;"></li>
+                                                <li class="bx bxs-star" style="color: #F0A750;"></li>
+                                                <li class="bx bxs-star" style="color: #F0A750;"></li>
+                                                <li class="bx bx-star" style="color: #F0A750;"></li>
                                             </ul>
                                             <span class="text-caption-1 text-secondary">(1.234)</span>
                                         </div>
@@ -2781,47 +2679,6 @@
                     </a>
                 </div>
             @endforeach
-
-            {{-- <div class="swiper-slide">
-                <a href="#" class="brand-item">
-                    <img src="{{ asset('public/frontend/images/brand/anvouge.png') }}" alt="brand">
-                </a>
-            </div>
-            <div class="swiper-slide">
-                <a href="#" class="brand-item">
-                    <img src="{{ asset('public/frontend/images/brand/carolin.png') }}" alt="brand">
-                </a>
-            </div>
-            <div class="swiper-slide">
-                <a href="#" class="brand-item">
-                    <img src="{{ asset('public/frontend/images/brand/shangxi.png') }}" alt="brand">
-                </a>
-            </div>
-            <div class="swiper-slide">
-                <a href="#" class="brand-item">
-                    <img src="{{ asset('public/frontend/images/brand/ecomife.png') }}" alt="brand">
-                </a>
-            </div>
-            <div class="swiper-slide">
-                <a href="#" class="brand-item">
-                    <img src="{{ asset('public/frontend/images/brand/cheryl.png') }}" alt="brand">
-                </a>
-            </div>
-            <div class="swiper-slide">
-                <a href="#" class="brand-item">
-                    <img src="{{ asset('public/frontend/images/brand/sopify.png') }}" alt="brand">
-                </a>
-            </div>
-            <div class="swiper-slide">
-                <a href="#" class="brand-item">
-                    <img src="{{ asset('public/frontend/images/brand/pennyw.png') }}" alt="brand">
-                </a>
-            </div>
-            <div class="swiper-slide">
-                <a href="#" class="brand-item">
-                    <img src="{{ asset('public/frontend/images/brand/panadoxn.png') }}" alt="brand">
-                </a>
-            </div> --}}
         </div>
     </div>
 </section>
