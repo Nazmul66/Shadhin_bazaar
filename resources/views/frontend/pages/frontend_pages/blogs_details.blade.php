@@ -11,461 +11,536 @@
 
 @section('body-content')
 
- <!--============================
-        BREADCRUMB START
-    ==============================-->
-    <section id="wsus__breadcrumb">
-        <div class="wsus_breadcrumb_overlay">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <h4>blog dtails</h4>
-                        <ul>
-                            <li><a href="#">blog</a></li>
-                            <li><a href="#">blog details</a></li>
-                        </ul>
+<!-- blog-detail -->
+<section class="flat-spacing">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mb-lg-30">
+                <div class="blog-detail-wrap page-single-2">
+                    <div class="inner">
+                        <div class="heading">
+                            <ul class="list-tags has-bg">
+                                <li>
+                                    <a href="#" class="link">Fashion Trends</a>
+                                </li>
+                            </ul>
+                            <h3 class="fw-5">The Future of Fashion How Technology Transforms the Industry</h3>
+                            <div class="meta">
+                                <div class="meta-item gap-8">
+                                    <div class="icon">
+                                        <i class="icon-calendar"></i>
+                                    </div>
+                                    <p class="body-text-1">February 28, 2024</p>
+                                </div>
+                                <div class="meta-item gap-8">
+                                    <div class="icon">
+                                        <i class="icon-user"></i>
+                                    </div>
+                                    <p class="body-text-1">by <a class="link" href="#">Themesflat</a></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="image">
+                            <img class="lazyload" data-src="{{ asset('public/frontend/images/blog/blog-details-2.jpg') }}" src="{{ asset('public/frontend/images/blog/blog-details-2.jpg') }}" alt="">
+                        </div>
+                        <div class="content">
+                            <p class="body-text-1 mb_12">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi interdum sed mauris eu imperdiet. Donec congue orci nec mi luctus, ut faucibus mauris scelerisque. Donec orci lorem, volutpat a mauris nec, sodales imperdiet
+                                urna. Sed dictum enim libero. Interdum et malesuada fames ac ante ipsum primis in faucibus. Maecenas ligula libero, pharetra non dolor et, tempor bibendum magna. Mauris a efficitur nisi.</p>
+                            <p class="body-text-1">Praesent interdum lacus ac est viverra hendrerit. Aliquam dapibus, ante vitae mattis gravida, purus sapien interdum magna, convallis volutpat est turpis pulvinar dui. Aenean eu turpis est. In hac habitasse platea dictumst.
+                                Integer at lobortis metus. Proin molestie eget massa vel gravida. Suspendisse nec ante vel </p>
+                        </div>
+                        <div class="group-image d-flex gap-20">
+                            <div>
+                                <img src="{{ asset('public/frontend/images/blog/blog-details-3.jpg') }}" alt="">
+                            </div>
+                            <div>
+                                <img src="{{ asset('public/frontend/images/blog/blog-details-4.jpg') }}" alt="">
+                            </div>
+                        </div>
+                        <div class="content">
+                            <h3 class="fw-5 mb_16">How to deal with employee quitting</h3>
+                            <p class="body-text-1 mb_16">Donec eu dui condimentum, laoreet nulla vitae, venenatis ipsum. Donec luctus sem sit amet varius laoreet. Aliquam fermentum sit amet urna fringilla tincidunt. Vestibulum ullamcorper nec lacus ac molestie. Curabitur
+                                congue neque sed nisi auctor consequat. Pellentesque rhoncus tortor vitae ipsum sagittis tempor.</p>
+                            <p class="body-text-1 mb_16">Vestibulum et pharetra arcu. In porta lobortis turpis. Ut faucibus fermentum posuere. Suspendisse potenti. Mauris a metus sed est semper vestibulum. Mauris tortor sem, consectetur vehicula vulputate id, suscipit vel
+                                leo.</p>
+                            <ul class="list-text type-disc mb_16">
+                                <li class="body-text-1">
+                                    15+ years of industry experience designing, building, and supporting large-scale distributed systems in production, with recent experience in building large scale cloud services.
+                                </li>
+                                <li class="body-text-1">
+                                    Deep knowledge and experience with different security areas like identity and access management, cryptography, network security, etc.
+                                </li>
+                                <li class="body-text-1">
+                                    Experience with database systems and database internals, such as query engines and optimizers are a big plus.
+                                </li>
+                                <li class="body-text-1">
+                                    Strong fundamentals in computer science skills.
+                                </li>
+                                <li class="body-text-1">
+                                    Expert-level development skills in Java or C++.
+                                </li>
+                                <li class="body-text-1">
+                                    Knowledge of industry standard security concepts and protocols like SAML, SCIM, OAuth, RBAC, cryptography is a plus.
+                                </li>
+                                <li class="body-text-1">
+                                    Advanced degree in Computer Science or related degree.
+                                </li>
+                                <li class="body-text-1">
+                                    Ph.D. in the related field is a plus
+                                </li>
+                            </ul>
+                            <p class="body-text-1 mb_16">Curabitur aliquam ac arcu in mattis. Phasellus pulvinar erat at aliquam hendrerit. Nam ut velit dolor. Sed fermentum tempus odio, ac faucibus elit scelerisque consequat. Fusce ac malesuada elit. Nam at aliquam libero,
+                                quis lacinia erat. In hac habitasse platea dictumst. Suspendisse id dolor orci. Vivamus at aliquam tellus. Vestibulum a augue ac purus suscipit varius non eget lectus. Nam lobortis mauris luctus tristique feugiat.
+                                Nulla eleifend risus sit amet nisi feugiat, id eleifend sapien malesuada. Phasellus venenatis convallis mattis. Duis vel tempor eros. Mauris semper sollicitudin neque, imperdiet ultrices urna maximus id.
+                            </p>
+                        </div>
+                        <div class="bot d-flex justify-content-between gap-10 flex-wrap">
+                            <ul class="list-tags has-bg">
+                                <li>Tag:</li>
+                                <li>
+                                    <a href="#" class="link">Fashion</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="link">Trending</a>
+                                </li>
+                            </ul>
+                            <div class="d-flex align-items-center justify-content-between gap-16">
+                                <p>Share this post:</p>
+                                <ul class="tf-social-icon style-1">
+                                    <li><a href="#" class="social-facebook"><i class="icon icon-fb"></i></a></li>
+                                    <li><a href="#" class="social-twiter"><i class="icon icon-x"></i></a></li>
+                                    <li><a href="#" class="social-pinterest"><i class="icon icon-pinterest"></i></a></li>
+                                    <li><a href="#" class="social-instagram"><i class="icon icon-instagram"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="related-post">
+                            <div class="pre w-50">
+                                <div class="text-btn-uppercase">
+                                    <a href="#">Previous</a>
+                                </div>
+                                <h6 class="fw-5">
+                                    <a class="link" href="#">How to choose the right customer</a>
+                                </h6>
+                            </div>
+                            <div class="next w-50">
+                                <div class="text-btn-uppercase text-end">
+                                    <a href="#">Next</a>
+                                </div>
+                                <h6 class="fw-5 text-end">
+                                    <a class="link" href="#">Starting your traveling blog with Vasco</a>
+                                </h6>
+                            </div>
+                        </div>
+                        <div class="reply-comment">
+                            <h4 class="reply-comment-heading">03 Comments</h4>
+                            <div class="reply-comment-wrap">
+                                <div class="reply-comment-item">
+                                    <div class="image">
+                                        <img src="{{ asset('public/frontend/images/avatar/user-1.jpg') }}" alt="">
+                                    </div>
+                                    <div class="content">
+                                        <div class="d-flex justify-content-between gap-10 flex-wrap">
+                                            <div>
+                                                <div class="d-flex gap-12 align-items-center">
+                                                    <h6>
+                                                        <a href="#" class="link">Guy Hawkins</a>
+                                                    </h6>
+                                                    <div class="box-check">
+                                                        <svg width="10" height="8" viewBox="0 0 10 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path d="M3.39644 7.84288L0.146441 4.35628C-0.0488135 4.14681 -0.0488135 3.80718 0.146441 3.59769L0.853531 2.8391C1.04879 2.62961 1.36539 2.62961 1.56064 2.8391L3.75 5.18782L8.43936 0.157101C8.63461 -0.0523671 8.95121 -0.0523671 9.14647 0.157101L9.85356 0.915689C10.0488 1.12516 10.0488 1.46479 9.85356 1.67428L4.10355 7.8429C3.90828 8.05237 3.5917 8.05237 3.39644 7.84288Z" fill="white"/>
+                                                        </svg>
+                                                    </div>
+                                                </div>
+                                                <div class="day text-caption-1">August 13, 2024</div>
+                                            </div>
+                                            <a class="link btn-style-1 font-3" href="#">Was this helpful? </a>
+                                        </div>
+                                        <p>Lorem ipsum dolor sit amet consectetur. Cursus nunc pharetra arcu quam turpis risus amet turpis. Facilisis elementum tincidunt pellentesque sed rutrum enim.</p>
+                                        <div>
+                                            <a class="text-button" href="#">Reply</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="reply-comment-item type-reply">
+                                    <div class="image">
+                                        <img src="{{ asset('public/frontend/images/avatar/user-2.jpg') }}" alt="">
+                                    </div>
+                                    <div class="content">
+                                        <div class="d-flex justify-content-between gap-10 flex-wrap">
+                                            <div>
+                                                <div class="d-flex gap-12 align-items-center">
+                                                    <h6>
+                                                        <a href="#" class="link">Eleanor Pena</a>
+                                                    </h6>
+                                                    <div class="box-check">
+                                                        <svg width="10" height="8" viewBox="0 0 10 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path d="M3.39644 7.84288L0.146441 4.35628C-0.0488135 4.14681 -0.0488135 3.80718 0.146441 3.59769L0.853531 2.8391C1.04879 2.62961 1.36539 2.62961 1.56064 2.8391L3.75 5.18782L8.43936 0.157101C8.63461 -0.0523671 8.95121 -0.0523671 9.14647 0.157101L9.85356 0.915689C10.0488 1.12516 10.0488 1.46479 9.85356 1.67428L4.10355 7.8429C3.90828 8.05237 3.5917 8.05237 3.39644 7.84288Z" fill="white"/>
+                                                        </svg>
+                                                    </div>
+                                                </div>
+                                                <div class="day text-caption-1">August 13, 2024</div>
+                                            </div>
+                                            <a class="link btn-style-1 font-3" href="#">Was this helpful? </a>
+                                        </div>
+                                        <p>Great choice of Acronym AF1’s</p>
+                                    </div>
+                                </div>
+                                <div class="reply-comment-item">
+                                    <div class="image">
+                                        <img src="{{ asset('public/frontend/images/avatar/user-3.jpg') }}" alt="">
+                                    </div>
+                                    <div class="content">
+                                        <div class="d-flex justify-content-between gap-10 flex-wrap">
+                                            <div>
+                                                <div class="d-flex gap-12 align-items-center">
+                                                    <h6>
+                                                        <a href="#" class="link">Jerome Bell</a>
+                                                    </h6>
+                                                    <div class="box-check">
+                                                        <svg width="10" height="8" viewBox="0 0 10 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path d="M3.39644 7.84288L0.146441 4.35628C-0.0488135 4.14681 -0.0488135 3.80718 0.146441 3.59769L0.853531 2.8391C1.04879 2.62961 1.36539 2.62961 1.56064 2.8391L3.75 5.18782L8.43936 0.157101C8.63461 -0.0523671 8.95121 -0.0523671 9.14647 0.157101L9.85356 0.915689C10.0488 1.12516 10.0488 1.46479 9.85356 1.67428L4.10355 7.8429C3.90828 8.05237 3.5917 8.05237 3.39644 7.84288Z" fill="white"/>
+                                                        </svg>
+                                                    </div>
+                                                </div>
+                                                <div class="day text-caption-1">August 13, 2024</div>
+                                            </div>
+                                            <a class="link btn-style-1 font-3" href="#">Was this helpful? </a>
+                                        </div>
+                                        <p>Lorem ipsum dolor sit amet consectetur. Cursus nunc pharetra arcu quam turpis risus amet turpis. Facilisis elementum tincidunt pellentesque sed rutrum enim.</p>
+                                        <div>
+                                            <a class="text-button" href="#">Reply</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="leave-comment">
+                            <h4 class="leave-comment-heading">Leave A Comment</h4>
+                            <form class="form-leave-comment">
+                                <div class="wrap">
+                                    <div class="cols">
+                                        <fieldset class="">
+                                            <input class="" type="text" placeholder="Your Name*" name="text" tabindex="2" value="" aria-required="true" required="">
+                                        </fieldset>
+                                        <fieldset class="">
+                                            <input class="" type="email" placeholder="Your Email*" name="email" tabindex="2" value="" aria-required="true" required="">
+                                        </fieldset>
+                                    </div>
+                                    <fieldset class="">
+                                        <textarea class="" rows="4" placeholder="Your Message*" tabindex="2" aria-required="true" required=""></textarea>
+                                    </fieldset>
+                                </div>
+                                <div class="button-submit">
+                                    <button class="" type="submit">Submit Review</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-    <!--============================
-        BREADCRUMB END
-    ==============================-->
-
-
-    <!--============================
-        BLOGS DETAILS START
-    ==============================-->
-    <section id="wsus__blog_details">
-        <div class="container">
-            <div class="row">
-                <div class="col-xxl-9 col-xl-8 col-lg-8">
-                    <div class="wsus__main_blog">
-                        <div class="wsus__main_blog_img">
-                            <img src="{{ asset('public/frontend/images/blog_details.jpg') }}" alt="blog" class="img-fluid w-100">
+            <div class="col-lg-4">
+                <div class="sidebar maxw-360">
+                    <div class="sidebar-item sidebar-writer">
+                        <div class="writer-avatar">
+                            <div class="image">
+                                <img src="{{ asset('public/frontend/images/avatar/user-3.jpg') }}" alt="">
+                            </div>
+                            <div>
+                                <div class="name">
+                                    <h6><a class="link" href="#">Shara Miller</a></h6>
+                                    <p class="text-caption-1">200 Follower</p>
+                                </div>
+                                <a href="#" class="button-follow text-btn-uppercase link">Follow</a>
+                            </div>
                         </div>
-                        <p class="wsus__main_blog_header">
-                            <span><i class="fas fa-user-tie"></i> by dabasis</span>
-                            <span><i class="fal fa-calendar-alt"></i> dec 04 2021</span>
-                            <span><i class="fal fa-comment-alt-smile"></i> 0 Comment</span>
-                            <span><i class="far fa-eye"></i> 11 Views</span>
-                        </p>
-                        <div class="wsus__description_area">
-                            <h1>Fashion tells about who you are from external</h1>
-                            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dicta perferendis cumque nam
-                                dolorum dignissimos nisi totam labore minus deleniti fuga molestias ab quo
-                                necessitatibus provident, corrupti ipsam hic. Dolorum tenetur nam fugiat molestiae
-                                veritatis sequi ad quia, id eos officiis aliquid numquam iusto sint iure eaque? Deserunt
-                                id inventore . Lorem ipsum dolor sit amet
-                            </p>
-                            <ul>
-                                <li>Consectetur adipisicing elit. Voluptatum sapiente aliquam ut neque voluptatibus
-                                    inventore odit nesciunt. </li>
-                                <li>Delectus dignissimos maiores fuga doloremque magni, ratione provident exercitationem
-                                    aliquam tempore velit facere</li>
-                                <li>Delectus dignissimos maiores fuga doloremque magni, ratione provident exercitationem
-                                    aliquam tempore velit facere</li>
-                                <li>Repudiandae qui sint? Delectus dignissimos maiores fuga doloremque magni, ratione
-                                    provident exercitationem</li>
-                                <li>Ipsum dolor sit amet, consectetur adipisicing elit. Voluptatum sapiente aliquam ut
-                                    neque voluptatibus inventore odit nesciunt</li>
+                        <div class="writer-content">
+                            <p>Jessie Nguyen (@Jessie_ng) is a writer who draws. He’s the Bestselling author of “Number of The Year”. Donec vitae tortor efficitur, convallis lelobortis elit.</p>
+                            <ul class="tf-social-icon">
+                                <li><a href="#" class="social-facebook"><i class="icon icon-fb"></i></a></li>
+                                <li><a href="#" class="social-twiter"><i class="icon icon-x"></i></a></li>
+                                <li><a href="#" class="social-instagram"><i class="icon icon-instagram"></i></a></li>
+                                <li><a href="#" class="social-tiktok"><i class="icon icon-tiktok"></i></a></li>
+                                <li><a href="#" class="social-amazon"><i class="icon icon-amazon"></i></a></li>
+                                <li><a href="#" class="social-pinterest"><i class="icon icon-pinterest"></i></a></li>
                             </ul>
-                            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dicta perferendis cumque nam
-                                dolorum dignissimos nisi totam labore minus deleniti fuga molestias ab quo
-                                necessitatibus provident, corrupti ipsam hic. Dolorum tenetur nam fugiat molestiae
-                                veritatis sequi ad quia, id eos officiis aliquid numquam iusto sint iure eaque? Deserunt
-                                id inventore . Lorem ipsum dolor sit amet
-                            </p>
-                            <div class="wsus__blog_quot_area">
-                                <i class="far fa-quote-left"></i>
-                                <p>War and Marketing Have Many Similarities</p>
-                                <span>JELLY CRISTIANA</span>
-                            </div>
-                            <h5>Defaulting to Mindfulness: The Third Person Effect</h5>
-                            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dicta perferendis cumque nam
-                                dolorum dignissimos nisi totam labore minus deleniti fuga molestias ab quo
-                                necessitatibus provident, corrupti ipsam hic. Dolorum tenetur nam fugiat molestiae
-                                veritatis sequi ad quia, id eos officiis aliquid numquam iusto sint iure eaque? Deserunt
-                                id inventore . Lorem ipsum dolor sit amet
-                            </p>
-                            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dicta perferendis cumque nam
-                                dolorum dignissimos nisi totam labore minus deleniti fuga molestias ab quo
-                                necessitatibus provident, corrupti ipsam hic. Dolorum tenetur nam fugiat molestiae
-                                veritatis sequi ad quia, id eos officiis aliquid numquam iusto sint iure eaque? Deserunt
-                                id inventore . Lorem ipsum dolor sit amet
-                            </p>
-                        </div>
-                        <div class="wsus__share_blog">
-                            <p>share:</p>
-                            <ul>
-                                <li><a class="facebook" href="#"><i class="fab fa-facebook-f"></i></a></li>
-                                <li><a class="twitter" href="#"><i class="fab fa-twitter"></i></a></li>
-                                <li><a class="linkedin" href="#"><i class="fab fa-linkedin-in"></i></a></li>
-                                <li><a class="pinterest" href="#"><i class="fab fa-pinterest-p"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="wsus__related_post">
-                            <div class="row">
-                                <div class="col-xl-12">
-                                    <h5>related post</h5>
-                                </div>
-                            </div>
-                            <div class="row blog_det_slider">
-                                <div class="col-xl-3">
-                                    <div class="wsus__single_blog wsus__single_blog_2">
-                                        <a class="wsus__blog_img" href="#">
-                                            <img src="{{ asset('public/frontend/images/blog_1.jpg') }}" alt="blog" class="img-fluid w-100">
-                                        </a>
-                                        <div class="wsus__blog_text">
-                                            <a class="blog_top red" href="#">women's</a>
-                                            <div class="wsus__blog_text_center">
-                                                <a href="blog_details.html">New found the women’s shirt for summer
-                                                    season</a>
-                                                <p class="date">nov 04 2021</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xl-3">
-                                    <div class="wsus__single_blog wsus__single_blog_2">
-                                        <a class="wsus__blog_img" href="#">
-                                            <img src="{{ asset('public/frontend/images/blog_2.jpg') }}" alt="blog" class="img-fluid w-100">
-                                        </a>
-                                        <div class="wsus__blog_text">
-                                            <a class="blog_top blue" href="#">lifestyle</a>
-                                            <div class="wsus__blog_text_center">
-                                                <a href="blog_details.html">Fusce lacinia arcuet nulla menasious</a>
-                                                <p class="date">nov 04 2021</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xl-3">
-                                    <div class="wsus__single_blog wsus__single_blog_2">
-                                        <a class="wsus__blog_img" href="#">
-                                            <img src="{{ asset('public/frontend/images/blog_3.jpg') }}" alt="blog" class="img-fluid w-100">
-                                        </a>
-                                        <div class="wsus__blog_text">
-                                            <a class="blog_top orange" href="#">lifestyle</a>
-                                            <div class="wsus__blog_text_center">
-                                                <a href="blog_details.html">found the men’s shirt for summer season</a>
-                                                <p class="date">nov 04 2021</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xl-3">
-                                    <div class="wsus__single_blog wsus__single_blog_2">
-                                        <a class="wsus__blog_img" href="#">
-                                            <img src="{{ asset('public/frontend/images/blog_4.jpg') }}" alt="blog" class="img-fluid w-100">
-                                        </a>
-                                        <div class="wsus__blog_text">
-                                            <a class="blog_top orange" href="#">fashion</a>
-                                            <div class="wsus__blog_text_center">
-                                                <a href="blog_details.html">winter collection for women’s</a>
-                                                <p class="date">nov 04 2021</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xl-3">
-                                    <div class="wsus__single_blog wsus__single_blog_2">
-                                        <a class="wsus__blog_img" href="#">
-                                            <img src="{{ asset('public/frontend/images/blog_5.jpg') }}" alt="blog" class="img-fluid w-100">
-                                        </a>
-                                        <div class="wsus__blog_text">
-                                            <a class="blog_top red" href="#">lifestyle</a>
-                                            <div class="wsus__blog_text_center">
-                                                <a href="blog_details.html">Comes a cool blog post with Images</a>
-                                                <p class="date">nov 04 2021</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="wsus__comment_area">
-                            <h4>comment <span>03</span></h4>
-                            <div class="wsus__main_comment">
-                                <div class="wsus__comment_img">
-                                    <img src="{{ asset('public/frontend/images/client_img_1.jpg') }}" alt="user" class="img-fluid w-100">
-                                </div>
-                                <div class="wsus__comment_text replay">
-                                    <h6>Shopnil mahadi <span>09 Jul 2021</span></h6>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate sint
-                                        molestiae eos? Officia, fuga eaque.</p>
-                                    <a href="#" data-bs-toggle="collapse"
-                                        data-bs-target="#flush-collapsetwo3">replay</a>
-                                    <div class="accordion accordion-flush" id="accordionFlushExample3">
-                                        <div class="accordion-item">
-                                            <div id="flush-collapsetwo3" class="accordion-collapse collapse"
-                                                aria-labelledby="flush-collapsetwo"
-                                                data-bs-parent="#accordionFlushExample">
-                                                <div class="accordion-body">
-                                                    <form>
-                                                        <div class="wsus__riv_edit_single text_area">
-                                                            <i class="far fa-edit"></i>
-                                                            <textarea cols="3" rows="1"
-                                                                placeholder="Your Text"></textarea>
-                                                        </div>
-                                                        <button type="submit" class="common_btn">submit</button>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="wsus__main_comment wsus__com_replay">
-                                <div class="wsus__comment_img">
-                                    <img src="{{ asset('public/frontend/images/client_img_3.jpg') }}" alt="user" class="img-fluid w-100">
-                                </div>
-                                <div class="wsus__comment_text replay">
-                                    <h6>Smith jhon <span>09 Jul 2021</span></h6>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate sint
-                                        molestiae eos? Officia, fuga eaque.</p>
-                                    <a href="#" data-bs-toggle="collapse"
-                                        data-bs-target="#flush-collapsetwo2">replay</a>
-                                    <div class="accordion accordion-flush" id="accordionFlushExample2">
-                                        <div class="accordion-item">
-                                            <div id="flush-collapsetwo2" class="accordion-collapse collapse"
-                                                aria-labelledby="flush-collapsetwo"
-                                                data-bs-parent="#accordionFlushExample">
-                                                <div class="accordion-body">
-                                                    <form>
-                                                        <div class="wsus__riv_edit_single text_area">
-                                                            <i class="far fa-edit"></i>
-                                                            <textarea cols="3" rows="1"
-                                                                placeholder="Your Text"></textarea>
-                                                        </div>
-                                                        <button type="submit" class="common_btn">submit</button>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="wsus__main_comment">
-                                <div class="wsus__comment_img">
-                                    <img src="{{ asset('public/frontend/images/client_img_1.jpg') }}" alt="user" class="img-fluid w-100">
-                                </div>
-                                <div class="wsus__comment_text replay">
-                                    <h6>Smith jhon <span>09 Jul 2021</span></h6>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate sint
-                                        molestiae eos? Officia, fuga eaque.</p>
-                                    <a href="#" data-bs-toggle="collapse" data-bs-target="#flush-collapsetwo">replay</a>
-                                    <div class="accordion accordion-flush" id="accordionFlushExample">
-                                        <div class="accordion-item">
-                                            <div id="flush-collapsetwo" class="accordion-collapse collapse"
-                                                aria-labelledby="flush-collapsetwo"
-                                                data-bs-parent="#accordionFlushExample">
-                                                <div class="accordion-body">
-                                                    <form>
-                                                        <div class="wsus__riv_edit_single text_area">
-                                                            <i class="far fa-edit"></i>
-                                                            <textarea cols="3" rows="1"
-                                                                placeholder="Your Text"></textarea>
-                                                        </div>
-                                                        <button type="submit" class="common_btn">submit</button>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="pagination">
-                                <nav aria-label="Page navigation example">
-                                    <ul class="pagination">
-                                        <li class="page-item">
-                                            <a class="page-link" href="#" aria-label="Previous">
-                                                <i class="fas fa-chevron-left"></i>
-                                            </a>
-                                        </li>
-                                        <li class="page-item"><a class="page-link page_active" href="#">1</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">4</a></li>
-                                        <li class="page-item">
-                                            <a class="page-link" href="#" aria-label="Next">
-                                                <i class="fas fa-chevron-right"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </nav>
-                            </div>
-                        </div>
-                        <div class="wsus__post_comment">
-                            <h4>post a comment</h4>
-                            <form action="#">
-                                <div class="row">
-                                    <div class="col-xl-6">
-                                        <div class="wsus__single_com">
-                                            <input type="text" placeholder="Name">
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-6">
-                                        <div class="wsus__single_com">
-                                            <input type="email" placeholder="Email">
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-12">
-                                        <div class="wsus__single_com">
-                                            <textarea rows="5" placeholder="Your Comment"></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button class="common_btn" type="submit">post comment</button>
-                            </form>
                         </div>
                     </div>
-                </div>
-                <div class="col-xxl-3 col-xl-4 col-lg-4">
-                    <div class="wsus__blog_sidebar" id="sticky_sidebar">
-                        <div class="wsus__blog_search">
-                            <h4>search</h4>
-                            <form>
-                                <input type="text" placeholder="Search">
-                                <button type="submit" class="common_btn"><i class="far fa-search"></i></button>
-                            </form>
-                        </div>
-                        <div class="wsus__blog_category">
-                            <h4>Categories</h4>
-                            <ul>
-                                <li><a href="#">Clothes</a></li>
-                                <li><a href="#">Entertainment</a></li>
-                                <li><a href="#">Fashion</a></li>
-                                <li><a href="#">Lifestyle</a></li>
-                                <li><a href="#">Technology</a></li>
-                                <li><a href="#">Shoes</a></li>
-                                <li><a href="#">electronic</a></li>
-                                <li><a href="#">Others</a></li>
-                            </ul>
-                        </div>
-                        <div class="wsus__blog_post">
-                            <h4>Popular Post</h4>
-                            <div class="wsus__blog_post_single">
-                                <a href="#" class="wsus__blog_post_img">
-                                    <img src="{{ asset('public/frontend/images/location_1.jpg') }}" alt="blog" class="imgofluid w-100">
-                                </a>
-                                <div class="wsus__blog_post_text">
-                                    <a href="#">One Thing Separates Creators</a>
-                                    <p> <span>Jul 29 2021 </span> 2 Comment </p>
+                    <div class="sidebar-item sidebar-relatest-post">
+                        <h5 class="sidebar-heading">Relatest Post</h5>
+                        <div>
+                            <div class="relatest-post-item hover-image">
+                                <div class="image">
+                                    <img class="lazyload" data-src="{{ asset('public/frontend/images/blog/sidebar-1.jpg') }}" src="{{ asset('public/frontend/images/blog/sidebar-1.jpg') }}" alt="">
+                                </div>
+                                <div class="content">
+                                    <div class="meta">
+                                        <div class="meta-item gap-8">
+                                            <div class="icon">
+                                                <i class="icon-calendar"></i>
+                                            </div>
+                                            <p class="text-caption-1">February 28, 2024</p>
+                                        </div>
+                                        <div class="meta-item gap-8">
+                                            <div class="icon">
+                                                <i class="icon-user"></i>
+                                            </div>
+                                            <p class="text-caption-1">by <a class="link" href="#">Themesflat</a></p>
+                                        </div>
+                                    </div>
+                                    <h6 class="title fw-5">
+                                        <a class="link" href="blog-detail.html">The Ultimate Guide: Dressing Stylishly with Minimal Effort</a>
+                                    </h6>
                                 </div>
                             </div>
-                            <div class="wsus__blog_post_single">
-                                <a href="#" class="wsus__blog_post_img">
-                                    <img src="{{ asset('public/frontend/images/location_2.jpg') }}" alt="blog" class="imgofluid w-100">
-                                </a>
-                                <div class="wsus__blog_post_text">
-                                    <a href="#">One Thing Separates Creators</a>
-                                    <p> <span>Jul 29 2021 </span> 2 Comment </p>
+                            <div class="relatest-post-item style-row hover-image">
+                                <div class="image">
+                                    <img class="lazyload" data-src="{{ asset('public/frontend/images/blog/sidebar-2.jpg') }}" src="{{ asset('public/frontend/images/blog/sidebar-2.jpg') }}" alt="">
+                                </div>
+                                <div class="content">
+                                    <div class="meta">
+                                        <div class="meta-item gap-8">
+                                            <p class="text-caption-1">February 28, 2024</p>
+                                        </div>
+                                        <div class="meta-item gap-8">
+                                            <p class="text-caption-1">by <a class="link" href="#">Themesflat</a></p>
+                                        </div>
+                                    </div>
+                                    <div class="title text-title">
+                                        <a class="link" href="blog-detail.html">10 Must-Have Wardrobe Staples for Every Season</a>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="wsus__blog_post_single">
-                                <a href="#" class="wsus__blog_post_img">
-                                    <img src="{{ asset('public/frontend/images/location_3.jpg') }}" alt="blog" class="imgofluid w-100">
-                                </a>
-                                <div class="wsus__blog_post_text">
-                                    <a href="#">One Thing Separates Creators</a>
-                                    <p> <span>Jul 29 2021 </span> 2 Comment </p>
+                            <div class="relatest-post-item style-row hover-image">
+                                <div class="image">
+                                    <img class="lazyload" data-src="{{ asset('public/frontend/images/blog/sidebar-3.jpg') }}" src="{{ asset('public/frontend/images/blog/sidebar-3.jpg') }}" alt="">
+                                </div>
+                                <div class="content">
+                                    <div class="meta">
+                                        <div class="meta-item gap-8">
+                                            <p class="text-caption-1">February 28, 2024</p>
+                                        </div>
+                                        <div class="meta-item gap-8">
+                                            <p class="text-caption-1">by <a class="link" href="#">Themesflat</a></p>
+                                        </div>
+                                    </div>
+                                    <div class="title text-title">
+                                        <a class="link" href="blog-detail.html">How to Transition Your Wardrobe from Day to Night</a>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="wsus__blog_post_single">
-                                <a href="#" class="wsus__blog_post_img">
-                                    <img src="{{ asset('public/frontend/images/location_4.jpg') }}" alt="blog" class="imgofluid w-100">
-                                </a>
-                                <div class="wsus__blog_post_text">
-                                    <a href="#">One Thing Separates Creators</a>
-                                    <p> <span>Jul 29 2021 </span> 2 Comment </p>
+                            <div class="relatest-post-item style-row hover-image">
+                                <div class="image">
+                                    <img class="lazyload" data-src="{{ asset('public/frontend/images/blog/sidebar-4.jpg') }}" src="{{ asset('public/frontend/images/blog/sidebar-4.jpg') }}" alt="">
+                                </div>
+                                <div class="content">
+                                    <div class="meta">
+                                        <div class="meta-item gap-8">
+                                            <p class="text-caption-1">February 28, 2024</p>
+                                        </div>
+                                        <div class="meta-item gap-8">
+                                            <p class="text-caption-1">by <a class="link" href="#">Themesflat</a></p>
+                                        </div>
+                                    </div>
+                                    <div class="title text-title">
+                                        <a class="link" href="blog-detail.html">How to Incorporate Classic Pieces into Modern Outfits</a>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="wsus__blog_post_single">
-                                <a href="#" class="wsus__blog_post_img">
-                                    <img src="{{ asset('public/frontend/images/location_2.jpg') }}" alt="blog" class="imgofluid w-100">
-                                </a>
-                                <div class="wsus__blog_post_text">
-                                    <a href="#">One Thing Separates Creators</a>
-                                    <p> <span>Jul 29 2021 </span> 2 Comment </p>
+                            <div class="relatest-post-item style-row hover-image">
+                                <div class="image">
+                                    <img class="lazyload" data-src="{{ asset('public/frontend/images/blog/sidebar-5.jpg') }}" src="{{ asset('public/frontend/images/blog/sidebar-5.jpg') }}" alt="">
+                                </div>
+                                <div class="content">
+                                    <div class="meta">
+                                        <div class="meta-item gap-8">
+                                            <p class="text-caption-1">February 28, 2024</p>
+                                        </div>
+                                        <div class="meta-item gap-8">
+                                            <p class="text-caption-1">by <a class="link" href="#">Themesflat</a></p>
+                                        </div>
+                                    </div>
+                                    <div class="title text-title">
+                                        <a class="link" href="blog-detail.html">How to Wear the Latest Fashion Trends Every Day</a>
+                                    </div>
                                 </div>
                             </div>
-
-                        </div>
-                        <div class="wsus__popular_tag">
-                            <h4>popular tags</h4>
-                            <ul>
-                                <li><a href="#">Fashion</a></li>
-                                <li><a href="#">Style</a></li>
-                                <li><a href="#">Travel</a></li>
-                                <li><a href="#">Women</a></li>
-                                <li><a href="#">Men</a></li>
-                                <li><a href="#">Hobbies</a></li>
-                                <li><a href="#">Shopping</a></li>
-                                <li><a href="#">Photography</a></li>
-                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-    <!--============================
-        BLOGS DETAILS END
-    ==============================-->
+    </div>
+</section>
+<!-- /blog-detail -->
+
+<!-- Related Articles -->
+<section class="flat-spacing pt-0">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="heading-section">
+                    <h3>Related Articles</h3>
+                    <p class="body-text-1">Discover the Hottest Fashion News and Trends Straight from the Runway</p>
+                </div>
+                <div class="swiper tf-sw-recent" data-preview="3" data-tablet="2" data-mobile="1" data-space-lg="30" data-space-md="30" data-space="15" data-pagination="1" data-pagination-md="1" data-pagination-lg="1">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <div class="wg-blog style-1 hover-image">
+                                <div class="image">
+                                    <img class="lazyload" data-src="{{ asset('public/frontend/images/blog/blog-grid-1.jpg') }}" src="{{ asset('public/frontend/images/blog/blog-grid-1.jpg') }}" alt="">
+                                </div>
+                                <div class="content">
+                                    <div class="meta">
+                                        <div class="meta-item gap-8">
+                                            <div class="icon">
+                                                <i class="icon-calendar"></i>
+                                            </div>
+                                            <p class="text-caption-1">February 28, 2024</p>
+                                        </div>
+                                        <div class="meta-item gap-8">
+                                            <div class="icon">
+                                                <i class="icon-user"></i>
+                                            </div>
+                                            <p class="text-caption-1">by <a class="link" href="#">Themesflat</a></p>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <h6 class="title fw-5">
+                                            <a class="link" href="blog-detail.html">How Technology is Transforming the Industry</a>
+                                        </h6>
+                                        <div class="body-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sed vulputate massa.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="wg-blog style-1 hover-image">
+                                <div class="image">
+                                    <img class="lazyload" data-src="{{ asset('public/frontend/images/blog/blog-grid-2.jpg') }}" src="{{ asset('public/frontend/images/blog/blog-grid-2.jpg') }}" alt="">
+                                </div>
+                                <div class="content">
+                                    <div class="meta">
+                                        <div class="meta-item gap-8">
+                                            <div class="icon">
+                                                <i class="icon-calendar"></i>
+                                            </div>
+                                            <p class="text-caption-1">February 28, 2024</p>
+                                        </div>
+                                        <div class="meta-item gap-8">
+                                            <div class="icon">
+                                                <i class="icon-user"></i>
+                                            </div>
+                                            <p class="text-caption-1">by <a class="link" href="#">Themesflat</a></p>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <h6 class="title fw-5">
+                                            <a class="link" href="blog-detail.html">The Future of Fashion How Technology Transforms the Industry</a>
+                                        </h6>
+                                        <div class="body-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sed vulputate massa.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="wg-blog style-1 hover-image">
+                                <div class="image">
+                                    <img class="lazyload" data-src="{{ asset('public/frontend/images/blog/blog-grid-3.jpg') }}" src="{{ asset('public/frontend/images/blog/blog-grid-3.jpg') }}" alt="">
+                                </div>
+                                <div class="content">
+                                    <div class="meta">
+                                        <div class="meta-item gap-8">
+                                            <div class="icon">
+                                                <i class="icon-calendar"></i>
+                                            </div>
+                                            <p class="text-caption-1">February 28, 2024</p>
+                                        </div>
+                                        <div class="meta-item gap-8">
+                                            <div class="icon">
+                                                <i class="icon-user"></i>
+                                            </div>
+                                            <p class="text-caption-1">by <a class="link" href="#">Themesflat</a></p>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <h6 class="title fw-5">
+                                            <a class="link" href="blog-detail.html">From Concept to Closet The Journey of Sustainable Fashion</a>
+                                        </h6>
+                                        <div class="body-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sed vulputate massa.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="wg-blog style-1 hover-image">
+                                <div class="image">
+                                    <img class="lazyload" data-src="{{ asset('public/frontend/images/blog/blog-grid-2.jpg') }}" src="{{ asset('public/frontend/images/blog/blog-grid-2.jpg') }}" alt="">
+                                </div>
+                                <div class="content">
+                                    <div class="meta">
+                                        <div class="meta-item gap-8">
+                                            <div class="icon">
+                                                <i class="icon-calendar"></i>
+                                            </div>
+                                            <p class="text-caption-1">February 28, 2024</p>
+                                        </div>
+                                        <div class="meta-item gap-8">
+                                            <div class="icon">
+                                                <i class="icon-user"></i>
+                                            </div>
+                                            <p class="text-caption-1">by <a class="link" href="#">Themesflat</a></p>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <h6 class="title fw-5">
+                                            <a class="link" href="blog-detail.html">The Future of Fashion How Technology Transforms the Industry</a>
+                                        </h6>
+                                        <div class="body-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sed vulputate massa.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="wg-blog style-1 hover-image">
+                                <div class="image">
+                                    <img class="lazyload" data-src="{{ asset('public/frontend/images/blog/blog-grid-3.jpg') }}" src="{{ asset('public/frontend/images/blog/blog-grid-3.jpg') }}" alt="">
+                                </div>
+                                <div class="content">
+                                    <div class="meta">
+                                        <div class="meta-item gap-8">
+                                            <div class="icon">
+                                                <i class="icon-calendar"></i>
+                                            </div>
+                                            <p class="text-caption-1">February 28, 2024</p>
+                                        </div>
+                                        <div class="meta-item gap-8">
+                                            <div class="icon">
+                                                <i class="icon-user"></i>
+                                            </div>
+                                            <p class="text-caption-1">by <a class="link" href="#">Themesflat</a></p>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <h6 class="title fw-5">
+                                            <a class="link" href="blog-detail.html">From Concept to Closet The Journey of Sustainable Fashion</a>
+                                        </h6>
+                                        <div class="body-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sed vulputate massa.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sw-pagination-recent sw-dots type-circle d-flex justify-content-center"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- /Related Articles -->
 
 @endsection
 
 @push('add-js')
-    <script src="{{ asset('public/frontend/js/select2.min.js') }}"></script>
 
-    <script>
-            $('.blog_det_slider').slick({
-        slidesToShow: 3,
-        slidesToScroll: 1,
-        autoplay: true,
-        autoplaySpeed: 4000,
-        dots: true,
-        arrows: false,
-
-        responsive: [
-            {
-                breakpoint: 1400,
-                settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 1,
-                }
-            },
-            {
-                breakpoint: 1200,
-                settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 1,
-                }
-            },
-            {
-                breakpoint: 992,
-                settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 1,
-                }
-            },
-            {
-                breakpoint: 768,
-                settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 1,
-                }
-            },
-            {
-                breakpoint: 576,
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                }
-            }
-        ]
-    });
-    </script>
 @endpush

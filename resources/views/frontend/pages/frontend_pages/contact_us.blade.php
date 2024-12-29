@@ -11,115 +11,105 @@
 
 @section('body-content')
 
-<!--============================
-        BREADCRUMB START
-    ==============================-->
-    <section id="wsus__breadcrumb">
-        <div class="wsus_breadcrumb_overlay">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <h4>contact us</h4>
-                        <ul>
-                            <li><a href="#">home</a></li>
-                            <li><a href="#">contact us</a></li>
-                        </ul>
-                    </div>
-                </div>
+<!-- page-title -->
+<div class="page-title" style="background-image: url({{ asset('public/frontend/images/section/page-title.jpg') }});">
+    <div class="container-full">
+        <div class="row">
+            <div class="col-12">
+                <h3 class="heading text-center">Contact Us</h3>
+                <ul class="breadcrumbs d-flex align-items-center justify-content-center">
+                    <li>
+                        <a class="link" href="index.html">Homepage</a>
+                    </li>
+                    <li>
+                        <i class="icon-arrRight"></i>
+                    </li>
+                    <li>
+                        <a class="link" href="#">Pages</a>
+                    </li>
+                    <li>
+                        <i class="icon-arrRight"></i>
+                    </li>
+                    <li>
+                        Contact Us
+                    </li>
+                </ul>
             </div>
         </div>
-    </section>
-    <!--============================
-        BREADCRUMB END
-    ==============================-->
+    </div>
+</div>
+<!-- /page-title -->
 
-
-    <!--============================
-        CONTACT PAGE START
-    ==============================-->
-    <section id="wsus__contact">
-        <div class="container">
-            <div class="wsus__contact_area">
-                <div class="row">
-                    <div class="col-xl-4">
-                        <div class="row">
-                            <div class="col-xl-12">
-                                <div class="wsus__contact_single">
-                                    <i class="fal fa-envelope"></i>
-                                    <h5>mail address</h5>
-                                    <a href="mailto:example@gmail.com">example@gmail.com</a>
-                                    <span><i class="fal fa-envelope"></i></span>
-                                </div>
-                            </div>
-                            <div class="col-xl-12">
-                                <div class="wsus__contact_single">
-                                    <i class="far fa-phone-alt"></i>
-                                    <h5>phone number</h5>
-                                    <a href="macallto:+69522145000001">+69522145000001</a>
-                                    <span><i class="far fa-phone-alt"></i></span>
-                                </div>
-                            </div>
-                            <div class="col-xl-12">
-                                <div class="wsus__contact_single">
-                                    <i class="fal fa-map-marker-alt"></i>
-                                    <h5>contact address</h5>
-                                    <a href="mailto:example@gmail.com">example@gmail.com</a>
-                                    <span><i class="fal fa-map-marker-alt"></i></span>
-                                </div>
-                            </div>
-                        </div>
+<!-- Store locations -->
+<section class="flat-spacing">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="contact-us-map">
+                    <div class="wrap-map">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d912.5264728357365!2d90.42024442845884!3d23.81483329865861!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c7e38dbe6fc1%3A0x84f05d820d063b60!2skuril%2CBashundhara!5e0!3m2!1sen!2sbd!4v1735432006868!5m2!1sen!2sbd" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                     </div>
-                    <div class="col-xl-8">
-                        <div class="wsus__contact_question">
-                            <h5>Send Us a Message</h5>
-                            <form>
-                                <div class="row">
-                                    <div class="col-xl-12">
-                                        <div class="wsus__con_form_single">
-                                            <input type="text" placeholder="Your Name">
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-12">
-                                        <div class="wsus__con_form_single">
-                                            <input type="email" placeholder="Email">
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-6">
-                                        <div class="wsus__con_form_single">
-                                            <input type="text" placeholder="Phone">
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-6">
-                                        <div class="wsus__con_form_single">
-                                            <input type="text" placeholder="Subject">
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-12">
-                                        <div class="wsus__con_form_single">
-                                            <textarea cols="3" rows="5" placeholder="Message"></textarea>
-                                        </div>
-                                        <button type="submit" class="common_btn">send now</button>
-                                    </div>
-                                </div>
-                            </form>
+                    <div class="right">
+                        <h4>Information</h4>
+                        <div class="mb_20">
+                            <div class="text-title mb_8">Phone:</div>
+                            <p class="text-secondary">+1 666 234 8888</p>
                         </div>
-                    </div>
-                    <div class="col-xl-12">
-                        <div class="wsus__con_map">
-                            <iframe
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3650.1435090089785!2d90.42196781465853!3d23.81349539228068!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c62fb95f16c1%3A0xb333248370356dee!2sJamuna%20Future%20Park!5e0!3m2!1sen!2sbd!4v1639724859199!5m2!1sen!2sbd"
-                                width="1600" height="450" style="border:0;" allowfullscreen="100"
-                                loading="lazy"></iframe>
+                        <div class="mb_20">
+                            <div class="text-title mb_8">Email:</div>
+                            <p class="text-secondary">themesflat@gmail.com</p>
+                        </div>
+                        <div class="mb_20">
+                            <div class="text-title mb_8">Address:</div>
+                            <p class="text-secondary">2163 Phillips Gap Rd, West Jefferson, North Carolina, United States</p>
+                        </div>
+                        <div>
+                            <div class="text-title mb_8">Open Time:</div>
+                            <p class="mb_4 open-time">
+                                <span class="text-secondary">Mon - Sat:</span> 7:30am - 8:00pm PST
+                            </p>
+                            <p class="open-time">
+                                <span class="text-secondary">Sunday:</span> 9:00am - 5:00pm PST
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-    <!--============================
-        CONTACT PAGE END
-    ==============================-->
+    </div>
+</section>
+<!-- /Store locations -->
 
+<!-- Get In Touch -->
+<section class="flat-spacing pt-0">
+    <div class="container">
+        <div class="heading-section text-center">
+            <h3 class="heading">Get In Touch</h3>
+            <p class="subheading">Use the form below to get in touch with the sales team</p>
+        </div>
+        <form action="" method="post" class="form-leave-comment">
+            <div class="wrap">
+                <div class="cols">
+                    <fieldset class="">
+                        <input class="" type="text" placeholder="Your Name*" name="name" id="name" tabindex="2" value="" aria-required="true" required="">
+                    </fieldset>
+                    <fieldset class="">
+                        <input class="" type="email" placeholder="Your Email*" name="email" id="email" tabindex="2" value="" aria-required="true" required="">
+                    </fieldset>
+                </div>
+                <fieldset class="">
+                    <textarea name="message" id="message" rows="4" placeholder="Your Message*" tabindex="2" aria-required="true" required=""></textarea>
+                </fieldset>
+            </div>
+            <div class="button-submit send-wrap">
+                <button class="tf-btn btn-fill" type="submit">
+                    <span class="text text-button">Send message</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</section>
+<!-- /Get In Touch -->
 
 @endsection
 

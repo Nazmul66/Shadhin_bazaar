@@ -33,7 +33,6 @@ class HomeController extends Controller
     }
     
 
-
     public function faq_page()
     {
         return view('frontend.pages.frontend_pages.faq');

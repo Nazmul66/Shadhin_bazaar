@@ -12,2066 +12,2815 @@
 
 @section('body-content')
 
-    <!--==========================
-        POP UP START
-    ===========================-->
-    <!-- <section id="wsus__pop_up">
-        <div class="wsus__pop_up_center">
-            <div class="wsus__pop_up_text">
-                <span id="cross"><i class="fas fa-times"></i></span>
-                <h5>get up to <span>75% off</span></h5>
-                <h2>Sign up to E-SHOP</h2>
-                <p>Subscribe to the <b>E-SHOP</b> market newsletter to receive updates on special offers.</p>
-                <form>
-                    <input type="email" placeholder="Your Email" class="news_input">
-                    <button type="submit" class="common_btn">go</button>
-                    <div class="wsus__pop_up_check_box">
+<!-- Slider -->
+<div class="tf-slideshow slider-style2 slider-electronic slider-position slider-effect-fade">
+    <div dir="ltr" class="swiper tf-sw-slideshow" data-effect="fade" data-preview="1" data-tablet="1" data-mobile="1" data-centered="false" data-space="0" data-space-mb="0" data-loop="true" data-auto-play="true">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <div class="wrap-slider">
+                    <img src="{{ asset('public/frontend/images/slider/slider-electronic.jpg') }}" alt="slideshow">
+                    <div class="box-content">
+                        <div class="container">
+                            <div class="content-slider">
+                                <div class="box-title-slider">
+                                    <div>
+                                        <p class="fade-item fade-item-1 subtitle text-btn-uppercase text-primary">SALE! UP TO 50% OFF!</p>
+                                        <div class="fade-item fade-item-2 title-display heading">Dji Phantom 3 <br> Professional</div>
+                                    </div>
+                                    <p class="fade-item fade-item-3 body-text-1 subheading">Metallic press stud fastening. Beaded detail. Festival Season.</p>
+                                </div>
+                                <div class="fade-item fade-item-4 box-btn-slider">
+                                    <a href="shop-default-grid.html" class="tf-btn btn-fill"><span class="text">Shop Now</span><i class="icon icon-arrowUpRight"></i></a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </form>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault11">
-                    <label class="form-check-label" for="flexCheckDefault11">
-                        Don't show this popup again
-                    </label>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <div class="wrap-slider">
+                    <img src="{{ asset('public/frontend/images/slider/slider-electronic2.jpg') }}" alt="slideshow">
+                    <div class="box-content">
+                        <div class="container">
+                            <div class="content-slider">
+                                <div class="box-title-slider">
+                                    <div>
+                                        <p class="fade-item fade-item-1 subtitle text-btn-uppercase text-primary">SALE! UP TO 50% OFF!</p>
+                                        <div class="fade-item fade-item-2 title-display heading">Marshall <br> Woburn White</div>
+                                    </div>
+                                    <p class="fade-item fade-item-3 body-text-1 subheading">Metallic press stud fastening. Beaded detail. Festival Season.</p>
+                                </div>
+                                <div class="fade-item fade-item-4 box-btn-slider">
+                                    <a href="shop-default-grid.html" class="tf-btn btn-fill"><span class="text">Shop Now</span><i class="icon icon-arrowUpRight"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <div class="wrap-slider">
+                    <img src="{{ asset('public/frontend/images/slider/slider-electronic3.jpg') }}" alt="slideshow">
+                    <div class="box-content">
+                        <div class="container">
+                            <div class="content-slider">
+                                <div class="box-title-slider">
+                                    <div>
+                                        <p class="fade-item fade-item-1 subtitle text-btn-uppercase text-primary">SALE! UP TO 50% OFF!</p>
+                                        <div class="fade-item fade-item-2 title-display heading">Apple MagSafe <br> For Iphone</div>
+                                    </div>
+                                    <p class="fade-item fade-item-3 body-text-1 subheading">Metallic press stud fastening. Beaded detail. Festival Season.</p>
+                                </div>
+                                <div class="fade-item fade-item-4 box-btn-slider">
+                                    <a href="shop-default-grid.html" class="tf-btn btn-fill"><span class="text">Shop Now</span><i class="icon icon-arrowUpRight"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </section> -->
-    <!--==========================
-        POP UP END
-    ===========================-->
+    </div>
+    <div class="wrap-pagination d-block">
+        <div class="container">
+            <div class="sw-dots sw-pagination-slider type-square justify-content-center"></div>
+        </div>
+    </div>
+</div>
+<!-- /Slider -->
 
-
-    <!--==========================
-      PRODUCT MODAL VIEW START
-    ===========================-->
-    <section class="product_popup_modal">
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i
-                                class="far fa-times"></i></button>
-                        <div class="row">
-                            <div class="col-xl-6 col-12 col-sm-10 col-md-8 col-lg-6 m-auto display">
-                                <div class="wsus__quick_view_img">
-                                    <a class="venobox wsus__pro_det_video" data-autoplay="true" data-vbtype="video"
-                                        href="https://youtu.be/7m16dFI1AF8">
-                                        <i class="fas fa-play"></i>
+<!-- Categories -->
+<section class="flat-spacing-4">
+    <div class="container">
+        <div class="heading-section text-center wow fadeInUp">
+            <h3 class="heading">Popular Categories</h3>
+        </div>
+        <div class="flat-collection-circle wow fadeInUp" data-wow-delay="0.1s">
+            <div dir="ltr" class="swiper tf-sw-categories" data-preview="7" data-tablet="4" data-mobile-sm="3" data-mobile="2" data-space-lg="30" data-space-md="20" data-space="15" data-pagination="2" data-pagination-md="4" data-pagination-lg="1">
+                <div class="swiper-wrapper">
+                    <!-- item 1 -->
+                    <div class="swiper-slide">
+                        <div class="collection-circle hover-img">
+                            <a href="shop-categories-top.html" class="img-style">
+                                <img class="lazyload" data-src="{{ asset('public/frontend/images/collections/collection-circle/cls-electronic1.jpg') }}" src="{{ asset('public/frontend/images/collections/collection-circle/cls-electronic1.jpg') }}" alt="collection-img">
+                            </a>
+                            <div class="collection-content text-center">
+                                <div>
+                                    <a href="shop-categories-top.html" class="cls-title">
+                                        <h6 class="text">Electronics</h6>
+                                        <i class="icon icon-arrowUpRight"></i>
                                     </a>
-                                    <div class="row modal_slider">
-                                        <div class="col-xl-12">
-                                            <div class="modal_slider_img">
-                                                <img src="images/zoom1.jpg" alt="product" class="img-fluid w-100">
-                                            </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- item 2 -->
+                    <div class="swiper-slide">
+                        <div class="collection-circle hover-img">
+                            <a href="shop-categories-top.html" class="img-style">
+                                <img class="lazyload" data-src="{{ asset('public/frontend/images/collections/collection-circle/cls-electronic2.jpg') }}" src="{{ asset('public/frontend/images/collections/collection-circle/cls-electronic2.jpg') }}" alt="collection-img">
+                            </a>
+                            <div class="collection-content text-center">
+                                <div>
+                                    <a href="shop-categories-top.html" class="cls-title">
+                                        <h6 class="text">Appliances</h6>
+                                        <i class="icon icon-arrowUpRight"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- item 3 -->
+                    <div class="swiper-slide">
+                        <div class="collection-circle hover-img">
+                            <a href="shop-categories-top.html" class="img-style">
+                                <img class="lazyload" data-src="{{ asset('public/frontend/images/collections/collection-circle/cls-electronic3.jpg') }}" src="{{ asset('public/frontend/images/collections/collection-circle/cls-electronic3.jpg') }}" alt="collection-img">
+                            </a>
+                            <div class="collection-content text-center">
+                                <div>
+                                    <a href="shop-categories-top.html" class="cls-title">
+                                        <h6 class="text">Kitchen </h6>
+                                        <i class="icon icon-arrowUpRight"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- item 4 -->
+                    <div class="swiper-slide">
+                        <div class="collection-circle hover-img">
+                            <a href="shop-categories-top.html" class="img-style">
+                                <img class="lazyload" data-src="{{ asset('public/frontend/images/collections/collection-circle/cls-electronic4.jpg') }}" src="{{ asset('public/frontend/images/collections/collection-circle/cls-electronic4.jpg') }}" alt="collection-img">
+                            </a>
+                            <div class="collection-content text-center">
+                                <a href="shop-categories-top.html" class="cls-title">
+                                    <h6 class="text">Audio</h6>
+                                    <i class="icon icon-arrowUpRight"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- item 5 -->
+                    <div class="swiper-slide">
+                        <div class="collection-circle hover-img">
+                            <a href="shop-categories-top.html" class="img-style">
+                                <img class="lazyload" data-src="{{ asset('public/frontend/images/collections/collection-circle/cls-electronic5.jpg') }}" src="{{ asset('public/frontend/images/collections/collection-circle/cls-electronic5.jpg') }}" alt="collection-img">
+                            </a>
+                            <div class="collection-content text-center">
+                                <a href="shop-categories-top.html" class="cls-title">
+                                    <h6 class="text">Smart Home</h6>
+                                    <i class="icon icon-arrowUpRight"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- item 6 -->
+                    <div class="swiper-slide">
+                        <div class="collection-circle hover-img">
+                            <a href="shop-categories-top.html" class="img-style">
+                                <img class="lazyload" data-src="{{ asset('public/frontend/images/collections/collection-circle/cls-electronic6.jpg') }}" src="{{ asset('public/frontend/images/collections/collection-circle/cls-electronic6.jpg') }}" alt="collection-img">
+                            </a>
+                            <div class="collection-content text-center">
+                                <a href="shop-categories-top.html" class="cls-title">
+                                    <h6 class="text">Game</h6>
+                                    <i class="icon icon-arrowUpRight"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- item 7 -->
+                    <div class="swiper-slide">
+                        <div class="collection-circle hover-img">
+                            <a href="shop-categories-top.html" class="img-style">
+                                <img class="lazyload" data-src="{{ asset('public/frontend/images/collections/collection-circle/cls-electronic7.jpg') }}" src="{{ asset('public/frontend/images/collections/collection-circle/cls-electronic7.jpg') }}" alt="collection-img">
+                            </a>
+                            <div class="collection-content text-center">
+                                <div>
+                                    <a href="shop-categories-top.html" class="cls-title">
+                                        <h6 class="text">Office</h6>
+                                        <i class="icon icon-arrowUpRight"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- item 8 -->
+                    <div class="swiper-slide">
+                        <div class="collection-circle hover-img">
+                            <a href="shop-categories-top.html" class="img-style">
+                                <img class="lazyload" data-src="{{ asset('public/frontend/images/collections/collection-circle/cls-electronic1.jpg') }}" src="{{ asset('public/frontend/images/collections/collection-circle/cls-electronic1.jpg') }}" alt="collection-img">
+                            </a>
+                            <div class="collection-content text-center">
+                                <div>
+                                    <a href="shop-categories-top.html" class="cls-title">
+                                        <h6 class="text">Electronics</h6>
+                                        <i class="icon icon-arrowUpRight"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex d-lg-none sw-pagination-categories sw-dots type-circle justify-content-center"></div>
+
+            </div>
+            <div class="nav-prev-categories d-none d-lg-flex nav-sw style-line nav-sw-left"><i class="icon icon-arrLeft"></i></div>
+            <div class="nav-next-categories d-none d-lg-flex nav-sw style-line nav-sw-right"><i class="icon icon-arrRight"></i></div>
+        </div>
+    </div>
+</section>
+<!-- /Categories -->
+
+<!-- Deal of the day -->
+<section class="flat-spacing-4 pt-0">
+    <div class="container">
+        <div class="heading-section-2 wow fadeInUp">
+            <h4>Deal of the day</h4>
+            <ul class="tab-product-v3 justify-content-sm-center" role="tablist">
+                <li class="nav-tab-item" role="presentation">
+                    <a href="#AllProducts" class="active text-caption-1" data-bs-toggle="tab">All Products</a>
+                </li>
+                <li class="nav-tab-item" role="presentation">
+                    <a href="#SmartPhone" class="text-caption-1" data-bs-toggle="tab">Smart Phone</a>
+                </li>
+                <li class="nav-tab-item" role="presentation">
+                    <a href="#Electronic" class="text-caption-1" data-bs-toggle="tab">Electronic</a>
+                </li>
+                <li class="nav-tab-item" role="presentation">
+                    <a href="#Audio" class="text-caption-1" data-bs-toggle="tab">Audio</a>
+                </li>
+            </ul>
+        </div>
+        <div class="flat-animate-tab">
+            <div class="tab-content">
+                <div class="tab-pane active show" id="AllProducts" role="tabpanel">
+                    <div dir="ltr" class="swiper tf-sw-latest" data-preview="5" data-tablet="4" data-mobile="2" data-space-lg="30" data-space-md="30" data-space="15" data-pagination="1" data-pagination-md="1" data-pagination-lg="1">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <div class="card-product wow fadeInUp" data-wow-delay="0s">
+                                    <div class="card-product-wrapper">
+                                        <a href="product-detail.html" class="product-img">
+                                            <img class="lazyload img-product" data-src="{{ asset('public/frontend/images/products/electronic/electronic-1.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-1.jpg') }}" alt="image-product">
+                                            <img class="lazyload img-hover" data-src="{{ asset('public/frontend/images/products/electronic/electronic-2.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-2.jpg') }}" alt="image-product">
+                                        </a>
+                                        <div class="list-product-btn">
+                                            <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
+                                                <span class="icon icon-heart"></span>
+                                                <span class="tooltip">Wishlist</span>
+                                            </a>
+                                            <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
+                                                <span class="icon icon-gitDiff"></span>
+                                                <span class="tooltip">Compare</span>
+                                            </a>
+                                            <a href="#quickView" data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
+                                                <span class="icon icon-eye"></span>
+                                                <span class="tooltip">Quick View</span>
+                                            </a>
                                         </div>
-                                        <div class="col-xl-12">
-                                            <div class="modal_slider_img">
-                                                <img src="images/zoom2.jpg" alt="product" class="img-fluid w-100">
-                                            </div>
+                                        <div class="list-btn-main">
+                                            <a href="#shoppingCart" data-bs-toggle="modal" class="btn-main-product">Add To cart</a>
                                         </div>
-                                        <div class="col-xl-12">
-                                            <div class="modal_slider_img">
-                                                <img src="images/zoom3.jpg" alt="product" class="img-fluid w-100">
-                                            </div>
+                                    </div>
+                                    <div class="card-product-info">
+                                        <a href="product-detail.html" class="title link">PlayStation DualSense Wireless Controller</a>
+                                        <div class="box-rating">
+                                            <ul class="list-star">
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                            </ul>
+                                            <span class="text-caption-1 text-secondary">(1.234)</span>
                                         </div>
-                                        <div class="col-xl-12">
-                                            <div class="modal_slider_img">
-                                                <img src="images/zoom4.jpg" alt="product" class="img-fluid w-100">
+                                        <span class="price">$59.99</span>
+                                        <div class="box-progress-stock">
+                                            <div class="progress">
+                                                <div class="progress-bar" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <div class="stock-status d-flex justify-content-between align-items-center">
+                                                <div class="stock-item text-caption-1">
+                                                    <span class="stock-label text-secondary-2">Available:</span>
+                                                    <span class="stock-value">50</span>
+                                                </div>
+                                                <div class="stock-item text-caption-1">
+                                                    <span class="stock-label text-secondary-2">Sold:</span>
+                                                    <span class="stock-value">50</span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xl-6 col-12 col-sm-12 col-md-12 col-lg-6">
-                                <div class="wsus__pro_details_text">
-                                    <a class="title" href="#">Electronics Black Wrist Watch</a>
-                                    <p class="wsus__stock_area"><span class="in_stock">in stock</span> (167 item)</p>
-                                    <h4>$50.00 <del>$60.00</del></h4>
-                                    <p class="review">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star-half-alt"></i>
-                                        <span>20 review</span>
-                                    </p>
-                                    <p class="description">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-
-                                    <div class="wsus_pro_hot_deals">
-                                        <h5>offer ending time : </h5>
-                                        <div class="simply-countdown simply-countdown-one"></div>
+                            <div class="swiper-slide">
+                                <div class="card-product wow fadeInUp" data-wow-delay="0.1s">
+                                    <div class="card-product-wrapper">
+                                        <a href="product-detail.html" class="product-img">
+                                            <img class="lazyload img-product" data-src="{{ asset('public/frontend/images/products/electronic/electronic-3.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-3.jpg') }}" alt="image-product">
+                                            <img class="lazyload img-hover" data-src="{{ asset('public/frontend/images/products/electronic/electronic-4.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-4.jpg') }}" alt="image-product">
+                                        </a>
+                                        <div class="on-sale-wrap"><span class="on-sale-item">-25%</span></div>
+                                        <div class="marquee-product bg-main">
+                                            <div class="marquee-wrapper">
+                                                <div class="initial-child-container">
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <span class="icon icon-lightning text-critical"></span>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <span class="icon icon-lightning text-critical"></span>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <span class="icon icon-lightning text-critical"></span>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <span class="icon icon-lightning text-critical"></span>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <span class="icon icon-lightning text-critical"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="marquee-wrapper">
+                                                <div class="initial-child-container">
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <span class="icon icon-lightning text-critical"></span>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <span class="icon icon-lightning text-critical"></span>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <span class="icon icon-lightning text-critical"></span>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <span class="icon icon-lightning text-critical"></span>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <span class="icon icon-lightning text-critical"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="list-product-btn">
+                                            <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
+                                                <span class="icon icon-heart"></span>
+                                                <span class="tooltip">Wishlist</span>
+                                            </a>
+                                            <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
+                                                <span class="icon icon-gitDiff"></span>
+                                                <span class="tooltip">Compare</span>
+                                            </a>
+                                            <a href="#quickView" data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
+                                                <span class="icon icon-eye"></span>
+                                                <span class="tooltip">Quick View</span>
+                                            </a>
+                                        </div>
+                                        <div class="list-btn-main">
+                                            <a href="#shoppingCart" data-bs-toggle="modal" class="btn-main-product">Add To cart</a>
+                                        </div>
                                     </div>
-                                    <div class="wsus_pro_det_color">
-                                        <h5>color :</h5>
-                                        <ul>
-                                            <li><a class="blue" href="#"><i class="far fa-check"></i></a></li>
-                                            <li><a class="orange" href="#"><i class="far fa-check"></i></a></li>
-                                            <li><a class="yellow" href="#"><i class="far fa-check"></i></a></li>
-                                            <li><a class="black" href="#"><i class="far fa-check"></i></a></li>
-                                            <li><a class="red" href="#"><i class="far fa-check"></i></a></li>
+                                    <div class="card-product-info">
+                                        <a href="product-detail.html" class="title link">Apple Watch Ultra 2-  Rugged Titanium Case</a>
+                                        <div class="box-rating">
+                                            <ul class="list-star">
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                            </ul>
+                                            <span class="text-caption-1 text-secondary">(1.234)</span>
+                                        </div>
+                                        <span class="price"><span class="old-price">$98.00</span> $79.99</span>
+                                        <div class="box-progress-stock">
+                                            <div class="progress">
+                                                <div class="progress-bar" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <div class="stock-status d-flex justify-content-between align-items-center">
+                                                <div class="stock-item text-caption-1">
+                                                    <span class="stock-label text-secondary-2">Available:</span>
+                                                    <span class="stock-value">50</span>
+                                                </div>
+                                                <div class="stock-item text-caption-1">
+                                                    <span class="stock-label text-secondary-2">Sold:</span>
+                                                    <span class="stock-value">50</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="card-product card-product-size wow fadeInUp" data-wow-delay="0.2s">
+                                    <div class="card-product-wrapper">
+                                        <a href="product-detail.html" class="product-img">
+                                            <img class="lazyload img-product" data-src="{{ asset('public/frontend/images/products/electronic/electronic-5.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-5.jpg') }}" alt="image-product">
+                                            <img class="lazyload img-hover" data-src="{{ asset('public/frontend/images/products/electronic/electronic-6.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-6.jpg') }}" alt="image-product">
+                                        </a>
+                                        <div class="variant-wrap size-list">
+                                            <ul class="variant-box">
+                                                <li class="size-item">S</li>
+                                                <li class="size-item">M</li>
+                                                <li class="size-item">L</li>
+                                                <li class="size-item">XL</li>
+                                            </ul>
+                                        </div>
+                                        <div class="variant-wrap countdown-wrap">
+                                            <div class="variant-box">
+                                                <div class="js-countdown" data-timer="1007500" data-labels="D :,H :,M :,S"></div>
+                                            </div>
+                                        </div>
+                                        <div class="list-product-btn">
+                                            <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
+                                                <span class="icon icon-heart"></span>
+                                                <span class="tooltip">Wishlist</span>
+                                            </a>
+                                            <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
+                                                <span class="icon icon-gitDiff"></span>
+                                                <span class="tooltip">Compare</span>
+                                            </a>
+                                            <a href="#quickView" data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
+                                                <span class="icon icon-eye"></span>
+                                                <span class="tooltip">Quick View</span>
+                                            </a>
+                                        </div>
+                                        <div class="list-btn-main">
+                                            <a href="#quickAdd" data-bs-toggle="modal" class="btn-main-product">Quick Add</a>
+                                        </div>
+                                    </div>
+                                    <div class="card-product-info">
+                                        <a href="product-detail.html" class="title link"> JBL Tune 750BTNC for Android Tablet</a>
+                                        <div class="box-rating">
+                                            <ul class="list-star">
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                            </ul>
+                                            <span class="text-caption-1 text-secondary">(1.234)</span>
+                                        </div>
+                                        <span class="price"><span class="old-price">$98.00</span> $89.99</span>
+                                        <div class="box-progress-stock">
+                                            <div class="progress">
+                                                <div class="progress-bar" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <div class="stock-status d-flex justify-content-between align-items-center">
+                                                <div class="stock-item text-caption-1">
+                                                    <span class="stock-label text-secondary-2">Available:</span>
+                                                    <span class="stock-value">50</span>
+                                                </div>
+                                                <div class="stock-item text-caption-1">
+                                                    <span class="stock-label text-secondary-2">Sold:</span>
+                                                    <span class="stock-value">50</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="card-product wow fadeInUp" data-wow-delay="0.3s">
+                                    <div class="card-product-wrapper">
+                                        <a href="product-detail.html" class="product-img">
+                                            <img class="lazyload img-product" data-src="{{ asset('public/frontend/products/electronic/electronic-7.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-7.jpg') }}" alt="image-product">
+                                            <img class="lazyload img-hover" data-src="{{ asset('public/frontend/images/products/electronic/electronic-8.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-8.jpg') }}" alt="image-product">
+                                        </a>
+                                        <div class="list-product-btn">
+                                            <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
+                                                <span class="icon icon-heart"></span>
+                                                <span class="tooltip">Wishlist</span>
+                                            </a>
+                                            <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
+                                                <span class="icon icon-gitDiff"></span>
+                                                <span class="tooltip">Compare</span>
+                                            </a>
+                                            <a href="#quickView" data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
+                                                <span class="icon icon-eye"></span>
+                                                <span class="tooltip">Quick View</span>
+                                            </a>
+                                        </div>
+                                        <div class="list-btn-main">
+                                            <a href="#shoppingCart" data-bs-toggle="modal" class="btn-main-product">Add To cart</a>
+                                        </div>
+                                    </div>
+                                    <div class="card-product-info">
+                                        <a href="product-detail.html" class="title link">JBL Live 460nc for Android IOS & Android</a>
+                                        <div class="box-rating">
+                                            <ul class="list-star">
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                            </ul>
+                                            <span class="text-caption-1 text-secondary">(1.234)</span>
+                                        </div>
+                                        <span class="price">$69.99</span>
+                                        <div class="box-progress-stock">
+                                            <div class="progress">
+                                                <div class="progress-bar" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <div class="stock-status d-flex justify-content-between align-items-center">
+                                                <div class="stock-item text-caption-1">
+                                                    <span class="stock-label text-secondary-2">Available:</span>
+                                                    <span class="stock-value">50</span>
+                                                </div>
+                                                <div class="stock-item text-caption-1">
+                                                    <span class="stock-label text-secondary-2">Sold:</span>
+                                                    <span class="stock-value">50</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="card-product wow fadeInUp" data-wow-delay="0.4s">
+                                    <div class="card-product-wrapper">
+                                        <a href="product-detail.html" class="product-img">
+                                            <img class="lazyload img-product" data-src="{{ asset('public/frontend/images/products/electronic/electronic-9.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-9.jpg') }}" alt="image-product">
+                                            <img class="lazyload img-hover" data-src="{{ asset('public/frontend/images/products/electronic/electronic-10.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-10.jpg" alt="image-product') }}">
+                                        </a>
+                                        <div class="list-product-btn">
+                                            <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
+                                                <span class="icon icon-heart"></span>
+                                                <span class="tooltip">Wishlist</span>
+                                            </a>
+                                            <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
+                                                <span class="icon icon-gitDiff"></span>
+                                                <span class="tooltip">Compare</span>
+                                            </a>
+                                            <a href="#quickView" data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
+                                                <span class="icon icon-eye"></span>
+                                                <span class="tooltip">Quick View</span>
+                                            </a>
+                                        </div>
+                                        <div class="list-btn-main">
+                                            <a href="#shoppingCart" data-bs-toggle="modal" class="btn-main-product">Add To cart</a>
+                                        </div>
+                                    </div>
+                                    <div class="card-product-info">
+                                        <a href="product-detail.html" class="title link">iPad Mini 6 8.3 inch Wi-Fi 6-5G64GB</a>
+                                        <div class="box-rating">
+                                            <ul class="list-star">
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                            </ul>
+                                            <span class="text-caption-1 text-secondary">(1.234)</span>
+                                        </div>
+                                        <span class="price">$69.99</span>
+                                        <div class="box-progress-stock">
+                                            <div class="progress">
+                                                <div class="progress-bar" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <div class="stock-status d-flex justify-content-between align-items-center">
+                                                <div class="stock-item text-caption-1">
+                                                    <span class="stock-label text-secondary-2">Available:</span>
+                                                    <span class="stock-value">50</span>
+                                                </div>
+                                                <div class="stock-item text-caption-1">
+                                                    <span class="stock-label text-secondary-2">Sold:</span>
+                                                    <span class="stock-value">50</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sw-pagination-latest sw-dots type-circle justify-content-center"></div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="SmartPhone" role="tabpanel">
+                    <div dir="ltr" class="swiper tf-sw-latest" data-preview="5" data-tablet="4" data-mobile="2" data-space-lg="30" data-space-md="30" data-space="15" data-pagination="1" data-pagination-md="1" data-pagination-lg="1">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <div class="card-product">
+                                    <div class="card-product-wrapper">
+                                        <a href="product-detail.html" class="product-img">
+                                            <img class="lazyload img-product" data-src="{{ asset('public/frontend/images/products/electronic/electronic-1.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-1.jpg') }}" alt="image-product">
+                                            <img class="lazyload img-hover" data-src="{{ asset('public/frontend/images/products/electronic/electronic-2.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-2.jpg') }}" alt="image-product">
+                                        </a>
+                                        <div class="list-product-btn">
+                                            <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
+                                                <span class="icon icon-heart"></span>
+                                                <span class="tooltip">Wishlist</span>
+                                            </a>
+                                            <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
+                                                <span class="icon icon-gitDiff"></span>
+                                                <span class="tooltip">Compare</span>
+                                            </a>
+                                            <a href="#quickView" data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
+                                                <span class="icon icon-eye"></span>
+                                                <span class="tooltip">Quick View</span>
+                                            </a>
+                                        </div>
+                                        <div class="list-btn-main">
+                                            <a href="#shoppingCart" data-bs-toggle="modal" class="btn-main-product">Add To cart</a>
+                                        </div>
+                                    </div>
+                                    <div class="card-product-info">
+                                        <a href="product-detail.html" class="title link">PlayStation DualSense Wireless Controller</a>
+                                        <div class="box-rating">
+                                            <ul class="list-star">
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                            </ul>
+                                            <span class="text-caption-1 text-secondary">(1.234)</span>
+                                        </div>
+                                        <span class="price">$59.99</span>
+                                        <div class="box-progress-stock">
+                                            <div class="progress">
+                                                <div class="progress-bar" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <div class="stock-status d-flex justify-content-between align-items-center">
+                                                <div class="stock-item text-caption-1">
+                                                    <span class="stock-label text-secondary-2">Available:</span>
+                                                    <span class="stock-value">50</span>
+                                                </div>
+                                                <div class="stock-item text-caption-1">
+                                                    <span class="stock-label text-secondary-2">Sold:</span>
+                                                    <span class="stock-value">50</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="card-product">
+                                    <div class="card-product-wrapper">
+                                        <a href="product-detail.html" class="product-img">
+                                            <img class="lazyload img-product" data-src="{{ asset('public/frontend/images/products/electronic/electronic-3.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-3.jpg') }}" alt="image-product">
+                                            <img class="lazyload img-hover" data-src="{{ asset('public/frontend/images/products/electronic/electronic-4.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-4.jpg') }}" alt="image-product">
+                                        </a>
+                                        <div class="on-sale-wrap"><span class="on-sale-item">-25%</span></div>
+                                        <div class="marquee-product bg-main">
+                                            <div class="marquee-wrapper">
+                                                <div class="initial-child-container">
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <span class="icon icon-lightning text-critical"></span>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <span class="icon icon-lightning text-critical"></span>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <span class="icon icon-lightning text-critical"></span>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <span class="icon icon-lightning text-critical"></span>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <span class="icon icon-lightning text-critical"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="marquee-wrapper">
+                                                <div class="initial-child-container">
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <span class="icon icon-lightning text-critical"></span>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <span class="icon icon-lightning text-critical"></span>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <span class="icon icon-lightning text-critical"></span>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <span class="icon icon-lightning text-critical"></span>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <span class="icon icon-lightning text-critical"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="list-product-btn">
+                                            <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
+                                                <span class="icon icon-heart"></span>
+                                                <span class="tooltip">Wishlist</span>
+                                            </a>
+                                            <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
+                                                <span class="icon icon-gitDiff"></span>
+                                                <span class="tooltip">Compare</span>
+                                            </a>
+                                            <a href="#quickView" data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
+                                                <span class="icon icon-eye"></span>
+                                                <span class="tooltip">Quick View</span>
+                                            </a>
+                                        </div>
+                                        <div class="list-btn-main">
+                                            <a href="#shoppingCart" data-bs-toggle="modal" class="btn-main-product">Add To cart</a>
+                                        </div>
+                                    </div>
+                                    <div class="card-product-info">
+                                        <a href="product-detail.html" class="title link">Apple Watch Ultra 2-  Rugged Titanium Case</a>
+                                        <div class="box-rating">
+                                            <ul class="list-star">
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                            </ul>
+                                            <span class="text-caption-1 text-secondary">(1.234)</span>
+                                        </div>
+                                        <span class="price"><span class="old-price">$98.00</span> $79.99</span>
+                                        <div class="box-progress-stock">
+                                            <div class="progress">
+                                                <div class="progress-bar" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <div class="stock-status d-flex justify-content-between align-items-center">
+                                                <div class="stock-item text-caption-1">
+                                                    <span class="stock-label text-secondary-2">Available:</span>
+                                                    <span class="stock-value">50</span>
+                                                </div>
+                                                <div class="stock-item text-caption-1">
+                                                    <span class="stock-label text-secondary-2">Sold:</span>
+                                                    <span class="stock-value">50</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="card-product card-product-size">
+                                    <div class="card-product-wrapper">
+                                        <a href="product-detail.html" class="product-img">
+                                            <img class="lazyload img-product" data-src="{{ asset('public/frontend/images/products/electronic/electronic-5.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-5.jpg') }}" alt="image-product">
+                                            <img class="lazyload img-hover" data-src="{{ asset('public/frontend/images/products/electronic/electronic-6.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-6.jpg') }}" alt="image-product">
+                                        </a>
+                                        <div class="variant-wrap size-list">
+                                            <ul class="variant-box">
+                                                <li class="size-item">S</li>
+                                                <li class="size-item">M</li>
+                                                <li class="size-item">L</li>
+                                                <li class="size-item">XL</li>
+                                            </ul>
+                                        </div>
+                                        <div class="variant-wrap countdown-wrap">
+                                            <div class="variant-box">
+                                                <div class="js-countdown" data-timer="1007500" data-labels="D :,H :,M :,S"></div>
+                                            </div>
+                                        </div>
+                                        <div class="list-product-btn">
+                                            <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
+                                                <span class="icon icon-heart"></span>
+                                                <span class="tooltip">Wishlist</span>
+                                            </a>
+                                            <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
+                                                <span class="icon icon-gitDiff"></span>
+                                                <span class="tooltip">Compare</span>
+                                            </a>
+                                            <a href="#quickView" data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
+                                                <span class="icon icon-eye"></span>
+                                                <span class="tooltip">Quick View</span>
+                                            </a>
+                                        </div>
+                                        <div class="list-btn-main">
+                                            <a href="#quickAdd" data-bs-toggle="modal" class="btn-main-product">Quick Add</a>
+                                        </div>
+                                    </div>
+                                    <div class="card-product-info">
+                                        <a href="product-detail.html" class="title link"> JBL Tune 750BTNC for Android Tablet</a>
+                                        <div class="box-rating">
+                                            <ul class="list-star">
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                            </ul>
+                                            <span class="text-caption-1 text-secondary">(1.234)</span>
+                                        </div>
+                                        <span class="price"><span class="old-price">$98.00</span> $89.99</span>
+                                        <div class="box-progress-stock">
+                                            <div class="progress">
+                                                <div class="progress-bar" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <div class="stock-status d-flex justify-content-between align-items-center">
+                                                <div class="stock-item text-caption-1">
+                                                    <span class="stock-label text-secondary-2">Available:</span>
+                                                    <span class="stock-value">50</span>
+                                                </div>
+                                                <div class="stock-item text-caption-1">
+                                                    <span class="stock-label text-secondary-2">Sold:</span>
+                                                    <span class="stock-value">50</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="card-product">
+                                    <div class="card-product-wrapper">
+                                        <a href="product-detail.html" class="product-img">
+                                            <img class="lazyload img-product" data-src="{{ asset('public/frontend/images/products/electronic/electronic-7.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-7.jpg') }}" alt="image-product">
+                                            <img class="lazyload img-hover" data-src="{{ asset('public/frontend/images/products/electronic/electronic-8.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-8.jpg') }}" alt="image-product">
+                                        </a>
+                                        <div class="list-product-btn">
+                                            <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
+                                                <span class="icon icon-heart"></span>
+                                                <span class="tooltip">Wishlist</span>
+                                            </a>
+                                            <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
+                                                <span class="icon icon-gitDiff"></span>
+                                                <span class="tooltip">Compare</span>
+                                            </a>
+                                            <a href="#quickView" data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
+                                                <span class="icon icon-eye"></span>
+                                                <span class="tooltip">Quick View</span>
+                                            </a>
+                                        </div>
+                                        <div class="list-btn-main">
+                                            <a href="#shoppingCart" data-bs-toggle="modal" class="btn-main-product">Add To cart</a>
+                                        </div>
+                                    </div>
+                                    <div class="card-product-info">
+                                        <a href="product-detail.html" class="title link">JBL Live 460nc for Android IOS & Android</a>
+                                        <div class="box-rating">
+                                            <ul class="list-star">
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                            </ul>
+                                            <span class="text-caption-1 text-secondary">(1.234)</span>
+                                        </div>
+                                        <span class="price">$69.99</span>
+                                        <div class="box-progress-stock">
+                                            <div class="progress">
+                                                <div class="progress-bar" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <div class="stock-status d-flex justify-content-between align-items-center">
+                                                <div class="stock-item text-caption-1">
+                                                    <span class="stock-label text-secondary-2">Available:</span>
+                                                    <span class="stock-value">50</span>
+                                                </div>
+                                                <div class="stock-item text-caption-1">
+                                                    <span class="stock-label text-secondary-2">Sold:</span>
+                                                    <span class="stock-value">50</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="card-product">
+                                    <div class="card-product-wrapper">
+                                        <a href="product-detail.html" class="product-img">
+                                            <img class="lazyload img-product" data-src="{{ asset('public/frontend/images/products/electronic/electronic-9.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-9.jpg') }}" alt="image-product">
+                                            <img class="lazyload img-hover" data-src="{{ asset('public/frontend/images/products/electronic/electronic-10.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-10.jpg') }}" alt="image-product">
+                                        </a>
+                                        <div class="list-product-btn">
+                                            <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
+                                                <span class="icon icon-heart"></span>
+                                                <span class="tooltip">Wishlist</span>
+                                            </a>
+                                            <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
+                                                <span class="icon icon-gitDiff"></span>
+                                                <span class="tooltip">Compare</span>
+                                            </a>
+                                            <a href="#quickView" data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
+                                                <span class="icon icon-eye"></span>
+                                                <span class="tooltip">Quick View</span>
+                                            </a>
+                                        </div>
+                                        <div class="list-btn-main">
+                                            <a href="#shoppingCart" data-bs-toggle="modal" class="btn-main-product">Add To cart</a>
+                                        </div>
+                                    </div>
+                                    <div class="card-product-info">
+                                        <a href="product-detail.html" class="title link">iPad Mini 6 8.3 inch Wi-Fi 6-5G64GB</a>
+                                        <div class="box-rating">
+                                            <ul class="list-star">
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                            </ul>
+                                            <span class="text-caption-1 text-secondary">(1.234)</span>
+                                        </div>
+                                        <span class="price">$69.99</span>
+                                        <div class="box-progress-stock">
+                                            <div class="progress">
+                                                <div class="progress-bar" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <div class="stock-status d-flex justify-content-between align-items-center">
+                                                <div class="stock-item text-caption-1">
+                                                    <span class="stock-label text-secondary-2">Available:</span>
+                                                    <span class="stock-value">50</span>
+                                                </div>
+                                                <div class="stock-item text-caption-1">
+                                                    <span class="stock-label text-secondary-2">Sold:</span>
+                                                    <span class="stock-value">50</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sw-pagination-latest sw-dots type-circle justify-content-center"></div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="Electronic" role="tabpanel">
+                    <div dir="ltr" class="swiper tf-sw-latest" data-preview="5" data-tablet="4" data-mobile="2" data-space-lg="30" data-space-md="30" data-space="15" data-pagination="1" data-pagination-md="1" data-pagination-lg="1">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <div class="card-product">
+                                    <div class="card-product-wrapper">
+                                        <a href="product-detail.html" class="product-img">
+                                            <img class="lazyload img-product" data-src="{{ asset('public/frontend/images/products/electronic/electronic-1.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-1.jpg') }}" alt="image-product">
+                                            <img class="lazyload img-hover" data-src="{{ asset('public/frontend/images/products/electronic/electronic-2.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-2.jpg') }}" alt="image-product">
+                                        </a>
+                                        <div class="list-product-btn">
+                                            <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
+                                                <span class="icon icon-heart"></span>
+                                                <span class="tooltip">Wishlist</span>
+                                            </a>
+                                            <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
+                                                <span class="icon icon-gitDiff"></span>
+                                                <span class="tooltip">Compare</span>
+                                            </a>
+                                            <a href="#quickView" data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
+                                                <span class="icon icon-eye"></span>
+                                                <span class="tooltip">Quick View</span>
+                                            </a>
+                                        </div>
+                                        <div class="list-btn-main">
+                                            <a href="#shoppingCart" data-bs-toggle="modal" class="btn-main-product">Add To cart</a>
+                                        </div>
+                                    </div>
+                                    <div class="card-product-info">
+                                        <a href="product-detail.html" class="title link">PlayStation DualSense Wireless Controller</a>
+                                        <div class="box-rating">
+                                            <ul class="list-star">
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                            </ul>
+                                            <span class="text-caption-1 text-secondary">(1.234)</span>
+                                        </div>
+                                        <span class="price">$59.99</span>
+                                        <div class="box-progress-stock">
+                                            <div class="progress">
+                                                <div class="progress-bar" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <div class="stock-status d-flex justify-content-between align-items-center">
+                                                <div class="stock-item text-caption-1">
+                                                    <span class="stock-label text-secondary-2">Available:</span>
+                                                    <span class="stock-value">50</span>
+                                                </div>
+                                                <div class="stock-item text-caption-1">
+                                                    <span class="stock-label text-secondary-2">Sold:</span>
+                                                    <span class="stock-value">50</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="card-product">
+                                    <div class="card-product-wrapper">
+                                        <a href="product-detail.html" class="product-img">
+                                            <img class="lazyload img-product" data-src="{{ asset('public/frontend/images/products/electronic/electronic-3.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-3.jpg') }}" alt="image-product">
+                                            <img class="lazyload img-hover" data-src="{{ asset('public/frontend/images/products/electronic/electronic-4.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-4.jpg') }}" alt="image-product">
+                                        </a>
+                                        <div class="on-sale-wrap"><span class="on-sale-item">-25%</span></div>
+                                        <div class="marquee-product bg-main">
+                                            <div class="marquee-wrapper">
+                                                <div class="initial-child-container">
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <span class="icon icon-lightning text-critical"></span>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <span class="icon icon-lightning text-critical"></span>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <span class="icon icon-lightning text-critical"></span>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <span class="icon icon-lightning text-critical"></span>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <span class="icon icon-lightning text-critical"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="marquee-wrapper">
+                                                <div class="initial-child-container">
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <span class="icon icon-lightning text-critical"></span>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <span class="icon icon-lightning text-critical"></span>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <span class="icon icon-lightning text-critical"></span>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <span class="icon icon-lightning text-critical"></span>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <span class="icon icon-lightning text-critical"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="list-product-btn">
+                                            <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
+                                                <span class="icon icon-heart"></span>
+                                                <span class="tooltip">Wishlist</span>
+                                            </a>
+                                            <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
+                                                <span class="icon icon-gitDiff"></span>
+                                                <span class="tooltip">Compare</span>
+                                            </a>
+                                            <a href="#quickView" data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
+                                                <span class="icon icon-eye"></span>
+                                                <span class="tooltip">Quick View</span>
+                                            </a>
+                                        </div>
+                                        <div class="list-btn-main">
+                                            <a href="#shoppingCart" data-bs-toggle="modal" class="btn-main-product">Add To cart</a>
+                                        </div>
+                                    </div>
+                                    <div class="card-product-info">
+                                        <a href="product-detail.html" class="title link">Apple Watch Ultra 2-  Rugged Titanium Case</a>
+                                        <div class="box-rating">
+                                            <ul class="list-star">
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                            </ul>
+                                            <span class="text-caption-1 text-secondary">(1.234)</span>
+                                        </div>
+                                        <span class="price"><span class="old-price">$98.00</span> $79.99</span>
+                                        <div class="box-progress-stock">
+                                            <div class="progress">
+                                                <div class="progress-bar" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <div class="stock-status d-flex justify-content-between align-items-center">
+                                                <div class="stock-item text-caption-1">
+                                                    <span class="stock-label text-secondary-2">Available:</span>
+                                                    <span class="stock-value">50</span>
+                                                </div>
+                                                <div class="stock-item text-caption-1">
+                                                    <span class="stock-label text-secondary-2">Sold:</span>
+                                                    <span class="stock-value">50</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="card-product card-product-size">
+                                    <div class="card-product-wrapper">
+                                        <a href="product-detail.html" class="product-img">
+                                            <img class="lazyload img-product" data-src="{{ asset('public/frontend/images/products/electronic/electronic-5.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-5.jpg') }}" alt="image-product">
+                                            <img class="lazyload img-hover" data-src="{{ asset('public/frontend/images/products/electronic/electronic-6.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-6.jpg') }}" alt="image-product">
+                                        </a>
+                                        <div class="variant-wrap size-list">
+                                            <ul class="variant-box">
+                                                <li class="size-item">S</li>
+                                                <li class="size-item">M</li>
+                                                <li class="size-item">L</li>
+                                                <li class="size-item">XL</li>
+                                            </ul>
+                                        </div>
+                                        <div class="variant-wrap countdown-wrap">
+                                            <div class="variant-box">
+                                                <div class="js-countdown" data-timer="1007500" data-labels="D :,H :,M :,S"></div>
+                                            </div>
+                                        </div>
+                                        <div class="list-product-btn">
+                                            <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
+                                                <span class="icon icon-heart"></span>
+                                                <span class="tooltip">Wishlist</span>
+                                            </a>
+                                            <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
+                                                <span class="icon icon-gitDiff"></span>
+                                                <span class="tooltip">Compare</span>
+                                            </a>
+                                            <a href="#quickView" data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
+                                                <span class="icon icon-eye"></span>
+                                                <span class="tooltip">Quick View</span>
+                                            </a>
+                                        </div>
+                                        <div class="list-btn-main">
+                                            <a href="#quickAdd" data-bs-toggle="modal" class="btn-main-product">Quick Add</a>
+                                        </div>
+                                    </div>
+                                    <div class="card-product-info">
+                                        <a href="product-detail.html" class="title link"> JBL Tune 750BTNC for Android Tablet</a>
+                                        <div class="box-rating">
+                                            <ul class="list-star">
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                            </ul>
+                                            <span class="text-caption-1 text-secondary">(1.234)</span>
+                                        </div>
+                                        <span class="price"><span class="old-price">$98.00</span> $89.99</span>
+                                        <div class="box-progress-stock">
+                                            <div class="progress">
+                                                <div class="progress-bar" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <div class="stock-status d-flex justify-content-between align-items-center">
+                                                <div class="stock-item text-caption-1">
+                                                    <span class="stock-label text-secondary-2">Available:</span>
+                                                    <span class="stock-value">50</span>
+                                                </div>
+                                                <div class="stock-item text-caption-1">
+                                                    <span class="stock-label text-secondary-2">Sold:</span>
+                                                    <span class="stock-value">50</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="card-product">
+                                    <div class="card-product-wrapper">
+                                        <a href="product-detail.html" class="product-img">
+                                            <img class="lazyload img-product" data-src="{{ asset('public/frontend/images/products/electronic/electronic-7.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-7.jpg') }}" alt="image-product">
+                                            <img class="lazyload img-hover" data-src="{{ asset('public/frontend/images/products/electronic/electronic-8.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-8.jpg') }}" alt="image-product">
+                                        </a>
+                                        <div class="list-product-btn">
+                                            <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
+                                                <span class="icon icon-heart"></span>
+                                                <span class="tooltip">Wishlist</span>
+                                            </a>
+                                            <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
+                                                <span class="icon icon-gitDiff"></span>
+                                                <span class="tooltip">Compare</span>
+                                            </a>
+                                            <a href="#quickView" data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
+                                                <span class="icon icon-eye"></span>
+                                                <span class="tooltip">Quick View</span>
+                                            </a>
+                                        </div>
+                                        <div class="list-btn-main">
+                                            <a href="#shoppingCart" data-bs-toggle="modal" class="btn-main-product">Add To cart</a>
+                                        </div>
+                                    </div>
+                                    <div class="card-product-info">
+                                        <a href="product-detail.html" class="title link">JBL Live 460nc for Android IOS & Android</a>
+                                        <div class="box-rating">
+                                            <ul class="list-star">
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                            </ul>
+                                            <span class="text-caption-1 text-secondary">(1.234)</span>
+                                        </div>
+                                        <span class="price">$69.99</span>
+                                        <div class="box-progress-stock">
+                                            <div class="progress">
+                                                <div class="progress-bar" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <div class="stock-status d-flex justify-content-between align-items-center">
+                                                <div class="stock-item text-caption-1">
+                                                    <span class="stock-label text-secondary-2">Available:</span>
+                                                    <span class="stock-value">50</span>
+                                                </div>
+                                                <div class="stock-item text-caption-1">
+                                                    <span class="stock-label text-secondary-2">Sold:</span>
+                                                    <span class="stock-value">50</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="card-product">
+                                    <div class="card-product-wrapper">
+                                        <a href="product-detail.html" class="product-img">
+                                            <img class="lazyload img-product" data-src="{{ asset('public/frontend/images/products/electronic/electronic-9.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-9.jpg') }}" alt="image-product">
+                                            <img class="lazyload img-hover" data-src="{{ asset('public/frontend/images/products/electronic/electronic-10.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-10.jpg') }}" alt="image-product">
+                                        </a>
+                                        <div class="list-product-btn">
+                                            <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
+                                                <span class="icon icon-heart"></span>
+                                                <span class="tooltip">Wishlist</span>
+                                            </a>
+                                            <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
+                                                <span class="icon icon-gitDiff"></span>
+                                                <span class="tooltip">Compare</span>
+                                            </a>
+                                            <a href="#quickView" data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
+                                                <span class="icon icon-eye"></span>
+                                                <span class="tooltip">Quick View</span>
+                                            </a>
+                                        </div>
+                                        <div class="list-btn-main">
+                                            <a href="#shoppingCart" data-bs-toggle="modal" class="btn-main-product">Add To cart</a>
+                                        </div>
+                                    </div>
+                                    <div class="card-product-info">
+                                        <a href="product-detail.html" class="title link">iPad Mini 6 8.3 inch Wi-Fi 6-5G64GB</a>
+                                        <div class="box-rating">
+                                            <ul class="list-star">
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                            </ul>
+                                            <span class="text-caption-1 text-secondary">(1.234)</span>
+                                        </div>
+                                        <span class="price">$69.99</span>
+                                        <div class="box-progress-stock">
+                                            <div class="progress">
+                                                <div class="progress-bar" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <div class="stock-status d-flex justify-content-between align-items-center">
+                                                <div class="stock-item text-caption-1">
+                                                    <span class="stock-label text-secondary-2">Available:</span>
+                                                    <span class="stock-value">50</span>
+                                                </div>
+                                                <div class="stock-item text-caption-1">
+                                                    <span class="stock-label text-secondary-2">Sold:</span>
+                                                    <span class="stock-value">50</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sw-pagination-latest sw-dots type-circle justify-content-center"></div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="Audio" role="tabpanel">
+                    <div dir="ltr" class="swiper tf-sw-latest" data-preview="5" data-tablet="4" data-mobile="2" data-space-lg="30" data-space-md="30" data-space="15" data-pagination="1" data-pagination-md="1" data-pagination-lg="1">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <div class="card-product">
+                                    <div class="card-product-wrapper">
+                                        <a href="product-detail.html" class="product-img">
+                                            <img class="lazyload img-product" data-src="{{ asset('public/frontend/images/products/electronic/electronic-1.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-1.jpg') }}" alt="image-product">
+                                            <img class="lazyload img-hover" data-src="{{ asset('public/frontend/images/products/electronic/electronic-2.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-2.jpg') }}" alt="image-product">
+                                        </a>
+                                        <div class="list-product-btn">
+                                            <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
+                                                <span class="icon icon-heart"></span>
+                                                <span class="tooltip">Wishlist</span>
+                                            </a>
+                                            <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
+                                                <span class="icon icon-gitDiff"></span>
+                                                <span class="tooltip">Compare</span>
+                                            </a>
+                                            <a href="#quickView" data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
+                                                <span class="icon icon-eye"></span>
+                                                <span class="tooltip">Quick View</span>
+                                            </a>
+                                        </div>
+                                        <div class="list-btn-main">
+                                            <a href="#shoppingCart" data-bs-toggle="modal" class="btn-main-product">Add To cart</a>
+                                        </div>
+                                    </div>
+                                    <div class="card-product-info">
+                                        <a href="product-detail.html" class="title link">PlayStation DualSense Wireless Controller</a>
+                                        <div class="box-rating">
+                                            <ul class="list-star">
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                            </ul>
+                                            <span class="text-caption-1 text-secondary">(1.234)</span>
+                                        </div>
+                                        <span class="price">$59.99</span>
+                                        <div class="box-progress-stock">
+                                            <div class="progress">
+                                                <div class="progress-bar" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <div class="stock-status d-flex justify-content-between align-items-center">
+                                                <div class="stock-item text-caption-1">
+                                                    <span class="stock-label text-secondary-2">Available:</span>
+                                                    <span class="stock-value">50</span>
+                                                </div>
+                                                <div class="stock-item text-caption-1">
+                                                    <span class="stock-label text-secondary-2">Sold:</span>
+                                                    <span class="stock-value">50</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="card-product">
+                                    <div class="card-product-wrapper">
+                                        <a href="product-detail.html" class="product-img">
+                                            <img class="lazyload img-product" data-src="{{ asset('public/frontend/images/products/electronic/electronic-3.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-3.jpg') }}" alt="image-product">
+                                            <img class="lazyload img-hover" data-src="{{ asset('public/frontend/images/products/electronic/electronic-4.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-4.jpg') }}" alt="image-product">
+                                        </a>
+                                        <div class="on-sale-wrap"><span class="on-sale-item">-25%</span></div>
+                                        <div class="marquee-product bg-main">
+                                            <div class="marquee-wrapper">
+                                                <div class="initial-child-container">
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <span class="icon icon-lightning text-critical"></span>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <span class="icon icon-lightning text-critical"></span>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <span class="icon icon-lightning text-critical"></span>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <span class="icon icon-lightning text-critical"></span>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <span class="icon icon-lightning text-critical"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="marquee-wrapper">
+                                                <div class="initial-child-container">
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <span class="icon icon-lightning text-critical"></span>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <span class="icon icon-lightning text-critical"></span>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <span class="icon icon-lightning text-critical"></span>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <span class="icon icon-lightning text-critical"></span>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <span class="icon icon-lightning text-critical"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="list-product-btn">
+                                            <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
+                                                <span class="icon icon-heart"></span>
+                                                <span class="tooltip">Wishlist</span>
+                                            </a>
+                                            <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
+                                                <span class="icon icon-gitDiff"></span>
+                                                <span class="tooltip">Compare</span>
+                                            </a>
+                                            <a href="#quickView" data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
+                                                <span class="icon icon-eye"></span>
+                                                <span class="tooltip">Quick View</span>
+                                            </a>
+                                        </div>
+                                        <div class="list-btn-main">
+                                            <a href="#shoppingCart" data-bs-toggle="modal" class="btn-main-product">Add To cart</a>
+                                        </div>
+                                    </div>
+                                    <div class="card-product-info">
+                                        <a href="product-detail.html" class="title link">Apple Watch Ultra 2-  Rugged Titanium Case</a>
+                                        <div class="box-rating">
+                                            <ul class="list-star">
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                            </ul>
+                                            <span class="text-caption-1 text-secondary">(1.234)</span>
+                                        </div>
+                                        <span class="price"><span class="old-price">$98.00</span> $79.99</span>
+                                        <div class="box-progress-stock">
+                                            <div class="progress">
+                                                <div class="progress-bar" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <div class="stock-status d-flex justify-content-between align-items-center">
+                                                <div class="stock-item text-caption-1">
+                                                    <span class="stock-label text-secondary-2">Available:</span>
+                                                    <span class="stock-value">50</span>
+                                                </div>
+                                                <div class="stock-item text-caption-1">
+                                                    <span class="stock-label text-secondary-2">Sold:</span>
+                                                    <span class="stock-value">50</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="card-product card-product-size">
+                                    <div class="card-product-wrapper">
+                                        <a href="product-detail.html" class="product-img">
+                                            <img class="lazyload img-product" data-src="{{ asset('public/frontend/images/products/electronic/electronic-5.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-5.jpg') }}" alt="image-product">
+                                            <img class="lazyload img-hover" data-src="{{ asset('public/frontend/images/products/electronic/electronic-6.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-6.jpg') }}" alt="image-product">
+                                        </a>
+                                        <div class="variant-wrap size-list">
+                                            <ul class="variant-box">
+                                                <li class="size-item">S</li>
+                                                <li class="size-item">M</li>
+                                                <li class="size-item">L</li>
+                                                <li class="size-item">XL</li>
+                                            </ul>
+                                        </div>
+                                        <div class="variant-wrap countdown-wrap">
+                                            <div class="variant-box">
+                                                <div class="js-countdown" data-timer="1007500" data-labels="D :,H :,M :,S"></div>
+                                            </div>
+                                        </div>
+                                        <div class="list-product-btn">
+                                            <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
+                                                <span class="icon icon-heart"></span>
+                                                <span class="tooltip">Wishlist</span>
+                                            </a>
+                                            <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
+                                                <span class="icon icon-gitDiff"></span>
+                                                <span class="tooltip">Compare</span>
+                                            </a>
+                                            <a href="#quickView" data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
+                                                <span class="icon icon-eye"></span>
+                                                <span class="tooltip">Quick View</span>
+                                            </a>
+                                        </div>
+                                        <div class="list-btn-main">
+                                            <a href="#quickAdd" data-bs-toggle="modal" class="btn-main-product">Quick Add</a>
+                                        </div>
+                                    </div>
+                                    <div class="card-product-info">
+                                        <a href="product-detail.html" class="title link"> JBL Tune 750BTNC for Android Tablet</a>
+                                        <div class="box-rating">
+                                            <ul class="list-star">
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                            </ul>
+                                            <span class="text-caption-1 text-secondary">(1.234)</span>
+                                        </div>
+                                        <span class="price"><span class="old-price">$98.00</span> $89.99</span>
+                                        <div class="box-progress-stock">
+                                            <div class="progress">
+                                                <div class="progress-bar" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <div class="stock-status d-flex justify-content-between align-items-center">
+                                                <div class="stock-item text-caption-1">
+                                                    <span class="stock-label text-secondary-2">Available:</span>
+                                                    <span class="stock-value">50</span>
+                                                </div>
+                                                <div class="stock-item text-caption-1">
+                                                    <span class="stock-label text-secondary-2">Sold:</span>
+                                                    <span class="stock-value">50</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="card-product">
+                                    <div class="card-product-wrapper">
+                                        <a href="product-detail.html" class="product-img">
+                                            <img class="lazyload img-product" data-src="{{ asset('public/frontend/images/products/electronic/electronic-7.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-7.jpg') }}" alt="image-product">
+                                            <img class="lazyload img-hover" data-src="{{ asset('public/frontend/images/products/electronic/electronic-8.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-8.jpg') }}" alt="image-product">
+                                        </a>
+                                        <div class="list-product-btn">
+                                            <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
+                                                <span class="icon icon-heart"></span>
+                                                <span class="tooltip">Wishlist</span>
+                                            </a>
+                                            <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
+                                                <span class="icon icon-gitDiff"></span>
+                                                <span class="tooltip">Compare</span>
+                                            </a>
+                                            <a href="#quickView" data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
+                                                <span class="icon icon-eye"></span>
+                                                <span class="tooltip">Quick View</span>
+                                            </a>
+                                        </div>
+                                        <div class="list-btn-main">
+                                            <a href="#shoppingCart" data-bs-toggle="modal" class="btn-main-product">Add To cart</a>
+                                        </div>
+                                    </div>
+                                    <div class="card-product-info">
+                                        <a href="product-detail.html" class="title link">JBL Live 460nc for Android IOS & Android</a>
+                                        <div class="box-rating">
+                                            <ul class="list-star">
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                            </ul>
+                                            <span class="text-caption-1 text-secondary">(1.234)</span>
+                                        </div>
+                                        <span class="price">$69.99</span>
+                                        <div class="box-progress-stock">
+                                            <div class="progress">
+                                                <div class="progress-bar" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <div class="stock-status d-flex justify-content-between align-items-center">
+                                                <div class="stock-item text-caption-1">
+                                                    <span class="stock-label text-secondary-2">Available:</span>
+                                                    <span class="stock-value">50</span>
+                                                </div>
+                                                <div class="stock-item text-caption-1">
+                                                    <span class="stock-label text-secondary-2">Sold:</span>
+                                                    <span class="stock-value">50</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="card-product">
+                                    <div class="card-product-wrapper">
+                                        <a href="product-detail.html" class="product-img">
+                                            <img class="lazyload img-product" data-src="{{ asset('public/frontend/images/products/electronic/electronic-9.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-9.jpg') }}" alt="image-product">
+                                            <img class="lazyload img-hover" data-src="{{ asset('public/frontend/images/products/electronic/electronic-10.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-10.jpg') }}" alt="image-product">
+                                        </a>
+                                        <div class="list-product-btn">
+                                            <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
+                                                <span class="icon icon-heart"></span>
+                                                <span class="tooltip">Wishlist</span>
+                                            </a>
+                                            <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
+                                                <span class="icon icon-gitDiff"></span>
+                                                <span class="tooltip">Compare</span>
+                                            </a>
+                                            <a href="#quickView" data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
+                                                <span class="icon icon-eye"></span>
+                                                <span class="tooltip">Quick View</span>
+                                            </a>
+                                        </div>
+                                        <div class="list-btn-main">
+                                            <a href="#shoppingCart" data-bs-toggle="modal" class="btn-main-product">Add To cart</a>
+                                        </div>
+                                    </div>
+                                    <div class="card-product-info">
+                                        <a href="product-detail.html" class="title link">iPad Mini 6 8.3 inch Wi-Fi 6-5G64GB</a>
+                                        <div class="box-rating">
+                                            <ul class="list-star">
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                                <li class="icon icon-star"></li>
+                                            </ul>
+                                            <span class="text-caption-1 text-secondary">(1.234)</span>
+                                        </div>
+                                        <span class="price">$69.99</span>
+                                        <div class="box-progress-stock">
+                                            <div class="progress">
+                                                <div class="progress-bar" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <div class="stock-status d-flex justify-content-between align-items-center">
+                                                <div class="stock-item text-caption-1">
+                                                    <span class="stock-label text-secondary-2">Available:</span>
+                                                    <span class="stock-value">50</span>
+                                                </div>
+                                                <div class="stock-item text-caption-1">
+                                                    <span class="stock-label text-secondary-2">Sold:</span>
+                                                    <span class="stock-value">50</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sw-pagination-latest sw-dots type-circle justify-content-center"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- /Deal of the day -->
+
+<!-- Collection -->
+<section class="flat-spacing pt-0">
+    <div class="container">
+        <div dir="ltr" class="swiper tf-sw-collection" data-preview="3" data-tablet="2" data-mobile-sm="1.7" data-mobile="1" data-space-lg="30" data-space-md="30" data-space="15" data-pagination="1" data-pagination-md="1" data-pagination-lg="1">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <div class="collection-position-2 style-5 style-7 hover-img wow fadeInUp" data-wow-delay="0s">
+                        <a class="img-style">
+                            <img class="lazyload" data-src="{{ asset('public/frontend/images/collections/cls-electronic-1.jpg') }}" src="{{ asset('public/frontend/images/collections/cls-electronic-1.jpg') }}" alt="banner-cls">
+                        </a>
+                        <div class="content text-start">
+                            <h5 class="title mb_8"><a href="shop-default-grid.html" class="link">New Apple Watch</a></h5>
+                            <p class="mb_16">Stay connected and stylish with <br> the latest Apple Watch.</p>
+                            <div>
+                                <a href="shop-default-grid.html" class="btn-line">Shop Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="collection-position-2 style-5 style-7 hover-img wow fadeInUp" data-wow-delay="0.1s">
+                        <a class="img-style">
+                            <img class="lazyload" data-src="{{ asset('public/frontend/images/collections/cls-electronic-2.jpg') }}" src="{{ asset('public/frontend/images/collections/cls-electronic-2.jpg') }}" alt="banner-cls">
+                        </a>
+                        <div class="content text-start">
+                            <h5 class="title mb_8"><a href="shop-default-grid.html" class="link">Discover Galaxy</a></h5>
+                            <p class="mb_16">Experience the cutting-edge <br> Samsung S24</p>
+                            <div>
+                                <a href="shop-default-grid.html" class="btn-line">Shop Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="collection-position-2 style-5 style-7 hover-img wow fadeInUp" data-wow-delay="0.2s">
+                        <a class="img-style">
+                            <img class="lazyload" data-src="{{ asset('public/frontend/images/collections/cls-electronic-3.jpg') }}" src="{{ asset('public/frontend/images/collections/cls-electronic-3.jpg') }}" alt="banner-cls">
+                        </a>
+                        <div class="content text-start">
+                            <h5 class="title mb_8"><a href="shop-default-grid.html" class="link">Smart Speaker</a></h5>
+                            <p class="mb_16">Google home smart speaker with <br> google assistant</p>
+                            <div>
+                                <a href="shop-default-grid.html" class="btn-line">Shop Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="sw-pagination-collection sw-dots type-circle justify-content-center"></div>
+        </div>
+    </div>
+</section>
+<!-- /Collection -->
+
+<!-- Today's Popular Picks -->
+<section class="flat-spacing-4 pt-0">
+    <div class="container">
+        <div class="heading-section-2 wow fadeInUp">
+            <h3>Today's Popular Picks</h3>
+            <a href="shop-default-grid.html" class="line-under">See All Products</a>
+        </div>
+        <div dir="ltr" class="swiper tf-sw-recent" data-preview="6" data-tablet="4" data-mobile="2" data-space-lg="30" data-space-md="30" data-space="15" data-pagination="1" data-pagination-md="1" data-pagination-lg="1">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <div class="card-product wow fadeInUp" data-wow-delay="0s">
+                        <div class="card-product-wrapper">
+                            <a href="product-detail.html" class="product-img">
+                                <img class="lazyload img-product" data-src="{{ asset('public/frontend/images/products/electronic/electronic-11.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-11.jpg') }}" alt="image-product">
+                                <img class="lazyload img-hover" data-src="{{ asset('public/frontend/images/products/electronic/electronic-12.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-12.jpg') }}" alt="image-product">
+                            </a>
+                            <div class="list-product-btn">
+                                <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
+                                    <span class="icon icon-heart"></span>
+                                    <span class="tooltip">Wishlist</span>
+                                </a>
+                                <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
+                                    <span class="icon icon-gitDiff"></span>
+                                    <span class="tooltip">Compare</span>
+                                </a>
+                                <a href="#quickView" data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
+                                    <span class="icon icon-eye"></span>
+                                    <span class="tooltip">Quick View</span>
+                                </a>
+                            </div>
+                            <div class="list-btn-main">
+                                <a href="#shoppingCart" data-bs-toggle="modal" class="btn-main-product">Add To cart</a>
+                            </div>
+                        </div>
+                        <div class="card-product-info">
+                            <a href="product-detail.html" class="title link"> Kodak Pixpro Fz45-bk 45mm</a>
+                            <div class="box-rating">
+                                <ul class="list-star">
+                                    <li class="icon icon-star"></li>
+                                    <li class="icon icon-star"></li>
+                                    <li class="icon icon-star"></li>
+                                    <li class="icon icon-star"></li>
+                                    <li class="icon icon-star"></li>
+                                </ul>
+                                <span class="text-caption-1 text-secondary">(1.234)</span>
+                            </div>
+                            <span class="price">$59.99</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="card-product wow fadeInUp" data-wow-delay="0.1s">
+                        <div class="card-product-wrapper">
+                            <a href="product-detail.html" class="product-img">
+                                <img class="lazyload img-product" data-src="{{ asset('public/frontend/images/products/electronic/electronic-1.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-1.jpg') }}" alt="image-product">
+                                <img class="lazyload img-hover" data-src="{{ asset('public/frontend/images/products/electronic/electronic-2.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-2.jpg') }}" alt="image-product">
+                            </a>
+                            <div class="on-sale-wrap"><span class="on-sale-item">-25%</span></div>
+                            <div class="list-product-btn">
+                                <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
+                                    <span class="icon icon-heart"></span>
+                                    <span class="tooltip">Wishlist</span>
+                                </a>
+                                <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
+                                    <span class="icon icon-gitDiff"></span>
+                                    <span class="tooltip">Compare</span>
+                                </a>
+                                <a href="#quickView" data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
+                                    <span class="icon icon-eye"></span>
+                                    <span class="tooltip">Quick View</span>
+                                </a>
+                            </div>
+                            <div class="list-btn-main">
+                                <a href="#shoppingCart" data-bs-toggle="modal" class="btn-main-product">Add To cart</a>
+                            </div>
+                        </div>
+                        <div class="card-product-info">
+                            <a href="product-detail.html" class="title link">PlayStation DualSense Wireless Controller</a>
+                            <div class="box-rating">
+                                <ul class="list-star">
+                                    <li class="icon icon-star"></li>
+                                    <li class="icon icon-star"></li>
+                                    <li class="icon icon-star"></li>
+                                    <li class="icon icon-star"></li>
+                                    <li class="icon icon-star"></li>
+                                </ul>
+                                <span class="text-caption-1 text-secondary">(1.234)</span>
+                            </div>
+                            <span class="price">$59.99</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="card-product wow fadeInUp" data-wow-delay="0.2s">
+                        <div class="card-product-wrapper">
+                            <a href="product-detail.html" class="product-img">
+                                <img class="lazyload img-product" data-src="{{ asset('public/frontend/images/products/electronic/electronic-13.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-13.jpg') }}" alt="image-product">
+                                <img class="lazyload img-hover" data-src="{{ asset('public/frontend/images/products/electronic/electronic-14.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-14.jpg') }}" alt="image-product">
+                            </a>
+                            <div class="list-product-btn">
+                                <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
+                                    <span class="icon icon-heart"></span>
+                                    <span class="tooltip">Wishlist</span>
+                                </a>
+                                <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
+                                    <span class="icon icon-gitDiff"></span>
+                                    <span class="tooltip">Compare</span>
+                                </a>
+                                <a href="#quickView" data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
+                                    <span class="icon icon-eye"></span>
+                                    <span class="tooltip">Quick View</span>
+                                </a>
+                            </div>
+                            <div class="list-btn-main">
+                                <a href="#shoppingCart" data-bs-toggle="modal" class="btn-main-product">Add To cart</a>
+                            </div>
+                        </div>
+                        <div class="card-product-info">
+                            <a href="product-detail.html" class="title link">Apple iPhone 14 Plus, Gold/Blue 128GB</a>
+                            <div class="box-rating">
+                                <ul class="list-star">
+                                    <li class="icon icon-star"></li>
+                                    <li class="icon icon-star"></li>
+                                    <li class="icon icon-star"></li>
+                                    <li class="icon icon-star"></li>
+                                    <li class="icon icon-star"></li>
+                                </ul>
+                                <span class="text-caption-1 text-secondary">(1.234)</span>
+                            </div>
+                            <span class="price">$59.99</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="card-product wow fadeInUp" data-wow-delay="0.3s">
+                        <div class="card-product-wrapper">
+                            <a href="product-detail.html" class="product-img">
+                                <img class="lazyload img-product" data-src="{{ asset('public/frontend/images/products/electronic/electronic-15.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-15.jpg') }}" alt="image-product">
+                                <img class="lazyload img-hover" data-src="{{ asset('public/frontend/images/products/electronic/electronic-16.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-16.jpg') }}" alt="image-product">
+                            </a>
+                            <div class="list-product-btn">
+                                <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
+                                    <span class="icon icon-heart"></span>
+                                    <span class="tooltip">Wishlist</span>
+                                </a>
+                                <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
+                                    <span class="icon icon-gitDiff"></span>
+                                    <span class="tooltip">Compare</span>
+                                </a>
+                                <a href="#quickView" data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
+                                    <span class="icon icon-eye"></span>
+                                    <span class="tooltip">Quick View</span>
+                                </a>
+                            </div>
+                            <div class="list-btn-main">
+                                <a href="#shoppingCart" data-bs-toggle="modal" class="btn-main-product">Add To cart</a>
+                            </div>
+                        </div>
+                        <div class="card-product-info">
+                            <a href="product-detail.html" class="title link">Apple iPhone 14 Plus, Gold/Blue 128GB</a>
+                            <div class="box-rating">
+                                <ul class="list-star">
+                                    <li class="icon icon-star"></li>
+                                    <li class="icon icon-star"></li>
+                                    <li class="icon icon-star"></li>
+                                    <li class="icon icon-star"></li>
+                                    <li class="icon icon-star"></li>
+                                </ul>
+                                <span class="text-caption-1 text-secondary">(1.234)</span>
+                            </div>
+                            <span class="price">$59.99</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="card-product wow fadeInUp" data-wow-delay="0.4s">
+                        <div class="card-product-wrapper">
+                            <a href="product-detail.html" class="product-img">
+                                <img class="lazyload img-product" data-src="{{ asset('public/frontend/images/products/electronic/electronic-17.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-17.jpg') }}" alt="image-product">
+                                <img class="lazyload img-hover" data-src="{{ asset('public/frontend/images/products/electronic/electronic-18.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-18.jpg') }}" alt="image-product">
+                            </a>
+                            <div class="list-product-btn">
+                                <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
+                                    <span class="icon icon-heart"></span>
+                                    <span class="tooltip">Wishlist</span>
+                                </a>
+                                <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
+                                    <span class="icon icon-gitDiff"></span>
+                                    <span class="tooltip">Compare</span>
+                                </a>
+                                <a href="#quickView" data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
+                                    <span class="icon icon-eye"></span>
+                                    <span class="tooltip">Quick View</span>
+                                </a>
+                            </div>
+                            <div class="list-btn-main">
+                                <a href="#shoppingCart" data-bs-toggle="modal" class="btn-main-product">Add To cart</a>
+                            </div>
+                        </div>
+                        <div class="card-product-info">
+                            <a href="product-detail.html" class="title link">LG AI DD™ Inverter 16kg automatic F2721HVRB</a>
+                            <div class="box-rating">
+                                <ul class="list-star">
+                                    <li class="icon icon-star"></li>
+                                    <li class="icon icon-star"></li>
+                                    <li class="icon icon-star"></li>
+                                    <li class="icon icon-star"></li>
+                                    <li class="icon icon-star"></li>
+                                </ul>
+                                <span class="text-caption-1 text-secondary">(1.234)</span>
+                            </div>
+                            <span class="price">$59.99</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="card-product wow fadeInUp" data-wow-delay="0.5s">
+                        <div class="card-product-wrapper">
+                            <a href="product-detail.html" class="product-img">
+                                <img class="lazyload img-product" data-src="{{ asset('public/frontend/images/products/electronic/electronic-19.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-19.jpg') }}" alt="image-product">
+                                <img class="lazyload img-hover" data-src="{{ asset('public/frontend/images/products/electronic/electronic-20.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-20.jpg') }}" alt="image-product">
+                            </a>
+                            <div class="list-product-btn">
+                                <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
+                                    <span class="icon icon-heart"></span>
+                                    <span class="tooltip">Wishlist</span>
+                                </a>
+                                <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
+                                    <span class="icon icon-gitDiff"></span>
+                                    <span class="tooltip">Compare</span>
+                                </a>
+                                <a href="#quickView" data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
+                                    <span class="icon icon-eye"></span>
+                                    <span class="tooltip">Quick View</span>
+                                </a>
+                            </div>
+                            <div class="list-btn-main">
+                                <a href="#shoppingCart" data-bs-toggle="modal" class="btn-main-product">Add To cart</a>
+                            </div>
+                        </div>
+                        <div class="card-product-info">
+                            <a href="product-detail.html" class="title link">Instant Pot Vortex Plus XL 8-quart Dual</a>
+                            <div class="box-rating">
+                                <ul class="list-star">
+                                    <li class="icon icon-star"></li>
+                                    <li class="icon icon-star"></li>
+                                    <li class="icon icon-star"></li>
+                                    <li class="icon icon-star"></li>
+                                    <li class="icon icon-star"></li>
+                                </ul>
+                                <span class="text-caption-1 text-secondary">(1.234)</span>
+                            </div>
+                            <span class="price">$59.99</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="sw-pagination-recent sw-dots type-circle justify-content-center"></div>
+        </div>
+    </div>
+</section>
+<!-- /Today's Popular Picks -->
+
+<!-- banner -->
+<section>
+    <div class="container">
+        <div class="banner-supper-sale">
+            <h6>Supper Sale:</h6>
+            <div class="code-sale">K82FS8</div>
+            <div class="body-text-1">-20% Discount for first purchse</div>
+            <a href="#" class="tf-btn btn-fill"><span class="text text-button">Discover More</span></a>
+        </div>
+    </div>
+</section>
+<!-- /banner -->
+
+<!-- product -->
+<section class="flat-spacing-4">
+    <div class="container">
+        <div class="grid-card-product tf-grid-layout lg-col-3 md-col-2">
+            <div class="column-card-product">
+                <h5 class="heading wow fadeInUp">Featured products</h5>
+                <div class="list-card-product">
+                    <div class="card-product list-st-2 wow fadeInUp">
+                        <div class="card-product-wrapper">
+                            <a href="product-detail.html" class="product-img">
+                                <img class="lazyload img-product" data-src="{{ asset('public/frontend/images/products/electronic/electronic-21.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-21.jpg') }}" alt="image-product">
+                                <img class="lazyload img-hover" data-src="{{ asset('public/frontend/images/products/electronic/electronic-22.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-22.jpg') }}" alt="image-product">
+                            </a>
+                            <div class="on-sale-wrap"><span class="on-sale-item">-25%</span></div>
+                        </div>
+                        <div class="card-product-info">
+                            <a href="product-detail.html" class="title link">Instant Pot Vortex Plus XL 8-quart Dual Basket Air Fryer Oven</a>
+                            <div class="bottom">
+                                <div class="inner-left">
+                                    <div class="box-rating">
+                                        <ul class="list-star">
+                                            <li class="icon icon-star"></li>
+                                            <li class="icon icon-star"></li>
+                                            <li class="icon icon-star"></li>
+                                            <li class="icon icon-star"></li>
+                                            <li class="icon icon-star"></li>
                                         </ul>
+                                        <span class="text-caption-1 text-secondary">(1.234)</span>
                                     </div>
-                                    <div class="wsus_pro__det_size">
-                                        <h5>size :</h5>
-                                        <ul>
-                                            <li><a href="#">S</a></li>
-                                            <li><a href="#">M</a></li>
-                                            <li><a href="#">L</a></li>
-                                            <li><a href="#">XL</a></li>
+                                    <span class="price py-4"> $59.99</span>
+                                </div>
+                                <a href="#shoppingCart" data-bs-toggle="modal" class="box-icon">
+                                    <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M16.2187 10.3327V5.99935C16.2187 4.85008 15.7622 3.74788 14.9495 2.93522C14.1369 2.12256 13.0347 1.66602 11.8854 1.66602C10.7361 1.66602 9.63394 2.12256 8.82129 2.93522C8.00863 3.74788 7.55208 4.85008 7.55208 5.99935V10.3327M4.30208 8.16602H19.4687L20.5521 21.166H3.21875L4.30208 8.16602Z" stroke="#181818" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>   
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-product list-st-2 wow fadeInUp">
+                        <div class="card-product-wrapper">
+                            <a href="product-detail.html" class="product-img">
+                                <img class="lazyload img-product" data-src="{{ asset('public/frontend/images/products/electronic/electronic-7.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-7.jpg') }}" alt="image-product">
+                                <img class="lazyload img-hover" data-src="{{ asset('public/frontend/images/products/electronic/electronic-8.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-8.jpg') }}" alt="image-product">
+                            </a>
+                            <div class="on-sale-wrap"><span class="on-sale-item">-25%</span></div>
+                        </div>
+                        <div class="card-product-info">
+                            <a href="product-detail.html" class="title link">JBL Live 460nc for Android IOS & Android</a>
+                            <div class="bottom">
+                                <div class="inner-left">
+                                    <div class="box-rating">
+                                        <ul class="list-star">
+                                            <li class="icon icon-star"></li>
+                                            <li class="icon icon-star"></li>
+                                            <li class="icon icon-star"></li>
+                                            <li class="icon icon-star"></li>
+                                            <li class="icon icon-star"></li>
                                         </ul>
+                                        <span class="text-caption-1 text-secondary">(1.234)</span>
                                     </div>
-                                    <div class="wsus__quentity">
-                                        <h5>quentity :</h5>
-                                        <form class="select_number">
-                                            <input class="number_area" type="text" min="1" max="100" value="1" />
-                                        </form>
-                                        <h3>$50.00</h3>
-                                    </div>
-                                    <div class="wsus__selectbox">
-                                        <div class="row">
-                                            <div class="col-xl-6 col-sm-6">
-                                                <h5 class="mb-2">select:</h5>
-                                                <select class="select_2" name="state">
-                                                    <option>default select</option>
-                                                    <option>select 1</option>
-                                                    <option>select 2</option>
-                                                    <option>select 3</option>
-                                                    <option>select 4</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-xl-6 col-sm-6">
-                                                <h5 class="mb-2">select:</h5>
-                                                <select class="select_2" name="state">
-                                                    <option>default select</option>
-                                                    <option>select 1</option>
-                                                    <option>select 2</option>
-                                                    <option>select 3</option>
-                                                    <option>select 4</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <ul class="wsus__button_area">
-                                        <li><a class="add_cart" href="#">add to cart</a></li>
-                                        <li><a class="buy_now" href="#">buy now</a></li>
-                                        <li><a href="#"><i class="fal fa-heart"></i></a></li>
-                                        <li><a href="#"><i class="far fa-random"></i></a></li>
-                                    </ul>
-                                    <p class="brand_model"><span>model :</span> 12345670</p>
-                                    <p class="brand_model"><span>brand :</span> The Northland</p>
-                                    <div class="wsus__pro_det_share">
-                                        <h5>share :</h5>
-                                        <ul class="d-flex">
-                                            <li><a class="facebook" href="#"><i class="fab fa-facebook-f"></i></a></li>
-                                            <li><a class="twitter" href="#"><i class="fab fa-twitter"></i></a></li>
-                                            <li><a class="whatsapp" href="#"><i class="fab fa-whatsapp"></i></a></li>
-                                            <li><a class="instagram" href="#"><i class="fab fa-instagram"></i></a></li>
+                                    <span class="price py-4"> $59.99</span>
+                                </div>
+                                <a href="#shoppingCart" data-bs-toggle="modal" class="box-icon">
+                                    <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M16.2187 10.3327V5.99935C16.2187 4.85008 15.7622 3.74788 14.9495 2.93522C14.1369 2.12256 13.0347 1.66602 11.8854 1.66602C10.7361 1.66602 9.63394 2.12256 8.82129 2.93522C8.00863 3.74788 7.55208 4.85008 7.55208 5.99935V10.3327M4.30208 8.16602H19.4687L20.5521 21.166H3.21875L4.30208 8.16602Z" stroke="#181818" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>   
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-product list-st-2 wow fadeInUp">
+                        <div class="card-product-wrapper">
+                            <a href="product-detail.html" class="product-img">
+                                <img class="lazyload img-product" data-src="{{ asset('public/frontend/images/products/electronic/electronic-1.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-1.jpg') }}" alt="image-product">
+                                <img class="lazyload img-hover" data-src="{{ asset('public/frontend/images/products/electronic/electronic-2.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-2.jpg') }}" alt="image-product">
+                            </a>
+                            <div class="on-sale-wrap"><span class="on-sale-item">-25%</span></div>
+                        </div>
+                        <div class="card-product-info">
+                            <a href="product-detail.html" class="title link">PlayStation DualSense Wireless Controller</a>
+                            <div class="bottom">
+                                <div class="inner-left">
+                                    <div class="box-rating">
+                                        <ul class="list-star">
+                                            <li class="icon icon-star"></li>
+                                            <li class="icon icon-star"></li>
+                                            <li class="icon icon-star"></li>
+                                            <li class="icon icon-star"></li>
+                                            <li class="icon icon-star"></li>
                                         </ul>
+                                        <span class="text-caption-1 text-secondary">(1.234)</span>
                                     </div>
+                                    <span class="price py-4"> $59.99</span>
                                 </div>
+                                <a href="#shoppingCart" data-bs-toggle="modal" class="box-icon">
+                                    <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M16.2187 10.3327V5.99935C16.2187 4.85008 15.7622 3.74788 14.9495 2.93522C14.1369 2.12256 13.0347 1.66602 11.8854 1.66602C10.7361 1.66602 9.63394 2.12256 8.82129 2.93522C8.00863 3.74788 7.55208 4.85008 7.55208 5.99935V10.3327M4.30208 8.16602H19.4687L20.5521 21.166H3.21875L4.30208 8.16602Z" stroke="#181818" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>   
+                                </a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-    <!--==========================
-      PRODUCT MODAL VIEW END
-    ===========================-->
-
-
-    <!--============================
-        BANNER PART 2 START
-    ==============================-->
-    <section id="wsus__banner">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-12">
-                    <div class="wsus__banner_content">
-                        <div class="row banner_slider">
-
-                            @foreach ($sliders as $item)
-                                <div class="col-xl-12">
-                                    <div class="wsus__single_slider" style="background: url({{ asset($item->slider_image) }});">
-                                        <div class="wsus__single_slider_text">
-                                            <h3>{{ $item->title }}</h3>
-                                            <h1>{{ $item->type }}</h1>
-                                            <h6>start at {{ $settings->currency_symbol }}{{ number_format($item->starting_price, 2) }}</h6>
-                                            <a class="common_btn" href="{{ $item->btn_url }}">shop now</a>
-                                        </div>
+            <div class="column-card-product">
+                <h5 class="heading wow fadeInUp">New Arrivals</h5>
+                <div class="list-card-product">
+                    <div class="card-product list-st-2 wow fadeInUp">
+                        <div class="card-product-wrapper">
+                            <a href="product-detail.html" class="product-img">
+                                <img class="lazyload img-product" data-src="{{ asset('public/frontend/images/products/electronic/electronic-19.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-19.jpg') }}" alt="image-product">
+                                <img class="lazyload img-hover" data-src="{{ asset('public/frontend/images/products/electronic/electronic-20.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-20.jpg') }}" alt="image-product">
+                            </a>
+                            <div class="on-sale-wrap"><span class="on-sale-item">-25%</span></div>
+                        </div>
+                        <div class="card-product-info">
+                            <a href="product-detail.html" class="title link">LG AI DD™ Inverter 16kg automatic F2721HVRB</a>
+                            <div class="bottom">
+                                <div class="inner-left">
+                                    <div class="box-rating">
+                                        <ul class="list-star">
+                                            <li class="icon icon-star"></li>
+                                            <li class="icon icon-star"></li>
+                                            <li class="icon icon-star"></li>
+                                            <li class="icon icon-star"></li>
+                                            <li class="icon icon-star"></li>
+                                        </ul>
+                                        <span class="text-caption-1 text-secondary">(1.234)</span>
                                     </div>
+                                    <span class="price py-4"> $59.99</span>
                                 </div>
-                            @endforeach
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!--============================
-        BANNER PART 2 END
-    ==============================-->
-
-
-    <!--============================
-        FLASH SELL START
-    ==============================-->
-    <section id="wsus__flash_sell" class="wsus__flash_sell_2">
-        <div class=" container">
-            <div class="row">
-                <div class="col-xl-12">
-                    <div class="offer_time" style="background: url({{ asset('public/frontend/images/flash_sell_bg.jpg') }})">
-                        <div class="wsus__flash_coundown">
-                            <span class=" end_text">flash sell</span>
-                            <div class="simply-countdown simply-countdown-one"></div>
-                            <a class="common_btn" href="{{ route('flash.sale') }}">see more <i class="fas fa-caret-right"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row flash_sell_slider">
-
-                @foreach ($flashSaleItems as $item)
-                    @php
-                        $product = App\Models\Product::where('id', $item->product_id)->first();
-                        $category = App\Models\Category::where('id', $product->category_id)->first();
-                        $productImage = App\Models\ProductImage::where('product_id', $product->id)->get();
-                    @endphp
-
-                    <div class="col-xl-3 col-sm-6 col-lg-4">
-                        <div class="wsus__product_item">
-                            <span class="wsus__new">{{ productType($product->type) }}</span>
-                            <span class="wsus__minus">-{{ calcDiscountPercent($product->price, $product->offer_price) }}%</span>
-
-                            <a class="wsus__pro_link" href="product_details.html">
-                                <img src="{{ asset($product->thumb_image) }}" alt="{{ $product->name }}" class="img-fluid w-100 img_1" />
-                                <img src="{{ asset($productImage[0]->images) }}" alt="{{ $product->name }}" class="img-fluid w-100 img_2" />
-                            </a>
-
-                            <ul class="wsus__single_pro_icon">
-                                <li><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"><i
-                                            class="far fa-eye"></i></a></li>
-                                <li><a href="#"><i class="far fa-heart"></i></a></li>
-                                <li><a href="#"><i class="far fa-random"></i></a>
-                            </ul>
-                            <div class="wsus__product_details">
-                                <a class="wsus__category" href="#">{{ $category->category_name }} </a>
-                                <p class="wsus__pro_rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                    <span>(133 review)</span>
-                                </p>
-                                <a class="wsus__pro_name" href="{{ route('product.details', $product->slug) }}">{{ $product->name }}</a>
-                                <p class="wsus__price">
-                                    @if ( !empty(checkDiscount($product)) )
-                                        ${{ $product->offer_price }} <del>${{ $product->price }}</del>
-                                    @else
-                                        ${{ $product->price }}
-                                    @endif
-                                </p>
-                                <a class="add_cart" href="#">add to cart</a>
+                                <a href="#shoppingCart" data-bs-toggle="modal" class="box-icon">
+                                    <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M16.2187 10.3327V5.99935C16.2187 4.85008 15.7622 3.74788 14.9495 2.93522C14.1369 2.12256 13.0347 1.66602 11.8854 1.66602C10.7361 1.66602 9.63394 2.12256 8.82129 2.93522C8.00863 3.74788 7.55208 4.85008 7.55208 5.99935V10.3327M4.30208 8.16602H19.4687L20.5521 21.166H3.21875L4.30208 8.16602Z" stroke="#181818" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>   
+                                </a>
                             </div>
                         </div>
                     </div>
-                @endforeach
-            </div>
-        </div>
-    </section>
-    <!--============================
-        FLASH SELL END
-    ==============================-->
-
-
-    <!--============================
-       MONTHLY TOP PRODUCT START
-    ==============================-->
-    <section id="wsus__monthly_top" class="wsus__monthly_top_2">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-12 col-lg-12">
-                    <div class="wsus__monthly_top_banner">
-                        <div class="wsus__monthly_top_banner_img">
-                            <img src="images/monthly_top_img3.jpg" alt="img" class="img-fluid w-100">
-                            <span></span>
-                        </div>
-                        <div class="wsus__monthly_top_banner_text">
-                            <h4>Black Friday Sale</h4>
-                            <h3>Up To <span>70% Off</span></h3>
-                            <H6>Everything</H6>
-                            <a class="shop_btn" href="#">shop now</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xl-12">
-                    <div class="wsus__section_header for_md">
-                        <h3>Top Categories Of The Month</h3>
-                        <div class="monthly_top_filter">
-                            <button class=" active" data-filter="*">music</button>
-                            <button data-filter=".cloth">clothing</button>
-                            <button data-filter=".elec">Electronic</button>
-                            <button data-filter=".spk">Speakers</button>
-                            <button data-filter=".cam">Cameras</button>
-                            <button data-filter=".wat">Watches</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xl-12 col-lg-12">
-                    <div class="row grid">
-                        <div class="col-xl-2 col-6 col-sm-6 col-md-4 col-lg-3  elec cam wat">
-                            <a class="wsus__hot_deals__single" href="#">
-                                <div class="wsus__hot_deals__single_img">
-                                    <img src="images/pro8_8.jpg" alt="bag" class="img-fluid w-100">
-                                </div>
-                                <div class="wsus__hot_deals__single_text">
-                                    <h5>wemen's one pcs</h5>
-                                    <p class="wsus__rating">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star-half-alt"></i>
-                                    </p>
-                                    <p class="wsus__tk">$120.20 <del>130.00</del></p>
-                                </div>
+                    <div class="card-product list-st-2 wow fadeInUp">
+                        <div class="card-product-wrapper">
+                            <a href="product-detail.html" class="product-img">
+                                <img class="lazyload img-product" data-src="{{ asset('public/frontend/images/products/electronic/electronic-13.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-13.jpg') }}" alt="image-product">
+                                <img class="lazyload img-hover" data-src="{{ asset('public/frontend/images/products/electronic/electronic-14.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-14.jpg') }}" alt="image-product">
                             </a>
+                            <div class="on-sale-wrap"><span class="on-sale-item">-25%</span></div>
                         </div>
-                        <div class="col-xl-2 col-6 col-sm-6 col-md-4 col-lg-3  cloth spk">
-                            <a class="wsus__hot_deals__single" href="#">
-                                <div class="wsus__hot_deals__single_img">
-                                    <img src="images/pro4_4.jpg" alt="bag" class="img-fluid w-100">
-                                </div>
-                                <div class="wsus__hot_deals__single_text">
-                                    <h5>men's casual watch</h5>
-                                    <p class="wsus__rating">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star-half-alt"></i>
-                                    </p>
-                                    <p class="wsus__tk">$120.20 <del>130.00</del></p>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-xl-2 col-6 col-sm-6 col-md-4 col-lg-3  elec cam wat">
-                            <a class="wsus__hot_deals__single" href="#">
-                                <div class="wsus__hot_deals__single_img">
-                                    <img src="images/pro9.jpg" alt="bag" class="img-fluid w-100">
-                                </div>
-                                <div class="wsus__hot_deals__single_text">
-                                    <h5>men's sholder bag</h5>
-                                    <p class="wsus__rating">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star-half-alt"></i>
-                                    </p>
-                                    <p class="wsus__tk">$120.20 <del>130.00</del></p>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-xl-2 col-6 col-sm-6 col-md-4 col-lg-3  cloth spk">
-                            <a class="wsus__hot_deals__single" href="#">
-                                <div class="wsus__hot_deals__single_img">
-                                    <img src="images/pro9_9.jpg" alt="bag" class="img-fluid w-100">
-                                </div>
-                                <div class="wsus__hot_deals__single_text">
-                                    <h5>men's sholder bag</h5>
-                                    <p class="wsus__rating">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star-half-alt"></i>
-                                    </p>
-                                    <p class="wsus__tk">$120.20 <del>130.00</del></p>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-xl-2 col-6 col-sm-6 col-md-4 col-lg-3  elec cam">
-                            <a class="wsus__hot_deals__single" href="#">
-                                <div class="wsus__hot_deals__single_img">
-                                    <img src="images/pro10.jpg" alt="bag" class="img-fluid w-100">
-                                </div>
-                                <div class="wsus__hot_deals__single_text">
-                                    <h5>MSI gaming chair</h5>
-                                    <p class="wsus__rating">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star-half-alt"></i>
-                                    </p>
-                                    <p class="wsus__tk">$120.20 <del>130.00</del></p>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-xl-2 col-6 col-sm-6 col-md-4 col-lg-3  cloth cam wat">
-                            <a class="wsus__hot_deals__single" href="#">
-                                <div class="wsus__hot_deals__single_img">
-                                    <img src="images/pro2.jpg" alt="bag" class="img-fluid w-100">
-                                </div>
-                                <div class="wsus__hot_deals__single_text">
-                                    <h5>men's shoes</h5>
-                                    <p class="wsus__rating">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star-half-alt"></i>
-                                    </p>
-                                    <p class="wsus__tk">$120.20 <del>130.00</del></p>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-xl-2 col-6 col-sm-6 col-md-4 col-lg-3  elec spk">
-                            <a class="wsus__hot_deals__single" href="#">
-                                <div class="wsus__hot_deals__single_img">
-                                    <img src="images/pro2.jpg" alt="bag" class="img-fluid w-100">
-                                </div>
-                                <div class="wsus__hot_deals__single_text">
-                                    <h5>men's shoes</h5>
-                                    <p class="wsus__rating">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star-half-alt"></i>
-                                    </p>
-                                    <p class="wsus__tk">$120.20 <del>130.00</del></p>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-xl-2 col-6 col-sm-6 col-md-4 col-lg-3  cloth cam wat">
-                            <a class="wsus__hot_deals__single" href="#">
-                                <div class="wsus__hot_deals__single_img">
-                                    <img src="images/pro10.jpg" alt="bag" class="img-fluid w-100">
-                                </div>
-                                <div class="wsus__hot_deals__single_text">
-                                    <h5>MSI gaming chair</h5>
-                                    <p class="wsus__rating">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star-half-alt"></i>
-                                    </p>
-                                    <p class="wsus__tk">$120.20 <del>130.00</del></p>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-xl-2 col-6 col-sm-6 col-md-4 col-lg-3  elec cam wat">
-                            <a class="wsus__hot_deals__single" href="#">
-                                <div class="wsus__hot_deals__single_img">
-                                    <img src="images/pro8_8.jpg" alt="bag" class="img-fluid w-100">
-                                </div>
-                                <div class="wsus__hot_deals__single_text">
-                                    <h5>wemen's one pcs</h5>
-                                    <p class="wsus__rating">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star-half-alt"></i>
-                                    </p>
-                                    <p class="wsus__tk">$120.20 <del>130.00</del></p>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-xl-2 col-6 col-sm-6 col-md-4 col-lg-3  cloth spk">
-                            <a class="wsus__hot_deals__single" href="#">
-                                <div class="wsus__hot_deals__single_img">
-                                    <img src="images/pro4_4.jpg" alt="bag" class="img-fluid w-100">
-                                </div>
-                                <div class="wsus__hot_deals__single_text">
-                                    <h5>men's casual watch</h5>
-                                    <p class="wsus__rating">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star-half-alt"></i>
-                                    </p>
-                                    <p class="wsus__tk">$120.20 <del>130.00</del></p>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-xl-2 col-6 col-sm-6 col-md-4 col-lg-3  elec wat">
-                            <a class="wsus__hot_deals__single" href="#">
-                                <div class="wsus__hot_deals__single_img">
-                                    <img src="images/pro9.jpg" alt="bag" class="img-fluid w-100">
-                                </div>
-                                <div class="wsus__hot_deals__single_text">
-                                    <h5>men's sholder bag</h5>
-                                    <p class="wsus__rating">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star-half-alt"></i>
-                                    </p>
-                                    <p class="wsus__tk">$120.20 <del>130.00</del></p>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-xl-2 col-6 col-sm-6 col-md-4 col-lg-3  cloth spk">
-                            <a class="wsus__hot_deals__single" href="#">
-                                <div class="wsus__hot_deals__single_img">
-                                    <img src="images/pro9_9.jpg" alt="bag" class="img-fluid w-100">
-                                </div>
-                                <div class="wsus__hot_deals__single_text">
-                                    <h5>men's sholder bag</h5>
-                                    <p class="wsus__rating">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star-half-alt"></i>
-                                    </p>
-                                    <p class="wsus__tk">$120.20 <del>130.00</del></p>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!--============================
-       MONTHLY TOP PRODUCT END
-    ==============================-->
-
-
-    <!--============================
-        BRAND SLIDER START
-    ==============================-->
-    <section id="wsus__brand_sleder" class="brand_slider_2">
-        <div class="container">
-            <div class="brand_border">
-                <div class="row brand_slider">
-                    <div class="col-xl-2">
-                        <div class="wsus__brand_logo">
-                            <img src="images/brand_logo_1.jpg" alt="brand" class="img-fluid w-100">
-                        </div>
-                    </div>
-                    <div class="col-xl-2">
-                        <div class="wsus__brand_logo">
-                            <img src="images/brand_logo_2.jpg" alt="brand" class="img-fluid w-100">
-                        </div>
-                    </div>
-                    <div class="col-xl-2">
-                        <div class="wsus__brand_logo">
-                            <img src="images/brand_logo_3.jpg" alt="brand" class="img-fluid w-100">
-                        </div>
-                    </div>
-                    <div class="col-xl-2">
-                        <div class="wsus__brand_logo">
-                            <img src="images/brand_logo_4.jpg" alt="brand" class="img-fluid w-100">
-                        </div>
-                    </div>
-                    <div class="col-xl-2">
-                        <div class="wsus__brand_logo">
-                            <img src="images/brand_logo_5.jpg" alt="brand" class="img-fluid w-100">
-                        </div>
-                    </div>
-                    <div class="col-xl-2">
-                        <div class="wsus__brand_logo">
-                            <img src="images/brand_logo_6.jpg" alt="brand" class="img-fluid w-100">
-                        </div>
-                    </div>
-                    <div class="col-xl-2">
-                        <div class="wsus__brand_logo">
-                            <img src="images/brand_logo_3.jpg" alt="brand" class="img-fluid w-100">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!--============================
-        BRAND SLIDER END
-    ==============================-->
-
-
-    <!--============================
-        SINGLE BANNER START
-    ==============================-->
-    <section id="wsus__single_banner" class="wsus__single_banner_2">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-6 col-lg-6">
-                    <div class="wsus__single_banner_content">
-                        <div class="wsus__single_banner_img">
-                            <img src="images/single_banner_7.jpg" alt="banner" class="img-fluid w-100">
-                        </div>
-                        <div class="wsus__single_banner_text">
-                            <h6>sell on <span>35% off</span></h6>
-                            <h3>smart watch</h3>
-                            <a class="shop_btn" href="#">shop now</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-6 col-lg-6">
-                    <div class="wsus__single_banner_content single_banner_2">
-                        <div class="wsus__single_banner_img">
-                            <img src="images/single_banner_8.jpg" alt="banner" class="img-fluid w-100">
-                        </div>
-                        <div class="wsus__single_banner_text">
-                            <h6>New Collection</h6>
-                            <h3>bicycle</h3>
-                            <a class="shop_btn" href="#">shop now</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!--============================
-        SINGLE BANNER END  
-    ==============================-->
-
-
-    <!--============================
-        HOT DEALS START
-    ==============================-->
-    <section id="wsus__hot_deals" class="wsus__hot_deals_2">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-12">
-                    <div class="wsus__section_header">
-                        <h3>hot deals of the day</h3>
-                    </div>
-                </div>
-            </div>
-            <div class="row hot_deals_slider_2">
-                <div class="col-xl-4 col-lg-6">
-                    <div class="wsus__hot_deals_offer">
-                        <div class="wsus__hot_deals_img">
-                            <img src="images/pro0010.jpg" alt="mobile" class="img-fluid w-100">
-                        </div>
-                        <div class="wsus__hot_deals_text">
-                            <a class="wsus__hot_title" href="product_details.html">apple smart watch</a>
-                            <p class="wsus__rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                                <span>(127 review)</span>
-                            </p>
-                            <p class="wsus__hot_deals_proce">$160 <del>$200</del></p>
-                            <P class="wsus__details">
-                                Lorem ipsum dolor sit amet, cons
-                                ectetur incid duut labore et dol.
-                                Re magna atellus in metus.
-                            </P>
-                            <ul>
-                                <li><a class="add_cart" href="#">add to cart</a></li>
-                                <li><a href="#"><i class="far fa-heart"></i></a></li>
-                                <li><a href="#"><i class="far fa-random"></i></a></li>
-                            </ul>
-                            <div class="simply-countdown simply-countdown-one"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-4 col-lg-6">
-                    <div class="wsus__hot_deals_offer">
-                        <div class="wsus__hot_deals_img">
-                            <img src="images/pro0011.jpg" alt="mobile" class="img-fluid w-100">
-                        </div>
-                        <div class="wsus__hot_deals_text">
-                            <a class="wsus__hot_title" href="product_details.html">portable mobile Speaker</a>
-                            <p class="wsus__rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                                <span>(176 review)</span>
-                            </p>
-                            <p class="wsus__hot_deals_proce">$200 <del>$220</del></p>
-                            <P class="wsus__details">
-                                Lorem ipsum dolor sit amet, cons
-                                ectetur incid duut labore et dol.
-                                Re magna atellus in metus.
-                            </P>
-                            <ul>
-                                <li><a class="add_cart" href="#">add to cart</a></li>
-                                <li><a href="#"><i class="far fa-heart"></i></a></li>
-                                <li><a href="#"><i class="far fa-random"></i></a></li>
-                            </ul>
-                            <div class="simply-countdown simply-countdown-one"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-4 col-lg-6">
-                    <div class="wsus__hot_deals_offer">
-                        <div class="wsus__hot_deals_img">
-                            <img src="images/pro0012.jpg" alt="mobile" class="img-fluid w-100">
-                        </div>
-                        <div class="wsus__hot_deals_text">
-                            <a class="wsus__hot_title" href="product_details.html">apple smart watch</a>
-                            <p class="wsus__rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                                <span>(127 review)</span>
-                            </p>
-                            <p class="wsus__hot_deals_proce">$160 <del>$200</del></p>
-                            <P class="wsus__details">
-                                Lorem ipsum dolor sit amet, cons
-                                ectetur incid duut labore et dol.
-                                Re magna atellus in metus.
-                            </P>
-                            <ul>
-                                <li><a class="add_cart" href="#">add to cart</a></li>
-                                <li><a href="#"><i class="far fa-heart"></i></a></li>
-                                <li><a href="#"><i class="far fa-random"></i></a></li>
-                            </ul>
-                            <div class="simply-countdown simply-countdown-one"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-4 col-lg-6">
-                    <div class="wsus__hot_deals_offer">
-                        <div class="wsus__hot_deals_img">
-                            <img src="images/pro0013.jpg" alt="mobile" class="img-fluid w-100">
-                        </div>
-                        <div class="wsus__hot_deals_text">
-                            <a class="wsus__hot_title" href="product_details.html">portable mobile Speaker</a>
-                            <p class="wsus__rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                                <span>(176 review)</span>
-                            </p>
-                            <p class="wsus__hot_deals_proce">$200 <del>$220</del></p>
-                            <P class="wsus__details">
-                                Lorem ipsum dolor sit amet, cons
-                                ectetur incid duut labore et dol.
-                                Re magna atellus in metus vulpue
-                                te eu sceleri que felis.
-                            </P>
-                            <ul>
-                                <li><a class="add_cart" href="#">add to cart</a></li>
-                                <li><a href="#"><i class="far fa-heart"></i></a></li>
-                                <li><a href="#"><i class="far fa-random"></i></a></li>
-                            </ul>
-                            <div class="simply-countdown simply-countdown-one"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="wsus__hot_large_item">
-                <div class="row">
-                    <div class="col-xl-12">
-                        <div class="wsus__section_header justify-content-start">
-                            <div class="monthly_top_filter2 mb-1">
-                                <button class="ms-0 active" data-filter="*">music</button>
-                                <button data-filter=".clotha">clothing</button>
-                                <button data-filter=".eleca">Electronic</button>
-                                <button data-filter=".spka">Speakers</button>
-                                <button data-filter=".cama">Cameras</button>
-                                <button class="me-0" data-filter=".wata">Watches</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row grid2">
-                    <div class="col-xl-3 col-sm-6 col-md-4 col-lg-4 clotha spka wata">
-                        <div class="wsus__product_item">
-                            <span class="wsus__minus">-20%</span>
-                            <a class="wsus__pro_link" href="product_details.html">
-                                <img src="images/charger_2.jpg" alt="product" class="img-fluid w-100 img_1" />
-                                <img src="images/charger_1.jpg" alt="product" class="img-fluid w-100 img_2" />
-                            </a>
-                            <ul class="wsus__single_pro_icon">
-                                <li><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"><i
-                                            class="far fa-eye"></i></a></li>
-                                <li><a href="#"><i class="far fa-heart"></i></a></li>
-                                <li><a href="#"><i class="far fa-random"></i></a>
-                            </ul>
-                            <div class="wsus__product_details">
-                                <a class="wsus__category" href="#">Electronics </a>
-                                <p class="wsus__pro_rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                    <span>(74 review)</span>
-                                </p>
-                                <a class="wsus__pro_name" href="#">8.5 VA first charger</a>
-                                <p class="wsus__price">$160</p>
-                                <a class="add_cart" href="#">add to cart</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-sm-6 col-md-4 col-lg-4 eleca cama">
-                        <div class="wsus__product_item">
-                            <a class="wsus__pro_link" href="product_details.html">
-                                <img src="images/headphone_1.jpg" alt="product" class="img-fluid w-100 img_1" />
-                                <img src="images/headphone_2.jpg" alt="product" class="img-fluid w-100 img_2" />
-                            </a>
-                            <ul class="wsus__single_pro_icon">
-                                <li><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"><i
-                                            class="far fa-eye"></i></a></li>
-                                <li><a href="#"><i class="far fa-heart"></i></a></li>
-                                <li><a href="#"><i class="far fa-random"></i></a>
-                            </ul>
-                            <div class="wsus__product_details">
-                                <a class="wsus__category" href="#">Electronics </a>
-                                <p class="wsus__pro_rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                    <span>(120 review)</span>
-                                </p>
-                                <a class="wsus__pro_name" href="#">man casual fashion cap</a>
-                                <p class="wsus__price">$115</p>
-                                <a class="add_cart" href="#">add to cart</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-sm-6 col-md-4 col-lg-4 clotha spka cama wata">
-                        <div class="wsus__product_item">
-                            <a class="wsus__pro_link" href="product_details.html">
-                                <img src="images/tab_1.jpg" alt="product" class="img-fluid w-100 img_1" />
-                                <img src="images/tab_2.jpg" alt="product" class="img-fluid w-100 img_2" />
-                            </a>
-                            <ul class="wsus__single_pro_icon">
-                                <li><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"><i
-                                            class="far fa-eye"></i></a></li>
-                                <li><a href="#"><i class="far fa-heart"></i></a></li>
-                                <li><a href="#"><i class="far fa-random"></i></a>
-                            </ul>
-                            <div class="wsus__product_details">
-                                <a class="wsus__category" href="#">Electronics </a>
-                                <p class="wsus__pro_rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                    <span>(120 review)</span>
-                                </p>
-                                <a class="wsus__pro_name" href="#">man casual fashion cap</a>
-                                <p class="wsus__price">$159</p>
-                                <a class="add_cart" href="#">add to cart</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-sm-6 col-md-4 col-lg-4 clotha eleca cama">
-                        <div class="wsus__product_item">
-                            <span class="wsus__minus">-20%</span>
-                            <a class="wsus__pro_link" href="product_details.html">
-                                <img src="images/mobile_1.jpg" alt="product" class="img-fluid w-100 img_1" />
-                                <img src="images/mobile_2.jpg" alt="product" class="img-fluid w-100 img_2" />
-                            </a>
-                            <ul class="wsus__single_pro_icon">
-                                <li><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"><i
-                                            class="far fa-eye"></i></a></li>
-                                <li><a href="#"><i class="far fa-heart"></i></a></li>
-                                <li><a href="#"><i class="far fa-random"></i></a>
-                            </ul>
-                            <div class="wsus__product_details">
-                                <a class="wsus__category" href="#">Electronics </a>
-                                <p class="wsus__pro_rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                    <span>(120 review)</span>
-                                </p>
-                                <a class="wsus__pro_name" href="#">man casual fashion cap</a>
-                                <p class="wsus__price">$189 <del>$199</del></p>
-                                <a class="add_cart" href="#">add to cart</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-sm-6 col-md-4 col-lg-4 clotha spka wata">
-                        <div class="wsus__product_item">
-                            <span class="wsus__new">New</span>
-                            <span class="wsus__minus">-20%</span>
-                            <a class="wsus__pro_link" href="product_details.html">
-                                <img src="images/charger_2.jpg" alt="product" class="img-fluid w-100 img_1" />
-                                <img src="images/charger_1.jpg" alt="product" class="img-fluid w-100 img_2" />
-                            </a>
-                            <ul class="wsus__single_pro_icon">
-                                <li><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"><i
-                                            class="far fa-eye"></i></a></li>
-                                <li><a href="#"><i class="far fa-heart"></i></a></li>
-                                <li><a href="#"><i class="far fa-random"></i></a>
-                            </ul>
-                            <div class="wsus__product_details">
-                                <a class="wsus__category" href="#">Electronics </a>
-                                <p class="wsus__pro_rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                    <span>(74 review)</span>
-                                </p>
-                                <a class="wsus__pro_name" href="#">8.5 VA first charger</a>
-                                <p class="wsus__price">$160</p>
-                                <a class="add_cart" href="#">add to cart</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-sm-6 col-md-4 col-lg-4 eleca cama">
-                        <div class="wsus__product_item">
-                            <a class="wsus__pro_link" href="product_details.html">
-                                <img src="images/headphone_1.jpg" alt="product" class="img-fluid w-100 img_1" />
-                                <img src="images/headphone_2.jpg" alt="product" class="img-fluid w-100 img_2" />
-                            </a>
-                            <ul class="wsus__single_pro_icon">
-                                <li><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"><i
-                                            class="far fa-eye"></i></a></li>
-                                <li><a href="#"><i class="far fa-heart"></i></a></li>
-                                <li><a href="#"><i class="far fa-random"></i></a>
-                            </ul>
-                            <div class="wsus__product_details">
-                                <a class="wsus__category" href="#">Electronics </a>
-                                <p class="wsus__pro_rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                    <span>(120 review)</span>
-                                </p>
-                                <a class="wsus__pro_name" href="#">man casual fashion cap</a>
-                                <p class="wsus__price">$115</p>
-                                <a class="add_cart" href="#">add to cart</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-sm-6 col-md-4 col-lg-4 clotha spka cama wata">
-                        <div class="wsus__product_item">
-                            <a class="wsus__pro_link" href="product_details.html">
-                                <img src="images/tab_1.jpg" alt="product" class="img-fluid w-100 img_1" />
-                                <img src="images/tab_2.jpg" alt="product" class="img-fluid w-100 img_2" />
-                            </a>
-                            <ul class="wsus__single_pro_icon">
-                                <li><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"><i
-                                            class="far fa-eye"></i></a></li>
-                                <li><a href="#"><i class="far fa-heart"></i></a></li>
-                                <li><a href="#"><i class="far fa-random"></i></a>
-                            </ul>
-                            <div class="wsus__product_details">
-                                <a class="wsus__category" href="#">Electronics </a>
-                                <p class="wsus__pro_rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                    <span>(120 review)</span>
-                                </p>
-                                <a class="wsus__pro_name" href="#">man casual fashion cap</a>
-                                <p class="wsus__price">$159</p>
-                                <a class="add_cart" href="#">add to cart</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-sm-6 col-md-4 col-lg-4 clotha eleca cama">
-                        <div class="wsus__product_item">
-                            <span class="wsus__new">New</span>
-                            <span class="wsus__minus">-20%</span>
-                            <a class="wsus__pro_link" href="product_details.html">
-                                <img src="images/mobile_1.jpg" alt="product" class="img-fluid w-100 img_1" />
-                                <img src="images/mobile_2.jpg" alt="product" class="img-fluid w-100 img_2" />
-                            </a>
-                            <ul class="wsus__single_pro_icon">
-                                <li><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"><i
-                                            class="far fa-eye"></i></a></li>
-                                <li><a href="#"><i class="far fa-heart"></i></a></li>
-                                <li><a href="#"><i class="far fa-random"></i></a>
-                            </ul>
-                            <div class="wsus__product_details">
-                                <a class="wsus__category" href="#">Electronics </a>
-                                <p class="wsus__pro_rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                    <span>(120 review)</span>
-                                </p>
-                                <a class="wsus__pro_name" href="#">man casual fashion cap</a>
-                                <p class="wsus__price">$189 <del>$199</del></p>
-                                <a class="add_cart" href="#">add to cart</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <section id="wsus__single_banner" class="home_2_single_banner">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xl-6 col-lg-6">
-                            <div class="wsus__single_banner_content banner_1">
-                                <div class="wsus__single_banner_img">
-                                    <img src="images/single_banner_44.jpg" alt="banner" class="img-fluid w-100">
-                                </div>
-                                <div class="wsus__single_banner_text">
-                                    <h6>sell on <span>35% off</span></h6>
-                                    <h3>smart watch</h3>
-                                    <a class="shop_btn" href="#">shop now</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-6 col-lg-6">
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="wsus__single_banner_content single_banner_2">
-                                        <div class="wsus__single_banner_img">
-                                            <img src="images/single_banner_55.jpg" alt="banner" class="img-fluid w-100">
-                                        </div>
-                                        <div class="wsus__single_banner_text">
-                                            <h6>New Collection</h6>
-                                            <h3>kid's fashion</h3>
-                                            <a class="shop_btn" href="#">shop now</a>
-                                        </div>
+                        <div class="card-product-info">
+                            <a href="product-detail.html" class="title link">Apple iPhone 14 Plus, Gold/Blue 128GB</a>
+                            <div class="bottom">
+                                <div class="inner-left">
+                                    <div class="box-rating">
+                                        <ul class="list-star">
+                                            <li class="icon icon-star"></li>
+                                            <li class="icon icon-star"></li>
+                                            <li class="icon icon-star"></li>
+                                            <li class="icon icon-star"></li>
+                                            <li class="icon icon-star"></li>
+                                        </ul>
+                                        <span class="text-caption-1 text-secondary">(1.234)</span>
                                     </div>
+                                    <span class="price py-4"> $59.99</span>
                                 </div>
-                                <div class="col-12 mt-lg-4">
-                                    <div class="wsus__single_banner_content">
-                                        <div class="wsus__single_banner_img">
-                                            <img src="images/single_banner_66.jpg" alt="banner" class="img-fluid w-100">
-                                        </div>
-                                        <div class="wsus__single_banner_text">
-                                            <h6>sell on <span>42% off</span></h6>
-                                            <h3>winter collection</h3>
-                                            <a class="shop_btn" href="#">shop now</a>
-                                        </div>
+                                <a href="#shoppingCart" data-bs-toggle="modal" class="box-icon">
+                                    <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M16.2187 10.3327V5.99935C16.2187 4.85008 15.7622 3.74788 14.9495 2.93522C14.1369 2.12256 13.0347 1.66602 11.8854 1.66602C10.7361 1.66602 9.63394 2.12256 8.82129 2.93522C8.00863 3.74788 7.55208 4.85008 7.55208 5.99935V10.3327M4.30208 8.16602H19.4687L20.5521 21.166H3.21875L4.30208 8.16602Z" stroke="#181818" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>   
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-product list-st-2 wow fadeInUp">
+                        <div class="card-product-wrapper">
+                            <a href="product-detail.html" class="product-img">
+                                <img class="lazyload img-product" data-src="{{ asset('public/frontend/images/products/electronic/electronic-3.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-3.jpg') }}" alt="image-product">
+                                <img class="lazyload img-hover" data-src="{{ asset('public/frontend/images/products/electronic/electronic-4.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-4.jpg') }}" alt="image-product">
+                            </a>
+                            <div class="on-sale-wrap"><span class="on-sale-item">-25%</span></div>
+                        </div>
+                        <div class="card-product-info">
+                            <a href="product-detail.html" class="title link">Apple Watch Ultra 2-  Rugged Titanium Case</a>
+                            <div class="bottom">
+                                <div class="inner-left">
+                                    <div class="box-rating">
+                                        <ul class="list-star">
+                                            <li class="icon icon-star"></li>
+                                            <li class="icon icon-star"></li>
+                                            <li class="icon icon-star"></li>
+                                            <li class="icon icon-star"></li>
+                                            <li class="icon icon-star"></li>
+                                        </ul>
+                                        <span class="text-caption-1 text-secondary">(1.234)</span>
                                     </div>
+                                    <span class="price py-4"> $59.99</span>
                                 </div>
+                                <a href="#shoppingCart" data-bs-toggle="modal" class="box-icon">
+                                    <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M16.2187 10.3327V5.99935C16.2187 4.85008 15.7622 3.74788 14.9495 2.93522C14.1369 2.12256 13.0347 1.66602 11.8854 1.66602C10.7361 1.66602 9.63394 2.12256 8.82129 2.93522C8.00863 3.74788 7.55208 4.85008 7.55208 5.99935V10.3327M4.30208 8.16602H19.4687L20.5521 21.166H3.21875L4.30208 8.16602Z" stroke="#181818" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>   
+                                </a>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <div class="wsus__hot_small_item wsus__hot_small_item_2">
-                <div class="row">
-                    <div class="col-xl-2 col-6 col-sm-6 col-md-4 col-lg-3">
-                        <a class="wsus__hot_deals__single" href="#">
-                            <div class="wsus__hot_deals__single_img">
-                                <img src="images/pro4_4.jpg" alt="bag" class="img-fluid w-100">
-                            </div>
-                            <div class="wsus__hot_deals__single_text">
-                                <h5>men's casual watch</h5>
-                                <p class="wsus__rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                </p>
-                                <p class="wsus__tk">$120.20 <del>130.00</del></p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-xl-2 col-6 col-sm-6 col-md-4 col-lg-3">
-                        <a class="wsus__hot_deals__single" href="#">
-                            <div class="wsus__hot_deals__single_img">
-                                <img src="images/pro9.jpg" alt="bag" class="img-fluid w-100">
-                            </div>
-                            <div class="wsus__hot_deals__single_text">
-                                <h5>men's sholder bag</h5>
-                                <p class="wsus__rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                </p>
-                                <p class="wsus__tk">$120.20 <del>130.00</del></p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-xl-2 col-6 col-sm-6 col-md-4 col-lg-3">
-                        <a class="wsus__hot_deals__single" href="#">
-                            <div class="wsus__hot_deals__single_img">
-                                <img src="images/pro9_9.jpg" alt="bag" class="img-fluid w-100">
-                            </div>
-                            <div class="wsus__hot_deals__single_text">
-                                <h5>men's sholder bag</h5>
-                                <p class="wsus__rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                </p>
-                                <p class="wsus__tk">$120.20 <del>130.00</del></p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-xl-2 col-6 col-sm-6 col-md-4 col-lg-3">
-                        <a class="wsus__hot_deals__single" href="#">
-                            <div class="wsus__hot_deals__single_img">
-                                <img src="images/pro10.jpg" alt="bag" class="img-fluid w-100">
-                            </div>
-                            <div class="wsus__hot_deals__single_text">
-                                <h5>MSI gaming chair</h5>
-                                <p class="wsus__rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                </p>
-                                <p class="wsus__tk">$120.20 <del>130.00</del></p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-xl-2 col-6 col-sm-6 col-md-4 col-lg-3">
-                        <a class="wsus__hot_deals__single" href="#">
-                            <div class="wsus__hot_deals__single_img">
-                                <img src="images/pro2.jpg" alt="bag" class="img-fluid w-100">
-                            </div>
-                            <div class="wsus__hot_deals__single_text">
-                                <h5>men's shoes</h5>
-                                <p class="wsus__rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                </p>
-                                <p class="wsus__tk">$120.20 <del>130.00</del></p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-xl-2 col-6 col-sm-6 col-md-4 col-lg-3">
-                        <a class="wsus__hot_deals__single" href="#">
-                            <div class="wsus__hot_deals__single_img">
-                                <img src="images/pro2.jpg" alt="bag" class="img-fluid w-100">
-                            </div>
-                            <div class="wsus__hot_deals__single_text">
-                                <h5>men's shoes</h5>
-                                <p class="wsus__rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                </p>
-                                <p class="wsus__tk">$120.20 <del>130.00</del></p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-xl-2 col-6 col-sm-6 col-md-4 col-lg-3">
-                        <a class="wsus__hot_deals__single" href="#">
-                            <div class="wsus__hot_deals__single_img">
-                                <img src="images/pro2.jpg" alt="bag" class="img-fluid w-100">
-                            </div>
-                            <div class="wsus__hot_deals__single_text">
-                                <h5>men's shoes</h5>
-                                <p class="wsus__rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                </p>
-                                <p class="wsus__tk">$120.20 <del>130.00</del></p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-xl-2 col-6 col-sm-6 col-md-4 col-lg-3">
-                        <a class="wsus__hot_deals__single" href="#">
-                            <div class="wsus__hot_deals__single_img">
-                                <img src="images/pro2.jpg" alt="bag" class="img-fluid w-100">
-                            </div>
-                            <div class="wsus__hot_deals__single_text">
-                                <h5>men's shoes</h5>
-                                <p class="wsus__rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                </p>
-                                <p class="wsus__tk">$120.20 <del>130.00</del></p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-xl-2 col-6 col-sm-6 col-md-4 col-lg-3">
-                        <a class="wsus__hot_deals__single" href="#">
-                            <div class="wsus__hot_deals__single_img">
-                                <img src="images/pro10.jpg" alt="bag" class="img-fluid w-100">
-                            </div>
-                            <div class="wsus__hot_deals__single_text">
-                                <h5>MSI gaming chair</h5>
-                                <p class="wsus__rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                </p>
-                                <p class="wsus__tk">$120.20 <del>130.00</del></p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-xl-2 col-6 col-sm-6 col-md-4 col-lg-3">
-                        <a class="wsus__hot_deals__single" href="#">
-                            <div class="wsus__hot_deals__single_img">
-                                <img src="images/pro9_9.jpg" alt="bag" class="img-fluid w-100">
-                            </div>
-                            <div class="wsus__hot_deals__single_text">
-                                <h5>men's sholder bag</h5>
-                                <p class="wsus__rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                </p>
-                                <p class="wsus__tk">$120.20 <del>130.00</del></p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-xl-2 col-6 col-sm-6 col-md-4 col-lg-3">
-                        <a class="wsus__hot_deals__single" href="#">
-                            <div class="wsus__hot_deals__single_img">
-                                <img src="images/pro9.jpg" alt="bag" class="img-fluid w-100">
-                            </div>
-                            <div class="wsus__hot_deals__single_text">
-                                <h5>men's sholder bag</h5>
-                                <p class="wsus__rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                </p>
-                                <p class="wsus__tk">$120.20 <del>130.00</del></p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-xl-2 col-6 col-sm-6 col-md-4 col-lg-3">
-                        <a class="wsus__hot_deals__single" href="#">
-                            <div class="wsus__hot_deals__single_img">
-                                <img src="images/pro4_4.jpg" alt="bag" class="img-fluid w-100">
-                            </div>
-                            <div class="wsus__hot_deals__single_text">
-                                <h5>men's casual watch</h5>
-                                <p class="wsus__rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                </p>
-                                <p class="wsus__tk">$120.20 <del>130.00</del></p>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!--============================
-        HOT DEALS END  
-    ==============================-->
-
-
-    <!--============================
-        ELECTRONIC PART START  
-    ==============================-->
-    <section id="wsus__electronic">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-12">
-                    <div class="wsus__section_header">
-                        <h3>Consumer Electronics</h3>
-                        <a class="see_btn" href="#">see more <i class="fas fa-caret-right"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="row flash_sell_slider">
-                <div class="col-xl-3 col-sm-6 col-lg-4">
-                    <div class="wsus__product_item">
-                        <span class="wsus__new">New</span>
-                        <a class="wsus__pro_link" href="product_details.html">
-                            <img src="images/charger_2.jpg" alt="product" class="img-fluid w-100 img_1" />
-                            <img src="images/charger_1.jpg" alt="product" class="img-fluid w-100 img_2" />
-                        </a>
-                        <ul class="wsus__single_pro_icon">
-                            <li><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"><i
-                                        class="far fa-eye"></i></a></li>
-                            <li><a href="#"><i class="far fa-heart"></i></a></li>
-                            <li><a href="#"><i class="far fa-random"></i></a>
-                        </ul>
-                        <div class="wsus__product_details">
-                            <a class="wsus__category" href="#">Electronics </a>
-                            <p class="wsus__pro_rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                                <span>(74 review)</span>
-                            </p>
-                            <a class="wsus__pro_name" href="#">8.5 VA first charger</a>
-                            <p class="wsus__price">$160</p>
-                            <a class="add_cart" href="#">add to cart</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-sm-6 col-lg-4">
-                    <div class="wsus__product_item">
-                        <span class="wsus__minus">-20%</span>
-                        <a class="wsus__pro_link" href="product_details.html">
-                            <img src="images/headphone_1.jpg" alt="product" class="img-fluid w-100 img_1" />
-                            <img src="images/headphone_2.jpg" alt="product" class="img-fluid w-100 img_2" />
-                        </a>
-                        <ul class="wsus__single_pro_icon">
-                            <li><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"><i
-                                        class="far fa-eye"></i></a></li>
-                            <li><a href="#"><i class="far fa-heart"></i></a></li>
-                            <li><a href="#"><i class="far fa-random"></i></a>
-                        </ul>
-                        <div class="wsus__product_details">
-                            <a class="wsus__category" href="#">Electronics </a>
-                            <p class="wsus__pro_rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                                <span>(120 review)</span>
-                            </p>
-                            <a class="wsus__pro_name" href="#">man casual fashion cap</a>
-                            <p class="wsus__price">$115</p>
-                            <a class="add_cart" href="#">add to cart</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-sm-6 col-lg-4">
-                    <div class="wsus__product_item">
-                        <a class="wsus__pro_link" href="product_details.html">
-                            <img src="images/tab_1.jpg" alt="product" class="img-fluid w-100 img_1" />
-                            <img src="images/tab_2.jpg" alt="product" class="img-fluid w-100 img_2" />
-                        </a>
-                        <ul class="wsus__single_pro_icon">
-                            <li><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"><i
-                                        class="far fa-eye"></i></a></li>
-                            <li><a href="#"><i class="far fa-heart"></i></a></li>
-                            <li><a href="#"><i class="far fa-random"></i></a>
-                        </ul>
-                        <div class="wsus__product_details">
-                            <a class="wsus__category" href="#">Electronics </a>
-                            <p class="wsus__pro_rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                                <span>(120 review)</span>
-                            </p>
-                            <a class="wsus__pro_name" href="#">man casual fashion cap</a>
-                            <p class="wsus__price">$159</p>
-                            <a class="add_cart" href="#">add to cart</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-sm-6 col-lg-4">
-                    <div class="wsus__product_item ">
-                        <a class="wsus__pro_link" href="product_details.html">
-                            <img src="images/mobile_1.jpg" alt="product" class="img-fluid w-100 img_1" />
-                            <img src="images/mobile_2.jpg" alt="product" class="img-fluid w-100 img_2" />
-                        </a>
-                        <ul class="wsus__single_pro_icon">
-                            <li><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"><i
-                                        class="far fa-eye"></i></a></li>
-                            <li><a href="#"><i class="far fa-heart"></i></a></li>
-                            <li><a href="#"><i class="far fa-random"></i></a>
-                        </ul>
-                        <div class="wsus__product_details">
-                            <a class="wsus__category" href="#">Electronics </a>
-                            <p class="wsus__pro_rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                                <span>(120 review)</span>
-                            </p>
-                            <a class="wsus__pro_name" href="#">man casual fashion cap</a>
-                            <p class="wsus__price">$189 <del>$199</del></p>
-                            <a class="add_cart" href="#">add to cart</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-sm-6 col-lg-4">
-                    <div class="wsus__product_item">
-                        <span class="wsus__new">New</span>
-                        <span class="wsus__minus">-20%</span>
-                        <a class="wsus__pro_link" href="product_details.html">
-                            <img src="images/mobile_1.jpg" alt="product" class="img-fluid w-100 img_1" />
-                            <img src="images/mobile_2.jpg" alt="product" class="img-fluid w-100 img_2" />
-                        </a>
-                        <ul class="wsus__single_pro_icon">
-                            <li><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"><i
-                                        class="far fa-eye"></i></a></li>
-                            <li><a href="#"><i class="far fa-heart"></i></a></li>
-                            <li><a href="#"><i class="far fa-random"></i></a>
-                        </ul>
-                        <div class="wsus__product_details">
-                            <a class="wsus__category" href="#">Electronics </a>
-                            <p class="wsus__pro_rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                                <span>(120 review)</span>
-                            </p>
-                            <a class="wsus__pro_name" href="#">man casual fashion cap</a>
-                            <p class="wsus__price">$189 <del>$199</del></p>
-                            <a class="add_cart" href="#">add to cart</a>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-    <!--============================
-        ELECTRONIC PART END  
-    ==============================-->
-
-
-    <!--============================
-        ELECTRONIC PART START  
-    ==============================-->
-    <section id="wsus__electronic2">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-12">
-                    <div class="wsus__section_header">
-                        <h3>Apparels & Clothings</h3>
-                        <a class="see_btn" href="#">see more <i class="fas fa-caret-right"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="row flash_sell_slider">
-                <div class="col-xl-3 col-sm-6 col-lg-4">
-                    <div class="wsus__product_item">
-                        <span class="wsus__new">New</span>
-                        <span class="wsus__minus">-20%</span>
-                        <a class="wsus__pro_link" href="product_details.html">
-                            <img src="images/pro8.jpg" alt="product" class="img-fluid w-100 img_1" />
-                            <img src="images/pro8_8.jpg" alt="product" class="img-fluid w-100 img_2" />
-                        </a>
-                        <ul class="wsus__single_pro_icon">
-                            <li><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"><i
-                                        class="far fa-eye"></i></a></li>
-                            <li><a href="#"><i class="far fa-heart"></i></a></li>
-                            <li><a href="#"><i class="far fa-random"></i></a>
-                        </ul>
-                        <div class="wsus__product_details">
-                            <a class="wsus__category" href="#">fashion </a>
-                            <p class="wsus__pro_rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                                <span>(10 review)</span>
-                            </p>
-                            <a class="wsus__pro_name" href="#">weman's fashion one pcs</a>
-                            <p class="wsus__price">$99</p>
-                            <a class="add_cart" href="#">add to cart</a>
+            <div class="column-card-product">
+                <h5 class="heading wow fadeInUp">Maybe you will love</h5>
+                <div class="list-card-product">
+                    <div class="card-product list-st-2 wow fadeInUp">
+                        <div class="card-product-wrapper">
+                            <a href="product-detail.html" class="product-img">
+                                <img class="lazyload img-product" data-src="{{ asset('public/frontend/images/products/electronic/electronic-19.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-19.jpg') }}" alt="image-product">
+                                <img class="lazyload img-hover" data-src="{{ asset('public/frontend/images/products/electronic/electronic-20.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-20.jpg') }}" alt="image-product">
+                            </a>
+                            <div class="on-sale-wrap"><span class="on-sale-item">-25%</span></div>
                         </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-sm-6 col-lg-4">
-                    <div class="wsus__product_item">
-                        <span class="wsus__minus">-20%</span>
-                        <a class="wsus__pro_link" href="product_details.html">
-                            <img src="images/kids_1.jpg" alt="product" class="img-fluid w-100 img_1" />
-                            <img src="images/kids_2.jpg" alt="product" class="img-fluid w-100 img_2" />
-                        </a>
-                        <ul class="wsus__single_pro_icon">
-                            <li><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"><i
-                                        class="far fa-eye"></i></a></li>
-                            <li><a href="#"><i class="far fa-heart"></i></a></li>
-                            <li><a href="#"><i class="far fa-random"></i></a>
-                        </ul>
-                        <div class="wsus__product_details">
-                            <a class="wsus__category" href="#">fashion </a>
-                            <p class="wsus__pro_rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                                <span>(41 review)</span>
-                            </p>
-                            <a class="wsus__pro_name" href="#">kid's fashion party dress</a>
-                            <p class="wsus__price">$110</p>
-                            <a class="add_cart" href="#">add to cart</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-sm-6 col-lg-4">
-                    <div class="wsus__product_item">
-                        <span class="wsus__new">New</span>
-                        <a class="wsus__pro_link" href="product_details.html">
-                            <img src="images/blazer_1.jpg" alt="product" class="img-fluid w-100 img_1" />
-                            <img src="images/blazer_2.jpg" alt="product" class="img-fluid w-100 img_2" />
-                        </a>
-                        <ul class="wsus__single_pro_icon">
-                            <li><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"><i
-                                        class="far fa-eye"></i></a></li>
-                            <li><a href="#"><i class="far fa-heart"></i></a></li>
-                            <li><a href="#"><i class="far fa-random"></i></a>
-                        </ul>
-                        <div class="wsus__product_details">
-                            <a class="wsus__category" href="#">fashion </a>
-                            <p class="wsus__pro_rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                                <span>(40 review)</span>
-                            </p>
-                            <a class="wsus__pro_name" href="#">man's fashion blazer</a>
-                            <p class="wsus__price">$180 <del>$200</del></p>
-                            <a class="add_cart" href="#">add to cart</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-sm-6 col-lg-4">
-                    <div class="wsus__product_item">
-                        <span class="wsus__minus">-20%</span>
-                        <a class="wsus__pro_link" href="product_details.html">
-                            <img src="images/wemans_2.jpg" alt="product" class="img-fluid w-100 img_1" />
-                            <img src="images/wemans_1.jpg" alt="product" class="img-fluid w-100 img_2" />
-                        </a>
-                        <ul class="wsus__single_pro_icon">
-                            <li><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"><i
-                                        class="far fa-eye"></i></a></li>
-                            <li><a href="#"><i class="far fa-heart"></i></a></li>
-                            <li><a href="#"><i class="far fa-random"></i></a>
-                        </ul>
-                        <div class="wsus__product_details">
-                            <a class="wsus__category" href="#">fashion </a>
-                            <p class="wsus__pro_rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                                <span>(99 review)</span>
-                            </p>
-                            <a class="wsus__pro_name" href="#">weman's fashion one pcs</a>
-                            <p class="wsus__price">$59</p>
-                            <a class="add_cart" href="#">add to cart</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-sm-6 col-lg-4">
-                    <div class="wsus__product_item">
-                        <span class="wsus__new">New</span>
-
-                        <a class="wsus__pro_link" href="product_details.html">
-                            <img src="images/wemans_2.jpg" alt="product" class="img-fluid w-100 img_1" />
-                            <img src="images/wemans_1.jpg" alt="product" class="img-fluid w-100 img_2" />
-                        </a>
-                        <ul class="wsus__single_pro_icon">
-                            <li><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"><i
-                                        class="far fa-eye"></i></a></li>
-                            <li><a href="#"><i class="far fa-heart"></i></a></li>
-                            <li><a href="#"><i class="far fa-random"></i></a>
-                        </ul>
-                        <div class="wsus__product_details">
-                            <a class="wsus__category" href="#">fashion </a>
-                            <p class="wsus__pro_rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                                <span>(99 review)</span>
-                            </p>
-                            <a class="wsus__pro_name" href="#">weman's fashion one pcs</a>
-                            <p class="wsus__price">$59</p>
-                            <a class="add_cart" href="#">add to cart</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!--============================
-        ELECTRONIC PART END  
-    ==============================-->
-
-
-    <!--============================
-           LARGE BANNER  START  
-    ==============================-->
-    <section id="wsus__large_banner">
-        <div class="container">
-            <div class="row">
-                <div class="cl-xl-12">
-                    <div class="wsus__large_banner_content" style="background: url(images/large_banner_img.jpg);">
-                        <div class="wsus__large_banner_content_overlay">
-                            <div class="row">
-                                <div class="col-xl-6 col-12 col-md-6">
-                                    <div class="wsus__large_banner_text">
-                                        <h3>This Week's Deal</h3>
-                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem repudiandae in
-                                            ipsam
-                                            nesciunt.</p>
-                                        <a class="shop_btn" href="#">view more</a>
+                        <div class="card-product-info">
+                            <a href="product-detail.html" class="title link">Instant Pot Vortex Plus XL 8-quart Dual Basket Air Fryer Oven</a>
+                            <div class="bottom">
+                                <div class="inner-left">
+                                    <div class="box-rating">
+                                        <ul class="list-star">
+                                            <li class="icon icon-star"></li>
+                                            <li class="icon icon-star"></li>
+                                            <li class="icon icon-star"></li>
+                                            <li class="icon icon-star"></li>
+                                            <li class="icon icon-star"></li>
+                                        </ul>
+                                        <span class="text-caption-1 text-secondary">(1.234)</span>
                                     </div>
+                                    <span class="price py-4"> $59.99</span>
                                 </div>
-                                <div class="col-xl-6 col-12 col-md-6">
-                                    <div class="wsus__large_banner_text wsus__large_banner_text_right">
-                                        <h3>headphones</h3>
-                                        <h5>up to 20% off</h5>
-                                        <p>Spring's collection has discounted now!</p>
-                                        <a class="shop_btn" href="#">shop now</a>
+                                <a href="#shoppingCart" data-bs-toggle="modal" class="box-icon">
+                                    <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M16.2187 10.3327V5.99935C16.2187 4.85008 15.7622 3.74788 14.9495 2.93522C14.1369 2.12256 13.0347 1.66602 11.8854 1.66602C10.7361 1.66602 9.63394 2.12256 8.82129 2.93522C8.00863 3.74788 7.55208 4.85008 7.55208 5.99935V10.3327M4.30208 8.16602H19.4687L20.5521 21.166H3.21875L4.30208 8.16602Z" stroke="#181818" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>   
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-product list-st-2 wow fadeInUp">
+                        <div class="card-product-wrapper">
+                            <a href="product-detail.html" class="product-img">
+                                <img class="lazyload img-product" data-src="{{ asset('public/frontend/images/products/electronic/electronic-9.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-9.jpg') }}" alt="image-product">
+                                <img class="lazyload img-hover" data-src="{{ asset('public/frontend/images/products/electronic/electronic-10.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-10.jpg') }}" alt="image-product">
+                            </a>
+                            <div class="on-sale-wrap"><span class="on-sale-item">-25%</span></div>
+                        </div>
+                        <div class="card-product-info">
+                            <a href="product-detail.html" class="title link">iPad Mini 6 8.3 inch Wi-Fi 6-5G64GB</a>
+                            <div class="bottom">
+                                <div class="inner-left">
+                                    <div class="box-rating">
+                                        <ul class="list-star">
+                                            <li class="icon icon-star"></li>
+                                            <li class="icon icon-star"></li>
+                                            <li class="icon icon-star"></li>
+                                            <li class="icon icon-star"></li>
+                                            <li class="icon icon-star"></li>
+                                        </ul>
+                                        <span class="text-caption-1 text-secondary">(1.234)</span>
                                     </div>
+                                    <span class="price py-4"> $59.99</span>
                                 </div>
+                                <a href="#shoppingCart" data-bs-toggle="modal" class="box-icon">
+                                    <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M16.2187 10.3327V5.99935C16.2187 4.85008 15.7622 3.74788 14.9495 2.93522C14.1369 2.12256 13.0347 1.66602 11.8854 1.66602C10.7361 1.66602 9.63394 2.12256 8.82129 2.93522C8.00863 3.74788 7.55208 4.85008 7.55208 5.99935V10.3327M4.30208 8.16602H19.4687L20.5521 21.166H3.21875L4.30208 8.16602Z" stroke="#181818" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>   
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-product list-st-2 wow fadeInUp">
+                        <div class="card-product-wrapper">
+                            <a href="product-detail.html" class="product-img">
+                                <img class="lazyload img-product" data-src="{{ asset('public/frontend/images/products/electronic/electronic-6.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-6.jpg') }}" alt="image-product">
+                                <img class="lazyload img-hover" data-src="{{ asset('public/frontend/images/products/electronic/electronic-7.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-7.jpg') }}" alt="image-product">
+                            </a>
+                            <div class="on-sale-wrap"><span class="on-sale-item">-25%</span></div>
+                        </div>
+                        <div class="card-product-info">
+                            <a href="product-detail.html" class="title link">JBL Live 460nc for Android IOS & Android</a>
+                            <div class="bottom">
+                                <div class="inner-left">
+                                    <div class="box-rating">
+                                        <ul class="list-star">
+                                            <li class="icon icon-star"></li>
+                                            <li class="icon icon-star"></li>
+                                            <li class="icon icon-star"></li>
+                                            <li class="icon icon-star"></li>
+                                            <li class="icon icon-star"></li>
+                                        </ul>
+                                        <span class="text-caption-1 text-secondary">(1.234)</span>
+                                    </div>
+                                    <span class="price py-4"> $59.99</span>
+                                </div>
+                                <a href="#shoppingCart" data-bs-toggle="modal" class="box-icon">
+                                    <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M16.2187 10.3327V5.99935C16.2187 4.85008 15.7622 3.74788 14.9495 2.93522C14.1369 2.12256 13.0347 1.66602 11.8854 1.66602C10.7361 1.66602 9.63394 2.12256 8.82129 2.93522C8.00863 3.74788 7.55208 4.85008 7.55208 5.99935V10.3327M4.30208 8.16602H19.4687L20.5521 21.166H3.21875L4.30208 8.16602Z" stroke="#181818" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>   
+                                </a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-    <!--============================
-           LARGE BANNER  END  
-    ==============================-->
+    </div>
+</section>
+<!-- /product -->
 
-
-    <!--============================
-        WEEKLY BEST ITEM START  
-    ==============================-->
-    <section id="wsus__weekly_best" class="home2_wsus__weekly_best_2 ">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-6 col-sm-6">
-                    <div class="wsus__section_header">
-                        <h3>weekly best rated Products</h3>
-                    </div>
-                    <div class="row weekly_best2">
-                        <div class="col-xl-4 col-lg-4">
-                            <a class="wsus__hot_deals__single" href="#">
-                                <div class="wsus__hot_deals__single_img">
-                                    <img src="images/pro9.jpg" alt="bag" class="img-fluid w-100">
-                                </div>
-                                <div class="wsus__hot_deals__single_text">
-                                    <h5>men's sholder bag</h5>
-                                    <p class="wsus__rating">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star-half-alt"></i>
-                                    </p>
-                                    <p class="wsus__tk">$120.20 <del>130.00</del></p>
-                                </div>
+<!-- Most-viewed Products -->
+<section class="flat-spacing-4 pt-0">
+    <div class="container">
+        <div class="heading-section-2 wow fadeInUp">
+            <h4>Most-viewed Products</h4>
+            <a href="shop-default-grid.html" class="line-under">See All Products</a>
+        </div>
+        <div dir="ltr" class="swiper tf-sw-products" data-preview="6" data-tablet="4" data-mobile="2" data-space-lg="30" data-space-md="30" data-space="15" data-pagination="1" data-pagination-md="1" data-pagination-lg="1">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <div class="card-product wow fadeInUp" data-wow-delay="0s">
+                        <div class="card-product-wrapper">
+                            <a href="product-detail.html" class="product-img">
+                                <img class="lazyload img-product" data-src="{{ asset('public/frontend/images/products/electronic/electronic-11.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-11.jpg') }}" alt="image-product">
+                                <img class="lazyload img-hover" data-src="{{ asset('public/frontend/images/products/electronic/electronic-12.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-12.jpg') }}" alt="image-product">
                             </a>
+                            <div class="list-product-btn">
+                                <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
+                                    <span class="icon icon-heart"></span>
+                                    <span class="tooltip">Wishlist</span>
+                                </a>
+                                <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
+                                    <span class="icon icon-gitDiff"></span>
+                                    <span class="tooltip">Compare</span>
+                                </a>
+                                <a href="#quickView" data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
+                                    <span class="icon icon-eye"></span>
+                                    <span class="tooltip">Quick View</span>
+                                </a>
+                            </div>
+                            <div class="list-btn-main">
+                                <a href="#shoppingCart" data-bs-toggle="modal" class="btn-main-product">Add To cart</a>
+                            </div>
                         </div>
-                        <div class="col-xl-4 col-lg-4">
-                            <a class="wsus__hot_deals__single" href="#">
-                                <div class="wsus__hot_deals__single_img">
-                                    <img src="images/pro4_4.jpg" alt="bag" class="img-fluid w-100">
-                                </div>
-                                <div class="wsus__hot_deals__single_text">
-                                    <h5>men's casual watch</h5>
-                                    <p class="wsus__rating">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star-half-alt"></i>
-                                    </p>
-                                    <p class="wsus__tk">$120.20 <del>130.00</del></p>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-xl-4 col-lg-4">
-                            <a class="wsus__hot_deals__single" href="#">
-                                <div class="wsus__hot_deals__single_img">
-                                    <img src="images/pro3.jpg" alt="bag" class="img-fluid w-100">
-                                </div>
-                                <div class="wsus__hot_deals__single_text">
-                                    <h5>hp 24" FHD monitore</h5>
-                                    <p class="wsus__rating">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star-half-alt"></i>
-                                    </p>
-                                    <p class="wsus__tk">$120.20 <del>130.00</del></p>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-xl-4 col-lg-4">
-                            <a class="wsus__hot_deals__single" href="#">
-                                <div class="wsus__hot_deals__single_img">
-                                    <img src="images/pro10.jpg" alt="bag" class="img-fluid w-100">
-                                </div>
-                                <div class="wsus__hot_deals__single_text">
-                                    <h5>MSI gaming chair</h5>
-                                    <p class="wsus__rating">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star-half-alt"></i>
-                                    </p>
-                                    <p class="wsus__tk">$120.20 <del>130.00</del></p>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-xl-4 col-lg-4">
-                            <a class="wsus__hot_deals__single" href="#">
-                                <div class="wsus__hot_deals__single_img">
-                                    <img src="images/pro9_9.jpg" alt="bag" class="img-fluid w-100">
-                                </div>
-                                <div class="wsus__hot_deals__single_text">
-                                    <h5>men's sholder bag</h5>
-                                    <p class="wsus__rating">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star-half-alt"></i>
-                                    </p>
-                                    <p class="wsus__tk">$120.20 <del>130.00</del></p>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-xl-4 col-lg-4">
-                            <a class="wsus__hot_deals__single" href="#">
-                                <div class="wsus__hot_deals__single_img">
-                                    <img src="images/pro4_4.jpg" alt="bag" class="img-fluid w-100">
-                                </div>
-                                <div class="wsus__hot_deals__single_text">
-                                    <h5>men's casual watch</h5>
-                                    <p class="wsus__rating">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star-half-alt"></i>
-                                    </p>
-                                    <p class="wsus__tk">$120.20 <del>130.00</del></p>
-                                </div>
-                            </a>
+                        <div class="card-product-info">
+                            <a href="product-detail.html" class="title link"> Kodak Pixpro Fz45-bk 45mm</a>
+                            <div class="box-rating">
+                                <ul class="list-star">
+                                    <li class="icon icon-star"></li>
+                                    <li class="icon icon-star"></li>
+                                    <li class="icon icon-star"></li>
+                                    <li class="icon icon-star"></li>
+                                    <li class="icon icon-star"></li>
+                                </ul>
+                                <span class="text-caption-1 text-secondary">(1.234)</span>
+                            </div>
+                            <span class="price">$59.99</span>
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-6 col-sm-6">
-                    <div class="wsus__section_header">
-                        <h3>weekly best Sale Products</h3>
-                    </div>
-                    <div class="row weekly_best2">
-                        <div class="col-xl-4 col-lg-4">
-                            <a class="wsus__hot_deals__single" href="#">
-                                <div class="wsus__hot_deals__single_img">
-                                    <img src="images/pro9.jpg" alt="bag" class="img-fluid w-100">
-                                </div>
-                                <div class="wsus__hot_deals__single_text">
-                                    <h5>men's sholder bag</h5>
-                                    <p class="wsus__rating">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star-half-alt"></i>
-                                    </p>
-                                    <p class="wsus__tk">$120.20 <del>130.00</del></p>
-                                </div>
+                <div class="swiper-slide">
+                    <div class="card-product wow fadeInUp" data-wow-delay="0.1s">
+                        <div class="card-product-wrapper">
+                            <a href="product-detail.html" class="product-img">
+                                <img class="lazyload img-product" data-src="{{ asset('public/frontend/images/products/electronic/electronic-1.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-1.jpg') }}" alt="image-product">
+                                <img class="lazyload img-hover" data-src="{{ asset('public/frontend/images/products/electronic/electronic-2.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-2.jpg') }}" alt="image-product">
                             </a>
+                            <div class="on-sale-wrap"><span class="on-sale-item">-25%</span></div>
+                            <div class="list-product-btn">
+                                <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
+                                    <span class="icon icon-heart"></span>
+                                    <span class="tooltip">Wishlist</span>
+                                </a>
+                                <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
+                                    <span class="icon icon-gitDiff"></span>
+                                    <span class="tooltip">Compare</span>
+                                </a>
+                                <a href="#quickView" data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
+                                    <span class="icon icon-eye"></span>
+                                    <span class="tooltip">Quick View</span>
+                                </a>
+                            </div>
+                            <div class="list-btn-main">
+                                <a href="#shoppingCart" data-bs-toggle="modal" class="btn-main-product">Add To cart</a>
+                            </div>
                         </div>
-                        <div class="col-xl-4 col-lg-4">
-                            <a class="wsus__hot_deals__single" href="#">
-                                <div class="wsus__hot_deals__single_img">
-                                    <img src="images/pro4_4.jpg" alt="bag" class="img-fluid w-100">
-                                </div>
-                                <div class="wsus__hot_deals__single_text">
-                                    <h5>men's casual watch</h5>
-                                    <p class="wsus__rating">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star-half-alt"></i>
-                                    </p>
-                                    <p class="wsus__tk">$120.20 <del>130.00</del></p>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-xl-4 col-lg-4">
-                            <a class="wsus__hot_deals__single" href="#">
-                                <div class="wsus__hot_deals__single_img">
-                                    <img src="images/pro3.jpg" alt="bag" class="img-fluid w-100">
-                                </div>
-                                <div class="wsus__hot_deals__single_text">
-                                    <h5>hp 24" FHD monitore</h5>
-                                    <p class="wsus__rating">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star-half-alt"></i>
-                                    </p>
-                                    <p class="wsus__tk">$120.20 <del>130.00</del></p>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-xl-4 col-lg-4">
-                            <a class="wsus__hot_deals__single" href="#">
-                                <div class="wsus__hot_deals__single_img">
-                                    <img src="images/pro10.jpg" alt="bag" class="img-fluid w-100">
-                                </div>
-                                <div class="wsus__hot_deals__single_text">
-                                    <h5>MSI gaming chair</h5>
-                                    <p class="wsus__rating">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star-half-alt"></i>
-                                    </p>
-                                    <p class="wsus__tk">$120.20 <del>130.00</del></p>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-xl-4 col-lg-4">
-                            <a class="wsus__hot_deals__single" href="#">
-                                <div class="wsus__hot_deals__single_img">
-                                    <img src="images/pro9_9.jpg" alt="bag" class="img-fluid w-100">
-                                </div>
-                                <div class="wsus__hot_deals__single_text">
-                                    <h5>men's sholder bag</h5>
-                                    <p class="wsus__rating">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star-half-alt"></i>
-                                    </p>
-                                    <p class="wsus__tk">$120.20 <del>130.00</del></p>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-xl-4 col-lg-4">
-                            <a class="wsus__hot_deals__single" href="#">
-                                <div class="wsus__hot_deals__single_img">
-                                    <img src="images/pro4_4.jpg" alt="bag" class="img-fluid w-100">
-                                </div>
-                                <div class="wsus__hot_deals__single_text">
-                                    <h5>men's casual watch</h5>
-                                    <p class="wsus__rating">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star-half-alt"></i>
-                                    </p>
-                                    <p class="wsus__tk">$120.20 <del>130.00</del></p>
-                                </div>
-                            </a>
+                        <div class="card-product-info">
+                            <a href="product-detail.html" class="title link">PlayStation DualSense Wireless Controller</a>
+                            <div class="box-rating">
+                                <ul class="list-star">
+                                    <li class="icon icon-star"></li>
+                                    <li class="icon icon-star"></li>
+                                    <li class="icon icon-star"></li>
+                                    <li class="icon icon-star"></li>
+                                    <li class="icon icon-star"></li>
+                                </ul>
+                                <span class="text-caption-1 text-secondary">(1.234)</span>
+                            </div>
+                            <span class="price">$59.99</span>
                         </div>
                     </div>
                 </div>
+                <div class="swiper-slide">
+                    <div class="card-product wow fadeInUp" data-wow-delay="0.2s">
+                        <div class="card-product-wrapper">
+                            <a href="product-detail.html" class="product-img">
+                                <img class="lazyload img-product" data-src="{{ asset('public/frontend/images/products/electronic/electronic-13.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-13.jpg') }}" alt="image-product">
+                                <img class="lazyload img-hover" data-src="{{ asset('public/frontend/images/products/electronic/electronic-14.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-14.jpg') }}" alt="image-product">
+                            </a>
+                            <div class="list-product-btn">
+                                <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
+                                    <span class="icon icon-heart"></span>
+                                    <span class="tooltip">Wishlist</span>
+                                </a>
+                                <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
+                                    <span class="icon icon-gitDiff"></span>
+                                    <span class="tooltip">Compare</span>
+                                </a>
+                                <a href="#quickView" data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
+                                    <span class="icon icon-eye"></span>
+                                    <span class="tooltip">Quick View</span>
+                                </a>
+                            </div>
+                            <div class="list-btn-main">
+                                <a href="#shoppingCart" data-bs-toggle="modal" class="btn-main-product">Add To cart</a>
+                            </div>
+                        </div>
+                        <div class="card-product-info">
+                            <a href="product-detail.html" class="title link">Apple iPhone 14 Plus, Gold/Blue 128GB</a>
+                            <div class="box-rating">
+                                <ul class="list-star">
+                                    <li class="icon icon-star"></li>
+                                    <li class="icon icon-star"></li>
+                                    <li class="icon icon-star"></li>
+                                    <li class="icon icon-star"></li>
+                                    <li class="icon icon-star"></li>
+                                </ul>
+                                <span class="text-caption-1 text-secondary">(1.234)</span>
+                            </div>
+                            <span class="price">$59.99</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="card-product wow fadeInUp" data-wow-delay="0.3s">
+                        <div class="card-product-wrapper">
+                            <a href="product-detail.html" class="product-img">
+                                <img class="lazyload img-product" data-src="{{ asset('public/frontend/images/products/electronic/electronic-15.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-15.jpg') }}" alt="image-product">
+                                <img class="lazyload img-hover" data-src="{{ asset('public/frontend/images/products/electronic/electronic-16.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-16.jpg') }}" alt="image-product">
+                            </a>
+                            <div class="list-product-btn">
+                                <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
+                                    <span class="icon icon-heart"></span>
+                                    <span class="tooltip">Wishlist</span>
+                                </a>
+                                <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
+                                    <span class="icon icon-gitDiff"></span>
+                                    <span class="tooltip">Compare</span>
+                                </a>
+                                <a href="#quickView" data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
+                                    <span class="icon icon-eye"></span>
+                                    <span class="tooltip">Quick View</span>
+                                </a>
+                            </div>
+                            <div class="list-btn-main">
+                                <a href="#shoppingCart" data-bs-toggle="modal" class="btn-main-product">Add To cart</a>
+                            </div>
+                        </div>
+                        <div class="card-product-info">
+                            <a href="product-detail.html" class="title link">Apple iPhone 14 Plus, Gold/Blue 128GB</a>
+                            <div class="box-rating">
+                                <ul class="list-star">
+                                    <li class="icon icon-star"></li>
+                                    <li class="icon icon-star"></li>
+                                    <li class="icon icon-star"></li>
+                                    <li class="icon icon-star"></li>
+                                    <li class="icon icon-star"></li>
+                                </ul>
+                                <span class="text-caption-1 text-secondary">(1.234)</span>
+                            </div>
+                            <span class="price">$59.99</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="card-product wow fadeInUp" data-wow-delay="0.4s">
+                        <div class="card-product-wrapper">
+                            <a href="product-detail.html" class="product-img">
+                                <img class="lazyload img-product" data-src="{{ asset('public/frontend/images/products/electronic/electronic-17.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-17.jpg') }}" alt="image-product">
+                                <img class="lazyload img-hover" data-src="{{ asset('public/frontend/images/products/electronic/electronic-18.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-18.jpg') }}" alt="image-product">
+                            </a>
+                            <div class="list-product-btn">
+                                <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
+                                    <span class="icon icon-heart"></span>
+                                    <span class="tooltip">Wishlist</span>
+                                </a>
+                                <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
+                                    <span class="icon icon-gitDiff"></span>
+                                    <span class="tooltip">Compare</span>
+                                </a>
+                                <a href="#quickView" data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
+                                    <span class="icon icon-eye"></span>
+                                    <span class="tooltip">Quick View</span>
+                                </a>
+                            </div>
+                            <div class="list-btn-main">
+                                <a href="#shoppingCart" data-bs-toggle="modal" class="btn-main-product">Add To cart</a>
+                            </div>
+                        </div>
+                        <div class="card-product-info">
+                            <a href="product-detail.html" class="title link">LG AI DD™ Inverter 16kg automatic F2721HVRB</a>
+                            <div class="box-rating">
+                                <ul class="list-star">
+                                    <li class="icon icon-star"></li>
+                                    <li class="icon icon-star"></li>
+                                    <li class="icon icon-star"></li>
+                                    <li class="icon icon-star"></li>
+                                    <li class="icon icon-star"></li>
+                                </ul>
+                                <span class="text-caption-1 text-secondary">(1.234)</span>
+                            </div>
+                            <span class="price">$59.99</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="card-product wow fadeInUp" data-wow-delay="0.5s">
+                        <div class="card-product-wrapper">
+                            <a href="product-detail.html" class="product-img">
+                                <img class="lazyload img-product" data-src="{{ asset('public/frontend/images/products/electronic/electronic-19.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-19.jpg') }}" alt="image-product">
+                                <img class="lazyload img-hover" data-src="{{ asset('public/frontend/images/products/electronic/electronic-20.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-20.jpg') }}" alt="image-product">
+                            </a>
+                            <div class="list-product-btn">
+                                <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
+                                    <span class="icon icon-heart"></span>
+                                    <span class="tooltip">Wishlist</span>
+                                </a>
+                                <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
+                                    <span class="icon icon-gitDiff"></span>
+                                    <span class="tooltip">Compare</span>
+                                </a>
+                                <a href="#quickView" data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
+                                    <span class="icon icon-eye"></span>
+                                    <span class="tooltip">Quick View</span>
+                                </a>
+                            </div>
+                            <div class="list-btn-main">
+                                <a href="#shoppingCart" data-bs-toggle="modal" class="btn-main-product">Add To cart</a>
+                            </div>
+                        </div>
+                        <div class="card-product-info">
+                            <a href="product-detail.html" class="title link">Instant Pot Vortex Plus XL 8-quart Dual</a>
+                            <div class="box-rating">
+                                <ul class="list-star">
+                                    <li class="icon icon-star"></li>
+                                    <li class="icon icon-star"></li>
+                                    <li class="icon icon-star"></li>
+                                    <li class="icon icon-star"></li>
+                                    <li class="icon icon-star"></li>
+                                </ul>
+                                <span class="text-caption-1 text-secondary">(1.234)</span>
+                            </div>
+                            <span class="price">$59.99</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="sw-pagination-products sw-dots type-circle justify-content-center"></div>
+        </div>
+    </div>
+</section>
+<!-- /Most-viewed Products -->
+
+<!-- Featured -->
+<section class="flat-spacing-4 pt-0">
+    <div class="container">
+        <div class="heading-section-2 wow fadeInUp">
+            <h4>Our Featured Offers</h4>
+            <a href="shop-default-grid.html" class="line-under">See All Offers</a>
+        </div>
+        <div dir="ltr" class="swiper tf-sw-products1" data-preview="4" data-tablet="4" data-mobile="2" data-space-lg="30" data-space-md="30" data-space="15" data-pagination="1" data-pagination-md="1" data-pagination-lg="1">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <div class="collection-circle style-1 hover-img wow fadeInUp" data-wow-delay="0s">
+                        <a href="shop-default-grid.html" class="img-style">
+                            <img class="lazyload" data-src="{{ asset('public/frontend/images/collections/collection-circle/cls-electronic8.jpg') }}" src="{{ asset('public/frontend/images/collections/collection-circle/cls-electronic8.jpg') }}" alt="collection-img">
+                        </a>
+                        <div class="collection-content text-center">
+                            <h5 class="heading">Shop top deals on Samsung Fold and more.</h5>
+                            <div>
+                                <a href="shop-default-grid.html" class="btn-line">Shop Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="collection-circle style-1 hover-img wow fadeInUp" data-wow-delay="0.1s">
+                        <a href="shop-default-grid.html" class="img-style">
+                            <img class="lazyload" data-src="{{ asset('public/frontend/images/collections/collection-circle/cls-electronic9.jpg') }}" src="{{ asset('public/frontend/images/collections/collection-circle/cls-electronic9.jpg') }}" alt="collection-img">
+                        </a>
+                        <div class="collection-content text-center">
+                            <h5 class="heading">Score top deals on Sony PS5 and accessories.</h5>
+                            <div>
+                                <a href="shop-default-grid.html" class="btn-line">Shop Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="collection-circle style-1 hover-img wow fadeInUp" data-wow-delay="0.2s">
+                        <a href="shop-default-grid.html" class="img-style">
+                            <img class="lazyload" data-src="{{ asset('public/frontend/images/collections/collection-circle/cls-electronic10.jpg') }}" src="{{ asset('public/frontend/images/collections/collection-circle/cls-electronic10.jpg') }}" alt="collection-img">
+                        </a>
+                        <div class="collection-content text-center">
+                            <h5 class="heading">Grab amazing deals on Imac and Apple</h5>
+                            <div>
+                                <a href="shop-default-grid.html" class="btn-line">Shop Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="collection-circle style-1 hover-img wow fadeInUp" data-wow-delay="0.3s">
+                        <a href="shop-default-grid.html" class="img-style">
+                            <img class="lazyload" data-src="{{ asset('public/frontend/images/collections/collection-circle/cls-electronic11.jpg') }}" src="{{ asset('public/frontend/images/collections/collection-circle/cls-electronic11.jpg') }}" alt="collection-img">
+                        </a>
+                        <div class="collection-content text-center">
+                            <h5 class="heading">Top deals on Bluetooth speakers and more.</h5>
+                            <div>
+                                <a href="shop-default-grid.html" class="btn-line">Shop Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="sw-pagination-products1 sw-dots type-circle justify-content-center"></div>
+        </div>
+    </div>
+</section>
+<!-- /Featured -->
+
+<!-- Iconbox -->
+<section class="flat-spacing-4 line-top-container">
+    <div class="container">
+        <div dir="ltr" class="swiper tf-sw-iconbox" data-preview="4" data-tablet="3" data-mobile-sm="2" data-mobile="1" data-space-lg="30" data-space-md="30" data-space="15" data-pagination="1" data-pagination-sm="2" data-pagination-md="3" data-pagination-lg="4">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <div class="tf-icon-box">
+                        <div class="icon-box"><span class="icon icon-return"></span></div>
+                        <div class="content text-center">
+                            <h6>14-Day Returns</h6>
+                            <p class="text-secondary">Risk-free shopping with easy returns.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="tf-icon-box">
+                        <div class="icon-box"><span class="icon icon-shipping"></span></div>
+                        <div class="content text-center">
+                            <h6>Free Shipping</h6>
+                            <p class="text-secondary">No extra costs, just the price you see.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="tf-icon-box">
+                        <div class="icon-box"><span class="icon icon-headset"></span></div>
+                        <div class="content text-center">
+                            <h6>24/7 Support</h6>
+                            <p class="text-secondary">24/7 support, always here just for you</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="tf-icon-box">
+                        <div class="icon-box"><span class="icon icon-sealCheck"></span></div>
+                        <div class="content text-center">
+                            <h6>Member Discounts</h6>
+                            <p class="text-secondary">Special prices for our loyal customers.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="sw-pagination-iconbox sw-dots type-circle justify-content-center"></div>
+        </div>
+    </div>
+</section>
+<!-- /Iconbox -->
+
+<!-- Partner -->
+<section class="flat-spacing-5 line-top">
+    <div dir="ltr" class="swiper tf-sw-partner sw-auto" data-preview="auto" data-tablet="auto" data-mobile-sm="auto" data-mobile="auto" data-space-lg="74" data-space-md="50" data-space="50" data-loop="true" data-auto-play="true" data-delay="0">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <a href="#" class="brand-item">
+                    <img src="{{ asset('public/frontend/images/brand/vanfaba.png') }}" alt="brand">
+                </a>
+            </div>
+            <div class="swiper-slide">
+                <a href="#" class="brand-item">
+                    <img src="{{ asset('public/frontend/images/brand/anvouge.png') }}" alt="brand">
+                </a>
+            </div>
+            <div class="swiper-slide">
+                <a href="#" class="brand-item">
+                    <img src="{{ asset('public/frontend/images/brand/carolin.png') }}" alt="brand">
+                </a>
+            </div>
+            <div class="swiper-slide">
+                <a href="#" class="brand-item">
+                    <img src="{{ asset('public/frontend/images/brand/shangxi.png') }}" alt="brand">
+                </a>
+            </div>
+            <div class="swiper-slide">
+                <a href="#" class="brand-item">
+                    <img src="{{ asset('public/frontend/images/brand/ecomife.png') }}" alt="brand">
+                </a>
+            </div>
+            <div class="swiper-slide">
+                <a href="#" class="brand-item">
+                    <img src="{{ asset('public/frontend/images/brand/cheryl.png') }}" alt="brand">
+                </a>
+            </div>
+            <div class="swiper-slide">
+                <a href="#" class="brand-item">
+                    <img src="{{ asset('public/frontend/images/brand/sopify.png') }}" alt="brand">
+                </a>
+            </div>
+            <div class="swiper-slide">
+                <a href="#" class="brand-item">
+                    <img src="{{ asset('public/frontend/images/brand/pennyw.png') }}" alt="brand">
+                </a>
+            </div>
+            <div class="swiper-slide">
+                <a href="#" class="brand-item">
+                    <img src="{{ asset('public/frontend/images/brand/panadoxn.png') }}" alt="brand">
+                </a>
             </div>
         </div>
-    </section>
-    <!--============================
-        WEEKLY BEST ITEM END 
-    ==============================-->
-
-
-    <!--============================
-      HOME SERVICES START
-    ==============================-->
-    <section id="wsus__home_services" class="home_service_2">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-3 col-sm-6 col-lg-3 pe-lg-0">
-                    <div class="wsus__home_services_single home_service_single_2 border_left">
-                        <i class="fal fa-truck"></i>
-                        <h5>Free Worldwide Shipping</h5>
-                        <p>Free shipping coast for all country</p>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-sm-6 col-lg-3 pe-lg-0">
-                    <div class="wsus__home_services_single home_service_single_2">
-                        <i class="fal fa-headset"></i>
-                        <h5>24/7 Customer Support</h5>
-                        <p>Friendly 24/7 customer support</p>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-sm-6 col-lg-3 pe-lg-0">
-                    <div class="wsus__home_services_single home_service_single_2">
-                        <i class="far fa-exchange-alt"></i>
-                        <h5>Money Back Guarantee</h5>
-                        <p>We return money within 30 days</p>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-sm-6 col-lg-3">
-                    <div class="wsus__home_services_single home_service_single_2">
-                        <i class="fal fa-credit-card"></i>
-                        <h5>Secure Online Payment</h5>
-                        <p>We posess SSL / Secure Certificate</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!--============================
-        HOME SERVICES END
-    ==============================-->
-
-
-    <!--============================
-        HOME BLOGS START
-    ==============================-->
-    <section id="wsus__blogs" class="home_blogs">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-12">
-                    <div class="wsus__section_header">
-                        <h3>recent blogs</h3>
-                        <a class="see_btn" href="#">see more <i class="fas fa-caret-right"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="row home_blog_slider">
-                <div class="col-xl-3">
-                    <div class="wsus__single_blog wsus__single_blog_2">
-                        <a class="wsus__blog_img" href="#">
-                            <img src="images/blog_1.jpg" alt="blog" class="img-fluid w-100">
-                        </a>
-                        <div class="wsus__blog_text">
-                            <a class="blog_top red" href="#">women's</a>
-                            <div class="wsus__blog_text_center">
-                                <a href="blog_details.html">New found the women’s shirt for summer season</a>
-                                <p class="date">nov 04 2021</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3">
-                    <div class="wsus__single_blog wsus__single_blog_2">
-                        <a class="wsus__blog_img" href="#">
-                            <img src="images/blog_2.jpg" alt="blog" class="img-fluid w-100">
-                        </a>
-                        <div class="wsus__blog_text">
-                            <a class="blog_top blue" href="#">lifestyle</a>
-                            <div class="wsus__blog_text_center">
-                                <a href="blog_details.html">Fusce lacinia arcuet nulla menasious</a>
-                                <p class="date">nov 04 2021</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3">
-                    <div class="wsus__single_blog wsus__single_blog_2">
-                        <a class="wsus__blog_img" href="#">
-                            <img src="images/blog_3.jpg" alt="blog" class="img-fluid w-100">
-                        </a>
-                        <div class="wsus__blog_text">
-                            <a class="blog_top orange" href="#">lifestyle</a>
-                            <div class="wsus__blog_text_center">
-                                <a href="blog_details.html">found the men’s shirt for summer season</a>
-                                <p class="date">nov 04 2021</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3">
-                    <div class="wsus__single_blog wsus__single_blog_2">
-                        <a class="wsus__blog_img" href="#">
-                            <img src="images/blog_4.jpg" alt="blog" class="img-fluid w-100">
-                        </a>
-                        <div class="wsus__blog_text">
-                            <a class="blog_top orange" href="#">fashion</a>
-                            <div class="wsus__blog_text_center">
-                                <a href="blog_details.html">winter collection for women’s</a>
-                                <p class="date">nov 04 2021</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3">
-                    <div class="wsus__single_blog wsus__single_blog_2">
-                        <a class="wsus__blog_img" href="#">
-                            <img src="images/blog_5.jpg" alt="blog" class="img-fluid w-100">
-                        </a>
-                        <div class="wsus__blog_text">
-                            <a class="blog_top red" href="#">lifestyle</a>
-                            <div class="wsus__blog_text_center">
-                                <a href="blog_details.html">Comes a cool blog post with Images</a>
-                                <p class="date">nov 04 2021</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!--============================
-        HOME BLOGS END
-    ==============================-->
+    </div>
+</section>
+<!-- /Partner -->
 
 @endsection
 
 
 @push('add-js')
 
-    @include('frontend.include.cart_sidebar_js_code')
-
-    <script>
-        $(document).ready(function(){
-            //======= COUNTDOWN ======//   
-            var d = new Date(), 
-                countUpDate = new Date();
-                d.setDate(d.getDate() + 90);
-
-            // default example
-            simplyCountdown('.simply-countdown-one', {
-                year: {{ date('Y', strtotime($flashSaleDate->end_date)) }},
-                month: {{ date('m', strtotime($flashSaleDate->end_date)) }} ,
-                day: {{ date('d', strtotime($flashSaleDate->end_date)) }},
-                enableUtc: true
-            });
-        })
-    </script>
 @endpush

@@ -11,214 +11,285 @@
 
 @section('body-content')
 
+<!-- page-title -->
+<div class="page-title" style="background-image: url({{ asset('public/frontend/images/section/page-title.jpg') }});">
+    <div class="container-full">
+        <div class="row">
+            <div class="col-12">
+                <h3 class="heading text-center">FAQs</h3>
+                <ul class="breadcrumbs d-flex align-items-center justify-content-center">
+                    <li>
+                        <a class="link" href="index.html">Homepage</a>
+                    </li>
+                    <li>
+                        <i class="icon-arrRight"></i>
+                    </li>
+                    <li>
+                        <a class="link" href="#">Pages</a>
+                    </li>
+                    <li>
+                        <i class="icon-arrRight"></i>
+                    </li>
+                    <li>
+                        FAQs
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /page-title -->
 
-    <!--============================
-        BREADCRUMB START
-    ==============================-->
-    <section id="wsus__breadcrumb">
-        <div class="wsus_breadcrumb_overlay">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <h4>Frequently asked questions</h4>
-                        <ul>
-                            <li><a href="#">home</a></li>
-                            <li><a href="#">faq</a></li>
-                        </ul>
-                    </div>
+<!-- FAQs -->
+<section class="flat-spacing">
+    <div class="container">
+        <div class="page-faqs-wrap">
+            <div class="list-faqs">
+                <div>
+                    <h5 class="faqs-title">How To Buy</h5>
+                    <ul class="accordion-product-wrap style-faqs" id="accordion-faq-1">
+                        <li class="accordion-product-item">
+                            <a href="#accordion-1" class="accordion-title collapsed current" data-bs-toggle="collapse" aria-expanded="true" aria-controls="accordion-1">
+                                <h6>How does COVID-19 affect my online orders and store purchases?</h6>
+                                <span class="btn-open-sub"></span>
+                            </a>
+                            <div id="accordion-1" class="collapse" data-bs-parent="#accordion-faq-1">
+                                <div class="accordion-faqs-content">
+                                    <p class="text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries. We remind you that you
+                                        can still find us at Mango.com and on all our online channels. Our customer services are still there for you, to answer any questions you may have, although due to the current situation, we are operating
+                                        with longer waiting times.</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="accordion-product-item">
+                            <a href="#accordion-2" class="accordion-title current" data-bs-toggle="collapse" aria-expanded="true" aria-controls="accordion-2">
+                                <h6>I have a promotional or discount code. How do I use it for an online purchase?</h6>
+                                <span class="btn-open-sub"></span>
+                            </a>
+                            <div id="accordion-2" class="collapse show" data-bs-parent="#accordion-faq-1">
+                                <div class="accordion-faqs-content">
+                                    <p class="text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries. We remind you that you
+                                        can still find us at Mango.com and on all our online channels. Our customer services are still there for you, to answer any questions you may have, although due to the current situation, we are operating
+                                        with longer waiting times.</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="accordion-product-item">
+                            <a href="#accordion-3" class="accordion-title collapsed current" data-bs-toggle="collapse" aria-expanded="true" aria-controls="accordion-3">
+                                <h6>NEW! Plus sizes for Woman</h6>
+                                <span class="btn-open-sub"></span>
+                            </a>
+                            <div id="accordion-3" class="collapse" data-bs-parent="#accordion-faq-1">
+                                <div class="accordion-faqs-content">
+                                    <p class="text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries. We remind you that you
+                                        can still find us at Mango.com and on all our online channels. Our customer services are still there for you, to answer any questions you may have, although due to the current situation, we are operating
+                                        with longer waiting times.</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="accordion-product-item">
+                            <a href="#accordion-4" class="accordion-title collapsed current" data-bs-toggle="collapse" aria-expanded="true" aria-controls="accordion-4">
+                                <h6>Where is my order?</h6>
+                                <span class="btn-open-sub"></span>
+                            </a>
+                            <div id="accordion-4" class="collapse" data-bs-parent="#accordion-faq-1">
+                                <div class="accordion-faqs-content">
+                                    <p class="text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries. We remind you that you
+                                        can still find us at Mango.com and on all our online channels. Our customer services are still there for you, to answer any questions you may have, although due to the current situation, we are operating
+                                        with longer waiting times.</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="accordion-product-item">
+                            <a href="#accordion-5" class="accordion-title collapsed current" data-bs-toggle="collapse" aria-expanded="true" aria-controls="accordion-5">
+                                <h6>How can I exchange or return an item purchased online?</h6>
+                                <span class="btn-open-sub"></span>
+                            </a>
+                            <div id="accordion-5" class="collapse" data-bs-parent="#accordion-faq-1">
+                                <div class="accordion-faqs-content">
+                                    <p class="text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries. We remind you that you
+                                        can still find us at Mango.com and on all our online channels. Our customer services are still there for you, to answer any questions you may have, although due to the current situation, we are operating
+                                        with longer waiting times.</p>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="faqs-title">Exchanges & Returns</h5>
+                    <ul class="accordion-product-wrap style-faqs" id="accordion-faq-2">
+                        <li class="accordion-product-item">
+                            <a href="#accordion-6" class="accordion-title collapsed current" data-bs-toggle="collapse" aria-expanded="true" aria-controls="accordion-6">
+                                <h6>Can I cancel or change my order?</h6>
+                                <span class="btn-open-sub"></span>
+                            </a>
+                            <div id="accordion-6" class="collapse" data-bs-parent="#accordion-faq-2">
+                                <div class="accordion-faqs-content">
+                                    <p class="text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries. We remind you that you
+                                        can still find us at Mango.com and on all our online channels. Our customer services are still there for you, to answer any questions you may have, although due to the current situation, we are operating
+                                        with longer waiting times.</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="accordion-product-item">
+                            <a href="#accordion-7" class="accordion-title current" data-bs-toggle="collapse" aria-expanded="true" aria-controls="accordion-7">
+                                <h6>I have a promotional or discount code. How do I use it for an online purchase?</h6>
+                                <span class="btn-open-sub"></span>
+                            </a>
+                            <div id="accordion-7" class="collapse show" data-bs-parent="#accordion-faq-2">
+                                <div class="accordion-faqs-content">
+                                    <p class="text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries. We remind you that you
+                                        can still find us at Mango.com and on all our online channels. Our customer services are still there for you, to answer any questions you may have, although due to the current situation, we are operating
+                                        with longer waiting times.</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="accordion-product-item">
+                            <a href="#accordion-8" class="accordion-title collapsed current" data-bs-toggle="collapse" aria-expanded="true" aria-controls="accordion-8">
+                                <h6>What are the delivery types?</h6>
+                                <span class="btn-open-sub"></span>
+                            </a>
+                            <div id="accordion-8" class="collapse" data-bs-parent="#accordion-faq-2">
+                                <div class="accordion-faqs-content">
+                                    <p class="text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries. We remind you that you
+                                        can still find us at Mango.com and on all our online channels. Our customer services are still there for you, to answer any questions you may have, although due to the current situation, we are operating
+                                        with longer waiting times.</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="accordion-product-item">
+                            <a href="#accordion-9" class="accordion-title collapsed current" data-bs-toggle="collapse" aria-expanded="true" aria-controls="accordion-9">
+                                <h6>How can I pay for my purchases?</h6>
+                                <span class="btn-open-sub"></span>
+                            </a>
+                            <div id="accordion-9" class="collapse" data-bs-parent="#accordion-faq-2">
+                                <div class="accordion-faqs-content">
+                                    <p class="text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries. We remind you that you
+                                        can still find us at Mango.com and on all our online channels. Our customer services are still there for you, to answer any questions you may have, although due to the current situation, we are operating
+                                        with longer waiting times.</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="accordion-product-item">
+                            <a href="#accordion-10" class="accordion-title collapsed current" data-bs-toggle="collapse" aria-expanded="true" aria-controls="accordion-10">
+                                <h6>Can I save an item I like?</h6>
+                                <span class="btn-open-sub"></span>
+                            </a>
+                            <div id="accordion-10" class="collapse" data-bs-parent="#accordion-faq-2">
+                                <div class="accordion-faqs-content">
+                                    <p class="text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries. We remind you that you
+                                        can still find us at Mango.com and on all our online channels. Our customer services are still there for you, to answer any questions you may have, although due to the current situation, we are operating
+                                        with longer waiting times.</p>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="faqs-title">Refund Questions</h5>
+                    <ul class="accordion-product-wrap style-faqs" id="accordion-faq-3">
+                        <li class="accordion-product-item">
+                            <a href="#accordion-11" class="accordion-title collapsed current" data-bs-toggle="collapse" aria-expanded="true" aria-controls="accordion-11">
+                                <h6>I cannot find my size or the colour I like. What should I do?</h6>
+                                <span class="btn-open-sub"></span>
+                            </a>
+                            <div id="accordion-11" class="collapse" data-bs-parent="#accordion-faq-3">
+                                <div class="accordion-faqs-content">
+                                    <p class="text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries. We remind you that you
+                                        can still find us at Mango.com and on all our online channels. Our customer services are still there for you, to answer any questions you may have, although due to the current situation, we are operating
+                                        with longer waiting times.</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="accordion-product-item">
+                            <a href="#accordion-12" class="accordion-title current" data-bs-toggle="collapse" aria-expanded="true" aria-controls="accordion-12">
+                                <h6>I have not received all the items in my order. What should I do?</h6>
+                                <span class="btn-open-sub"></span>
+                            </a>
+                            <div id="accordion-12" class="collapse show" data-bs-parent="#accordion-faq-2">
+                                <div class="accordion-faqs-content">
+                                    <p class="text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries. We remind you that you
+                                        can still find us at Mango.com and on all our online channels. Our customer services are still there for you, to answer any questions you may have, although due to the current situation, we are operating
+                                        with longer waiting times.</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="accordion-product-item">
+                            <a href="#accordion-13" class="accordion-title collapsed current" data-bs-toggle="collapse" aria-expanded="true" aria-controls="accordion-13">
+                                <h6>The items received are incorrect or are defective. What should I do?</h6>
+                                <span class="btn-open-sub"></span>
+                            </a>
+                            <div id="accordion-13" class="collapse" data-bs-parent="#accordion-faq-2">
+                                <div class="accordion-faqs-content">
+                                    <p class="text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries. We remind you that you
+                                        can still find us at Mango.com and on all our online channels. Our customer services are still there for you, to answer any questions you may have, although due to the current situation, we are operating
+                                        with longer waiting times.</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="accordion-product-item">
+                            <a href="#accordion-14" class="accordion-title collapsed current" data-bs-toggle="collapse" aria-expanded="true" aria-controls="accordion-14">
+                                <h6>Are the items included in the shopping basket reserved automatically?</h6>
+                                <span class="btn-open-sub"></span>
+                            </a>
+                            <div id="accordion-14" class="collapse" data-bs-parent="#accordion-faq-2">
+                                <div class="accordion-faqs-content">
+                                    <p class="text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries. We remind you that you
+                                        can still find us at Mango.com and on all our online channels. Our customer services are still there for you, to answer any questions you may have, although due to the current situation, we are operating
+                                        with longer waiting times.</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="accordion-product-item">
+                            <a href="#accordion-15" class="accordion-title collapsed current" data-bs-toggle="collapse" aria-expanded="true" aria-controls="accordion-15">
+                                <h6>In which countries can I shop online?</h6>
+                                <span class="btn-open-sub"></span>
+                            </a>
+                            <div id="accordion-15" class="collapse" data-bs-parent="#accordion-faq-2">
+                                <div class="accordion-faqs-content">
+                                    <p class="text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries. We remind you that you
+                                        can still find us at Mango.com and on all our online channels. Our customer services are still there for you, to answer any questions you may have, although due to the current situation, we are operating
+                                        with longer waiting times.</p>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="ask-question sticky-top">
+                <div class="ask-question-wrap">
+                    <h5 class="mb_4">Ask Your Question</h5>
+                    <p class="mb_20 text-secondary">Ask Anything, We're Here to Help</p>
+                    <form class="form-leave-comment">
+                        <fieldset class="mb_20">
+                            <div class="text-caption-1 mb_8">Name</div>
+                            <input class="" type="text" placeholder="Your Name*" name="text" tabindex="2" value="" aria-required="true" required="">
+                        </fieldset>
+                        <fieldset class="mb_20">
+                            <div class="text-caption-1 mb_8">How can we help you?</div>
+                            <div class="tf-select">
+                                <select class="">
+                                    <option selected="selected">Exchanges & Returns</option>
+                                    <option>Other</option>
+                                </select>
+                            </div>
+                        </fieldset>
+                        <fieldset class="mb_20">
+                            <div class="text-caption-1 mb_8">Name</div>
+                            <textarea class="" rows="4" placeholder="Your Message*" tabindex="2" aria-required="true" required=""></textarea>
+                        </fieldset>
+                        <div class="button-submit">
+                            <button class="btn-style-2 w-100" type="submit">
+                                <span class="text text-button">Send Request</span>
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-    </section>
-    <!--============================
-        BREADCRUMB END
-    ==============================-->
-
-
-    <!--============================
-        FAQ START
-    ==============================-->
-    <section id="wsus__faq">
-        <div class="container">
-            <div class="accordion" id="accordionExample">
-                <div class="row">
-                    <div class="col-xl-12">
-                        <h4>Frequent Asked Questions</h4>
-                    </div>
-                    <div class="col-xl-6">
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="headingThree33333n">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree33333n" aria-expanded="false" aria-controls="collapseThree33333n">
-                                    Is Buying On-Line Safe?
-                                </button>
-                            </h2>
-                            <div id="collapseThree33333n" class="accordion-collapse collapse" aria-labelledby="headingThree33333n" data-bs-parent="#accordionExample">
-                                <div class="accordion-body">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officiis explicabo rem facere nulla nihil ad iure architecto sunt nesciunt sed, delectus at aperiam sapiente reiciendis numquam. Expedita quisquam praesentium
-                                        aliquam repellendus, minus aut illum aperiam, doloribus minima beatae consequuntur fugit esse eius ex molestias! Sequi, totam doloribus veniam quis in beatae vitae excepturi praesentium atque illo.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="headingTwo">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                    How Long Will it Take to Get My Package?
-                                </button>
-                            </h2>
-                            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-                                <div class="accordion-body">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officiis explicabo rem facere nulla nihil ad iure architecto sunt nesciunt sed, delectus at aperiam sapiente reiciendis numquam. Expedita quisquam praesentium
-                                        aliquam repellendus, minus aut illum aperiam, doloribus minima beatae consequuntur fugit esse eius ex molestias! Sequi, totam doloribus veniam quis in beatae vitae excepturi praesentium atque illo.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="headingThree">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                    Do You Ship Internationally?
-                                </button>
-                            </h2>
-                            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-                                <div class="accordion-body">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officiis explicabo rem facere nulla nihil ad iure architecto sunt nesciunt sed, delectus at aperiam sapiente reiciendis numquam. Expedita quisquam praesentium
-                                        aliquam repellendus, minus aut illum aperiam, doloribus minima beatae consequuntur fugit esse eius ex molestias! Sequi, totam doloribus veniam quis in beatae vitae excepturi praesentium atque illo.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="headingThree333">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree333" aria-expanded="false" aria-controls="collapseThree333">
-                                    What Shipping Methods are Available?
-                                </button>
-                            </h2>
-                            <div id="collapseThree333" class="accordion-collapse collapse" aria-labelledby="headingThree333" data-bs-parent="#accordionExample">
-                                <div class="accordion-body">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officiis explicabo rem facere nulla nihil ad iure architecto sunt nesciunt sed, delectus at aperiam sapiente reiciendis numquam. Expedita quisquam praesentium
-                                        aliquam repellendus, minus aut illum aperiam, doloribus minima beatae consequuntur fugit esse eius ex molestias! Sequi, totam doloribus veniam quis in beatae vitae excepturi praesentium atque illo.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="headingThree3333">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree3333" aria-expanded="false" aria-controls="collapseThree3333">
-                                    What Payment Methods are Accepted?
-                                </button>
-                            </h2>
-                            <div id="collapseThree3333" class="accordion-collapse collapse" aria-labelledby="headingThree3333" data-bs-parent="#accordionExample">
-                                <div class="accordion-body">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officiis explicabo rem facere nulla nihil ad iure architecto sunt nesciunt sed, delectus at aperiam sapiente reiciendis numquam. Expedita quisquam praesentium
-                                        aliquam repellendus, minus aut illum aperiam, doloribus minima beatae consequuntur fugit esse eius ex molestias! Sequi, totam doloribus veniam quis in beatae vitae excepturi praesentium atque illo.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="headingThree33333">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree33333" aria-expanded="false" aria-controls="collapseThree33333">
-                                    Is Buying On-Line Safe?
-                                </button>
-                            </h2>
-                            <div id="collapseThree33333" class="accordion-collapse collapse" aria-labelledby="headingThree33333" data-bs-parent="#accordionExample">
-                                <div class="accordion-body">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officiis explicabo rem facere nulla nihil ad iure architecto sunt nesciunt sed, delectus at aperiam sapiente reiciendis numquam. Expedita quisquam praesentium
-                                        aliquam repellendus, minus aut illum aperiam, doloribus minima beatae consequuntur fugit esse eius ex molestias! Sequi, totam doloribus veniam quis in beatae vitae excepturi praesentium atque illo.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-6">
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="headingTwotwo">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwotwo" aria-expanded="false" aria-controls="collapseTwotwo">
-                                    How Long Will it Take to Get My Package?
-                                </button>
-                            </h2>
-                            <div id="collapseTwotwo" class="accordion-collapse collapse" aria-labelledby="headingTwotwo" data-bs-parent="#accordionExample">
-                                <div class="accordion-body">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officiis explicabo rem facere nulla nihil ad iure architecto sunt nesciunt sed, delectus at aperiam sapiente reiciendis numquam. Expedita quisquam praesentium
-                                        aliquam repellendus, minus aut illum aperiam, doloribus minima beatae consequuntur fugit esse eius ex molestias! Sequi, totam doloribus veniam quis in beatae vitae excepturi praesentium atque illo.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="headingThreethree">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThreethree" aria-expanded="false" aria-controls="collapseThreethree">
-                                    Do You Ship Internationally?
-                                </button>
-                            </h2>
-                            <div id="collapseThreethree" class="accordion-collapse collapse" aria-labelledby="headingThreethree" data-bs-parent="#accordionExample">
-                                <div class="accordion-body">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officiis explicabo rem facere nulla nihil ad iure architecto sunt nesciunt sed, delectus at aperiam sapiente reiciendis numquam. Expedita quisquam praesentium
-                                        aliquam repellendus, minus aut illum aperiam, doloribus minima beatae consequuntur fugit esse eius ex molestias! Sequi, totam doloribus veniam quis in beatae vitae excepturi praesentium atque illo.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="headingThree333one">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree333one" aria-expanded="false" aria-controls="collapseThree333one">
-                                    What Shipping Methods are Available?
-                                </button>
-                            </h2>
-                            <div id="collapseThree333one" class="accordion-collapse collapse" aria-labelledby="headingThree333one" data-bs-parent="#accordionExample">
-                                <div class="accordion-body">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officiis explicabo rem facere nulla nihil ad iure architecto sunt nesciunt sed, delectus at aperiam sapiente reiciendis numquam. Expedita quisquam praesentium
-                                        aliquam repellendus, minus aut illum aperiam, doloribus minima beatae consequuntur fugit esse eius ex molestias! Sequi, totam doloribus veniam quis in beatae vitae excepturi praesentium atque illo.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="headingThree3333three">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree3333three" aria-expanded="false" aria-controls="collapseThree3333three">
-                                    What Payment Methods are Accepted?
-                                </button>
-                            </h2>
-                            <div id="collapseThree3333three" class="accordion-collapse collapse" aria-labelledby="headingThree3333three" data-bs-parent="#accordionExample">
-                                <div class="accordion-body">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officiis explicabo rem facere nulla nihil ad iure architecto sunt nesciunt sed, delectus at aperiam sapiente reiciendis numquam. Expedita quisquam praesentium
-                                        aliquam repellendus, minus aut illum aperiam, doloribus minima beatae consequuntur fugit esse eius ex molestias! Sequi, totam doloribus veniam quis in beatae vitae excepturi praesentium atque illo.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="headingThree33333four">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree33333four" aria-expanded="false" aria-controls="collapseThree33333four">
-                                    Is Buying On-Line Safe?
-                                </button>
-                            </h2>
-                            <div id="collapseThree33333four" class="accordion-collapse collapse" aria-labelledby="headingThree33333four" data-bs-parent="#accordionExample">
-                                <div class="accordion-body">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officiis explicabo rem facere nulla nihil ad iure architecto sunt nesciunt sed, delectus at aperiam sapiente reiciendis numquam. Expedita quisquam praesentium
-                                        aliquam repellendus, minus aut illum aperiam, doloribus minima beatae consequuntur fugit esse eius ex molestias! Sequi, totam doloribus veniam quis in beatae vitae excepturi praesentium atque illo.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="headingThree33333five">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree33333five" aria-expanded="false" aria-controls="collapseThree33333five">
-                                    Is Buying On-Line Safe?
-                                </button>
-                            </h2>
-                            <div id="collapseThree33333five" class="accordion-collapse collapse" aria-labelledby="headingThree33333five" data-bs-parent="#accordionExample">
-                                <div class="accordion-body">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officiis explicabo rem facere nulla nihil ad iure architecto sunt nesciunt sed, delectus at aperiam sapiente reiciendis numquam. Expedita quisquam praesentium
-                                        aliquam repellendus, minus aut illum aperiam, doloribus minima beatae consequuntur fugit esse eius ex molestias! Sequi, totam doloribus veniam quis in beatae vitae excepturi praesentium atque illo.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-12">
-                    <div class="wsus__faq_text">
-                        <h3>Still need help? Reach out to support 24/7</h3>
-                        <a class="common_btn" href="contact.html">contact</a>
-                        <a class="call" href="callto:+695478555544">call: +695478555544</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!--============================
-        FAQ END
-    ==============================-->
+    </div>
+</section>
+<!-- /FAQs -->
 
 @endsection
 
