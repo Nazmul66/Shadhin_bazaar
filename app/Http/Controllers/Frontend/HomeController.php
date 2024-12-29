@@ -48,6 +48,16 @@ class HomeController extends Controller
         return view('frontend.pages.frontend_pages.privacy_policy');
     }
 
+    public function terms_condition()
+    {
+        return view('frontend.pages.frontend_pages.terms_condition');
+    }
+
+    public function customer_feedback()
+    {
+        return view('frontend.pages.frontend_pages.customer_feedback');
+    }
+
     public function blogs()
     {
         return view('frontend.pages.frontend_pages.blogs');
@@ -85,19 +95,20 @@ class HomeController extends Controller
     }
 
 
-
-
-
     /**
      *  All Product Pages template shown
     */
 
 
-
-    public function cart_view()
+    public function shop_page()
     {
-        return view('frontend.pages.product_pages.cart_view');
+        return view('frontend.pages.product_pages.shop-page');
     }
+
+    // public function cart_view()
+    // {
+    //     return view('frontend.pages.product_pages.cart_view');
+    // }
 
     public function wishlist_view()
     {

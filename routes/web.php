@@ -30,8 +30,13 @@ use App\Http\Controllers\Frontend\CheckoutController;
     Route::get('/faq', [HomeController::class, "faq_page"])->name('faq');
     Route::get('/team', [HomeController::class, "team_page"])->name('team');
     Route::get('/privacy-policy', [HomeController::class, "privacy_policy"])->name('privacy.policy');
+    Route::get('/terms-condition', [HomeController::class, "terms_condition"])->name('terms.condition');
+    Route::get('/customer-feedback', [HomeController::class, "customer_feedback"])->name('customer.feedback');
     Route::get('/blogs', [HomeController::class, "blogs"])->name('blogs');
     Route::get('/blogs-details', [HomeController::class, "blogs_details"])->name('blogs.details');
+    // Route::get('/wishlist', [HomeController::class, "wishlist_view"])->name('wishlist');
+    // Route::get('/compare', [HomeController::class, "compare_view"])->name('compare');
+    Route::get('/shop-page', [HomeController::class, "shop_page"])->name('shop.page');
     Route::get('/track-order', [HomeController::class, "track_order"])->name('track.order');
     Route::get('/register-login', [HomeController::class, "register_login"])->name('register.login');
 
@@ -39,7 +44,7 @@ use App\Http\Controllers\Frontend\CheckoutController;
     Route::get('/flash-sale', [FlashSaleController::class, "index"])->name('flash.sale');
 
     //__ Products __//
-    Route::get('/product-details/{slug}', [ProductController::class, "show_product_details"])->name('product.details');
+    Route::get('/product-details', [ProductController::class, "show_product_details"])->name('product.details');
     Route::post('/get-color-size-price', [ProductController::class, 'getColorSizePrice'])->name('get.color.size.price');
     Route::post('/product/add-to-cart', [ProductController::class, 'productAddToCart'])->name('addToCart');
     Route::get('/remove-cart/{id}/{color_id?}/{size_id?}', [ProductController::class, 'removeCart'])->name('remove.cart');
@@ -66,8 +71,7 @@ use App\Http\Controllers\Frontend\CheckoutController;
     Route::get('/product-brands', [ProductController::class, "product_brands"])->name('product.brands');
 
 
-    // Route::get('/wishlist', [HomeController::class, "wishlist_view"])->name('wishlist');
-    // Route::get('/compare', [HomeController::class, "compare_view"])->name('compare');
+
     
     
 

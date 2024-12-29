@@ -11,646 +11,568 @@
 
 @section('body-content')
 
-<!--============================
-        BREADCRUMB START
-    ==============================-->
-    <section id="wsus__breadcrumb">
-        <div class="wsus_breadcrumb_overlay">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <h4>cart View</h4>
-                        <ul>
-                            <li><a href="#">home</a></li>
-                            <li><a href="#">peoduct</a></li>
-                            <li><a href="#">cart view</a></li>
-                        </ul>
+  <!-- page-title -->
+  <div class="page-title" style="background-image: url({{ asset('public/frontend/images/section/page-title.jpg') }});">
+    <div class="container">
+        <h3 class="heading text-center">Shopping Cart</h3>
+        <ul class="breadcrumbs d-flex align-items-center justify-content-center">
+            <li><a class="link" href="index.html">Homepage</a></li>
+            <li><i class="icon-arrRight"></i></li>
+            <li><a class="link" href="shop-default-grid.html">Shop</a></li>
+            <li><i class="icon-arrRight"></i></li>
+            <li>Shopping Cart</li>
+        </ul>
+    </div>
+</div>
+<!-- /page-title -->
+<!-- Section cart -->
+<section class="flat-spacing">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-8">
+                <div class="tf-cart-sold">
+                    <div class="notification-sold bg-surface">
+                        <img class="icon" src="images/logo/icon-fire.png" alt="img">
+                        <div class="count-text">Your cart will expire in
+                            <div class="js-countdown time-count" data-timer="600" data-labels=":,:,:,"></div> minutes! Please checkout now before your items sell out!</div>
+                    </div>
+                    <div class="notification-progress">
+                        <div class="text">Buy <span class="fw-semibold text-primary">$70.00</span> more to get <span class="fw-semibold">Freeship</span></div>
+                        <div class="progress-cart">
+                            <div class="value" style="width: 0%;" data-progress="50">
+                                <span class="round"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <form>
+                    <table class="tf-table-page-cart">
+                        <thead>
+                            <tr>
+                                <th>Products</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Total Price</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="tf-cart-item file-delete">
+                                <td class="tf-cart-item_product">
+                                    <a href="product-detail.html" class="img-box">
+                                        <img src="images/products/womens/women-19.jpg" alt="product">
+                                    </a>
+                                    <div class="cart-info">
+                                        <a href="product-detail.html" class="cart-title link">V-neck cotton T-shirt</a>
+                                        <div class="variant-box">
+                                            <div class="tf-select">
+                                                <select>
+                                                    <option selected="selected">Blue</option>
+                                                    <option>Black</option>
+                                                    <option>White</option>
+                                                    <option>Red</option>
+                                                    <option>Beige</option>
+                                                    <option>Pink</option>
+                                                </select>
+                                            </div>
+                                            <div class="tf-select">
+                                                <select>
+                                                    <option selected="selected">XL</option>
+                                                    <option>XS</option>
+                                                    <option>S</option>
+                                                    <option>M</option>
+                                                    <option>L</option>
+                                                    <option>XL</option>
+                                                    <option>2XL</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-cart-title="Price" class="tf-cart-item_price text-center">
+                                    <div class="cart-price text-button price-on-sale">$60.00</div>
+                                </td>
+                                <td data-cart-title="Quantity" class="tf-cart-item_quantity">
+                                    <div class="wg-quantity mx-md-auto">
+                                        <span class="btn-quantity btn-decrease">-</span>
+                                        <input type="text" class="quantity-product" name="number" value="1">
+                                        <span class="btn-quantity btn-increase">+</span>
+                                    </div>
+                                </td>
+                                <td data-cart-title="Total" class="tf-cart-item_total text-center">
+                                    <div class="cart-total text-button total-price">$60.00</div>
+                                </td>
+                                <td data-cart-title="Remove" class="remove-cart"><span class="remove icon icon-close"></span></td>
+                            </tr>
+                            <tr class="tf-cart-item file-delete">
+                                <td class="tf-cart-item_product">
+                                    <a href="product-detail.html" class="img-box">
+                                        <img src="images/products/womens/women-1.jpg" alt="product">
+                                    </a>
+                                    <div class="cart-info">
+                                        <a href="product-detail.html" class="cart-title link">V-neck cotton T-shirt</a>
+                                        <div class="variant-box">
+                                            <div class="tf-select">
+                                                <select>
+                                                    <option selected="selected">Blue</option>
+                                                    <option>Black</option>
+                                                    <option>White</option>
+                                                    <option>Red</option>
+                                                    <option>Beige</option>
+                                                    <option>Pink</option>
+                                                </select>
+                                            </div>
+                                            <div class="tf-select">
+                                                <select>
+                                                    <option selected="selected">XL</option>
+                                                    <option>XS</option>
+                                                    <option>S</option>
+                                                    <option>M</option>
+                                                    <option>L</option>
+                                                    <option>XL</option>
+                                                    <option>2XL</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-cart-title="Price" class="tf-cart-item_price text-center">
+                                    <div class="cart-price text-button price-on-sale">$40.00</div>
+                                </td>
+                                <td data-cart-title="Quantity" class="tf-cart-item_quantity">
+                                    <div class="wg-quantity mx-md-auto">
+                                        <span class="btn-quantity btn-decrease">-</span>
+                                        <input type="text" class="quantity-product" name="number" value="1">
+                                        <span class="btn-quantity btn-increase">+</span>
+                                    </div>
+                                </td>
+                                <td data-cart-title="Total" class="tf-cart-item_total text-center">
+                                    <div class="cart-total text-button total-price">$40.00</div>
+                                </td>
+                                <td data-cart-title="Remove" class="remove-cart"><span class="remove icon icon-close"></span></td>
+                            </tr>
+                            <tr class="tf-cart-item file-delete">
+                                <td class="tf-cart-item_product">
+                                    <a href="product-detail.html" class="img-box">
+                                        <img src="images/products/womens/women-29.jpg" alt="product">
+                                    </a>
+                                    <div class="cart-info">
+                                        <a href="product-detail.html" class="cart-title link">V-neck cotton T-shirt</a>
+                                        <div class="variant-box">
+                                            <div class="tf-select">
+                                                <select>
+                                                    <option selected="selected">Blue</option>
+                                                    <option>Black</option>
+                                                    <option>White</option>
+                                                    <option>Red</option>
+                                                    <option>Beige</option>
+                                                    <option>Pink</option>
+                                                </select>
+                                            </div>
+                                            <div class="tf-select">
+                                                <select>
+                                                    <option selected="selected">XL</option>
+                                                    <option>XS</option>
+                                                    <option>S</option>
+                                                    <option>M</option>
+                                                    <option>L</option>
+                                                    <option>XL</option>
+                                                    <option>2XL</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-cart-title="Price" class="tf-cart-item_price text-center">
+                                    <div class="cart-price"><span class="old-price">$80.00</span><span class="text-button new-price price-on-sale">$129.00</span></div>
+                                </td>
+                                <td data-cart-title="Quantity" class="tf-cart-item_quantity">
+                                    <div class="wg-quantity mx-md-auto">
+                                        <span class="btn-quantity btn-decrease">-</span>
+                                        <input type="text" class="quantity-product" name="number" value="1">
+                                        <span class="btn-quantity btn-increase">+</span>
+                                    </div>
+                                </td>
+                                <td data-cart-title="Total" class="tf-cart-item_total text-center">
+                                    <div class="cart-total text-button total-price">$129.00</div>
+                                </td>
+                                <td data-cart-title="Remove" class="remove-cart"><span class="remove icon icon-close"></span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="ip-discount-code">
+                        <input type="text" placeholder="Add voucher discount">
+                        <button class="tf-btn"><span class="text">Apply Code</span></button>
+                    </div>
+                    <div class="group-discount">
+                        <div class="box-discount">
+                            <div class="discount-top">
+                                <div class="discount-off">
+                                    <div class="text-caption-1">Discount</div>
+                                    <span class="sale-off text-btn-uppercase">10% OFF</span>
+                                </div>
+                                <div class="discount-from">
+                                    <p class="text-caption-1">For all orders <br> from 200$</p>
+                                </div>
+                            </div>
+                            <div class="discount-bot">
+                                <span class="text-btn-uppercase">Mo234231</span>
+                                <button class="tf-btn"><span class="text">Apply Code</span></button>
+                            </div>
+                        </div>
+                        <div class="box-discount active">
+                            <div class="discount-top">
+                                <div class="discount-off">
+                                    <div class="text-caption-1">Discount</div>
+                                    <span class="sale-off text-btn-uppercase">10% OFF</span>
+                                </div>
+                                <div class="discount-from">
+                                    <p class="text-caption-1">For all orders <br> from 200$</p>
+                                </div>
+                            </div>
+                            <div class="discount-bot">
+                                <span class="text-btn-uppercase">Mo234231</span>
+                                <button class="tf-btn"><span class="text">Apply Code</span></button>
+                            </div>
+                        </div>
+                        <div class="box-discount">
+                            <div class="discount-top">
+                                <div class="discount-off">
+                                    <div class="text-caption-1">Discount</div>
+                                    <span class="sale-off text-btn-uppercase">10% OFF</span>
+                                </div>
+                                <div class="discount-from">
+                                    <p class="text-caption-1">For all orders <br> from 200$</p>
+                                </div>
+                            </div>
+                            <div class="discount-bot">
+                                <span class="text-btn-uppercase">Mo234231</span>
+                                <button class="tf-btn"><span class="text">Apply Code</span></button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-xl-4">
+                <div class="fl-sidebar-cart">
+                    <div class="box-order bg-surface">
+                        <h5 class="title">Order Summary</h5>
+                        <div class="subtotal text-button d-flex justify-content-between align-items-center">
+                            <span>Subtotal</span>
+                            <span class="total">-$80.00</span>
+                        </div>
+                        <div class="discount text-button d-flex justify-content-between align-items-center">
+                            <span>Discounts</span>
+                            <span class="total">-$80.00</span>
+                        </div>
+                        <div class="ship">
+                            <span class="text-button">Shipping</span>
+                            <div class="flex-grow-1">
+                                <fieldset class="ship-item">
+                                    <input type="radio" name="ship-check" class="tf-check-rounded" id="free" checked>
+                                    <label for="free">
+                                        <span>Free Shipping</span>
+                                        <span class="price">$0.00</span>
+                                    </label>
+                                </fieldset>
+                                <fieldset class="ship-item">
+                                    <input type="radio" name="ship-check" class="tf-check-rounded" id="local">
+                                    <label for="local">
+                                        <span>Local:</span>
+                                        <span class="price">$35.00</span>
+                                    </label>
+                                </fieldset>
+                                <fieldset class="ship-item">
+                                    <input type="radio" name="ship-check" class="tf-check-rounded" id="rate">
+                                    <label for="rate">
+                                        <span>Flat Rate:</span>
+                                        <span class="price">$35.00</span>
+                                    </label>
+                                </fieldset>
+                            </div>
+                        </div>
+                        <h5 class="total-order d-flex justify-content-between align-items-center">
+                            <span>Total</span>
+                            <span class="total">$186,99</span>
+                        </h5>
+                        <div class="box-progress-checkout">
+                            <fieldset class="check-agree">
+                                <input type="checkbox" id="check-agree" class="tf-check-rounded">
+                                <label for="check-agree">
+                                    I agree with the <a href="term-of-use.html">terms and conditions</a>
+                                </label>
+                            </fieldset>
+                            <a href="checkout.html" class="tf-btn btn-reset">Process To Checkout</a>
+                            <p class="text-button text-center">Or continue shopping</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-    <!--============================
-        BREADCRUMB END
-    ==============================-->
+    </div>
+</section>
+<!-- /Section cart -->
+<!-- Recent product -->
+<section class="flat-spacing pt-0">
+    <div class="container">
+        <div class="heading-section text-center wow fadeInUp">
+            <h4 class="heading">You may also like</h4>
+        </div>
+        <div dir="ltr" class="swiper tf-sw-recent" data-preview="4" data-tablet="3" data-mobile="2" data-space-lg="30" data-space-md="30" data-space="15" data-pagination="1" data-pagination-md="1" data-pagination-lg="1">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <div class="card-product wow fadeInUp" data-wow-delay="0s">
+                        <div class="card-product-wrapper">
+                            <a href="product-detail.html" class="product-img">
+                                <img class="lazyload img-product" data-src="images/products/womens/women-19.jpg" src="images/products/womens/women-19.jpg" alt="image-product">
+                                <img class="lazyload img-hover" data-src="images/products/womens/women-20.jpg" src="images/products/womens/women-20.jpg" alt="image-product">
+                            </a>
+                            <div class="list-product-btn">
+                                <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
+                                    <span class="icon icon-heart"></span>
+                                    <span class="tooltip">Wishlist</span>
+                                </a>
+                                <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
+                                    <span class="icon icon-gitDiff"></span>
+                                    <span class="tooltip">Compare</span>
+                                </a>
+                                <a href="#quickView" data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
+                                    <span class="icon icon-eye"></span>
+                                    <span class="tooltip">Quick View</span>
+                                </a>
+                            </div>
+                            <div class="list-btn-main">
+                                <a href="#shoppingCart" data-bs-toggle="modal" class="btn-main-product">Add To cart</a>
+                            </div>
+                        </div>
+                        <div class="card-product-info">
+                            <a href="product-detail.html" class="title link">V-neck cotton T-shirt</a>
+                            <span class="price">$59.99</span>
 
-
-    <!--============================
-        CART VIEW PAGE START
-    ==============================-->
-    <section id="wsus__cart_view">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-9">
-                    <div class="wsus__cart_list">
-                        <div class="table-responsive">
-                            <table>
-                                <thead>
-                                    <tr class="d-flex">
-                                        <th class="wsus__pro_img">
-                                            product item
-                                        </th>
-
-                                        <th class="wsus__pro_status">
-                                            status
-                                        </th>
-
-                                        <th class="wsus__pro_select">
-                                            quantity
-                                        </th>
-
-                                        <th class="wsus__pro_name">
-                                            Price
-                                        </th>
-
-                                        <th class="wsus__pro_tk">
-                                           Total price
-                                        </th>
-
-                                        <th class="wsus__pro_icon">
-                                            <a href="javascript:void();" class="common_btn clear_cart">clear cart</a>
-                                        </th>
-                                    </tr>
-                                </thead>
-
-                                <tbody id="cart_data_update">
-                                    @if ( $all_carts->count() > 0 )
-                                        @foreach ($all_carts as $cart)
-                                            <tr class="d-flex" id="cart-item-{{ $cart->id }}">
-                                                <td class="wsus__pro_img">
-                                                    <img src="{{ asset($cart->thumb_image) }}" alt="product" class="img-fluid w-100">
-                                                </td>
-                                    
-                                                <td class="wsus__pro_name">
-                                                    <p class="mb-1">{{ $cart->name }}</p>
-                                                    <span class="variant_item mb-2">  
-                                                        <strong>Product Price : </strong> ${{ $cart->price }}
-                                                    </span>
-                                                    @if ( !empty($cart->color_name) )
-                                                        <span class="variant_item mb-2"> <strong>Color:</strong> 
-                                                            <span class="color_content" style="background: {{ $cart->color_name }}"></span> 
-                                                            (${{ $cart->color_price }})
-                                                        </span>
-                                                    @endif
-                                                    @if ( !empty($cart->size_name))
-                                                        <span class="variant_item"> <strong>Size: </strong>
-                                                            <span class="size_content">{{ $cart->size_name }}</span> 
-                                                            (${{ $cart->size_price }})
-                                                        </span>
-                                                    @endif
-                                                </td>
-                                    
-                                                <td class="wsus__pro_select">
-                                                    <div class="select_number">
-                                                        <span class="increment" data-cart-id="{{ $cart->id }}" data-prdt-id="{{ $cart->product_id }}">-</span>
-                                                        <input type="number" class="qty_field" name="qty" min="1" max="20" data-cart-id="{{ $cart->id }}" value="{{ $cart->qty }}">
-                                                        <span class="decrement" data-cart-id="{{ $cart->id }}" data-prdt-id="{{ $cart->product_id }}">+</span>
-                                                    </div>
-                                                </td>
-                                    
-                                                <td class="wsus__pro_status">
-                                                    <h6 id="item-price-{{ $cart->id }}">
-                                                        @if (!empty($cart->offer_price))
-                                                            ${{ number_format($cart->qty * $cart->offer_price, 2) }}
-                                                        @else
-                                                            ${{ number_format($cart->qty * $cart->color_price, 2) }}
-                                                        @endif
-                                                    </h6>
-                                                </td>
-                                    
-                                                <td class="wsus__pro_tk">
-                                                    <h6 id="main-price-{{ $cart->id }}">
-                                                        @if (!empty($cart->offer_price))
-                                                            ${{ number_format($cart->qty * ( $cart->offer_price + $cart->color_price + $cart->size_price ), 2) }}
-                                                        @else
-                                                            ${{ number_format($cart->qty * ( $cart->color_price + $cart->size_price + $cart->price ), 2) }}
-                                                        @endif
-                                                    </h6>
-                                                </td>
-                                    
-                                                <td class="wsus__pro_icon">
-                                                    <a type="button" class="delete_cart_item" data-cart-id="{{ $cart->id }}" data-prdt-id="{{ $cart->product_id }}">
-                                                        <i class="far fa-times"></i>
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    @else
-                                       <tr>
-                                          <td colspan="6">
-                                            <a class="common_btn mt-3 mb-3 text-center " href=""><i class="fab fa-shopify" aria-hidden="true"></i> go shop</a>
-                                          </td>
-                                       </tr>
-                                    @endif
-                                </tbody>
-                            </table>
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-3">
-                    <div class="wsus__cart_list_footer_button" id="sticky_sidebar">
-                        <h6>total cart</h6>
-                        <p>subtotal: <span id="subtotal">${{ number_format($subTotal, 2) ?? 0 }}</span></p>
-                        <p>Coupon (-): <span id="discount">
-                                @if(Session::has('coupon'))
-                                    ${{ number_format(Session::get('coupon')['discount'], 2) }}
-                                @else
-                                    $0.00
-                                @endif
-                            </span>
-                        </p>
+                <div class="swiper-slide">
+                    <div class="card-product wow fadeInUp" data-wow-delay="0.1s">
+                        <div class="card-product-wrapper">
+                            <a href="product-detail.html" class="product-img">
+                                <img class="lazyload img-product" data-src="images/products/womens/women-176.jpg" src="images/products/womens/women-176.jpg" alt="image-product">
+                                <img class="lazyload img-hover" data-src="images/products/womens/women-179.jpg" src="images/products/womens/women-179.jpg" alt="image-product">
+                            </a>
+                            <div class="on-sale-wrap"><span class="on-sale-item">-25%</span></div>
+                            <div class="marquee-product bg-main">
+                                <div class="marquee-wrapper">
+                                    <div class="initial-child-container">
+                                        <div class="marquee-child-item">
+                                            <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
+                                        </div>
+                                        <div class="marquee-child-item">
+                                            <span class="icon icon-lightning text-critical"></span>
+                                        </div>
+                                        <div class="marquee-child-item">
+                                            <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
+                                        </div>
+                                        <div class="marquee-child-item">
+                                            <span class="icon icon-lightning text-critical"></span>
+                                        </div>
+                                        <div class="marquee-child-item">
+                                            <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
+                                        </div>
+                                        <div class="marquee-child-item">
+                                            <span class="icon icon-lightning text-critical"></span>
+                                        </div>
+                                        <div class="marquee-child-item">
+                                            <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
+                                        </div>
+                                        <div class="marquee-child-item">
+                                            <span class="icon icon-lightning text-critical"></span>
+                                        </div>
+                                        <div class="marquee-child-item">
+                                            <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
+                                        </div>
+                                        <div class="marquee-child-item">
+                                            <span class="icon icon-lightning text-critical"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="marquee-wrapper">
+                                    <div class="initial-child-container">
+                                        <div class="marquee-child-item">
+                                            <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
+                                        </div>
+                                        <div class="marquee-child-item">
+                                            <span class="icon icon-lightning text-critical"></span>
+                                        </div>
+                                        <div class="marquee-child-item">
+                                            <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
+                                        </div>
+                                        <div class="marquee-child-item">
+                                            <span class="icon icon-lightning text-critical"></span>
+                                        </div>
+                                        <div class="marquee-child-item">
+                                            <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
+                                        </div>
+                                        <div class="marquee-child-item">
+                                            <span class="icon icon-lightning text-critical"></span>
+                                        </div>
+                                        <div class="marquee-child-item">
+                                            <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
+                                        </div>
+                                        <div class="marquee-child-item">
+                                            <span class="icon icon-lightning text-critical"></span>
+                                        </div>
+                                        <div class="marquee-child-item">
+                                            <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
+                                        </div>
+                                        <div class="marquee-child-item">
+                                            <span class="icon icon-lightning text-critical"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="list-product-btn">
+                                <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
+                                    <span class="icon icon-heart"></span>
+                                    <span class="tooltip">Wishlist</span>
+                                </a>
+                                <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
+                                    <span class="icon icon-gitDiff"></span>
+                                    <span class="tooltip">Compare</span>
+                                </a>
+                                <a href="#quickView" data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
+                                    <span class="icon icon-eye"></span>
+                                    <span class="tooltip">Quick View</span>
+                                </a>
+                            </div>
+                            <div class="list-btn-main">
+                                <a href="#shoppingCart" data-bs-toggle="modal" class="btn-main-product">Add To cart</a>
+                            </div>
+                        </div>
+                        <div class="card-product-info">
+                            <a href="product-detail.html" class="title link">Polarized sunglasses</a>
+                            <span class="price"><span class="old-price">$98.00</span> $79.99</span>
+                            <ul class="list-color-product">
+                                <li class="list-color-item color-swatch active line">
+                                    <span class="swatch-value bg-light-blue"></span>
+                                    <img class="lazyload" data-src="images/products/womens/women-176.jpg" src="images/products/womens/women-176.jpg" alt="image-product">
+                                </li>
+                                <li class="list-color-item color-swatch">
+                                    <span class="swatch-value bg-light-blue-2"></span>
+                                    <img class="lazyload" data-src="images/products/womens/women-177.jpg" src="images/products/womens/women-177.jpg" alt="image-product">
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="card-product card-product-size wow fadeInUp" data-wow-delay="0.2s">
+                        <div class="card-product-wrapper">
+                            <a href="product-detail.html" class="product-img">
+                                <img class="lazyload img-product" data-src="images/products/womens/women-29.jpg" src="images/products/womens/women-29.jpg" alt="image-product">
+                                <img class="lazyload img-hover" data-src="images/products/womens/women-30.jpg" src="images/products/womens/women-30.jpg" alt="image-product">
+                            </a>
+                            <div class="variant-wrap size-list">
+                                <ul class="variant-box">
+                                    <li class="size-item">S</li>
+                                    <li class="size-item">M</li>
+                                    <li class="size-item">L</li>
+                                    <li class="size-item">XL</li>
+                                </ul>
+                            </div>
+                            <div class="variant-wrap countdown-wrap">
+                                <div class="variant-box">
+                                    <div class="js-countdown" data-timer="1007500" data-labels="D :,H :,M :,S"></div>
+                                </div>
+                            </div>
+                            <div class="list-product-btn">
+                                <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
+                                    <span class="icon icon-heart"></span>
+                                    <span class="tooltip">Wishlist</span>
+                                </a>
+                                <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
+                                    <span class="icon icon-gitDiff"></span>
+                                    <span class="tooltip">Compare</span>
+                                </a>
+                                <a href="#quickView" data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
+                                    <span class="icon icon-eye"></span>
+                                    <span class="tooltip">Quick View</span>
+                                </a>
+                            </div>
+                            <div class="list-btn-main">
+                                <a href="#quickAdd" data-bs-toggle="modal" class="btn-main-product">Quick Add</a>
+                            </div>
+                        </div>
+                        <div class="card-product-info">
+                            <a href="product-detail.html" class="title link">Ramie shirt with pockets </a>
+                            <span class="price"><span class="old-price">$98.00</span> $89.99</span>
+                            <ul class="list-color-product">
+                                <li class="list-color-item color-swatch active line">
+                                    <span class="swatch-value bg-light-orange"></span>
+                                    <img class="lazyload" data-src="images/products/womens/women-29.jpg" src="images/products/womens/women-29.jpg" alt="image-product">
+                                </li>
+                                <li class="list-color-item color-swatch">
+                                    <span class="swatch-value bg-light-grey"></span>
+                                    <img class="lazyload" data-src="images/products/womens/women-33.jpg" src="images/products/womens/women-33.jpg" alt="image-product">
+                                </li>
 
-                        @php
-                            if ( session()->has('coupon') ) {
-                              $coupons = session()->get('coupon')['discount'];
-                            }
-                            else{
-                                $coupons = 0;
-                            }
-                        @endphp
-
-                        <p class="total"><span>total:</span> <span id="total_price">${{ number_format($subTotal - $coupons, 2) }} </span></p>
-
-                        <form id="apply_coupon" method="GET">
-                            @csrf
-
-                            <input type="text" id="coupon_code" name="coupon_code" value="{{ session()->has('coupon') ? session()->get('coupon')['coupon_name'] : ""}}" placeholder="Coupon Code">
-                            <button type="submit" class="common_btn">apply</button>
-                        </form>
-                        <a class="common_btn mt-4 w-100 text-center" href="{{ route('checkout') }}">checkout</a>
-                        <a class="common_btn mt-1 w-100 text-center" href=""><i class="fab fa-shopify"></i> go shop</a>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="card-product wow fadeInUp" data-wow-delay="0.3s">
+                        <div class="card-product-wrapper">
+                            <a href="product-detail.html" class="product-img">
+                                <img class="lazyload img-product" data-src="images/products/womens/women-1.jpg" src="images/products/womens/women-1.jpg" alt="image-product">
+                                <img class="lazyload img-hover" data-src="images/products/womens/women-2.jpg" src="images/products/womens/women-2.jpg" alt="image-product">
+                            </a>
+                            <div class="list-product-btn">
+                                <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
+                                    <span class="icon icon-heart"></span>
+                                    <span class="tooltip">Wishlist</span>
+                                </a>
+                                <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
+                                    <span class="icon icon-gitDiff"></span>
+                                    <span class="tooltip">Compare</span>
+                                </a>
+                                <a href="#quickView" data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
+                                    <span class="icon icon-eye"></span>
+                                    <span class="tooltip">Quick View</span>
+                                </a>
+                            </div>
+                            <div class="list-btn-main">
+                                <a href="#shoppingCart" data-bs-toggle="modal" class="btn-main-product">Add To cart</a>
+                            </div>
+                        </div>
+                        <div class="card-product-info">
+                            <a href="product-detail.html" class="title link">Ribbed cotton-blend top</a>
+                            <span class="price">$69.99</span>
+                            <ul class="list-color-product">
+                                <li class="list-color-item color-swatch active line">
+                                    <span class="swatch-value bg-dark-grey"></span>
+                                    <img class="lazyload" data-src="images/products/womens/women-1.jpg" src="images/products/womens/women-1.jpg" alt="image-product">
+                                </li>
+                                <li class="list-color-item color-swatch">
+                                    <span class="swatch-value bg-light-pink"></span>
+                                    <img class="lazyload" data-src="images/products/womens/women-2.jpg" src="images/products/womens/women-2.jpg" alt="image-product">
+                                </li>
+                                <li class="list-color-item color-swatch">
+                                    <span class="swatch-value bg-dark-grey-2"></span>
+                                    <img class="lazyload" data-src="images/products/womens/women-3.jpg" src="images/products/womens/women-3.jpg" alt="image-product">
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
+            <div class="sw-pagination-recent sw-dots type-circle justify-content-center"></div>
         </div>
-    </section>
-
-
-    <section id="wsus__single_banner">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-6 col-lg-6">
-                    <div class="wsus__single_banner_content">
-                        <div class="wsus__single_banner_img">
-                            <img src="{{ asset('public/frontend/images/single_banner_2.jpg') }}" alt="banner" class="img-fluid w-100">
-                        </div>
-                        <div class="wsus__single_banner_text">
-                            <h6>sell on <span>35% off</span></h6>
-                            <h3>smart watch</h3>
-                            <a class="shop_btn" href="#">shop now</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-6 col-lg-6">
-                    <div class="wsus__single_banner_content single_banner_2">
-                        <div class="wsus__single_banner_img">
-                            <img src="{{ asset('public/frontend/images/single_banner_3.jpg') }}" alt="banner" class="img-fluid w-100">
-                        </div>
-                        <div class="wsus__single_banner_text">
-                            <h6>New Collection</h6>
-                            <h3>Cosmetics</h3>
-                            <a class="shop_btn" href="#">shop now</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!--============================
-          CART VIEW PAGE END
-    ==============================-->
+    </div>
+</section>
+<!-- /Recent product -->
 
 @endsection
 
 @push('add-js')
-<script>
 
-    $(document).ready(function() {
-
-        //__ Function to update cart sidebar UI __//
-        function refreshSidebarCart() {
-            $.ajax({
-                url: '{{ route("get.sidebar.cart") }}', // Your route to fetch sidebar cart data
-                type: 'GET',
-                success: function(res) {
-                    var cartItemsHtml = '';
-    
-                     // Check if the cart has items
-                    if (res.carts.length > 0) {
-                        // Loop through each cart item and update the cart
-                        $.each(res.carts, function(index, item) {
-                            cartItemsHtml += `
-                                <li>
-                                    <div class="wsus__cart_img">
-                                        <a href="{{ url('product/details') }}/${item.id}">
-                                            <img src="${item.image_url}" alt="product" class="img-fluid w-100">
-                                        </a>
-                                        <a class="wsis__del_icon removeCart" data-colorId="${item.color_id}" data-sizeId="${item.size_id}" data-prdtId="${item.pdt_id}" style="cursor: pointer;">
-                                            <i class="fas fa-minus-circle"></i>
-                                        </a>
-                                    </div>
-                                    <div class="wsus__cart_text">
-                                        <a class="wsus__cart_title" href="{{ url('product/details') }}/${item.slug}">${item.name}</a>
-                                        <p>
-                                            ${item.offer_price ? `$${item.offer_price} <del>$${item.price}</del>` : `$${item.price}`} x ${item.qty} Qty
-                                        </p>
-                            `;
-                
-                            // Check and append size details if available
-                            if (item.size_name && item.size_price) {
-                                cartItemsHtml += `
-                                    <span class="variant_item"> Size: <span class="size_content">${item.size_name}</span>  ($${item.size_price})</span>
-                                `;
-                            }
-                
-                            // Check and append color details if available
-                            if (item.color_name && item.color_price) {
-                                cartItemsHtml += `
-                                    <span class="variant_item"> Color: <span class="color_content" style="background: ${item.color_name}; width: 20px; height: 20px; display: inline-block; border-radius: 50%;"></span>  ($${item.color_price})</span>
-                                `;
-                            }
-                            cartItemsHtml += `</div> </li>`;
-                        });
-
-                        // Update cart items in the mini-cart
-                        $('#cart-items').html(cartItemsHtml);
-
-                        // Update subtotal in the mini-cart
-                        $('#cart-subtotal').text(`$${res.subtotal.toFixed(2)}`);
-                    } else {
-                        window.location.reload();
-                        // If no items are in the cart, display a message
-                        $('#cart-items').html('<a class="common_btn mt-4 mb-3 text-center " href="#"><i class="fab fa-shopify" aria-hidden="true"></i> go shop</a>');
-                        $('#cart-subtotal').text('$0.00');
-                    }
-                
-                },
-                error: function (err){
-                    console.log('error', err)
-                }
-           });
-        }
-
-        // Function to refresh the main cart table
-        function refreshMainCartData() {
-            $.ajax({
-                url: '{{ route("get.main.cart") }}', // Make sure this route is correct
-                type: 'GET',
-                success: function(res) {
-                    if (res.status === 'success') {
-                        let cartDataHtml = '';
-
-                        // Loop through each cart item to build HTML rows
-                        $.each(res.carts, function(index, cart) {
-                            cartDataHtml += `
-                                <tr class="d-flex" id="cart-item-${cart.id}">
-                                    <td class="wsus__pro_img">
-                                        <img src="${cart.thumb_image}" alt="product" class="img-fluid w-100">
-                                    </td>
-                                    <td class="wsus__pro_name">
-                                        <p>${cart.name}</p>
-                                        ${cart.color_name ? `
-                                            <span class="variant_item mb-2"> Color: 
-                                                <span class="color_content" style="background: ${cart.color_name}"></span> 
-                                                ($${cart.color_price})
-                                            </span>` : ''}
-                                        ${cart.size_name ? `
-                                            <span class="variant_item"> Size: 
-                                                <span class="size_content">${cart.size_name}</span> 
-                                                ($${cart.size_price})
-                                            </span>` : ''}
-                                    </td>
-                                    <td class="wsus__pro_select">
-                                        <div class="select_number">
-                                            <span class="increment" data-cart-id="${cart.id}" data-prdt-id="${cart.pdt_id}">-</span>
-                                            <input type="number" class="qty_field" name="qty" min="1" max="20" data-cart-id="${cart.id}" value="${cart.qty}">
-                                            <span class="decrement" data-cart-id="${cart.id}" data-prdt-id="${cart.pdt_id}">+</span>
-                                        </div>
-                                    </td>
-                                    <td class="wsus__pro_status">
-                                        <h6 id="item-price-${cart.id}">
-                                            $${(cart.offer_price || cart.price) * cart.qty}
-                                        </h6>
-                                    </td>
-                                    <td class="wsus__pro_tk">
-                                        <h6 id="main-price-${cart.id}">
-                                            $${(cart.offer_price + cart.color_price + cart.size_price) * cart.qty}
-                                        </h6>
-                                    </td>
-                                    <td class="wsus__pro_icon">
-                                        <a type="button" class="delete_cart_item" data-cart-id="${cart.id}" data-prdt-id="${cart.pdt_id}">
-                                            <i class="far fa-times"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                            `;
-                        });
-
-                        // If cart is empty, display "go shop" button
-                        if (res.carts.length === 0) {
-                            cartDataHtml = `
-                                <tr>
-                                    <td colspan="6">
-                                        <a class="common_btn mt-3 mb-3 text-center " href="#"><i class="fab fa-shopify" aria-hidden="true"></i> go shop</a>
-                                    </td>
-                                </tr>
-                            `;
-                        }
-
-                        // Update main cart table and subtotal
-                        $('#cart_data_update').html(cartDataHtml);
-                        $('#cart_count').text(`${res.total_count}`);
-                        $('#cart-subtotal').text(`$${res.subtotal.toFixed(2)}`);
-                        $('#subtotal').text(`$${res.subtotal.toFixed(2)}`);
-                    }
-                },
-                error: function(error) {
-                    console.log('Error refreshing main cart:', error);
-                }
-            });
-        }
-
-        // Handle Increment button click (for increasing the quantity)
-        $(document).on('click', '.decrement', function() {
-            // Find the input field next to the clicked button
-            var qtyInput = $(this).siblings('.qty_field');
-            var currentQty = parseInt(qtyInput.val());
-            var maxQty = parseInt(qtyInput.attr('max'));
-            var cartId = $(this).data('cart-id');
-            var productId = $(this).data('prdt-id');
-
-            // Increase the quantity
-            if (currentQty < maxQty) {
-                qtyInput.val(currentQty + 1);
-                updateCartQuantity(cartId, productId, currentQty + 1);  // Call the update function
-            }
-        });
-
-         // Handle Decrement button click (for decreasing the quantity)
-        $(document).on('click', '.increment', function() {
-            // Find the input field next to the clicked button
-            var qtyInput = $(this).siblings('.qty_field');
-            var currentQty = parseInt(qtyInput.val());
-            var minQty = parseInt(qtyInput.attr('min'));
-            var cartId = $(this).data('cart-id');
-            var productId = $(this).data('prdt-id');
-
-            // Decrease the quantity but not below the minimum allowed value
-            if (currentQty > minQty) {
-                qtyInput.val(currentQty - 1);
-                updateCartQuantity(cartId, productId, currentQty - 1);  // Call the update function
-            }
-        });
-
-        // Function to update cart quantity
-        function updateCartQuantity(cartId, productId, newQty) {
-            // console.log("Updating cart with cartId:", cartId, "productId:", productId, "newQty:", newQty); // 
-
-            $.ajax({
-                url: `{{ route('update.cart.quantity') }}`,
-                type: 'POST',
-                data: {
-                    cart_id: cartId,
-                    product_id: productId,
-                    qty: newQty,
-                    _token: "{{ csrf_token() }}" // Include CSRF token
-                },
-                success: function(res) {
-
-                    var total = res.subtotal - {{ session()->has('coupon') ? session()->get('coupon')['discount'] : 0 }}
-                    $('#total_price').text(`$${total.toFixed(2)}`);
-
-                     // Refresh the sidebar cart data
-                    refreshSidebarCart();
-
-                    // update the discount amount
-                    calculateCouponDiscount()
-
-                    if (res.status === 'success') {
-                        // Update the item price
-                        $('#item-price-' + cartId).text('$' + res.price.toFixed(2));
-
-                        // Update the main price
-                        $('#main-price-' + cartId).text('$' + res.mainPrice.toFixed(2));
-
-                        // Update the subtotal
-                        $('#subtotal').text('$' + res.subtotal.toFixed(2));
-                        $('#cart-subtotal').text('$' + res.subtotal.toFixed(2));
-                    }
-                },
-                error: function(error) {
-                    console.error('AJAX Error:', error); // Log AJAX errors
-                }
-            });
-        }
-
-
-        // Delete cart item on click
-        $(document).on('click', '.delete_cart_item', function(e) {
-            // e.preventDefault();
-            
-            let cartId = $(this).data('cart-id');
-            let prdtId = $(this).data('prdt-id');
-            let row = $('#cart-item-' + cartId); // Get the row to remove it later
-
-            $.ajax({
-                url: '{{ route("delete.cart.item") }}', // Update with the correct route
-                type: 'POST',
-                data: {
-                    cart_id: cartId,
-                    prdtId: prdtId,
-                    _token: '{{ csrf_token() }}'
-                },
-                success: function(res) {
-                    if (res.status === 'success') {
-                         // Calculate the new total after discount
-                        let totalAfterDiscount = res.subtotal - res.discount;
-                        $('#total_price').text(`$${totalAfterDiscount.toFixed(2)}`);
-
-                        // Refresh the sidebar cart data
-                        refreshSidebarCart();
-
-                        // Remove the row from the DOM
-                        row.remove();
-
-                        // Update the subtotal
-                        $('#subtotal').text('$' + res.subtotal.toFixed(2));
-
-                        $('#cart_count').text(`${res.total?.length}`);
-
-                        // Check if the cart is empty
-                        if (res.total?.length === 0) {
-                            window.location.reload();
-                            
-                            // Display the "Go to Shop" button when cart is empty
-                            $('#cart_data_update').html(`
-                                <tr>
-                                    <td colspan="6" class="text-center">
-                                        <a class="common_btn mt-3 mb-3 text-center " href="#">
-                                            <i class="fab fa-shopify" aria-hidden="true"></i> Go to Shop
-                                        </a>
-                                    </td>
-                                </tr>
-                            `);
-                        }
-                    }
-                },
-                error: function(error) {
-                    console.error('AJAX Error:', error);
-                }
-            });
-        });
-
-
-        // Clear cart button click event
-        $(document).on('click', '.clear_cart', function(e) {
-            e.preventDefault(); // Prevent default action
-
-            $.ajax({
-                url: '{{ route("clear.cart") }}', // Route to clear cart
-                type: 'POST',
-                data: {
-                    _token: '{{ csrf_token() }}' // Include CSRF token
-                },
-                success: function(response) {
-                    if (response.status === 'success') {
-                        refreshMainCartData();
-                        refreshSidebarCart()
-
-                        // Clear the cart items from the DOM
-                        $('#cart_data_update').html(`
-                            <tr>
-                                <td colspan="6" class="text-center">
-                                    <a class="common_btn mt-3 mb-3 text-center" href="#">
-                                        <i class="fab fa-shopify" aria-hidden="true"></i> Go to Shop
-                                    </a>
-                                </td>
-                            </tr>
-                        `);
-
-                        // Update the subtotal to zero
-                        $('#subtotal').text('$0.00');
-                        $('#cart_count').text('0');
-                    }
-                },
-                error: function(error) {
-                    console.error('AJAX Error:', error);
-                }
-            });
-        });
-
-
-        //__ Remove cart items [ sidebar ] __// 
-        $(document).on('click', '.removeCart', function() {
-            var colorId = $(this).attr('data-colorId');
-            var sizeId = $(this).attr('data-sizeId');
-            var prdtId = $(this).attr('data-prdtId');
-            var cartItem = $(this).closest('li'); // Get the closest cart item element
-
-            $.ajax({
-                url: `{{ url('/remove-cart') }}/${prdtId}/${colorId}/${sizeId}`,
-                type: 'GET', 
-                success: function(res) {
-                    if (res.success === true) {
-
-                        // Remove the cart item from the UI
-                        cartItem.remove(); // Remove the item from the UI
-                        
-                        var total = res.subtotal - {{ session()->has('coupon') ? session()->get('coupon')['discount'] : 0 }}
-                        $('#total_price').text(`$${total.toFixed(2)}`);
-
-                        // Refresh the cart data after deletion
-                        refreshMainCartData();
-
-                        // Update cart data
-                        updateCartSubtotal(); // Call function to update subtotal
-
-                        // Check if the cart is empty
-                        if (res.total === 0) {
-                            window.location.reload();
-                            // If the cart is empty, show an empty cart message and reset the subtotal
-                            $('#cart-items').html('<div class="text-center"><a class="common_btn mt-4 mb-3 text-center " href="#"><i class="fab fa-shopify" aria-hidden="true"></i> go shop</a></div>');
-                            $('#cart-subtotal').text('$0.00'); // Reset the subtotal
-                            $('#cart_count').text('0'); // Reset the cart count
-                        }
-                    } else {
-                        console.log('Error removing item');
-                    }
-                },
-                error: function(error) {
-                    console.log('Error:', error);
-                }
-            });
-        });
-
-
-        //__ Update cart price calculation __//
-        function updateCartSubtotal() {
-            $.ajax({
-                url: `{{ url('/get-cart') }}`, // Add the route to get updated cart
-                type: 'GET',
-                success: function(res) {
-                    if (res.success) {
-                        if (res.carts.length === 0) {
-                            // If no items are in the cart
-                            $('#cart-items').html('<span class="mt-4 d-block alert alert-danger text-center">Cart is empty</span>');
-                            $('#cart-subtotal').text('$0.00'); // Reset subtotal display
-                            $('#cart_count').text('0'); // Reset cart count
-                        } else {
-                            // Update subtotal and cart items as usual
-                            var subtotal = 0;
-                            $.each(res.carts, function(index, item) {
-                                let price = item.offer_price ? item.offer_price : item.price;
-                                subtotal += (price * item.qty) + (item.color_price || 0) + (item.size_price || 0);
-                            });
-                            $('#cart-subtotal').text(`$${subtotal.toFixed(2)}`); // Update subtotal display
-                            $('#cart_count').text(res.total); // Update cart count
-                        }
-                    }
-                },
-                error: function(error) {
-                    console.log('Error fetching updated cart:', error);
-                }
-            });
-        }
-
-        //__ Coupon Apply __//
-        $('#apply_coupon').on('submit', function(e){
-            e.preventDefault();
-
-            let formData = $(this).serialize();
-
-            $.ajax({
-                url: `{{ route('apply.coupon') }}`,
-                type: 'POST',
-                data: formData,
-                success: function(res) {
-                    // console.log(res.message);
-                    calculateCouponDiscount()
-                },
-                error: function(error) {
-                    console.error('AJAX Error:', error);
-                }
-            });
-        })
-
-
-        function calculateCouponDiscount()
-        {
-            $.ajax({
-                url: `{{ route('coupon.calculation') }}`,
-                type: 'GET',
-                success: function(res) {
-                    // console.log(res);
-                    $('#discount').text(`$${res.discount.toFixed(2)}`);
-                    $('#total_price').text(`$${res.cart_total.toFixed(2)}`);
-                },
-                error: function(error) {
-                    console.error('AJAX Error:', error);
-                }
-            });
-        }
-    });
-
-</script>
 @endpush

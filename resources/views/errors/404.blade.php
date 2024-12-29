@@ -11,27 +11,25 @@
 
 @section('body-content')
 
-    <!--============================
-        404 PAGE START
-    ==============================-->
-    <section id="wsus__404">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-6 col-md-10 col-lg-8 col-xxl-5 m-auto">
-                    <div class="wsus__404_text">
-                        <h2>404</h2>
-                        <h4><span>Oops!!!</span> Something Went Wrong Here</h4>
-                        <p>There may be a misspelling in the URL entered, or the page you are looking for may no longer
-                            exist</p>
-                        <a href="index.html" class="common_btn">Go Back Home</a>
+        <!-- 404 -->
+        <section class="flat-spacing page-404">
+            <div class="container">
+                <div class="page-404-inner">
+                    <div class="image">
+                        <img class="lazyload" data-src="{{ asset('public/frontend/images/section/404.png') }}" src="{{ asset('public/frontend/images/section/404.png') }}" alt="image">
+                    </div>
+                    <div class="content">
+                        <div class="heading">Oops!</div>
+                        <div>
+                            <h2 class="title mb_4">Something is Missing.</h2>
+                            <div class="text body-text-1 text-secondary">The page you are looking for cannot be found. take a break before trying again </div>
+                        </div>
+                        <a href="index.html" class="tf-btn btn-fill"><span class="text text-button">Back To Homepage</span></a>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-    <!--============================
-        404 PAGE END
-    ==============================-->
+        </section>
+        <!-- /404 -->
 
 @endsection
 

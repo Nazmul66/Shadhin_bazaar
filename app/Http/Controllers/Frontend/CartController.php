@@ -13,25 +13,8 @@ class CartController extends Controller
 
     public function cart_view()
     {
-        if( !Auth::Check() ){
-            return redirect()->route('register.login');
-        }
 
-        $all_carts = DB::table('carts')
-                ->leftJoin('products', 'products.id', 'carts.product_id')
-                ->leftJoin('product_colors', 'product_colors.id', 'carts.color_id')
-                ->leftJoin('product_sizes', 'product_sizes.id', 'carts.size_id')
-                ->select('carts.*', 'products.thumb_image', 'products.name', 'products.id as pdt_id', 'products.slug', 'products.price', 'products.offer_price', 'product_sizes.size_name', 'product_sizes.size_price', 'product_colors.color_name', 'product_colors.color_price')
-                ->whereNull('carts.order_id')
-                ->where('carts.user_id', Auth::user()->id)
-                ->get();
-        
-        $subTotal = 0;
-        foreach( $all_carts as $item  ){
-            $subTotal += ( ($item->offer_price ? $item->offer_price : $item->price) + $item->color_price + $item->size_price ) * $item->qty;
-        }
-
-        return view('frontend.pages.product_pages.cart_view', compact('all_carts', 'subTotal'));
+        return view('frontend.pages.product_pages.cart_view');
     }
 
 

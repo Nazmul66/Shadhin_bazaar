@@ -11,220 +11,179 @@
 
 @section('body-content')
 
-<!--============================
-        BREADCRUMB START
-    ==============================-->
-    <section id="wsus__breadcrumb">
-        <div class="wsus_breadcrumb_overlay">
+        <!-- page-title -->
+        <div class="page-title" style="background-image: url({{ asset('public/frontend/images/section/page-title.jpg') }});">
             <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <h4>compare</h4>
-                        <ul>
-                            <li><a href="#">home</a></li>
-                            <li><a href="#">product</a></li>
-                            <li><a href="#">compare</a></li>
-                        </ul>
-                    </div>
-                </div>
+                <h3 class="heading text-center">Compare Products</h3>
+                <ul class="breadcrumbs d-flex align-items-center justify-content-center">
+                    <li><a class="link" href="index.html">Homepage</a></li>
+                    <li><i class="icon-arrRight"></i></li>
+                    <li><a class="link" href="shop-default-grid.html">Shop</a></li>
+                    <li><i class="icon-arrRight"></i></li>
+                    <li>Compare</li>
+                </ul>
             </div>
         </div>
-    </section>
-    <!--============================
-        BREADCRUMB END
-    ==============================-->
-
-
-    <!--==========================
-        COMPARE START
-    ===========================-->
-    <section id="wsus__compare">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="wsus__compare_list">
-                        <div class="table-responsive">
-                            <table class="table">
-                                <tbody>
-                                    <tr class="d-flex">
-                                        <td class="wsus__compare_img">
-                                            <p>Product details</p>
-                                        </td>
-                                        <td class="wsus__compare_img"><img src="{{ asset('public/frontend/images/blazer_2.jpg') }}" alt="product"
-                                                class="img-fluid w-100">
-                                        </td>
-                                        <td class="wsus__compare_img"><img src="{{ asset('public/frontend/images/headphone_1.jpg') }}" alt="product"
-                                                class="img-fluid w-100">
-                                        </td>
-                                        <td class="wsus__compare_img"><img src="{{ asset('public/frontend/images/kids_1.jpg') }}" alt="product"
-                                                class="img-fluid w-100">
-                                        </td>
-                                    </tr>
-                                    <tr class="d-flex">
-                                        <td class="wsus__compare_text">
-                                            <p>Product Name</p>
-                                        </td>
-                                        <td class="wsus__compare_text">
-                                            <p>Product Name</p>
-                                        </td>
-                                        <td class="wsus__compare_text">
-                                            <p>Product Name</p>
-                                        </td>
-                                        <td class="wsus__compare_text">
-                                            <p>Product Name</p>
-                                        </td>
-                                    </tr>
-                                    <tr class="d-flex">
-                                        <td class="wsus__compare_text">
-                                            <p>Price</p>
-                                        </td>
-                                        <td class="wsus__compare_text">
-                                            <p class="wsus__compare_price">$120.00</p>
-                                        </td>
-                                        <td class="wsus__compare_text">
-                                            <p class="wsus__compare_price">$142.00</p>
-                                        </td>
-                                        <td class="wsus__compare_text">
-                                            <p class="wsus__compare_price">$165.00</p>
-                                        </td>
-                                    </tr>
-                                    <tr class="d-flex">
-                                        <td class="wsus__compare_text">
-                                            <p>Rating</p>
-                                        </td>
-                                        <td class="wsus__compare_text">
-                                            <p class="compare_rating"><i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star-half-alt"></i>
-                                                <i class="fal fa-star"></i>
-                                                <span>(71)</span>
-                                            </p>
-                                        </td>
-                                        <td class="wsus__compare_text">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star-half-alt"></i>
-                                            <i class="fal fa-star"></i>
-                                            <span>(145)</span>
-                                        </td>
-                                        <td class="wsus__compare_text">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star-half-alt"></i>
-                                            <i class="fal fa-star"></i>
-                                            <span>(22)</span>
-                                        </td>
-                                    </tr>
-                                    <tr class="d-flex">
-                                        <td class="wsus__compare_text">
-                                            <p>size</p>
-                                        </td>
-                                        <td class="wsus__compare_text">
-                                            <span class="wsus__compare_size"> 950 sqft</span>
-                                        </td>
-                                        <td class="wsus__compare_text">
-                                            <span class="wsus__compare_size"> 11000 sqft</span>
-                                        </td>
-                                        <td class="wsus__compare_text">
-                                            <span class="wsus__compare_size"> 720 sqft</span>
-                                        </td>
-                                    </tr>
-                                    <tr class="d-flex">
-                                        <td class="wsus__compare_text">
-                                            <p>Item Availability</p>
-                                        </td>
-                                        <td class="wsus__compare_text">
-                                            <span class="wsus__compare_stock">In Stock</span>
-                                        </td>
-                                        <td class="wsus__compare_text">
-                                            <span class="wsus__compare_stock_out">Out Of Stock</span>
-                                        </td>
-                                        <td class="wsus__compare_text">
-                                            <span class="wsus__compare_stock">In Stock</span>
-                                        </td>
-                                    </tr>
-                                    <tr class="d-flex">
-                                        <td class="wsus__compare_text">
-                                            <p>Dimensions</p>
-                                        </td>
-                                        <td class="wsus__compare_text">
-                                            <span class="wsus__n_a">n/a</span>
-                                        </td>
-                                        <td class="wsus__compare_text">
-                                            <span class="wsus__n_a">n/a</span>
-                                        </td>
-                                        <td class="wsus__compare_text">
-                                            <span class="wsus__n_a">n/a</span>
-                                        </td>
-                                    </tr>
-                                    <tr class="d-flex">
-                                        <td class="wsus__compare_text">
-                                            <p>description</p>
-                                        </td>
-                                        <td class="wsus__compare_text wsus__compare_des">
-                                            <p><span>color : </span> pearl</p>
-                                            <p><span>Fabric : </span> 100% Cotton</p>
-                                            <p><span>Materials : </span>Yearn</p>
-                                            <p><span>Packaging : </span>1 pice poly</p>
-                                            <p><span>Cleaning : </span>Washable</p>
-                                        </td>
-                                        <td class="wsus__compare_text wsus__compare_des">
-                                            <p><span>color : </span> white</p>
-                                            <p><span>Fabric : </span> 100% Cotton</p>
-                                            <p><span>Materials : </span>Yearn</p>
-                                            <p><span>Packaging : </span>1 pice poly</p>
-                                            <p><span>Cleaning : </span>Washable</p>
-                                        </td>
-                                        <td class="wsus__compare_text wsus__compare_des">
-                                            <p><span>color : </span> blue</p>
-                                            <p><span>Fabric : </span> 100% Cotton</p>
-                                            <p><span>Materials : </span>Yearn</p>
-                                            <p><span>Packaging : </span>1 pice poly</p>
-                                            <p><span>Cleaning : </span>Washable</p>
-                                        </td>
-                                    </tr>
-                                    <tr class="d-flex">
-                                        <td class="wsus__compare_text">
-                                            <p>Add To Cart </p>
-                                        </td>
-                                        <td class="wsus__compare_text">
-                                            <a href="#" class="common_btn">add to cart</a>
-                                        </td>
-                                        <td class="wsus__compare_text">
-                                            <a href="#" class="common_btn">add to cart</a>
-                                        </td>
-                                        <td class="wsus__compare_text">
-                                            <a href="#" class="common_btn">add to cart</a>
-                                        </td>
-                                    </tr>
-                                    <tr class="d-flex">
-                                        <td class="wsus__compare_text">
-                                            <p>remove </p>
-                                        </td>
-                                        <td class="wsus__compare_text wsus__del_area">
-                                            <a href="#" class="wsus__compare_del"><i class="far fa-times"></i></a>
-                                        </td>
-                                        <td class="wsus__compare_text wsus__del_area">
-                                            <a href="#" class="wsus__compare_del"><i class="far fa-times"></i></a>
-                                        </td>
-                                        <td class="wsus__compare_text wsus__del_area">
-                                            <a href="#" class="wsus__compare_del"><i class="far fa-times"></i></a>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+        <!-- /page-title -->
+        <!-- Section compare product -->
+        <section class="flat-spacing">
+            <div class="container">
+                <div class="tf-compare-table">
+                    <div class="tf-compare-row tf-compare-grid">
+                        <div class="tf-compare-col d-md-block d-none"></div>
+                        <div class="tf-compare-col">
+                            <div class="tf-compare-item">
+                                <a class="tf-compare-image" href="product-detail.html">
+                                    <img class="lazyload" data-src="{{ asset('public/frontend/images/products/womens/women-19.jpg') }}" src="{{ asset('public/frontend/images/products/womens/women-19.jpg') }}" alt="img-compare">
+                                </a>
+                                <div class="tf-compare-content">
+                                    <a class="link text-title text-line-clamp-1" href="product-detail.html">V-neck cotton T-shirt</a>
+                                    <p class="desc text-caption-1">Clothes, women, T-shirt</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tf-compare-col">
+                            <div class="tf-compare-item">
+                                <a class="tf-compare-image" href="product-detail.html">
+                                    <img class="lazyload" data-src="{{ asset('public/frontend/images/products/womens/women-29.jpg') }}" src="{{ asset('public/frontend/images/products/womens/women-29.jpg') }}" alt="img-compare">
+                                </a>
+                                <div class="tf-compare-content">
+                                    <a class="link text-title text-line-clamp-1" href="product-detail.html">Ramie shirt with pockets </a>
+                                    <p class="desc text-caption-1">Clothes, women, T-shirt</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tf-compare-col">
+                            <div class="tf-compare-item">
+                                <a class="tf-compare-image" href="product-detail.html">
+                                    <img class="lazyload" data-src="{{ asset('public/frontend/images/products/womens/women-1.jpg') }}" src="{{ asset('public/frontend/images/products/womens/women-1.jpg') }}" alt="img-compare">
+                                </a>
+                                <div class="tf-compare-content">
+                                    <a class="link text-title text-line-clamp-1" href="product-detail.html">Ribbed cotton-blend top</a>
+                                    <p class="desc text-caption-1">Clothes, women, T-shirt</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    <div class="tf-compare-row">
+                        <div class="tf-compare-col tf-compare-field d-md-block d-none">
+                            <h6>Rating</h6>
+                        </div>
+                        <div class="tf-compare-col tf-compare-field tf-compare-rate">
+                            <div class="list-star">
+                                <span class="icon icon-star"></span>
+                                <span class="icon icon-star"></span>
+                                <span class="icon icon-star"></span>
+                                <span class="icon icon-star"></span>
+                                <span class="icon icon-star"></span>
+                            </div>
+                            <span>(1.234)</span>
+                        </div>
+                        <div class="tf-compare-col tf-compare-field tf-compare-rate">
+                            <div class="list-star">
+                                <span class="icon icon-star"></span>
+                                <span class="icon icon-star"></span>
+                                <span class="icon icon-star"></span>
+                                <span class="icon icon-star"></span>
+                                <span class="icon icon-star"></span>
+                            </div>
+                            <span>(1.234)</span>
+                        </div>
+                        <div class="tf-compare-col tf-compare-field tf-compare-rate">
+                            <div class="list-star">
+                                <span class="icon icon-star"></span>
+                                <span class="icon icon-star"></span>
+                                <span class="icon icon-star"></span>
+                                <span class="icon icon-star"></span>
+                                <span class="icon icon-star"></span>
+                            </div>
+                            <span>(1.234)</span>
+                        </div>
+                    </div>
+                    <div class="tf-compare-row">
+                        <div class="tf-compare-col tf-compare-field d-md-block d-none">
+                            <h6>Price</h6>
+                        </div>
+                        <div class="tf-compare-col tf-compare-field text-center"><span class="price">$68.00</span></div>
+                        <div class="tf-compare-col tf-compare-field text-center"><span class="price">$68.00</span></div>
+                        <div class="tf-compare-col tf-compare-field text-center"><span class="price">$68.00</span></div>
+                    </div>
+                    <div class="tf-compare-row">
+                        <div class="tf-compare-col tf-compare-field d-md-block d-none">
+                            <h6>Type</h6>
+                        </div>
+                        <div class="tf-compare-col tf-compare-field text-center"><span class="type">Jacket</span></div>
+                        <div class="tf-compare-col tf-compare-field text-center"><span class="type">Jacket</span></div>
+                        <div class="tf-compare-col tf-compare-field text-center"><span class="type">Jacket</span></div>
+                    </div>
+                    <div class="tf-compare-row">
+                        <div class="tf-compare-col tf-compare-field d-md-block d-none">
+                            <h6>Brand</h6>
+                        </div>
+                        <div class="tf-compare-col tf-compare-field text-center"><span class="brand">Gucci</span></div>
+                        <div class="tf-compare-col tf-compare-field text-center"><span class="brand">Channel</span></div>
+                        <div class="tf-compare-col tf-compare-field text-center"><span class="brand">Channel</span></div>
+                    </div>
+                    <div class="tf-compare-row">
+                        <div class="tf-compare-col tf-compare-field d-md-block d-none">
+                            <h6>size</h6>
+                        </div>
+                        <div class="tf-compare-col tf-compare-field text-center"><span class="size">X, XS, L, M, XL</span></div>
+                        <div class="tf-compare-col tf-compare-field text-center"><span class="size">X, XS, L, M, XL</span></div>
+                        <div class="tf-compare-col tf-compare-field text-center"><span class="size">X, XS, L, M, XL</span></div>
+                    </div>
+                    <div class="tf-compare-row">
+                        <div class="tf-compare-col tf-compare-field d-md-block d-none">
+                            <h6>Color</h6>
+                        </div>
+                        <div class="tf-compare-col tf-compare-field text-center">
+                            <div class="list-compare-color justify-content-center">
+                                <span class="item bg-pink"></span>
+                                <span class="item bg-yellow"></span>
+                                <span class="item bg-primary active"></span>
+                                <span class="item bg-success"></span>
+                                <span class="item bg-warning"></span>
+                            </div>
+                        </div>
+                        <div class="tf-compare-col tf-compare-field text-center">
+                            <div class="list-compare-color justify-content-center">
+                                <span class="item bg-pink"></span>
+                                <span class="item bg-yellow"></span>
+                                <span class="item bg-primary active"></span>
+                                <span class="item bg-success"></span>
+                                <span class="item bg-warning"></span>
+                            </div>
+                        </div>
+                        <div class="tf-compare-col tf-compare-field text-center">
+                            <div class="list-compare-color justify-content-center">
+                                <span class="item bg-pink"></span>
+                                <span class="item bg-yellow"></span>
+                                <span class="item bg-primary active"></span>
+                                <span class="item bg-success"></span>
+                                <span class="item bg-warning"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tf-compare-row">
+                        <div class="tf-compare-col tf-compare-field d-md-block d-none">
+                            <h6>Metarial</h6>
+                        </div>
+                        <div class="tf-compare-col tf-compare-field text-center"><span class="size">Cotton</span></div>
+                        <div class="tf-compare-col tf-compare-field text-center"><span class="size">Silk</span></div>
+                        <div class="tf-compare-col tf-compare-field text-center"><span class="size">Velvet</span></div>
+                    </div>
+                    <div class="tf-compare-row">
+                        <div class="tf-compare-col tf-compare-field d-md-block d-none">
+                            <h6>Add To Cart</h6>
+                        </div>
+                        <div class="tf-compare-col tf-compare-field tf-compare-viewcart text-center"><a href="shopping-cart.html" class="btn-view-cart">Add To Cart</a></div>
+                        <div class="tf-compare-col tf-compare-field tf-compare-viewcart text-center"><a href="shopping-cart.html" class="btn-view-cart">Add To Cart</a></div>
+                        <div class="tf-compare-col tf-compare-field tf-compare-viewcart text-center"><a href="shopping-cart.html" class="btn-view-cart">Add To Cart</a></div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
-    <!--==========================
-        COMPARE END
-    ===========================-->
+        </section>
+        <!-- /Section compare product -->
 
 @endsection
 

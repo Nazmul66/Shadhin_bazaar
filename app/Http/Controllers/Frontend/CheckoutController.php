@@ -15,9 +15,9 @@ class CheckoutController extends Controller
      */
     public function checkout()
     {
-        if( !Auth::Check() ){
-            return redirect()->route('register.login');
-        }
+        // if( !Auth::Check() ){
+        //     return redirect()->route('register.login');
+        // }
 
         $shipping_rules = ShippingRule::where('status', 1)->get();
         return view('frontend.pages.product_pages.checkout', compact('shipping_rules'));

@@ -13,14 +13,15 @@ use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
-    public function show_product_details(string $slug)
+    public function show_product_details()
     {
-        $data['product'] = Product::where('slug', $slug)->first();
-        $data['related_products'] = Product::where('category_id', '=', $data['product']->category_id)
-                                ->where('id', '!=', $data['product']->id)
-                                ->where('status', 1)
-                                ->get();
-        return view('frontend.pages.product_pages.product_details', $data);
+        // $data['product'] = Product::where('slug', $slug)->first();
+        // $data['related_products'] = Product::where('category_id', '=', $data['product']->category_id)
+        //                         ->where('id', '!=', $data['product']->id)
+        //                         ->where('status', 1)
+        //                         ->get();
+        // return view('frontend.pages.product_pages.product_details', $data);
+        return view('frontend.pages.product_pages.product_details');
     }
 
 
