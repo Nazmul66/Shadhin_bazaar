@@ -40,6 +40,37 @@
                 </a>
             </div>
         </div>
+        
+        <div class="card-body">
+           <table id="inputTable">
+            <thead class="bg-primary text-white">
+                <tr>
+                    <th>Name</th>
+                    <th>Data</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            
+            <tbody class="table-border-bottom-0" id="data-table">
+                <tr>
+                    <td>
+                        <input type="text" class="form-control" name="name[]" required>
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" name="data[]" required>
+                    </td>
+                    <td>
+                        <select name="dropdown" class="form-control dropdown-select" required>
+                            <option value="" disabled selected>Select Option</option>
+                            <option value="Analytics" data-name="Analytics">Analytics</option>
+                            <option value="Python" data-name="Python">Python</option>
+                            <option value="CrawlBar" data-name="CrawlBar">Crawl Bar</option>
+                        </select>
+                    </td>
+                </tr>
+            </tbody>
+           </table>
+        </div>
 
         <div class="card-body">
             <div class="">
@@ -48,7 +79,8 @@
                         <tr>
                             <th>#SL.</th>
                             <th>Product Image</th>
-                            <th>Product Details</th>
+                            <th>Product Name</th>
+                            <th>Product Quantity</th>
                             <th>Product Categorized</th>
                             <th>Special Featured</th>
                             <th>Status</th>
@@ -63,7 +95,7 @@
         </div>
 
         <!-- Create Modal -->
-        <div id="createModal" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" data-bs-scroll="true"
+        {{-- <div id="createModal" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" data-bs-scroll="true"
              style="display: none;" aria-hidden="true">
             <div class="modal-dialog modal-xl">
                 <div class="modal-content">
@@ -250,7 +282,7 @@
                             </div>
                 
                             <div class="row">
-                                {{-- <div class="col-md-4 mb-3">
+                                <div class="col-md-4 mb-3">
                                     <label class="form-label" for="type">Product Type</label>
                                     <select class="form-select" id="type" name="type">
                                         <option value="" disabled selected>Select</option>
@@ -259,7 +291,7 @@
                                         <option value="best">Best</option>
                                         <option value="top">Top</option>
                                     </select>
-                                </div> --}}
+                                </div>
                 
                                 <div class="col-md-4 mb-3">
                                     <label class="form-label" for="is_featured">Is Featured</label>
@@ -305,11 +337,11 @@
 
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
-        </div>
+        </div> --}}
 
 
         <!-- Edit Modal -->
-        <div id="editModal" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" data-bs-scroll="true"
+        {{-- <div id="editModal" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" data-bs-scroll="true"
              style="display: none;" aria-hidden="true">
             <div class="modal-dialog modal-xl">
                 <div class="modal-content">
@@ -466,7 +498,8 @@
                                         <option value="top">Top</option>
                                     </select>
                                 </div>
-                                {{-- <div class="col-md-4 mb-3">
+
+                                <div class="col-md-4 mb-3">
                                     <label class="form-label" for="up_is_featured">Is Featured</label>
                                     <select class="form-select" id="up_is_featured" name="is_featured">
                                         <option value="" disabled selected>Select</option>
@@ -491,7 +524,7 @@
                                         <option value="1">Yes</option>
                                         <option value="0">No</option>
                                     </select>
-                                </div> --}}
+                                </div>
 
                                 <div class="col-md-4 mb-3">
                                     <label class="form-label" for="up_seo_title">SEO Title</label>
@@ -515,7 +548,7 @@
 
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
-        </div>
+        </div> --}}
     </div>
 
 @endsection
@@ -529,150 +562,208 @@
     <script src="https://cdn.datatables.net/2.1.6/js/dataTables.min.js"></script>
     <script src="{{ asset('public/backend/assets/js/all_plugins.js') }}"></script>
 
+    {{-- New Drop select Option --}}
     <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const dataTable = document.getElementById('data-table');
 
+            // Event listener for dropdown changes
+            dataTable.addEventListener('change', function (event) {
+                if (event.target.classList.contains('dropdown-select')) {
+                    const selectedOption = event.target.options[event.target.selectedIndex];
+                    const selectedValue = selectedOption.value; // Get the value of the selected option
+                    const selectedName = selectedOption.dataset.name; // Get the data-name attribute
+
+                    // Append the data dynamically as a new row
+                    const newRow = document.createElement('tr');
+                    newRow.innerHTML = `
+                        <td>
+                            <input type="text" class="form-control" name="name[]" value="${selectedName}" readonly>
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" name="data[]" value="Default Data" required>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-danger remove-row">Remove</button>
+                        </td>
+                    `;
+                    dataTable.appendChild(newRow);
+
+                    // Disable the selected option in all dropdowns
+                    const dropdowns = document.querySelectorAll('.dropdown-select');
+                    dropdowns.forEach(dropdown => {
+                        const optionToDisable = dropdown.querySelector(`option[value="${selectedValue}"]`);
+                        if (optionToDisable) optionToDisable.disabled = true;
+                    });
+
+                    // Reset the current dropdown after selection
+                    event.target.value = "";
+                }
+            });
+
+            // Event listener for removing rows
+            dataTable.addEventListener('click', function (event) {
+                if (event.target.classList.contains('remove-row')) {
+                    const row = event.target.closest('tr');
+                    const removedValue = row.querySelector('input[name="name[]"]').value;
+
+                    // Re-enable the option in all dropdowns
+                    const dropdowns = document.querySelectorAll('.dropdown-select');
+                    dropdowns.forEach(dropdown => {
+                        const optionToEnable = dropdown.querySelector(`option[value="${removedValue}"]`);
+                        if (optionToEnable) optionToEnable.disabled = false;
+                    });
+
+                    // Remove the row
+                    row.remove();
+                }
+            });
+        });
+    </script>
+
+    <script>
      $(document).ready(function () {
 
         // Choice.js plugin
-        const product_tags = new Choices('.product-tags',{
-            removeItems: true,
-            duplicateItemsAllowed: false,
-            removeItemButton: true,
-            delimiter: ',',
-        });
+        // const product_tags = new Choices('.product-tags',{
+        //     removeItems: true,
+        //     duplicateItemsAllowed: false,
+        //     removeItemButton: true,
+        //     delimiter: ',',
+        // });
 
-        let tagChoices = new Choices('.up_product_tags',{
-            removeItems: true,
-            duplicateItemsAllowed: false,
-            removeItemButton: true,
-            delimiter: ',',
-        });
+        // let tagChoices = new Choices('.up_product_tags',{
+        //     removeItems: true,
+        //     duplicateItemsAllowed: false,
+        //     removeItemButton: true,
+        //     delimiter: ',',
+        // });
 
 
         // Ckeditor 5 plugin
-        let jReq;
-        ClassicEditor
-            .create(document.querySelector('#long_description'))
-            .then(newEditor => {
-                jReq = newEditor;
-            })
-            .catch(error => {
-                console.error(error);
-            });
+        // let jReq;
+        // ClassicEditor
+        //     .create(document.querySelector('#long_description'))
+        //     .then(newEditor => {
+        //         jReq = newEditor;
+        //     })
+        //     .catch(error => {
+        //         console.error(error);
+        //     });
 
 
-            let longDescriptionEditor;
-            ClassicEditor
-                .create(document.querySelector('#up_long_description'))
-                .then(newEditor => {
-                    longDescriptionEditor = newEditor; // Store the editor instance
-                })
-                .catch(error => {
-                    console.error(error);
-            });
+        //     let longDescriptionEditor;
+        //     ClassicEditor
+        //         .create(document.querySelector('#up_long_description'))
+        //         .then(newEditor => {
+        //             longDescriptionEditor = newEditor; // Store the editor instance
+        //         })
+        //         .catch(error => {
+        //             console.error(error);
+        //     });
 
-            function previewImage(event) {
-                const file = event.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = e => document.getElementById('image_preview').innerHTML = `
-                    <img src="${e.target.result}" width="100" height="100">`;
-                    reader.readAsDataURL(file);
-                }
-            }
+            // function previewImage(event) {
+            //     const file = event.target.files[0];
+            //     if (file) {
+            //         const reader = new FileReader();
+            //         reader.onload = e => document.getElementById('image_preview').innerHTML = `
+            //         <img src="${e.target.result}" width="100" height="100">`;
+            //         reader.readAsDataURL(file);
+            //     }
+            // }
 
-            $('#discount_type').on('change', function () {
-                const selectedValue = $(this).val();
+            // $('#discount_type').on('change', function () {
+            //     const selectedValue = $(this).val();
                 
-                if (selectedValue === 'amount' || selectedValue === 'percent') {
-                    $('.discount_value').removeClass('d-none'); // Show the discount_value div
-                } else {
-                    $('.discount_value').addClass('d-none'); // Hide the discount_value div
-                }
-            });
+            //     if (selectedValue === 'amount' || selectedValue === 'percent') {
+            //         $('.discount_value').removeClass('d-none'); // Show the discount_value div
+            //     } else {
+            //         $('.discount_value').addClass('d-none'); // Hide the discount_value div
+            //     }
+            // });
 
-            // Fetching subcategory information
-            $(document).on('input', '.category_id', function(){
-                var category_id = $(this).val();
-                // console.log(category_id);
+            // // Fetching subcategory information
+            // $(document).on('input', '.category_id', function(){
+            //     var category_id = $(this).val();
+            //     // console.log(category_id);
 
-                $.ajax({
-                    type: "POST",
-                    url: "{{ route('admin.get.product.subCategory.data') }}",
-                    data: {
-                        id: category_id
-                    },
-                    success: function (res) {
-                        console.log(res.data);
-                        if (res.status) {
-                            // Clear any previous subcategory options
-                            $('.subCategory_id').empty();
-                            // Add default "Select" option
-                            $('.subCategory_id').append('<option value="" disabled selected>Select</option>');
+            //     $.ajax({
+            //         type: "POST",
+            //         url: "{{ route('admin.get.product.subCategory.data') }}",
+            //         data: {
+            //             id: category_id
+            //         },
+            //         success: function (res) {
+            //             console.log(res.data);
+            //             if (res.status) {
+            //                 // Clear any previous subcategory options
+            //                 $('.subCategory_id').empty();
+            //                 // Add default "Select" option
+            //                 $('.subCategory_id').append('<option value="" disabled selected>Select</option>');
 
-                            // Append new subcategories with images
-                            $.each(res.data, function (key, subCategory) {
-                                var option = '<option value="' + subCategory.id + '" data-image-url="' + subCategory.image_url + '">' + subCategory.subcategory_name + '</option>';
-                                $('.subCategory_id').append(option);
-                            });
-
-
-                            // Trigger select2 to reinitialize so the images appear
-                            $('#subCategory_id').select2({
-                                dropdownParent: $('#createModal'),
-                                templateResult: formatState,
-                                templateSelection: formatState,
-                            });
-                        }
-                    },
-                    error: function (err) {
-                        console.log(err);
-                    }
-
-                })
-            })
+            //                 // Append new subcategories with images
+            //                 $.each(res.data, function (key, subCategory) {
+            //                     var option = '<option value="' + subCategory.id + '" data-image-url="' + subCategory.image_url + '">' + subCategory.subcategory_name + '</option>';
+            //                     $('.subCategory_id').append(option);
+            //                 });
 
 
-             // Fetching Child-subcategory information
-             $(document).on('input', '.subCategory_id', function(){
-                var subCategory_id = $(this).val();
-                // console.log(category_id);
+            //                 // Trigger select2 to reinitialize so the images appear
+            //                 $('#subCategory_id').select2({
+            //                     dropdownParent: $('#createModal'),
+            //                     templateResult: formatState,
+            //                     templateSelection: formatState,
+            //                 });
+            //             }
+            //         },
+            //         error: function (err) {
+            //             console.log(err);
+            //         }
 
-                $.ajax({
-                    type: "POST",
-                    url: "{{ route('admin.get.product.childCategory.data') }}",
-                    data: {
-                        id: subCategory_id
-                    },
-                    success: function (res) {
-                        console.log(res.data);
-                        if (res.status) {
-                            // Clear any previous subcategory options
-                            $('.childCategory_id').empty();
-                            // Add default "Select" option
-                            $('.childCategory_id').append('<option value="" disabled selected>Select</option>');
-
-                            // Append new subcategories with images
-                            $.each(res.data, function (key, childCategory) {
-                                var option = '<option value="' + childCategory.id + '" data-image-url="' + childCategory.image_url + '">' + childCategory.name + '</option>';
-                                $('.childCategory_id').append(option);
-                            });
+            //     })
+            // })
 
 
-                            // Trigger select2 to reinitialize so the images appear
-                            $('#childCategory_id').select2({
-                                dropdownParent: $('#createModal'),
-                                templateResult: formatState,
-                                templateSelection: formatState,
-                            });
-                        }
-                    },
-                    error: function (err) {
-                        console.log(err);
-                    }
+            //  // Fetching Child-subcategory information
+            //  $(document).on('input', '.subCategory_id', function(){
+            //     var subCategory_id = $(this).val();
+            //     // console.log(category_id);
 
-                })
-            })
+            //     $.ajax({
+            //         type: "POST",
+            //         url: "{{ route('admin.get.product.childCategory.data') }}",
+            //         data: {
+            //             id: subCategory_id
+            //         },
+            //         success: function (res) {
+            //             console.log(res.data);
+            //             if (res.status) {
+            //                 // Clear any previous subcategory options
+            //                 $('.childCategory_id').empty();
+            //                 // Add default "Select" option
+            //                 $('.childCategory_id').append('<option value="" disabled selected>Select</option>');
+
+            //                 // Append new subcategories with images
+            //                 $.each(res.data, function (key, childCategory) {
+            //                     var option = '<option value="' + childCategory.id + '" data-image-url="' + childCategory.image_url + '">' + childCategory.name + '</option>';
+            //                     $('.childCategory_id').append(option);
+            //                 });
+
+
+            //                 // Trigger select2 to reinitialize so the images appear
+            //                 $('#childCategory_id').select2({
+            //                     dropdownParent: $('#createModal'),
+            //                     templateResult: formatState,
+            //                     templateSelection: formatState,
+            //                 });
+            //             }
+            //         },
+            //         error: function (err) {
+            //             console.log(err);
+            //         }
+
+            //     })
+            // })
 
 
             // Show Data through Datatable
@@ -700,6 +791,9 @@
                     },
                     {
                         data: 'product_details',
+                    },
+                    {
+                        data: 'quantity',
                     },
                     {
                         data: 'categorized',
@@ -761,168 +855,168 @@
             })
 
             // Create
-            $('#createForm').submit(function (e) {
-                e.preventDefault();
+            // $('#createForm').submit(function (e) {
+            //     e.preventDefault();
 
-                let formData = new FormData(this);
+            //     let formData = new FormData(this);
 
-                $.ajax({
-                    type: "POST",
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    url: "{{ route('admin.product.store') }}",
-                    data: formData,
-                    processData: false,  // Prevent jQuery from processing the data
-                    contentType: false,  // Prevent jQuery from setting contentType
-                    success: function (res) {
-                        console.log(res);
-                        if (res.status === true) {
-                            $('#createModal').modal('hide');
-                            $('#createForm')[0].reset();
-                            datatables.ajax.reload();
+            //     $.ajax({
+            //         type: "POST",
+            //         headers: {
+            //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            //         },
+            //         url: "{{ route('admin.product.store') }}",
+            //         data: formData,
+            //         processData: false,  // Prevent jQuery from processing the data
+            //         contentType: false,  // Prevent jQuery from setting contentType
+            //         success: function (res) {
+            //             console.log(res);
+            //             if (res.status === true) {
+            //                 $('#createModal').modal('hide');
+            //                 $('#createForm')[0].reset();
+            //                 datatables.ajax.reload();
 
-                            swal.fire({
-                                title: "Success",
-                                text: `${res.message}`,
-                                icon: "success"
-                            })
-                        }
-                    },
-                    error: function (err) {
-                        let error = err.responseJSON.errors;
+            //                 swal.fire({
+            //                     title: "Success",
+            //                     text: `${res.message}`,
+            //                     icon: "success"
+            //                 })
+            //             }
+            //         },
+            //         error: function (err) {
+            //             let error = err.responseJSON.errors;
 
-                        $('#image_validate').empty().html(error.thumb_image);
-                        $('#name_validate').empty().html(error.name);
-                        $('#category_id_validate').empty().html(error.category_id);
-                        $('#brand_id_validate').empty().html(error.brand_id);
-                        $('#price_validate').empty().html(error.price);
-                        $('#quantity_validate').empty().html(error.qty);
-                        $('#short_validate').empty().html(error.short_description);
-                        $('#long_validate').empty().html(error.long_description);
-                        $('#is_featured_validate').empty().html(error.is_featured);
-                        $('#is_top_validate').empty().html(error.is_top);
-                        $('#is_best_validate').empty().html(error.is_best);
-                        $('#status_validate').empty().html(error.status);
+            //             $('#image_validate').empty().html(error.thumb_image);
+            //             $('#name_validate').empty().html(error.name);
+            //             $('#category_id_validate').empty().html(error.category_id);
+            //             $('#brand_id_validate').empty().html(error.brand_id);
+            //             $('#price_validate').empty().html(error.price);
+            //             $('#quantity_validate').empty().html(error.qty);
+            //             $('#short_validate').empty().html(error.short_description);
+            //             $('#long_validate').empty().html(error.long_description);
+            //             $('#is_featured_validate').empty().html(error.is_featured);
+            //             $('#is_top_validate').empty().html(error.is_top);
+            //             $('#is_best_validate').empty().html(error.is_best);
+            //             $('#status_validate').empty().html(error.status);
 
-                        swal.fire({
-                            title: "Failed",
-                            text: "Something Went Wrong !",
-                            icon: "error"
-                        })
-                    }
-                });
-            })
-
-
-            // Edit 
-            $(document).on("click", '#editButton', function (e) {
-                let id = $(this).attr('data-id');
-                // alert(id);
-
-                $.ajax({
-                    type: 'GET',
-                    // headers: {
-                    //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    // },
-                    url: "{{ url('admin/product') }}/" + id + "/edit",
-                    processData: false,  // Prevent jQuery from processing the data
-                    contentType: false,  // Prevent jQuery from setting contentType
-                    success: function (res) {
-                        console.log(res.success);
-                        let data = res.success;
-
-                        $('#id').val(data.id);
-                        $('#up_name').val(data.name);
-                        $('#up_sku').val(data.sku);
-                        $('#up_category_id').val(data.category_id).trigger('change');  // <-- This is important for select2
-                        $('#up_subCategory_id').val(data.subCategory_id).trigger('change');  // <-- This is important for select2
-                        $('#up_childCategory_id').val(data.childCategory_id).trigger('change');  // <-- This is important for select2
-                        $('#up_brand_id').val(data.brand_id).trigger('change');  // <-- This is important for select2
-                        $('#up_price').val(data.price);
-                        $('#up_offer_price').val(data.offer_price);
-                        $('#up_qty').val(data.qty);
-                        $('#up_offer_start_date').val(data.offer_start_date);
-                        $('#up_offer_end_date').val(data.offer_end_date);
-                        $('#up_video_link').val(data.video_link);
-                        $('#up_short').val(data.short_description);
-
-                        // Set CKEditor content
-                        if (longDescriptionEditor) {
-                            longDescriptionEditor.setData(data.long_description); // Set long_description
-                        }
-
-                        // Reinitialize Choices after setting the value
-                        tagChoices.setValue(data.tags.split(','));
-
-                        $('#up_type').val(data.type);
-                        // $('#up_is_featured').val(data.is_featured);
-                        // $('#up_is_top').val(data.is_top);
-                        // $('#up_is_best').val(data.is_best);
-                        $('#up_seo_title').val(data.seo_title);
-                        $('#up_seo_description').val(data.seo_description);
-                        // Set image
-                        $('#imageShow').html('');
-                        $('#imageShow').append(`
-                         <a href="{{ asset("`+ data.thumb_image +`") }}" target="__blank">
-                             <img src="{{ asset("`+ data.thumb_image +`") }}" alt="Product Image" style="width: 75px;"> 
-                          </a>
-                        `);
-                    },
-                    error: function (error) {
-                        console.log('error');
-                    }
-
-                });
-            })
+            //             swal.fire({
+            //                 title: "Failed",
+            //                 text: "Something Went Wrong !",
+            //                 icon: "error"
+            //             })
+            //         }
+            //     });
+            // })
 
 
-            // Update 
-            $("#EditForm").submit(function (e) {
-                e.preventDefault();
+            // // Edit 
+            // $(document).on("click", '#editButton', function (e) {
+            //     let id = $(this).attr('data-id');
+            //     // alert(id);
 
-                let id = $('#id').val();
-                let formData = new FormData(this);
+            //     $.ajax({
+            //         type: 'GET',
+            //         // headers: {
+            //         //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            //         // },
+            //         url: "{{ url('admin/product') }}/" + id + "/edit",
+            //         processData: false,  // Prevent jQuery from processing the data
+            //         contentType: false,  // Prevent jQuery from setting contentType
+            //         success: function (res) {
+            //             console.log(res.success);
+            //             let data = res.success;
 
-                $.ajax({
-                    type: "POST",
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    url: "{{ url('admin/product') }}/" + id,
-                    data: formData,
-                    processData: false,  // Prevent jQuery from processing the data
-                    contentType: false,  // Prevent jQuery from setting contentType
-                    success: function (res) {
+            //             $('#id').val(data.id);
+            //             $('#up_name').val(data.name);
+            //             $('#up_sku').val(data.sku);
+            //             $('#up_category_id').val(data.category_id).trigger('change');  // <-- This is important for select2
+            //             $('#up_subCategory_id').val(data.subCategory_id).trigger('change');  // <-- This is important for select2
+            //             $('#up_childCategory_id').val(data.childCategory_id).trigger('change');  // <-- This is important for select2
+            //             $('#up_brand_id').val(data.brand_id).trigger('change');  // <-- This is important for select2
+            //             $('#up_price').val(data.price);
+            //             $('#up_offer_price').val(data.offer_price);
+            //             $('#up_qty').val(data.qty);
+            //             $('#up_offer_start_date').val(data.offer_start_date);
+            //             $('#up_offer_end_date').val(data.offer_end_date);
+            //             $('#up_video_link').val(data.video_link);
+            //             $('#up_short').val(data.short_description);
 
-                        swal.fire({
-                            title: "Success",
-                            text: "Product Edited",
-                            icon: "success"
-                        })
+            //             // Set CKEditor content
+            //             if (longDescriptionEditor) {
+            //                 longDescriptionEditor.setData(data.long_description); // Set long_description
+            //             }
 
-                        $('#editModal').modal('hide');
-                        $('#EditForm')[0].reset();
-                        datatables.ajax.reload();
-                    },
-                    error: function (err) {
-                        let error = err.responseJSON.errors;
+            //             // Reinitialize Choices after setting the value
+            //             tagChoices.setValue(data.tags.split(','));
 
-                        $('#up_name_validate').empty().html(error.name);
-                        $('#up_category_id_validate').empty().html(error.category_id);
-                        $('#up_price_validate').empty().html(error.price);
-                        $('#up_quantity_validate').empty().html(error.qty);
-                        $('#up_short_validate').empty().html(error.short_description);
-                        $('#up_long_validate').empty().html(error.long_description);
+            //             $('#up_type').val(data.type);
+            //             // $('#up_is_featured').val(data.is_featured);
+            //             // $('#up_is_top').val(data.is_top);
+            //             // $('#up_is_best').val(data.is_best);
+            //             $('#up_seo_title').val(data.seo_title);
+            //             $('#up_seo_description').val(data.seo_description);
+            //             // Set image
+            //             $('#imageShow').html('');
+            //             $('#imageShow').append(`
+            //              <a href="{{ asset("`+ data.thumb_image +`") }}" target="__blank">
+            //                  <img src="{{ asset("`+ data.thumb_image +`") }}" alt="Product Image" style="width: 75px;"> 
+            //               </a>
+            //             `);
+            //         },
+            //         error: function (error) {
+            //             console.log('error');
+            //         }
 
-                        swal.fire({
-                            title: "Failed",
-                            text: "Something Went Wrong !",
-                            icon: "error"
-                        })
-                    }
-                });
-            });
+            //     });
+            // })
+
+
+            // // Update 
+            // $("#EditForm").submit(function (e) {
+            //     e.preventDefault();
+
+            //     let id = $('#id').val();
+            //     let formData = new FormData(this);
+
+            //     $.ajax({
+            //         type: "POST",
+            //         headers: {
+            //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            //         },
+            //         url: "{{ url('admin/product') }}/" + id,
+            //         data: formData,
+            //         processData: false,  // Prevent jQuery from processing the data
+            //         contentType: false,  // Prevent jQuery from setting contentType
+            //         success: function (res) {
+
+            //             swal.fire({
+            //                 title: "Success",
+            //                 text: "Product Edited",
+            //                 icon: "success"
+            //             })
+
+            //             $('#editModal').modal('hide');
+            //             $('#EditForm')[0].reset();
+            //             datatables.ajax.reload();
+            //         },
+            //         error: function (err) {
+            //             let error = err.responseJSON.errors;
+
+            //             $('#up_name_validate').empty().html(error.name);
+            //             $('#up_category_id_validate').empty().html(error.category_id);
+            //             $('#up_price_validate').empty().html(error.price);
+            //             $('#up_quantity_validate').empty().html(error.qty);
+            //             $('#up_short_validate').empty().html(error.short_description);
+            //             $('#up_long_validate').empty().html(error.long_description);
+
+            //             swal.fire({
+            //                 title: "Failed",
+            //                 text: "Something Went Wrong !",
+            //                 icon: "error"
+            //             })
+            //         }
+            //     });
+            // });
 
 
             // Delete

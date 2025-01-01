@@ -42,49 +42,6 @@
                     </div>
                 </div>
             @endforeach
-
-            {{-- <div class="swiper-slide">
-                <div class="wrap-slider">
-                    <img src="{{ asset('public/frontend/images/slider/slider-electronic2.jpg') }}" alt="slideshow">
-                    <div class="box-content">
-                        <div class="container">
-                            <div class="content-slider">
-                                <div class="box-title-slider">
-                                    <div>
-                                        <p class="fade-item fade-item-1 subtitle text-btn-uppercase text-primary">SALE! UP TO 50% OFF!</p>
-                                        <div class="fade-item fade-item-2 title-display heading">Marshall <br> Woburn White</div>
-                                    </div>
-                                    <p class="fade-item fade-item-3 body-text-1 subheading">Metallic press stud fastening. Beaded detail. Festival Season.</p>
-                                </div>
-                                <div class="fade-item fade-item-4 box-btn-slider">
-                                    <a href="shop-default-grid.html" class="tf-btn btn-fill"><span class="text">Shop Now</span><i class='bx bx-right-arrow-alt' style="font-size: 26px;"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="swiper-slide">
-                <div class="wrap-slider">
-                    <img src="{{ asset('public/frontend/images/slider/slider-electronic3.jpg') }}" alt="slideshow">
-                    <div class="box-content">
-                        <div class="container">
-                            <div class="content-slider">
-                                <div class="box-title-slider">
-                                    <div>
-                                        <p class="fade-item fade-item-1 subtitle text-btn-uppercase text-primary">SALE! UP TO 50% OFF!</p>
-                                        <div class="fade-item fade-item-2 title-display heading">Apple MagSafe <br> For Iphone</div>
-                                    </div>
-                                    <p class="fade-item fade-item-3 body-text-1 subheading">Metallic press stud fastening. Beaded detail. Festival Season.</p>
-                                </div>
-                                <div class="fade-item fade-item-4 box-btn-slider">
-                                    <a href="shop-default-grid.html" class="tf-btn btn-fill"><span class="text">Shop Now</span><i class='bx bx-right-arrow-alt' style="font-size: 26px;"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> --}}
         </div>
     </div>
     <div class="wrap-pagination d-block">
@@ -142,15 +99,11 @@
                 <li class="nav-tab-item" role="presentation">
                     <a href="#AllProducts" class="active text-caption-1" data-bs-toggle="tab">All Products</a>
                 </li>
-                <li class="nav-tab-item" role="presentation">
-                    <a href="#SmartPhone" class="text-caption-1" data-bs-toggle="tab">Smart Phone</a>
-                </li>
-                <li class="nav-tab-item" role="presentation">
-                    <a href="#Electronic" class="text-caption-1" data-bs-toggle="tab">Electronic</a>
-                </li>
-                <li class="nav-tab-item" role="presentation">
-                    <a href="#Audio" class="text-caption-1" data-bs-toggle="tab">Audio</a>
-                </li>
+                @foreach ($categories as $key => $item)
+                    <li class="nav-tab-item" role="presentation">
+                        <a href="#{{ $item->slug }}" class="text-caption-1" data-bs-toggle="tab">{{ $item->category_name }}</a>
+                    </li>
+                @endforeach
             </ul>
         </div>
         <div class="flat-animate-tab">
@@ -158,1489 +111,364 @@
                 <div class="tab-pane active show" id="AllProducts" role="tabpanel">
                     <div dir="ltr" class="swiper tf-sw-latest" data-preview="5" data-tablet="4" data-mobile="2" data-space-lg="30" data-space-md="30" data-space="15" data-pagination="1" data-pagination-md="1" data-pagination-lg="1">
                         <div class="swiper-wrapper">
-                            <div class="swiper-slide">
-                                <div class="card-product wow fadeInUp" data-wow-delay="0s">
-                                    <div class="card-product-wrapper">
-                                        <a href="product-detail.html" class="product-img">
-                                            <img class="lazyload img-product" data-src="{{ asset('public/frontend/images/products/electronic/electronic-1.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-1.jpg') }}" alt="image-product">
-                                            <img class="lazyload img-hover" data-src="{{ asset('public/frontend/images/products/electronic/electronic-2.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-2.jpg') }}" alt="image-product">
-                                        </a>
-                                        <div class="list-product-btn">
-                                            <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
-                                                <i class='bx bx-heart' style="font-size: 24px;"></i>
-                                                <span class="tooltip">Wishlist</span>
+                            @foreach ($products as $row)
+                                <div class="swiper-slide">
+                                    <div class="card-product wow fadeInUp" data-wow-delay="0.1s">
+                                        <div class="card-product-wrapper">
+                                            <a href="product-detail.html" class="product-img">
+                                                <img class="lazyload img-product" data-src="{{ asset($row->thumb_image) }}" src="{{ asset($row->thumb_image) }}" alt="{{ $row->slug }}">
+
+                                                @php
+                                                    $image = App\Models\ProductImage::where('product_id', $row->id)->first();
+
+                                                    $discount = '';
+                                                    if ( !empty($row->discount_type === "amount" ) ){
+                                                        $discount = '-'. $row->discount_value . "Tk";
+                                                    }   
+                                                    else if( $row->discount_type === "percent" ){
+                                                        $discount = '-'. $row->discount_value . "%";
+                                                    }
+                                                @endphp
+
+                                                @if (!empty($image))
+                                                    <img class="lazyload img-hover" data-src="{{ asset($image->images) }}" src="{{ asset($image->images) }}" alt="{{ $row->slug }}">
+                                                @endif
                                             </a>
-                                            <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
-                                                <i class='bx bx-git-compare' style="font-size: 24px;"></i>
-                                                <span class="tooltip">Compare</span>
-                                            </a>
-                                            <a href="#quickView" data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
-                                                <ion-icon name="eye-outline" style="font-size: 24px;"></ion-icon>
-                                                <span class="tooltip">Quick View</span>
-                                            </a>
-                                        </div>
-                                        <div class="list-btn-main">
-                                            <a href="#shoppingCart" data-bs-toggle="modal" class="btn-main-product">Add To cart</a>
-                                        </div>
-                                    </div>
-                                    <div class="card-product-info">
-                                        <a href="product-detail.html" class="title link">PlayStation DualSense Wireless Controller</a>
-                                        <div class="box-rating">
-                                            <ul class="list-star">
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                            </ul>
-                                            <span class="text-caption-1 text-secondary">(1.234)</span>
-                                        </div>
-                                        <span class="price">$59.99</span>
-                                        <div class="box-progress-stock">
-                                            <div class="progress">
-                                                <div class="progress-bar" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                            <div class="on-sale-wrap">
+                                                <span class="on-sale-item">
+                                                    {{ $discount }}
+                                                </span>
                                             </div>
-                                            <div class="stock-status d-flex justify-content-between align-items-center">
-                                                <div class="stock-item text-caption-1">
-                                                    <span class="stock-label text-secondary-2">Available:</span>
-                                                    <span class="stock-value">50</span>
-                                                </div>
-                                                <div class="stock-item text-caption-1">
-                                                    <span class="stock-label text-secondary-2">Sold:</span>
-                                                    <span class="stock-value">50</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="card-product wow fadeInUp" data-wow-delay="0.1s">
-                                    <div class="card-product-wrapper">
-                                        <a href="product-detail.html" class="product-img">
-                                            <img class="lazyload img-product" data-src="{{ asset('public/frontend/images/products/electronic/electronic-3.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-3.jpg') }}" alt="image-product">
-                                            <img class="lazyload img-hover" data-src="{{ asset('public/frontend/images/products/electronic/electronic-4.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-4.jpg') }}" alt="image-product">
-                                        </a>
-                                        <div class="on-sale-wrap"><span class="on-sale-item">-25%</span></div>
-                                        <div class="marquee-product bg-main">
-                                            <div class="marquee-wrapper">
-                                                <div class="initial-child-container">
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
+
+
+                                            @if ( !empty($row->discount_type === "amount") || !empty($row->discount_type === "percent") )
+
+                                                <div class="marquee-product bg-main">
+                                                    <div class="marquee-wrapper">
+                                                        <div class="initial-child-container">
+                                                            <div class="marquee-child-item">
+                                                                <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
+                                                            </div>
+                                                            <div class="marquee-child-item">
+                                                                <ion-icon name="flash-outline" class="text-critical"></ion-icon>
+                                                            </div>
+                                                            <div class="marquee-child-item">
+                                                                <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
+                                                            </div>
+                                                            <div class="marquee-child-item">
+                                                                <ion-icon name="flash-outline" class="text-critical"></ion-icon>
+                                                            </div>
+                                                            <div class="marquee-child-item">
+                                                                <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
+                                                            </div>
+                                                            <div class="marquee-child-item">
+                                                                <ion-icon name="flash-outline" class="text-critical"></ion-icon>
+                                                            </div>
+                                                            <div class="marquee-child-item">
+                                                                <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
+                                                            </div>
+                                                            <div class="marquee-child-item">
+                                                                <ion-icon name="flash-outline" class="text-critical"></ion-icon>
+                                                            </div>
+                                                            <div class="marquee-child-item">
+                                                                <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
+                                                            </div>
+                                                            <div class="marquee-child-item">
+                                                                <ion-icon name="flash-outline" class="text-critical"></ion-icon>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    <div class="marquee-child-item">
-                                                        {{-- <span class="icon icon-lightning "></span> --}}
-                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                         <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="marquee-wrapper">
-                                                <div class="initial-child-container">
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        {{-- <span class="icon icon-lightning "></span> --}}
-                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                         <ion-icon name="flash-outline" class="text-critical"></ion-icon>
+                                                    <div class="marquee-wrapper">
+                                                        <div class="initial-child-container">
+                                                            <div class="marquee-child-item">
+                                                                <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
+                                                            </div>
+                                                            <div class="marquee-child-item">
+                                                                <ion-icon name="flash-outline" class="text-critical"></ion-icon>
+                                                            </div>
+                                                            <div class="marquee-child-item">
+                                                                <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
+                                                            </div>
+                                                            <div class="marquee-child-item">
+                                                                <ion-icon name="flash-outline" class="text-critical"></ion-icon>
+                                                            </div>
+                                                            <div class="marquee-child-item">
+                                                                <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
+                                                            </div>
+                                                            <div class="marquee-child-item">
+                                                                <ion-icon name="flash-outline" class="text-critical"></ion-icon>
+                                                            </div>
+                                                            <div class="marquee-child-item">
+                                                                <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
+                                                            </div>
+                                                            <div class="marquee-child-item">
+                                                                <ion-icon name="flash-outline" class="text-critical"></ion-icon>
+                                                            </div>
+                                                            <div class="marquee-child-item">
+                                                                <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
+                                                            </div>
+                                                            <div class="marquee-child-item">
+                                                                <ion-icon name="flash-outline" class="text-critical"></ion-icon>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
+                                            @endif
+
+                                            
+                                            <div class="list-product-btn">
+                                                <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
+                                                    <i class='bx bx-heart' style="font-size: 24px;"></i>
+                                                    <span class="tooltip">Wishlist</span>
+                                                </a>
+                                                <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
+                                                    <i class='bx bx-git-compare' style="font-size: 24px;"></i>
+                                                    <span class="tooltip">Compare</span>
+                                                </a>
+                                                <a href="#quickView" data-id={{ $row->id }} data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
+                                                    <ion-icon name="eye-outline" style="font-size: 24px;"></ion-icon>
+                                                    <span class="tooltip">Quick View</span>
+                                                </a>
+                                            </div>
+                                            <div class="list-btn-main">
+                                                <a href="#shoppingCart" data-bs-toggle="modal" class="btn-main-product">Add To cart</a>
                                             </div>
                                         </div>
-                                        <div class="list-product-btn">
-                                            <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
-                                                <i class='bx bx-heart' style="font-size: 24px;"></i>
-                                                <span class="tooltip">Wishlist</span>
-                                            </a>
-                                            <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
-                                                <i class='bx bx-git-compare' style="font-size: 24px;"></i>
-                                                <span class="tooltip">Compare</span>
-                                            </a>
-                                            <a href="#quickView" data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
-                                                <ion-icon name="eye-outline" style="font-size: 24px;"></ion-icon>
-                                                <span class="tooltip">Quick View</span>
-                                            </a>
-                                        </div>
-                                        <div class="list-btn-main">
-                                            <a href="#shoppingCart" data-bs-toggle="modal" class="btn-main-product">Add To cart</a>
-                                        </div>
-                                    </div>
-                                    <div class="card-product-info">
-                                        <a href="product-detail.html" class="title link">Apple Watch Ultra 2-  Rugged Titanium Case</a>
-                                        <div class="box-rating">
-                                            <ul class="list-star">
-                                                <li class="bx bxs-star" style="color: #F0A750;"></li>
-                                                <li class="bx bxs-star" style="color: #F0A750;"></li>
-                                                <li class="bx bxs-star" style="color: #F0A750;"></li>
-                                                <li class="bx bxs-star" style="color: #F0A750;"></li>
-                                                <li class="bx bx-star" style="color: #F0A750;"></li>
-                                            </ul>
-                                            <span class="text-caption-1 text-secondary">(1.234)</span>
-                                        </div>
-                                        <span class="price"><span class="old-price">$98.00</span> $79.99</span>
-                                        <div class="box-progress-stock">
-                                            <div class="progress">
-                                                <div class="progress-bar" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+
+
+                                        <div class="card-product-info">
+                                            <a href="{{ route('product.details', $row->slug) }}" class="title link">{{ $row->name }}</a>
+                                            <div class="box-rating">
+                                                <ul class="list-star">
+                                                    <li class="bx bxs-star" style="color: #F0A750;"></li>
+                                                    <li class="bx bxs-star" style="color: #F0A750;"></li>
+                                                    <li class="bx bxs-star" style="color: #F0A750;"></li>
+                                                    <li class="bx bxs-star" style="color: #F0A750;"></li>
+                                                    <li class="bx bx-star" style="color: #F0A750;"></li>
+                                                </ul>
+                                                <span class="text-caption-1 text-secondary">(1.234)</span>
                                             </div>
-                                            <div class="stock-status d-flex justify-content-between align-items-center">
-                                                <div class="stock-item text-caption-1">
-                                                    <span class="stock-label text-secondary-2">Available:</span>
-                                                    <span class="stock-value">50</span>
+
+                                            @if ( !empty($row->discount_type === "amount") )
+                                                <span class="price"><span class="old-price">${{ $row->selling_price }}</span> ${{ $row->selling_price - $row->discount_value }}</span>
+                                            @elseif( !empty($row->discount_type === "percent") )
+                                            @php
+                                                $discount_val = $row->selling_price * $row->discount_value / 100;
+                                            @endphp
+                                                <span class="price"><span class="old-price">${{ $row->selling_price }}</span> ${{ $row->selling_price - $discount_val }}</span>
+                                            @else
+                                                <span class="price"> ${{ $row->selling_price }}</span>
+                                            @endif
+                                           
+
+                                            <div class="box-progress-stock">
+                                                <div class="progress">
+                                                    <div class="progress-bar" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
-                                                <div class="stock-item text-caption-1">
-                                                    <span class="stock-label text-secondary-2">Sold:</span>
-                                                    <span class="stock-value">50</span>
+                                                <div class="stock-status d-flex justify-content-between align-items-center">
+                                                    <div class="stock-item text-caption-1">
+                                                        <span class="stock-label text-secondary-2">Available:</span>
+                                                        <span class="stock-value">{{ $row->qty }}</span>
+                                                    </div>
+                                                    <div class="stock-item text-caption-1">
+                                                        <span class="stock-label text-secondary-2">Sold:</span>
+                                                        <span class="stock-value">{{ $row->product_sold }}</span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="card-product card-product-size wow fadeInUp" data-wow-delay="0.2s">
-                                    <div class="card-product-wrapper">
-                                        <a href="product-detail.html" class="product-img">
-                                            <img class="lazyload img-product" data-src="{{ asset('public/frontend/images/products/electronic/electronic-5.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-5.jpg') }}" alt="image-product">
-                                            <img class="lazyload img-hover" data-src="{{ asset('public/frontend/images/products/electronic/electronic-6.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-6.jpg') }}" alt="image-product">
-                                        </a>
-                                        <div class="variant-wrap size-list">
-                                            <ul class="variant-box">
-                                                <li class="size-item">S</li>
-                                                <li class="size-item">M</li>
-                                                <li class="size-item">L</li>
-                                                <li class="size-item">XL</li>
-                                            </ul>
-                                        </div>
-                                        <div class="variant-wrap countdown-wrap">
-                                            <div class="variant-box">
-                                                <div class="js-countdown" data-timer="1007500" data-labels="D :,H :,M :,S"></div>
-                                            </div>
-                                        </div>
-                                        <div class="list-product-btn">
-                                            <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
-                                                <span class="icon icon-heart"></span>
-                                                <span class="tooltip">Wishlist</span>
-                                            </a>
-                                            <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
-                                                <span class="icon icon-gitDiff"></span>
-                                                <span class="tooltip">Compare</span>
-                                            </a>
-                                            <a href="#quickView" data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
-                                                <span class="icon icon-eye"></span>
-                                                <span class="tooltip">Quick View</span>
-                                            </a>
-                                        </div>
-                                        <div class="list-btn-main">
-                                            <a href="#quickAdd" data-bs-toggle="modal" class="btn-main-product">Quick Add</a>
-                                        </div>
-                                    </div>
-                                    <div class="card-product-info">
-                                        <a href="product-detail.html" class="title link"> JBL Tune 750BTNC for Android Tablet</a>
-                                        <div class="box-rating">
-                                            <ul class="list-star">
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                            </ul>
-                                            <span class="text-caption-1 text-secondary">(1.234)</span>
-                                        </div>
-                                        <span class="price"><span class="old-price">$98.00</span> $89.99</span>
-                                        <div class="box-progress-stock">
-                                            <div class="progress">
-                                                <div class="progress-bar" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                            <div class="stock-status d-flex justify-content-between align-items-center">
-                                                <div class="stock-item text-caption-1">
-                                                    <span class="stock-label text-secondary-2">Available:</span>
-                                                    <span class="stock-value">50</span>
-                                                </div>
-                                                <div class="stock-item text-caption-1">
-                                                    <span class="stock-label text-secondary-2">Sold:</span>
-                                                    <span class="stock-value">50</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="card-product wow fadeInUp" data-wow-delay="0.3s">
-                                    <div class="card-product-wrapper">
-                                        <a href="product-detail.html" class="product-img">
-                                            <img class="lazyload img-product" data-src="{{ asset('public/frontend/products/electronic/electronic-7.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-7.jpg') }}" alt="image-product">
-                                            <img class="lazyload img-hover" data-src="{{ asset('public/frontend/images/products/electronic/electronic-8.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-8.jpg') }}" alt="image-product">
-                                        </a>
-                                        <div class="list-product-btn">
-                                            <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
-                                                <span class="icon icon-heart"></span>
-                                                <span class="tooltip">Wishlist</span>
-                                            </a>
-                                            <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
-                                                <span class="icon icon-gitDiff"></span>
-                                                <span class="tooltip">Compare</span>
-                                            </a>
-                                            <a href="#quickView" data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
-                                                <span class="icon icon-eye"></span>
-                                                <span class="tooltip">Quick View</span>
-                                            </a>
-                                        </div>
-                                        <div class="list-btn-main">
-                                            <a href="#shoppingCart" data-bs-toggle="modal" class="btn-main-product">Add To cart</a>
-                                        </div>
-                                    </div>
-                                    <div class="card-product-info">
-                                        <a href="product-detail.html" class="title link">JBL Live 460nc for Android IOS & Android</a>
-                                        <div class="box-rating">
-                                            <ul class="list-star">
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                            </ul>
-                                            <span class="text-caption-1 text-secondary">(1.234)</span>
-                                        </div>
-                                        <span class="price">$69.99</span>
-                                        <div class="box-progress-stock">
-                                            <div class="progress">
-                                                <div class="progress-bar" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                            <div class="stock-status d-flex justify-content-between align-items-center">
-                                                <div class="stock-item text-caption-1">
-                                                    <span class="stock-label text-secondary-2">Available:</span>
-                                                    <span class="stock-value">50</span>
-                                                </div>
-                                                <div class="stock-item text-caption-1">
-                                                    <span class="stock-label text-secondary-2">Sold:</span>
-                                                    <span class="stock-value">50</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="card-product wow fadeInUp" data-wow-delay="0.4s">
-                                    <div class="card-product-wrapper">
-                                        <a href="product-detail.html" class="product-img">
-                                            <img class="lazyload img-product" data-src="{{ asset('public/frontend/images/products/electronic/electronic-9.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-9.jpg') }}" alt="image-product">
-                                            <img class="lazyload img-hover" data-src="{{ asset('public/frontend/images/products/electronic/electronic-10.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-10.jpg" alt="image-product') }}">
-                                        </a>
-                                        <div class="list-product-btn">
-                                            <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
-                                                <span class="icon icon-heart"></span>
-                                                <span class="tooltip">Wishlist</span>
-                                            </a>
-                                            <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
-                                                <span class="icon icon-gitDiff"></span>
-                                                <span class="tooltip">Compare</span>
-                                            </a>
-                                            <a href="#quickView" data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
-                                                <span class="icon icon-eye"></span>
-                                                <span class="tooltip">Quick View</span>
-                                            </a>
-                                        </div>
-                                        <div class="list-btn-main">
-                                            <a href="#shoppingCart" data-bs-toggle="modal" class="btn-main-product">Add To cart</a>
-                                        </div>
-                                    </div>
-                                    <div class="card-product-info">
-                                        <a href="product-detail.html" class="title link">iPad Mini 6 8.3 inch Wi-Fi 6-5G64GB</a>
-                                        <div class="box-rating">
-                                            <ul class="list-star">
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                            </ul>
-                                            <span class="text-caption-1 text-secondary">(1.234)</span>
-                                        </div>
-                                        <span class="price">$69.99</span>
-                                        <div class="box-progress-stock">
-                                            <div class="progress">
-                                                <div class="progress-bar" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                            <div class="stock-status d-flex justify-content-between align-items-center">
-                                                <div class="stock-item text-caption-1">
-                                                    <span class="stock-label text-secondary-2">Available:</span>
-                                                    <span class="stock-value">50</span>
-                                                </div>
-                                                <div class="stock-item text-caption-1">
-                                                    <span class="stock-label text-secondary-2">Sold:</span>
-                                                    <span class="stock-value">50</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
                         <div class="sw-pagination-latest sw-dots type-circle justify-content-center"></div>
                     </div>
                 </div>
-                <div class="tab-pane" id="SmartPhone" role="tabpanel">
-                    <div dir="ltr" class="swiper tf-sw-latest" data-preview="5" data-tablet="4" data-mobile="2" data-space-lg="30" data-space-md="30" data-space="15" data-pagination="1" data-pagination-md="1" data-pagination-lg="1">
-                        <div class="swiper-wrapper">
-                            <div class="swiper-slide">
-                                <div class="card-product">
-                                    <div class="card-product-wrapper">
-                                        <a href="product-detail.html" class="product-img">
-                                            <img class="lazyload img-product" data-src="{{ asset('public/frontend/images/products/electronic/electronic-1.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-1.jpg') }}" alt="image-product">
-                                            <img class="lazyload img-hover" data-src="{{ asset('public/frontend/images/products/electronic/electronic-2.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-2.jpg') }}" alt="image-product">
-                                        </a>
-                                        <div class="list-product-btn">
-                                            <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
-                                                <span class="icon icon-heart"></span>
-                                                <span class="tooltip">Wishlist</span>
-                                            </a>
-                                            <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
-                                                <span class="icon icon-gitDiff"></span>
-                                                <span class="tooltip">Compare</span>
-                                            </a>
-                                            <a href="#quickView" data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
-                                                <span class="icon icon-eye"></span>
-                                                <span class="tooltip">Quick View</span>
-                                            </a>
-                                        </div>
-                                        <div class="list-btn-main">
-                                            <a href="#shoppingCart" data-bs-toggle="modal" class="btn-main-product">Add To cart</a>
+
+                {{-- Looping all categorized data --}}
+                @foreach ($categories as $key => $item)
+                    <div class="tab-pane" id="{{ $item->slug }}" role="tabpanel">
+                        <div dir="ltr" class="swiper tf-sw-latest" data-preview="5" data-tablet="4" data-mobile="2" data-space-lg="30" data-space-md="30" data-space="15" data-pagination="1" data-pagination-md="1" data-pagination-lg="1">
+
+                            <div class="swiper-wrapper">
+                                @foreach (App\Models\Product::where('category_id', $item->id)->where('is_approved', 1)->where('status', 1)->get(); as $row)
+                                    <div class="swiper-slide">
+                                        <div class="card-product wow fadeInUp" data-wow-delay="0.1s">
+                                            <div class="card-product-wrapper">
+                                                <a href="product-detail.html" class="product-img">
+                                                    <img class="lazyload img-product" data-src="{{ asset($row->thumb_image) }}" src="{{ asset($row->thumb_image) }}" alt="{{ $row->slug }}">
+
+                                                    @php
+                                                        $image = App\Models\ProductImage::where('product_id', $row->id)->first();
+
+                                                        $discount = '';
+                                                        if ( !empty($row->discount_type === "amount" ) ){
+                                                            $discount = '-'. $row->discount_value . "Tk";
+                                                        }   
+                                                        else if( $row->discount_type === "percent" ){
+                                                            $discount = '-'. $row->discount_value . "%";
+                                                        }
+                                                    @endphp
+
+                                                    @if (!empty($image))
+                                                        <img class="lazyload img-hover" data-src="{{ asset($image->images) }}" src="{{ asset($image->images) }}" alt="{{ $row->slug }}">
+                                                    @endif
+                                                </a>
+                                                <div class="on-sale-wrap">
+                                                    <span class="on-sale-item">
+                                                        {{ $discount }}
+                                                    </span>
+                                                </div>
+
+
+                                                @if ( !empty($row->discount_type === "amount") || !empty($row->discount_type === "percent") )
+
+                                                    <div class="marquee-product bg-main">
+                                                        <div class="marquee-wrapper">
+                                                            <div class="initial-child-container">
+                                                                <div class="marquee-child-item">
+                                                                    <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
+                                                                </div>
+                                                                <div class="marquee-child-item">
+                                                                    <ion-icon name="flash-outline" class="text-critical"></ion-icon>
+                                                                </div>
+                                                                <div class="marquee-child-item">
+                                                                    <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
+                                                                </div>
+                                                                <div class="marquee-child-item">
+                                                                    <ion-icon name="flash-outline" class="text-critical"></ion-icon>
+                                                                </div>
+                                                                <div class="marquee-child-item">
+                                                                    <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
+                                                                </div>
+                                                                <div class="marquee-child-item">
+                                                                    <ion-icon name="flash-outline" class="text-critical"></ion-icon>
+                                                                </div>
+                                                                <div class="marquee-child-item">
+                                                                    <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
+                                                                </div>
+                                                                <div class="marquee-child-item">
+                                                                    <ion-icon name="flash-outline" class="text-critical"></ion-icon>
+                                                                </div>
+                                                                <div class="marquee-child-item">
+                                                                    <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
+                                                                </div>
+                                                                <div class="marquee-child-item">
+                                                                    <ion-icon name="flash-outline" class="text-critical"></ion-icon>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="marquee-wrapper">
+                                                            <div class="initial-child-container">
+                                                                <div class="marquee-child-item">
+                                                                    <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
+                                                                </div>
+                                                                <div class="marquee-child-item">
+                                                                    <ion-icon name="flash-outline" class="text-critical"></ion-icon>
+                                                                </div>
+                                                                <div class="marquee-child-item">
+                                                                    <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
+                                                                </div>
+                                                                <div class="marquee-child-item">
+                                                                    <ion-icon name="flash-outline" class="text-critical"></ion-icon>
+                                                                </div>
+                                                                <div class="marquee-child-item">
+                                                                    <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
+                                                                </div>
+                                                                <div class="marquee-child-item">
+                                                                    <ion-icon name="flash-outline" class="text-critical"></ion-icon>
+                                                                </div>
+                                                                <div class="marquee-child-item">
+                                                                    <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
+                                                                </div>
+                                                                <div class="marquee-child-item">
+                                                                    <ion-icon name="flash-outline" class="text-critical"></ion-icon>
+                                                                </div>
+                                                                <div class="marquee-child-item">
+                                                                    <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
+                                                                </div>
+                                                                <div class="marquee-child-item">
+                                                                    <ion-icon name="flash-outline" class="text-critical"></ion-icon>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                @endif
+
+                                                
+                                                <div class="list-product-btn">
+                                                    <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
+                                                        <i class='bx bx-heart' style="font-size: 24px;"></i>
+                                                        <span class="tooltip">Wishlist</span>
+                                                    </a>
+                                                    <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
+                                                        <i class='bx bx-git-compare' style="font-size: 24px;"></i>
+                                                        <span class="tooltip">Compare</span>
+                                                    </a>
+                                                    <a href="#quickView" data-id={{ $row->id }} data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
+                                                        <ion-icon name="eye-outline" style="font-size: 24px;"></ion-icon>
+                                                        <span class="tooltip">Quick View</span>
+                                                    </a>
+                                                </div>
+                                                <div class="list-btn-main">
+                                                    <a href="#shoppingCart" data-bs-toggle="modal" class="btn-main-product">Add To cart</a>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="card-product-info">
+                                                <a href="{{ route('product.details', $row->slug) }}" class="title link">{{ $row->name }}</a>
+                                                <div class="box-rating">
+                                                    <ul class="list-star">
+                                                        <li class="bx bxs-star" style="color: #F0A750;"></li>
+                                                        <li class="bx bxs-star" style="color: #F0A750;"></li>
+                                                        <li class="bx bxs-star" style="color: #F0A750;"></li>
+                                                        <li class="bx bxs-star" style="color: #F0A750;"></li>
+                                                        <li class="bx bx-star" style="color: #F0A750;"></li>
+                                                    </ul>
+                                                    <span class="text-caption-1 text-secondary">(1.234)</span>
+                                                </div>
+
+                                                @if ( !empty($row->discount_type === "amount") )
+                                                    <span class="price"><span class="old-price">${{ $row->selling_price }}</span> ${{ $row->selling_price - $row->discount_value }}</span>
+                                                @elseif( !empty($row->discount_type === "percent") )
+                                                @php
+                                                    $discount_val = $row->selling_price * $row->discount_value / 100;
+                                                @endphp
+                                                    <span class="price"><span class="old-price">${{ $row->selling_price }}</span> ${{ $row->selling_price - $discount_val }}</span>
+                                                @else
+                                                    <span class="price"> ${{ $row->selling_price }}</span>
+                                                @endif
+                                            
+
+                                                <div class="box-progress-stock">
+                                                    <div class="progress">
+                                                        <div class="progress-bar" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    </div>
+                                                    <div class="stock-status d-flex justify-content-between align-items-center">
+                                                        <div class="stock-item text-caption-1">
+                                                            <span class="stock-label text-secondary-2">Available:</span>
+                                                            <span class="stock-value">{{ $row->qty }}</span>
+                                                        </div>
+                                                        <div class="stock-item text-caption-1">
+                                                            <span class="stock-label text-secondary-2">Sold:</span>
+                                                            <span class="stock-value">{{ $row->product_sold }}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="card-product-info">
-                                        <a href="product-detail.html" class="title link">PlayStation DualSense Wireless Controller</a>
-                                        <div class="box-rating">
-                                            <ul class="list-star">
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                            </ul>
-                                            <span class="text-caption-1 text-secondary">(1.234)</span>
-                                        </div>
-                                        <span class="price">$59.99</span>
-                                        <div class="box-progress-stock">
-                                            <div class="progress">
-                                                <div class="progress-bar" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                            <div class="stock-status d-flex justify-content-between align-items-center">
-                                                <div class="stock-item text-caption-1">
-                                                    <span class="stock-label text-secondary-2">Available:</span>
-                                                    <span class="stock-value">50</span>
-                                                </div>
-                                                <div class="stock-item text-caption-1">
-                                                    <span class="stock-label text-secondary-2">Sold:</span>
-                                                    <span class="stock-value">50</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                @endforeach
                             </div>
-                            <div class="swiper-slide">
-                                <div class="card-product">
-                                    <div class="card-product-wrapper">
-                                        <a href="product-detail.html" class="product-img">
-                                            <img class="lazyload img-product" data-src="{{ asset('public/frontend/images/products/electronic/electronic-3.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-3.jpg') }}" alt="image-product">
-                                            <img class="lazyload img-hover" data-src="{{ asset('public/frontend/images/products/electronic/electronic-4.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-4.jpg') }}" alt="image-product">
-                                        </a>
-                                        <div class="on-sale-wrap"><span class="on-sale-item">-25%</span></div>
-                                        <div class="marquee-product bg-main">
-                                            <div class="marquee-wrapper">
-                                                <div class="initial-child-container">
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <span class="icon icon-lightning text-critical"></span>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <span class="icon icon-lightning text-critical"></span>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <span class="icon icon-lightning text-critical"></span>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <span class="icon icon-lightning text-critical"></span>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <span class="icon icon-lightning text-critical"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="marquee-wrapper">
-                                                <div class="initial-child-container">
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <span class="icon icon-lightning text-critical"></span>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <span class="icon icon-lightning text-critical"></span>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <span class="icon icon-lightning text-critical"></span>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <span class="icon icon-lightning text-critical"></span>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <span class="icon icon-lightning text-critical"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="list-product-btn">
-                                            <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
-                                                <span class="icon icon-heart"></span>
-                                                <span class="tooltip">Wishlist</span>
-                                            </a>
-                                            <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
-                                                <span class="icon icon-gitDiff"></span>
-                                                <span class="tooltip">Compare</span>
-                                            </a>
-                                            <a href="#quickView" data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
-                                                <span class="icon icon-eye"></span>
-                                                <span class="tooltip">Quick View</span>
-                                            </a>
-                                        </div>
-                                        <div class="list-btn-main">
-                                            <a href="#shoppingCart" data-bs-toggle="modal" class="btn-main-product">Add To cart</a>
-                                        </div>
-                                    </div>
-                                    <div class="card-product-info">
-                                        <a href="product-detail.html" class="title link">Apple Watch Ultra 2-  Rugged Titanium Case</a>
-                                        <div class="box-rating">
-                                            <ul class="list-star">
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                            </ul>
-                                            <span class="text-caption-1 text-secondary">(1.234)</span>
-                                        </div>
-                                        <span class="price"><span class="old-price">$98.00</span> $79.99</span>
-                                        <div class="box-progress-stock">
-                                            <div class="progress">
-                                                <div class="progress-bar" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                            <div class="stock-status d-flex justify-content-between align-items-center">
-                                                <div class="stock-item text-caption-1">
-                                                    <span class="stock-label text-secondary-2">Available:</span>
-                                                    <span class="stock-value">50</span>
-                                                </div>
-                                                <div class="stock-item text-caption-1">
-                                                    <span class="stock-label text-secondary-2">Sold:</span>
-                                                    <span class="stock-value">50</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="card-product card-product-size">
-                                    <div class="card-product-wrapper">
-                                        <a href="product-detail.html" class="product-img">
-                                            <img class="lazyload img-product" data-src="{{ asset('public/frontend/images/products/electronic/electronic-5.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-5.jpg') }}" alt="image-product">
-                                            <img class="lazyload img-hover" data-src="{{ asset('public/frontend/images/products/electronic/electronic-6.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-6.jpg') }}" alt="image-product">
-                                        </a>
-                                        <div class="variant-wrap size-list">
-                                            <ul class="variant-box">
-                                                <li class="size-item">S</li>
-                                                <li class="size-item">M</li>
-                                                <li class="size-item">L</li>
-                                                <li class="size-item">XL</li>
-                                            </ul>
-                                        </div>
-                                        <div class="variant-wrap countdown-wrap">
-                                            <div class="variant-box">
-                                                <div class="js-countdown" data-timer="1007500" data-labels="D :,H :,M :,S"></div>
-                                            </div>
-                                        </div>
-                                        <div class="list-product-btn">
-                                            <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
-                                                <span class="icon icon-heart"></span>
-                                                <span class="tooltip">Wishlist</span>
-                                            </a>
-                                            <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
-                                                <span class="icon icon-gitDiff"></span>
-                                                <span class="tooltip">Compare</span>
-                                            </a>
-                                            <a href="#quickView" data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
-                                                <span class="icon icon-eye"></span>
-                                                <span class="tooltip">Quick View</span>
-                                            </a>
-                                        </div>
-                                        <div class="list-btn-main">
-                                            <a href="#quickAdd" data-bs-toggle="modal" class="btn-main-product">Quick Add</a>
-                                        </div>
-                                    </div>
-                                    <div class="card-product-info">
-                                        <a href="product-detail.html" class="title link"> JBL Tune 750BTNC for Android Tablet</a>
-                                        <div class="box-rating">
-                                            <ul class="list-star">
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                            </ul>
-                                            <span class="text-caption-1 text-secondary">(1.234)</span>
-                                        </div>
-                                        <span class="price"><span class="old-price">$98.00</span> $89.99</span>
-                                        <div class="box-progress-stock">
-                                            <div class="progress">
-                                                <div class="progress-bar" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                            <div class="stock-status d-flex justify-content-between align-items-center">
-                                                <div class="stock-item text-caption-1">
-                                                    <span class="stock-label text-secondary-2">Available:</span>
-                                                    <span class="stock-value">50</span>
-                                                </div>
-                                                <div class="stock-item text-caption-1">
-                                                    <span class="stock-label text-secondary-2">Sold:</span>
-                                                    <span class="stock-value">50</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="card-product">
-                                    <div class="card-product-wrapper">
-                                        <a href="product-detail.html" class="product-img">
-                                            <img class="lazyload img-product" data-src="{{ asset('public/frontend/images/products/electronic/electronic-7.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-7.jpg') }}" alt="image-product">
-                                            <img class="lazyload img-hover" data-src="{{ asset('public/frontend/images/products/electronic/electronic-8.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-8.jpg') }}" alt="image-product">
-                                        </a>
-                                        <div class="list-product-btn">
-                                            <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
-                                                <span class="icon icon-heart"></span>
-                                                <span class="tooltip">Wishlist</span>
-                                            </a>
-                                            <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
-                                                <span class="icon icon-gitDiff"></span>
-                                                <span class="tooltip">Compare</span>
-                                            </a>
-                                            <a href="#quickView" data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
-                                                <span class="icon icon-eye"></span>
-                                                <span class="tooltip">Quick View</span>
-                                            </a>
-                                        </div>
-                                        <div class="list-btn-main">
-                                            <a href="#shoppingCart" data-bs-toggle="modal" class="btn-main-product">Add To cart</a>
-                                        </div>
-                                    </div>
-                                    <div class="card-product-info">
-                                        <a href="product-detail.html" class="title link">JBL Live 460nc for Android IOS & Android</a>
-                                        <div class="box-rating">
-                                            <ul class="list-star">
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                            </ul>
-                                            <span class="text-caption-1 text-secondary">(1.234)</span>
-                                        </div>
-                                        <span class="price">$69.99</span>
-                                        <div class="box-progress-stock">
-                                            <div class="progress">
-                                                <div class="progress-bar" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                            <div class="stock-status d-flex justify-content-between align-items-center">
-                                                <div class="stock-item text-caption-1">
-                                                    <span class="stock-label text-secondary-2">Available:</span>
-                                                    <span class="stock-value">50</span>
-                                                </div>
-                                                <div class="stock-item text-caption-1">
-                                                    <span class="stock-label text-secondary-2">Sold:</span>
-                                                    <span class="stock-value">50</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="card-product">
-                                    <div class="card-product-wrapper">
-                                        <a href="product-detail.html" class="product-img">
-                                            <img class="lazyload img-product" data-src="{{ asset('public/frontend/images/products/electronic/electronic-9.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-9.jpg') }}" alt="image-product">
-                                            <img class="lazyload img-hover" data-src="{{ asset('public/frontend/images/products/electronic/electronic-10.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-10.jpg') }}" alt="image-product">
-                                        </a>
-                                        <div class="list-product-btn">
-                                            <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
-                                                <span class="icon icon-heart"></span>
-                                                <span class="tooltip">Wishlist</span>
-                                            </a>
-                                            <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
-                                                <span class="icon icon-gitDiff"></span>
-                                                <span class="tooltip">Compare</span>
-                                            </a>
-                                            <a href="#quickView" data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
-                                                <span class="icon icon-eye"></span>
-                                                <span class="tooltip">Quick View</span>
-                                            </a>
-                                        </div>
-                                        <div class="list-btn-main">
-                                            <a href="#shoppingCart" data-bs-toggle="modal" class="btn-main-product">Add To cart</a>
-                                        </div>
-                                    </div>
-                                    <div class="card-product-info">
-                                        <a href="product-detail.html" class="title link">iPad Mini 6 8.3 inch Wi-Fi 6-5G64GB</a>
-                                        <div class="box-rating">
-                                            <ul class="list-star">
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                            </ul>
-                                            <span class="text-caption-1 text-secondary">(1.234)</span>
-                                        </div>
-                                        <span class="price">$69.99</span>
-                                        <div class="box-progress-stock">
-                                            <div class="progress">
-                                                <div class="progress-bar" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                            <div class="stock-status d-flex justify-content-between align-items-center">
-                                                <div class="stock-item text-caption-1">
-                                                    <span class="stock-label text-secondary-2">Available:</span>
-                                                    <span class="stock-value">50</span>
-                                                </div>
-                                                <div class="stock-item text-caption-1">
-                                                    <span class="stock-label text-secondary-2">Sold:</span>
-                                                    <span class="stock-value">50</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+
+                            <div class="sw-pagination-latest sw-dots type-circle justify-content-center"></div>
                         </div>
-                        <div class="sw-pagination-latest sw-dots type-circle justify-content-center"></div>
                     </div>
-                </div>
-                <div class="tab-pane" id="Electronic" role="tabpanel">
-                    <div dir="ltr" class="swiper tf-sw-latest" data-preview="5" data-tablet="4" data-mobile="2" data-space-lg="30" data-space-md="30" data-space="15" data-pagination="1" data-pagination-md="1" data-pagination-lg="1">
-                        <div class="swiper-wrapper">
-                            <div class="swiper-slide">
-                                <div class="card-product">
-                                    <div class="card-product-wrapper">
-                                        <a href="product-detail.html" class="product-img">
-                                            <img class="lazyload img-product" data-src="{{ asset('public/frontend/images/products/electronic/electronic-1.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-1.jpg') }}" alt="image-product">
-                                            <img class="lazyload img-hover" data-src="{{ asset('public/frontend/images/products/electronic/electronic-2.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-2.jpg') }}" alt="image-product">
-                                        </a>
-                                        <div class="list-product-btn">
-                                            <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
-                                                <span class="icon icon-heart"></span>
-                                                <span class="tooltip">Wishlist</span>
-                                            </a>
-                                            <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
-                                                <span class="icon icon-gitDiff"></span>
-                                                <span class="tooltip">Compare</span>
-                                            </a>
-                                            <a href="#quickView" data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
-                                                <span class="icon icon-eye"></span>
-                                                <span class="tooltip">Quick View</span>
-                                            </a>
-                                        </div>
-                                        <div class="list-btn-main">
-                                            <a href="#shoppingCart" data-bs-toggle="modal" class="btn-main-product">Add To cart</a>
-                                        </div>
-                                    </div>
-                                    <div class="card-product-info">
-                                        <a href="product-detail.html" class="title link">PlayStation DualSense Wireless Controller</a>
-                                        <div class="box-rating">
-                                            <ul class="list-star">
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                            </ul>
-                                            <span class="text-caption-1 text-secondary">(1.234)</span>
-                                        </div>
-                                        <span class="price">$59.99</span>
-                                        <div class="box-progress-stock">
-                                            <div class="progress">
-                                                <div class="progress-bar" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                            <div class="stock-status d-flex justify-content-between align-items-center">
-                                                <div class="stock-item text-caption-1">
-                                                    <span class="stock-label text-secondary-2">Available:</span>
-                                                    <span class="stock-value">50</span>
-                                                </div>
-                                                <div class="stock-item text-caption-1">
-                                                    <span class="stock-label text-secondary-2">Sold:</span>
-                                                    <span class="stock-value">50</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="card-product">
-                                    <div class="card-product-wrapper">
-                                        <a href="product-detail.html" class="product-img">
-                                            <img class="lazyload img-product" data-src="{{ asset('public/frontend/images/products/electronic/electronic-3.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-3.jpg') }}" alt="image-product">
-                                            <img class="lazyload img-hover" data-src="{{ asset('public/frontend/images/products/electronic/electronic-4.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-4.jpg') }}" alt="image-product">
-                                        </a>
-                                        <div class="on-sale-wrap"><span class="on-sale-item">-25%</span></div>
-                                        <div class="marquee-product bg-main">
-                                            <div class="marquee-wrapper">
-                                                <div class="initial-child-container">
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <span class="icon icon-lightning text-critical"></span>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <span class="icon icon-lightning text-critical"></span>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <span class="icon icon-lightning text-critical"></span>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <span class="icon icon-lightning text-critical"></span>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <span class="icon icon-lightning text-critical"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="marquee-wrapper">
-                                                <div class="initial-child-container">
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <span class="icon icon-lightning text-critical"></span>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <span class="icon icon-lightning text-critical"></span>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <span class="icon icon-lightning text-critical"></span>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <span class="icon icon-lightning text-critical"></span>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <span class="icon icon-lightning text-critical"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="list-product-btn">
-                                            <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
-                                                <span class="icon icon-heart"></span>
-                                                <span class="tooltip">Wishlist</span>
-                                            </a>
-                                            <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
-                                                <span class="icon icon-gitDiff"></span>
-                                                <span class="tooltip">Compare</span>
-                                            </a>
-                                            <a href="#quickView" data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
-                                                <span class="icon icon-eye"></span>
-                                                <span class="tooltip">Quick View</span>
-                                            </a>
-                                        </div>
-                                        <div class="list-btn-main">
-                                            <a href="#shoppingCart" data-bs-toggle="modal" class="btn-main-product">Add To cart</a>
-                                        </div>
-                                    </div>
-                                    <div class="card-product-info">
-                                        <a href="product-detail.html" class="title link">Apple Watch Ultra 2-  Rugged Titanium Case</a>
-                                        <div class="box-rating">
-                                            <ul class="list-star">
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                            </ul>
-                                            <span class="text-caption-1 text-secondary">(1.234)</span>
-                                        </div>
-                                        <span class="price"><span class="old-price">$98.00</span> $79.99</span>
-                                        <div class="box-progress-stock">
-                                            <div class="progress">
-                                                <div class="progress-bar" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                            <div class="stock-status d-flex justify-content-between align-items-center">
-                                                <div class="stock-item text-caption-1">
-                                                    <span class="stock-label text-secondary-2">Available:</span>
-                                                    <span class="stock-value">50</span>
-                                                </div>
-                                                <div class="stock-item text-caption-1">
-                                                    <span class="stock-label text-secondary-2">Sold:</span>
-                                                    <span class="stock-value">50</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="card-product card-product-size">
-                                    <div class="card-product-wrapper">
-                                        <a href="product-detail.html" class="product-img">
-                                            <img class="lazyload img-product" data-src="{{ asset('public/frontend/images/products/electronic/electronic-5.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-5.jpg') }}" alt="image-product">
-                                            <img class="lazyload img-hover" data-src="{{ asset('public/frontend/images/products/electronic/electronic-6.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-6.jpg') }}" alt="image-product">
-                                        </a>
-                                        <div class="variant-wrap size-list">
-                                            <ul class="variant-box">
-                                                <li class="size-item">S</li>
-                                                <li class="size-item">M</li>
-                                                <li class="size-item">L</li>
-                                                <li class="size-item">XL</li>
-                                            </ul>
-                                        </div>
-                                        <div class="variant-wrap countdown-wrap">
-                                            <div class="variant-box">
-                                                <div class="js-countdown" data-timer="1007500" data-labels="D :,H :,M :,S"></div>
-                                            </div>
-                                        </div>
-                                        <div class="list-product-btn">
-                                            <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
-                                                <span class="icon icon-heart"></span>
-                                                <span class="tooltip">Wishlist</span>
-                                            </a>
-                                            <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
-                                                <span class="icon icon-gitDiff"></span>
-                                                <span class="tooltip">Compare</span>
-                                            </a>
-                                            <a href="#quickView" data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
-                                                <span class="icon icon-eye"></span>
-                                                <span class="tooltip">Quick View</span>
-                                            </a>
-                                        </div>
-                                        <div class="list-btn-main">
-                                            <a href="#quickAdd" data-bs-toggle="modal" class="btn-main-product">Quick Add</a>
-                                        </div>
-                                    </div>
-                                    <div class="card-product-info">
-                                        <a href="product-detail.html" class="title link"> JBL Tune 750BTNC for Android Tablet</a>
-                                        <div class="box-rating">
-                                            <ul class="list-star">
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                            </ul>
-                                            <span class="text-caption-1 text-secondary">(1.234)</span>
-                                        </div>
-                                        <span class="price"><span class="old-price">$98.00</span> $89.99</span>
-                                        <div class="box-progress-stock">
-                                            <div class="progress">
-                                                <div class="progress-bar" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                            <div class="stock-status d-flex justify-content-between align-items-center">
-                                                <div class="stock-item text-caption-1">
-                                                    <span class="stock-label text-secondary-2">Available:</span>
-                                                    <span class="stock-value">50</span>
-                                                </div>
-                                                <div class="stock-item text-caption-1">
-                                                    <span class="stock-label text-secondary-2">Sold:</span>
-                                                    <span class="stock-value">50</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="card-product">
-                                    <div class="card-product-wrapper">
-                                        <a href="product-detail.html" class="product-img">
-                                            <img class="lazyload img-product" data-src="{{ asset('public/frontend/images/products/electronic/electronic-7.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-7.jpg') }}" alt="image-product">
-                                            <img class="lazyload img-hover" data-src="{{ asset('public/frontend/images/products/electronic/electronic-8.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-8.jpg') }}" alt="image-product">
-                                        </a>
-                                        <div class="list-product-btn">
-                                            <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
-                                                <span class="icon icon-heart"></span>
-                                                <span class="tooltip">Wishlist</span>
-                                            </a>
-                                            <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
-                                                <span class="icon icon-gitDiff"></span>
-                                                <span class="tooltip">Compare</span>
-                                            </a>
-                                            <a href="#quickView" data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
-                                                <span class="icon icon-eye"></span>
-                                                <span class="tooltip">Quick View</span>
-                                            </a>
-                                        </div>
-                                        <div class="list-btn-main">
-                                            <a href="#shoppingCart" data-bs-toggle="modal" class="btn-main-product">Add To cart</a>
-                                        </div>
-                                    </div>
-                                    <div class="card-product-info">
-                                        <a href="product-detail.html" class="title link">JBL Live 460nc for Android IOS & Android</a>
-                                        <div class="box-rating">
-                                            <ul class="list-star">
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                            </ul>
-                                            <span class="text-caption-1 text-secondary">(1.234)</span>
-                                        </div>
-                                        <span class="price">$69.99</span>
-                                        <div class="box-progress-stock">
-                                            <div class="progress">
-                                                <div class="progress-bar" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                            <div class="stock-status d-flex justify-content-between align-items-center">
-                                                <div class="stock-item text-caption-1">
-                                                    <span class="stock-label text-secondary-2">Available:</span>
-                                                    <span class="stock-value">50</span>
-                                                </div>
-                                                <div class="stock-item text-caption-1">
-                                                    <span class="stock-label text-secondary-2">Sold:</span>
-                                                    <span class="stock-value">50</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="card-product">
-                                    <div class="card-product-wrapper">
-                                        <a href="product-detail.html" class="product-img">
-                                            <img class="lazyload img-product" data-src="{{ asset('public/frontend/images/products/electronic/electronic-9.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-9.jpg') }}" alt="image-product">
-                                            <img class="lazyload img-hover" data-src="{{ asset('public/frontend/images/products/electronic/electronic-10.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-10.jpg') }}" alt="image-product">
-                                        </a>
-                                        <div class="list-product-btn">
-                                            <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
-                                                <span class="icon icon-heart"></span>
-                                                <span class="tooltip">Wishlist</span>
-                                            </a>
-                                            <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
-                                                <span class="icon icon-gitDiff"></span>
-                                                <span class="tooltip">Compare</span>
-                                            </a>
-                                            <a href="#quickView" data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
-                                                <span class="icon icon-eye"></span>
-                                                <span class="tooltip">Quick View</span>
-                                            </a>
-                                        </div>
-                                        <div class="list-btn-main">
-                                            <a href="#shoppingCart" data-bs-toggle="modal" class="btn-main-product">Add To cart</a>
-                                        </div>
-                                    </div>
-                                    <div class="card-product-info">
-                                        <a href="product-detail.html" class="title link">iPad Mini 6 8.3 inch Wi-Fi 6-5G64GB</a>
-                                        <div class="box-rating">
-                                            <ul class="list-star">
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                            </ul>
-                                            <span class="text-caption-1 text-secondary">(1.234)</span>
-                                        </div>
-                                        <span class="price">$69.99</span>
-                                        <div class="box-progress-stock">
-                                            <div class="progress">
-                                                <div class="progress-bar" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                            <div class="stock-status d-flex justify-content-between align-items-center">
-                                                <div class="stock-item text-caption-1">
-                                                    <span class="stock-label text-secondary-2">Available:</span>
-                                                    <span class="stock-value">50</span>
-                                                </div>
-                                                <div class="stock-item text-caption-1">
-                                                    <span class="stock-label text-secondary-2">Sold:</span>
-                                                    <span class="stock-value">50</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="sw-pagination-latest sw-dots type-circle justify-content-center"></div>
-                    </div>
-                </div>
-                <div class="tab-pane" id="Audio" role="tabpanel">
-                    <div dir="ltr" class="swiper tf-sw-latest" data-preview="5" data-tablet="4" data-mobile="2" data-space-lg="30" data-space-md="30" data-space="15" data-pagination="1" data-pagination-md="1" data-pagination-lg="1">
-                        <div class="swiper-wrapper">
-                            <div class="swiper-slide">
-                                <div class="card-product">
-                                    <div class="card-product-wrapper">
-                                        <a href="product-detail.html" class="product-img">
-                                            <img class="lazyload img-product" data-src="{{ asset('public/frontend/images/products/electronic/electronic-1.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-1.jpg') }}" alt="image-product">
-                                            <img class="lazyload img-hover" data-src="{{ asset('public/frontend/images/products/electronic/electronic-2.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-2.jpg') }}" alt="image-product">
-                                        </a>
-                                        <div class="list-product-btn">
-                                            <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
-                                                <span class="icon icon-heart"></span>
-                                                <span class="tooltip">Wishlist</span>
-                                            </a>
-                                            <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
-                                                <span class="icon icon-gitDiff"></span>
-                                                <span class="tooltip">Compare</span>
-                                            </a>
-                                            <a href="#quickView" data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
-                                                <span class="icon icon-eye"></span>
-                                                <span class="tooltip">Quick View</span>
-                                            </a>
-                                        </div>
-                                        <div class="list-btn-main">
-                                            <a href="#shoppingCart" data-bs-toggle="modal" class="btn-main-product">Add To cart</a>
-                                        </div>
-                                    </div>
-                                    <div class="card-product-info">
-                                        <a href="product-detail.html" class="title link">PlayStation DualSense Wireless Controller</a>
-                                        <div class="box-rating">
-                                            <ul class="list-star">
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                            </ul>
-                                            <span class="text-caption-1 text-secondary">(1.234)</span>
-                                        </div>
-                                        <span class="price">$59.99</span>
-                                        <div class="box-progress-stock">
-                                            <div class="progress">
-                                                <div class="progress-bar" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                            <div class="stock-status d-flex justify-content-between align-items-center">
-                                                <div class="stock-item text-caption-1">
-                                                    <span class="stock-label text-secondary-2">Available:</span>
-                                                    <span class="stock-value">50</span>
-                                                </div>
-                                                <div class="stock-item text-caption-1">
-                                                    <span class="stock-label text-secondary-2">Sold:</span>
-                                                    <span class="stock-value">50</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="card-product">
-                                    <div class="card-product-wrapper">
-                                        <a href="product-detail.html" class="product-img">
-                                            <img class="lazyload img-product" data-src="{{ asset('public/frontend/images/products/electronic/electronic-3.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-3.jpg') }}" alt="image-product">
-                                            <img class="lazyload img-hover" data-src="{{ asset('public/frontend/images/products/electronic/electronic-4.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-4.jpg') }}" alt="image-product">
-                                        </a>
-                                        <div class="on-sale-wrap"><span class="on-sale-item">-25%</span></div>
-                                        <div class="marquee-product bg-main">
-                                            <div class="marquee-wrapper">
-                                                <div class="initial-child-container">
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <span class="icon icon-lightning text-critical"></span>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <span class="icon icon-lightning text-critical"></span>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <span class="icon icon-lightning text-critical"></span>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <span class="icon icon-lightning text-critical"></span>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <span class="icon icon-lightning text-critical"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="marquee-wrapper">
-                                                <div class="initial-child-container">
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <span class="icon icon-lightning text-critical"></span>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <span class="icon icon-lightning text-critical"></span>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <span class="icon icon-lightning text-critical"></span>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <span class="icon icon-lightning text-critical"></span>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <span class="icon icon-lightning text-critical"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="list-product-btn">
-                                            <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
-                                                <span class="icon icon-heart"></span>
-                                                <span class="tooltip">Wishlist</span>
-                                            </a>
-                                            <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
-                                                <span class="icon icon-gitDiff"></span>
-                                                <span class="tooltip">Compare</span>
-                                            </a>
-                                            <a href="#quickView" data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
-                                                <span class="icon icon-eye"></span>
-                                                <span class="tooltip">Quick View</span>
-                                            </a>
-                                        </div>
-                                        <div class="list-btn-main">
-                                            <a href="#shoppingCart" data-bs-toggle="modal" class="btn-main-product">Add To cart</a>
-                                        </div>
-                                    </div>
-                                    <div class="card-product-info">
-                                        <a href="product-detail.html" class="title link">Apple Watch Ultra 2-  Rugged Titanium Case</a>
-                                        <div class="box-rating">
-                                            <ul class="list-star">
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                            </ul>
-                                            <span class="text-caption-1 text-secondary">(1.234)</span>
-                                        </div>
-                                        <span class="price"><span class="old-price">$98.00</span> $79.99</span>
-                                        <div class="box-progress-stock">
-                                            <div class="progress">
-                                                <div class="progress-bar" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                            <div class="stock-status d-flex justify-content-between align-items-center">
-                                                <div class="stock-item text-caption-1">
-                                                    <span class="stock-label text-secondary-2">Available:</span>
-                                                    <span class="stock-value">50</span>
-                                                </div>
-                                                <div class="stock-item text-caption-1">
-                                                    <span class="stock-label text-secondary-2">Sold:</span>
-                                                    <span class="stock-value">50</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="card-product card-product-size">
-                                    <div class="card-product-wrapper">
-                                        <a href="product-detail.html" class="product-img">
-                                            <img class="lazyload img-product" data-src="{{ asset('public/frontend/images/products/electronic/electronic-5.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-5.jpg') }}" alt="image-product">
-                                            <img class="lazyload img-hover" data-src="{{ asset('public/frontend/images/products/electronic/electronic-6.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-6.jpg') }}" alt="image-product">
-                                        </a>
-                                        <div class="variant-wrap size-list">
-                                            <ul class="variant-box">
-                                                <li class="size-item">S</li>
-                                                <li class="size-item">M</li>
-                                                <li class="size-item">L</li>
-                                                <li class="size-item">XL</li>
-                                            </ul>
-                                        </div>
-                                        <div class="variant-wrap countdown-wrap">
-                                            <div class="variant-box">
-                                                <div class="js-countdown" data-timer="1007500" data-labels="D :,H :,M :,S"></div>
-                                            </div>
-                                        </div>
-                                        <div class="list-product-btn">
-                                            <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
-                                                <span class="icon icon-heart"></span>
-                                                <span class="tooltip">Wishlist</span>
-                                            </a>
-                                            <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
-                                                <span class="icon icon-gitDiff"></span>
-                                                <span class="tooltip">Compare</span>
-                                            </a>
-                                            <a href="#quickView" data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
-                                                <span class="icon icon-eye"></span>
-                                                <span class="tooltip">Quick View</span>
-                                            </a>
-                                        </div>
-                                        <div class="list-btn-main">
-                                            <a href="#quickAdd" data-bs-toggle="modal" class="btn-main-product">Quick Add</a>
-                                        </div>
-                                    </div>
-                                    <div class="card-product-info">
-                                        <a href="product-detail.html" class="title link"> JBL Tune 750BTNC for Android Tablet</a>
-                                        <div class="box-rating">
-                                            <ul class="list-star">
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                            </ul>
-                                            <span class="text-caption-1 text-secondary">(1.234)</span>
-                                        </div>
-                                        <span class="price"><span class="old-price">$98.00</span> $89.99</span>
-                                        <div class="box-progress-stock">
-                                            <div class="progress">
-                                                <div class="progress-bar" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                            <div class="stock-status d-flex justify-content-between align-items-center">
-                                                <div class="stock-item text-caption-1">
-                                                    <span class="stock-label text-secondary-2">Available:</span>
-                                                    <span class="stock-value">50</span>
-                                                </div>
-                                                <div class="stock-item text-caption-1">
-                                                    <span class="stock-label text-secondary-2">Sold:</span>
-                                                    <span class="stock-value">50</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="card-product">
-                                    <div class="card-product-wrapper">
-                                        <a href="product-detail.html" class="product-img">
-                                            <img class="lazyload img-product" data-src="{{ asset('public/frontend/images/products/electronic/electronic-7.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-7.jpg') }}" alt="image-product">
-                                            <img class="lazyload img-hover" data-src="{{ asset('public/frontend/images/products/electronic/electronic-8.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-8.jpg') }}" alt="image-product">
-                                        </a>
-                                        <div class="list-product-btn">
-                                            <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
-                                                <span class="icon icon-heart"></span>
-                                                <span class="tooltip">Wishlist</span>
-                                            </a>
-                                            <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
-                                                <span class="icon icon-gitDiff"></span>
-                                                <span class="tooltip">Compare</span>
-                                            </a>
-                                            <a href="#quickView" data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
-                                                <span class="icon icon-eye"></span>
-                                                <span class="tooltip">Quick View</span>
-                                            </a>
-                                        </div>
-                                        <div class="list-btn-main">
-                                            <a href="#shoppingCart" data-bs-toggle="modal" class="btn-main-product">Add To cart</a>
-                                        </div>
-                                    </div>
-                                    <div class="card-product-info">
-                                        <a href="product-detail.html" class="title link">JBL Live 460nc for Android IOS & Android</a>
-                                        <div class="box-rating">
-                                            <ul class="list-star">
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                            </ul>
-                                            <span class="text-caption-1 text-secondary">(1.234)</span>
-                                        </div>
-                                        <span class="price">$69.99</span>
-                                        <div class="box-progress-stock">
-                                            <div class="progress">
-                                                <div class="progress-bar" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                            <div class="stock-status d-flex justify-content-between align-items-center">
-                                                <div class="stock-item text-caption-1">
-                                                    <span class="stock-label text-secondary-2">Available:</span>
-                                                    <span class="stock-value">50</span>
-                                                </div>
-                                                <div class="stock-item text-caption-1">
-                                                    <span class="stock-label text-secondary-2">Sold:</span>
-                                                    <span class="stock-value">50</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="card-product">
-                                    <div class="card-product-wrapper">
-                                        <a href="product-detail.html" class="product-img">
-                                            <img class="lazyload img-product" data-src="{{ asset('public/frontend/images/products/electronic/electronic-9.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-9.jpg') }}" alt="image-product">
-                                            <img class="lazyload img-hover" data-src="{{ asset('public/frontend/images/products/electronic/electronic-10.jpg') }}" src="{{ asset('public/frontend/images/products/electronic/electronic-10.jpg') }}" alt="image-product">
-                                        </a>
-                                        <div class="list-product-btn">
-                                            <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
-                                                <span class="icon icon-heart"></span>
-                                                <span class="tooltip">Wishlist</span>
-                                            </a>
-                                            <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
-                                                <span class="icon icon-gitDiff"></span>
-                                                <span class="tooltip">Compare</span>
-                                            </a>
-                                            <a href="#quickView" data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
-                                                <span class="icon icon-eye"></span>
-                                                <span class="tooltip">Quick View</span>
-                                            </a>
-                                        </div>
-                                        <div class="list-btn-main">
-                                            <a href="#shoppingCart" data-bs-toggle="modal" class="btn-main-product">Add To cart</a>
-                                        </div>
-                                    </div>
-                                    <div class="card-product-info">
-                                        <a href="product-detail.html" class="title link">iPad Mini 6 8.3 inch Wi-Fi 6-5G64GB</a>
-                                        <div class="box-rating">
-                                            <ul class="list-star">
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                                <li class="icon icon-star"></li>
-                                            </ul>
-                                            <span class="text-caption-1 text-secondary">(1.234)</span>
-                                        </div>
-                                        <span class="price">$69.99</span>
-                                        <div class="box-progress-stock">
-                                            <div class="progress">
-                                                <div class="progress-bar" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                            <div class="stock-status d-flex justify-content-between align-items-center">
-                                                <div class="stock-item text-caption-1">
-                                                    <span class="stock-label text-secondary-2">Available:</span>
-                                                    <span class="stock-value">50</span>
-                                                </div>
-                                                <div class="stock-item text-caption-1">
-                                                    <span class="stock-label text-secondary-2">Sold:</span>
-                                                    <span class="stock-value">50</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="sw-pagination-latest sw-dots type-circle justify-content-center"></div>
-                    </div>
-                </div>
+                @endforeach
+
+                {{-- Quick View Modal Show
+                @include('frontend.include.product_quick_view') --}}
             </div>
         </div>
     </div>
@@ -2688,5 +1516,168 @@
 
 
 @push('add-js')
+<script>
+     
+     $(document).ready(function () {
+        $('.quickview').click(function (e) {
+            e.preventDefault(); // Prevent default behavior if necessary
+            var id = $(this).data('id'); // Use `data-id` attribute
 
+            $.ajax({
+                type: "GET",
+                url: "{{ route('cart.quick.view') }}",
+                data: { id: id }, // Pass `id` as a key-value pair
+                success: function (res) {
+                    // console.log(res); // Handle response
+                    var product = res.product;
+
+                    $('#product_id').val(`${product.id}`);
+                    $('#thumb_image').html(res.main_image);
+                    $('#category_name').text(`${product.cat_name}`);
+                    $('#product_name').text(`${product.name}`);
+                    $('#sold_product').text(`${product.product_sold}`);
+                    $('.tf-product-info-price').html(res.price_val);
+                    $('#short_desc').text(`${product.short_description}`);
+                    $('#product_view').text(`${product.product_view}`);
+                    $('.total_price').text('$' + res.product_price);
+
+                    var imagesHtml = '';
+
+                    // Loop through the images array
+                    res.multi_images.forEach(function (image) {
+                        imagesHtml += `
+                            <div class="quickView-item item-scroll-quickview" data-scroll-quickview="beige">
+                                <img class="lazyload" data-src="${image}" src="${image}" alt="">
+                            </div>
+                        `;
+                    });
+
+                    $('.multiple_image').html(imagesHtml);
+
+
+                    if (res.product_color && res.product_color.length > 0) {
+                         var colorsHtml = '';
+
+                        // Loop through the product_color array
+                        res.product_color.forEach(function (color, index) {
+                            colorsHtml += `
+                                <div class="">
+                                    <input id="color${color.id}" type="radio" data-price="${color.color_price}" name="color_id" value="${color.id}" ${index === 0 ? 'checked' : ''}>
+                                    <label class="hover-tooltip tooltip-bot radius-60 color-btn btn-scroll-quickview color_show ${index === 0 ? 'active' : ''}" 
+                                        data-slide="0" 
+                                        data-price="${color.color_price || ''}" 
+                                        for="color${color.id}" 
+                                        data-value="${color.color_name}" 
+                                        data-scroll-quickview="${color.color_name.toLowerCase()}"
+                                        >
+                                        <span class="btn-checkbox" style="background-color:${color.color_code || ''}"></span>
+                                        <span class="tooltip">${color.color_name} ( TK ${color.color_price} )</span>
+                                    </label>
+                                </div>
+                            `;
+                        });
+
+                        $('#color_variant').html(colorsHtml);
+
+                        // Dynamically set the first color name in the text-title span
+                        var firstColor = res.product_color[0]; // Get the first color
+                        $('.text-title.color_variant').text(firstColor.color_name);
+                    } else {
+                        $('#color_variant').html('<p>No colors available for this product.</p>');
+                        $('.text-title.color_variant').text('No Color');
+                    }
+
+
+
+                    if (res.product_sizes && res.product_sizes.length > 0) {
+                        var sizesHtml = '';
+
+                        // Loop through the product_sizes array
+                        res.product_sizes.forEach(function (size, index) {
+                            sizesHtml += `
+                                <div class="">
+                                    <input type="radio" name="size_id" data-price="${size.size_price}" id="size${size.id}" value="${size.id}" ${index === 0 ? 'checked' : ''}>
+                                    <label class="hover-tooltip tooltip-bot style-text size-btn for="size${size.id}" data-value="${size.size_name.toUpperCase()}" data-size-price="${size.size_price}">
+                                        <span class="text-title">${size.size_name.toUpperCase()}</span>
+                                    </label>
+                                </div>
+                            `;
+                        });
+
+                        // Update the size container
+                        $('#size_variant').html(sizesHtml);
+
+                        // Dynamically set the first size name in the text-title span
+                        var firstSize = res.product_sizes[0]; // Get the first size
+                        $('.text-title.size_variant').text(firstSize.size_name.toUpperCase());
+                    } else {
+                        $('#size_variant').html('<p>No sizes available for this product.</p>');
+                        $('.text-title.size_variant').text('No Size');
+                    }
+                    
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+        });
+
+        // For color select
+        $(document).on('click', '.color_show', function () {
+            var radioId = $(this).attr('for');
+            var $radioInput = $('#' + radioId);
+
+            if ($radioInput.length) {
+                $radioInput.prop('checked', true);
+
+                var colorName = $(this).attr('data-value');
+                $('.color_variant').text(colorName);
+
+                $('.color_show').removeClass('active');
+                $(this).addClass('active');
+            }
+        });
+
+        // For size select
+        $(document).on('click', '.size-btn', function () {
+            var radioInput = $(this).prev('input[type="radio"]');
+            radioInput.prop('checked', true);
+
+            var selectedSize = $(this).data('value');
+            $('.size_variant').text(selectedSize);
+
+            $('.size-btn').removeClass('active');
+            $(this).addClass('active');
+        });
+
+
+
+        $('.add-to-cart-form').on('submit', function(e) {
+            e.preventDefault(); 
+
+            // Get the value of the clicked button
+            const clickedButton = $('button[type="submit"]:focus');
+            const buttonValue = clickedButton.val(); // 'add_cart' or 'buy_now'
+
+            let formData = $(this).serialize() + '&button_value=' + buttonValue;
+
+            $.ajax({
+                method: 'POST',
+                data: formData,
+                url: "{{ route('add.cart') }}",
+                success: function(data) {
+                    // Handle success
+                    console.log('Product added to cart:', data);
+                    toastr.success('Product added to cart!');
+                },
+                error: function(data) {
+                    // Handle error
+                    // console.log('Error adding product to cart:', data);
+                    toastr.error('Failed to add product to cart.');
+                },
+            });
+        });
+    });
+
+</script>
 @endpush

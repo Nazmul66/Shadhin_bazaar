@@ -19,6 +19,7 @@
                                 </div>
                             </div>
                         </div>
+                        
                         <div class="list-cart-item">
                             <div class="image">
                                 <img class="lazyload" data-src="{{ asset('public/frontend/images/products/womens/women-2.jpg') }}" src="{{ asset('public/frontend/images/products/womens/women-2.jpg') }}" alt="">

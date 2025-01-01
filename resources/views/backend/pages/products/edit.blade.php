@@ -186,7 +186,7 @@
                     </div>
     
                     <div class="col-md-4 mb-3 discount_value d-none">
-                        <label class="form-label" for="discount_value">Discount Value</label>
+                        <label class="form-label" for="discount_value">Discount Value <span class="text-danger">*</span></label>
                         <input class="form-control" type="number" id="discount_value" name="discount_value" value="{{ old('discount_value', $product->discount_value ?? 0) }}"  placeholder="Discount Value....">
 
                         <span id="long_validate" class="text-danger mt-1">
@@ -205,8 +205,8 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-4 mb-3">
-                        <label class="form-label" for="offer_start_date">Offer Start Date</label>
+                    <div class="col-md-4 mb-3 offer_start_value d-none">
+                        <label class="form-label" for="offer_start_date">Offer Start Date <span class="text-danger">*</span></label>
                         <input class="form-control offer_start_date" type="date" id="offer_start_date" name="offer_start_date" placeholder="Select a date...." value="{{ old('offer_start_date', $product->offer_start_date) }}">
 
                         <span id="offer_start_validate" class="text-danger mt-2">
@@ -214,8 +214,8 @@
                         </span>
                     </div>
     
-                    <div class="col-md-4 mb-3">
-                        <label class="form-label" for="offer_end_date">Offer End Date</label>
+                    <div class="col-md-4 mb-3 offer_end_value d-none">
+                        <label class="form-label" for="offer_end_date">Offer End Date <span class="text-danger">*</span></label>
                         <input class="form-control offer_end_date" type="date" id="offer_end_date" name="offer_end_date" value="{{ old('offer_end_date', $product->offer_end_date) }}" placeholder="Select a date....">
 
                         <span id="offer_end_validate" class="text-danger mt-2">
@@ -349,22 +349,28 @@
         }
 
         $(document).ready(function () {
-            function toggleDiscountValueDiv() {
+            function toggleDiscountDivs() {
                 const selectedValue = $('#discount_type').val();
 
                 if (selectedValue === 'amount' || selectedValue === 'percent') {
-                    $('.discount_value').removeClass('d-none'); // Show the discount_value div
+                    // Show all related divs
+                    $('.discount_value').removeClass('d-none'); // Show discount value div (if it exists)
+                    $('.offer_start_value').removeClass('d-none'); // Show offer start date div
+                    $('.offer_end_value').removeClass('d-none'); // Show offer end date div
                 } else {
-                    $('.discount_value').addClass('d-none'); // Hide the discount_value div
+                    // Hide all related divs
+                    $('.discount_value').addClass('d-none');
+                    $('.offer_start_value').addClass('d-none');
+                    $('.offer_end_value').addClass('d-none');
                 }
             }
 
             // Initial check on page load
-            toggleDiscountValueDiv();
+            toggleDiscountDivs();
 
             // Event listener for changes to #discount_type
             $('#discount_type').on('change', function () {
-                toggleDiscountValueDiv();
+                toggleDiscountDivs();
             });
 
             // Flatpicker Plugin
@@ -417,125 +423,150 @@
                     console.error(error);
                 });
 
-            //____ category_id Select2 ____//
-            $('#category_id').select2({
-                templateResult: formatState,       
-                templateSelection: formatState, 
+            // Initialize Select2 for category, subcategory, and child category
+            initializeSelect2();
+
+            // Automatically populate subcategories and child categories if category/subcategory is pre-selected
+            const selectedCategoryId = "{{ old('category_id', $product->category_id ?? '') }}";
+            if (selectedCategoryId) {
+                populateSubCategories(selectedCategoryId, "{{ old('subCategory_id', $product->subCategory_id ?? '') }}");
+            }
+
+            const selectedSubCategoryId = "{{ old('subCategory_id', $product->subCategory_id ?? '') }}";
+            if (selectedSubCategoryId) {
+                populateChildCategories(selectedSubCategoryId, "{{ old('childCategory_id', $product->childCategory_id ?? '') }}");
+            }
+
+            // Handle category change event
+            $(document).on('change', '.category_id', function () {
+                const category_id = $(this).val();
+                populateSubCategories(category_id); // Fetch subcategories
+                clearChildCategories(); // Clear child categories since subcategory has changed
             });
 
-            //____ subCategory_id Select2 ____//
-            $('#subCategory_id').select2({
-                templateResult: formatState,
-                templateSelection: formatState,
-            });
-
-            //____ childCategory_id Select2 ____//
-            $('#childCategory_id').select2({
-                templateResult: formatState,
-                templateSelection: formatState,
-            });
-
-            //____ childCategory_id Select2 ____//
-            $('#brand_id').select2({
-                // dropdownParent: $('#createModal'),
-                templateResult: formatState,
-                templateSelection: formatState,
-            });
-
-            function formatState (state) {
-                if (!state.id) {
-                    return state.text; // Return text for disabled option
+            // Handle subcategory change event
+            $(document).on('change', '.subCategory_id', function () {
+                const subCategory_id = $(this).val();
+                if (subCategory_id) {
+                    populateChildCategories(subCategory_id); // Fetch child categories
+                } else {
+                    clearChildCategories(); // Clear child categories if no subcategory is selected
                 }
+            });
 
-                var imageUrl = $(state.element).data('image-url'); // Access image URL from data attribute
-
-                if (!imageUrl) {
-                    return state.text; // Return text if no image URL is available
-                }
-
-                var $state = $(
-                    '<span><img src="' + imageUrl + '" style="width: 35px; height: 30px; margin-right: 8px;" /> ' + state.text + '</span>'
-                );
-                return $state;
-            };
-
-
-            // Fetching subcategory information
-            $(document).on('input', '.category_id', function(){
-                var category_id = $(this).val();
-                // console.log(category_id);
-
+            // Function to populate subcategories
+            function populateSubCategories(category_id, selectedSubCategoryId = null) {
                 $.ajax({
                     type: "POST",
                     url: "{{ route('admin.get.product.subCategory.data') }}",
-                    data: {
-                        id: category_id
-                    },
+                    data: { id: category_id },
                     success: function (res) {
-                        console.log(res.data);
-                        if (res.status) {
-                            // Clear any previous subcategory options
-                            $('.subCategory_id').empty();
-                            // Add default "Select" option
-                            $('.subCategory_id').append('<option value="" disabled selected>Select</option>');
-
-                            // Append new subcategories with images
+                        if (res.status && res.data.length > 0) {
+                            // Populate subcategory dropdown
+                            $('.subCategory_id').empty().append('<option value="" disabled selected>Select</option>');
                             $.each(res.data, function (key, subCategory) {
-                                var option = '<option value="' + subCategory.id + '" data-image-url="' + subCategory.image_url + '">' + subCategory.subcategory_name + '</option>';
-                                $('.subCategory_id').append(option);
+                                $('.subCategory_id').append(
+                                    `<option value="${subCategory.id}" data-image-url="${subCategory.image_url}">${subCategory.subcategory_name}</option>`
+                                );
                             });
 
-                            // Trigger select2 to reinitialize so the images appear
+                            // Reinitialize Select2 and set selected subcategory if applicable
                             $('#subCategory_id').select2({
                                 templateResult: formatState,
                                 templateSelection: formatState,
                             });
+
+                            if (selectedSubCategoryId) {
+                                $('.subCategory_id').val(selectedSubCategoryId).trigger('change');
+                            }
+                        } else {
+                            clearSubCategories(); // Clear if no subcategories exist
+                            clearChildCategories(); // Clear child categories too
                         }
                     },
                     error: function (err) {
-                        console.log(err);
-                    }
-                })
-            })
+                        console.error(err);
+                    },
+                });
+            }
 
-            // Fetching Child-subcategory information
-            $(document).on('input', '.subCategory_id', function(){
-                var subCategory_id = $(this).val();
-                // console.log(category_id);
-
+            // Function to populate child categories
+            function populateChildCategories(subCategory_id, selectedChildCategoryId = null) {
                 $.ajax({
                     type: "POST",
                     url: "{{ route('admin.get.product.childCategory.data') }}",
-                    data: {
-                        id: subCategory_id
-                    },
+                    data: { id: subCategory_id },
                     success: function (res) {
-                        console.log(res.data);
-                        if (res.status) {
-                            // Clear any previous subcategory options
-                            $('.childCategory_id').empty();
-                            // Add default "Select" option
-                            $('.childCategory_id').append('<option value="" disabled selected>Select</option>');
-
-                            // Append new subcategories with images
+                        if (res.status && res.data.length > 0) {
+                            // Populate child category dropdown
+                            $('.childCategory_id').empty().append('<option value="" disabled selected>Select</option>');
                             $.each(res.data, function (key, childCategory) {
-                                var option = '<option value="' + childCategory.id + '" data-image-url="' + childCategory.image_url + '">' + childCategory.name + '</option>';
-                                $('.childCategory_id').append(option);
+                                $('.childCategory_id').append(
+                                    `<option value="${childCategory.id}" data-image-url="${childCategory.image_url}">${childCategory.name}</option>`
+                                );
                             });
 
-
-                            // Trigger select2 to reinitialize so the images appear
+                            // Reinitialize Select2 and set selected child category if applicable
                             $('#childCategory_id').select2({
                                 templateResult: formatState,
                                 templateSelection: formatState,
                             });
+
+                            if (selectedChildCategoryId) {
+                                $('.childCategory_id').val(selectedChildCategoryId).trigger('change');
+                            }
+                        } else {
+                            clearChildCategories(); // Clear if no child categories exist
                         }
                     },
                     error: function (err) {
-                        console.log(err);
-                    }
-                })
-            });
+                        console.error(err);
+                    },
+                });
+            }
+
+            // Function to clear subcategories
+            function clearSubCategories() {
+                $('.subCategory_id').empty().append('<option value="" disabled selected>Select</option>');
+                $('#subCategory_id').select2({
+                    templateResult: formatState,
+                    templateSelection: formatState,
+                });
+            }
+
+            // Function to clear child categories
+            function clearChildCategories() {
+                $('.childCategory_id').empty().append('<option value="" disabled selected>Select</option>');
+                $('#childCategory_id').select2({
+                    templateResult: formatState,
+                    templateSelection: formatState,
+                });
+            }
+
+            // Function to initialize Select2
+            function initializeSelect2() {
+                $('#category_id, #subCategory_id, #childCategory_id').select2({
+                    templateResult: formatState,
+                    templateSelection: formatState,
+                });
+            }
+
+            // Function for formatting select2 options
+            function formatState(state) {
+                if (!state.id) {
+                    return state.text; // Return text for placeholder option
+                }
+
+                const imageUrl = $(state.element).data('image-url'); // Access image URL from data attribute
+                if (!imageUrl) {
+                    return state.text; // Return text if no image URL is available
+                }
+
+                return $(
+                    `<span><img src="${imageUrl}" style="width: 35px; height: 30px; margin-right: 8px;" /> ${state.text}</span>`
+                );
+            }
+
 
     });
     </script>

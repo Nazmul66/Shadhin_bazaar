@@ -88,8 +88,12 @@ class ProductController extends Controller
             })
             ->addColumn('product_details', function ($product) {
                 return '<div class="">
-                       <h6>Product Name : <span class="badge bg-success">'. $product->name .'</span></h6> 
-                       <h6>Product Quantity : <span class="badge bg-success">'. $product->qty .'</span></h6>
+                       <h6><span class="text-dark">'. $product->name .'</span></h6> 
+                </div>';
+            })
+            ->addColumn('quantity', function ($product) {
+                return '<div class="">
+                       <h6><span class="text-dark">'. $product->qty .' Pcs</span></h6>
                 </div>';
             })
             ->addColumn('status', function ($product) {
@@ -127,7 +131,7 @@ class ProductController extends Controller
                 </div>';
             })
 
-            ->rawColumns(['categorized', 'special_featured', 'product_details', 'product_img', 'status', 'action'])
+            ->rawColumns(['categorized', 'quantity', 'special_featured', 'product_details', 'product_img', 'status', 'action'])
             ->make(true);
     }
 
@@ -162,7 +166,7 @@ class ProductController extends Controller
             $product->name                      = $request->name;
             $product->slug                      = Str::slug($request->name);
             $product->sku                       = $request->sku;
-            $product->barcode                   = time() . rand(1000, 99999);
+            $product->barcode                   = 730 . rand(100000000, 999999999);
             $product->vender_id                 = 1;  // Note 1=admin, 2=vendor
             $product->category_id               = $request->category_id;
             $product->subCategory_id            = $request->subCategory_id;
@@ -245,8 +249,8 @@ class ProductController extends Controller
             $product->name                      = $request->name;
             $product->slug                      = Str::slug($request->name);
             $product->sku                       = $request->sku;
-            $product->barcode                   = 730 . rand(100000000, 999999999);
-            $product->vender_id                 = 1;  // Note 1=admin, 2=vendor
+            // $product->barcode                   = 730 . rand(100000000, 999999999);
+            // $product->vender_id                 = 1;  // Note 1=admin, 2=vendor
             $product->category_id               = $request->category_id;
             $product->subCategory_id            = $request->subCategory_id;
             $product->childCategory_id          = $request->childCategory_id;
@@ -258,9 +262,11 @@ class ProductController extends Controller
             $product->selling_price             = $request->selling_price;
             $product->discount_type             = $request->discount_type;
             if( $request->discount_type === "none" ){
-                $product->discount_value            = null;
+                $product->discount_value        = null;
             }
-            $product->discount_value            = $request->discount_value;
+            else{
+                $product->discount_value        = $request->discount_value;
+            }
             $product->offer_start_date          = $request->offer_start_date;
             $product->offer_end_date            = $request->offer_end_date;
             $product->short_description         = $request->short_description;
@@ -410,6 +416,7 @@ class ProductController extends Controller
                     $productColor->product_id     = $id;
                     $productColor->color_name     = $colorName;
                     $productColor->color_price    = $request->color_price[$row];
+                    $productColor->color_code     = $request->color_code[$row];
                     $productColor->save();
                 }
             }

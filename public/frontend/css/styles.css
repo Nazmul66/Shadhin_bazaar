@@ -4294,6 +4294,8 @@ footer.has-pb {
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 100%;
+    border: none;
     padding: 14px 15px;
     border-radius: 999px;
     background-color: var(--primary);
@@ -4303,6 +4305,7 @@ footer.has-pb {
 
 .btn-style-3:hover {
     background-color: var(--main);
+    color: var(--white);
 }
 
 .btn-style-4 {
@@ -17839,4 +17842,12 @@ ul.list-text.type-number {
     }
 }
 
+/* .buy_now_btn{
+    width: 100%;
+    border: none;
+    transition: all 0.3s ease-in-out;
+}
+.buy_now_btn:hover{
+    color: #FFF;
+} */
 /*# sourceMappingURL=styles.css.map */

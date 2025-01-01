@@ -53,7 +53,7 @@
                             </div>
     
                             <div class="">
-                                <label for="thumb_image" class="form-label">Product Image <sup class="text-danger" style="font-size: 12px;">* resolution (520 x 680)</sup></label>
+                                <label for="thumb_image" class="form-label">Product Image <sup class="text-danger" style="font-size: 12px;">* resolution (600px x 800px)</sup></label>
                                 <input type="file" class="form-control" name="thumb_image" id="thumb_image" accept=".png, .jpeg, .jpg, .webp" onchange="previewImage(event)">
                             </div>
                         </div>
@@ -188,7 +188,7 @@
                     </div>
     
                     <div class="col-md-4 mb-3 discount_value d-none">
-                        <label class="form-label" for="discount_value">Discount Value</label>
+                        <label class="form-label" for="discount_value">Discount Value <span class="text-danger">*</span></label>
                         <input class="form-control" type="number" id="discount_value" name="discount_value" value="{{ old('discount_value') }}"  placeholder="Discount Value....">
 
                         <span id="long_validate" class="text-danger mt-1">
@@ -207,8 +207,8 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-4 mb-3">
-                        <label class="form-label" for="offer_start_date">Offer Start Date</label>
+                    <div class="col-md-4 mb-3 offer_start_value d-none">
+                        <label class="form-label" for="offer_start_date">Offer Start Date <span class="text-danger">*</span></label>
                         <input class="form-control offer_start_date" type="date" id="offer_start_date" name="offer_start_date" placeholder="Select a date...." value="{{ old('offer_start_date') }}">
 
                         <span id="offer_start_validate" class="text-danger mt-2">
@@ -216,8 +216,8 @@
                         </span>
                     </div>
     
-                    <div class="col-md-4 mb-3">
-                        <label class="form-label" for="offer_end_date">Offer End Date</label>
+                    <div class="col-md-4 mb-3 offer_end_value d-none">
+                        <label class="form-label" for="offer_end_date">Offer End Date <span class="text-danger">*</span></label>
                         <input class="form-control offer_end_date" type="date" id="offer_end_date" name="offer_end_date" value="{{ old('offer_end_date') }}" placeholder="Select a date....">
 
                         <span id="offer_end_validate" class="text-danger mt-2">
@@ -351,23 +351,30 @@
         }
 
         $(document).ready(function () {
-            function toggleDiscountValueDiv() {
+            function toggleDiscountDivs() {
                 const selectedValue = $('#discount_type').val();
 
                 if (selectedValue === 'amount' || selectedValue === 'percent') {
-                    $('.discount_value').removeClass('d-none'); // Show the discount_value div
+                    // Show all related divs
+                    $('.discount_value').removeClass('d-none'); // Show discount value div (if it exists)
+                    $('.offer_start_value').removeClass('d-none'); // Show offer start date div
+                    $('.offer_end_value').removeClass('d-none'); // Show offer end date div
                 } else {
-                    $('.discount_value').addClass('d-none'); // Hide the discount_value div
+                    // Hide all related divs
+                    $('.discount_value').addClass('d-none');
+                    $('.offer_start_value').addClass('d-none');
+                    $('.offer_end_value').addClass('d-none');
                 }
             }
 
             // Initial check on page load
-            toggleDiscountValueDiv();
+            toggleDiscountDivs();
 
             // Event listener for changes to #discount_type
             $('#discount_type').on('change', function () {
-                toggleDiscountValueDiv();
+                toggleDiscountDivs();
             });
+
 
             // Flatpicker Plugin
             $(".offer_start_date").flatpickr({
@@ -462,11 +469,8 @@
             };
 
 
-            // Fetching subcategory information
-            $(document).on('input', '.category_id', function(){
-                var category_id = $(this).val();
-                // console.log(category_id);
-
+            // Function to fetch subcategories based on category ID
+            function fetchSubCategories(category_id) {
                 $.ajax({
                     type: "POST",
                     url: "{{ route('admin.get.product.subCategory.data') }}",
@@ -474,7 +478,6 @@
                         id: category_id
                     },
                     success: function (res) {
-                        console.log(res.data);
                         if (res.status) {
                             // Clear any previous subcategory options
                             $('.subCategory_id').empty();
@@ -487,24 +490,27 @@
                                 $('.subCategory_id').append(option);
                             });
 
-                            // Trigger select2 to reinitialize so the images appear
+                            // Reinitialize select2 to show images
                             $('#subCategory_id').select2({
                                 templateResult: formatState,
                                 templateSelection: formatState,
                             });
+
+                            // If old data exists for subCategory_id, trigger change event to fetch child categories
+                            const oldSubCategoryId = "{{ old('subCategory_id', $product->subCategory_id ?? '') }}";
+                            if (oldSubCategoryId) {
+                                $('.subCategory_id').val(oldSubCategoryId).trigger('change');
+                            }
                         }
                     },
                     error: function (err) {
                         console.log(err);
                     }
-                })
-            })
+                });
+            }
 
-            // Fetching Child-subcategory information
-            $(document).on('input', '.subCategory_id', function(){
-                var subCategory_id = $(this).val();
-                // console.log(category_id);
-
+            // Function to fetch child subcategories based on subCategory ID
+            function fetchChildCategories(subCategory_id) {
                 $.ajax({
                     type: "POST",
                     url: "{{ route('admin.get.product.childCategory.data') }}",
@@ -512,33 +518,58 @@
                         id: subCategory_id
                     },
                     success: function (res) {
-                        console.log(res.data);
                         if (res.status) {
-                            // Clear any previous subcategory options
+                            // Clear any previous child category options
                             $('.childCategory_id').empty();
                             // Add default "Select" option
                             $('.childCategory_id').append('<option value="" disabled selected>Select</option>');
 
-                            // Append new subcategories with images
+                            // Append new child categories with images
                             $.each(res.data, function (key, childCategory) {
                                 var option = '<option value="' + childCategory.id + '" data-image-url="' + childCategory.image_url + '">' + childCategory.name + '</option>';
                                 $('.childCategory_id').append(option);
                             });
 
-
-                            // Trigger select2 to reinitialize so the images appear
+                            // Reinitialize select2 to show images
                             $('#childCategory_id').select2({
                                 templateResult: formatState,
                                 templateSelection: formatState,
                             });
+
+                            // Set old child category if exists
+                            const oldChildCategoryId = "{{ old('childCategory_id', $product->childCategory_id ?? '') }}";
+                            if (oldChildCategoryId) {
+                                $('.childCategory_id').val(oldChildCategoryId);
+                            }
                         }
                     },
                     error: function (err) {
                         console.log(err);
                     }
-                })
+                });
+            }
+
+            // Event listener for category selection
+            $(document).on('change', '.category_id', function () {
+                const category_id = $(this).val();
+                if (category_id) {
+                    fetchSubCategories(category_id);
+                }
             });
 
+            // Event listener for subcategory selection
+            $(document).on('change', '.subCategory_id', function () {
+                const subCategory_id = $(this).val();
+                if (subCategory_id) {
+                    fetchChildCategories(subCategory_id);
+                }
+            });
+
+            // On page load, check if old category_id exists and fetch its subcategories
+            const oldCategoryId = "{{ old('category_id', $product->category_id ?? '') }}";
+            if (oldCategoryId) {
+                $('.category_id').val(oldCategoryId).trigger('change');
+            }
     });
     </script>
 @endpush

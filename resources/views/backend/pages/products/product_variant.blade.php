@@ -134,7 +134,8 @@
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <th>Color</th>
+                                        <th>Color Name</th>
+                                        <th>Color Code</th>
                                         <th>Price ($)</th>
                                         <th>Action</th>
                                     </tr>
@@ -145,6 +146,9 @@
                                         <tr data-value="{{ $row }}">
                                             <td>
                                                 <input type="text" class="form-control" value="{{ $item->color_name }}" name="color_name[]" readonly required>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" value="{{ $item->color_code }}" name="color_code[]" readonly required>
                                             </td>
                                             <td>
                                                 <input type="text" class="form-control" value="{{ $item->color_price }}" name="color_price[]" required>
@@ -158,11 +162,11 @@
 
                                 <tfoot>
                                     <tr>
-                                        <th colspan="3">
+                                        <th colspan="4">
                                             <select class="form-select" id="product_color">
                                                 <option value="" disabled selected>Select Product Color</option>
                                                 @foreach ($color_value as $item)
-                                                    <option value="{{ $item->value }}">{{ $item->value }}</option>
+                                                    <option value="{{ $item->value }}"  data-color-code="{{ $item->color_value }}">{{ $item->value }}</option>
                                                 @endforeach
                                             </select>
                                         </th>
@@ -331,63 +335,73 @@ $(document).ready(function() {
 
 
 <script>
-    $(document).ready(function() {
-        // Disable already selected colors on page load
-        @foreach($productColors as $item)
-            var selectedColor = "{{ $item->color_name }}";
-            var optionColor = $('#product_color').find('option[value="' + selectedColor + '"]');
-            optionColor.prop('disabled', true);  // Disable the option in Select2
-        @endforeach
-    
-        // Initialize Select2 plugin for color dropdown
+$(document).ready(function() {
+    // Disable already selected colors on page load
+    @foreach($productColors as $item)
+        var selectedColor = "{{ $item->color_name }}";
+        var selectedColorCode = "{{ $item->color_code }}";
+        var optionColor = $('#product_color').find('option[value="' + selectedColor + '"]');
+        optionColor.prop('disabled', true);  // Disable the option in Select2
+        var optionColorCode = $('#product_color').find('option[value="' + selectedColorCode + '"]');
+        optionColorCode.prop('disabled', true);  // Disable the option in Select2
+    @endforeach
+
+    // Initialize Select2 plugin for color dropdown
+    $('#product_color').select2();
+
+    // When a new value is selected in product color
+    $('#product_color').on('select2:select', function (e) {
+        var selectedColorValue = e.params.data.id; // Get the selected value (ID)
+
+        // Get the corresponding color_code for the selected color_name
+        var selectedColorCode = $('#product_color').find('option[value="' + selectedColorValue + '"]').data('color-code');
+
+        // Disable the selected option in the dropdown
+        var optionColor = $('#product_color').find('option[value="' + selectedColorValue + '"]');
+        optionColor.prop('disabled', true);
+
+        // Trigger the Select2 to refresh the dropdown options
         $('#product_color').select2();
-    
-        // When a new value is selected in product color
-        $('#product_color').on('select2:select', function (e) {
-            var selectedColorValue = e.params.data.id; // Get the selected value (ID)
-    
-            // Disable the selected option in the dropdown
-            var optionColor = $('#product_color').find('option[value="' + selectedColorValue + '"]');
-            optionColor.prop('disabled', true);
-    
-            // Trigger the Select2 to refresh the dropdown options
-            $('#product_color').select2();
-    
-            // Append the new color row to the table
-            $('.color_table_extend').append(`
-                <tr data-value="${selectedColorValue}">
-                    <td>
-                        <input type="text" class="form-control" value="${selectedColorValue}" name="color_name[]" readonly >
-                    </td>
-                    <td>
-                        <input type="text" class="form-control" value="0" name="color_price[]" required>
-                    </td>
-                    <td>
-                        <button type="button" class="btn btn-danger">Remove</button>
-                    </td>
-                </tr>
-            `);
-    
-            // Reset the select dropdown after a value is appended
-            $('#product_color').val('').trigger('change');
-        });
-    
-        // Handle removal of a row and re-enable the option in product color
-        $(document).on('click', '.btn-danger', function() {
-            var row = $(this).closest('tr');  // Find the closest row (tr)
-            var removedColorValue = row.data('value'); // Get the value from the row
-    
-            // Re-enable the option in the select dropdown
-            var optionColor = $('#product_color').find('option[value="' + removedColorValue + '"]');
-            optionColor.prop('disabled', false);
-    
-            // Refresh the select2 dropdown to reflect the changes
-            $('#product_color').select2();
-    
-            // Remove the row from the table
-            row.remove();
-        });
+
+        // Append the new color row to the table with editable color_code and color_name
+        $('.color_table_extend').append(`
+            <tr data-value="${selectedColorValue}">
+                <td>
+                    <input type="text" class="form-control" value="${selectedColorValue}" name="color_name[]" readonly>
+                </td>
+                <td>
+                    <input type="text" class="form-control" value="${selectedColorCode}" name="color_code[]" readonly required> 
+                </td>
+                <td>
+                    <input type="text" class="form-control" value="0" name="color_price[]" required>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-danger">Remove</button>
+                </td>
+            </tr>
+        `);
+
+        // Reset the select dropdown after a value is appended
+        $('#product_color').val('').trigger('change');
     });
+
+    // Handle removal of a row and re-enable the option in product color
+    $(document).on('click', '.btn-danger', function() {
+        var row = $(this).closest('tr');  // Find the closest row (tr)
+        var removedColorValue = row.data('value'); // Get the value from the row
+
+        // Re-enable the option in the select dropdown
+        var optionColor = $('#product_color').find('option[value="' + removedColorValue + '"]');
+        optionColor.prop('disabled', false);
+
+        // Refresh the select2 dropdown to reflect the changes
+        $('#product_color').select2();
+
+        // Remove the row from the table
+        row.remove();
+    });
+});
+
 </script>
 
 

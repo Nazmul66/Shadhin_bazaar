@@ -7,6 +7,7 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\FlashSale;
 use App\Models\FlashSaleItem;
+use App\Models\Product;
 use App\Models\Slider;
 use Illuminate\Http\Request;
 
@@ -22,6 +23,7 @@ class HomeController extends Controller
         $data['brands']         = Brand::where('status', 1)->get();
         $data['flashSaleDate']  = FlashSale::first();
         $data['flashSaleItems'] = FlashSaleItem::where('show_at_home', 1)->where('status', 1)->get();
+        $data['products']       = Product::where('is_approved', 1)->where('status', 1)->get();
 
         return view('frontend.pages.home', $data);
     }
