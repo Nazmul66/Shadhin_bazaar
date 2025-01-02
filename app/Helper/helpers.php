@@ -3,6 +3,7 @@
   //__ Set Sidebar Item Active __// 
 
 use App\Models\Setting;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -31,9 +32,11 @@ use Illuminate\Support\Facades\DB;
   //__ Check discount for products __//  
   function checkDiscount($product)
   {
-      $current_date = date('Y-m-d');
+    $current_date = Carbon::now()->format('Y-m-d');
+    $offer_start_date = Carbon::parse($product->offer_start_date)->format('Y-m-d');
+    $offer_end_date = Carbon::parse($product->offer_end_date)->format('Y-m-d');
 
-      if( $product->offer_price > 0 && $current_date >= $product->offer_start_date  && $current_date <= $product->offer_end_date){
+      if( $product->purchase_price > 0 && $current_date >= $offer_start_date  && $current_date <= $offer_end_date){
         return true;
       }
       return false;

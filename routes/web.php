@@ -43,7 +43,7 @@ use App\Http\Controllers\Frontend\AjaxCallController;
 
 
     Route::get('/cart-quick-view', [AjaxCallController::class, "cartQuickView"])->name('cart.quick.view');
-    Route::post('/add-cart', [AjaxCallController::class, "addCart"])->name('add.cart');
+
 
 
     //__ Flash Sales __//
@@ -57,12 +57,13 @@ use App\Http\Controllers\Frontend\AjaxCallController;
     Route::get('/get-cart-data', [ProductController::class, 'getCart'])->name('get.cart.data');
     
     //__ Carts __//
-    Route::get('/cart', [CartController::class, 'cart_view'])->name('show-cart');
-    Route::post('/update-cart-quantity', [CartController::class, 'update_cart_quantity'])->name('update.cart.quantity');
-    Route::post('/cart/delete-item', [CartController::class, 'deleteCartItem'])->name('delete.cart.item');
-    Route::post('/clear-cart', [CartController::class, 'clearCart'])->name('clear.cart');
-    Route::get('/get-sidebar-cart', [CartController::class, 'get_sidebar_cart'])->name('get.sidebar.cart');
-    Route::get('/get-main-cart', [CartController::class, 'get_main_cart'])->name('get.main.cart');
+    Route::post('/add-cart', [CartController::class, "addCart"])->name('add.cart');
+    // Route::get('/cart', [CartController::class, 'cart_view'])->name('show-cart');
+    // Route::post('/update-cart-quantity', [CartController::class, 'update_cart_quantity'])->name('update.cart.quantity');
+    // Route::post('/cart/delete-item', [CartController::class, 'deleteCartItem'])->name('delete.cart.item');
+    // Route::post('/clear-cart', [CartController::class, 'clearCart'])->name('clear.cart');
+    // Route::get('/get-sidebar-cart', [CartController::class, 'get_sidebar_cart'])->name('get.sidebar.cart');
+    // Route::get('/get-main-cart', [CartController::class, 'get_main_cart'])->name('get.main.cart');
 
 
     //__ Coupon __//

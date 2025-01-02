@@ -87,7 +87,7 @@
                                 <div class="variant-picker-values" id="color_variant">
                                     <div class="">
                                         <input id="values-beige1" type="radio" name="color2" checked>
-                                        <label class="hover-tooltip tooltip-bot radius-60 color-btn btn-scroll-quickview color_show active" 
+                                        <label class="hover-tooltip tooltip-bot radius-60 color-btn color_show active" 
                                             data-slide="0" 
                                             data-price="79.99" 
                                             for="values-beige1" 
@@ -100,7 +100,7 @@
                                     </div>
     
                                     {{-- <input id="values-gray1" type="radio" name="color2">
-                                    <label class="hover-tooltip tooltip-bot radius-60 color-btn btn-scroll-quickview" data-slide="1" data-price="79.99" for="values-gray1" data-value="Gray" data-scroll-quickview="gray">
+                                    <label class="hover-tooltip tooltip-bot radius-60 color-btn " data-slide="1" data-price="79.99" for="values-gray1" data-value="Gray" data-scroll-quickview="gray">
                                         <span class="btn-checkbox bg-color-gray"></span>
                                         <span class="tooltip">Gray</span>
                                     </label>
@@ -147,14 +147,14 @@
                                 <div class="title mb_12">Quantity:</div>
                                 <div class="wg-quantity">
                                     <span class="btn-quantity btn-decrease">-</span>
-                                    <input class="quantity-product" type="text" name="qty" value="1">
+                                    <input class="quantity-product" id="modal_qty" type="text" name="qty" value="1">
                                     <span class="btn-quantity btn-increase">+</span>
                                 </div>
                             </div>
     
                             <div class="mt-3">
                                 <div class="tf-product-info-by-btn mb_10">
-                                    <button type="submit" name="button" value="add_cart" class="btn-style-2 flex-grow-1 text-btn-uppercase fw-6 show-shopping-cart">
+                                    <button type="submit" name="button" value="add_cart" class="btn-style-2 flex-grow-1 text-btn-uppercase fw-6 ">
                                         <span>Add to cart</span>
                                         {{-- <span class="tf-qty-price total_price">$79.99</span> --}}
                                     </button>

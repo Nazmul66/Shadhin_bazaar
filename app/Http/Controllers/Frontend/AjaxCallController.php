@@ -44,42 +44,48 @@ class AjaxCallController extends Controller
         }
 
         $price_val = '';
-        if ($product->discount_type === 'amount') {
-            $discounted_price = $product->selling_price - $product->discount_value;
-        
+        if( checkDiscount($product) ){
+            if ($product->discount_type === 'amount') {
+                $discounted_price = $product->selling_price - $product->discount_value;
+            
+                $price_val = '
+                    <h5 class="price-on-sale font-2">$' . number_format($discounted_price, 2) . '</h5>
+                    <div class="compare-at-price font-2">$' . number_format($product->selling_price, 2) . '</div>
+                    <div class="badges-on-sale text-btn-uppercase">
+                        -' . $product->discount_value. '$
+                    </div>';
+            } elseif ($product->discount_type === 'percent') {
+                $discounted_price = $product->selling_price - ($product->selling_price * $product->discount_value / 100);
+            
+                $price_val = '
+                    <h5 class="price-on-sale font-2">$' . number_format($discounted_price, 2) . '</h5>
+                    <div class="compare-at-price font-2">$' . number_format($product->selling_price, 2) . '</div>
+                    <div class="badges-on-sale text-btn-uppercase">
+                        -' . $product->discount_value. '%
+                    </div>';
+            } else {
+                $price_val = '
+                    <h5 class="price-on-sale font-2">$' . number_format($product->selling_price, 2) . '</h5>';
+            }
+        }
+        else{
             $price_val = '
-                <h5 class="price-on-sale font-2">$' . number_format($discounted_price, 2) . '</h5>
-                <div class="compare-at-price font-2">$' . number_format($product->selling_price, 2) . '</div>
-                <div class="badges-on-sale text-btn-uppercase">
-                    -' . $product->discount_value. '$
-                </div>';
-        } elseif ($product->discount_type === 'percent') {
-            $discounted_price = $product->selling_price - ($product->selling_price * $product->discount_value / 100);
-        
-            $price_val = '
-                <h5 class="price-on-sale font-2">$' . number_format($discounted_price, 2) . '</h5>
-                <div class="compare-at-price font-2">$' . number_format($product->selling_price, 2) . '</div>
-                <div class="badges-on-sale text-btn-uppercase">
-                    -' . $product->discount_value. '%
-                </div>';
-        } else {
-            $price_val = '
-                <h5 class="price-on-sale font-2">$' . number_format($product->selling_price, 2) . '</h5>';
+                    <h5 class="price-on-sale font-2">$' . number_format($product->selling_price, 2) . '</h5>';
         }
 
 
-        $product_price = '';
-        if ($product->discount_type === 'amount') {
-            $discounted_price = $product->selling_price - $product->discount_value;
+        // $product_price = '';
+        // if ($product->discount_type === 'amount') {
+        //     $discounted_price = $product->selling_price - $product->discount_value;
         
-            $product_price = $discounted_price;
-        } elseif ($product->discount_type === 'percent') {
-            $discounted_price = $product->selling_price - ($product->selling_price * $product->discount_value / 100);
+        //     $product_price = $discounted_price;
+        // } elseif ($product->discount_type === 'percent') {
+        //     $discounted_price = $product->selling_price - ($product->selling_price * $product->discount_value / 100);
         
-            $product_price = $discounted_price;
-        } else {
-            $product_price = $product->selling_price;
-        }
+        //     $product_price = $discounted_price;
+        // } else {
+        //     $product_price = $product->selling_price;
+        // }
 
 
         $productSizes = collect($product_size);
@@ -100,12 +106,9 @@ class AjaxCallController extends Controller
             'product_sizes' => $product_sizes,
             'product_color' => $product_color,
             'price_val' => $price_val,
-            'product_price' => $product_price,
+            // 'product_price' => $product_price,
         ]);
     }
 
-    public function addCart(Request $request)
-    {
-        dd($request->all());
-    }
+
 }
