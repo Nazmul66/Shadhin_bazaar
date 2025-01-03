@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
-use App\Models\Cart;
 use App\Models\Product;
 use App\Models\ProductColor;
 use App\Models\ProductSize;
 use Carbon\Carbon;
+use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -17,7 +17,8 @@ class CartController extends Controller
 
     public function cart_view()
     {
-        return view('frontend.pages.product_pages.cart_view');
+        $data['cartItems']  =  Cart::content();
+        return view('frontend.pages.product_pages.cart_view', $data);
     }
 
     public function addCart(Request $request)
@@ -47,7 +48,7 @@ class CartController extends Controller
         $cartData = [];
         $cartData['id']                     = $product->id;
         $cartData['name']                   = $product->name;
-        $cartData['qty']                    = $product->qty;
+        $cartData['qty']                    = $request->qty;
         $cartData['price']                  = $productPrice;
         $cartData['weight']                 = 10;
         $cartData['options']['size_id']     = $product_size->id;
@@ -60,15 +61,20 @@ class CartController extends Controller
         $cartData['options']['image']       = $product->thumb_image;
         $cartData['options']['image']       = $product->thumb_image;
 
-        dd($cartData);
-
-
+        // dd($cartData);
+        Cart::add($cartData);
 
         return response()->json([
            'status' => true,
+           'button_value' => $request->button_value,
         ]);
     }
 
+    public function cartDestroy()
+    {
+        Cart::destroy();
+        return redirect()->back();
+    }
 
 
 

@@ -23,8 +23,6 @@ use App\Http\Controllers\Frontend\AjaxCallController;
 //     return view('frontend.pages.home');
 // });
 
-
-
     Route::get('/', [HomeController::class, "home"])->name('home');
     Route::get('/about-us', [HomeController::class, "about_us"])->name('about.us');
     Route::get('/contact-us', [HomeController::class, "contact_us"])->name('contact.us');
@@ -45,7 +43,6 @@ use App\Http\Controllers\Frontend\AjaxCallController;
     Route::get('/cart-quick-view', [AjaxCallController::class, "cartQuickView"])->name('cart.quick.view');
 
 
-
     //__ Flash Sales __//
     Route::get('/flash-sale', [FlashSaleController::class, "index"])->name('flash.sale');
 
@@ -57,8 +54,9 @@ use App\Http\Controllers\Frontend\AjaxCallController;
     Route::get('/get-cart-data', [ProductController::class, 'getCart'])->name('get.cart.data');
     
     //__ Carts __//
+    Route::get('/cart', [CartController::class, 'cart_view'])->name('show-cart');
     Route::post('/add-cart', [CartController::class, "addCart"])->name('add.cart');
-    // Route::get('/cart', [CartController::class, 'cart_view'])->name('show-cart');
+    Route::get('/cart-destroy', [CartController::class, "cartDestroy"])->name('cart.destroy');
     // Route::post('/update-cart-quantity', [CartController::class, 'update_cart_quantity'])->name('update.cart.quantity');
     // Route::post('/cart/delete-item', [CartController::class, 'deleteCartItem'])->name('delete.cart.item');
     // Route::post('/clear-cart', [CartController::class, 'clearCart'])->name('clear.cart');

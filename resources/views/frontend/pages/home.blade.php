@@ -1681,11 +1681,15 @@
                         console.log('Product added to cart:', data);
                         toastr.success('Product added to cart!');
 
-                        // Add the 'show-shopping-cart' class to the clicked button
-                        clickedButton.addClass('show-shopping-cart');
-
-                        // Show the modal
-                        $('#shoppingCart').modal('show');
+                        if( data.button_value === "buy_now" ){
+                            window.location.href = "{{ url('/checkout') }}";
+                        }
+                        else{
+                            // Add the 'show-shopping-cart' class to the clicked button
+                            clickedButton.addClass('show-shopping-cart');
+                            // Show the modal
+                            $('#shoppingCart').modal('show');
+                        }
                     }
                 },
                 error: function(data) {
@@ -1694,6 +1698,11 @@
                     toastr.error('Failed to add product to cart.');
                 },
             });
+        });
+
+
+        $('.quick_view_cart').on('click', function() {
+            $('.show-shopping-cart').removeClass('show-shopping-cart');
         });
     });
 

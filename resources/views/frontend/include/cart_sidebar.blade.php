@@ -93,42 +93,66 @@
                     </div>
                 </div>
             </div>
+
+            
             <div class="d-flex flex-column flex-grow-1 h-100">
                 <div class="header">
                     <h5 class="title">Shopping Cart</h5>
-                    <span class="icon-close icon-close-popup" data-bs-dismiss="modal"></span>
+                    {{-- <span class="icon-close icon-close-popup" data-bs-dismiss="modal"></span> --}}
+                    <i class='bx bx-x icon-close-popup' style="font-size: 32px;" data-bs-dismiss="modal"></i>
                 </div>
+
                 <div class="wrap">
                     <div class="tf-mini-cart-threshold">
                         <div class="tf-progress-bar">
                             <div class="value" style="width: 0%;" data-progress="75">
-                                <i class="icon icon-shipping"></i>
+                               <i class='icon bx bxs-truck'></i>
                             </div>
                         </div>
                         <div class="text-caption-1">
                             Congratulations! You've got free shipping!
                         </div>
                     </div>
+
                     <div class="tf-mini-cart-wrap">
                         <div class="tf-mini-cart-main">
                             <div class="tf-mini-cart-sroll">
                                 <div class="tf-mini-cart-items">
-                                    <div class="tf-mini-cart-item file-delete">
-                                        <div class="tf-mini-cart-image">
-                                            <img class="lazyload" data-src="{{ asset('public/frontend/images/products/womens/women-19.jpg') }}" src="{{ asset('public/frontend/images/products/womens/women-19.jpg') }}" alt="">
-                                        </div>
-                                        <div class="tf-mini-cart-info flex-grow-1">
-                                            <div class="mb_12 d-flex align-items-center justify-content-between flex-wrap gap-12">
-                                                <div class="text-title"><a href="product-detail.html" class="link text-line-clamp-1">Contrasting sheepskin</a></div>
-                                                <div class="text-button tf-btn-remove remove">Remove</div>
+
+                                    @forelse (Gloudemans\Shoppingcart\Facades\Cart::content() as $row)
+                                        @php
+                                            $totalPrice = ($row->price + ($row->options->size_price ?? 0) + ($row->options->color_price ?? 0)) * $row->qty;
+                                        @endphp
+
+                                        <div class="tf-mini-cart-item file-delete">
+                                            <div class="tf-mini-cart-image">
+                                                <img class="lazyload" data-src="{{ asset($row->options->image) }}" src="{{ asset($row->options->image) }}" alt="{{ $row->options->slug }}">
                                             </div>
-                                            <div class="d-flex align-items-center justify-content-between flex-wrap gap-12">
-                                                <div class="text-secondary-2">XL/Blue</div>
-                                                <div class="text-button">1 X $60.00</div>
+                                            <div class="tf-mini-cart-info flex-grow-1">
+
+                                                <div class="mb_12 d-flex align-items-center justify-content-between de-flex gap-12">
+                                                    <div class="text-title"><a href="{{ route('product.details', $row->options->slug) }}" class="link text-line-clamp-1">{{ $row->name }}</a></div>
+                                                    <div class="text-button tf-btn-remove remove">Remove</div>
+                                                </div>
+
+                                                <div class="d-flex align-items-center justify-content-between de-flex gap-12">
+                                                    <div class="text-secondary-2">{{ strtoupper($row->options->size_name) }} ( ${{ $row->options->size_price }} ) / {{ trans($row->options->color_name) }} ( ${{ $row->options->color_price }} )</div>
+                                                    <div class="text-button">{{ $row->qty }} X ${{ $row->price }}</div>
+                                                </div>
+
+                                                <div class="d-flex align-items-center justify-content-between de-flex gap-12">
+                                                    <div class="text-secondary-2">Amount</div>
+                                                    <div class="text-button">${{ $totalPrice }}</div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="tf-mini-cart-item file-delete">
+                                    @empty
+                                        <div class="alert alert-danger text-center" role="alert">
+                                            <a href="{{ route('checkout') }}" class="tf-btn btn-reset">Continue Shopping</a>
+                                        </div>
+                                    @endforelse
+
+                                    {{-- <div class="tf-mini-cart-item file-delete">
                                         <div class="tf-mini-cart-image">
                                             <img class="lazyload" data-src="{{ asset('public/frontend/images/products/womens/women-1.jpg') }}" src="{{ asset('public/frontend/images/products/womens/women-1.jpg') }}" alt="">
                                         </div>
@@ -143,6 +167,7 @@
                                             </div>
                                         </div>
                                     </div>
+
                                     <div class="tf-mini-cart-item file-delete">
                                         <div class="tf-mini-cart-image">
                                             <img class="lazyload" data-src="{{ asset('public/frontend/images/products/womens/women-2.jpg') }}" src="{{ asset('public/frontend/images/products/womens/women-2.jpg') }}" alt="">
@@ -158,6 +183,7 @@
                                             </div>
                                         </div>
                                     </div>
+
                                     <div class="tf-mini-cart-item file-delete">
                                         <div class="tf-mini-cart-image">
                                             <img class="lazyload" data-src="{{ asset('public/frontend/images/products/womens/women-3.jpg') }}" src="{{ asset('public/frontend/images/products/womens/women-3.jpg') }}" alt="">
@@ -173,6 +199,7 @@
                                             </div>
                                         </div>
                                     </div>
+
                                     <div class="tf-mini-cart-item file-delete">
                                         <div class="tf-mini-cart-image">
                                             <img class="lazyload" data-src="{{ asset('public/frontend/images/products/womens/women-4.jpg') }}" src="{{ asset('public/frontend/images/products/womens/women-4.jpg') }}" alt="">
@@ -187,14 +214,14 @@
                                                 <div class="text-button">1 X $60.00</div>
                                             </div>
                                         </div>
-                                    </div>
-
+                                    </div> --}}
 
                                 </div>
                             </div>
                         </div>
+
                         <div class="tf-mini-cart-bottom">
-                            <div class="tf-mini-cart-tool">
+                            {{-- <div class="tf-mini-cart-tool">
                                 <div class="tf-mini-cart-tool-btn btn-add-note">
                                     <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <g clip-path="url(#clip0_6133_36620)">
@@ -225,7 +252,8 @@
                                     </svg>
                                     <div class="text-caption-1">Coupon</div>
                                 </div>
-                            </div>
+                            </div> --}}
+
                             <div class="tf-mini-cart-bottom-wrap">
                                 <div class="tf-cart-totals-discounts">
                                     <h5>Subtotal</h5>
@@ -244,15 +272,16 @@
                                     </label>
                                 </div>
                                 <div class="tf-mini-cart-view-checkout">
-                                    <a href="shopping-cart.html" class="tf-btn w-100 btn-white radius-4 has-border"><span class="text">View cart</span></a>
-                                    <a href="shopping-cart.html" class="tf-btn w-100 btn-fill radius-4"><span class="text">Check Out</span></a>
+                                    <a href="{{ route('show-cart') }}" class="tf-btn w-100 btn-white radius-4 has-border"><span class="text">View cart</span></a>
+                                    <a href="{{ route('checkout') }}" class="tf-btn w-100 btn-fill radius-4"><span class="text">Check Out</span></a>
                                 </div>
                                 <div class="text-center">
                                     <a class="link text-btn-uppercase" href="shop-default-grid.html">Or continue shopping</a>
                                 </div>
                             </div>
                         </div>
-                        <div class="tf-mini-cart-tool-openable add-note">
+
+                        {{-- <div class="tf-mini-cart-tool-openable add-note">
                             <div class="tf-mini-cart-tool-content">
                                 <label for="Cart-note" class="tf-mini-cart-tool-text">
                                     <span class="icon">
@@ -281,6 +310,7 @@
                                 </form>
                             </div>
                         </div>
+
                         <div class="tf-mini-cart-tool-openable estimate-shipping">
                             <div class="tf-mini-cart-tool-content">
                                 <label class="tf-mini-cart-tool-text">
@@ -356,6 +386,7 @@
                                 </form>
                             </div>
                         </div>
+
                         <div class="tf-mini-cart-tool-openable add-coupon">
                             <div class="tf-mini-cart-tool-content">
                                 <label class="tf-mini-cart-tool-text">
@@ -385,7 +416,7 @@
                                     </div>
                                 </form>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>

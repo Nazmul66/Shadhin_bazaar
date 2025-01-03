@@ -2,39 +2,37 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="tf-quick-view-image">
-                <div class="wrap-quick-view wrapper-scroll-quickview">
+                <div class="wrap-quick-view wrapper-scroll-quickview multiple_image">
                     <div class="quickView-item item-scroll-quickview" id="thumb_image" data-scroll-quickview="beige">
                         <img class="lazyload" data-src="{{ asset('public/frontend/images/products/womens/women-1.jpg') }}" src="{{ asset('public/frontend/images/products/womens/women-1.jpg') }}" alt="">
                     </div>
 
-                   <div class="multiple_image">
-                        <div class="quickView-item item-scroll-quickview" data-scroll-quickview="beige">
-                            <img class="lazyload" data-src="{{ asset('public/frontend/images/products/womens/women-2.jpg') }}" src="{{ asset('public/frontend/images/products/womens/women-2.jpg') }}" alt="">
-                        </div>
+                    <div class="quickView-item item-scroll-quickview" data-scroll-quickview="beige">
+                        <img class="lazyload" data-src="{{ asset('public/frontend/images/products/womens/women-2.jpg') }}" src="{{ asset('public/frontend/images/products/womens/women-2.jpg') }}" alt="">
+                    </div>
 
-                        <div class="quickView-item item-scroll-quickview" data-scroll-quickview="gray">
-                            <img class="lazyload" data-src="{{ asset('public/frontend/images/products/womens/women-3.jpg') }}" src="{{ asset('public/frontend/images/products/womens/women-3.jpg') }}" alt="">
-                        </div>
+                    <div class="quickView-item item-scroll-quickview" data-scroll-quickview="gray">
+                        <img class="lazyload" data-src="{{ asset('public/frontend/images/products/womens/women-3.jpg') }}" src="{{ asset('public/frontend/images/products/womens/women-3.jpg') }}" alt="">
+                    </div>
 
-                        <div class="quickView-item item-scroll-quickview" data-scroll-quickview="gray">
-                            <img class="lazyload" data-src="{{ asset('public/frontend/images/products/womens/women-4.jpg') }}" src="{{ asset('public/frontend/images/products/womens/women-4.jpg') }}" alt="">
-                        </div>
+                    <div class="quickView-item item-scroll-quickview" data-scroll-quickview="gray">
+                        <img class="lazyload" data-src="{{ asset('public/frontend/images/products/womens/women-4.jpg') }}" src="{{ asset('public/frontend/images/products/womens/women-4.jpg') }}" alt="">
+                    </div>
 
-                        <div class="quickView-item item-scroll-quickview" data-scroll-quickview="grey">
-                            <img class="lazyload" data-src="{{ asset('public/frontend/images/products/womens/women-19.jpg') }}" src="{{ asset('public/frontend/images/products/womens/women-19.jpg') }}" alt="">
-                        </div>
+                    <div class="quickView-item item-scroll-quickview" data-scroll-quickview="grey">
+                        <img class="lazyload" data-src="{{ asset('public/frontend/images/products/womens/women-19.jpg') }}" src="{{ asset('public/frontend/images/products/womens/women-19.jpg') }}" alt="">
+                    </div>
 
-                        <div class="quickView-item item-scroll-quickview" data-scroll-quickview="grey">
-                            <img class="lazyload" data-src="{{ asset('public/frontend/images/products/womens/women-20.jpg') }}" src="{{ asset('public/frontend/images/products/womens/women-20.jpg') }}" alt="">
-                        </div>
-                   </div>
+                    <div class="quickView-item item-scroll-quickview" data-scroll-quickview="grey">
+                        <img class="lazyload" data-src="{{ asset('public/frontend/images/products/womens/women-20.jpg') }}" src="{{ asset('public/frontend/images/products/womens/women-20.jpg') }}" alt="">
+                    </div>
                 </div>
             </div>
             
             <div class="wrap">
                 <div class="header">
                     <h5 class="title">Quick View</h5>
-                    <i class='bx bx-x icon-close-popup' style="font-size: 32px;" data-bs-dismiss="modal"></i>
+                    <i class='bx bx-x icon-close-popup quick_view_cart' style="font-size: 32px;" data-bs-dismiss="modal"></i>
                 </div>
                 <div class="tf-product-info-list">
                     <div class="tf-product-info-heading">
@@ -86,7 +84,7 @@
                                 </div>
                                 <div class="variant-picker-values" id="color_variant">
                                     <div class="">
-                                        <input id="values-beige1" type="radio" name="color2" checked>
+                                        <input id="values-beige1" type="radio" name="color_id" checked>
                                         <label class="hover-tooltip tooltip-bot radius-60 color-btn color_show active" 
                                             data-slide="0" 
                                             data-price="79.99" 

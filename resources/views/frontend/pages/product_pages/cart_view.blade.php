@@ -25,6 +25,7 @@
     </div>
 </div>
 <!-- /page-title -->
+
 <!-- Section cart -->
 <section class="flat-spacing">
     <div class="container">
@@ -32,7 +33,7 @@
             <div class="col-xl-8">
                 <div class="tf-cart-sold">
                     <div class="notification-sold bg-surface">
-                        <img class="icon" src="images/logo/icon-fire.png" alt="img">
+                        <img class="icon" src="{{ asset('public/frontend/images/logo/icon-fire.png') }}" alt="img">
                         <div class="count-text">Your cart will expire in
                             <div class="js-countdown time-count" data-timer="600" data-labels=":,:,:,"></div> minutes! Please checkout now before your items sell out!</div>
                     </div>
@@ -57,54 +58,78 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="tf-cart-item file-delete">
-                                <td class="tf-cart-item_product">
-                                    <a href="product-detail.html" class="img-box">
-                                        <img src="images/products/womens/women-19.jpg" alt="product">
-                                    </a>
-                                    <div class="cart-info">
-                                        <a href="product-detail.html" class="cart-title link">V-neck cotton T-shirt</a>
-                                        <div class="variant-box">
-                                            <div class="tf-select">
-                                                <select>
-                                                    <option selected="selected">Blue</option>
-                                                    <option>Black</option>
-                                                    <option>White</option>
-                                                    <option>Red</option>
-                                                    <option>Beige</option>
-                                                    <option>Pink</option>
-                                                </select>
-                                            </div>
-                                            <div class="tf-select">
-                                                <select>
-                                                    <option selected="selected">XL</option>
-                                                    <option>XS</option>
-                                                    <option>S</option>
-                                                    <option>M</option>
-                                                    <option>L</option>
-                                                    <option>XL</option>
-                                                    <option>2XL</option>
-                                                </select>
+
+                            @forelse ($cartItems as $row)
+
+                            @php
+                                $totalPrice = ($row->price + ($row->options->size_price ?? 0) + ($row->options->color_price ?? 0)) * $row->qty;
+                            @endphp
+                                <tr class="tf-cart-item file-delete">
+                                    <td class="tf-cart-item_product">
+                                        <a href="{{ route('product.details', $row->options->slug) }}" class="img-box">
+                                            <img src="{{ asset($row->options->image) }}" alt="{{ $row->options->slug }}">
+                                        </a>
+                                        <div class="cart-info">
+                                            <a href="{{ route('product.details', $row->options->slug) }}" class="cart-title link">{{ $row->name }}</a>
+                                            <div class="variant-box">
+                                                <div class="tf-select">
+                                                    <div class="product_variant">
+                                                        Color : {{ trans($row->options->color_name) }} ( ${{ $row->options->color_price }} )
+                                                    </div>
+                                                    {{-- <select>
+                                                        <option selected="selected">Blue</option>
+                                                        <option>Black</option>
+                                                        <option>White</option>
+                                                        <option>Red</option>
+                                                        <option>Beige</option>
+                                                        <option>Pink</option>
+                                                    </select> --}}
+                                                </div>
+                                                <div class="tf-select">
+                                                    <div class="product_variant">
+                                                        Size : {{ strtoupper($row->options->size_name) }} ( ${{ $row->options->size_price }} )
+                                                    </div>
+                                                    {{-- <select>
+                                                        <option selected="selected">XL</option>
+                                                        <option>XS</option>
+                                                        <option>S</option>
+                                                        <option>M</option>
+                                                        <option>L</option>
+                                                        <option>XL</option>
+                                                        <option>2XL</option>
+                                                    </select> --}}
+                                                </div>
                                             </div>
                                         </div>
+                                    </td>
+                                    <td data-cart-title="Price" class="tf-cart-item_price text-center">
+                                        <div class="cart_price text-button price_on_sale">${{ $row->price }}</div>
+                                    </td>
+                                    <td data-cart-title="Quantity" class="tf-cart-item_quantity">
+                                        <div class="wg-quantity mx-md-auto">
+                                            <span class="btn-quantity btn-decrease">-</span>
+                                            <input type="text" class="quantity-product" name="number" value="{{ $row->qty }}">
+                                            <span class="btn-quantity btn-increase">+</span>
+                                        </div>
+                                    </td>
+                                    <td data-cart-title="Total" class="tf-cart-item_total text-center">
+                                        <div class="cart_total text-button total_price">${{ $totalPrice }}</div>
+                                    </td>
+                                    <td data-cart-title="Remove" class="remove-cart">
+                                        {{-- <span class="remove icon icon-close"></span> --}}
+                                        <i class='icon bx bx-x icon-close-popup' style="font-size: 20px;"></i>
+                                    </td>
+                                </tr>
+                            @empty
+                            <tr>
+                                <td colspan="5">
+                                    <div class="alert alert-danger text-center" role="alert">
+                                        <a href="{{ route('checkout') }}" class="tf-btn btn-reset">Continue Shopping</a>
                                     </div>
                                 </td>
-                                <td data-cart-title="Price" class="tf-cart-item_price text-center">
-                                    <div class="cart-price text-button price-on-sale">$60.00</div>
-                                </td>
-                                <td data-cart-title="Quantity" class="tf-cart-item_quantity">
-                                    <div class="wg-quantity mx-md-auto">
-                                        <span class="btn-quantity btn-decrease">-</span>
-                                        <input type="text" class="quantity-product" name="number" value="1">
-                                        <span class="btn-quantity btn-increase">+</span>
-                                    </div>
-                                </td>
-                                <td data-cart-title="Total" class="tf-cart-item_total text-center">
-                                    <div class="cart-total text-button total-price">$60.00</div>
-                                </td>
-                                <td data-cart-title="Remove" class="remove-cart"><span class="remove icon icon-close"></span></td>
                             </tr>
-                            <tr class="tf-cart-item file-delete">
+                            @endforelse
+                            {{-- <tr class="tf-cart-item file-delete">
                                 <td class="tf-cart-item_product">
                                     <a href="product-detail.html" class="img-box">
                                         <img src="images/products/womens/women-1.jpg" alt="product">
@@ -151,6 +176,7 @@
                                 </td>
                                 <td data-cart-title="Remove" class="remove-cart"><span class="remove icon icon-close"></span></td>
                             </tr>
+
                             <tr class="tf-cart-item file-delete">
                                 <td class="tf-cart-item_product">
                                     <a href="product-detail.html" class="img-box">
@@ -197,7 +223,7 @@
                                     <div class="cart-total text-button total-price">$129.00</div>
                                 </td>
                                 <td data-cart-title="Remove" class="remove-cart"><span class="remove icon icon-close"></span></td>
-                            </tr>
+                            </tr> --}}
                         </tbody>
                     </table>
                     <div class="ip-discount-code">
@@ -302,7 +328,7 @@
                                     I agree with the <a href="term-of-use.html">terms and conditions</a>
                                 </label>
                             </fieldset>
-                            <a href="checkout.html" class="tf-btn btn-reset">Process To Checkout</a>
+                            <a href="{{ route('checkout') }}" class="tf-btn btn-reset">Process To Checkout</a>
                             <p class="text-button text-center">Or continue shopping</p>
                         </div>
                     </div>
@@ -312,6 +338,7 @@
     </div>
 </section>
 <!-- /Section cart -->
+
 <!-- Recent product -->
 <section class="flat-spacing pt-0">
     <div class="container">

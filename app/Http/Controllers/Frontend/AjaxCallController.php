@@ -43,6 +43,11 @@ class AjaxCallController extends Controller
             }
         }
 
+        // Add $main_image as the first element of $images if it exists
+        if (!empty($main_image)) {
+            array_unshift($images, asset($product->thumb_image));
+        }
+
         $price_val = '';
         if( checkDiscount($product) ){
             if ($product->discount_type === 'amount') {

@@ -4889,16 +4889,16 @@ form .cols>* {
     transition: all 0.3s ease;
 }
 
-.tf-select::after {
+/* .tf-select::after {
     font-family: "icomoon";
     position: absolute;
-    content: "\e935";
+    content: "\0002c5";
     right: 16px;
     top: 50%;
     transform: translateY(-50%);
     font-size: 20px;
     z-index: -1;
-}
+} */
 
 .tf-select:hover select {
     border-color: var(--main);
@@ -12919,7 +12919,7 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
 .tf-cart-item .tf-cart-item_product .variant-box {
     display: grid;
     gap: 8px;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
 }
 
 .tf-cart-item .tf-cart-item_product .tf-select select {
@@ -12929,6 +12929,22 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
     font-size: 16px;
     line-height: 26px;
     font-weight: 600;
+}
+.tf-cart-item .tf-cart-item_product .tf-select .product_variant {
+    min-width: 100px;
+    width: 100%;
+    border-radius: 8px;
+    padding: 5px 12px;
+    font-size: 16px;
+    line-height: 26px;
+    font-weight: 600;
+    appearance: none;
+    border: 2px solid var(--line);
+    background-color: transparent;
+    transition: all 0.3s ease-in-out;
+}
+.tf-cart-item .tf-cart-item_product .tf-select .product_variant:hover{
+    border-color: var(--main);
 }
 
 .tf-cart-item .tf-cart-item_product .tf-select::after {
@@ -17842,12 +17858,14 @@ ul.list-text.type-number {
     }
 }
 
-/* .buy_now_btn{
-    width: 100%;
-    border: none;
-    transition: all 0.3s ease-in-out;
+.de-flex {
+    flex-wrap: nowrap; /* Ensure no wrapping on larger screens */
 }
-.buy_now_btn:hover{
-    color: #FFF;
-} */
+
+/* Mobile and tablet screens */
+@media (max-width: 1024px) {
+    .de-flex {
+        flex-wrap: wrap; /* Enable wrapping for smaller screens */
+    }
+}
 /*# sourceMappingURL=styles.css.map */
