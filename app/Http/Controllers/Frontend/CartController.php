@@ -92,6 +92,17 @@ class CartController extends Controller
         return $totalPrice;
     }
 
+    public function cart_remove_product($rowId)
+    {
+    //    dd($rowId);
+       Cart::remove($rowId);
+
+       return response()->json([
+            'status'  => 'success',
+            'message' => 'Delete Cart item successfully',
+        ]);
+    }
+
     public function clear_cart()
     {
         Cart::destroy();

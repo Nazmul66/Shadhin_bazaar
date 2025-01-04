@@ -67,7 +67,7 @@
                                     $totalPrice = ($row->price + ($row->options->size_price ?? 0) + ($row->options->color_price ?? 0)) * $row->qty;
                                 @endphp
 
-                                <tr class="tf-cart-item file-delete">
+                                <tr class="tf-cart-item file-delete" id="remove-{{ $row->rowId }}">
                                     <td class="tf-cart-item_product">
                                         <a href="{{ route('product.details', $row->options->slug) }}" class="img-box">
                                             <img src="{{ asset($row->options->image) }}" alt="{{ $row->options->slug }}">
@@ -118,15 +118,15 @@
                                     <td data-cart-title="Total" class="tf-cart-item_total text-center">
                                         <div id="{{ $row->rowId }}" class="cart_total text-button total_price">${{ $totalPrice }}</div>
                                     </td>
-                                    <td class="remove-cart remove_item_alignemnt">
-                                        {{-- <span class="remove icon icon-close"></span> --}}
-                                        <i class='icon bx bx-x icon-close-popup' style="font-size: 20px;"></i>
+                                    <td class="remove-cart remove_item_alignemnt" id="remove_cart">
+                                        <i class='icon bx bx-x icon-close-popup remove_product_cart' style="font-size: 20px;" data-id="{{ $row->rowId }}"></i>
                                     </td>
                                 </tr>
                             @empty
                             <tr>
                                 <td colspan="5">
                                     <div class="alert alert-danger text-center" role="alert">
+                                        <p class="mb-3">There is no cart item</p>
                                         <a href="{{ route('checkout') }}" class="tf-btn btn-reset">Continue Shopping</a>
                                     </div>
                                 </td>
@@ -518,37 +518,6 @@
 <script>
     $(document).ready(function(){
         //__ Product Quantity Increament __//
-        $('.product-decrease').on('click', function(){
-            let input = $(this).siblings('.product_quantity');
-            let rowId = input.data('row_id');
-            let quantity = parseInt(input.val()) || 0;
-            quantity -= 1; 
-            input.val(quantity); 
-            console.log(rowId);
-
-            $.ajax({
-                url: "{{ route('cart.update.quantity') }}",
-                method: 'POST',
-                data: {
-                    quantity : quantity,
-                    rowId    : rowId,
-                },
-                success: function(data) {
-                    console.log(data);
-                    if( data.status === 'success' ){ 
-                        let productId = '#' + rowId;
-                        $(productId).text('$' + data.productTotal);
-                        toastr.success(data.message);
-                    }
-                },
-                error: function(err) {
-                    console.log(err);
-                },
-            })
-        })
-
-
-        //__ Product Quantity Decrement __//
         $('.product-increase').on('click', function(){
             let input = $(this).siblings('.product_quantity');
             let rowId = input.data('row_id');
@@ -578,18 +547,56 @@
             })
         })
 
-
-        //__ Clear all Cart data __//
-        $('#clear_cart').on('click', function(e){
-            e.preventDefault();
+        //__ Product Quantity Decrement __//
+        $('.product-decrease').on('click', function(){
+            let input = $(this).siblings('.product_quantity');
+            let rowId = input.data('row_id');
+            let quantity = parseInt(input.val()) || 0;
+            quantity -= 1; 
+            if( quantity < 1 ){
+                quantity = 1
+            }
+            input.val(quantity); 
+            // console.log(rowId);
 
             $.ajax({
-                url: "{{ route('clear.cart') }}",
+                url: "{{ route('cart.update.quantity') }}",
+                method: 'POST',
+                data: {
+                    quantity : quantity,
+                    rowId    : rowId,
+                },
+                success: function(data) {
+                    console.log(data);
+                    if( data.status === 'success' ){ 
+                        let productId = '#' + rowId;
+                        $(productId).text('$' + data.productTotal);
+                        toastr.success(data.message);
+                    }
+                },
+                error: function(err) {
+                    console.log(err);
+                },
+            })
+        })
+
+
+        //__ Single product clear __//
+        $(document).on('click', '.remove_product_cart', function(e) {
+            e.preventDefault();
+            let id = $(this).data('id');    
+            // console.log(id); 
+
+            $.ajax({
+                url: "{{ url('/cart/remove-product') }}/" + id,
                 method: 'GET',
+                dataType: 'json',
+                data: { id: id },
                 success: function(data) {
                     // console.log(data);
                     if( data.status === 'success' ){ 
-                        $('.tf-cart-item').remove();
+                        let singleProductRemove = '#remove-' +id;
+                        $(singleProductRemove).remove();
 
                         // Check if the table is empty and display the message
                         const tableBody = $('#cart-table-body'); // Replace with the actual tbody ID or class
@@ -598,18 +605,72 @@
                                 <tr>
                                     <td colspan="5">
                                         <div class="alert alert-danger text-center" role="alert">
+                                            <p class="mb-3">There is no cart item</p>
                                             <a href="{{ route('checkout') }}" class="tf-btn btn-reset">Continue Shopping</a>
                                         </div>
                                     </td>
                                 </tr>
                             `);
                         }
+
                         toastr.success(data.message);
                     }
                 },
                 error: function(err) {
                     console.log(err);
                 },
+            })
+        })
+
+
+        //__ Clear all Cart data __//
+        $('#clear_cart').on('click', function(e){
+            e.preventDefault();
+
+            swal.fire({
+                title: "Are you sure?",
+                text: "This action will clear your cart!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+            })
+            .then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "{{ route('clear.cart') }}",
+                        method: 'GET',
+                        success: function(data) {
+                            // console.log(data);
+                            if( data.status === 'success' ){ 
+                                $('.tf-cart-item').remove();
+
+                                // Check if the table is empty and display the message
+                                const tableBody = $('#cart-table-body'); // Replace with the actual tbody ID or class
+                                if (tableBody.children('tr.tf-cart-item').length === 0) {
+                                    tableBody.html(`
+                                        <tr>
+                                            <td colspan="5">
+                                                <div class="alert alert-danger text-center" role="alert">
+                                                    <p class="mb-3">There is no cart item</p>
+                                                    <a href="{{ route('checkout') }}" class="tf-btn btn-reset">Continue Shopping</a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    `);
+                                }
+                                toastr.success(data.message);
+                            }
+                            },
+                            error: function(err) {
+                                console.log(err);
+                            },
+                    })
+                } 
+                else {
+                    swal.fire('Your cart data is safe');
+                }
             })
         })
     })
