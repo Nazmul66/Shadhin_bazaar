@@ -1,3 +1,11 @@
+@php
+    $subtotal_cart = 0;
+
+    foreach (Cart::content() as  $product) {
+        $subtotal_cart += ($product->price + ($product->options->size_price ?? 0) + ($product->options->color_price ?? 0)) * $product->qty;
+    }
+@endphp
+
 <div class="modal fullRight fade modal-shopping-cart" id="shoppingCart">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -103,122 +111,48 @@
                 </div>
 
                 <div class="wrap">
-                    <div class="tf-mini-cart-threshold">
-                        <div class="tf-progress-bar">
-                            <div class="value" style="width: 0%;" data-progress="75">
-                               <i class='icon bx bxs-truck'></i>
-                            </div>
-                        </div>
-                        <div class="text-caption-1">
-                            Congratulations! You've got free shipping!
-                        </div>
-                    </div>
-
                     <div class="tf-mini-cart-wrap">
                         <div class="tf-mini-cart-main">
                             <div class="tf-mini-cart-sroll">
-                                <div class="tf-mini-cart-items">
+                                <div class="tf-mini-cart-items" id="cart-sidebar-table-body">
+                                    @if ( Cart::content()->isNotEmpty() )
+                                        @foreach ( Cart::content() as $row )
+                                            @php
+                                                $totalPrice = ($row->price + ($row->options->size_price ?? 0) + ($row->options->color_price ?? 0)) * $row->qty;
+                                            @endphp
 
-                                    @forelse (Gloudemans\Shoppingcart\Facades\Cart::content() as $row)
-                                        @php
-                                            $totalPrice = ($row->price + ($row->options->size_price ?? 0) + ($row->options->color_price ?? 0)) * $row->qty;
-                                        @endphp
+                                            <div class="tf-mini-cart-item file_delete" id="side_remove-{{ $row->rowId }}">
+                                                <div class="tf-mini-cart-image">
+                                                    <img class="lazyload" data-src="{{ asset($row->options->image) }}" src="{{ asset($row->options->image) }}" alt="{{ $row->options->slug }}">
+                                                </div>
+                                                <div class="tf-mini-cart-info flex-grow-1">
+                                                    <div class="mb_12 d-flex align-items-center justify-content-between de-flex gap-12">
+                                                        <div class="text-title"><a href="{{ route('product.details', $row->options->slug) }}" class="link text-line-clamp-1">{{ $row->name }}</a></div>
+                                                        <div class="text-button tf-btn-remove remove side_remove_cart" data-row_id="{{ $row->rowId }}" >Remove</div>
+                                                    </div>
 
-                                        <div class="tf-mini-cart-item file-delete">
-                                            <div class="tf-mini-cart-image">
-                                                <img class="lazyload" data-src="{{ asset($row->options->image) }}" src="{{ asset($row->options->image) }}" alt="{{ $row->options->slug }}">
+                                                    <div class="d-flex align-items-center justify-content-between de-flex gap-12">
+                                                        <div class="text-secondary-2">{{ strtoupper($row->options->size_name) }} ( ${{ $row->options->size_price }} ) / {{ trans($row->options->color_name) }} ( ${{ $row->options->color_price }} )</div>
+                                                        <div class="text-button">{{ $row->qty }} X ${{ $row->price }}</div>
+                                                    </div>
+
+                                                    <div class="d-flex align-items-center justify-content-between de-flex gap-12">
+                                                        <div class="text-secondary-2">Amount</div>
+                                                        <div class="text-button">${{ $totalPrice }}</div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="tf-mini-cart-info flex-grow-1">
-
-                                                <div class="mb_12 d-flex align-items-center justify-content-between de-flex gap-12">
-                                                    <div class="text-title"><a href="{{ route('product.details', $row->options->slug) }}" class="link text-line-clamp-1">{{ $row->name }}</a></div>
-                                                    <div class="text-button tf-btn-remove remove">Remove</div>
-                                                </div>
-
-                                                <div class="d-flex align-items-center justify-content-between de-flex gap-12">
-                                                    <div class="text-secondary-2">{{ strtoupper($row->options->size_name) }} ( ${{ $row->options->size_price }} ) / {{ trans($row->options->color_name) }} ( ${{ $row->options->color_price }} )</div>
-                                                    <div class="text-button">{{ $row->qty }} X ${{ $row->price }}</div>
-                                                </div>
-
-                                                <div class="d-flex align-items-center justify-content-between de-flex gap-12">
-                                                    <div class="text-secondary-2">Amount</div>
-                                                    <div class="text-button">${{ $totalPrice }}</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    @empty
-                                        <div class="alert alert-danger text-center" role="alert">
+                                        @endforeach
+                                    @else
+                                        <div class="alert alert-danger text-center" style="margin: 0 24px;" role="alert">
+                                            <p class="mb-3">No items in the cart. </p>
                                             <a href="{{ route('checkout') }}" class="tf-btn btn-reset">Continue Shopping</a>
                                         </div>
-                                    @endforelse
-
-                                    {{-- <div class="tf-mini-cart-item file-delete">
-                                        <div class="tf-mini-cart-image">
-                                            <img class="lazyload" data-src="{{ asset('public/frontend/images/products/womens/women-1.jpg') }}" src="{{ asset('public/frontend/images/products/womens/women-1.jpg') }}" alt="">
-                                        </div>
-                                        <div class="tf-mini-cart-info flex-grow-1">
-                                            <div class="mb_12 d-flex align-items-center justify-content-between flex-wrap gap-12">
-                                                <div class="text-title"><a href="product-detail.html" class="link text-line-clamp-1">Suede leggings</a></div>
-                                                <div class="text-button tf-btn-remove remove">Remove</div>
-                                            </div>
-                                            <div class="d-flex align-items-center justify-content-between flex-wrap gap-12">
-                                                <div class="text-secondary-2">XL/Blue</div>
-                                                <div class="text-button">1 X $60.00</div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="tf-mini-cart-item file-delete">
-                                        <div class="tf-mini-cart-image">
-                                            <img class="lazyload" data-src="{{ asset('public/frontend/images/products/womens/women-2.jpg') }}" src="{{ asset('public/frontend/images/products/womens/women-2.jpg') }}" alt="">
-                                        </div>
-                                        <div class="tf-mini-cart-info flex-grow-1">
-                                            <div class="mb_12 d-flex align-items-center justify-content-between flex-wrap gap-12">
-                                                <div class="text-title"><a href="product-detail.html" class="link text-line-clamp-1">Faux-leather trousers</a></div>
-                                                <div class="text-button tf-btn-remove remove">Remove</div>
-                                            </div>
-                                            <div class="d-flex align-items-center justify-content-between flex-wrap gap-12">
-                                                <div class="text-secondary-2">XL/Blue</div>
-                                                <div class="text-button">1 X $60.00</div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="tf-mini-cart-item file-delete">
-                                        <div class="tf-mini-cart-image">
-                                            <img class="lazyload" data-src="{{ asset('public/frontend/images/products/womens/women-3.jpg') }}" src="{{ asset('public/frontend/images/products/womens/women-3.jpg') }}" alt="">
-                                        </div>
-                                        <div class="tf-mini-cart-info flex-grow-1">
-                                            <div class="mb_12 d-flex align-items-center justify-content-between flex-wrap gap-12">
-                                                <div class="text-title"><a href="product-detail.html" class="link text-line-clamp-1">Biker-style leggings</a></div>
-                                                <div class="text-button tf-btn-remove remove">Remove</div>
-                                            </div>
-                                            <div class="d-flex align-items-center justify-content-between flex-wrap gap-12">
-                                                <div class="text-secondary-2">XL/Blue</div>
-                                                <div class="text-button">1 X $60.00</div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="tf-mini-cart-item file-delete">
-                                        <div class="tf-mini-cart-image">
-                                            <img class="lazyload" data-src="{{ asset('public/frontend/images/products/womens/women-4.jpg') }}" src="{{ asset('public/frontend/images/products/womens/women-4.jpg') }}" alt="">
-                                        </div>
-                                        <div class="tf-mini-cart-info flex-grow-1">
-                                            <div class="mb_12 d-flex align-items-center justify-content-between flex-wrap gap-12">
-                                                <div class="text-title"><a href="product-detail.html" class="link text-line-clamp-1">Jacquard fluid trousers</a></div>
-                                                <div class="text-button tf-btn-remove remove">Remove</div>
-                                            </div>
-                                            <div class="d-flex align-items-center justify-content-between flex-wrap gap-12">
-                                                <div class="text-secondary-2">XL/Blue</div>
-                                                <div class="text-button">1 X $60.00</div>
-                                            </div>
-                                        </div>
-                                    </div> --}}
-
+                                    @endif     
                                 </div>
                             </div>
                         </div>
+
 
                         <div class="tf-mini-cart-bottom">
                             {{-- <div class="tf-mini-cart-tool">
@@ -257,26 +191,35 @@
                             <div class="tf-mini-cart-bottom-wrap">
                                 <div class="tf-cart-totals-discounts">
                                     <h5>Subtotal</h5>
-                                    <h5 class="tf-totals-total-value">$186,99</h5>
+                                    <h5 class="tf-totals-total-value" id="cart_total_value">${{ $subtotal_cart }}</h5>
                                 </div>
-                                <div class="tf-cart-checkbox">
-                                    <div class="tf-checkbox-wrapp">
-                                        <input class="" type="checkbox" id="CartDrawer-Form_agree" name="agree_checkbox">
-                                        <div>
-                                            <i class="icon-check"></i>
+
+                                <div class="mini-cart-actions">
+                                    @if ( Cart::content()->isNotEmpty() )
+                                        <div id="tf-mini-cart-actions-field">
+                                            <div class="tf-cart-checkbox">
+                                                <div class="tf-checkbox-wrapp">
+                                                    <input class="" type="checkbox" id="CartDrawer-Form_agree" name="agree_checkbox">
+                                                    <div>
+                                                        <i class="icon-check"></i>
+                                                    </div>
+                                                </div>
+                                                <label for="CartDrawer-Form_agree">
+                                                    I agree with 
+                                                    <a href="term-of-use.html" title="Terms of Service">Terms & Conditions</a>
+                                                </label>
+                                            </div>
+
+                                            <div class="tf-mini-cart-view-checkout">
+                                                <a href="{{ route('show-cart') }}" class="tf-btn w-100 btn-white radius-4 has-border"><span class="text">View cart</span></a>
+                                                <a href="{{ route('checkout') }}" class="tf-btn w-100 btn-fill radius-4"><span class="text">Check Out</span></a>
+                                            </div>
+
+                                            <div class="text-center">
+                                                <a class="link text-btn-uppercase" href="shop-default-grid.html">Or continue shopping</a>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <label for="CartDrawer-Form_agree">
-                                        I agree with 
-                                        <a href="term-of-use.html" title="Terms of Service">Terms & Conditions</a>
-                                    </label>
-                                </div>
-                                <div class="tf-mini-cart-view-checkout">
-                                    <a href="{{ route('show-cart') }}" class="tf-btn w-100 btn-white radius-4 has-border"><span class="text">View cart</span></a>
-                                    <a href="{{ route('checkout') }}" class="tf-btn w-100 btn-fill radius-4"><span class="text">Check Out</span></a>
-                                </div>
-                                <div class="text-center">
-                                    <a class="link text-btn-uppercase" href="shop-default-grid.html">Or continue shopping</a>
+                                    @endif
                                 </div>
                             </div>
                         </div>

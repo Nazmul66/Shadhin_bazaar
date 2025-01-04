@@ -26,6 +26,19 @@ class CartController extends Controller
         // dd($request->all());
         $product = Product::findOrFail($request->product_id);
 
+        if( $product->qty ===  0){
+            return response()->json([
+                'status' => "error",
+                'message' => "Product stock out",
+            ]);
+        }
+        elseif( $product->qty < $request->qty ){
+            return response()->json([
+                'status' => "error",
+                'message' => 'Quantity is not available in our stock',
+            ]);
+        }
+
         $product_color = ProductColor::where('product_id', $product->id)->where('id', $request->color_id)->first();
         $product_size  = ProductSize::where('product_id', $product->id)->where('id', $request->size_id)->first();
 
@@ -65,14 +78,60 @@ class CartController extends Controller
         Cart::add($cartData);
 
         return response()->json([
-           'status' => true,
+           'status' => 'success',
+           'message' => 'Product added to cart!',
            'button_value' => $request->button_value,
+        ]);
+    }
+
+    public function get_sidebar_cart()
+    {
+        $cartItems = Cart::content()->map(function ($item) {
+            return [
+                'rowId' => $item->rowId,
+                'name' => $item->name,
+                'qty' => $item->qty,
+                'price' => $item->price,
+                'size_name' => $item->options->size_name ?? null,
+                'size_price' => $item->options->size_price ?? 0,
+                'color_name' => $item->options->color_name ?? null,
+                'color_price' => $item->options->color_price ?? 0,
+                'image' => asset($item->options->image),
+                'slug' => $item->options->slug,
+                'total' => ($item->price + ($item->options->size_price ?? 0) + ($item->options->color_price ?? 0)) * $item->qty,
+            ];
+        })->values()->toArray();
+
+        $isEmpty = Cart::content()->isEmpty(); // Check if the cart is empty
+    
+        return response()->json([
+            'status' => true,
+            'isEmpty' => $isEmpty,
+            'cartItems' => $cartItems,
         ]);
     }
 
     public function updateProductQuantity(Request $request)
     {
         // dd($request->all());
+
+        $productId = Cart::get($request->rowId)->id;
+        $product = Product::findOrFail($productId);
+
+        if( $product->qty ===  0){
+            return response()->json([
+                'status' => "error",
+                'message' => "Product stock out",
+            ]);
+        }
+        elseif( $product->qty < $request->quantity ){
+            return response()->json([
+                'status' => "error",
+                'recent_stock' => $product->qty,
+                'message' => 'Quantity is not available in our stock',
+            ]);
+        }
+
         Cart::update($request->rowId, $request->quantity);
         $productTotal = $this->getProductTotal($request->rowId);
    
@@ -84,13 +143,6 @@ class CartController extends Controller
         ]);
     }
 
-    public function getProductTotal($rowId)
-    {
-        $product = Cart::get($rowId);
-        $totalPrice = ($product->price + ($product->options->size_price ?? 0) + ($product->options->color_price ?? 0)) * $product->qty;
-
-        return $totalPrice;
-    }
 
     public function cart_remove_product($rowId)
     {
@@ -101,6 +153,17 @@ class CartController extends Controller
             'status'  => 'success',
             'message' => 'Delete Cart item successfully',
         ]);
+    }
+
+    public function getTotalCart()
+    {
+       $total = 0;
+
+       foreach( Cart::content() as $product ){
+            $total += $this->getProductTotal($product->rowId);
+       }
+
+       return response()->json(['status' => 'success', 'total' => $total]);
     }
 
     public function cart_count()
@@ -121,6 +184,14 @@ class CartController extends Controller
            'status'  => 'success',
            'message' => 'Cart cleared successfully',
         ]);
+    }
+
+    public function getProductTotal($rowId)
+    {
+        $product = Cart::get($rowId);
+        $totalPrice = ($product->price + ($product->options->size_price ?? 0) + ($product->options->color_price ?? 0)) * $product->qty;
+
+        return $totalPrice;
     }
 
 

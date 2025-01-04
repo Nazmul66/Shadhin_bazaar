@@ -538,7 +538,14 @@
                     if( data.status === 'success' ){ 
                         let productId = '#' + rowId;
                         $(productId).text('$' + data.productTotal);
+                        getSidebarCartTotal();
+                        sidebarCartData();
                         toastr.success(data.message);
+                    }
+                    else if( data.status === 'error' ){
+                        input.val(data.recent_stock);
+                        sidebarCartData();
+                        toastr.error(data.message);
                     }
                 },
                 error: function(err) {
@@ -567,11 +574,16 @@
                     rowId    : rowId,
                 },
                 success: function(data) {
-                    console.log(data);
+                    // console.log(data);
                     if( data.status === 'success' ){ 
                         let productId = '#' + rowId;
                         $(productId).text('$' + data.productTotal);
+                        getSidebarCartTotal();
+                        sidebarCartData();
                         toastr.success(data.message);
+                    }
+                    else if( data.status === 'stock_out' ){
+                        toastr.error(data.message);
                     }
                 },
                 error: function(err) {
@@ -594,25 +606,30 @@
                 success: function(data) {
                     // console.log(data);
                     if( data.status === 'success' ){ 
+                        getSidebarCartTotal();
                         let singleProductRemove = '#remove-' +id;
                         $(singleProductRemove).remove();
 
                         // Check if the table is empty and display the message
-                        const tableBody = $('#cart-table-body'); // Replace with the actual tbody ID or class
+                        const tableBody = $('#cart-table-body');
                         if (tableBody.children('tr.tf-cart-item').length === 0) {
                             tableBody.html(`
                                 <tr>
                                     <td colspan="5">
-                                        <div class="alert alert-danger text-center" role="alert">
-                                            <p class="mb-3">There is no cart item</p>
+                                        <div class="alert alert-danger text-center" role="alert" style="margin: 0 24px;">
+                                            <p class="mb-3">No items in the cart. </p>
                                             <a href="{{ route('checkout') }}" class="tf-btn btn-reset">Continue Shopping</a>
                                         </div>
                                     </td>
                                 </tr>
                             `);
+
+                            $('.tf-mini-cart-threshold').remove();
+                            $('#tf-mini-cart-actions-field').remove();
                         }
-                        
-                        getCartCount();
+
+                        sidebarCartData();
+                        getCartCount(); 
                         toastr.success(data.message);
                     }
                 },
@@ -621,6 +638,189 @@
                 },
             })
         })
+
+
+        //__ Sidebar Single product clear __//
+        $(document).on('click', '.side_remove_cart', function(e) {
+            e.preventDefault();
+            let id = $(this).data('row_id');    
+            // console.log(id); 
+
+            $.ajax({
+                url: "{{ url('/cart/remove-product') }}/" + id,
+                method: 'GET',
+                dataType: 'json',
+                data: { id: id },
+                success: function(data) {
+                    // console.log(data);
+                    if( data.status === 'success' ){ 
+                        getSidebarCartTotal();
+                        let singleProductRemove = '#side_remove-' +id;
+                        $(singleProductRemove).remove();
+
+                        // Check if the table is empty and display the message
+                        const tableBody = $('#cart-sidebar-table-body'); // Replace with the actual tbody ID or class
+                        if (tableBody.children('.tf-mini-cart-item').length === 0) {
+                            tableBody.html(`
+                                <div class="alert alert-danger text-center" role="alert" style="margin: 0 24px;">
+                                    <p class="mb-3">No items in the cart. </p>
+                                    <a href="{{ route('checkout') }}" class="tf-btn btn-reset">Continue Shopping</a>
+                                </div>
+                            `);
+                            $('.tf-mini-cart-threshold').remove();
+                            $('#tf-mini-cart-actions-field').remove();
+                        }
+                        CartPageData();
+                        getCartCount(); 
+                        toastr.success(data.message);
+                    }
+                },
+                error: function(err) {
+                    console.log(err);
+                },
+            })
+        })
+
+
+        // Fetch all cart data from Sidebar
+        function sidebarCartData(){
+            $.ajax({
+                method: 'GET',
+                url: "{{ route('get.sidebar.cart') }}",
+                success: function(response) {
+                    if (response.status === true) {
+                        let cartHtml = '';
+
+                        // If cart is empty, show error message
+                        if (response.isEmpty) {
+                            cartHtml = `
+                                <div class="alert alert-danger text-center" role="alert" style="margin: 0 24px;">
+                                    <p class="mb-3">No items in the cart. </p>
+                                    <a href="{{ route('checkout') }}" class="tf-btn btn-reset">Continue Shopping</a>
+                                </div>
+                            `;
+                        } else {
+                            // Loop through cart items if not empty
+                            response.cartItems.forEach(item => {
+                                cartHtml += `
+                                    <div class="tf-mini-cart-item file_delete" id="side_remove-${item.rowId}">
+                                        <div class="tf-mini-cart-image">
+                                            <img class="lazyload" data-src="${item.image}" src="${item.image}" alt="${item.slug}">
+                                        </div>
+                                        <div class="tf-mini-cart-info flex-grow-1">
+                                            <div class="mb_12 d-flex align-items-center justify-content-between de-flex gap-12">
+                                                <div class="text-title">
+                                                    <a href="/product-details/${item.slug}" class="link text-line-clamp-1">${item.name}</a>
+                                                </div>
+                                                <div class="text-button tf-btn-remove remove side_remove_cart" data-row_id="${item.rowId}">Remove</div>
+                                            </div>
+                                            <div class="d-flex align-items-center justify-content-between de-flex gap-12">
+                                                <div class="text-secondary-2">
+                                                    ${item.size_name ? item.size_name.toUpperCase() + ` ($${item.size_price})` : ''} 
+                                                    ${item.color_name ? ` / ${item.color_name} ($${item.color_price})` : ''}
+                                                </div>
+                                                <div class="text-button">${item.qty} X $${item.price}</div>
+                                            </div>
+                                            <div class="d-flex align-items-center justify-content-between de-flex gap-12">
+                                                <div class="text-secondary-2">Amount</div>
+                                                <div class="text-button">$${item.total}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                `;
+                            });
+                        }
+
+                        // Update the cart sidebar body
+                        $('#cart-sidebar-table-body').html(cartHtml);
+                    }
+                },
+                error: function(err) {
+                    toastr.error('Failed to fetch cart data.');
+                    console.log(err);
+                }
+            });
+        }
+
+
+        // Fetch all cart data for Cart Page
+        function CartPageData() {
+            $.ajax({
+                method: 'GET',
+                url: "{{ route('get.sidebar.cart') }}", // Update with your route
+                success: function(response) {
+                    if (response.status === true) {
+                        let cartHtml = '';
+
+                        if (response.isEmpty) {
+                            // If cart is empty, display a message
+                            cartHtml = `
+                                <tr>
+                                    <td colspan="5">
+                                        <div class="alert alert-danger text-center" role="alert">
+                                            <p class="mb-3">There is no cart item</p>
+                                            <a href="{{ route('checkout') }}" class="tf-btn btn-reset">Continue Shopping</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            `;
+                        } else {
+                            // Loop through cart items and generate HTML
+                            response.cartItems.forEach(item => {
+                                cartHtml += `
+                                    <tr class="tf-cart-item file-delete" id="remove-${item.rowId}">
+                                        <td class="tf-cart-item_product">
+                                            <a href="/product-details/${item.slug}" class="img-box">
+                                                <img src="${item.image}" alt="${item.slug}">
+                                            </a>
+                                            <div class="cart-info">
+                                                <a href="/product-details/${item.slug}" class="cart-title link">${item.name}</a>
+                                                <div class="variant-box">
+                                                    <div class="tf-select">
+                                                        <div class="product_variant">
+                                                            Color: ${item.color_name || 'N/A'} ($${item.color_price})
+                                                        </div>
+                                                    </div>
+                                                    <div class="tf-select">
+                                                        <div class="product_variant">
+                                                            Size: ${item.size_name || 'N/A'} ($${item.size_price})
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td data-cart-title="Price" class="tf-cart-item_price text-center">
+                                            <div class="cart_price text-button price_on_sale">$${item.price}</div>
+                                        </td>
+                                        <td data-cart-title="Quantity" class="tf-cart-item_quantity">
+                                            <div class="wg-quantity mx-md-auto">
+                                                <span class="btn-quantity product-decrease" data-row_id="${item.rowId}">-</span>
+                                                <input type="text" name="number" class="product_quantity" data-row_id="${item.rowId}" value="${item.qty}">
+                                                <span class="btn-quantity product-increase" data-row_id="${item.rowId}">+</span>
+                                            </div>
+                                        </td>
+                                        <td data-cart-title="Total" class="tf-cart-item_total text-center">
+                                            <div id="${item.rowId}" class="cart_total text-button total_price">$${item.total}</div>
+                                        </td>
+                                        <td class="remove-cart remove_item_alignemnt" id="remove_cart">
+                                            <i class="icon bx bx-x icon-close-popup remove_product_cart" style="font-size: 20px;" data-id="${item.rowId}"></i>
+                                        </td>
+                                    </tr>
+                                `;
+                            });
+                        }
+
+                        // Update the cart table body
+                        $('#cart-table-body').html(cartHtml);
+                    }
+                },
+                error: function(err) {
+                    toastr.error('Failed to fetch cart data.');
+                    console.log(err);
+                }
+            });
+        }
+
 
         //__ Clear all Cart data __//
         $('#clear_cart').on('click', function(e){
@@ -643,6 +843,7 @@
                         success: function(data) {
                             // console.log(data);
                             if( data.status === 'success' ){ 
+                                getSidebarCartTotal();
                                 $('.tf-cart-item').remove();
 
                                 // Check if the table is empty and display the message
@@ -651,14 +852,18 @@
                                     tableBody.html(`
                                         <tr>
                                             <td colspan="5">
-                                                <div class="alert alert-danger text-center" role="alert">
-                                                    <p class="mb-3">There is no cart item</p>
+                                                <div class="alert alert-danger text-center"  role="alert" style="margin: 0 24px;">
+                                                    <p class="mb-3">No items in the cart. </p>
                                                     <a href="{{ route('checkout') }}" class="tf-btn btn-reset">Continue Shopping</a>
                                                 </div>
                                             </td>
                                         </tr>
                                     `);
+                                    
+                                    $('.tf-mini-cart-threshold').remove();
+                                    $('#tf-mini-cart-actions-field').remove();
                                 }
+                                sidebarCartData();
                                 getCartCount();
                                 toastr.success(data.message);
                             }
@@ -673,6 +878,53 @@
                 }
             })
         })
+
+
+        //__ Cart subTotal __//
+        function getSidebarCartTotal(){
+            $.ajax({
+                method: 'GET',
+                url: "{{ route('cart.sidebar-product-total') }}",
+                success: function(data) {
+                    console.log('get total', data);
+                    if( data.status === 'success' ){
+                       $('.tf-totals-total-value').text('$' + data.total);
+                    }
+                },
+                error: function(data) {
+                    console.log('Error adding product to cart:', data);
+                },
+            });
+        }
+
+        //__ Sidebar Cart Element __//
+        function sidebarCartActionElement(){
+            $('.mini-cart-actions').html(`
+                <div id="tf-mini-cart-actions-field">
+                    <div class="tf-cart-checkbox">
+                        <div class="tf-checkbox-wrapp">
+                            <input class="" type="checkbox" id="CartDrawer-Form_agree" name="agree_checkbox">
+                            <div>
+                                <i class="icon-check"></i>
+                            </div>
+                        </div>
+                        <label for="CartDrawer-Form_agree">
+                            I agree with 
+                            <a href="term-of-use.html" title="Terms of Service">Terms & Conditions</a>
+                        </label>
+                    </div>
+
+                    <div class="tf-mini-cart-view-checkout">
+                        <a href="{{ route('show-cart') }}" class="tf-btn w-100 btn-white radius-4 has-border"><span class="text">View cart</span></a>
+                        <a href="{{ route('checkout') }}" class="tf-btn w-100 btn-fill radius-4"><span class="text">Check Out</span></a>
+                    </div>
+
+                    <div class="text-center">
+                        <a class="link text-btn-uppercase" href="shop-default-grid.html">Or continue shopping</a>
+                    </div>    
+                </div>
+            `);
+        }
 
         //__ Cart Count __//
         function getCartCount(){

@@ -1607,8 +1607,9 @@
                             sizesHtml += `
                                 <div class="">
                                     <input type="radio" name="size_id" data-price="${size.size_price}" id="size${size.id}" value="${size.id}" ${index === 0 ? 'checked' : ''}>
-                                    <label class="hover-tooltip tooltip-bot style-text size-btn for="size${size.id}" data-value="${size.size_name.toUpperCase()}" data-size-price="${size.size_price}">
+                                    <label class="hover-tooltip tooltip-bot style-text size-btn for="size${size.id}" data-value="${size.size_name.toUpperCase()}" data-size-price="${size.size_price}" >
                                         <span class="text-title">${size.size_name.toUpperCase()}</span>
+                                        <span class="tooltip">${size.size_name} ( TK ${size.size_price} )</span>
                                     </label>
                                 </div>
                             `;
@@ -1661,6 +1662,7 @@
         });
 
 
+        // Product add to cart
         $('.add-to-cart-form').on('submit', function(e) {
             e.preventDefault(); 
 
@@ -1676,10 +1678,13 @@
                 url: "{{ route('add.cart') }}",
                 success: function(data) {
                     // Handle success
-                    if( data.status === true ){
+                    if( data.status === 'success' ){
                         // console.log('Product added to cart:', data);
+                        sidebarCartData();
+                        sidebarCartActionElement();
+                        getSidebarCartTotal();
                         getCartCount();
-                        toastr.success('Product added to cart!');
+                        toastr.success(data.message);
 
                         if( data.button_value === "buy_now" ){
                             window.location.href = "{{ url('/checkout') }}";
@@ -1691,6 +1696,10 @@
                             $('#shoppingCart').modal('show');
                         }
                     }
+                    else if( data.status === 'error' ){
+                        toastr.error(data.message);
+                    }
+
                 },
                 error: function(data) {
                     // Handle error
@@ -1699,6 +1708,98 @@
                 },
             });
         });
+
+
+        // Fetch all sidebar cart data
+        function sidebarCartData(){
+            $.ajax({
+                method: 'GET',
+                url: "{{ route('get.sidebar.cart') }}",
+                success: function(response) {
+                    if (response.status === true) {
+                        let cartHtml = '';
+                        response.cartItems.forEach(item => {
+                            cartHtml += `
+                                <div class="tf-mini-cart-item file_delete" id="side_remove-${item.rowId}">
+                                    <div class="tf-mini-cart-image">
+                                        <img class="lazyload" data-src="${item.image}" src="${item.image}" alt="${item.slug}">
+                                    </div>
+                                    <div class="tf-mini-cart-info flex-grow-1">
+                                        <div class="mb_12 d-flex align-items-center justify-content-between de-flex gap-12">
+                                            <div class="text-title">
+                                                <a href="/product-details/${item.slug}" class="link text-line-clamp-1">${item.name}</a>
+                                            </div>
+                                            <div class="text-button tf-btn-remove remove side_remove_cart" data-row_id="${item.rowId}">Remove</div>
+                                        </div>
+                                        <div class="d-flex align-items-center justify-content-between de-flex gap-12">
+                                            <div class="text-secondary-2">
+                                                ${item.size_name ? item.size_name.toUpperCase() + ` ($${item.size_price})` : ''} 
+                                                ${item.color_name ? ` / ${item.color_name} ($${item.color_price})` : ''}
+                                            </div>
+                                            <div class="text-button">${item.qty} X $${item.price}</div>
+                                        </div>
+                                        <div class="d-flex align-items-center justify-content-between de-flex gap-12">
+                                            <div class="text-secondary-2">Amount</div>
+                                            <div class="text-button">$${item.total}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        });
+
+                        // Update the cart sidebar body
+                        $('#cart-sidebar-table-body').html(cartHtml);
+
+                        sidebarCartActionElement();
+                    }
+                },
+                error: function(err) {
+                    toastr.error('Failed to fetch cart data.');
+                    console.log(err);
+                }
+            });
+        }
+
+
+        //__ Sidebar Single product clear __//
+        $(document).on('click', '.side_remove_cart', function(e) {
+            e.preventDefault();
+            let id = $(this).data('row_id');    
+            // console.log(id); 
+
+            $.ajax({
+                url: "{{ url('/cart/remove-product') }}/" + id,
+                method: 'GET',
+                dataType: 'json',
+                data: { id: id },
+                success: function(data) {
+                    // console.log(data);
+                    if( data.status === 'success' ){ 
+                        getSidebarCartTotal();
+                        let singleProductRemove = '#side_remove-' +id;
+                        $(singleProductRemove).remove();
+
+                        // Check if the table is empty and display the message
+                        const tableBody = $('#cart-sidebar-table-body'); // Replace with the actual tbody ID or class
+                        if (tableBody.children('.tf-mini-cart-item').length === 0) {
+                            tableBody.html(`
+                                <div class="alert alert-danger text-center" role="alert" style="margin: 0 24px;">
+                                    <a href="{{ route('checkout') }}" class="tf-btn btn-reset">Continue Shopping</a>
+                                </div>
+                            `);
+                            $('.tf-mini-cart-threshold').remove();
+                            $('#tf-mini-cart-actions-field').remove();
+                        }
+
+                        getCartCount(); 
+                        toastr.success(data.message);
+                    }
+                },
+                error: function(err) {
+                    console.log(err);
+                },
+            })
+        })
 
         //__ Cart Count __//
         function getCartCount(){
@@ -1715,6 +1816,52 @@
                     // console.log('Error adding product to cart:', data);
                 },
             });
+        }
+
+        //__ Cart subTotal __//
+        function getSidebarCartTotal(){
+            $.ajax({
+                method: 'GET',
+                url: "{{ route('cart.sidebar-product-total') }}",
+                success: function(data) {
+                    console.log('get total', data);
+                    if( data.status === 'success' ){
+                       $('.tf-totals-total-value').text('$' + data.total);
+                    }
+                },
+                error: function(data) {
+                    console.log('Error adding product to cart:', data);
+                },
+            });
+        }
+
+        //__ Sidebar Cart Element __//
+        function sidebarCartActionElement(){
+            $('.mini-cart-actions').html(`
+                <div id="tf-mini-cart-actions-field">
+                    <div class="tf-cart-checkbox">
+                        <div class="tf-checkbox-wrapp">
+                            <input class="" type="checkbox" id="CartDrawer-Form_agree" name="agree_checkbox">
+                            <div>
+                                <i class="icon-check"></i>
+                            </div>
+                        </div>
+                        <label for="CartDrawer-Form_agree">
+                            I agree with 
+                            <a href="term-of-use.html" title="Terms of Service">Terms & Conditions</a>
+                        </label>
+                    </div>
+
+                    <div class="tf-mini-cart-view-checkout">
+                        <a href="{{ route('show-cart') }}" class="tf-btn w-100 btn-white radius-4 has-border"><span class="text">View cart</span></a>
+                        <a href="{{ route('checkout') }}" class="tf-btn w-100 btn-fill radius-4"><span class="text">Check Out</span></a>
+                    </div>
+
+                    <div class="text-center">
+                        <a class="link text-btn-uppercase" href="shop-default-grid.html">Or continue shopping</a>
+                    </div>    
+                </div>
+            `);
         }
 
         $('.quick_view_cart').on('click', function() {
