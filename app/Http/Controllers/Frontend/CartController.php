@@ -103,6 +103,16 @@ class CartController extends Controller
         ]);
     }
 
+    public function cart_count()
+    {
+        $cartCount = Cart::content()->count();
+
+        return response()->json([
+            'status'  => 'success',
+            'cartCount' => $cartCount,
+         ]);
+    }
+
     public function clear_cart()
     {
         Cart::destroy();

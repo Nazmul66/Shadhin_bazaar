@@ -580,7 +580,6 @@
             })
         })
 
-
         //__ Single product clear __//
         $(document).on('click', '.remove_product_cart', function(e) {
             e.preventDefault();
@@ -612,7 +611,8 @@
                                 </tr>
                             `);
                         }
-
+                        
+                        getCartCount();
                         toastr.success(data.message);
                     }
                 },
@@ -621,7 +621,6 @@
                 },
             })
         })
-
 
         //__ Clear all Cart data __//
         $('#clear_cart').on('click', function(e){
@@ -660,6 +659,7 @@
                                         </tr>
                                     `);
                                 }
+                                getCartCount();
                                 toastr.success(data.message);
                             }
                             },
@@ -673,6 +673,23 @@
                 }
             })
         })
+
+        //__ Cart Count __//
+        function getCartCount(){
+            $.ajax({
+                method: 'GET',
+                url: "{{ route('cart.count') }}",
+                success: function(data) {
+                    console.log(data);
+                    if( data.status === 'success' ){
+                       $('.count-box').text(data.cartCount);
+                    }
+                },
+                error: function(data) {
+                    // console.log('Error adding product to cart:', data);
+                },
+            });
+        }
     })
 </script>
 @endpush

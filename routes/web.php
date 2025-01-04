@@ -60,6 +60,7 @@ use App\Http\Controllers\Frontend\AjaxCallController;
     Route::post('/add-cart', [CartController::class, "addCart"])->name('add.cart');
     Route::post('/cart/update-quantity', [CartController::class, "updateProductQuantity"])->name('cart.update.quantity');
     Route::get('/cart/remove-product/{rowId}', [CartController::class, "cart_remove_product"])->name('cart.remove.product');
+    Route::get('/cart-count', [CartController::class, "cart_count"])->name('cart.count');
     Route::get('/clear-cart', [CartController::class, "clear_cart"])->name('clear.cart');
     // Route::post('/update-cart-quantity', [CartController::class, 'update_cart_quantity'])->name('update.cart.quantity');
     // Route::post('/cart/delete-item', [CartController::class, 'deleteCartItem'])->name('delete.cart.item');

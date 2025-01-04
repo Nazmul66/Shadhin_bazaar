@@ -1661,7 +1661,6 @@
         });
 
 
-
         $('.add-to-cart-form').on('submit', function(e) {
             e.preventDefault(); 
 
@@ -1678,7 +1677,8 @@
                 success: function(data) {
                     // Handle success
                     if( data.status === true ){
-                        console.log('Product added to cart:', data);
+                        // console.log('Product added to cart:', data);
+                        getCartCount();
                         toastr.success('Product added to cart!');
 
                         if( data.button_value === "buy_now" ){
@@ -1700,6 +1700,22 @@
             });
         });
 
+        //__ Cart Count __//
+        function getCartCount(){
+            $.ajax({
+                method: 'GET',
+                url: "{{ route('cart.count') }}",
+                success: function(data) {
+                    console.log(data);
+                    if( data.status === 'success' ){
+                       $('.count-box').text(data.cartCount);
+                    }
+                },
+                error: function(data) {
+                    // console.log('Error adding product to cart:', data);
+                },
+            });
+        }
 
         $('.quick_view_cart').on('click', function() {
             $('.show-shopping-cart').removeClass('show-shopping-cart');
