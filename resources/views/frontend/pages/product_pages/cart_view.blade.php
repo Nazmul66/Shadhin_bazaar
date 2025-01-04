@@ -53,17 +53,20 @@
                                 <th>Products</th>
                                 <th>Price</th>
                                 <th>Quantity</th>
-                                <th>Total Price</th>
-                                <th></th>
+                                <th style="white-space: nowrap;">Total Price</th>
+                                <th>
+                                    <button class="tf-btn-clear" id="clear_cart">
+                                        <span class="text">Clear Code</span>
+                                    </button>
+                                </th>
                             </tr>
                         </thead>
-                        <tbody>
-
+                        <tbody id="cart-table-body">
                             @forelse ($cartItems as $row)
+                                @php
+                                    $totalPrice = ($row->price + ($row->options->size_price ?? 0) + ($row->options->color_price ?? 0)) * $row->qty;
+                                @endphp
 
-                            @php
-                                $totalPrice = ($row->price + ($row->options->size_price ?? 0) + ($row->options->color_price ?? 0)) * $row->qty;
-                            @endphp
                                 <tr class="tf-cart-item file-delete">
                                     <td class="tf-cart-item_product">
                                         <a href="{{ route('product.details', $row->options->slug) }}" class="img-box">
@@ -107,15 +110,15 @@
                                     </td>
                                     <td data-cart-title="Quantity" class="tf-cart-item_quantity">
                                         <div class="wg-quantity mx-md-auto">
-                                            <span class="btn-quantity btn-decrease">-</span>
-                                            <input type="text" class="quantity-product" name="number" value="{{ $row->qty }}">
-                                            <span class="btn-quantity btn-increase">+</span>
+                                            <span class="btn-quantity product-decrease">-</span>
+                                            <input type="text" name="number" class="product_quantity" data-row_id="{{ $row->rowId }}" value="{{ $row->qty }}">
+                                            <span class="btn-quantity product-increase">+</span>
                                         </div>
                                     </td>
                                     <td data-cart-title="Total" class="tf-cart-item_total text-center">
-                                        <div class="cart_total text-button total_price">${{ $totalPrice }}</div>
+                                        <div id="{{ $row->rowId }}" class="cart_total text-button total_price">${{ $totalPrice }}</div>
                                     </td>
-                                    <td data-cart-title="Remove" class="remove-cart">
+                                    <td class="remove-cart remove_item_alignemnt">
                                         {{-- <span class="remove icon icon-close"></span> --}}
                                         <i class='icon bx bx-x icon-close-popup' style="font-size: 20px;"></i>
                                     </td>
@@ -129,107 +132,14 @@
                                 </td>
                             </tr>
                             @endforelse
-                            {{-- <tr class="tf-cart-item file-delete">
-                                <td class="tf-cart-item_product">
-                                    <a href="product-detail.html" class="img-box">
-                                        <img src="images/products/womens/women-1.jpg" alt="product">
-                                    </a>
-                                    <div class="cart-info">
-                                        <a href="product-detail.html" class="cart-title link">V-neck cotton T-shirt</a>
-                                        <div class="variant-box">
-                                            <div class="tf-select">
-                                                <select>
-                                                    <option selected="selected">Blue</option>
-                                                    <option>Black</option>
-                                                    <option>White</option>
-                                                    <option>Red</option>
-                                                    <option>Beige</option>
-                                                    <option>Pink</option>
-                                                </select>
-                                            </div>
-                                            <div class="tf-select">
-                                                <select>
-                                                    <option selected="selected">XL</option>
-                                                    <option>XS</option>
-                                                    <option>S</option>
-                                                    <option>M</option>
-                                                    <option>L</option>
-                                                    <option>XL</option>
-                                                    <option>2XL</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td data-cart-title="Price" class="tf-cart-item_price text-center">
-                                    <div class="cart-price text-button price-on-sale">$40.00</div>
-                                </td>
-                                <td data-cart-title="Quantity" class="tf-cart-item_quantity">
-                                    <div class="wg-quantity mx-md-auto">
-                                        <span class="btn-quantity btn-decrease">-</span>
-                                        <input type="text" class="quantity-product" name="number" value="1">
-                                        <span class="btn-quantity btn-increase">+</span>
-                                    </div>
-                                </td>
-                                <td data-cart-title="Total" class="tf-cart-item_total text-center">
-                                    <div class="cart-total text-button total-price">$40.00</div>
-                                </td>
-                                <td data-cart-title="Remove" class="remove-cart"><span class="remove icon icon-close"></span></td>
-                            </tr>
-
-                            <tr class="tf-cart-item file-delete">
-                                <td class="tf-cart-item_product">
-                                    <a href="product-detail.html" class="img-box">
-                                        <img src="images/products/womens/women-29.jpg" alt="product">
-                                    </a>
-                                    <div class="cart-info">
-                                        <a href="product-detail.html" class="cart-title link">V-neck cotton T-shirt</a>
-                                        <div class="variant-box">
-                                            <div class="tf-select">
-                                                <select>
-                                                    <option selected="selected">Blue</option>
-                                                    <option>Black</option>
-                                                    <option>White</option>
-                                                    <option>Red</option>
-                                                    <option>Beige</option>
-                                                    <option>Pink</option>
-                                                </select>
-                                            </div>
-                                            <div class="tf-select">
-                                                <select>
-                                                    <option selected="selected">XL</option>
-                                                    <option>XS</option>
-                                                    <option>S</option>
-                                                    <option>M</option>
-                                                    <option>L</option>
-                                                    <option>XL</option>
-                                                    <option>2XL</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td data-cart-title="Price" class="tf-cart-item_price text-center">
-                                    <div class="cart-price"><span class="old-price">$80.00</span><span class="text-button new-price price-on-sale">$129.00</span></div>
-                                </td>
-                                <td data-cart-title="Quantity" class="tf-cart-item_quantity">
-                                    <div class="wg-quantity mx-md-auto">
-                                        <span class="btn-quantity btn-decrease">-</span>
-                                        <input type="text" class="quantity-product" name="number" value="1">
-                                        <span class="btn-quantity btn-increase">+</span>
-                                    </div>
-                                </td>
-                                <td data-cart-title="Total" class="tf-cart-item_total text-center">
-                                    <div class="cart-total text-button total-price">$129.00</div>
-                                </td>
-                                <td data-cart-title="Remove" class="remove-cart"><span class="remove icon icon-close"></span></td>
-                            </tr> --}}
                         </tbody>
                     </table>
+
                     <div class="ip-discount-code">
                         <input type="text" placeholder="Add voucher discount">
                         <button class="tf-btn"><span class="text">Apply Code</span></button>
                     </div>
+
                     <div class="group-discount">
                         <div class="box-discount">
                             <div class="discount-top">
@@ -246,6 +156,7 @@
                                 <button class="tf-btn"><span class="text">Apply Code</span></button>
                             </div>
                         </div>
+
                         <div class="box-discount active">
                             <div class="discount-top">
                                 <div class="discount-off">
@@ -261,6 +172,7 @@
                                 <button class="tf-btn"><span class="text">Apply Code</span></button>
                             </div>
                         </div>
+
                         <div class="box-discount">
                             <div class="discount-top">
                                 <div class="discount-off">
@@ -279,6 +191,8 @@
                     </div>
                 </form>
             </div>
+
+
             <div class="col-xl-4">
                 <div class="fl-sidebar-cart">
                     <div class="box-order bg-surface">
@@ -601,5 +515,103 @@
 @endsection
 
 @push('add-js')
+<script>
+    $(document).ready(function(){
+        //__ Product Quantity Increament __//
+        $('.product-decrease').on('click', function(){
+            let input = $(this).siblings('.product_quantity');
+            let rowId = input.data('row_id');
+            let quantity = parseInt(input.val()) || 0;
+            quantity -= 1; 
+            input.val(quantity); 
+            console.log(rowId);
 
+            $.ajax({
+                url: "{{ route('cart.update.quantity') }}",
+                method: 'POST',
+                data: {
+                    quantity : quantity,
+                    rowId    : rowId,
+                },
+                success: function(data) {
+                    console.log(data);
+                    if( data.status === 'success' ){ 
+                        let productId = '#' + rowId;
+                        $(productId).text('$' + data.productTotal);
+                        toastr.success(data.message);
+                    }
+                },
+                error: function(err) {
+                    console.log(err);
+                },
+            })
+        })
+
+
+        //__ Product Quantity Decrement __//
+        $('.product-increase').on('click', function(){
+            let input = $(this).siblings('.product_quantity');
+            let rowId = input.data('row_id');
+            let quantity = parseInt(input.val()) || 0;
+            quantity += 1; 
+            input.val(quantity); 
+            console.log(rowId);
+
+            $.ajax({
+                url: "{{ route('cart.update.quantity') }}",
+                method: 'POST',
+                data: {
+                    quantity : quantity,
+                    rowId    : rowId,
+                },
+                success: function(data) {
+                    console.log(data);
+                    if( data.status === 'success' ){ 
+                        let productId = '#' + rowId;
+                        $(productId).text('$' + data.productTotal);
+                        toastr.success(data.message);
+                    }
+                },
+                error: function(err) {
+                    console.log(err);
+                },
+            })
+        })
+
+
+        //__ Clear all Cart data __//
+        $('#clear_cart').on('click', function(e){
+            e.preventDefault();
+
+            $.ajax({
+                url: "{{ route('clear.cart') }}",
+                method: 'GET',
+                success: function(data) {
+                    // console.log(data);
+                    if( data.status === 'success' ){ 
+                        $('.tf-cart-item').remove();
+
+                        // Check if the table is empty and display the message
+                        const tableBody = $('#cart-table-body'); // Replace with the actual tbody ID or class
+                        if (tableBody.children('tr.tf-cart-item').length === 0) {
+                            tableBody.html(`
+                                <tr>
+                                    <td colspan="5">
+                                        <div class="alert alert-danger text-center" role="alert">
+                                            <a href="{{ route('checkout') }}" class="tf-btn btn-reset">Continue Shopping</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            `);
+                        }
+                        toastr.success(data.message);
+                    }
+                },
+                error: function(err) {
+                    console.log(err);
+                },
+            })
+        })
+    })
+</script>
 @endpush

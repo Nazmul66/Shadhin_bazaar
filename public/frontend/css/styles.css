@@ -12918,7 +12918,7 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
 
 .tf-cart-item .tf-cart-item_product .variant-box {
     display: grid;
-    gap: 8px;
+    gap: 0px;
     grid-template-columns: 1fr;
 }
 
@@ -12939,13 +12939,13 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
     line-height: 26px;
     font-weight: 600;
     appearance: none;
-    border: 2px solid var(--line);
+    /* border: 2px solid var(--line); */
     background-color: transparent;
     transition: all 0.3s ease-in-out;
 }
-.tf-cart-item .tf-cart-item_product .tf-select .product_variant:hover{
+/* .tf-cart-item .tf-cart-item_product .tf-select .product_variant:hover{
     border-color: var(--main);
-}
+} */
 
 .tf-cart-item .tf-cart-item_product .tf-select::after {
     right: 12px;
@@ -12978,8 +12978,8 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
 }
 
 .tf-cart-item .remove-cart .icon {
-    width: 20px;
-    height: 20px;
+    width: 40px;
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -12995,6 +12995,19 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
     color: var(--critical);
     background-color: var(--white);
     cursor: pointer;
+}
+
+@media ( min-width: 320px ) and ( max-width: 576px ){
+    .tf-cart-item .remove-cart .icon {
+        width: 20px;
+        height: 20px;
+    }
+}
+@media ( min-width: 577px ) and ( max-width: 768px ){
+    .tf-cart-item .remove-cart .icon {
+        width: 20px;
+        height: 20px;
+    }
 }
 
 .tf-cart-item .remove-cart .icon:hover {
@@ -13013,6 +13026,44 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
     bottom: 8px;
     border-radius: 8px;
     padding: 6px 20px;
+}
+.tf-btn-clear{
+    webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    background-color: var(--main);
+    white-space: nowrap;
+    color: var(--white);
+    padding: 5px 14px;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 14px;
+    line-height: 26px;
+    font-weight: 600;
+    text-transform: capitalize;
+    border: 1px solid var(--main);
+    position: relative;
+    overflow: hidden;
+}
+.tf-btn-clear .text {
+    position: relative;
+    z-index: 2;
+}
+.remove_item_alignemnt{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@media ( min-width: 320px ) and ( max-width: 576px ){
+    .remove_item_alignemnt{
+        justify-content: start;
+    }
 }
 
 .ip-discount-code input {

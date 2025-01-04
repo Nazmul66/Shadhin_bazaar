@@ -70,10 +70,36 @@ class CartController extends Controller
         ]);
     }
 
-    public function cartDestroy()
+    public function updateProductQuantity(Request $request)
+    {
+        // dd($request->all());
+        Cart::update($request->rowId, $request->quantity);
+        $productTotal = $this->getProductTotal($request->rowId);
+   
+        // dd($productTotal);
+        return response()->json([
+            'status'       => 'success',
+            'message'      => 'Product quantity updated',
+            'productTotal' => $productTotal,
+        ]);
+    }
+
+    public function getProductTotal($rowId)
+    {
+        $product = Cart::get($rowId);
+        $totalPrice = ($product->price + ($product->options->size_price ?? 0) + ($product->options->color_price ?? 0)) * $product->qty;
+
+        return $totalPrice;
+    }
+
+    public function clear_cart()
     {
         Cart::destroy();
-        return redirect()->back();
+
+        return response()->json([
+           'status'  => 'success',
+           'message' => 'Cart cleared successfully',
+        ]);
     }
 
 

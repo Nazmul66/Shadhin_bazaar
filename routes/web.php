@@ -46,6 +46,7 @@ use App\Http\Controllers\Frontend\AjaxCallController;
     //__ Flash Sales __//
     Route::get('/flash-sale', [FlashSaleController::class, "index"])->name('flash.sale');
 
+
     //__ Products __//
     Route::get('/product-details/{slug}', [ProductController::class, "show_product_details"])->name('product.details');
     Route::post('/get-color-size-price', [ProductController::class, 'getColorSizePrice'])->name('get.color.size.price');
@@ -53,10 +54,12 @@ use App\Http\Controllers\Frontend\AjaxCallController;
     Route::get('/remove-cart/{id}/{color_id?}/{size_id?}', [ProductController::class, 'removeCart'])->name('remove.cart');
     Route::get('/get-cart-data', [ProductController::class, 'getCart'])->name('get.cart.data');
     
+
     //__ Carts __//
     Route::get('/cart', [CartController::class, 'cart_view'])->name('show-cart');
     Route::post('/add-cart', [CartController::class, "addCart"])->name('add.cart');
-    Route::get('/cart-destroy', [CartController::class, "cartDestroy"])->name('cart.destroy');
+    Route::post('/cart/update-quantity', [CartController::class, "updateProductQuantity"])->name('cart.update.quantity');
+    Route::get('/clear-cart', [CartController::class, "clear_cart"])->name('clear.cart');
     // Route::post('/update-cart-quantity', [CartController::class, 'update_cart_quantity'])->name('update.cart.quantity');
     // Route::post('/cart/delete-item', [CartController::class, 'deleteCartItem'])->name('delete.cart.item');
     // Route::post('/clear-cart', [CartController::class, 'clearCart'])->name('clear.cart');
