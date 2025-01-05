@@ -7,7 +7,7 @@
                         <img class="lazyload" data-src="{{ asset('public/frontend/images/products/womens/women-1.jpg') }}" src="{{ asset('public/frontend/images/products/womens/women-1.jpg') }}" alt="">
                     </div>
 
-                    <div class="quickView-item item-scroll-quickview" data-scroll-quickview="beige">
+                    {{-- <div class="quickView-item item-scroll-quickview" data-scroll-quickview="beige">
                         <img class="lazyload" data-src="{{ asset('public/frontend/images/products/womens/women-2.jpg') }}" src="{{ asset('public/frontend/images/products/womens/women-2.jpg') }}" alt="">
                     </div>
 
@@ -25,7 +25,7 @@
 
                     <div class="quickView-item item-scroll-quickview" data-scroll-quickview="grey">
                         <img class="lazyload" data-src="{{ asset('public/frontend/images/products/womens/women-20.jpg') }}" src="{{ asset('public/frontend/images/products/womens/women-20.jpg') }}" alt="">
-                    </div>
+                    </div> --}}
                 </div>
             </div>
             
@@ -52,17 +52,17 @@
                                 </div>
                                 <div class="tf-product-info-sold">
                                     <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                                    <div class="text text-caption-1"><span id="sold_product">18</span> product sold</div>
+                                    <div class="text text-caption-1"><span id="sold_product"></span> product sold</div>
                                 </div>
                             </div>
                         </div>
                         <div class="tf-product-info-desc">
                             <div class="tf-product-info-price">
-                                <h5 class="price-on-sale font-2">$79.99</h5>
+                                {{-- <h5 class="price-on-sale font-2">$79.99</h5>
                                 <div class="compare-at-price font-2">$98.99</div>
                                 <div class="badges-on-sale text-btn-uppercase">
                                     -25%
-                                </div>
+                                </div> --}}
                             </div>
                             <p id="short_desc">The garments labelled as Committed are products that have been produced using sustainable fibres or processes, reducing their environmental impact.</p>
                             <div class="tf-product-info-liveview">
@@ -79,11 +79,12 @@
                             <input type="hidden" name="product_id" id="product_id">
 
                             <div class="variant-picker-item">
-                                <div class="variant-picker-label mb_12">
+                                <div class="variant-picker-label mb_12 mb-2">
                                     Colors:<span class="text-title color_variant variant-picker-label-value">Beige</span>
                                 </div>
+
                                 <div class="variant-picker-values" id="color_variant">
-                                    <div class="">
+                                    <div class="mb-2">
                                         <input id="values-beige1" type="radio" name="color_id" checked>
                                         <label class="hover-tooltip tooltip-bot radius-60 color-btn color_show active" 
                                             data-slide="0" 
@@ -120,7 +121,7 @@
                                 </div>
     
                                 <div class="variant-picker-values gap12" id="size_variant">
-                                    <div class="">
+                                    <div class="mb-2">
                                         <input type="radio" name="size_id" id="values-s1">
                                         <label class="style-text size-btn" for="values-s1" data-value="S">
                                             <span class="text-title">S</span>

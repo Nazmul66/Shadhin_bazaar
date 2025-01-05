@@ -4775,7 +4775,7 @@ form .cols>* {
 
 .list-rating-check:not(:checked)>label:before {
     font-family: "icomoon";
-    content: "\e92a";
+    content: "\2605";
 }
 
 .list-rating-check>input:checked~label {

@@ -111,11 +111,12 @@
                 <div class="tab-pane active show" id="AllProducts" role="tabpanel">
                     <div dir="ltr" class="swiper tf-sw-latest" data-preview="5" data-tablet="4" data-mobile="2" data-space-lg="30" data-space-md="30" data-space="15" data-pagination="1" data-pagination-md="1" data-pagination-lg="1">
                         <div class="swiper-wrapper">
+
                             @foreach ($products as $row)
                                 <div class="swiper-slide">
                                     <div class="card-product wow fadeInUp" data-wow-delay="0.1s">
                                         <div class="card-product-wrapper">
-                                            <a href="product-detail.html" class="product-img">
+                                            <a href="{{ route('product.details', $row->slug) }}" class="product-img">
                                                 <img class="lazyload img-product" data-src="{{ asset($row->thumb_image) }}" src="{{ asset($row->thumb_image) }}" alt="{{ $row->slug }}">
 
                                                 @php
@@ -234,7 +235,7 @@
                                                 </a>
                                             </div>
                                             <div class="list-btn-main">
-                                                <a href="#shoppingCart" data-bs-toggle="modal" class="btn-main-product">Add To cart</a>
+                                                <a href="#quickAdd" data-id={{ $row->id }} data-bs-toggle="modal" class="btn-main-product quickAdd">Quick Add</a>
                                             </div>
                                         </div>
 
@@ -300,7 +301,7 @@
                                     <div class="swiper-slide">
                                         <div class="card-product wow fadeInUp" data-wow-delay="0.1s">
                                             <div class="card-product-wrapper">
-                                                <a href="product-detail.html" class="product-img">
+                                                <a href="{{ route('product.details', $row->slug) }}" class="product-img">
                                                     <img class="lazyload img-product" data-src="{{ asset($row->thumb_image) }}" src="{{ asset($row->thumb_image) }}" alt="{{ $row->slug }}">
 
                                                     @php
@@ -437,9 +438,9 @@
                                                 </div>
 
                                                 @if ( checkDiscount($row) )
-                                                    @if ( !empty($row->discount_type === "amount") )
+                                                    @if ( $row->discount_type === "amount")
                                                         <span class="price"><span class="old-price">${{ $row->selling_price }}</span> ${{ $row->selling_price - $row->discount_value }}</span>
-                                                    @elseif( !empty($row->discount_type === "percent") )
+                                                    @elseif( $row->discount_type === "percent" )
                                                     @php
                                                         $discount_val = $row->selling_price * $row->discount_value / 100;
                                                     @endphp
@@ -1528,6 +1529,7 @@
 <script>
      
      $(document).ready(function () {
+        //__ Quick View Cart __//
         $('.quickview').click(function (e) {
             e.preventDefault(); // Prevent default behavior if necessary
             var id = $(this).data('id'); // Use `data-id` attribute
@@ -1625,6 +1627,92 @@
                         $('#size_variant').html('<p>No sizes available for this product.</p>');
                         $('.text-title.size_variant').text('No Size');
                     }
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+        });
+
+        //__ Quick Add Cart __//
+        $('.quickAdd').click(function (e) {
+            e.preventDefault(); // Prevent default behavior if necessary
+            var id = $(this).data('id'); // Use `data-id` attribute
+
+            $.ajax({
+                type: "GET",
+                url: "{{ route('cart.quick.view') }}",
+                data: { id: id }, // Pass `id` as a key-value pair
+                success: function (res) {
+                    // console.log(res); // Handle response
+                    var product = res.product;
+
+                    $('#quick_add_qty').val(1);
+                    $('#quick_product_id').val(`${product.id}`);
+                    $('#quick_thumb_image').html(res.main_image);
+                    $('#quick_product_name').text(`${product.name}`);
+                    $('.tf-product-info-price').html(res.price_val);
+
+                    if (res.product_color && res.product_color.length > 0) {
+                         var colorsHtml = '';
+
+                        // Loop through the product_color array
+                        res.product_color.forEach(function (color, index) {
+                            colorsHtml += `
+                                <div class="mb-2">
+                                    <input id="color${color.id}" type="radio" data-price="${color.color_price}" name="color_id" value="${color.id}" ${index === 0 ? 'checked' : ''}>
+                                    <label class="hover-tooltip tooltip-bot radius-60 color-btn  color_show ${index === 0 ? 'active' : ''}" 
+                                        data-slide="0" 
+                                        data-price="${color.color_price || ''}" 
+                                        for="color${color.id}" 
+                                        data-value="${color.color_name}" 
+                                        data-scroll-quickview="${color.color_name.toLowerCase()}"
+                                        >
+                                        <span class="btn-checkbox" style="background-color:${color.color_code || ''}"></span>
+                                        <span class="tooltip">${color.color_name} ( TK ${color.color_price} )</span>
+                                    </label>
+                                </div>
+                            `;
+                        });
+
+                        $('#quick_color_variant').html(colorsHtml);
+
+                        // Dynamically set the first color name in the text-title span
+                        var firstColor = res.product_color[0]; // Get the first color
+                        $('.text-title.color_variant').text(firstColor.color_name);
+                    } else {
+                        $('#color_variant').html('<p>No colors available for this product.</p>');
+                        $('.text-title.color_variant').text('No Color');
+                    }
+
+
+
+                    if (res.product_sizes && res.product_sizes.length > 0) {
+                        var sizesHtml = '';
+
+                        // Loop through the product_sizes array
+                        res.product_sizes.forEach(function (size, index) {
+                            sizesHtml += `
+                                <div class="mb-2">
+                                    <input type="radio" name="size_id" data-price="${size.size_price}" id="size${size.id}" value="${size.id}" ${index === 0 ? 'checked' : ''}>
+                                    <label class="hover-tooltip tooltip-bot style-text size-btn for="size${size.id}" data-value="${size.size_name.toUpperCase()}" data-size-price="${size.size_price}" >
+                                        <span class="text-title">${size.size_name.toUpperCase()}</span>
+                                        <span class="tooltip">${size.size_name} ( TK ${size.size_price} )</span>
+                                    </label>
+                                </div>
+                            `;
+                        });
+
+                        // Update the size container
+                        $('#quick_size_variant').html(sizesHtml);
+
+                        // Dynamically set the first size name in the text-title span
+                        var firstSize = res.product_sizes[0]; // Get the first size
+                        $('.text-title.size_variant').text(firstSize.size_name.toUpperCase());
+                    } else {
+                        $('#size_variant').html('<p>No sizes available for this product.</p>');
+                        $('.text-title.size_variant').text('No Size');
+                    }
                     
                 },
                 error: function (err) {
@@ -1687,6 +1775,7 @@
                         toastr.success(data.message);
 
                         if( data.button_value === "buy_now" ){
+                            $('.show-shopping-cart').removeClass('show-shopping-cart');
                             window.location.href = "{{ url('/checkout') }}";
                         }
                         else{
