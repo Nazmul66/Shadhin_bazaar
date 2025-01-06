@@ -26,7 +26,7 @@ class ProductController extends Controller
 
         // Handle case where the product is not found
         if (!$product) {
-            abort(404, 'Product not found');
+            abort(404);
         }
 
         $product->increment('product_view');
