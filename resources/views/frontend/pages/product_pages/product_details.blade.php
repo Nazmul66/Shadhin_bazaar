@@ -18,9 +18,9 @@
         <div class="tf-breadcrumb-wrap">
             <div class="tf-breadcrumb-list">
                 <a href="index.html" class="text text-caption-1">Homepage</a>
-                <i class="icon icon-arrRight"></i>
+                <i class='bx bx-chevron-right'></i>
                 <a href="#" class="text text-caption-1">{{ $product->cat_name }}</a>
-                <i class="icon icon-arrRight"></i>
+                <i class='bx bx-chevron-right'></i>
                 <span class="text text-caption-1">{{ $product->slug }}</span>
             </div>
         </div>
@@ -179,7 +179,7 @@
                                             <div class="variant-picker-values">
                                                 @foreach ($product_colors as $index => $row)
                                                     <input id="color{{ $row->id }}" type="radio" data-price="{{ $row->color_price }}" name="color_id" value="{{ $row->id }}" {{ $index === 0 ? 'checked' : '' }}>
-                                                    <label class="hover-tooltip tooltip-bot radius-60 color-btn main_color_show {{ $index == 0 ? 'active' : '' }}" 
+                                                    <label class="hover-tooltip tooltip-bot radius-60 color-btns main_color_show {{ $index == 0 ? 'active' : '' }}" 
                                                         data-slide="0" 
                                                         data-price="{{ $row->color_price || '' }}" 
                                                         for="color{{ $row->id }}" 
@@ -200,7 +200,7 @@
                                                 <div class="variant-picker-label">
                                                     Size:<span class="text-title size_variant variant-picker-label-value">{{ $product_sizes[0]->size_name }}</span>
                                                 </div>
-                                                <a href="#size-guide" data-bs-toggle="modal" class="size-guide text-title link">Size Guide</a>
+                                                {{-- <a href="#size-guide" data-bs-toggle="modal" class="size-guide text-title link">Size Guide</a> --}}
                                             </div>
 
                                             <div class="variant-picker-values gap12">
@@ -228,8 +228,8 @@
                                     <div class="mt-3">
                                         <div class="tf-product-info-by-btn mb_10">
                                             <button type="submit" name="button" value="add_cart" class="btn-style-2 flex-grow-1 text-btn-uppercase fw-6 ">
-                                                <span>Add to cart</span>
-                                                {{-- <span class="tf-qty-price total_price">$79.99</span> --}}
+                                                <span>Add to cart</span> -
+                                                <span class="tf-qty-price total_price">$79.99</span>
                                             </button>
                                             <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon hover-tooltip compare btn-icon-action show-compare">
                                                 <i class='bx bx-git-compare' style="font-size: 24px;"></i>
@@ -245,7 +245,7 @@
                                 </form>
 
                                 <div class="tf-product-info-help">
-                                    <div class="tf-product-info-extra-link">
+                                    {{-- <div class="tf-product-info-extra-link">
                                         <a href="#delivery_return" data-bs-toggle="modal" class="tf-product-extra-icon">
                                             <div class="icon">
                                                 <i class='bx bxs-truck'></i>
@@ -291,74 +291,18 @@
                                         <!-- /modal delivery_return -->
 
 
-                                        {{-- <a href="#ask_question" data-bs-toggle="modal" class="tf-product-extra-icon">
+                                        <a href="#ask_question" data-bs-toggle="modal" class="tf-product-extra-icon">
                                             <div class="icon">
                                                 <i class='bx bx-question-mark'></i>
                                             </div>
                                             <p class="text-caption-1">Ask A Question</p>
-                                        </a> --}}
-
-
-                                        <a href="#share_social" data-bs-toggle="modal" class="tf-product-extra-icon">
-                                            <div class="icon">
-                                                <i class='bx bx-share-alt' ></i>
-                                            </div>
-                                            <p class="text-caption-1">Share</p>
                                         </a>
 
-                                        <!-- modal share social -->
-                                        <div class="modal modalCentered fade tf-product-modal modal-part-content" id="share_social" style="z-index: 1060; display: none;" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered">
-                                                <div class="modal-content">
-                                                    <div class="header">
-                                                        <div class="demo-title">Share</div>
-                                                        <i class='bx bx-x icon-close-popup quick_view_cart' style="font-size: 32px;" data-bs-dismiss="modal"></i>
-                                                    </div>
 
-                                                    <div class="overflow-y-auto">
-                                                        <ul class="tf-social-icon d-flex gap-10">
-                                                            <li>
-                                                                <a href="#" class="box-icon social-facebook bg_line">
-                                                                    <i class='bx bxl-facebook' style="font-size: 20px;"></i>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#" class="box-icon social-twiter bg_line">
-                                                                    <i class="fa-brands fa-x-twitter" style="font-size: 20px;"></i>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#" class="box-icon social-instagram bg_line">
-                                                                    <i class='bx bxl-instagram' style="font-size: 20px;"></i>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#" class="box-icon social-tiktok bg_line">
-                                                                    <i class='bx bxl-tiktok' style="font-size: 20px;"></i>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#" class="box-icon social-pinterest bg_line">
-                                                                    <i class='bx bxl-pinterest-alt' style="font-size: 20px;"></i>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                        <form class="form-share" method="post" accept-charset="utf-8">
-                                                            <fieldset>
-                                                                <input type="text" value="{{ url()->current() }}" tabindex="0" id="copytext" aria-required="true" readonly>
-                                                            </fieldset>
-                                                            <div class="button-submit">
-                                                                <button class="tf-btn radius-4 btn-fill" onclick="copyUrl()" type="button"><span class="text">Copy</span></button>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- /modal share social -->
-                                    </div>
 
-                                    <div class="tf-product-info-time">
+                                    </div> --}}
+
+                                    {{-- <div class="tf-product-info-time">
                                         <div class="icon">
                                             <i class='bx bx-time-five'></i>
                                         </div>
@@ -370,11 +314,11 @@
                                             <i class='bx bx-refresh'></i>
                                         </div>
                                         <p class="text-caption-1">Return within <span>45 days</span> of purchase. Duties & taxes are non-refundable.</p>
-                                    </div>
+                                    </div> --}}
 
                                     {{-- Store Location --}}
-                                    <div class="dropdown dropdown-store-location">
-                                        <div class="dropdown-title dropdown-backdrop" data-bs-toggle="dropdown" aria-haspopup="true">
+                                    <div class="dropdown dropdown-store-location d-flex align-items-center gap-3">
+                                        {{-- <div class="dropdown-title dropdown-backdrop" data-bs-toggle="dropdown" aria-haspopup="true">
                                             <div class="tf-product-info-view link">
                                                 <div class="icon">
                                                     <i class='bx bx-map'></i>
@@ -399,7 +343,43 @@
                                                     <p>Gracielahaven, Oregon</p>
                                                 </div>
                                             </div>
+                                        </div> --}}
+
+
+                                        <a href="#share_social" data-bs-toggle="modal" class="tf-product-extra-icon d-flex align-items-center gap-1">
+                                            <div class="icon">
+                                                <i class='bx bx-share-alt' ></i>
+                                            </div>
+                                            <p class="text-caption-1">Share</p>
+                                        </a>
+
+                                        <!-- modal share social -->
+                                        <div class="modal modalCentered fade tf-product-modal modal-part-content" id="share_social" style="z-index: 1060; display: none;" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-content">
+                                                    <div class="header">
+                                                        <div class="demo-title">Share</div>
+                                                        <i class='bx bx-x icon-close-popup quick_view_cart' style="font-size: 32px;" data-bs-dismiss="modal"></i>
+                                                    </div>
+
+                                                    <div class="overflow-y-auto">
+                                                        <ul class="tf-social-icon d-flex gap-10">
+                                                            {!! $socialLinks !!}
+                                                        </ul>
+
+                                                        <form class="form-share" method="post" accept-charset="utf-8">
+                                                            <fieldset>
+                                                                <input type="text" value="{{ url()->current() }}" tabindex="0" id="copytext" aria-required="true" readonly>
+                                                            </fieldset>
+                                                            <div class="button-submit">
+                                                                <button class="tf-btn radius-4 btn-fill" onclick="copyUrl()" type="button"><span class="text">Copy</span></button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
+                                        <!-- /modal share social -->
                                     </div>
 
                                 </div>
@@ -539,20 +519,27 @@
                         <li class="item-title active">
                             <span class="inner">Description</span>
                         </li>
+
                         <li class="item-title">
                             <span class="inner">Customer Reviews</span>
                         </li>
-                        <li class="item-title">
-                            <span class="inner">Shipping & Returns</span>
-                        </li>
-                        <li class="item-title">
-                            <span class="inner">Return Policies</span>
-                        </li>
+
+                        @if ( !empty($product->shipping_return) )
+                            <li class="item-title">
+                                <span class="inner">Shipping & Returns</span>
+                            </li>
+                        @endif
+
+                        @if (!empty($product->return_policy))
+                            <li class="item-title">
+                                <span class="inner">Return Policies</span>
+                            </li>
+                        @endif
                     </ul>
 
                     <div class="widget-content-tab">
                         <div class="widget-content-inner active">
-                            <div class="tab-description">
+                            <div class="tab_description">
                                  {!! $product->long_description !!}
                             </div>
                         </div>
@@ -740,17 +727,21 @@
                             </div>
                         </div>
 
-                        <div class="widget-content-inner">
-                            <div class="tab-shipping">
-                                {!! $product->shipping_return !!}
+                        @if ( !empty($product->shipping_return) )
+                            <div class="widget-content-inner">
+                                <div class="tab_description">
+                                    {!! $product->shipping_return !!}
+                                </div>
                             </div>
-                        </div>
+                        @endif
 
-                        <div class="widget-content-inner">
-                            <div class="tab-policies">
-                                {!! $product->return_policy !!}
+                        @if (!empty($product->return_policy))
+                            <div class="widget-content-inner">
+                                <div class="tab_description">
+                                    {!! $product->return_policy !!}
+                                </div>
                             </div>
-                        </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -1164,6 +1155,7 @@
 
                 $('.main_color_show').removeClass('active');
                 $(this).addClass('active');
+                calculateTotalPrice();
             }
         });
 
@@ -1177,10 +1169,11 @@
 
             $('.main_size_btn').removeClass('active');
             $(this).addClass('active');
+            calculateTotalPrice();
         });
 
         function copyUrl() {
-        // Get the text field
+           // Get the text field
             var copyText = document.getElementById("copytext");
 
             // Select the text field
@@ -1190,6 +1183,43 @@
             // Copy the text inside the text field
             navigator.clipboard.writeText(copyText.value);
         }
+
+        function calculateTotalPrice() {
+            var priceText = $('.price_on_sale').text(); 
+            var priceValue = parseInt(priceText.replace('$', '').trim()); 
+            var qty = $('.quantity-product').val();
+            var color_price = $('input[name="color_id"]:checked').data('price') || 0; // Default to 0 if undefined
+            var size_price = $('input[name="size_id"]:checked').data('price') || 0;  // Default to 0 if undefined
+            var total = ( priceValue * qty ) + ( qty * (parseFloat(color_price) + parseFloat(size_price)) ) ;
+            $('.total_price').text('$' + total); // Update total price
+            // console.log('Initial:', qty, color_price, size_price);
+        }
+
+        $(document).ready(function () {
+            // Initial calculation on page load
+            calculateTotalPrice();
+
+            // Recalculate on increase button click
+            $('.btn-increase').on('click', function () {
+                calculateTotalPrice();
+            });
+
+            // Recalculate on decrease button click
+            $('.btn-decrease').on('click', function () {
+                calculateTotalPrice();
+            });
+
+            // For Color Change
+            $('input[name="color_id"]').on('change', function () {
+                calculateTotalPrice();
+            });
+
+            // For Color Change
+            $('input[name="size_id"]').on('change', function () {
+                calculateTotalPrice();
+            });
+
+        });
 </script>
 
 
@@ -1416,7 +1446,6 @@
            $(this).addClass('active');
        });
 
-
        // Product add to cart
        $('.add-to-cart-form').on('submit', function(e) {
            e.preventDefault(); 
@@ -1464,7 +1493,6 @@
                },
            });
        });
-
 
        // Fetch all sidebar cart data
        function sidebarCartData(){
@@ -1515,7 +1543,6 @@
                }
            });
        }
-
 
        //__ Sidebar Single product clear __//
        $(document).on('click', '.side_remove_cart', function(e) {

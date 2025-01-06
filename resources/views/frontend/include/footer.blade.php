@@ -48,9 +48,9 @@
                                         <li class="text-caption-1">
                                             <a href="#" class="footer-menu_item">Our Stories</a>
                                         </li>
-                                        <li class="text-caption-1">
+                                        {{-- <li class="text-caption-1">
                                             <a href="#" class="footer-menu_item">Size Guide</a>
-                                        </li>
+                                        </li> --}}
                                         <li class="text-caption-1">
                                             <a href="contact.html" class="footer-menu_item">Contact us</a>
                                         </li>

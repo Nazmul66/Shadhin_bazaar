@@ -11,6 +11,8 @@ use App\Models\ProductSize;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Jorenvh\Share\Share;
+use Jorenvh\Share\ShareFacade;
 
 class ProductController extends Controller
 {
@@ -39,6 +41,18 @@ class ProductController extends Controller
                     ->where('status', 1)
                     ->get();
 
+
+        $socialLinks = \Share::page(url()->current(), 'Share title')
+                ->facebook()
+                ->twitter()
+                ->linkedin()
+                ->whatsapp()
+                ->reddit()
+                ->pinterest()
+                ->telegram();
+
+        $socialLinks = str_replace('<a ', '<a target="_blank" ', $socialLinks);
+
         return view('frontend.pages.product_pages.product_details', [
             'products'         => $products,
             'product'          => $product,
@@ -46,6 +60,7 @@ class ProductController extends Controller
             'product_colors'   => $product_colors,
             'product_images'   => $product_images,
             'related_products' => $related_products,
+            'socialLinks'      => $socialLinks,
         ]);
     }
 

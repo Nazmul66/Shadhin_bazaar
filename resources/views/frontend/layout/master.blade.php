@@ -298,7 +298,7 @@
     <!-- /wishlist Mobile Sidebar -->
 
     <!-- size-guide -->
-    <div class="modal fade modal-size-guide" id="size-guide">
+    {{-- <div class="modal fade modal-size-guide" id="size-guide">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content widget-tabs style-2">
                 <div class="header">
@@ -432,7 +432,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     <!-- /size-guide -->
 
     <!-- compare -->

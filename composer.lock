@@ -1723,12 +1723,12 @@
             "type": "library",
             "extra": {
                 "laravel": {
-                    "providers": [
-                        "Jorenvh\\Share\\Providers\\ShareServiceProvider"
-                    ],
                     "aliases": {
                         "Share": "Jorenvh\\Share\\ShareFacade"
-                    }
+                    },
+                    "providers": [
+                        "Jorenvh\\Share\\Providers\\ShareServiceProvider"
+                    ]
                 }
             },
             "autoload": {

@@ -117,7 +117,7 @@
                                     <div class="variant-picker-label">
                                         Size:<span class="text-title size_variant variant-picker-label-value">L</span>
                                     </div>
-                                    <a class="size-guide text-title link show-size-guide">Size Guide</a>
+                                    {{-- <a class="size-guide text-title link show-size-guide">Size Guide</a> --}}
                                 </div>
     
                                 <div class="variant-picker-values gap12" id="size_variant">
