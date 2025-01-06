@@ -920,6 +920,8 @@
                                             @else
                                                 <span class="price"> ${{ $row->selling_price }}</span>
                                             @endif
+                                        @else
+                                            <span class="price"> ${{ $row->selling_price }}</span>
                                         @endif
                                     
 
@@ -1101,6 +1103,8 @@
                                             @else
                                                 <span class="price"> ${{ $row->selling_price }}</span>
                                             @endif
+                                        @else
+                                            <span class="price"> ${{ $row->selling_price }}</span>
                                         @endif
                                     
 

@@ -64,7 +64,7 @@ use Illuminate\Support\Facades\Session;
             return $total;
         }
         elseif( $coupon['discount_type'] === "percent" ){
-            $discount  =  getCartTotal() - (getCartTotal() * $coupon['discount'] / 100);
+            $discount  =  ( getCartTotal() * $coupon['discount'] ) / 100;
             $total     =  getCartTotal() - $discount;
             return $total;
         }

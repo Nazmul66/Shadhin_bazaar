@@ -11,14 +11,12 @@ use App\Models\ProductSize;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Jorenvh\Share\Share;
-use Jorenvh\Share\ShareFacade;
 
 class ProductController extends Controller
 {
     public function show_product_details($slug)
     {
-        $products = Product::orderBy('product_view', 'desc')->get();
+        $products = Product::where('status', 1)->orderBy('product_view', 'desc')->get();
         $product = Product::leftJoin('categories', 'categories.id', 'products.category_id')
                 ->select('products.*', 'categories.category_name as cat_name')
                 ->where('products.slug', $slug)

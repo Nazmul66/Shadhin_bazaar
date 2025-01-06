@@ -6,22 +6,42 @@
                 <h6 class="title">You May Also Like</h6>
                 <div class="wrap-recommendations">
                     <div class="list-cart">
-                        <div class="list-cart-item">
-                            <div class="image">
-                                <img class="lazyload" data-src="{{ asset('public/frontend/images/products/womens/women-1.jpg') }}" src="{{ asset('public/frontend/images/products/womens/women-1.jpg') }}" alt="">
-                            </div>
-                            <div class="content">
-                                <div class="name">
-                                    <a class="link text-line-clamp-1" href="product-detail.html">Belt wrap dress</a>
+
+                        @foreach (App\Models\Product::where('status', 1)->inRandomOrder()->limit(6)->get(); as $row)
+                            <div class="list-cart-item">
+                                <div class="image">
+                                    <img class="lazyload" data-src="{{ asset($row->thumb_image) }}" src="{{ asset($row->thumb_image) }}" alt="{{ $row->slug }}">
                                 </div>
-                                <div class="cart-item-bot">
-                                    <div class="text-button price">$59.99</div>
-                                    <a class="link text-button" href="#">Add to cart</a>
+
+                                <div class="content">
+                                    <div class="name">
+                                        <a class="link text-line-clamp-1" href="{{ route('product.details', $row->slug) }}">{{ $row->name }}</a>
+                                    </div>
+                                    <div class="cart-item-bot">
+                                        <div class="text-button price">
+                                        @if ( checkDiscount($row) )
+                                            @if ( $row->discount_type === "amount")
+                                                <span class="price"><span class="old-price text-danger" style="text-decoration: line-through;">${{ $row->selling_price }}</span> ${{ $row->selling_price - $row->discount_value }}</span>
+                                            @elseif( $row->discount_type === "percent" )
+                                            @php
+                                                $discount_val = $row->selling_price * $row->discount_value / 100;
+                                            @endphp
+                                                <span class="price"><span class="old-price text-danger" style="text-decoration: line-through;">${{ $row->selling_price }}</span> ${{ $row->selling_price - $discount_val }}</span>
+                                            @else
+                                                <span class="price"> ${{ $row->selling_price }}</span>
+                                            @endif
+                                        @else
+                                            <span class="price"> ${{ $row->selling_price }}</span>
+                                        @endif
+                                        </div>
+                                        <a href="#quickAdd" data-id={{ $row->id }} data-bs-toggle="modal" class="link text-button quickAdd" >Add to cart</a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        @endforeach
+
                         
-                        <div class="list-cart-item">
+                        {{-- <div class="list-cart-item">
                             <div class="image">
                                 <img class="lazyload" data-src="{{ asset('public/frontend/images/products/womens/women-2.jpg') }}" src="{{ asset('public/frontend/images/products/womens/women-2.jpg') }}" alt="">
                             </div>
@@ -90,7 +110,7 @@
                                     <a class="link text-button" href="#">Add to cart</a>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Coupon;
 use App\Models\Product;
 use App\Models\ProductColor;
 use App\Models\ProductSize;
@@ -19,6 +20,8 @@ class CartController extends Controller
     public function cart_view()
     {
         $data['cartItems']  =  Cart::content();
+        $data['coupons']    =  Coupon::where('status', 1)->get();
+        $data['products']   =  Product::where('status', 1)->inRandomOrder()->get();
         return view('frontend.pages.product_pages.cart_view', $data);
     }
 

@@ -264,8 +264,9 @@
                                                 @else
                                                     <span class="price"> ${{ $row->selling_price }}</span>
                                                 @endif
+                                            @else
+                                                <span class="price"> ${{ $row->selling_price }}</span>
                                             @endif
-                                           
 
                                             <div class="box-progress-stock">
                                                 <div class="progress">
@@ -448,6 +449,8 @@
                                                     @else
                                                         <span class="price"> ${{ $row->selling_price }}</span>
                                                     @endif
+                                                @else
+                                                    <span class="price"> ${{ $row->selling_price }}</span>
                                                 @endif
                                             
 

@@ -69,15 +69,18 @@ class CouponController extends Controller
                     'status'     => 'success',
                     'cart_total' => $total,
                     'discount'   => $coupon['discount'],
+                    'discount_type'  => 'amount',
                 ]);
             }
             elseif( $coupon['discount_type'] === "percent" ){
-                $discount  =  getCartTotal() - (getCartTotal() * $coupon['discount'] / 100);
+                $discount  =  ( getCartTotal() * $coupon['discount'] ) / 100;
                 $total     =  getCartTotal() - $discount;
                 return response()->json([
                     'status'     => 'success',
                     'cart_total' => $total,
                     'discount'   => $discount,
+                    'discount_type'  => 'percent',
+                    'discount_percent'  => $coupon['discount'],
                 ]);
             }
         }
