@@ -1,10 +1,3 @@
-@php
-    $subtotal_cart = 0;
-
-    foreach (Cart::content() as  $product) {
-        $subtotal_cart += ($product->price + ($product->options->size_price ?? 0) + ($product->options->color_price ?? 0)) * $product->qty;
-    }
-@endphp
 
 <div class="modal fullRight fade modal-shopping-cart" id="shoppingCart">
     <div class="modal-dialog">
@@ -191,7 +184,7 @@
                             <div class="tf-mini-cart-bottom-wrap">
                                 <div class="tf-cart-totals-discounts">
                                     <h5>Subtotal</h5>
-                                    <h5 class="tf-totals-total-value" id="cart_total_value">${{ $subtotal_cart }}</h5>
+                                    <h5 class="tf-totals-total-value" id="cart_total_value">${{ getCartTotal() }}</h5>
                                 </div>
 
                                 <div class="mini-cart-actions">

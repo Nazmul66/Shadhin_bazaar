@@ -11,6 +11,7 @@ use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class CartController extends Controller
 {
@@ -39,8 +40,19 @@ class CartController extends Controller
             ]);
         }
 
-        $product_color = ProductColor::where('product_id', $product->id)->where('id', $request->color_id)->first();
-        $product_size  = ProductSize::where('product_id', $product->id)->where('id', $request->size_id)->first();
+        $product_color = null;
+        if( !empty($request->color_id) ){
+            $product_color = ProductColor::where('product_id', $product->id)
+                ->where('id', $request->color_id)
+                ->first();
+        }
+
+        $product_size = null;
+        if( !empty($request->size_id) ){
+            $product_size  = ProductSize::where('product_id', $product->id)
+                ->where('id', $request->size_id)
+                ->first();
+        }
 
         $productPrice = 0;
         if( checkDiscount($product) ){
@@ -64,12 +76,19 @@ class CartController extends Controller
         $cartData['qty']                    = $request->qty;
         $cartData['price']                  = $productPrice;
         $cartData['weight']                 = 10;
-        $cartData['options']['size_id']     = $product_size->id;
-        $cartData['options']['size_name']   = $product_size->size_name;
-        $cartData['options']['size_price']  = $product_size->size_price;
-        $cartData['options']['color_id']    = $product_color->id;
-        $cartData['options']['color_name']  = $product_color->color_name;
-        $cartData['options']['color_price'] = $product_color->color_price;
+
+        if ($product_size) {
+            $cartData['options']['size_id'] = $product_size->id;
+            $cartData['options']['size_name']   = $product_size->size_name;
+            $cartData['options']['size_price']  = $product_size->size_price;
+        }
+
+        if ($product_color) {
+            $cartData['options']['color_id']    = $product_color->id;
+            $cartData['options']['color_name']  = $product_color->color_name;
+            $cartData['options']['color_price'] = $product_color->color_price;
+        }
+
         $cartData['options']['slug']        = $product->slug;
         $cartData['options']['image']       = $product->thumb_image;
         $cartData['options']['image']       = $product->thumb_image;
@@ -143,11 +162,14 @@ class CartController extends Controller
         ]);
     }
 
-
     public function cart_remove_product($rowId)
     {
-    //    dd($rowId);
+      // dd($rowId);
        Cart::remove($rowId);
+
+       if( Cart::content()->count() === 0 ){
+            Session::forget('coupon');
+       }
 
        return response()->json([
             'status'  => 'success',
@@ -179,6 +201,7 @@ class CartController extends Controller
     public function clear_cart()
     {
         Cart::destroy();
+        Session::forget('coupon'); 
 
         return response()->json([
            'status'  => 'success',

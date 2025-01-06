@@ -46,6 +46,7 @@
                         </div>
                     </div>
                 </div>
+
                 <form>
                     <table class="tf-table-page-cart">
                         <thead>
@@ -134,62 +135,67 @@
                             @endforelse
                         </tbody>
                     </table>
+                </form>
+
+                <form id="coupon_form">
+                    @csrf
 
                     <div class="ip-discount-code">
-                        <input type="text" placeholder="Add voucher discount">
-                        <button class="tf-btn"><span class="text">Apply Code</span></button>
-                    </div>
-
-                    <div class="group-discount">
-                        <div class="box-discount">
-                            <div class="discount-top">
-                                <div class="discount-off">
-                                    <div class="text-caption-1">Discount</div>
-                                    <span class="sale-off text-btn-uppercase">10% OFF</span>
-                                </div>
-                                <div class="discount-from">
-                                    <p class="text-caption-1">For all orders <br> from 200$</p>
-                                </div>
-                            </div>
-                            <div class="discount-bot">
-                                <span class="text-btn-uppercase">Mo234231</span>
-                                <button class="tf-btn"><span class="text">Apply Code</span></button>
-                            </div>
-                        </div>
-
-                        <div class="box-discount active">
-                            <div class="discount-top">
-                                <div class="discount-off">
-                                    <div class="text-caption-1">Discount</div>
-                                    <span class="sale-off text-btn-uppercase">10% OFF</span>
-                                </div>
-                                <div class="discount-from">
-                                    <p class="text-caption-1">For all orders <br> from 200$</p>
-                                </div>
-                            </div>
-                            <div class="discount-bot">
-                                <span class="text-btn-uppercase">Mo234231</span>
-                                <button class="tf-btn"><span class="text">Apply Code</span></button>
-                            </div>
-                        </div>
-
-                        <div class="box-discount">
-                            <div class="discount-top">
-                                <div class="discount-off">
-                                    <div class="text-caption-1">Discount</div>
-                                    <span class="sale-off text-btn-uppercase">10% OFF</span>
-                                </div>
-                                <div class="discount-from">
-                                    <p class="text-caption-1">For all orders <br> from 200$</p>
-                                </div>
-                            </div>
-                            <div class="discount-bot">
-                                <span class="text-btn-uppercase">Mo234231</span>
-                                <button class="tf-btn"><span class="text">Apply Code</span></button>
-                            </div>
-                        </div>
+                        <input type="text" name="coupon_code" placeholder="Add voucher discount">
+                        <button type="submit" class="tf-btn"><span class="text">Apply Code</span></button>
                     </div>
                 </form>
+
+                <div class="group-discount">
+                    <div class="box-discount">
+                        <div class="discount-top">
+                            <div class="discount-off">
+                                <div class="text-caption-1">Discount</div>
+                                <span class="sale-off text-btn-uppercase">10% OFF</span>
+                            </div>
+                            <div class="discount-from">
+                                <p class="text-caption-1">For all orders <br> from 200$</p>
+                            </div>
+                        </div>
+                        <div class="discount-bot">
+                            <span class="text-btn-uppercase">Mo234231</span>
+                            <button class="tf-btn"><span class="text">Apply Code</span></button>
+                        </div>
+                    </div>
+
+                    <div class="box-discount active">
+                        <div class="discount-top">
+                            <div class="discount-off">
+                                <div class="text-caption-1">Discount</div>
+                                <span class="sale-off text-btn-uppercase">10% OFF</span>
+                            </div>
+                            <div class="discount-from">
+                                <p class="text-caption-1">For all orders <br> from 200$</p>
+                            </div>
+                        </div>
+                        <div class="discount-bot">
+                            <span class="text-btn-uppercase">Mo234231</span>
+                            <button class="tf-btn"><span class="text">Apply Code</span></button>
+                        </div>
+                    </div>
+
+                    <div class="box-discount">
+                        <div class="discount-top">
+                            <div class="discount-off">
+                                <div class="text-caption-1">Discount</div>
+                                <span class="sale-off text-btn-uppercase">10% OFF</span>
+                            </div>
+                            <div class="discount-from">
+                                <p class="text-caption-1">For all orders <br> from 200$</p>
+                            </div>
+                        </div>
+                        <div class="discount-bot">
+                            <span class="text-btn-uppercase">Mo234231</span>
+                            <button class="tf-btn"><span class="text">Apply Code</span></button>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
 
@@ -199,14 +205,20 @@
                         <h5 class="title">Order Summary</h5>
                         <div class="subtotal text-button d-flex justify-content-between align-items-center">
                             <span>Subtotal</span>
-                            <span class="total">-$80.00</span>
+                            <span class="subTotal">${{ getCartTotal() }}</span>
                         </div>
                         <div class="discount text-button d-flex justify-content-between align-items-center">
-                            <span>Discounts</span>
-                            <span class="total">-$80.00</span>
+                            <span>(-) Discounts</span>
+                            <span class="total_discount">
+                                @if ( Session::has('coupon') )
+                                    ${{ Session::get('coupon')['discount'] }}
+                                @else
+                                    $00
+                                @endif
+                            </span>
                         </div>
                         <div class="ship">
-                            <span class="text-button">Shipping</span>
+                            <span class="text-button">(-) Shipping</span>
                             <div class="flex-grow-1">
                                 <fieldset class="ship-item">
                                     <input type="radio" name="ship-check" class="tf-check-rounded" id="free" checked>
@@ -233,7 +245,7 @@
                         </div>
                         <h5 class="total-order d-flex justify-content-between align-items-center">
                             <span>Total</span>
-                            <span class="total">$186,99</span>
+                            <span class="main_cart_total">${{ getMainCartTotal() }}</span>
                         </h5>
                         <div class="box-progress-checkout">
                             <fieldset class="check-agree">
@@ -538,6 +550,7 @@
                     if( data.status === 'success' ){ 
                         let productId = '#' + rowId;
                         $(productId).text('$' + data.productTotal);
+                        calculationCouponDiscount();
                         getSidebarCartTotal();
                         sidebarCartData();
                         toastr.success(data.message);
@@ -578,6 +591,7 @@
                     if( data.status === 'success' ){ 
                         let productId = '#' + rowId;
                         $(productId).text('$' + data.productTotal);
+                        calculationCouponDiscount();
                         getSidebarCartTotal();
                         sidebarCartData();
                         toastr.success(data.message);
@@ -606,6 +620,7 @@
                 success: function(data) {
                     // console.log(data);
                     if( data.status === 'success' ){ 
+                        calculationCouponDiscount();
                         getSidebarCartTotal();
                         let singleProductRemove = '#remove-' +id;
                         $(singleProductRemove).remove();
@@ -627,7 +642,7 @@
                             $('.tf-mini-cart-threshold').remove();
                             $('#tf-mini-cart-actions-field').remove();
                         }
-
+                        
                         sidebarCartData();
                         getCartCount(); 
                         toastr.success(data.message);
@@ -670,6 +685,7 @@
                             $('.tf-mini-cart-threshold').remove();
                             $('#tf-mini-cart-actions-field').remove();
                         }
+                        calculationCouponDiscount(); 
                         CartPageData();
                         getCartCount(); 
                         toastr.success(data.message);
@@ -843,6 +859,7 @@
                         success: function(data) {
                             // console.log(data);
                             if( data.status === 'success' ){ 
+                                calculationCouponDiscount();
                                 getSidebarCartTotal();
                                 $('.tf-cart-item').remove();
 
@@ -889,6 +906,7 @@
                     console.log('get total', data);
                     if( data.status === 'success' ){
                        $('.tf-totals-total-value').text('$' + data.total);
+                       $('.subTotal').text('$' + data.total);
                     }
                 },
                 error: function(data) {
@@ -941,6 +959,51 @@
                     // console.log('Error adding product to cart:', data);
                 },
             });
+        }
+
+
+        //__ Coupon Apply __//
+        $('#coupon_form').on('submit', function(e){
+            e.preventDefault();
+            let formdata = $(this).serialize(); 
+            console.log(formdata);
+
+            $.ajax({
+                url: "{{ route('apply.coupon') }}",
+                method: 'POST',
+                data: formdata,
+                success: function(data) {
+                    console.log(data);
+                    if( data.status === 'success' ){ 
+                        calculationCouponDiscount();
+                        toastr.success(data.message);
+                    }
+                    else if( data.status === 'error' ){
+                        toastr.error(data.message);
+                    }
+                },
+                error: function(err) {
+                    console.log(err);
+                },
+            })
+        })
+
+
+        function calculationCouponDiscount(){
+            $.ajax({
+                url: "{{ route('coupon.calculation') }}",
+                method: 'GET',
+                success: function(data) {
+                    // console.log(data.cart_total, data.discount);
+                    if( data.status === 'success' ){ 
+                        $('.total_discount').text('$'+ data.discount);
+                        $('.main_cart_total').text('$'+ data.cart_total);
+                    }
+                },
+                error: function(err) {
+                    console.log(err);
+                },
+            })
         }
     })
 </script>
