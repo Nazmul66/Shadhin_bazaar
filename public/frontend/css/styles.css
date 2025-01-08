@@ -18024,4 +18024,20 @@ ul.list-text.type-number {
     display: inline-block;
     padding-right: 6px;
 }
+.checkout_remove_cart{
+    color: var(--critical);
+    text-decoration: underline;
+    cursor: pointer;
+}
+@media ( min-width: 320px ) and ( max-width: 576px ){
+    /* .sidebar-checkout-content .item-product .content-box{
+        flex-direction: column;
+    } */
+    .price, .count{
+        font-size: 14px;
+    }
+    .x-mark{
+        font-size: 10px;
+    }
+}
 /*# sourceMappingURL=styles.css.map */

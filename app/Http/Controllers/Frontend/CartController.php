@@ -162,6 +162,7 @@ class CartController extends Controller
             'status'       => 'success',
             'message'      => 'Product quantity updated',
             'productTotal' => $productTotal,
+            'productQty'   => Cart::get($request->rowId)->qty,
         ]);
     }
 

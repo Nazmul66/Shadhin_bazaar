@@ -73,6 +73,7 @@
                                         <a href="{{ route('product.details', $row->options->slug) }}" class="img-box">
                                             <img src="{{ asset($row->options->image) }}" alt="{{ $row->options->slug }}">
                                         </a>
+                                        
                                         <div class="cart-info">
                                             <a href="{{ route('product.details', $row->options->slug) }}" class="cart-title link">{{ $row->name }}</a>
                                             <div class="variant-box">
@@ -106,9 +107,11 @@
                                             </div>
                                         </div>
                                     </td>
+
                                     <td data-cart-title="Price" class="tf-cart-item_price text-center">
                                         <div class="cart_price text-button price_on_sale">${{ $row->price }}</div>
                                     </td>
+
                                     <td data-cart-title="Quantity" class="tf-cart-item_quantity">
                                         <div class="wg-quantity mx-md-auto">
                                             <span class="btn-quantity product-decrease">-</span>
@@ -156,7 +159,7 @@
                         @if ( getCartTotal() > 0 )
                             @foreach ($coupons as $item)
                                 @if ( date('Y-m-d') >= $item->start_date && date('Y-m-d') <= $item->end_date && $item->quantity >= $item->total_used)
-                                    <div class="box-discount {{ $item->code }} {{ Session::get('coupon')['coupon_code'] === $item->code ? 'active' : '' }}">
+                                    <div class="box-discount {{ $item->code }} {{ Session::has('coupon') && Session::get('coupon')['coupon_code'] === $item->code ? 'active' : '' }}">
                                         <div class="discount-top">
                                             <div class="discount-off">
                                                 <div class="text-caption-1">Discount</div>
@@ -168,10 +171,12 @@
                                                     @endif
                                                 </span>
                                             </div>
+
                                             <div class="discount-from">
                                                 <p class="text-caption-1">For all orders <br> from <span class="main_cart_total">${{ getMainCartTotal() }}</span></p>
                                             </div>
                                         </div>
+
                                         <div class="discount-bot">
                                             <span class="text-btn-uppercase">{{ $item->code }}</span>
                                             <button type="button" class="tf-btn tf_btn_discount" data-code="{{ $item->code }}"><span class="text">Apply Code</span></button>
@@ -411,22 +416,24 @@
                                         </div>
                                     @endif
                                 @endif
-
                                 
                                 <div class="list-product-btn">
                                     <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
                                         <i class='bx bx-heart' style="font-size: 24px;"></i>
                                         <span class="tooltip">Wishlist</span>
                                     </a>
+
                                     <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
                                         <i class='bx bx-git-compare' style="font-size: 24px;"></i>
                                         <span class="tooltip">Compare</span>
                                     </a>
+
                                     <a href="#quickView" data-id={{ $row->id }} data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
                                         <ion-icon name="eye-outline" style="font-size: 24px;"></ion-icon>
                                         <span class="tooltip">Quick View</span>
                                     </a>
                                 </div>
+
                                 <div class="list-btn-main">
                                     <a href="#quickAdd" data-id={{ $row->id }} data-bs-toggle="modal" class="btn-main-product quickAdd">Quick Add</a>
                                 </div>
@@ -491,6 +498,7 @@
 @endsection
 
 @push('add-js')
+
 <script>
     $(document).ready(function(){
         //__ Product Quantity Increament __//
@@ -996,7 +1004,6 @@
     })
 </script>
 
-
 <script>
     $(document).ready(function () {
        //__ Quick View Cart __//
@@ -1425,4 +1432,5 @@
        });
    });
 </script>
+
 @endpush
