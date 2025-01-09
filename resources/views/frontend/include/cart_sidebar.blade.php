@@ -2,7 +2,8 @@
 <div class="modal fullRight fade modal-shopping-cart" id="shoppingCart">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="tf-minicart-recommendations">
+
+            {{-- <div class="tf-minicart-recommendations">
                 <h6 class="title">You May Also Like</h6>
                 <div class="wrap-recommendations">
                     <div class="list-cart">
@@ -41,7 +42,7 @@
                         @endforeach
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
             
             <div class="d-flex flex-column flex-grow-1 h-100">
@@ -138,7 +139,7 @@
                                 <div class="mini-cart-actions">
                                     @if ( Cart::content()->isNotEmpty() )
                                         <div id="tf-mini-cart-actions-field">
-                                            <div class="tf-cart-checkbox">
+                                            {{-- <div class="tf-cart-checkbox">
                                                 <div class="tf-checkbox-wrapp">
                                                     <input class="" type="checkbox" id="CartDrawer-Form_agree" name="agree_checkbox">
                                                     <div>
@@ -149,7 +150,7 @@
                                                     I agree with 
                                                     <a href="term-of-use.html" title="Terms of Service">Terms & Conditions</a>
                                                 </label>
-                                            </div>
+                                            </div> --}}
 
                                             <div class="tf-mini-cart-view-checkout">
                                                 <a href="{{ route('show-cart') }}" class="tf-btn w-100 btn-white radius-4 has-border"><span class="text">View cart</span></a>

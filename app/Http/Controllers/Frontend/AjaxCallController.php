@@ -100,7 +100,7 @@ class AjaxCallController extends Controller
         $sortedSizes = $productSizes->sortBy(function ($size) use ($defaultOrder) {
             return array_search($size->size_name, $defaultOrder); 
         });
-        
+
         // Convert back to a plain array
         $product_sizes = $sortedSizes->values()->all();
         
@@ -108,7 +108,7 @@ class AjaxCallController extends Controller
             'product' => $product,
             'main_image' => $main_image,
             'multi_images' => $images,
-            'product_sizes' => $product_sizes,
+            'product_sizes' => $product_sizes ?: [],
             'product_color' => $product_color,
             'price_val' => $price_val,
             // 'product_price' => $product_price,

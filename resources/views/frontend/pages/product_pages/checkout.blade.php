@@ -192,125 +192,110 @@
                 <div class="flat-spacing flat-sidebar-checkout">
                     <div class="sidebar-checkout-content">
                         <h5 class="title">Shopping Cart</h5>
-                        <div class="list-product">
+                        <div class="list-product" id="list_product">
 
-                            @foreach ($cartItems as $item)
-                                @php
-                                    $totalPrice = ($item->price + ($item->options->size_price ?? 0) + ($item->options->color_price ?? 0)) * $item->qty;
+                            @if ($cartItems->count() > 0)
+                                @foreach ($cartItems as $item)
+                                    @php
+                                        $totalPrice = ($item->price + ($item->options->size_price ?? 0) + ($item->options->color_price ?? 0)) * $item->qty;
 
-                                    $variant_price = ($item->price + ($item->options->size_price ?? 0) + ($item->options->color_price ?? 0));
-                                @endphp
+                                        $variant_price = ($item->price + ($item->options->size_price ?? 0) + ($item->options->color_price ?? 0));
+                                    @endphp
 
-                                <div class="item-product">
-                                    <a href="{{ route('product.details', $item->options->slug) }}" class="img-product">
-                                        <img src="{{ asset($item->options->image) }}" alt="{{ $item->slug }}">
-                                    </a>
+                                    <div class="item-product checkout_product" id="checkout-{{ $item->rowId }}">
+                                        <a href="{{ route('product.details', $item->options->slug) }}" class="img-product">
+                                            <img src="{{ asset($item->options->image) }}" alt="{{ $item->slug }}">
+                                        </a>
 
-                                    <div class="content-box">
-                                        <div class="info">
-                                            <a href="{{ route('product.details', $item->options->slug) }}" class="name-product link text-title">{{ $item->name }}</a>
+                                        <div class="content-box">
+                                            <div class="info">
+                                                <a href="{{ route('product.details', $item->options->slug) }}" class="name-product link text-title">{{ $item->name }}</a>
 
-                                            <div class="variant text-caption-1 text-secondary"><span class="size">{{ strtoupper($item->options->size_name) }} ( ${{ $item->options->size_price }} )</span> / <span class="color">{{ $item->options->color_name }} ( ${{ $item->options->color_price }} )</span></div>
+                                                <div class="variant text-caption-1 text-secondary"><span class="size">{{ strtoupper($item->options->size_name) }} ( ${{ $item->options->size_price }} )</span> / <span class="color">{{ $item->options->color_name }} ( ${{ $item->options->color_price }} )</span></div>
 
-                                            <div class="wg-quantity">
-                                                <span class="btn-quantity product-decrease">-</span>
-                                                <input type="text" name="number" class="product_quantity" data-row_id="{{ $item->rowId }}" value="{{ $item->qty }}">
-                                                <span class="btn-quantity product-increase">+</span>
+                                                <div class="wg-quantity">
+                                                    <span class="btn-quantity product-decrease">-</span>
+                                                    <input type="text" name="number" class="product_quantity" data-row_id="{{ $item->rowId }}" value="{{ $item->qty }}">
+                                                    <span class="btn-quantity product-increase">+</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="total-price text-button" style="flex-direction: column">
+                                                <div class="text-button tf-btn-remove remove checkout_remove_cart" data-row_id="{{ $item->rowId }}">Remove</div>
+
+                                                <div class="">
+                                                    <span class="count" data-row_id="{{ $item->rowId }}" id="qty{{ $item->rowId }}">{{ $item->qty }}</span>
+                                                    <span class="x-mark">X</span>  <span class="price">${{ $variant_price }}</span>
+                                                </div>
+
+                                                <div id="{{ $item->rowId }}" class="cart_total text-button total_price">${{ $totalPrice }}</div>
                                             </div>
                                         </div>
-
-                                        <div class="total-price text-button" style="flex-direction: column">
-                                            <div class="text-button tf-btn-remove remove checkout_remove_cart" data-row_id="checkout-{{ $item->rowId }}">Remove</div>
-
-                                            <div class="">
-                                                <span class="count" data-row_id="{{ $item->rowId }}" id="qty{{ $item->rowId }}">{{ $item->qty }}</span>
-                                                <span class="x-mark">X</span>  <span class="price">${{ $variant_price }}</span>
-                                            </div>
-
-                                            <div id="{{ $item->rowId }}" class="cart_total text-button total_price">${{ $totalPrice }}</div>
-                                        </div>
                                     </div>
-                                </div>
-                            @endforeach
-
-                            {{-- <div class="item-product">
-                                <a href="product-detail.html" class="img-product">
-                                    <img src="images/products/womens/women-1.jpg" alt="img-product">
-                                </a>
-                                <div class="content-box">
-                                    <div class="info">
-                                        <a href="product-detail.html" class="name-product link text-title">Polarized sunglasses</a>
-                                        <div class="variant text-caption-1 text-secondary"><span class="size">XL</span>/<span class="color">Blue</span></div>
-                                    </div>
-                                    <div class="total-price text-button"><span class="count">1</span>X<span class="price">$60.00</span></div>
-                                </div>
-                            </div>
-
-                            <div class="item-product">
-                                <a href="product-detail.html" class="img-product">
-                                    <img src="images/products/womens/women-29.jpg" alt="img-product">
-                                </a>
-                                <div class="content-box">
-                                    <div class="info">
-                                        <a href="product-detail.html" class="name-product link text-title">Ramie shirt with pockets </a>
-                                        <div class="variant text-caption-1 text-secondary"><span class="size">XL</span>/<span class="color">Blue</span></div>
-                                    </div>
-                                    <div class="total-price text-button"><span class="count">1</span>X<span class="price">$60.00</span></div>
-                                </div>
-                            </div> --}}
-                        </div>
-
-                        <div class="sec-discount">
-                            @if ( getCartTotal() > 0 )
-                                <div dir="ltr" class="swiper tf-sw-categories" data-preview="2.25" data-tablet="3" data-mobile-sm="2.5" data-mobile="1.2" data-space-lg="20" data-space-md="20" data-space="15" data-pagination="1" data-pagination-md="1" data-pagination-lg="1">
-                                    <div class="swiper-wrapper">
-                                        @foreach ($coupons as $item)
-                                            <div class="swiper-slide">
-                                                @if ( date('Y-m-d') >= $item->start_date && date('Y-m-d') <= $item->end_date && $item->quantity >= $item->total_used)
-                                                    <div class="box-discount {{ $item->code }} {{ Session::has('coupon') && Session::get('coupon')['coupon_code'] === $item->code ? 'active' : '' }}">
-                                                        <div class="discount-top">
-                                                            <div class="discount-off">
-                                                                <div class="text-caption-1">Discount</div>
-                                                                <span class="sale-off text-btn-uppercase">
-                                                                    @if ( $item->discount_type === "amount" )
-                                                                        ${{ $item->discount }} OFF
-                                                                    @elseif( $item->discount_type === "percent")
-                                                                        {{ $item->discount }}% OFF
-                                                                    @endif
-                                                                </span>
-                                                            </div>
-
-                                                            <div class="discount-from">
-                                                                <p class="text-caption-1">For all orders <br> from <span class="main_cart_total">${{ getMainCartTotal() }}</span></p>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="discount-bot">
-                                                            <span class="text-btn-uppercase">{{ $item->code }}</span>
-                                                            <button type="button" class="tf-btn tf_btn_discount" data-code="{{ $item->code }}"><span class="text">Apply Code</span></button>
-                                                        </div>
-                                                    </div>
-                                                @endif
-                                            </div>
-                                        @endforeach
-                                    </div>
+                                @endforeach
+                            @else
+                                <div class="alert alert-danger text-center" style="margin: 0 24px;" role="alert">
+                                    <p class="mb-3">No items in the cart. </p>
+                                    <a href="{{ route('checkout') }}" class="tf-btn btn-reset">Continue Shopping</a>
                                 </div>
                             @endif
+                        </div>
 
-                            <form class="coupon_form">
-                                @csrf
-            
-                                <div class="ip-discount-code">
-                                    <input type="text" name="coupon_code" id="coupon_codes" placeholder="Add voucher discount"
-                                    @if ( Session::has('coupon') )
-                                        value="{{ Session::get('coupon')['coupon_code'] }}"
+                        <div class="whole_discount_container">
+                            <div class="group-discount" style="display: block;">
+                                <div class="sec-discount">
+                                    @if ( getCartTotal() > 0 )
+                                        <div dir="ltr" class="swiper tf-sw-categories" data-preview="2.25" data-tablet="3" data-mobile-sm="2.5" data-mobile="1.2" data-space-lg="20" data-space-md="20" data-space="15" data-pagination="1" data-pagination-md="1" data-pagination-lg="1">
+                                            <div class="swiper-wrapper">
+                                                @foreach ($coupons as $item)
+                                                    <div class="swiper-slide">
+                                                        @if ( date('Y-m-d') >= $item->start_date && date('Y-m-d') <= $item->end_date && $item->quantity >= $item->total_used)
+                                                            <div class="box-discount {{ $item->code }} {{ Session::has('coupon') && Session::get('coupon')['coupon_code'] === $item->code ? 'active' : '' }}">
+                                                                <div class="discount-top">
+                                                                    <div class="discount-off">
+                                                                        <div class="text-caption-1">Discount</div>
+                                                                        <span class="sale-off text-btn-uppercase">
+                                                                            @if ( $item->discount_type === "amount" )
+                                                                                ${{ $item->discount }} OFF
+                                                                            @elseif( $item->discount_type === "percent")
+                                                                                {{ $item->discount }}% OFF
+                                                                            @endif
+                                                                        </span>
+                                                                    </div>
+
+                                                                    <div class="discount-from">
+                                                                        <p class="text-caption-1">For all orders <br> from <span class="main_cart_total">${{ getMainCartTotal() }}</span></p>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="discount-bot">
+                                                                    <span class="text-btn-uppercase">{{ $item->code }}</span>
+                                                                    <button type="button" class="tf-btn tf_btn_discount" data-code="{{ $item->code }}"><span class="text">Apply Code</span></button>
+                                                                </div>
+                                                            </div>
+                                                        @endif
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        </div>
                                     @endif
-                                    >
-                                    <button type="submit" class="tf-btn"><span class="text">Apply Code</span></button>
-                                </div>
-                            </form>
 
-                            {{-- <p>Discount code is only used for orders with a total value of products over $500.00</p> --}}
+                                    <form class="coupon_form">
+                                        @csrf
+                    
+                                        <div class="ip-discount-code">
+                                            <input type="text" name="coupon_code" id="coupon_codes" placeholder="Add voucher discount"
+                                            @if ( Session::has('coupon') )
+                                                value="{{ Session::get('coupon')['coupon_code'] }}"
+                                            @endif
+                                            >
+                                            <button type="submit" class="tf-btn"><span class="text">Apply Code</span></button>
+                                        </div>
+                                    </form>
+
+                                    {{-- <p>Discount code is only used for orders with a total value of products over $500.00</p> --}}
+                                </div>
+                            </div>
                         </div>
 
                         <div class="sec-total-price">
@@ -364,7 +349,7 @@
 <script>
     $(document).ready(function(){
         //__ Product Quantity Increament __//
-        $('.product-increase').on('click', function(){
+        $(document).on('click', '.product-increase', function() {
             let input = $(this).siblings('.product_quantity');
             let rowId = input.data('row_id');
             let quantity = parseInt(input.val()) || 0;
@@ -405,7 +390,7 @@
         })
 
         //__ Product Quantity Decrement __//
-        $('.product-decrease').on('click', function(){
+        $(document).on('click', '.product-decrease', function() {
             let input = $(this).siblings('.product_quantity');
             let rowId = input.data('row_id');
             let quantity = parseInt(input.val()) || 0;
@@ -529,6 +514,7 @@
                             $('.group-discount').remove();
                         }
                         calculationCouponDiscount(); 
+                        CheckoutPageData();
                         CartPageData();
                         getCartCount(); 
                         toastr.success(data.message);
@@ -540,58 +526,100 @@
             })
         })
 
+        //__ Checkout product clear __//
+        $(document).on('click', '.checkout_remove_cart', function (e) {
+            e.preventDefault();
+
+            // Extract the correct rowId without the prefix
+            let rowId = $(this).data('row_id');
+
+            $.ajax({
+                url: "{{ url('/cart/remove-product') }}/" + rowId,
+                method: 'GET',
+                success: function (data) {
+                    if (data.status === 'success') {
+                        $(`#checkout-${rowId}`).remove();
+
+                        // Check if the cart is empty and update accordingly
+                        if ($('#list_product .checkout_product').length === 0) {
+                            $('#list_product').html(`
+                                <div class="alert alert-danger text-center" role="alert" style="margin: 0 24px;">
+                                    <p class="mb-3">No items in the cart.</p>
+                                    <a href="{{ route('checkout') }}" class="tf-btn btn-reset">Continue Shopping</a>
+                                </div>
+                            `);
+                            $('.tf-mini-cart-threshold').remove();
+                            $('#tf-mini-cart-actions-field').remove();
+                            $('#coupon_codes').val('');
+                            $('.group-discount').remove();
+                        }
+
+                        sidebarCartData();  
+                        getSidebarCartTotal();
+                        calculationCouponDiscount(); 
+                        getCartCount(); 
+                        CartPageData();
+                        toastr.success(data.message);
+                    }
+                },
+                error: function (err) {
+                    console.error(err);
+                    toastr.error('Failed to remove item from cart.');
+                }
+            });
+        });
+
         // Fetch all cart data from Sidebar
-        function sidebarCartData(){
+        function sidebarCartData() {
             $.ajax({
                 method: 'GET',
                 url: "{{ route('get.sidebar.cart') }}",
                 success: function(response) {
-                    if (response.status === true) {
-                        let cartHtml = '';
+                    let cartHtml = '';
 
-                        // If cart is empty, show error message
-                        if (response.isEmpty) {
-                            cartHtml = `
-                                <div class="alert alert-danger text-center" role="alert" style="margin: 0 24px;">
-                                    <p class="mb-3">No items in the cart. </p>
-                                    <a href="{{ route('checkout') }}" class="tf-btn btn-reset">Continue Shopping</a>
-                                </div>
-                            `;
-                        } else {
-                            // Loop through cart items if not empty
-                            response.cartItems.forEach(item => {
-                                cartHtml += `
-                                    <div class="tf-mini-cart-item file_delete" id="side_remove-${item.rowId}">
-                                        <div class="tf-mini-cart-image">
-                                            <img class="lazyload" data-src="${item.image}" src="${item.image}" alt="${item.slug}">
+                    // Check if the cart is empty
+                    if (response.isEmpty) {
+                        cartHtml = `
+                            <div class="alert alert-danger text-center" role="alert" style="margin: 0 24px;">
+                                <p class="mb-3">No items in the cart.</p>
+                                <a href="{{ route('checkout') }}" class="tf-btn btn-reset">Continue Shopping</a>
+                            </div>
+                        `;
+                    } else {
+                        // Loop through cart items if not empty
+                        response.cartItems.forEach(item => {
+                            cartHtml += `
+                                <div class="tf-mini-cart-item file_delete" id="side_remove-${item.rowId}">
+                                    <div class="tf-mini-cart-image">
+                                        <img class="lazyload" data-src="${item.image}" src="${item.image}" alt="${item.slug}">
+                                    </div>
+                                    <div class="tf-mini-cart-info flex-grow-1">
+                                        <div class="mb_12 d-flex align-items-center justify-content-between de-flex gap-12">
+                                            <div class="text-title">
+                                                <a href="/product-details/${item.slug}" class="link text-line-clamp-1">${item.name}</a>
+                                            </div>
+                                            <div class="text-button tf-btn-remove remove side_remove_cart" data-row_id="${item.rowId}">Remove</div>
                                         </div>
-                                        <div class="tf-mini-cart-info flex-grow-1">
-                                            <div class="mb_12 d-flex align-items-center justify-content-between de-flex gap-12">
-                                                <div class="text-title">
-                                                    <a href="/product-details/${item.slug}" class="link text-line-clamp-1">${item.name}</a>
-                                                </div>
-                                                <div class="text-button tf-btn-remove remove side_remove_cart" data-row_id="${item.rowId}">Remove</div>
+                                        <div class="d-flex align-items-center justify-content-between de-flex gap-12">
+                                            <div class="text-secondary-2">
+                                                ${item.size_name ? item.size_name.toUpperCase() + ` ($${item.size_price})` : ''} 
+                                                ${item.color_name ? ` / ${item.color_name} ($${item.color_price})` : ''}
                                             </div>
-                                            <div class="d-flex align-items-center justify-content-between de-flex gap-12">
-                                                <div class="text-secondary-2">
-                                                    ${item.size_name ? item.size_name.toUpperCase() + ` ($${item.size_price})` : ''} 
-                                                    ${item.color_name ? ` / ${item.color_name} ($${item.color_price})` : ''}
-                                                </div>
-                                                <div class="text-button">${item.qty} X $${item.price}</div>
-                                            </div>
-                                            <div class="d-flex align-items-center justify-content-between de-flex gap-12">
-                                                <div class="text-secondary-2">Amount</div>
-                                                <div class="text-button">$${item.total}</div>
-                                            </div>
+                                            <div class="text-button">${item.qty} X $${item.price}</div>
+                                        </div>
+                                        <div class="d-flex align-items-center justify-content-between de-flex gap-12">
+                                            <div class="text-secondary-2">Amount</div>
+                                            <div class="text-button">$${item.total}</div>
                                         </div>
                                     </div>
-                                `;
-                            });
-                        }
-
-                        // Update the cart sidebar body
-                        $('#cart-sidebar-table-body').html(cartHtml);
+                                </div>
+                            `;
+                        });
                     }
+
+                    // Update the cart sidebar body
+                    $('#cart-sidebar-table-body').html(cartHtml);
+                    sidebarCartActionElement();
                 },
                 error: function(err) {
                     toastr.error('Failed to fetch cart data.');
@@ -601,7 +629,7 @@
         }
 
         // Fetch all cart data for Cart Page
-        function CartPageData() {
+        function CartPageData(){
             $.ajax({
                 method: 'GET',
                 url: "{{ route('get.sidebar.cart') }}", // Update with your route
@@ -678,6 +706,72 @@
             });
         }
 
+        // Fetch all cart data for Checkout Page
+        function CheckoutPageData(){
+            $.ajax({
+                method: 'GET',
+                url: "{{ route('get.sidebar.cart') }}", // Update with your route
+                success: function(response) {
+                    if (response.status === true) {
+                        let cartHtml = '';
+
+                        if (response.isEmpty) {
+                            // If cart is empty, display a message
+                            cartHtml = `
+                                <div class="alert alert-danger text-center" role="alert" style="margin: 0 24px;">
+                                    <p class="mb-3">No items in the cart.</p>
+                                    <a href="{{ route('checkout') }}" class="tf-btn btn-reset">Continue Shopping</a>
+                                </div>
+                            `;
+                        } else {
+                            // Loop through cart items and generate HTML
+                            response.cartItems.forEach(item => {
+                                cartHtml += `
+                                <div class="item-product checkout_product" id="${item.rowId}">
+                                        <a href="/product-details/${item.slug}" class="img-product">
+                                            <img src="${item.image}" alt="${item.slug}">
+                                        </a>
+
+                                        <div class="content-box">
+                                            <div class="info">
+                                                <a href="/product-details/${item.slug}" class="name-product link text-title">${item.name}</a>
+
+                                                <div class="variant text-caption-1 text-secondary"><span class="size">${item.color_name || 'N/A'} ( $${item.color_price} )</span> / <span class="color">${item.size_name || 'N/A'} ( $${item.size_price} )</span></div>
+
+                                                <div class="wg-quantity">
+                                                    <span class="btn-quantity product-decrease">-</span>
+                                                    <input type="text" name="number" class="product_quantity" data-row_id="${item.rowId}" value="${item.qty}">
+                                                    <span class="btn-quantity product-increase">+</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="total-price text-button" style="flex-direction: column">
+                                                <div class="text-button tf-btn-remove remove checkout_remove_cart" data-row_id="${item.rowId}">Remove</div>
+
+                                                <div class="">
+                                                    <span class="count" data-row_id="${item.rowId}" id="qty${item.rowId}">1</span>
+                                                    <span class="x-mark">X</span>  <span class="price">$2450</span>
+                                                </div>
+
+                                                <div id="${item.rowId}" class="cart_total text-button total_price">$2450</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                `;
+                            });
+                        }
+
+                        // Update the cart table body
+                        $('#list_product').html(cartHtml);
+                    }
+                },
+                error: function(err) {
+                    toastr.error('Failed to fetch cart data.');
+                    console.log(err);
+                }
+            });
+        }
+
         //__ Clear all Cart data __//
         $('#clear_cart').on('click', function(e){
             e.preventDefault();
@@ -738,7 +832,6 @@
             })
         })
 
-
         //__ Cart subTotal __//
         function getSidebarCartTotal(){
             $.ajax({
@@ -749,6 +842,7 @@
                     if( data.status === 'success' ){
                        $('.tf-totals-total-value').text('$' + data.total);
                        $('.subTotal').text('$' + data.total);
+                    //    $('.main_cart_total').text('$' + data.total);
                     }
                 },
                 error: function(data) {
@@ -803,7 +897,6 @@
             });
         }
 
-
         //__ Coupon Apply __//
         $(document).on('submit', '.coupon_form', function(e){
             e.preventDefault();
@@ -844,6 +937,7 @@
                     if( data.status === 'success' ){ 
                         $('.total_discount').text('$'+ data.discount);
                         $('.main_cart_total').text('$'+ data.cart_total);
+                        $('.main_cart_total').text('$'+ data.cart_total);
 
                         if( data.discount_type === "percent" ){
                             $('.percent_show').text('(' + data.discount_percent + '%)');
@@ -865,11 +959,7 @@
             let code = $(this).data('code');
             $('#coupon_codes').val(code);
         })
-    })
-</script>
 
-<script>
-    $(document).ready(function () {
        //__ Quick View Cart __//
        $('.quickview').click(function (e) {
            e.preventDefault(); // Prevent default behavior if necessary
@@ -908,7 +998,7 @@
                    $('.multiple_image').html(imagesHtml);
 
 
-                   if (res.product_color && res.product_color.length > 0) {
+                    if (res.product_color && res.product_color.length > 0) {
                         var colorsHtml = '';
 
                        // Loop through the product_color array
@@ -935,39 +1025,38 @@
                        // Dynamically set the first color name in the text-title span
                        var firstColor = res.product_color[0]; // Get the first color
                        $('.text-title.color_variant').text(firstColor.color_name);
-                   } else {
+                    } else {
                        $('#color_variant').html('<p>No colors available for this product.</p>');
                        $('.text-title.color_variant').text('No Color');
-                   }
+                    }
 
+                    if (res.product_sizes && res.product_sizes.length > 0) {
+                        var sizesHtml = '';
 
+                        // Loop through the product_sizes array
+                        res.product_sizes.forEach(function (size, index) {
+                            sizesHtml += `
+                                <div class="">
+                                    <input type="radio" name="size_id" data-price="${size.size_price}" id="size${size.id}" value="${size.id}" ${index === 0 ? 'checked' : ''}>
+                                    <label class="hover-tooltip tooltip-bot style-text size-btn" for="size${size.id}" data-value="${size.size_name.toUpperCase()}" data-size-price="${size.size_price}">
+                                        <span class="text-title">${size.size_name.toUpperCase()}</span>
+                                        <span class="tooltip">${size.size_name} ( TK ${size.size_price} )</span>
+                                    </label>
+                                </div>
+                            `;
+                        });
 
-                   if (res.product_sizes && res.product_sizes.length > 0) {
-                       var sizesHtml = '';
+                        // Update the size container
+                        $('#size_variant').html(sizesHtml);
 
-                       // Loop through the product_sizes array
-                       res.product_sizes.forEach(function (size, index) {
-                           sizesHtml += `
-                               <div class="">
-                                   <input type="radio" name="size_id" data-price="${size.size_price}" id="size${size.id}" value="${size.id}" ${index === 0 ? 'checked' : ''}>
-                                   <label class="hover-tooltip tooltip-bot style-text size-btn for="size${size.id}" data-value="${size.size_name.toUpperCase()}" data-size-price="${size.size_price}" >
-                                       <span class="text-title">${size.size_name.toUpperCase()}</span>
-                                       <span class="tooltip">${size.size_name} ( TK ${size.size_price} )</span>
-                                   </label>
-                               </div>
-                           `;
-                       });
-
-                       // Update the size container
-                       $('#size_variant').html(sizesHtml);
-
-                       // Dynamically set the first size name in the text-title span
-                       var firstSize = res.product_sizes[0]; // Get the first size
-                       $('.text-title.size_variant').text(firstSize.size_name.toUpperCase());
-                   } else {
-                       $('#size_variant').html('<p>No sizes available for this product.</p>');
-                       $('.text-title.size_variant').text('No Size');
-                   }
+                        // Dynamically set the first size name in the text-title span
+                        var firstSize = res.product_sizes[0]; // Get the first size
+                        $('.text-title.size_variant').text(firstSize.size_name.toUpperCase());
+                    } else {
+                        // Handle the case where no sizes are available
+                        $('#size_variant').html('');
+                        $('.text-title.size_variant').text('No Size');
+                    }
                },
                error: function (err) {
                    console.log(err);
@@ -1025,10 +1114,9 @@
                        $('#color_variant').html('<p>No colors available for this product.</p>');
                        $('.text-title.color_variant').text('No Color');
                    }
+                   
 
-
-
-                   if (res.product_sizes && res.product_sizes.length > 0) {
+                    if (res.product_sizes && res.product_sizes.length > 0) {
                        var sizesHtml = '';
 
                        // Loop through the product_sizes array
@@ -1051,7 +1139,7 @@
                        var firstSize = res.product_sizes[0]; // Get the first size
                        $('.text-title.size_variant').text(firstSize.size_name.toUpperCase());
                    } else {
-                       $('#size_variant').html('<p>No sizes available for this product.</p>');
+                       $('#quick_size_variant').html('');
                        $('.text-title.size_variant').text('No Size');
                    }
                    
@@ -1139,54 +1227,54 @@
        });
 
        // Fetch all sidebar cart data
-       function sidebarCartData(){
-           $.ajax({
-               method: 'GET',
-               url: "{{ route('get.sidebar.cart') }}",
-               success: function(response) {
-                   if (response.status === true) {
-                       let cartHtml = '';
-                       response.cartItems.forEach(item => {
-                           cartHtml += `
-                               <div class="tf-mini-cart-item file_delete" id="side_remove-${item.rowId}">
-                                   <div class="tf-mini-cart-image">
-                                       <img class="lazyload" data-src="${item.image}" src="${item.image}" alt="${item.slug}">
-                                   </div>
-                                   <div class="tf-mini-cart-info flex-grow-1">
-                                       <div class="mb_12 d-flex align-items-center justify-content-between de-flex gap-12">
-                                           <div class="text-title">
-                                               <a href="/product-details/${item.slug}" class="link text-line-clamp-1">${item.name}</a>
-                                           </div>
-                                           <div class="text-button tf-btn-remove remove side_remove_cart" data-row_id="${item.rowId}">Remove</div>
-                                       </div>
-                                       <div class="d-flex align-items-center justify-content-between de-flex gap-12">
-                                           <div class="text-secondary-2">
-                                               ${item.size_name ? item.size_name.toUpperCase() + ` ($${item.size_price})` : ''} 
-                                               ${item.color_name ? ` / ${item.color_name} ($${item.color_price})` : ''}
-                                           </div>
-                                           <div class="text-button">${item.qty} X $${item.price}</div>
-                                       </div>
-                                       <div class="d-flex align-items-center justify-content-between de-flex gap-12">
-                                           <div class="text-secondary-2">Amount</div>
-                                           <div class="text-button">$${item.total}</div>
-                                       </div>
-                                   </div>
-                               </div>
-                           `;
-                       });
+    //    function sidebarCartData(){
+    //        $.ajax({
+    //            method: 'GET',
+    //            url: "{{ route('get.sidebar.cart') }}",
+    //            success: function(response) {
+    //                if (response.status === true) {
+    //                    let cartHtml = '';
+    //                    response.cartItems.forEach(item => {
+    //                        cartHtml += `
+    //                            <div class="tf-mini-cart-item file_delete" id="side_remove-${item.rowId}">
+    //                                <div class="tf-mini-cart-image">
+    //                                    <img class="lazyload" data-src="${item.image}" src="${item.image}" alt="${item.slug}">
+    //                                </div>
+    //                                <div class="tf-mini-cart-info flex-grow-1">
+    //                                    <div class="mb_12 d-flex align-items-center justify-content-between de-flex gap-12">
+    //                                        <div class="text-title">
+    //                                            <a href="/product-details/${item.slug}" class="link text-line-clamp-1">${item.name}</a>
+    //                                        </div>
+    //                                        <div class="text-button tf-btn-remove remove side_remove_cart" data-row_id="${item.rowId}">Remove</div>
+    //                                    </div>
+    //                                    <div class="d-flex align-items-center justify-content-between de-flex gap-12">
+    //                                        <div class="text-secondary-2">
+    //                                            ${item.size_name ? item.size_name.toUpperCase() + ` ($${item.size_price})` : ''} 
+    //                                            ${item.color_name ? ` / ${item.color_name} ($${item.color_price})` : ''}
+    //                                        </div>
+    //                                        <div class="text-button">${item.qty} X $${item.price}</div>
+    //                                    </div>
+    //                                    <div class="d-flex align-items-center justify-content-between de-flex gap-12">
+    //                                        <div class="text-secondary-2">Amount</div>
+    //                                        <div class="text-button">$${item.total}</div>
+    //                                    </div>
+    //                                </div>
+    //                            </div>
+    //                        `;
+    //                    });
 
-                       // Update the cart sidebar body
-                       $('#cart-sidebar-table-body').html(cartHtml);
+    //                    // Update the cart sidebar body
+    //                    $('#cart-sidebar-table-body').html(cartHtml);
 
-                       sidebarCartActionElement();
-                   }
-               },
-               error: function(err) {
-                   toastr.error('Failed to fetch cart data.');
-                   console.log(err);
-               }
-           });
-       }
+    //                    sidebarCartActionElement();
+    //                }
+    //            },
+    //            error: function(err) {
+    //                toastr.error('Failed to fetch cart data.');
+    //                console.log(err);
+    //            }
+    //        });
+    //    }
 
        //__ Sidebar Single product clear __//
        $(document).on('click', '.side_remove_cart', function(e) {
@@ -1266,18 +1354,6 @@
        function sidebarCartActionElement(){
            $('.mini-cart-actions').html(`
                <div id="tf-mini-cart-actions-field">
-                   <div class="tf-cart-checkbox">
-                       <div class="tf-checkbox-wrapp">
-                           <input class="" type="checkbox" id="CartDrawer-Form_agree" name="agree_checkbox">
-                           <div>
-                               <i class="icon-check"></i>
-                           </div>
-                       </div>
-                       <label for="CartDrawer-Form_agree">
-                           I agree with 
-                           <a href="term-of-use.html" title="Terms of Service">Terms & Conditions</a>
-                       </label>
-                   </div>
 
                    <div class="tf-mini-cart-view-checkout">
                        <a href="{{ route('show-cart') }}" class="tf-btn w-100 btn-white radius-4 has-border"><span class="text">View cart</span></a>

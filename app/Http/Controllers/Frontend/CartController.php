@@ -121,6 +121,7 @@ class CartController extends Controller
                 'image' => asset($item->options->image),
                 'slug' => $item->options->slug,
                 'total' => ($item->price + ($item->options->size_price ?? 0) + ($item->options->color_price ?? 0)) * $item->qty,
+                'variant_price' => ($item->price + ($item->options->size_price ?? 0) + ($item->options->color_price ?? 0)),
             ];
         })->values()->toArray();
 
@@ -129,7 +130,7 @@ class CartController extends Controller
         return response()->json([
             'status' => true,
             'isEmpty' => $isEmpty,
-            'cartItems' => $cartItems,
+            'cartItems' => $cartItems ?: [],
         ]);
     }
 
@@ -184,7 +185,6 @@ class CartController extends Controller
     public function getTotalCart()
     {
        $total = 0;
-
        foreach( Cart::content() as $product ){
             $total += $this->getProductTotal($product->rowId);
        }

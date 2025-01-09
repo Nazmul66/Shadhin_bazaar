@@ -1411,7 +1411,7 @@
                        var firstSize = res.product_sizes[0]; // Get the first size
                        $('.text-title.size_variant').text(firstSize.size_name.toUpperCase());
                    } else {
-                       $('#size_variant').html('<p>No sizes available for this product.</p>');
+                       $('#quick_size_variant').html('');
                        $('.text-title.size_variant').text('No Size');
                    }
                    
@@ -1626,18 +1626,6 @@
        function sidebarCartActionElement(){
            $('.mini-cart-actions').html(`
                <div id="tf-mini-cart-actions-field">
-                   <div class="tf-cart-checkbox">
-                       <div class="tf-checkbox-wrapp">
-                           <input class="" type="checkbox" id="CartDrawer-Form_agree" name="agree_checkbox">
-                           <div>
-                               <i class="icon-check"></i>
-                           </div>
-                       </div>
-                       <label for="CartDrawer-Form_agree">
-                           I agree with 
-                           <a href="term-of-use.html" title="Terms of Service">Terms & Conditions</a>
-                       </label>
-                   </div>
 
                    <div class="tf-mini-cart-view-checkout">
                        <a href="{{ route('show-cart') }}" class="tf-btn w-100 btn-white radius-4 has-border"><span class="text">View cart</span></a>
