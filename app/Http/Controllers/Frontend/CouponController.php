@@ -26,7 +26,7 @@ class CouponController extends Controller
         if( $coupon === null){
             return response()->json(['status' => 'error', 'message' => 'Invalid Coupon Code']);
         }
-        else if( date('Y-m-d', strtotime($coupon->start_date)) < date('Y-m-d') ){
+        else if( date('Y-m-d', strtotime($coupon->start_date)) > date('Y-m-d') ){
             return response()->json(['status' => 'error', 'message' => 'Coupon not exists']);
         }
         else if( date('Y-m-d', strtotime($coupon->end_date)) < date('Y-m-d') ){
@@ -60,39 +60,37 @@ class CouponController extends Controller
 
     public function coupon_calculation()
     {
-        if( Session::has('coupon') ){
+        if (Session::has('coupon')) {
             $coupon = Session::get('coupon');
-
-            if( $coupon['discount_type'] === "amount" ){
-                $total  =  getCartTotal() - $coupon['discount'];
-                return response()->json([
-                    'status'     => 'success',
-                    'cart_total' => $total,
-                    'discount'   => $coupon['discount'],
-                    'discount_type'  => 'amount',
-                ]);
+        
+            if ($coupon['discount_type'] === "amount") {
+                $total    = getCartTotal() - $coupon['discount'];
+                $discount = $coupon['discount'];
+                
+            } elseif ($coupon['discount_type'] === "percent") {
+                $discount = (getCartTotal() * $coupon['discount']) / 100;
+                $total = getCartTotal() - $discount;
             }
-            elseif( $coupon['discount_type'] === "percent" ){
-                $discount  =  ( getCartTotal() * $coupon['discount'] ) / 100;
-                $total     =  getCartTotal() - $discount;
-                return response()->json([
-                    'status'     => 'success',
-                    'cart_total' => $total,
-                    'discount'   => $discount,
-                    'discount_type'  => 'percent',
-                    'discount_percent'  => $coupon['discount'],
-                ]);
-            }
+        } else {
+            $total = getCartTotal();
         }
-        else{
-            $total     =  getCartTotal();
-            return response()->json([
-                'status'     => 'success',
-                'cart_total' => $total,
-                'discount'   => 0,
-            ]);
+        
+        // Add shipping cost if available
+        if (Session::has('shippingCost')) {
+            $shippingCost = Session::get('shippingCost');
+            $total += $shippingCost;
+        } else {
+            $shippingCost = 0;
         }
+        
+        // Return the updated values
+        return response()->json([
+            'status'         => 'success',
+            'cart_total'     => $total,
+            'discount'       => isset($discount) ? $discount : 0,
+            'discount_type'  => isset($coupon['discount_type']) ? $coupon['discount_type'] : null,
+            'discount_percent' => isset($coupon['discount']) ? $coupon['discount'] : null,
+            'shipping_cost'  => $shippingCost,
+        ]);
     }
-
-
 }

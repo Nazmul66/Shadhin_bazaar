@@ -10,6 +10,7 @@ use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\CouponController;
 use App\Http\Controllers\Frontend\FlashSaleController;
 use App\Http\Controllers\Frontend\CheckoutController;
+use App\Http\Controllers\Frontend\ShippingRuleController;
 use App\Http\Controllers\Frontend\AjaxCallController;
 
 /*
@@ -75,6 +76,10 @@ use App\Http\Controllers\Frontend\AjaxCallController;
     //__ Coupon __//
     Route::post('/apply-coupon', [CouponController::class, 'apply_coupon'])->name('apply.coupon');
     Route::get('/coupon-calculation', [CouponController::class, 'coupon_calculation'])->name('coupon.calculation');
+
+    //__ Shipping Rules  __//
+    Route::post('/apply-shipping', [ShippingRuleController::class, 'apply_shipping'])->name('apply.shipping');
+    Route::get('/shipping-rules-calculation', [ShippingRuleController::class, 'shipping_rules_calculation'])->name('shipping.rules.calculation');
 
     //__ Checkout __//
     Route::get('/checkout', [CheckoutController::class, 'checkout'])->name('checkout');

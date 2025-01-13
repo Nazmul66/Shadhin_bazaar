@@ -47,98 +47,109 @@
                     </div>
                 </div> --}}
 
-                <form>
-                    <table class="tf-table-page-cart">
-                        <thead>
-                            <tr>
-                                <th>Products</th>
-                                <th>Price</th>
-                                <th>Quantity</th>
-                                <th style="white-space: nowrap;">Total Price</th>
-                                <th>
-                                    <button class="tf-btn-clear" id="clear_cart">
-                                        <span class="text">Clear All</span>
-                                    </button>
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody id="cart-table-body">
-                            @forelse ($cartItems as $row)
-                                @php
-                                    $totalPrice = ($row->price + ($row->options->size_price ?? 0) + ($row->options->color_price ?? 0)) * $row->qty;
-                                @endphp
 
-                                <tr class="tf-cart-item file-delete" id="remove-{{ $row->rowId }}">
-                                    <td class="tf-cart-item_product">
-                                        <a href="{{ route('product.details', $row->options->slug) }}" class="img-box">
-                                            <img src="{{ asset($row->options->image) }}" alt="{{ $row->options->slug }}">
-                                        </a>
-                                        
-                                        <div class="cart-info">
-                                            <a href="{{ route('product.details', $row->options->slug) }}" class="cart-title link">{{ $row->name }}</a>
-                                            <div class="variant-box">
-                                                <div class="tf-select">
-                                                    <div class="product_variant">
-                                                        Color : {{ trans($row->options->color_name) }} ( ${{ $row->options->color_price }} )
-                                                    </div>
-                                                    {{-- <select>
-                                                        <option selected="selected">Blue</option>
-                                                        <option>Black</option>
-                                                        <option>White</option>
-                                                        <option>Red</option>
-                                                        <option>Beige</option>
-                                                        <option>Pink</option>
-                                                    </select> --}}
+                <table class="tf-table-page-cart">
+                    <thead>
+                        <tr>
+                            <th>Products</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th style="white-space: nowrap;">Total Price</th>
+                            <th>
+                                <button class="tf-btn-clear" id="clear_cart">
+                                    <span class="text">Clear All</span>
+                                </button>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="cart-table-body">
+                        @forelse ($cartItems as $row)
+                            @php
+                                $totalPrice = ($row->price + ($row->options->size_price ?? 0) + ($row->options->color_price ?? 0)) * $row->qty;
+                            @endphp
+
+                            <tr class="tf-cart-item file-delete" id="remove-{{ $row->rowId }}">
+                                <td class="tf-cart-item_product">
+                                    <a href="{{ route('product.details', $row->options->slug) }}" class="img-box">
+                                        <img src="{{ asset($row->options->image) }}" alt="{{ $row->options->slug }}">
+                                    </a>
+                                    
+                                    <div class="cart-info">
+                                        <a href="{{ route('product.details', $row->options->slug) }}" class="cart-title link">{{ $row->name }}</a>
+                                        <div class="variant-box">
+                                            <div class="tf-select">
+                                                <div class="product_variant">
+                                                    Color : {{ trans($row->options->color_name) }} ( ${{ $row->options->color_price }} )
                                                 </div>
-                                                <div class="tf-select">
-                                                    <div class="product_variant">
-                                                        Size : {{ strtoupper($row->options->size_name) }} ( ${{ $row->options->size_price }} )
-                                                    </div>
-                                                    {{-- <select>
-                                                        <option selected="selected">XL</option>
-                                                        <option>XS</option>
-                                                        <option>S</option>
-                                                        <option>M</option>
-                                                        <option>L</option>
-                                                        <option>XL</option>
-                                                        <option>2XL</option>
-                                                    </select> --}}
+                                                {{-- <select>
+                                                    <option selected="selected">Blue</option>
+                                                    <option>Black</option>
+                                                    <option>White</option>
+                                                    <option>Red</option>
+                                                    <option>Beige</option>
+                                                    <option>Pink</option>
+                                                </select> --}}
+                                            </div>
+                                            <div class="tf-select">
+                                                <div class="product_variant">
+                                                    Size : {{ strtoupper($row->options->size_name) }} ( ${{ $row->options->size_price }} )
                                                 </div>
+                                                {{-- <select>
+                                                    <option selected="selected">XL</option>
+                                                    <option>XS</option>
+                                                    <option>S</option>
+                                                    <option>M</option>
+                                                    <option>L</option>
+                                                    <option>XL</option>
+                                                    <option>2XL</option>
+                                                </select> --}}
                                             </div>
                                         </div>
-                                    </td>
-
-                                    <td data-cart-title="Price" class="tf-cart-item_price text-center">
-                                        <div class="cart_price text-button price_on_sale">${{ $row->price }}</div>
-                                    </td>
-
-                                    <td data-cart-title="Quantity" class="tf-cart-item_quantity">
-                                        <div class="wg-quantity mx-md-auto">
-                                            <span class="btn-quantity product-decrease">-</span>
-                                            <input type="text" name="number" class="product_quantity" data-row_id="{{ $row->rowId }}" value="{{ $row->qty }}">
-                                            <span class="btn-quantity product-increase">+</span>
-                                        </div>
-                                    </td>
-                                    <td data-cart-title="Total" class="tf-cart-item_total text-center">
-                                        <div id="{{ $row->rowId }}" class="cart_total text-button total_price">${{ $totalPrice }}</div>
-                                    </td>
-                                    <td class="remove-cart remove_item_alignemnt" id="remove_cart">
-                                        <i class='icon bx bx-x icon-close-popup remove_product_cart' style="font-size: 20px;" data-id="{{ $row->rowId }}"></i>
-                                    </td>
-                                </tr>
-                            @empty
-                            <tr>
-                                <td colspan="5">
-                                    <div class="alert alert-danger text-center" role="alert">
-                                        <p class="mb-3">There is no cart item</p>
-                                        <a href="{{ route('checkout') }}" class="tf-btn btn-reset">Continue Shopping</a>
                                     </div>
                                 </td>
+
+                                <td data-cart-title="Price" class="tf-cart-item_price text-center">
+                                    <div class="cart_price text-button price_on_sale">${{ $row->price }}</div>
+                                </td>
+
+                                <td data-cart-title="Quantity" class="tf-cart-item_quantity">
+                                    <div class="wg-quantity mx-md-auto">
+                                        <span class="btn-quantity product-decrease">-</span>
+                                        <input type="text" name="number" class="product_quantity" data-row_id="{{ $row->rowId }}" value="{{ $row->qty }}">
+                                        <span class="btn-quantity product-increase">+</span>
+                                    </div>
+                                </td>
+                                <td data-cart-title="Total" class="tf-cart-item_total text-center">
+                                    <div id="{{ $row->rowId }}" class="cart_total text-button total_price">${{ $totalPrice }}</div>
+                                </td>
+                                <td class="remove-cart remove_item_alignemnt" id="remove_cart">
+                                    <i class='icon bx bx-x icon-close-popup remove_product_cart' style="font-size: 20px;" data-id="{{ $row->rowId }}"></i>
+                                </td>
                             </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
-                </form>
+                        @empty
+                        <tr>
+                            <td colspan="5">
+                                <div class="alert alert-danger text-center" role="alert">
+                                    <p class="mb-3">There is no cart item</p>
+                                    <a href="{{ route('checkout') }}" class="tf-btn btn-reset">Continue Shopping</a>
+                                </div>
+                            </td>
+                        </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="tf-select mb-3">
+                            <label for="" class="mb-2">Delivery Charge</label>
+                            <select class="text-title" id="shippingRules" style="border-radius: 8px;">
+                                <option value="30" {{ session('shippingCost') == 30 ? 'selected' : '' }}>InSide Dhaka ( $30 )</option>
+                                <option value="60" {{ session('shippingCost') == 60 ? 'selected' : '' }}>OutSide Dhaka ( $60 )</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
 
                 <form class="coupon_form">
                     @csrf
@@ -186,7 +197,6 @@
                             @endforeach
                         @endif
 
-
                     {{-- <div class="box-discount active">
                         <div class="discount-top">
                             <div class="discount-off">
@@ -231,6 +241,7 @@
                             <span>Subtotal</span>
                             <span class="subTotal">${{ getCartTotal() }}</span>
                         </div>
+
                         <div class="discount text-button d-flex justify-content-between align-items-center">
                             <span>(-) Discounts
                                 <code class="percent_show">
@@ -239,6 +250,7 @@
                                     @endif
                                 </code>
                             </span>
+
                             <span class="total_discount">
                                 @if ( Session::has('coupon') )
                                     @if ( Session::get('coupon')['discount_type'] === "amount")
@@ -251,10 +263,23 @@
                                 @endif
                             </span>
                         </div>
+
                         <div class="subtotal text-button d-flex justify-content-between align-items-center">
+                            <span>(+) Shipping</span>
+                            <span class="shipping_amount">
+                                @if ( Session::has('shippingCost') && Session::get('shippingCost'))
+                                    ${{ Session::get('shippingCost') }}
+                                @else
+                                    $0
+                                @endif
+                            </span>
+                        </div>
+
+                        {{-- <div class="subtotal text-button d-flex justify-content-between align-items-center">
                             <span>(-)Tax</span>
                             <span class="tax">$0</span>
-                        </div>
+                        </div> --}}
+
                         {{-- <div class="ship">
                             <span class="text-button">(-) Shipping</span>
                             <div class="flex-grow-1">
@@ -281,10 +306,12 @@
                                 </fieldset>
                             </div>
                         </div> --}}
+
                         <h5 class="total-order d-flex justify-content-between align-items-center">
                             <span>Total</span>
                             <span class="main_cart_total">${{ getMainCartTotal() }}</span>
                         </h5>
+
                         <div class="box-progress-checkout mt-5">
                             {{-- <fieldset class="check-agree">
                                 <input type="checkbox" id="check-agree" class="tf-check-rounded">
@@ -628,7 +655,6 @@
             })
         })
 
-
         //__ Sidebar Single product clear __//
         $(document).on('click', '.side_remove_cart', function(e) {
             e.preventDefault();
@@ -672,7 +698,6 @@
                 },
             })
         })
-
 
         // Fetch all cart data from Sidebar
         function sidebarCartData(){
@@ -734,8 +759,45 @@
             });
         }
 
+        //__ Shipping Rules add __//
+        const $shippingRules = $('#shippingRules');
 
-        // Fetch all cart data for Cart Page
+        function applyShippingRule(selectedValue) {
+            if (selectedValue) {
+                $.ajax({
+                    url: "{{ route('apply.shipping') }}", // Ensure the route exists
+                    type: "POST",
+                    data: {
+                        _token: "{{ csrf_token() }}", // Laravel CSRF token
+                        shippingRule: selectedValue
+                    },
+                    success: function (res) {
+                        if (res.status === true) {
+                            $('.shipping_amount').text('$' + res.shippingCost);
+                            $('.main_cart_total').text('$' + res.cartTotal);
+                            toastr.success(res.message);
+                        } else {
+                            $('.shipping_amount').text('$' + res.shippingCost);
+                            toastr.error(res.message);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error applying shipping rule:', error);
+                    }
+                });
+            }
+        }
+
+        // Trigger the AJAX call on page load for the default selected option
+        applyShippingRule($shippingRules.val());
+
+        // Trigger AJAX call on dropdown change
+        $shippingRules.on('change', function () {
+            applyShippingRule($(this).val());
+        });
+
+
+        //__ Fetch all cart data for Cart Page __//
         function CartPageData() {
             $.ajax({
                 method: 'GET',
@@ -812,7 +874,6 @@
             });
         }
 
-
         //__ Clear all Cart data __//
         $('#clear_cart').on('click', function(e){
             e.preventDefault();
@@ -872,7 +933,6 @@
                 }
             })
         })
-
 
         //__ Cart subTotal __//
         function getSidebarCartTotal(){
@@ -938,7 +998,6 @@
             });
         }
 
-
         //__ Coupon Apply __//
         $(document).on('submit', '.coupon_form', function(e){
             e.preventDefault();
@@ -986,6 +1045,9 @@
                         else{
                             $('.percent_show').text('');
                         }
+
+                        // Update shipping cost
+                        $('.shipping_amount').text('$' + data.shipping_cost);
                     }
                 },
                 error: function(err) {
@@ -1000,11 +1062,8 @@
             let code = $(this).data('code');
             $('#coupon_codes').val(code);
         })
-    })
-</script>
 
-<script>
-    $(document).ready(function () {
+        
        //__ Quick View Cart __//
        $('.quickview').click(function (e) {
            e.preventDefault(); // Prevent default behavior if necessary

@@ -174,6 +174,7 @@ class CartController extends Controller
 
        if( Cart::content()->count() === 0 ){
             Session::forget('coupon');
+            Session::forget('shippingCost');
        }
 
        return response()->json([
@@ -206,6 +207,7 @@ class CartController extends Controller
     {
         Cart::destroy();
         Session::forget('coupon'); 
+        Session::forget('shippingCost');
 
         return response()->json([
            'status'  => 'success',

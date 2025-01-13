@@ -56,22 +56,26 @@ use Illuminate\Support\Facades\Session;
 
   function getMainCartTotal()
   {
-    if( Session::has('coupon') ){
-        $coupon = Session::get('coupon');
+      $cartTotal = getCartTotal();
 
-        if( $coupon['discount_type'] === "amount" ){
-            $total  =  getCartTotal() - $coupon['discount'];
-            return $total;
-        }
-        elseif( $coupon['discount_type'] === "percent" ){
-            $discount  =  ( getCartTotal() * $coupon['discount'] ) / 100;
-            $total     =  getCartTotal() - $discount;
-            return $total;
-        }
-    }
-    else{
-       return getCartTotal();
-    }
+      // Apply coupon discount if available
+      if (Session::has('coupon')) {
+          $coupon = Session::get('coupon');
+
+          if ($coupon['discount_type'] === "amount") {
+              $cartTotal -= $coupon['discount'];
+          } elseif ($coupon['discount_type'] === "percent") {
+              $discount = ($cartTotal * $coupon['discount']) / 100;
+              $cartTotal -= $discount;
+          }
+      }
+
+      // Add shipping cost if available
+      if (Session::has('shippingCost')) {
+          $cartTotal += Session::get('shippingCost');
+      }
+
+      return $cartTotal;
   }
 
 
