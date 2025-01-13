@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\Setting;
 use App\Traits\ImageUploadTraits;
+use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -54,6 +55,9 @@ class SettingController extends Controller
         $setting->phone_optional       = $request->phone_optional;
         $setting->email                = $request->email;
         $setting->email_optional       = $request->email_optional;
+        $setting->inside_city          = $request->inside_city;
+        $setting->outside_city         = $request->outside_city;
+        $setting->tax                  = $request->tax;
         $setting->address              = Str::trim($request->address);
         $setting->address_optional     = Str::trim($request->address_optional);
 
@@ -102,21 +106,14 @@ class SettingController extends Controller
         DB::rollBack();
         // throw $ex;
         // dd($ex->getMessage());
-        $notification = array(
-            'message'    => "There is Something wrong.",
-            'alert-type' => "error"
-        );
+        Toastr::error('There is Something wrong.', 'Error', ["positionClass" => "toast-top-right"]);
 
-        return redirect()->back()->with($notification);
+        return redirect()->back();
     }
 
-    $notification = array(
-        'message'    => "Setting data Inserted successfully.",
-        'alert-type' => "success"
-    );
-
+    Toastr::success('Setting data Inserted successfully.', 'Success', ["positionClass" => "toast-top-right"]);
     DB::commit();
-    return redirect()->back()->with($notification);
+    return redirect()->back();
 }
 
     /**
@@ -149,6 +146,9 @@ class SettingController extends Controller
             $setting->email_optional       = $request->email_optional;
             $setting->address              = Str::trim($request->address);
             $setting->address_optional     = Str::trim($request->address_optional);
+            $setting->inside_city          = $request->inside_city;
+            $setting->outside_city         = $request->outside_city;
+            $setting->tax                  = $request->tax;
 
             $setting->facebook_pixel       = Str::trim($request->facebook_pixel);
             $setting->google_analytics     = Str::trim($request->google_analytics);
@@ -197,21 +197,15 @@ class SettingController extends Controller
             DB::rollBack();
             // throw $ex;
             // dd($ex->getMessage());
-            $notification = array(
-                'message'    => "There is Something wrong.",
-                'alert-type' => "error"
-            );
+            Toastr::error('There is Something wrong.', 'Error', ["positionClass" => "toast-top-right"]);
 
-            return redirect()->back()->with($notification);
+            return redirect()->back();
         }
 
-        $notification = array(
-            'message'    => "Setting data Updated successfully.",
-            'alert-type' => "success"
-        );
+        Toastr::success('Setting data Updated successfully.', 'Success', ["positionClass" => "toast-top-right"]);
 
         DB::commit();
-        return redirect()->back()->with($notification);
+        return redirect()->back();
     }
 
 

@@ -70,12 +70,15 @@
                                 <textarea name="address" id="address" placeholder="Address*" cols="30" rows="6"></textarea>
                             </div>
 
-                            <div class="tf-select">
-                                <select class="text-title" id="shippingRules" style="border-radius: 8px;" required>
-                                    <option value="30" {{ session('shippingCost') == 30 ? 'selected' : '' }}>InSide Dhaka ( $30 )</option>
-                                    <option value="60" {{ session('shippingCost') == 60 ? 'selected' : '' }}>OutSide Dhaka ( $60 )</option>
-                                </select>
-                            </div>
+                            @if ( !empty(getSetting()->inside_city) && !empty(getSetting()->outside_city) )
+                                <div class="tf-select">
+                                    <select class="text-title" id="shippingRules" style="border-radius: 8px;" required>
+                                        <option value="30" {{ session('shippingCost') == 30 ? 'selected' : '' }}>InSide Dhaka ( {{ getSetting()->currency_symbol . getSetting()->inside_city }} )</option>
+                                        <option value="60" {{ session('shippingCost') == 60 ? 'selected' : '' }}>OutSide Dhaka ( {{ getSetting()->currency_symbol . getSetting()->outside_city }} )</option>
+                                    </select>
+                                </div>
+                            @endif
+                            
 
                             {{-- <div class="grid-2">
                                 <div class="tf-select">

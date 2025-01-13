@@ -118,6 +118,32 @@ return [
         'Zimbabwe Dollar' => 'ZWD',
     ],
 
+    'currencySymbols' => [
+        'USD' => '$',    // US Dollar
+        'EUR' => '€',    // Euro
+        'GBP' => '£',    // British Pound
+        'JPY' => '¥',    // Japanese Yen
+        'CNY' => '¥',    // Chinese Yuan
+        'INR' => '₹',    // Indian Rupee
+        'AUD' => 'A$',   // Australian Dollar
+        'CAD' => 'C$',   // Canadian Dollar
+        'CHF' => 'CHF',  // Swiss Franc
+        'SEK' => 'kr',   // Swedish Krona
+        'NOK' => 'kr',   // Norwegian Krone
+        'DKK' => 'kr',   // Danish Krone
+        'ZAR' => 'R',    // South African Rand
+        'NZD' => 'NZ$',  // New Zealand Dollar
+        'SGD' => 'S$',   // Singapore Dollar
+        'HKD' => 'HK$',  // Hong Kong Dollar
+        'MXN' => 'Mex$', // Mexican Peso
+        'RUB' => '₽',    // Russian Ruble
+        'BRL' => 'R$',   // Brazilian Real
+        'AED' => 'د.إ',  // UAE Dirham
+        'SAR' => '﷼',    // Saudi Riyal
+        'KRW' => '₩',    // South Korean Won
+        'TRY' => '₺',    // Turkish Lira
+        'BDT' => '৳',    // Bangladeshi Taka
+    ],
 
     'time_zone' => [
         'America/Adak' => '(GMT-10:00) America/Adak (Hawaii-Aleutian Standard Time)',
@@ -521,7 +547,6 @@ return [
         'Asia/Anadyr' => '(GMT+12:00) Asia/Anadyr (Anadyr Time)',
         'Asia/Kamchatka' => '(GMT+12:00) Asia/Kamchatka (Petropavlovsk-Kamchatski Time)'
     ],
-
 
 ];
 

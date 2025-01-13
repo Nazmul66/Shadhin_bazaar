@@ -143,6 +143,38 @@
                                 </textarea>
                         </div>
                     </div>
+
+                    <div class="row">
+                        <div class="col mb-3">
+                            <label class="form-label" for="inside_city">Inside City</label>
+                            <input type="number" class="form-control" id="inside_city" name="inside_city" placeholder="Delivery Cost..."
+                                @if ( !empty( $setting ) )
+                                    value="{{ $setting->inside_city }}"
+                                @else
+                                    value="{{ old('inside_city')}}"
+                                @endif>
+                        </div>
+
+                        <div class="col mb-3">
+                            <label class="form-label" for="outside_city">Outside Dhaka</label>
+                            <input type="number" class="form-control" id="outside_city" name="outside_city" placeholder="Delivery Cost..."
+                                @if ( !empty( $setting ) )
+                                    value="{{ $setting->outside_city }}"
+                                @else
+                                    value="{{ old('outside_city')}}"
+                                @endif>
+                        </div>
+
+                        <div class="col mb-3">
+                            <label class="form-label" for="tax">Tax (%)</label>
+                            <input type="number" class="form-control" id="tax" name="tax" placeholder="Government Tax..."
+                                @if ( !empty( $setting ) )
+                                    value="{{ $setting->tax }}"
+                                @else
+                                    value="{{ old('tax')}}"
+                                @endif>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -263,17 +295,17 @@
                         <div class="row">
                             <div class="col mb-3">
                                 <label class="form-label" for="facebook_pixel">Facebook Pixel</label>
-                                 <textarea id="facebook_pixel" class="form-control" name="facebook_pixel" placeholder="Link paste here...." >{{ old('facebook_pixel', $setting->facebook_pixel)}}</textarea>
+                                 <textarea id="facebook_pixel" class="form-control" name="facebook_pixel" placeholder="Link paste here...." rows="8">{{ old('facebook_pixel', $setting->facebook_pixel)}}</textarea>
                              </div>
 
                              <div class="col mb-3">
                                 <label class="form-label" for="google_analytics">Google Analytics</label>
-                                 <textarea id="google_analytics" class="form-control" name="google_analytics" placeholder="Link paste here...." >{{ old('google_analytics', $setting->google_analytics)}}</textarea>
+                                 <textarea id="google_analytics" class="form-control" name="google_analytics" placeholder="Link paste here...." rows="8">{{ old('google_analytics', $setting->google_analytics)}}</textarea>
                              </div>
 
                             <div class="col-12 mb-3">
                                 <label class="form-label" for="google_map">Google Map </label>
-                                 <textarea id="google_map" class="form-control" name="google_map" placeholder="Embeded link paste here...." >{{ old('google_map', $setting->google_map)}} </textarea>
+                                 <textarea id="google_map" class="form-control" name="google_map" placeholder="Embeded link paste here...." rows="8">{{ old('google_map', $setting->google_map)}} </textarea>
                              </div>
                         </div>
                 </div>
@@ -291,13 +323,18 @@
                         
                         <div class="col mb-3">
                             <label for="currency_symbol" class="form-label">Currency Symbol</label>
-                            <input type="text" class="form-control" id="currency_symbol" name="currency_symbol"
-                                @if ( !empty( $setting ) )
-                                    value="{{ $setting->currency_symbol }}"
-                                @else
-                                    value="{{ old('currency_symbol')}}"
-                                @endif
-                                placeholder="Currency Symbol Here....">
+                            <select name="currency_symbol" id="currency_symbol" class="form-control" id="currency">
+                                @foreach (config('setting.currencySymbols') as $key => $symbol)
+                                    <option value="{{ $symbol }}"
+                                        @if (!empty($setting) && $setting->currency_symbol == $symbol)
+                                            selected
+                                        @elseif (old('currency_symbol') == $symbol)
+                                            selected
+                                        @endif>
+                                        {{ $symbol }} ({{ $key }})
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
 
                         <div class="col mb-3">
@@ -306,7 +343,7 @@
                             <select class="form-select" id="currency_name" name="currency_name" value="{{ old('currency_name') }}">
                                 <option value="" selected disabled>Select</option>
                                 @foreach (config('setting.currency_list') as $key => $item)
-                                    <option value="{{ $item }}" @if(!empty($setting->currency_name)) @selected($item == $setting->currency_name) @endif>{{ $item }}</option>
+                                    <option value="{{ $item }}" @if(!empty($setting->currency_name)) @selected($item == $setting->currency_name) @endif>{{ $item }} ({{ $key }})</option>
                                 @endforeach
 
                             </select>
@@ -318,7 +355,7 @@
                             <select class="form-select" id="timeZone" name="timeZone" {{ old('timeZone') }}>
                                 <option value="" selected disabled>Select</option>
                                 @foreach (config('setting.time_zone') as $key => $item)
-                                    <option value="{{ $key }}" @if(!empty($setting->timeZone)) @selected($key == $setting->timeZone) @endif>{{ $key }}</option>
+                                    <option value="{{ $key }}" @if(!empty($setting->timeZone)) @selected($key == $setting->timeZone) @endif>{{ $key }} {{ $item }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -381,7 +418,7 @@
 
                         <div class="col-12 mb-3">
                             <label class="form-label" for="meta_description">Meta Description</label>
-                                <textarea id="meta_description" class="form-control" name="meta_description" placeholder="Write Meta Description....." > @if( !empty( $setting ) ) {{ $setting->meta_description }}  @else {{ old('meta_description')}} @endif
+                                <textarea id="meta_description" class="form-control" name="meta_description" placeholder="Write Meta Description....." rows="8"> @if( !empty( $setting ) ) {{ $setting->meta_description }}  @else {{ old('meta_description')}} @endif
                                 </textarea>
                         </div>
                     </div>
@@ -416,6 +453,9 @@
 
         //____ Currency Name Select2 ____//
         $('#currency_name').select2();
+
+        //____ Currency Symbol Select2 ____//
+        $('#currency_symbol').select2();
 
         //____ timeZone Select2 ____//
         $('#timeZone').select2();
