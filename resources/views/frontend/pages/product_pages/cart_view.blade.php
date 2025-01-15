@@ -265,7 +265,8 @@
                         </div>
 
                         <div class="subtotal text-button d-flex justify-content-between align-items-center">
-                            <span>(+) Shipping</span>
+                            {{-- <span>(+) Shipping</span> --}}
+                            <span>(+) Delivery Charge</span>
                             <span class="shipping_amount">
                                 @if ( Session::has('shippingCost') && Session::get('shippingCost'))
                                     ${{ Session::get('shippingCost') }}

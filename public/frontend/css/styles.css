@@ -13444,8 +13444,8 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
 }
 
 .payment-box .payment-item .apple-pay-title img {
-    width: 13px;
-    height: 16px;
+    width: 150px;
+    height: 45px;
 }
 
 .payment-box .payment-item .paypal-title {
@@ -13453,8 +13453,8 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
 }
 
 .payment-box .payment-item .paypal-title img {
-    width: 60px;
-    height: 16px;
+    width: 100px;
+    height: 40px;
 }
 
 .payment-box .payment-choose-card.active {

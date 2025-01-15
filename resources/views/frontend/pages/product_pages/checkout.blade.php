@@ -49,7 +49,9 @@
 
                     <div class="wrap">
                         <h5 class="title">Information</h5>
-                        <form class="info-box">
+                        <form class="form-payment info-box" method="POST">
+                            @csrf 
+
                             <div class="grid-1">
                                 <input type="text" name="full_name" placeholder="Full Name*" required>
                             </div>
@@ -103,14 +105,12 @@
                             </div> --}}
 
                             {{-- <textarea placeholder="Write note..."></textarea> --}}
-                        </form>
-                    </div>
+                        {{-- </form> --}}
 
-                    <div class="wrap">
-                        <h5 class="title">Choose payment Option:</h5>
-                        <form class="form-payment">
+                        <h5 class="title mt-5">Choose payment Option:</h5>
+
                             <div class="payment-box" id="payment-box">
-                                <div class="payment-item payment-choose-card active">
+                                {{-- <div class="payment-item payment-choose-card active">
                                     <label for="credit-card-method" class="payment-header" data-bs-toggle="collapse" data-bs-target="#credit-card-payment" aria-controls="credit-card-payment">
                                         <input type="radio" name="payment-method" class="tf-check-rounded" id="credit-card-method" checked>
                                         <span class="text-title">Credit Card</span>
@@ -140,7 +140,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
+
                                 <div class="payment-item">
                                     <label for="delivery-method" class="payment-header collapsed" data-bs-toggle="collapse" data-bs-target="#delivery-payment" aria-controls="delivery-payment">
                                         <input type="radio" name="payment-method" class="tf-check-rounded" id="delivery-method">
@@ -148,22 +149,25 @@
                                     </label>
                                     <div id="delivery-payment" class="collapse" data-bs-parent="#payment-box"></div>
                                 </div>
+
                                 <div class="payment-item">
                                     <label for="apple-method" class="payment-header collapsed" data-bs-toggle="collapse" data-bs-target="#apple-payment" aria-controls="apple-payment">
                                         <input type="radio" name="payment-method" class="tf-check-rounded" id="apple-method">
-                                        <span class="text-title apple-pay-title"><img src="images/payment/applePay.png" alt="apple"> Apple Pay</span>
+                                        <span class="text-title apple-pay-title align-items-center"><img src="{{ asset('public/frontend/images/payment/ssl_commerz.png') }}" alt="apple"></span>
                                     </label>
                                     <div id="apple-payment" class="collapse" data-bs-parent="#payment-box"></div>
                                 </div>
+
                                 <div class="payment-item paypal-item">
                                     <label for="paypal-method" class="payment-header collapsed" data-bs-toggle="collapse" data-bs-target="#paypal-method-payment" aria-controls="paypal-method-payment">
                                         <input type="radio" name="payment-method" class="tf-check-rounded" id="paypal-method">
-                                        <span class="paypal-title"><img src="images/payment/paypal.png" alt="apple"></span>
+                                        <span class="paypal-title apple-pay-title align-items-center"><img src="{{ asset('public/frontend/images/payment/Bkash.png') }}" alt="apple"></span>
                                     </label>
                                     <div id="paypal-method-payment" class="collapse" data-bs-parent="#payment-box"></div>
                                 </div>
                             </div>
-                            <button class="tf-btn btn-reset">Payment</button>
+
+                            <button type="submit" id="pay-now-button" class="tf-btn btn-reset">Payment</button>
                         </form>
                     </div>
                 </div>
@@ -315,7 +319,8 @@
                                 </div>
 
                                 <div class="item d-flex align-items-center justify-content-between text-button">
-                                    <span>(+) Shipping</span>
+                                    {{-- <span>(+) Shipping</span> --}}
+                                    <span>(+) Delivery Charge</span>
                                     <span class="shipping_amount">
                                         @if ( Session::has('shippingCost') && Session::get('shippingCost'))
                                             ${{ Session::get('shippingCost') ?: 0 }}
@@ -589,6 +594,7 @@
                     },
                     error: function (xhr, status, error) {
                         console.error('Error applying shipping rule:', error);
+                        toastr.error(res.message);
                     }
                 });
             }
