@@ -4,7 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\SslCommerzPaymentController;
-use App\Http\Controllers\Frontend\StripPaymentController;
+use App\Http\Controllers\Frontend\BkashController;
+use App\Http\Controllers\Frontend\CODController;
 use App\Http\Controllers\Frontend\ProductController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\CouponController;
@@ -77,16 +78,37 @@ use App\Http\Controllers\Frontend\AjaxCallController;
     Route::post('/apply-coupon', [CouponController::class, 'apply_coupon'])->name('apply.coupon');
     Route::get('/coupon-calculation', [CouponController::class, 'coupon_calculation'])->name('coupon.calculation');
 
+
     //__ Shipping Rules  __//
     Route::post('/apply-shipping', [ShippingRuleController::class, 'apply_shipping'])->name('apply.shipping');
     Route::get('/shipping-rules-calculation', [ShippingRuleController::class, 'shipping_rules_calculation'])->name('shipping.rules.calculation');
+
 
     //__ Checkout __//
     Route::get('/checkout', [CheckoutController::class, 'checkout'])->name('checkout');
 
 
-    Route::get('/product-category', [ProductController::class, "product_category"])->name('product.category');
-    Route::get('/product-brands', [ProductController::class, "product_brands"])->name('product.brands');
+    //__  __//
+    Route::prefix('payment')->name('payment.')->group(function () {
+        
+        Route::controller(SslCommerzPaymentController::class)->group(function () {
+            Route::post('/ssl_commercz-pay', 'index')->name('ssl_commercz');
+            Route::post('/pay-via-ajax', 'payViaAjax');
+            Route::post('/success', 'success');
+            Route::post('/fail', 'fail');
+            Route::post('/cancel', 'cancel');
+            Route::post('/ipn', 'ipn');
+        });
+       
+        Route::controller(BkashController::class)->group(function () {
+            Route::post('/bkash', 'index')->name('bkash');
+        });
+
+        Route::controller(CODController::class)->group(function () {
+            Route::post('/cod', 'index')->name('cod');
+        });
+
+    });
 
 
 
@@ -97,23 +119,12 @@ use App\Http\Controllers\Frontend\AjaxCallController;
     // Route::get('/forget-password', [HomeController::class, "forgetPassword"])->name('forget.password');   
     
 
-// Stripe Start
-    Route::post('/stripe-pay', [StripPaymentController::class, 'index']);
-// Stripe end
-
 
 // SSLCOMMERZ Start
     Route::get('/example1', [SslCommerzPaymentController::class, 'exampleEasyCheckout']);
     Route::get('/example2', [SslCommerzPaymentController::class, 'exampleHostedCheckout']);
 
-    Route::post('/ssl_commercz-pay', [SslCommerzPaymentController::class, 'index']);
-    Route::post('/pay-via-ajax', [SslCommerzPaymentController::class, 'payViaAjax']);
 
-    Route::post('/success', [SslCommerzPaymentController::class, 'success']);
-    Route::post('/fail', [SslCommerzPaymentController::class, 'fail']);
-    Route::post('/cancel', [SslCommerzPaymentController::class, 'cancel']);
-
-    Route::post('/ipn', [SslCommerzPaymentController::class, 'ipn']);
 //SSLCOMMERZ END
 
 /*

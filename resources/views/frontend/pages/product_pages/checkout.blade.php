@@ -49,34 +49,55 @@
 
                     <div class="wrap">
                         <h5 class="title">Information</h5>
-                        <form class="form-payment info-box" method="POST">
+
+                        <form id="payment-form" class="form-payment info-box" action="" method="POST">
                             @csrf 
 
                             <div class="grid-1">
-                                <input type="text" name="full_name" placeholder="Full Name*" required>
+                                <input type="text" name="full_name" placeholder="Full Name*" value="{{ old('full_name') }}">
+
+                                @error('full_name')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <div class="grid-1">
-                                <input type="text" name="email" placeholder="Email Address*" required>
+                                <input type="text" name="email" class="" placeholder="Email Address" value="{{ old('email') }}">
+
+                                @error('email')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <div class="grid-1">
-                                <input type="text" name="phone" placeholder="Phone Number*" required>
+                                <input type="text" name="phone" pattern="^0\d{10}$" maxlength="11" placeholder="Phone Number*" value="{{ old('phone') }}">
+
+                                @error('phone')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <div class="grid-1">
-                                <input type="text" name="city" placeholder="Town/City*">
+                                <input type="text" name="city" placeholder="Town/City" value="{{ old('city') }}">
+
+                                @error('city')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <div class="grid-1">
-                                <textarea name="address" id="address" placeholder="Address*" cols="30" rows="6"></textarea>
+                                <textarea name="address" id="address" placeholder="Address*" cols="30" rows="6">{{ old('address') }}</textarea>
+
+                                @error('address')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             @if ( !empty(getSetting()->inside_city) && !empty(getSetting()->outside_city) )
                                 <div class="tf-select">
                                     <select class="text-title" id="shippingRules" style="border-radius: 8px;" required>
-                                        <option value="30" {{ session('shippingCost') == 30 ? 'selected' : '' }}>InSide Dhaka ( {{ getSetting()->currency_symbol . getSetting()->inside_city }} )</option>
-                                        <option value="60" {{ session('shippingCost') == 60 ? 'selected' : '' }}>OutSide Dhaka ( {{ getSetting()->currency_symbol . getSetting()->outside_city }} )</option>
+                                        <option value="{{ getSetting()->inside_city }}" {{ session('shippingCost') == getSetting()->inside_city ? 'selected' : '' }}>InSide Dhaka ( {{ getSetting()->currency_symbol . getSetting()->inside_city }} )</option>
+                                        <option value="{{ getSetting()->outside_city }}" {{ session('shippingCost') == getSetting()->outside_city ? 'selected' : '' }}>OutSide Dhaka ( {{ getSetting()->currency_symbol . getSetting()->outside_city }} )</option>
                                     </select>
                                 </div>
                             @endif
@@ -105,9 +126,9 @@
                             </div> --}}
 
                             {{-- <textarea placeholder="Write note..."></textarea> --}}
-                        {{-- </form> --}}
+                            {{-- </form> --}}
 
-                        <h5 class="title mt-5">Choose payment Option:</h5>
+                            <h5 class="title mt-5">Choose payment Option:</h5>
 
                             <div class="payment-box" id="payment-box">
                                 {{-- <div class="payment-item payment-choose-card active">
@@ -142,28 +163,28 @@
                                     </div>
                                 </div> --}}
 
+                                {{-- <input type="hidden" name="payment_method" id="selected-payment-method" /> --}}
+
+                                <!-- Cash on Delivery -->
                                 <div class="payment-item">
-                                    <label for="delivery-method" class="payment-header collapsed" data-bs-toggle="collapse" data-bs-target="#delivery-payment" aria-controls="delivery-payment">
-                                        <input type="radio" name="payment-method" class="tf-check-rounded" id="delivery-method">
+                                    <label for="delivery-method" class="payment-header" data-payment-route="{{ route('payment.cod') }}">
+                                        <input type="radio" name="payment-method" class="tf-check-rounded" id="delivery-method" value="cod">
                                         <span class="text-title">Cash on delivery</span>
                                     </label>
-                                    <div id="delivery-payment" class="collapse" data-bs-parent="#payment-box"></div>
                                 </div>
 
                                 <div class="payment-item">
-                                    <label for="apple-method" class="payment-header collapsed" data-bs-toggle="collapse" data-bs-target="#apple-payment" aria-controls="apple-payment">
-                                        <input type="radio" name="payment-method" class="tf-check-rounded" id="apple-method">
-                                        <span class="text-title apple-pay-title align-items-center"><img src="{{ asset('public/frontend/images/payment/ssl_commerz.png') }}" alt="apple"></span>
+                                    <label for="sslcommerz-method" class="payment-header" data-payment-route="{{ route('payment.ssl_commercz') }}">
+                                        <input type="radio" name="payment-method" class="tf-check-rounded" id="sslcommerz-method" value="sslcommerz">
+                                        <span class="text-title apple-pay-title align-items-center"><img src="{{ asset('public/frontend/images/payment/ssl_commerz.png') }}" alt=""></span>
                                     </label>
-                                    <div id="apple-payment" class="collapse" data-bs-parent="#payment-box"></div>
                                 </div>
 
                                 <div class="payment-item paypal-item">
-                                    <label for="paypal-method" class="payment-header collapsed" data-bs-toggle="collapse" data-bs-target="#paypal-method-payment" aria-controls="paypal-method-payment">
-                                        <input type="radio" name="payment-method" class="tf-check-rounded" id="paypal-method">
-                                        <span class="paypal-title apple-pay-title align-items-center"><img src="{{ asset('public/frontend/images/payment/Bkash.png') }}" alt="apple"></span>
+                                    <label for="bKash-method" class="payment-header" data-payment-route="{{ route('payment.bkash') }}">
+                                        <input type="radio" name="payment-method" class="tf-check-rounded" id="bKash-method" value="bkash">
+                                        <span class="paypal-title apple-pay-title align-items-center"><img src="{{ asset('public/frontend/images/payment/Bkash.png') }}" alt=""></span>
                                     </label>
-                                    <div id="paypal-method-payment" class="collapse" data-bs-parent="#payment-box"></div>
                                 </div>
                             </div>
 
@@ -1412,7 +1433,40 @@
        $('.quick_view_cart').on('click', function() {
            $('.show-shopping-cart').removeClass('show-shopping-cart');
        });
+
    });
+</script>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const paymentForm = document.getElementById('payment-form');
+        const paymentOptions = document.querySelectorAll('input[name="payment-method"]');
+        const payNowButton = document.getElementById('pay-now-button');
+
+        // Ensure the payment form exists before applying event listeners
+        if (paymentForm) {
+            paymentOptions.forEach(option => {
+                option.addEventListener('change', function () {
+                    const selectedRoute = this.closest('label').getAttribute('data-payment-route');
+                    if (selectedRoute) {
+                        paymentForm.setAttribute('action', selectedRoute);
+                    }
+                });
+            });
+
+            payNowButton.addEventListener('click', function (e) {
+                const selectedOption = document.querySelector('input[name="payment-method"]:checked');
+                if (!selectedOption) {
+                    e.preventDefault();
+                    // alert('Please select a payment method.');
+                    toastr.error('Please select a payment method.');
+                }
+            });
+        } else {
+            toastr.error('Payment form element not found.');
+        }
+    });
 </script>
 
 @endpush

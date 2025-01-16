@@ -250,16 +250,4 @@ class ProductController extends Controller
     // }
 
 
-
-
-
-    // public function product_category()
-    // {
-    //     return view('frontend.pages.product_pages.product_category');
-    // }
-
-    // public function product_brands()
-    // {
-    //     return view('frontend.pages.product_pages.brands');
-    // }
 }

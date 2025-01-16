@@ -21,9 +21,10 @@ class CheckoutController extends Controller
         //     return redirect()->route('register.login');
         // }
 
-        $data['cartItems']  =  Cart::content();
-        $data['coupons']    =  Coupon::where('status', 1)->get();
-        $shipping_rules     =  ShippingRule::where('status', 1)->get();
+        $data['cartItems']        =  Cart::content();
+        $data['coupons']          =  Coupon::where('status', 1)->get();
+        $data['shipping_rules']   =  ShippingRule::where('status', 1)->get();
+        
         return view('frontend.pages.product_pages.checkout', $data);
     }
 
