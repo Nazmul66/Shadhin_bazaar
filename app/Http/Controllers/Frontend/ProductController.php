@@ -39,7 +39,6 @@ class ProductController extends Controller
                     ->where('status', 1)
                     ->get();
 
-
         $socialLinks = \Share::page(url()->current(), 'Share title')
                 ->facebook()
                 ->twitter()

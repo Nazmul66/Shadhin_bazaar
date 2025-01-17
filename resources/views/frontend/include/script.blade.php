@@ -16,8 +16,6 @@
 <script defer src="https://sibforms.com/forms/end-form/build/main.js"></script>
     
 
-    @stack('add-js')
-
     {{-- Toaster Notification --}}
     {!! Toastr::message() !!}
 
@@ -27,11 +25,15 @@
                 Toastr.error("{!! $error !!}");
             @endforeach
         @endif
-    
-        // Ajax Setup
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
     </script>
+
+@stack('add-js')
+
+<script>
+    // Ajax Setup
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+</script>

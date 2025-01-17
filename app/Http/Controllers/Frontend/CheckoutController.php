@@ -17,8 +17,8 @@ class CheckoutController extends Controller
      */
     public function checkout()
     {
-        // if( !Auth::Check() ){
-        //     return redirect()->route('register.login');
+        // if( getCartTotal() < 1 ){
+        //     return redirect()->route('home');
         // }
 
         $data['cartItems']        =  Cart::content();
@@ -26,6 +26,11 @@ class CheckoutController extends Controller
         $data['shipping_rules']   =  ShippingRule::where('status', 1)->get();
         
         return view('frontend.pages.product_pages.checkout', $data);
+    }
+
+    public function order_success()
+    {
+        return view('frontend.pages.frontend_pages.order-success');
     }
 
 }

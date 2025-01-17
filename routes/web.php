@@ -85,7 +85,8 @@ use App\Http\Controllers\Frontend\AjaxCallController;
 
 
     //__ Checkout __//
-    Route::get('/checkout', [CheckoutController::class, 'checkout'])->name('checkout');
+    Route::get('/checkout', [CheckoutController::class, 'checkout'])->name('checkout')->middleware('NoBack');
+    Route::get('/order-success', [CheckoutController::class, 'order_success'])->name('order-success');
 
 
     //__  __//

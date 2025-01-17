@@ -85,12 +85,12 @@ class CouponController extends Controller
         
         // Return the updated values
         return response()->json([
-            'status'         => 'success',
-            'cart_total'     => $total,
-            'discount'       => isset($discount) ? $discount : 0,
-            'discount_type'  => isset($coupon['discount_type']) ? $coupon['discount_type'] : null,
+            'status'           => 'success',
+            'cart_total'       => $total,
+            'discount'         => isset($discount) ? $discount : 0,
+            'discount_type'    => isset($coupon['discount_type']) ? $coupon['discount_type'] : null,
             'discount_percent' => isset($coupon['discount']) ? $coupon['discount'] : null,
-            'shipping_cost'  => $shippingCost,
+            'shipping_cost'    => $shippingCost,
         ]);
     }
 }

@@ -12,6 +12,7 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
+            'NoBack' => \App\Http\Middleware\NobackMiddleware::class,
             'admin' => \App\Http\Middleware\Admin::class,
             'setLanguage' => \App\Http\Middleware\SetLanguage::class,
             'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,

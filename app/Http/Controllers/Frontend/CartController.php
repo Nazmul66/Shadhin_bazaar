@@ -74,14 +74,14 @@ class CartController extends Controller
         }
 
         $cartData = [];
-        $cartData['id']                     = $product->id;
-        $cartData['name']                   = $product->name;
-        $cartData['qty']                    = $request->qty;
-        $cartData['price']                  = $productPrice;
-        $cartData['weight']                 = 10;
+        $cartData['id']                        = $product->id;
+        $cartData['name']                      = $product->name;
+        $cartData['qty']                       = $request->qty;
+        $cartData['price']                     = $productPrice;
+        $cartData['weight']                    = 10;
 
         if ($product_size) {
-            $cartData['options']['size_id'] = $product_size->id;
+            $cartData['options']['size_id']     = $product_size->id;
             $cartData['options']['size_name']   = $product_size->size_name;
             $cartData['options']['size_price']  = $product_size->size_price;
         }
@@ -92,9 +92,10 @@ class CartController extends Controller
             $cartData['options']['color_price'] = $product_color->color_price;
         }
 
-        $cartData['options']['slug']        = $product->slug;
-        $cartData['options']['image']       = $product->thumb_image;
-        $cartData['options']['image']       = $product->thumb_image;
+        $cartData['options']['variants_total']  = ( $product_color->color_price ?? 0 ) + ( $product_size->size_price ?? 0 );
+        $cartData['options']['slug']            = $product->slug;
+        $cartData['options']['image']           = $product->thumb_image;
+        $cartData['options']['image']           = $product->thumb_image;
 
         // dd($cartData);
         Cart::add($cartData);
