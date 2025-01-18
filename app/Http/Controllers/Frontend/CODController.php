@@ -12,6 +12,7 @@ use Brian2694\Toastr\Facades\Toastr;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 class CODController extends Controller
@@ -34,7 +35,9 @@ class CODController extends Controller
 
             $order = new Order();
 
-            $order->invoice_id        = 'INV-' . str_replace('.', '', microtime(true)) . '-' . date('Ymd');
+            $maxOrderId               = Order::max('order_id');
+            $order->order_id          = $maxOrderId ? $maxOrderId + 1 : 145299437801;
+            $order->invoice_id        = 'INV-1737' . rand(100000000, 9999999999);
             $order->user_id           = 0;
             $order->subtotal          = getCartTotal();
             $order->total_amount      = getMainCartTotal();
@@ -55,7 +58,7 @@ class CODController extends Controller
                 $product = Product::find($item->id);
 
                 $orderProduct   = new OrderProduct();
-                $orderProduct->order_id       = $order->id;
+                $orderProduct->order_id       = $order->order_id;
                 $orderProduct->product_id     = $product->id;
                 $orderProduct->vendor_id      = 0;
                 $orderProduct->product_name   = $product->name;
@@ -68,15 +71,17 @@ class CODController extends Controller
 
             //__ store transaction details __//
             $transaction = new Transaction();
-            $transaction->order_id            = $order->id;
-            $transaction->transaction_id      = 'TXN-' . str_replace('.', '', microtime(true)) . '-' . date('YmdHis');
-            $transaction->payment_method      = $request->input('payment-method');;
+            $transaction->order_id            = $order->order_id;
+            $transaction->transaction_id      = 'TXN-' . str_replace('.', '', microtime(true));
+            $transaction->payment_method      = $request->input('payment-method');
             $transaction->amount              = getMainCartTotal();
             $transaction->save();
 
             $this->clearSession();  // clear session
+            session()->put("order_confirmed_$order->order_id", true);
+
             Toastr::success('Order Successfully done', 'Success', ["positionClass" => "toast-top-right"]);
-            return redirect()->route('order-success');
+            return redirect()->route('payment.success', ['order_id' => $order->order_id]);
        }
        else{
             Toastr::error('Please purchase any product', 'Error', ["positionClass" => "toast-top-right"]);
@@ -84,10 +89,30 @@ class CODController extends Controller
        }
     }
 
+    public function success_payment($order_id)
+    {
+        // Check if the session has the confirmation for this order
+        if (!session()->has("order_confirmed_$order_id")) {
+            return redirect()->route('home'); // Redirect to the home page
+        }
+
+        $order_details = DB::table('orders')
+                    ->leftJoin('transactions', 'transactions.order_id', 'orders.order_id')
+                    ->where('orders.order_id', $order_id)
+                    ->select('orders.*', 'transactions.transaction_id')
+                    ->first();
+
+        $order_products = OrderProduct::where('order_id', $order_details->order_id)->get();
+
+        // Clear the session to prevent revisiting
+        session()->forget("order_confirmed_$order_id");
+
+        return view('frontend.pages.frontend_pages.order-success', compact('order_details', 'order_products'));
+    }
 
 
     /**
-     * Remove the specified resource from storage.
+     * Clear All Session
      */
     public function clearSession()
     {

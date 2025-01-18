@@ -86,47 +86,43 @@ use App\Http\Controllers\Frontend\AjaxCallController;
 
     //__ Checkout __//
     Route::get('/checkout', [CheckoutController::class, 'checkout'])->name('checkout')->middleware('NoBack');
-    Route::get('/order-success', [CheckoutController::class, 'order_success'])->name('order-success');
 
-
-    //__  __//
-    Route::prefix('payment')->name('payment.')->group(function () {
-        
-        Route::controller(SslCommerzPaymentController::class)->group(function () {
-            Route::post('/ssl_commercz-pay', 'index')->name('ssl_commercz');
-            Route::post('/pay-via-ajax', 'payViaAjax');
-            Route::post('/success', 'success');
-            Route::post('/fail', 'fail');
-            Route::post('/cancel', 'cancel');
-            Route::post('/ipn', 'ipn');
-        });
-       
-        Route::controller(BkashController::class)->group(function () {
-            Route::post('/bkash', 'index')->name('bkash');
-        });
-
-        Route::controller(CODController::class)->group(function () {
-            Route::post('/cod', 'index')->name('cod');
-        });
-
+    //__ Cash On Delivery Payment Gateway __//
+    Route::controller(CODController::class)->group(function () {
+        Route::post('/cod', 'index')->name('payment.cod');
+        Route::get('/success-payment/{order_id}', 'success_payment')->name('payment.success')->middleware('NoBack');
     });
 
 
+    //__ SSL_Commerze Payment Gateway __//
+    Route::controller(SslCommerzPaymentController::class)->group(function () {
+        Route::post('/ssl_commercz-pay', 'index')->name('payment.ssl_commercz');
+        Route::post('/success', 'success')->name('order-success');
+        Route::post('/fail', 'fail');
+        Route::post('/cancel', 'cancel');
+    });
 
-    
+
+   // Route::controller(BkashController::class)->group(function () {
+    //     Route::post('/bkash', 'index')->name('payment.bkash');
+        
+    //     // Payment Routes for bKash
+    //     Route::get('/bkash/payment', [App\Http\Controllers\BkashTokenizePaymentController::class,'index']);
+    //     Route::get('/bkash/create-payment', [App\Http\Controllers\BkashTokenizePaymentController::class,'createPayment'])->name('bkash-create-payment');
+    //     Route::get('/bkash/callback', [App\Http\Controllers\BkashTokenizePaymentController::class,'callBack'])->name('bkash-callBack');
+
+    //     //search payment
+    //     Route::get('/bkash/search/{trxID}', [App\Http\Controllers\BkashTokenizePaymentController::class,'searchTnx'])->name('bkash-serach');
+
+    //     //refund payment routes
+    //     Route::get('/bkash/refund', [App\Http\Controllers\BkashTokenizePaymentController::class,'refund'])->name('bkash-refund');
+    //     Route::get('/bkash/refund/status', [App\Http\Controllers\BkashTokenizePaymentController::class,'refundStatus'])->name('bkash-refund-status');
+    // });
     
 
     // Route::get('/change-password', [HomeController::class, "changePassword"])->name('change.password');
     // Route::get('/forget-password', [HomeController::class, "forgetPassword"])->name('forget.password');   
     
-
-
-// SSLCOMMERZ Start
-    Route::get('/example1', [SslCommerzPaymentController::class, 'exampleEasyCheckout']);
-    Route::get('/example2', [SslCommerzPaymentController::class, 'exampleHostedCheckout']);
-
-
-//SSLCOMMERZ END
 
 /*
 |--------------------------------------------------------------------------

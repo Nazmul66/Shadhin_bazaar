@@ -180,12 +180,12 @@
                                     </label>
                                 </div>
 
-                                <div class="payment-item paypal-item">
+                                {{-- <div class="payment-item paypal-item">
                                     <label for="bKash-method" class="payment-header" data-payment-route="{{ route('payment.bkash') }}">
                                         <input type="radio" name="payment-method" class="tf-check-rounded" id="bKash-method" value="bkash">
                                         <span class="paypal-title apple-pay-title align-items-center"><img src="{{ asset('public/frontend/images/payment/Bkash.png') }}" alt=""></span>
                                     </label>
-                                </div>
+                                </div> --}}
                             </div>
 
                             <button type="submit" id="pay-now-button" class="tf-btn btn-reset">Payment</button>

@@ -17,9 +17,10 @@ class CheckoutController extends Controller
      */
     public function checkout()
     {
-        // if( getCartTotal() < 1 ){
-        //     return redirect()->route('home');
-        // }
+        if( Cart::content()->count() < 1 ){
+            Toastr::error('At least 1 product item must added', 'Error', ["positionClass" => "toast-top-right"]);
+            return redirect()->back();
+        }
 
         $data['cartItems']        =  Cart::content();
         $data['coupons']          =  Coupon::where('status', 1)->get();
@@ -28,9 +29,5 @@ class CheckoutController extends Controller
         return view('frontend.pages.product_pages.checkout', $data);
     }
 
-    public function order_success()
-    {
-        return view('frontend.pages.frontend_pages.order-success');
-    }
 
 }

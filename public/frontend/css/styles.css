@@ -12984,6 +12984,12 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
     background-color: transparent;
     transition: all 0.3s ease-in-out;
 }
+@media ( min-width: 320px ) and ( max-width: 576px ){
+    .tf-cart-item .tf-cart-item_product .tf-select .product_variant {
+        font-size: 14px;
+        line-height: 22px;
+    }
+}
 /* .tf-cart-item .tf-cart-item_product .tf-select .product_variant:hover{
     border-color: var(--main);
 } */
