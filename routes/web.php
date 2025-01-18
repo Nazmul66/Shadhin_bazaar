@@ -24,48 +24,58 @@ use App\Http\Controllers\Frontend\AjaxCallController;
 // Route::get('/', function () {
 //     return view('frontend.pages.home');
 // });
+Route::middleware(['auth'])->group(function () {
 
-    Route::get('/', [HomeController::class, "home"])->name('home');
-    Route::get('/about-us', [HomeController::class, "about_us"])->name('about.us');
-    Route::get('/contact-us', [HomeController::class, "contact_us"])->name('contact.us');
-    Route::get('/faq', [HomeController::class, "faq_page"])->name('faq');
-    Route::get('/team', [HomeController::class, "team_page"])->name('team');
-    Route::get('/privacy-policy', [HomeController::class, "privacy_policy"])->name('privacy.policy');
-    Route::get('/terms-condition', [HomeController::class, "terms_condition"])->name('terms.condition');
-    Route::get('/customer-feedback', [HomeController::class, "customer_feedback"])->name('customer.feedback');
-    Route::get('/blogs', [HomeController::class, "blogs"])->name('blogs');
-    Route::get('/blogs-details', [HomeController::class, "blogs_details"])->name('blogs.details');
-    // Route::get('/wishlist', [HomeController::class, "wishlist_view"])->name('wishlist');
-    // Route::get('/compare', [HomeController::class, "compare_view"])->name('compare');
-    Route::get('/shop-page', [HomeController::class, "shop_page"])->name('shop.page');
-    Route::get('/track-order', [HomeController::class, "track_order"])->name('track.order');
-    Route::get('/register-login', [HomeController::class, "register_login"])->name('register.login');
+    Route::controller(HomeController::class)->group(function () {
+        Route::get('/', "home")->name('home');
+        Route::get('/about-us', "about_us")->name('about.us');
+        Route::get('/contact-us', "contact_us")->name('contact.us');
+        Route::get('/faq', "faq_page")->name('faq');
+        Route::get('/team', "team_page")->name('team');
+        Route::get('/privacy-policy', "privacy_policy")->name('privacy.policy');
+        Route::get('/terms-condition', "terms_condition")->name('terms.condition');
+        Route::get('/customer-feedback', "customer_feedback")->name('customer.feedback');
+        Route::get('/blogs', "blogs")->name('blogs');
+        Route::get('/blogs-details', "blogs_details")->name('blogs.details');
+        // Route::get('/wishlist', "wishlist_view")->name('wishlist');
+        // Route::get('/compare', "compare_view")->name('compare');
+        Route::get('/shop-page', "shop_page")->name('shop.page');
+        Route::get('/track-order', "track_order")->name('track.order');
+        Route::get('/register-login', "register_login")->name('register.login');
+    });
 
 
-    Route::get('/cart-quick-view', [AjaxCallController::class, "cartQuickView"])->name('cart.quick.view');
+    Route::controller(AjaxCallController::class)->group(function () {
+        Route::get('/cart-quick-view', "cartQuickView")->name('cart.quick.view');
+    });
 
 
     //__ Flash Sales __//
-    Route::get('/flash-sale', [FlashSaleController::class, "index"])->name('flash.sale');
-
+    Route::controller(FlashSaleController::class)->group(function () {
+        Route::get('/flash-sale', "index")->name('flash.sale');
+    });
 
     //__ Products __//
-    Route::get('/product-details/{slug}', [ProductController::class, "show_product_details"])->name('product.details');
-    Route::post('/get-color-size-price', [ProductController::class, 'getColorSizePrice'])->name('get.color.size.price');
-    Route::post('/product/add-to-cart', [ProductController::class, 'productAddToCart'])->name('addToCart');
-    Route::get('/remove-cart/{id}/{color_id?}/{size_id?}', [ProductController::class, 'removeCart'])->name('remove.cart');
-    Route::get('/get-cart-data', [ProductController::class, 'getCart'])->name('get.cart.data');
+    Route::controller(ProductController::class)->group(function () {
+        Route::get('/product-details/{slug}', "show_product_details")->name('product.details');
+        Route::post('/get-color-size-price', 'getColorSizePrice')->name('get.color.size.price');
+        Route::post('/product/add-to-cart', 'productAddToCart')->name('addToCart');
+        Route::get('/remove-cart/{id}/{color_id?}/{size_id?}', 'removeCart')->name('remove.cart');
+        Route::get('/get-cart-data', 'getCart')->name('get.cart.data');
+    });
     
 
     //__ Carts __//
-    Route::get('/cart', [CartController::class, 'cart_view'])->name('show-cart');
-    Route::post('/add-cart', [CartController::class, "addCart"])->name('add.cart');
-    Route::post('/cart/update-quantity', [CartController::class, "updateProductQuantity"])->name('cart.update.quantity');
-    Route::get('/cart/remove-product/{rowId}', [CartController::class, "cart_remove_product"])->name('cart.remove.product');
-    Route::get('/get-sidebar-cart', [CartController::class, "get_sidebar_cart"])->name('get.sidebar.cart');
-    Route::get('/cart-count', [CartController::class, "cart_count"])->name('cart.count');
-    Route::get('/cart-sidebar-product-total', [CartController::class, "getTotalCart"])->name('cart.sidebar-product-total');
-    Route::get('/clear-cart', [CartController::class, "clear_cart"])->name('clear.cart');
+    Route::controller(CartController::class)->group(function () {
+        Route::get('/cart', 'cart_view')->name('show-cart');
+        Route::post('/add-cart', "addCart")->name('add.cart');
+        Route::post('/cart/update-quantity', "updateProductQuantity")->name('cart.update.quantity');
+        Route::get('/cart/remove-product/{rowId}', "cart_remove_product")->name('cart.remove.product');
+        Route::get('/get-sidebar-cart', "get_sidebar_cart")->name('get.sidebar.cart');
+        Route::get('/cart-count', "cart_count")->name('cart.count');
+        Route::get('/cart-sidebar-product-total', "getTotalCart")->name('cart.sidebar-product-total');
+        Route::get('/clear-cart', "clear_cart")->name('clear.cart');
+    });
 
     // Route::post('/update-cart-quantity', [CartController::class, 'update_cart_quantity'])->name('update.cart.quantity');
     // Route::post('/cart/delete-item', [CartController::class, 'deleteCartItem'])->name('delete.cart.item');
@@ -75,17 +85,23 @@ use App\Http\Controllers\Frontend\AjaxCallController;
 
 
     //__ Coupon __//
-    Route::post('/apply-coupon', [CouponController::class, 'apply_coupon'])->name('apply.coupon');
-    Route::get('/coupon-calculation', [CouponController::class, 'coupon_calculation'])->name('coupon.calculation');
+    Route::controller(CouponController::class)->group(function () {
+        Route::post('/apply-coupon', 'apply_coupon')->name('apply.coupon');
+        Route::get('/coupon-calculation', 'coupon_calculation')->name('coupon.calculation');
+    });
 
 
     //__ Shipping Rules  __//
-    Route::post('/apply-shipping', [ShippingRuleController::class, 'apply_shipping'])->name('apply.shipping');
-    Route::get('/shipping-rules-calculation', [ShippingRuleController::class, 'shipping_rules_calculation'])->name('shipping.rules.calculation');
+    Route::controller(ShippingRuleController::class)->group(function () {
+        Route::post('/apply-shipping', 'apply_shipping')->name('apply.shipping');
+        Route::get('/shipping-rules-calculation', 'shipping_rules_calculation')->name('shipping.rules.calculation');
+    });
 
 
     //__ Checkout __//
-    Route::get('/checkout', [CheckoutController::class, 'checkout'])->name('checkout')->middleware('NoBack');
+    Route::controller(CheckoutController::class)->group(function () {
+        Route::get('/checkout', 'checkout')->name('checkout')->middleware('NoBack');
+    });
 
     //__ Cash On Delivery Payment Gateway __//
     Route::controller(CODController::class)->group(function () {
@@ -123,6 +139,7 @@ use App\Http\Controllers\Frontend\AjaxCallController;
     // Route::get('/change-password', [HomeController::class, "changePassword"])->name('change.password');
     // Route::get('/forget-password', [HomeController::class, "forgetPassword"])->name('forget.password');   
     
+});
 
 /*
 |--------------------------------------------------------------------------

@@ -1,43 +1,5 @@
 @charset "UTF-8";
-/* ---------------------------------------------------------
-    * Name: Modave - Multipurpose eCommerce
-    * Version: 1.0.0
-    * Author: Themesflat
-    * Author URI: http://themesflat.com 
 
-	* Abstracts variable
-
-    * Reset css styles
-
-    * Components
-
-        * header
-        * footer
-        * tabs
-        * slider banner
-        * button
-        * form
-        * nice select
-        * carousel
-        * avatar
-        * pop up
-        * box icon
-        * hover
-        * collection
-        * product
-        * blog
-        * testimonial
-        * lookbook
-        * accordion
-        * zoom
-        * shop
-
-    * section
-
-    * Responsive
- ------------------------------------------------------------------------------ */
-
-/*--------- Abstracts variable ---------- */
 
 @import url(./bootstrap-select.min.css);
 :root {
@@ -2808,7 +2770,7 @@ header.header-bg {
     z-index: 999;
     visibility: hidden;
     text-align: left;
-    top: calc(100% + 28px);
+    top: calc(100% + 12px);
     opacity: 0;
     visibility: hidden;
     border-radius: 8px;
@@ -2866,8 +2828,8 @@ header.header-bg {
 .nav-account .dropdown-login .sub-top {
     display: grid;
     gap: 12px;
-    padding-bottom: 16px;
-    border-bottom: 1px solid var(--line);
+    /* padding-bottom: 16px;
+    border-bottom: 1px solid var(--line); */
 }
 
 .nav-account .dropdown-login .sub-bot {

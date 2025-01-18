@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,7 +17,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function create(): View
     {
-        return view('auth.login');
+        return view('frontend.pages.auth.login');
     }
 
     /**
@@ -28,7 +29,12 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect('/');
+        // Clear the previous intended URL to prevent redirecting to other pages
+        $request->session()->forget('url.intended');
+
+        Toastr::success('User Login Successfully', 'Success', ["positionClass" => "toast-top-right"]);
+
+        return redirect()->route('home');
     }
 
     /**
@@ -42,6 +48,8 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        Toastr::success('Logout Successfully', 'Success', ["positionClass" => "toast-top-right"]);
+
+        return redirect()->route('home');
     }
 }

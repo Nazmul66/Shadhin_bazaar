@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -19,7 +20,7 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
-        return view('auth.register');
+        return view('frontend.pages.auth.register');
     }
 
     /**
@@ -30,21 +31,29 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'name'      => ['required', 'string', 'max:255'],
+            'email'     => ['nullable', 'string', 'lowercase', 'email', 'max:255', 'unique:users,email'],
+            'phone'     => ['required', 'digits:11', 'unique:users,phone'],
+            'password'  => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+        try {
+            // dd($request->all());
+            $user = User::create([
+                'name'      => $request->name,
+                'email'     => $request->email, // This can be null
+                'phone'     => $request->phone,
+                'password'  => Hash::make($request->password),
+            ]);
 
-        event(new Registered($user));
+            event(new Registered($user));
 
-        Auth::login($user);
+            Auth::login($user);
 
-        return redirect('/');
+            Toastr::success('User Login Successfully', 'Success', ["positionClass" => "toast-top-right"]);
+            return redirect('/');
+        } catch (\Exception $e) {
+            Toastr::error('User Login Error', 'Error', ["positionClass" => "toast-top-right"]);
+        }
     }
 }

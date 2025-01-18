@@ -56,7 +56,7 @@
 <section class="flat-spacing-4">
     <div class="container">
         <div class="heading-section text-center wow fadeInUp">
-            <h3 class="heading">Popular Categories</h3>
+            <h3 class="heading">Popular Categories {{ Auth::user()->name ?? "" }}</h3>
         </div>
         <div class="flat-collection-circle wow fadeInUp" data-wow-delay="0.1s">
             <div dir="ltr" class="swiper tf-sw-categories" data-preview="7" data-tablet="4" data-mobile-sm="3" data-mobile="2" data-space-lg="30" data-space-md="20" data-space="15" data-pagination="2" data-pagination-md="4" data-pagination-lg="1">

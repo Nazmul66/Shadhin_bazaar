@@ -54,6 +54,7 @@
                                     aria-controls="pills-profiles" aria-selected="true">signup</button>
                             </li>
                         </ul>
+
                         <div class="tab-content" id="pills-tabContent2">
                             {{-- Login Form --}}
                             <div class="tab-pane fade show active" id="pills-homes" role="tabpanel"
@@ -121,14 +122,14 @@
 
                                         <div class="wsus__login_input">
                                             <i class="fas fa-key"></i>
-                                            <input type="text" type="password" name="password" required autocomplete="off" placeholder="Password">
+                                            <input type="password" name="password" required autocomplete="off" placeholder="Password">
 
                                             <x-input-error :messages="$errors->get('password')" class="mt-2" />
                                         </div>
 
                                         <div class="wsus__login_input">
                                             <i class="fas fa-key"></i>
-                                            <input type="text" type="password" name="password_confirmation" required autocomplete="off" placeholder="Confirm Password">
+                                            <input type="password" name="password_confirmation" required autocomplete="off" placeholder="Confirm Password">
 
                                             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
                                         </div>
