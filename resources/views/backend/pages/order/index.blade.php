@@ -249,116 +249,6 @@
                 })
             })
 
-            // // Edit 
-            // $(document).on("click", '#editButton', function (e) {
-            //     let id = $(this).attr('data-id');
-            //     // alert(id);
-
-            //     $.ajax({
-            //         type: 'GET',
-            //         // headers: {
-            //         //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            //         // },
-            //         url: "{{ url('admin/product') }}/" + id + "/edit",
-            //         processData: false,  // Prevent jQuery from processing the data
-            //         contentType: false,  // Prevent jQuery from setting contentType
-            //         success: function (res) {
-            //             console.log(res.success);
-            //             let data = res.success;
-
-            //             $('#id').val(data.id);
-            //             $('#up_name').val(data.name);
-            //             $('#up_sku').val(data.sku);
-            //             $('#up_category_id').val(data.category_id).trigger('change');  // <-- This is important for select2
-            //             $('#up_subCategory_id').val(data.subCategory_id).trigger('change');  // <-- This is important for select2
-            //             $('#up_childCategory_id').val(data.childCategory_id).trigger('change');  // <-- This is important for select2
-            //             $('#up_brand_id').val(data.brand_id).trigger('change');  // <-- This is important for select2
-            //             $('#up_price').val(data.price);
-            //             $('#up_offer_price').val(data.offer_price);
-            //             $('#up_qty').val(data.qty);
-            //             $('#up_offer_start_date').val(data.offer_start_date);
-            //             $('#up_offer_end_date').val(data.offer_end_date);
-            //             $('#up_video_link').val(data.video_link);
-            //             $('#up_short').val(data.short_description);
-
-            //             // Set CKEditor content
-            //             if (longDescriptionEditor) {
-            //                 longDescriptionEditor.setData(data.long_description); // Set long_description
-            //             }
-
-            //             // Reinitialize Choices after setting the value
-            //             tagChoices.setValue(data.tags.split(','));
-
-            //             $('#up_type').val(data.type);
-            //             // $('#up_is_featured').val(data.is_featured);
-            //             // $('#up_is_top').val(data.is_top);
-            //             // $('#up_is_best').val(data.is_best);
-            //             $('#up_seo_title').val(data.seo_title);
-            //             $('#up_seo_description').val(data.seo_description);
-            //             // Set image
-            //             $('#imageShow').html('');
-            //             $('#imageShow').append(`
-            //              <a href="{{ asset("`+ data.thumb_image +`") }}" target="__blank">
-            //                  <img src="{{ asset("`+ data.thumb_image +`") }}" alt="Product Image" style="width: 75px;"> 
-            //               </a>
-            //             `);
-            //         },
-            //         error: function (error) {
-            //             console.log('error');
-            //         }
-
-            //     });
-            // })
-
-
-            // // Update 
-            // $("#EditForm").submit(function (e) {
-            //     e.preventDefault();
-
-            //     let id = $('#id').val();
-            //     let formData = new FormData(this);
-
-            //     $.ajax({
-            //         type: "POST",
-            //         headers: {
-            //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            //         },
-            //         url: "{{ url('admin/product') }}/" + id,
-            //         data: formData,
-            //         processData: false,  // Prevent jQuery from processing the data
-            //         contentType: false,  // Prevent jQuery from setting contentType
-            //         success: function (res) {
-
-            //             swal.fire({
-            //                 title: "Success",
-            //                 text: "Product Edited",
-            //                 icon: "success"
-            //             })
-
-            //             $('#editModal').modal('hide');
-            //             $('#EditForm')[0].reset();
-            //             datatables.ajax.reload();
-            //         },
-            //         error: function (err) {
-            //             let error = err.responseJSON.errors;
-
-            //             $('#up_name_validate').empty().html(error.name);
-            //             $('#up_category_id_validate').empty().html(error.category_id);
-            //             $('#up_price_validate').empty().html(error.price);
-            //             $('#up_quantity_validate').empty().html(error.qty);
-            //             $('#up_short_validate').empty().html(error.short_description);
-            //             $('#up_long_validate').empty().html(error.long_description);
-
-            //             swal.fire({
-            //                 title: "Failed",
-            //                 text: "Something Went Wrong !",
-            //                 icon: "error"
-            //             })
-            //         }
-            //     });
-            // });
-
-
             // Delete
             $(document).on("click", "#deleteBtn", function () {
                 let id = $(this).data('id')
@@ -376,8 +266,7 @@
                     if (result.isConfirmed) {
                         $.ajax({
                             type: 'DELETE',
-
-                            url: "{{ url('admin/product') }}/" + id,
+                            url: "{{ url('admin/order') }}/" + id,
                             data: {
                                 headers: {
                                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

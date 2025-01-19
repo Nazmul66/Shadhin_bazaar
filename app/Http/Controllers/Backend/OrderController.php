@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use App\Models\OrderProduct;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -69,23 +71,17 @@ class OrderController extends Controller
             
                 return '<select class="form-select" id="order_status" data-id="' . $order->id . '">' . $options . '</select>';
             })
-            ->addColumn('action', function ($product) {
+            ->addColumn('action', function ($order) {
                  return '
                 <div class="btn-group">
                     <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Actions <i class="mdi mdi-chevron-down"></i>
                     </button>
 
                     <div class="dropdown-menu dropdownmenu-primary" style="">
-                        <a class="dropdown-item text-info" href="'. route('admin.product.show', $product->id) .'"><i class="fas fa-eye"></i> View</a>
+                        <a class="dropdown-item text-info" href="'. route('admin.product.show', $order->id) .'"><i class="fas fa-eye"></i> Invoice</a>
 
-                        <a class="dropdown-item text-primary" href="'. route('admin.product.edit', $product->id) .'"><i class="fas fa-edit"></i> Edit</a>
-
-                        <a class="dropdown-item text-danger" href="javascript:void(0)" data-id="'.$product->id.'" id="deleteBtn">
+                        <a class="dropdown-item text-danger" href="javascript:void(0)" data-id="'.$order->id.'" id="deleteBtn">
                             <i class="fas fa-trash"></i> Delete
-                        </a>
-
-                        <a class="dropdown-item text-success" href="'. route('admin.product-variant', $product->id) .'" ><i class="bx bx-cog"></i>
-                           Product Variants
                         </a>
                     </div>
                 </div>';
@@ -129,27 +125,20 @@ class OrderController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function destroy(Order $order)
     {
-        //
-    }
+        // dd($order);
+        // Delete all related OrderProduct entries
+        foreach (OrderProduct::where('order_id', $order->order_id)->get() as $orderItem) {
+            $orderItem->delete();
+        }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+        // Delete the single Transaction entry related to the order
+        Transaction::where('order_id', $order->order_id)->delete();
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        // Delete the Order itself
+        $order->delete();
+
+        return response()->json(['message' => 'Order and its related data have been deleted.'], 200);
     }
 }
