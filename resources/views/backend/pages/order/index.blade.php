@@ -7,7 +7,6 @@
 @push('add-css')
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('public/backend/assets/libs/flatpickr/flatpickr.min.css') }}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
     <link rel="stylesheet" href="https://cdn.datatables.net/2.1.6/css/dataTables.dataTables.min.css">
 @endpush
 
@@ -69,11 +68,8 @@
 @push('add-script')
     {{-- data.setData(res.data.schedules_desc); --}}
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <script src="https://cdn.ckeditor.com/ckeditor5/41.1.0/classic/ckeditor.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/choices.js@9.0.1/public/assets/scripts/choices.min.js"></script>
     <script src="{{ asset('public/backend/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
     <script src="https://cdn.datatables.net/2.1.6/js/dataTables.min.js"></script>
-    <script src="{{ asset('public/backend/assets/js/all_plugins.js') }}"></script>
 
     <script>
         $(document).ready(function () {
@@ -133,7 +129,6 @@
                     },
                 ]
             });
-
 
             // Payment status updates
             $(document).on('change', '#payment_status', function () {

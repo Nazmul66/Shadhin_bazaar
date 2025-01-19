@@ -70,7 +70,7 @@
                             @csrf 
 
                             <div class="grid-1">
-                                <input type="text" name="full_name" placeholder="Full Name*" value="{{ old('full_name') }}">
+                                <input type="text" name="full_name" placeholder="Full Name*" value="{{ old('full_name', Auth::user()->name) }}">
 
                                 @error('full_name')
                                     <div class="text-danger">{{ $message }}</div>
@@ -78,7 +78,7 @@
                             </div>
 
                             <div class="grid-1">
-                                <input type="text" name="email" class="" placeholder="Email Address" value="{{ old('email') }}">
+                                <input type="text" name="email" class="" placeholder="Email Address" @if( !empty(Auth::user()->email) ) disabled @endif value="{{ old('email', Auth::user()->email) }}">
 
                                 @error('email')
                                     <div class="text-danger">{{ $message }}</div>
@@ -86,7 +86,7 @@
                             </div>
 
                             <div class="grid-1">
-                                <input type="text" name="phone" pattern="^0\d{10}$" maxlength="11" placeholder="Phone Number*" value="{{ old('phone') }}">
+                                <input type="text" name="phone" pattern="^0\d{10}$" maxlength="11" placeholder="Phone Number*" value="{{ old('phone', Auth::user()->phone) }}">
 
                                 @error('phone')
                                     <div class="text-danger">{{ $message }}</div>
@@ -94,7 +94,7 @@
                             </div>
 
                             <div class="grid-1">
-                                <input type="text" name="city" placeholder="Town/City" value="{{ old('city') }}">
+                                <input type="text" name="city" placeholder="Town/City" value="{{ old('city', Auth::user()->city) }}">
 
                                 @error('city')
                                     <div class="text-danger">{{ $message }}</div>
@@ -102,7 +102,7 @@
                             </div>
 
                             <div class="grid-1">
-                                <textarea name="address" id="address" placeholder="Address*" cols="30" rows="6">{{ old('address') }}</textarea>
+                                <textarea name="address" id="address" placeholder="Address*" cols="30" rows="6">{{ old('address', Auth::user()->address) }}</textarea>
 
                                 @error('address')
                                     <div class="text-danger">{{ $message }}</div>

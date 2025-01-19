@@ -10,6 +10,7 @@ use App\Models\Order;
 use App\Models\OrderProduct;
 use App\Models\Product;
 use App\Models\Transaction;
+use App\Models\User;
 use Brian2694\Toastr\Facades\Toastr;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Auth;
@@ -78,6 +79,21 @@ class SslCommerzPaymentController extends Controller
         $post_data['value_b'] = "ref002";
         $post_data['value_c'] = "ref003";
         $post_data['value_d'] = "ref004";
+
+        $user             = User::find(Auth::user()->id);
+        
+        $user->name       = $request->input('full_name');
+        // Update email if it is different
+        if ($user->email !== $request->input('email')) {
+            $user->email = $request->input('email');
+        }
+        // Update phone if it is different
+        if ($user->phone !== $request->input('phone')) {
+            $user->phone = $request->input('phone');
+        }
+        $user->city       = $request->input('city');
+        $user->address    = $request->input('phone');
+        $user->update();
 
         //__ Store all data __//
         $this->storeOrder($post_data['tran_id'], $order_address_data, $payment_method, 0);
