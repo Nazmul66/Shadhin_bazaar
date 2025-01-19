@@ -24,6 +24,7 @@ use App\Http\Controllers\Backend\SubcategoryController;
 use App\Http\Controllers\Backend\ChildCategoryController;
 use App\Http\Controllers\Backend\FlashSaleController;
 use App\Http\Controllers\Backend\CouponController;
+use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Backend\ReviewController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\ProductController;
@@ -134,6 +135,13 @@ Route::middleware('setLanguage')->group(function(){
         Route::get('/delete/sizes/{id}', [ProductController::class, 'delete_product_size'])->name('product-size.delete'); 
         Route::get('/delete/colors/{id}', [ProductController::class, 'delete_product_color'])->name('product-color.delete');
 
+
+        //______ Orders _____//
+        Route::resource('/order', OrderController::class)->names('order');
+        Route::get('/order-data', [OrderController::class, 'getData'])->name('order-data');
+        Route::post('/order/payment-status', [OrderController::class, 'changePaymentStatus'])->name('change.payment.status');
+        Route::post('/order/order-status', [OrderController::class, 'changeOrderStatus'])->name('change.order.status');
+        // Route::get('/order/view/{id}', [OrderController::class, 'orderView'])->name('order.view');
 
         //______ Flash Sale _____//
         Route::put('/flash-sale', [FlashSaleController::class, 'flashSale_index'])->name('flashSale.index');

@@ -47,11 +47,11 @@ class CODController extends Controller
             $order->currency_symbol   = getSetting()->currency_symbol;
             $order->product_qty       = Cart::content()->count();
             $order->payment_method    = $request->input('payment-method');
-            $order->payment_status    = 1;
+            $order->payment_status    = 0;
             $order->delivery_charge   = Session::get('shippingCost') ?: null;
             $order->coupon            = json_encode(Session::get('coupon')) ?: null;
             $order->order_address     = json_encode($order_address_data);
-            $order->order_status      = 0;
+            $order->order_status      = 'pending';
             // dd($order);
             $order->save();
 

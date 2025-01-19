@@ -80,7 +80,7 @@ class SslCommerzPaymentController extends Controller
         $post_data['value_d'] = "ref004";
 
         //__ Store all data __//
-        $this->storeOrder($post_data['tran_id'], $order_address_data, $payment_method, 1);
+        $this->storeOrder($post_data['tran_id'], $order_address_data, $payment_method, 0);
 
         //__ clear session __//
         $this->clearSession();  
@@ -180,7 +180,7 @@ class SslCommerzPaymentController extends Controller
         $order->delivery_charge   = Session::get('shippingCost') ?: null;
         $order->coupon            = json_encode(Session::get('coupon')) ?: null;
         $order->order_address     = json_encode($order_address_data);
-        $order->order_status      = 0;
+        $order->order_status      = 'pending';
         // dd($order);
         $order->save();
 

@@ -136,6 +136,21 @@
                     </ul>
                 </li>
 
+                {{-- Order List --}}
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow">
+                        <i class='bx bx-line-chart'></i>
+                        <span >Order Panel</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li>
+                            <a href="{{ route('admin.order.index') }}">
+                                <span >Order</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
                 {{-- Manage Website --}}
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">

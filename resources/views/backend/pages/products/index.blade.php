@@ -1,7 +1,7 @@
 @extends('backend.layout.master')
 
 @push('title')
-    List Product
+    All Products List
 @endpush
 
 @push('add-css')
@@ -41,36 +41,6 @@
             </div>
         </div>
         
-        <div class="card-body">
-           <table id="inputTable">
-            <thead class="bg-primary text-white">
-                <tr>
-                    <th>Name</th>
-                    <th>Data</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            
-            <tbody class="table-border-bottom-0" id="data-table">
-                <tr>
-                    <td>
-                        <input type="text" class="form-control" name="name[]" required>
-                    </td>
-                    <td>
-                        <input type="text" class="form-control" name="data[]" required>
-                    </td>
-                    <td>
-                        <select name="dropdown" class="form-control dropdown-select" required>
-                            <option value="" disabled selected>Select Option</option>
-                            <option value="Analytics" data-name="Analytics">Analytics</option>
-                            <option value="Python" data-name="Python">Python</option>
-                            <option value="CrawlBar" data-name="CrawlBar">Crawl Bar</option>
-                        </select>
-                    </td>
-                </tr>
-            </tbody>
-           </table>
-        </div>
 
         <div class="card-body">
             <div class="">
@@ -561,65 +531,6 @@
     <script src="{{ asset('public/backend/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
     <script src="https://cdn.datatables.net/2.1.6/js/dataTables.min.js"></script>
     <script src="{{ asset('public/backend/assets/js/all_plugins.js') }}"></script>
-
-    {{-- New Drop select Option --}}
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const dataTable = document.getElementById('data-table');
-
-            // Event listener for dropdown changes
-            dataTable.addEventListener('change', function (event) {
-                if (event.target.classList.contains('dropdown-select')) {
-                    const selectedOption = event.target.options[event.target.selectedIndex];
-                    const selectedValue = selectedOption.value; // Get the value of the selected option
-                    const selectedName = selectedOption.dataset.name; // Get the data-name attribute
-
-                    // Append the data dynamically as a new row
-                    const newRow = document.createElement('tr');
-                    newRow.innerHTML = `
-                        <td>
-                            <input type="text" class="form-control" name="name[]" value="${selectedName}" readonly>
-                        </td>
-                        <td>
-                            <input type="text" class="form-control" name="data[]" value="Default Data" required>
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-danger remove-row">Remove</button>
-                        </td>
-                    `;
-                    dataTable.appendChild(newRow);
-
-                    // Disable the selected option in all dropdowns
-                    const dropdowns = document.querySelectorAll('.dropdown-select');
-                    dropdowns.forEach(dropdown => {
-                        const optionToDisable = dropdown.querySelector(`option[value="${selectedValue}"]`);
-                        if (optionToDisable) optionToDisable.disabled = true;
-                    });
-
-                    // Reset the current dropdown after selection
-                    event.target.value = "";
-                }
-            });
-
-            // Event listener for removing rows
-            dataTable.addEventListener('click', function (event) {
-                if (event.target.classList.contains('remove-row')) {
-                    const row = event.target.closest('tr');
-                    const removedValue = row.querySelector('input[name="name[]"]').value;
-
-                    // Re-enable the option in all dropdowns
-                    const dropdowns = document.querySelectorAll('.dropdown-select');
-                    dropdowns.forEach(dropdown => {
-                        const optionToEnable = dropdown.querySelector(`option[value="${removedValue}"]`);
-                        if (optionToEnable) optionToEnable.disabled = false;
-                    });
-
-                    // Remove the row
-                    row.remove();
-                }
-            });
-        });
-    </script>
 
     <script>
      $(document).ready(function () {
