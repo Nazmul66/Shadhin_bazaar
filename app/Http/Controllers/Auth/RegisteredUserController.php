@@ -18,8 +18,11 @@ class RegisteredUserController extends Controller
     /**
      * Display the registration view.
      */
-    public function create(): View
+    public function create()
     {
+        if( Auth::guard('web')->check() ){
+            return redirect()->back();
+        }
         return view('frontend.pages.auth.register');
     }
 
@@ -50,6 +53,15 @@ class RegisteredUserController extends Controller
         
         Toastr::success('User Login Successfully', 'Success', ["positionClass" => "toast-top-right"]);
 
-        return redirect()->intended('/');
+        // Check if there's an intended URL (e.g., /checkout)
+        if ($request->session()->has('custom_redirect_url')) {
+            // Retrieve and remove the custom session variable
+            $redirectUrl = $request->session()->pull('custom_redirect_url'); 
+    
+            // Redirect to the stored URL
+            return redirect()->to($redirectUrl);
+        }
+
+        return redirect()->route('home');
     }
 }

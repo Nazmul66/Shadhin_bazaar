@@ -23,10 +23,10 @@ class SslCommerzPaymentController extends Controller
     {
         // dd($request->all(), "hello");
 
-        // if( Cart::content()->count() < 1 ){
-        //     Toastr::error('Please purchase any product', 'Error', ["positionClass" => "toast-top-right"]);
-        //     return back();
-        // }
+        if( Cart::content()->count() < 1 ){
+            Toastr::error('At least 1 product item must added', 'Error', ["positionClass" => "toast-top-right"]);
+            return back();
+        }
 
         $payment_method = $request->input('payment-method');
         $order_address_data = [
@@ -167,9 +167,9 @@ class SslCommerzPaymentController extends Controller
 
         $maxOrderId               = Order::max('order_id');
         $order->tracking_number   = 'TRK' . rand(1000, 99999) . now()->format('Ymd') ;
-        $order->order_id          = $maxOrderId ? $maxOrderId + 1 : 145299437801;
+        $order->order_id          = $maxOrderId ? $maxOrderId + 1 : 14529937801;
         $order->invoice_id        = 'INV-1737' . rand(100000000, 9999999999);
-        $order->user_id           = 0;
+        $order->user_id           = Auth::user()->id;
         $order->subtotal          = getCartTotal();
         $order->total_amount      = getMainCartTotal();
         $order->currency_name     = getSetting()->currency_name;

@@ -18,10 +18,17 @@ class CheckoutController extends Controller
      */
     public function checkout()
     {
-        if( Cart::content()->count() < 1 ){
-            Toastr::error('At least 1 product item must added', 'Error', ["positionClass" => "toast-top-right"]);
-            return redirect()->back();
+        // if( Cart::content()->count() < 1 ){
+        //     Toastr::error('At least 1 product item must added', 'Error', ["positionClass" => "toast-top-right"]);
+        //     return redirect()->route('home');
+        // }
+
+        if (!Auth::guard('web')->check()) {
+            session(['custom_redirect_url' => url()->full()]);
+            return redirect()->route('login');
         }
+        
+        // Session::forget('custom_redirect_url');
 
         $data['cartItems']        =  Cart::content();
         $data['coupons']          =  Coupon::where('status', 1)->get();
