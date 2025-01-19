@@ -55,15 +55,14 @@
                         @csrf
 
                         <div class="wrap">
-
                             <fieldset class="">
-                                <input class="" type="text" tabindex="2" placeholder="Email Address or Phone Number" name="login" tabindex="2" value="{{ old('login') }}" aria-required="true" >
+                                <input class="" type="text" placeholder="Email Address or Phone Number" name="login" tabindex="2" value="{{ old('login') }}" aria-required="true" >
                             </fieldset>
                             <x-input-error :messages="$errors->get('login')" class="mt-1 text-danger" style="margin-top: -20px !important; " />
 
 
                             <fieldset class="position-relative password-item">
-                                <input class="input-password" type="password" placeholder="Password*" tabindex="2" name="password" tabindex="2" value="" aria-required="true" >
+                                <input class="input-password" type="password" placeholder="Password*" name="password" tabindex="2" aria-required="true" >
                                 <span class="toggle-password unshow">
                                     <ion-icon name="eye-outline"></ion-icon>
                                 </span>

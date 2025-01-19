@@ -33,19 +33,35 @@
         <div class="row">
             <div class="col-xl-6">
                 <div class="flat-spacing tf-page-checkout">
-                    <div class="wrap">
-                        <div class="title-login">
-                            <p>Already have an account?</p>
-                            <a href="login.html" class="text-button">Login here</a>
-                        </div>
-                        <form class="login-box">
-                            <div class="grid-2">
-                                <input type="text" placeholder="Your name/Email">
-                                <input type="password" placeholder="Password">
+
+                    @if ( !Auth::guard('web')->check() )
+                        <div class="wrap">
+                            <div class="title-login">
+                                <p>Create New Account?</p>
+                                <a href="{{ route('register') }}" class="text-button">Register here</a>
                             </div>
-                            <button class="tf-btn" type="submit"><span class="text">Login</span></button>
-                        </form>
-                    </div>
+
+                            <form class="login-box" method="POST" action="{{ route('login') }}">
+                                @csrf
+
+                                <div class="grid-2">
+                                    <div class="">
+                                        <input type="text" placeholder="Email Address or Phone Number" name="login" tabindex="2" value="{{ old('login') }}" aria-required="true">
+                                        <x-input-error :messages="$errors->get('login')" class="mt-1 text-danger" style="margin-top: -20px !important; " />
+                                    </div>
+                                    
+                                    <div class="">
+                                        <input type="password" name="password" placeholder="Password" aria-required="true" autocomplete="off">
+                                        <x-input-error :messages="$errors->get('password')" class="mt-1 text-danger" style="margin-top: -20px !important;" />
+                                    </div>
+                                </div>
+
+                                <button class="tf-btn" type="submit">
+                                    <span class="text">Login</span>
+                                </button>
+                            </form>
+                        </div>
+                    @endif
 
                     <div class="wrap">
                         <h5 class="title">Information</h5>

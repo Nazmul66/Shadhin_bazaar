@@ -25,6 +25,7 @@ class CODController extends Controller
         // dd($request->all());
 
        if( Cart::content()->count() > 0 ){
+        
             $order_address_data = [
                 'full_name' => $request->input('full_name'),
                 'email'     => $request->input('email') ?? 'unknown@gmail.com',

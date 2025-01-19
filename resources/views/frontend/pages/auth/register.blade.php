@@ -60,7 +60,7 @@
                         </fieldset>
 
                         <fieldset class="">
-                            <input type="email" placeholder="Email Address" name="email"  value="{{ old('email') }}" autofocus autocomplete="off">
+                            <input type="email" placeholder="Email Address" name="email" value="{{ old('email') }}" autofocus autocomplete="off">
 
                             <x-input-error :messages="$errors->get('email')" class="mt-1 text-danger" />
                         </fieldset>

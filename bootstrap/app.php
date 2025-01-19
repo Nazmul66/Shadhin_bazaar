@@ -12,6 +12,7 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
+            'RedirectToCheckout' => \App\Http\Middleware\RedirectToCheckout::class,
             'NoBack' => \App\Http\Middleware\NobackMiddleware::class,
             'admin' => \App\Http\Middleware\Admin::class,
             'setLanguage' => \App\Http\Middleware\SetLanguage::class,

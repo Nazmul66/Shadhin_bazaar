@@ -37,23 +37,19 @@ class RegisteredUserController extends Controller
             'password'  => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        try {
-            // dd($request->all());
-            $user = User::create([
-                'name'      => $request->name,
-                'email'     => $request->email, // This can be null
-                'phone'     => $request->phone,
-                'password'  => Hash::make($request->password),
-            ]);
+        $user = User::create([
+            'name'      => $request->name,
+            'email'     => $request->email, // This can be null
+            'phone'     => $request->phone,
+            'password'  => Hash::make($request->password),
+        ]);
 
-            event(new Registered($user));
+        event(new Registered($user));
 
-            Auth::login($user);
+        Auth::login($user);
+        
+        Toastr::success('User Login Successfully', 'Success', ["positionClass" => "toast-top-right"]);
 
-            Toastr::success('User Login Successfully', 'Success', ["positionClass" => "toast-top-right"]);
-            return redirect('/');
-        } catch (\Exception $e) {
-            Toastr::error('User Login Error', 'Error', ["positionClass" => "toast-top-right"]);
-        }
+        return redirect()->intended('/');
     }
 }

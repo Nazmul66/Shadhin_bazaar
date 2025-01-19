@@ -21,11 +21,6 @@ use App\Http\Controllers\Frontend\AjaxCallController;
 |
 */
 
-// Route::get('/', function () {
-//     return view('frontend.pages.home');
-// });
-Route::middleware(['auth'])->group(function () {
-
     Route::controller(HomeController::class)->group(function () {
         Route::get('/', "home")->name('home');
         Route::get('/about-us', "about_us")->name('about.us');
@@ -99,8 +94,8 @@ Route::middleware(['auth'])->group(function () {
 
 
     //__ Checkout __//
-    Route::controller(CheckoutController::class)->group(function () {
-        Route::get('/checkout', 'checkout')->name('checkout')->middleware('NoBack');
+    Route::middleware(['NoBack'])->controller(CheckoutController::class)->group(function () {
+        Route::get('/checkout', 'checkout')->name('checkout');
     });
 
     //__ Cash On Delivery Payment Gateway __//
@@ -139,7 +134,7 @@ Route::middleware(['auth'])->group(function () {
     // Route::get('/change-password', [HomeController::class, "changePassword"])->name('change.password');
     // Route::get('/forget-password', [HomeController::class, "forgetPassword"])->name('forget.password');   
     
-});
+
 
 /*
 |--------------------------------------------------------------------------

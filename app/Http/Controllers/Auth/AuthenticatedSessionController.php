@@ -8,6 +8,8 @@ use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\URL;
 use Illuminate\View\View;
 
 class AuthenticatedSessionController extends Controller
@@ -29,12 +31,10 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        // Clear the previous intended URL to prevent redirecting to other pages
-        $request->session()->forget('url.intended');
-
         Toastr::success('User Login Successfully', 'Success', ["positionClass" => "toast-top-right"]);
 
-        return redirect()->route('home');
+        // Default fallback: Redirect to home page or dashboard if no intended URL exists
+        return redirect()->route('show-cart');
     }
 
     /**
@@ -50,6 +50,6 @@ class AuthenticatedSessionController extends Controller
 
         Toastr::success('Logout Successfully', 'Success', ["positionClass" => "toast-top-right"]);
 
-        return redirect()->route('home');
+        return redirect()->intended('/');
     }
 }
