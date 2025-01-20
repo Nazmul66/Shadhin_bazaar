@@ -119,7 +119,7 @@
                                     <label for="discount_type" for="discount_type" class="form-label">Discount Type <span class="text-danger">*</span></label>
                                     <select class="form-select" name="discount_type" id="discount_type">
                                         <option value="percent" selected>Percentage (%)</option>
-                                        <option value="amount">Amount {{ $settings->currency_symbol }}</option>
+                                        <option value="amount">Amount {{  getSetting()->currency_symbol }}</option>
                                     </select>
                                 </div>
 
@@ -224,7 +224,7 @@
                                     <label for="up_discount_type" class="form-label">Discount Type <span class="text-danger">*</span></label>
                                     <select class="form-select" name="discount_type" id="up_discount_type">
                                         <option value="percent" selected>Percentage (%)</option>
-                                        <option value="amount">Amount {{ $settings->currency_symbol }}</option>
+                                        <option value="amount">Amount {{  getSetting()->currency_symbol }}</option>
                                     </select>
                                 </div>
 

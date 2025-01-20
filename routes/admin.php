@@ -28,6 +28,7 @@ use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Backend\ReviewController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\ProductController;
+use App\Http\Controllers\Backend\TransactionController;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
 
@@ -90,7 +91,6 @@ Route::middleware('setLanguage')->group(function(){
         Route::get('/childCategory-data', [ChildCategoryController::class, 'getData'])->name('childCategory-data');
         Route::post('/childCategory/status', [ChildCategoryController::class, 'changeChildCategoryStatus'])->name('childCategory.status');
         Route::get('/childCategories/view/{id}', [ChildCategoryController::class, 'childSubCategoryView'])->name('childCategory.view');
-
         Route::post('/get/subCategory-data', [ChildCategoryController::class, 'get_subCategory_data'])->name('childCategory.subCategory.data');
 
 
@@ -137,11 +137,20 @@ Route::middleware('setLanguage')->group(function(){
 
 
         //______ Orders _____//
-        Route::resource('/order', OrderController::class)->names('order');
+        // Route::resource('/order', OrderController::class)->names('order');
+        Route::get('/order/{status}', [OrderController::class, 'index'])->name('order.index');
         Route::get('/order-data', [OrderController::class, 'getData'])->name('order-data');
+        Route::get('/order/show/{id}', [OrderController::class, 'orderShow'])->name('order.show');
+        Route::get('/order/destroy/{id}', [OrderController::class, 'orderDestroy'])->name('order.destroy');
         Route::post('/order/payment-status', [OrderController::class, 'changePaymentStatus'])->name('change.payment.status');
         Route::post('/order/order-status', [OrderController::class, 'changeOrderStatus'])->name('change.order.status');
         Route::get('/order/invoice-pdf/{id}', [OrderController::class, 'order_invoice_pdf'])->name('order.order_invoice_pdf');
+
+
+        //______ Transactions _____//
+        Route::resource('/transaction', TransactionController::class)->names('transaction');
+        Route::get('/transaction-data', [TransactionController::class, 'getData'])->name('transaction-data');
+        Route::get('/transaction/view/{id}', [TransactionController::class, 'transactionView'])->name('transaction.view');
         
 
         //______ Flash Sale _____//

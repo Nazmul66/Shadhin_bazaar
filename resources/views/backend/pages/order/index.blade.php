@@ -41,9 +41,9 @@
                 <div class="col-lg-3">
                     <label for="">Order Status</label>
                     <select class="form-select submitable order_status" name="order_status">
-                           <option value="" selected>All</option>
-                        @foreach (config('order_status_data.order_status') as $key => $status)
-                            <option value="{{ $key }}">{{ ucfirst($status['status']) }}</option>
+                            <option value="" @if($status === "all") selected @endif>All</option>
+                        @foreach (config('order_status_data.order_status') as $key => $statusOption)
+                            <option value="{{ $key }}" @if($key === $status) selected @endif>{{ ucfirst($statusOption['status']) }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -309,7 +309,7 @@
                     if (result.isConfirmed) {
                         $.ajax({
                             type: 'DELETE',
-                            url: "{{ url('admin/order') }}/" + id,
+                            url: "{{ url('admin/order/destroy') }}/" + id,
                             data: {
                                 headers: {
                                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -337,7 +337,6 @@
 
             $('.submitable').on('change', function(e){
                 $('.datatables').DataTable().ajax.reload();
-
             })
         })
     </script>

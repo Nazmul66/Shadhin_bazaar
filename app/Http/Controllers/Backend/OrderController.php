@@ -16,9 +16,9 @@ class OrderController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index($status)
     {
-        return view('backend.pages.order.index');
+        return view('backend.pages.order.index', compact('status'));
     }
 
     public function getData(Request $request)
@@ -73,7 +73,7 @@ class OrderController extends Controller
             
                 foreach ($orderStatuses as $key => $status) {
                     // Compare values properly to avoid matching issues
-                    $selected = (trim($order->order_status) === trim($status['status'])) ? 'selected' : '';
+                    $selected = (trim($order->order_status) === trim($key)) ? 'selected' : '';
                     $options .= '<option value="' . $key . '" ' . $selected . '>' . ucfirst($status['status']) . '</option>';
                 }
             
@@ -128,7 +128,7 @@ class OrderController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function orderShow(string $id)
     {
         $order  = DB::table('orders')
                     ->leftJoin('transactions', 'transactions.order_id', 'orders.order_id')
@@ -141,7 +141,7 @@ class OrderController extends Controller
         return view('backend.pages.order.order-invoice', compact('order', 'order_products'));
     }
 
-    public function destroy(Order $order)
+    public function orderDestroy(Order $order)
     {
         // dd($order);
         // Delete all related OrderProduct entries
