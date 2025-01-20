@@ -175,7 +175,7 @@
                             <li>subtotal <span>{{ $order_details->currency_symbol }}{{ number_format($order_details->subtotal, 2, '.', ''); }}</span></li>
                             
                             {{-- <li>shipping <span>$12.00</span></li> --}}
-                            <li>(+) Delivery Charge <span>{{ $order_details->currency_symbol }}{{ number_format($order_details->delivery_charge, 2, '.', ''); }}</span></li>
+                            <li>(+) Shipping Charge <span>{{ $order_details->currency_symbol }}{{ number_format($order_details->delivery_charge, 2, '.', ''); }}</span></li>
 
                             <li>(-) Coupon 
                                 @if (is_array($coupon) && isset($coupon['discount_type']))

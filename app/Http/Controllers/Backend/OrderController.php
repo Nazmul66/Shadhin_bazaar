@@ -7,7 +7,9 @@ use App\Models\Order;
 use App\Models\OrderProduct;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class OrderController extends Controller
 {
@@ -19,22 +21,28 @@ class OrderController extends Controller
         return view('backend.pages.order.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    public function getData()
+    public function getData(Request $request)
     {
         // get all data
-        $orders = Order::leftJoin('order_products', 'order_products.id', 'orders.order_id')
+        $orders = '';
+            $query = Order::leftJoin('order_products', 'order_products.id', 'orders.order_id')
                 ->leftJoin('transactions', 'transactions.order_id', 'orders.order_id')
-                ->leftJoin('users', 'users.id', 'orders.user_id')
-                ->select('orders.*', 'order_products.product_name', 'order_products.variants', 'order_products.variant_total', 'order_products.unit_price', 'order_products.qty', 'users.name as cus_name', 'users.email as cus_email', 'users.phone as cus_phone')
-                ->get();
+                ->leftJoin('users', 'users.id', 'orders.user_id');
+
+                if( !empty($request->order_status) ){
+                    $query->where('order_status', $request->order_status);
+                }
+
+                if( !empty($request->payment_status) ){
+                    $query->where('payment_status', $request->payment_status);
+                }
+
+                if( !empty($request->date_range) ){
+                    [$start_date, $end_date] = explode(' to ', $request->date_range);
+                    $query->whereBetween('orders.created_at', [$start_date, $end_date]);
+                }
+
+            $orders = $query->select('orders.*', 'order_products.product_name', 'order_products.variants', 'order_products.variant_total', 'order_products.unit_price', 'order_products.qty', 'users.name as cus_name', 'users.email as cus_email', 'users.phone as cus_phone')->get();
 
         return DataTables::of($orders)
             ->addIndexColumn()
@@ -78,7 +86,7 @@ class OrderController extends Controller
                     </button>
 
                     <div class="dropdown-menu dropdownmenu-primary" style="">
-                        <a class="dropdown-item text-info" href="'. route('admin.product.show', $order->id) .'"><i class="fas fa-eye"></i> Invoice</a>
+                        <a class="dropdown-item text-info" href="'. route('admin.order.show', $order->id) .'"><i class="fas fa-eye"></i> Invoice</a>
 
                         <a class="dropdown-item text-danger" href="javascript:void(0)" data-id="'.$order->id.'" id="deleteBtn">
                             <i class="fas fa-trash"></i> Delete
@@ -122,7 +130,15 @@ class OrderController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $order  = DB::table('orders')
+                    ->leftJoin('transactions', 'transactions.order_id', 'orders.order_id')
+                    ->where('orders.id', $id)
+                    ->select('orders.*', 'transactions.transaction_id')
+                    ->first();
+                    
+        $order_products = OrderProduct::where('order_id', $order->order_id)->get();
+
+        return view('backend.pages.order.order-invoice', compact('order', 'order_products'));
     }
 
     public function destroy(Order $order)
@@ -138,7 +154,21 @@ class OrderController extends Controller
 
         // Delete the Order itself
         $order->delete();
-
+        
         return response()->json(['message' => 'Order and its related data have been deleted.'], 200);
+    }
+
+    public function order_invoice_pdf($id)
+    {
+        $data['order']  = DB::table('orders')
+            ->leftJoin('transactions', 'transactions.order_id', 'orders.order_id')
+            ->where('orders.id', $id)
+            ->select('orders.*', 'transactions.transaction_id')
+            ->first();
+        
+        $data['order_products'] = OrderProduct::where('order_id', $data['order']->order_id)->get();
+
+        $pdf = Pdf::loadView('backend.pages.order.invoice_pdf', $data);
+        return $pdf->download('invoice.pdf');
     }
 }

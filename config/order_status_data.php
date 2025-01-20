@@ -27,6 +27,10 @@ return [
             'status' => 'delivered',
             'details' => 'Delivered',
         ],
+        'cancelled' => [
+            'status' => 'cancelled',
+            'details' => 'Cancelled',
+        ],
     ]
 
 ];

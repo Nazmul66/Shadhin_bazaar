@@ -47,7 +47,7 @@ class CODController extends Controller
                 $user->phone = $request->input('phone');
             }
             $user->city       = $request->input('city');
-            $user->address    = $request->input('phone');
+            $user->address    = $request->input('address');
             $user->update();
 
 

@@ -137,15 +137,15 @@
                 </li>
 
                 {{-- Order List --}}
-                <li>
+                <li class="@yield('all_orders')">
                     <a href="javascript: void(0);" class="has-arrow">
                         <i class='bx bx-line-chart'></i>
                         <span >Order Panel</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li>
+                        <li class="@yield('all_orders')">
                             <a href="{{ route('admin.order.index') }}">
-                                <span >Order</span>
+                                <span >All Order</span>
                             </a>
                         </li>
                     </ul>

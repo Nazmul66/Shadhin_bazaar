@@ -37,10 +37,36 @@
                 </div>
             </div>
             
+            <div class="row px-3 pt-3">
+                <div class="col-lg-3">
+                    <label for="">Order Status</label>
+                    <select class="form-select submitable order_status" name="order_status">
+                           <option value="" selected>All</option>
+                        @foreach (config('order_status_data.order_status') as $key => $status)
+                            <option value="{{ $key }}">{{ ucfirst($status['status']) }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="col-lg-3">
+                    <label for="">Payment Status</label>
+                    <select class="form-select submitable payment_status" name="payment_status">
+                        <option value="" selected>All</option>
+                        <option value="0">Pending</option>
+                        <option value="1">Paid</option>
+                        <option value="2">Due</option>
+                    </select>
+                </div>
+
+                <div class="col-lg-3">
+                    <label for="">Date Range Filter</label>
+                    <input type="date" class="form-select submitable date_range" name="date_range" >
+                </div>
+            </div>
     
             <div class="card-body">
                 <div class="">
-                    <table class="table table-bordered mb-0" id="datatables">
+                    <table class="table table-bordered mb-0 datatables" id="datatables">
                         <thead class="bg-primary text-white">
                             <tr>
                                 <th>#SL.</th>
@@ -74,15 +100,37 @@
     <script>
         $(document).ready(function () {
 
+            // Flatpicker Plugin
+            $(".date_range").flatpickr({
+                dateFormat: "Y-m-d",
+                mode: "range",
+                onClose: function(selectedDates, dateStr, instance) {
+                    if (selectedDates.length === 2) {
+                        // Only trigger when both start and end dates are selected
+                        var start_date = selectedDates[0].toISOString().split('T')[0]; // Format to YYYY-MM-DD
+                        var end_date = selectedDates[1].toISOString().split('T')[0];   // Format to YYYY-MM-DD
+                        
+                        console.log("Start Date: " + start_date);
+                        console.log("End Date: " + end_date);
+                    }
+                }
+            });
+
             // Show Data through Datatable
-            let datatables = $('#datatables').DataTable({
-                order: [
+            let datatables = $('.datatables').DataTable({
+                "order": [
                     [0, 'desc']
                 ],
-                processing: true,
-                serverSide: true,
-
-                ajax: "{{ route('admin.order-data') }}",
+                "processing": true,
+                "serverSide": true,
+                "ajax": {
+                    "url" : "{{ route('admin.order-data') }}",
+                    "data": function(e){
+                        e.order_status   = $('.order_status').val();
+                        e.payment_status = $('.payment_status').val();
+                        e.date_range     = $('.date_range').val();
+                    }
+                },
                 // pageLength: 30,
 
                 columns: [
@@ -285,6 +333,11 @@
                         swal.fire('Your Data is Safe');
                     }
                 })
+            })
+
+            $('.submitable').on('change', function(e){
+                $('.datatables').DataTable().ajax.reload();
+
             })
         })
     </script>

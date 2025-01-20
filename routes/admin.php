@@ -141,7 +141,8 @@ Route::middleware('setLanguage')->group(function(){
         Route::get('/order-data', [OrderController::class, 'getData'])->name('order-data');
         Route::post('/order/payment-status', [OrderController::class, 'changePaymentStatus'])->name('change.payment.status');
         Route::post('/order/order-status', [OrderController::class, 'changeOrderStatus'])->name('change.order.status');
-        // Route::get('/order/view/{id}', [OrderController::class, 'orderView'])->name('order.view');
+        Route::get('/order/invoice-pdf/{id}', [OrderController::class, 'order_invoice_pdf'])->name('order.order_invoice_pdf');
+        
 
         //______ Flash Sale _____//
         Route::put('/flash-sale', [FlashSaleController::class, 'flashSale_index'])->name('flashSale.index');
