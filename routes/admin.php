@@ -29,6 +29,7 @@ use App\Http\Controllers\Backend\ReviewController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\TransactionController;
+use App\Http\Controllers\Backend\CustomerController;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
 
@@ -55,7 +56,10 @@ Route::middleware('setLanguage')->group(function(){
         Route::post('/profile-update', [AdminController::class, "changeProfile"])->name('change-profile');
         Route::post('/current-password', [AdminController::class, "checkCurrentPassword"])->name('current-password');
 
-
+        //______ Customers _____//
+        Route::resource('/customer', CustomerController::class)->names('customer');
+        Route::get('/customer-data', [CustomerController::class, 'getData'])->name('customer-data');
+        Route::get('/customer/view/{id}', [CustomerController::class, 'customerView'])->name('customer.view');
 
         //______ Role & Permission _____//
         Route::resource('/permission', PermissionController::class)->names('permission');

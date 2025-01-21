@@ -16,6 +16,14 @@
                     </a>
                 </li>
 
+                {{-- Order List --}}
+                <li class="@yield('all_customer')">
+                    <a href="{{ route('admin.customer.index') }}">
+                        <i class='bx bx-support'></i>
+                        <span >All Customers</span>
+                    </a>
+                </li>
+
                 {{-- Role & Permission --}}
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
