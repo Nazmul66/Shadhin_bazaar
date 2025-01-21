@@ -1,7 +1,7 @@
 @extends('frontend.layout.master')
 
 @push('add-meta')
-    <title>Sazao || About-us Template</title>
+    <title>Products Page</title>
 @endpush
 
 @push('add-css')
@@ -61,7 +61,8 @@
                     <p class="text-caption-1">Best Quality items</p>
                 </div>
             </div>
-            <ul class="tf-control-layout">
+
+            {{-- <ul class="tf-control-layout">
                 <li class="tf-view-layout-switch sw-layout-2" data-value-layout="tf-col-2">
                     <div class="item">
                         <svg class="icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -98,7 +99,9 @@
                         </svg>
                     </div>
                 </li>
-            </ul>
+            </ul> --}}
+
+            {{-- Product Sorting --}}
             <div class="tf-control-sorting">
                 <p class="d-none d-lg-block text-caption-1">Sort by:</p>
                 <div class="tf-dropdown-sort" data-bs-toggle="dropdown">
@@ -107,19 +110,16 @@
                         <i class='bx bx-chevron-down' style="font-size: 20px;"></i>
                     </div>
                     <div class="dropdown-menu">
-                        <div class="select-item" data-sort-value="best-selling">
-                            <span class="text-value-item">Best selling</span>
-                        </div>
-                        <div class="select-item" data-sort-value="a-z">
+                        <div class="select-item" data-sort-value="a_z">
                             <span class="text-value-item">Alphabetically, A-Z</span>
                         </div>
-                        <div class="select-item" data-sort-value="z-a">
+                        <div class="select-item" data-sort-value="z_a">
                             <span class="text-value-item">Alphabetically, Z-A</span>
                         </div>
-                        <div class="select-item" data-sort-value="price-low-high">
+                        <div class="select-item" data-sort-value="price_low_high">
                             <span class="text-value-item">Price, low to high</span>
                         </div>
-                        <div class="select-item" data-sort-value="price-high-low">
+                        <div class="select-item" data-sort-value="price_high_low">
                             <span class="text-value-item">Price, high to low</span>
                         </div>
                     </div>
@@ -129,11 +129,11 @@
         <div class="wrapper-control-shop">
             <div class="meta_filter_shop">
                 <div class="count-text">
-                    <span class="count">{{ $products->count() }} Products Found</span>
+                    <span class="count"><span id="product_count">{{ $products->count() }}</span> Products Found</span>
                 </div>
                 {{-- <div id="product-count-list" class="count-text"></div> --}}
                 {{-- <div id="applied-filters"></div> --}}
-                <button id="remove_all" class="remove_all_filters text-btn-uppercase">Reset Filters <i class='bx bx-x' style="font-size: 20px;"></i></button>
+                {{-- <button id="remove_all" class="remove_all_filters text-btn-uppercase">Reset Filters <i class='bx bx-x' style="font-size: 20px;"></i></button> --}}
             </div>
 
             <div class="row">
@@ -144,7 +144,22 @@
                                 <h5>Filters</h5>
                                 <span class="icon-close close-filter"></span>
                             </div>
+
                             <div class="canvas-body">
+                                <form id="filterForm" method="POST">
+                                    @csrf
+
+                                    <input type="text" hidden name="product_category_id" id="get_category_id">
+                                    <input type="text" hidden name="product_subCategory_id" id="get_subCategory_id">
+                                    <input type="text" hidden name="product_childCategory_id" id="get_childCategory_id">
+                                    <input type="text" hidden name="size_id" id="get_size_id">
+                                    <input type="text" hidden name="color_id" id="get_color_id">
+                                    <input type="text" hidden name="brand_id" id="get_brand_id">
+                                    <input type="text" hidden name="stock_id" id="get_stock_id">
+                                    <input type="text" hidden name="sorting_id" id="get_sorting_id">
+                                    <input type="text" hidden name="start_price" id="get_start_price">
+                                    <input type="text" hidden name="end_price" id="get_end_price">
+                                </form>
 
                                 {{-- Category Wise Filter --}}
                                 <div class="widget-facet facet-fieldset">
@@ -153,40 +168,83 @@
                                     <div class="box-fieldset-item">
                                         @if ( request()->has('categories') )
                                             @foreach ($categoryItems as $item)
+                                                @php
+                                                    $count = App\Models\Product::where('category_id', $item->id)->count();
+                                                @endphp
+
                                                 <fieldset class="fieldset-item">
                                                     <input type="checkbox"
-                                                     name="brand" 
-                                                     class="tf-check" 
+                                                     name="categories" 
+                                                     class="tf-check change_category" 
                                                      id="{{ $item->slug }}"
                                                      {{ request()->categories == $item->slug ? 'checked' : '' }}
+                                                     value="{{ $item->id }}"
                                                      >
-                                                    <label for="{{ $item->slug }}">{{ $item->category_name }}</label>
+                                                    <label for="{{ $item->slug }}">{{ $item->category_name }} <span class="count-category">( {{ $count }} )</span></label>
                                                 </fieldset>
                                             @endforeach
-                                        @endif
 
-                                        @if ( request()->has('sub_categories') )
+                                        @elseif ( request()->has('sub_categories') )
                                             @foreach ($categoryItems as $item)
+                                                @php
+                                                   $count = App\Models\Product::where('subCategory_id', $item->id)->count();
+                                                @endphp
+
                                                 <fieldset class="fieldset-item">
                                                     <input type="checkbox" 
-                                                    name="brand" 
-                                                    class="tf-check" 
+                                                    name="sub_categories" 
+                                                    class="tf-check change_subCategory" 
                                                     id="{{ $item->slug }}"
                                                     {{ request()->sub_categories == $item->slug ? 'checked' : '' }}
+                                                    value="{{ $item->id }}"
                                                     >
-                                                    <label for="{{ $item->slug }}">{{ $item->subcategory_name }}</label>
+                                                    <label for="{{ $item->slug }}">{{ $item->subcategory_name }} <span class="count-category">( {{ $count }} )</span></label>
+                                                </fieldset>
+                                            @endforeach
+
+                                        @elseif ( request()->has('child_categories') )
+                                            @foreach ($categoryItems as $item)
+                                                @php
+                                                   $count = App\Models\Product::where('childCategory_id', $item->id)->count();
+                                                @endphp
+
+                                                <fieldset class="fieldset-item">
+                                                    <input type="checkbox" 
+                                                    name="child_categories" 
+                                                    class="tf-check change_childCategory" 
+                                                    id="{{ $item->slug }}"
+                                                    {{ request()->child_categories == $item->slug ? 'checked' : '' }}
+                                                    value="{{ $item->id }}"
+                                                    >
+                                                    <label for="{{ $item->slug }}">{{ $item->name }} <span class="count-category">( {{ $count }} )</span></label>
+                                                </fieldset>
+                                            @endforeach
+
+                                        @else
+                                            @foreach ($categoryItems as $item)
+                                                @php
+                                                    $count = App\Models\Product::where('category_id', $item->id)->count();
+                                                @endphp
+                                                <fieldset class="fieldset-item">
+                                                    <input type="checkbox"
+                                                        name="brand" 
+                                                        class="tf-check change_category" 
+                                                        id="{{ $item->slug }}"
+                                                        {{ request()->categories == $item->slug ? 'checked' : '' }}
+                                                        value="{{ $item->id }}"
+                                                        >
+                                                    <label for="{{ $item->slug }}">{{ $item->category_name }} <span class="count-category">( {{ $count }} )</span></label>
                                                 </fieldset>
                                             @endforeach
                                         @endif
-                                    </div>
 
-                                  
+                                    </div>
                                 </div>
 
                                 {{-- Price Range Filter --}}
                                 <div class="widget-facet facet-price">
                                     <h6 class="facet-title" style="font-size: 20px;">Price</h6>
-                                    <div class="price-val-range" id="price-value-range" data-min="0" data-max="500"></div>
+                                    <div class="price-val-range" id="price-value-range" data-min="0" data-max="{{ $maxPrice }}"></div>
                                     <div class="box-price-product">
                                         <div class="box-price-item">
                                             <span class="title-price">Min price</span>
@@ -203,59 +261,57 @@
                                 <div class="widget-facet facet-size">
                                     <h6 class="facet-title" style="font-size: 20px;">Size</h6>
                                     <div class="facet-size-box size-box">
-                                        <span class="size-item size-check">XS</span>
-                                        <span class="size-item size-check">S</span>
-                                        <span class="size-item size-check">M</span>
-                                        <span class="size-item size-check">L</span>
-                                        <span class="size-item size-check">XL</span>
-                                        <span class="size-item size-check">2XL</span>
-                                        <span class="size-item size-check">3XL</span>
-                                        <span class="size-item size-check free-size">Free Size</span>
+                                        @foreach ($product_sizes as $row)
+                                            <span class="size-item size-check" id={{ $row->id }} data-val="0">{{ $row->value }}</span>
+                                        @endforeach
                                     </div>
                                 </div>
 
                                 {{-- Colors Filter --}}
                                 <div class="widget-facet facet-color">
-                                    <h6 class="facet-title" style="font-size: 20px;">Colors</h6>
-                                    <div class="facet-color-box">
-                                        <div class="color-item color-check"><span class="color bg-light-pink-2"></span>Pink</div>
-                                        <div class="color-item color-check"><span class="color bg-red"></span> Red</div>
-                                        <div class="color-item color-check"><span class="color bg-beige-2"></span>Beige</div>
-                                        <div class="color-item color-check"><span class="color bg-orange-2"></span>Orange</div>
-                                        <div class="color-item color-check"><span class="color bg-light-green"></span>Green</div>
-                                        <div class="color-item color-check"><span class="color bg-main"></span>Black</div>
-                                        <div class="color-item color-check"><span class="color bg-white line-black"></span>White</div>
-                                        <div class="color-item color-check"><span class="color bg-purple-3"></span>Purple</div>
-                                        <div class="color-item color-check"><span class="color bg-grey"></span>Grey</div>
-                                        <div class="color-item color-check"><span class="color bg-light-blue-5"></span>Light Blue</div>
-                                        <div class="color-item color-check"><span class="color bg-dark-blue"></span>Dark Blue</div>
+                                    <h6 class="facet-title accordion-button collapsed" style="font-size: 20px;" data-bs-toggle="collapse" data-bs-target="#stock_filter" aria-expanded="false" aria-controls="stock_filter">Colors</h6>
+
+                                    <div id="stock_filter" class="facet-color-box accordion-collapse collapse">
+                                        @foreach ($product_colors as $row)
+                                            <div class="color-item color-check" id={{ $row->id }} data-val="0">
+                                                <span 
+                                                    class="color {{ in_array($row->color_value, ['#FFFFFF', '#FFF', '#F8F8F8']) ? 'line-black' : '' }}" 
+                                                    style="background: {{ $row->color_value }};">
+                                                </span>
+                                                {{ $row->value }}
+                                            </div>
+                                        @endforeach
                                     </div>
                                 </div>
 
                                 {{-- Stock Filter --}}
                                 <div class="widget-facet facet-fieldset">
-                                    <h6 class="facet-title" style="font-size: 20px;">Availability</h6>
-                                    <div class="box-fieldset-item">
+                                    <h6 class="facet-title" style="font-size: 20px;">Availability </h6>
+
+                                    <div  class="box-fieldset-item">
                                         <fieldset class="fieldset-item">
-                                            <input type="radio" name="availability" class="tf-check" id="inStock">
-                                            <label for="inStock">In stock <span class="count-stock">(32)</span></label>
+                                            <input type="radio" name="availability"  class="tf-check change_stock" id="inStock" value="stock_in">
+                                            <label for="inStock">In stock <span class="count-stock">( {{ $stockIn }} )</span></label>
                                         </fieldset>
                                         <fieldset class="fieldset-item">
-                                            <input type="radio" name="availability" class="tf-check" id="outStock">
-                                            <label for="outStock">Out of stock <span class="count-stock">(2)</span></label>
+                                            <input type="radio" name="availability" class="tf-check change_stock" id="outStock" value="stock_out">
+                                            <label for="outStock">Out of stock <span class="count-stock">( {{ $stockOut }} )</span></label>
                                         </fieldset>
                                     </div>
                                 </div>
 
                                 {{-- Brands Filter --}}
                                 <div class="widget-facet facet-fieldset">
-                                    <h6 class="facet-title" style="font-size: 20px;">Brands</h6>
-                                    <div class="box-fieldset-item">
+                                    <h6 class="facet-title" style="font-size: 20px;" >Brands</h6>
 
+                                    <div class="box-fieldset-item">
                                         @foreach ($brands as $item)
+                                                @php
+                                                    $count = App\Models\Product::where('brand_id', $item->id)->count();
+                                                @endphp
                                             <fieldset class="fieldset-item">
-                                                <input type="checkbox" name="brand" class="tf-check" id="{{ $item->slug }}">
-                                                <label for="{{ $item->slug }}">{{ $item->brand_name }}</label>
+                                                <input type="checkbox" name="brand" class="tf-check change_brand" value="{{ $item->id }}" id="{{ $item->slug }}">
+                                                <label for="{{ $item->slug }}">{{ $item->brand_name }} <span class="count-brand">( {{ $count }} )</span></label>
                                             </fieldset>
                                         @endforeach
                                     </div>
@@ -271,298 +327,11 @@
 
 
                 <div class="col-xl-9">
-                    <div class="wrapper-shop tf-grid-layout tf-col-3" id="gridLayout" style="">
+                    <div class="wrapper-shop filter_products_data tf-grid-layout 
+                     {{ $products->count() > 0 ? 'tf-col-4' : 'tf-col-1' }}" 
+                    id="gridLayout" style="">
 
-                        @foreach ($products as $row)
-                            <div class="swiper-slide">
-                                <div class="card-product wow fadeInUp" data-wow-delay="0.1s">
-                                    <div class="card-product-wrapper">
-                                        <a href="{{ route('product.details', $row->slug) }}" class="product-img">
-                                            <img class="lazyload img-product" data-src="{{ asset($row->thumb_image) }}" src="{{ asset($row->thumb_image) }}" alt="{{ $row->slug }}">
-
-                                            @php
-                                                $image = App\Models\ProductImage::where('product_id', $row->id)->first();
-
-                                                $discount = '';
-                                                if( checkDiscount($row) ){
-                                                    if ( !empty($row->discount_type === "amount" ) ){
-                                                        $discount = '-'. $row->discount_value . "Tk";
-                                                    }   
-                                                    else if( $row->discount_type === "percent" ){
-                                                        $discount = '-'. $row->discount_value . "%";
-                                                    }
-                                                }
-                                            @endphp
-
-                                            @if (!empty($image))
-                                                <img class="lazyload img-hover" data-src="{{ asset($image->images) }}" src="{{ asset($image->images) }}" alt="{{ $row->slug }}">
-                                            @endif
-                                        </a>
-                                        <div class="on-sale-wrap">
-                                            <span class="on-sale-item">
-                                                {{ $discount }}
-                                            </span>
-                                        </div>
-
-
-                                        @if ( checkDiscount($row) )
-                                            @if ( !empty($row->discount_type === "amount") || !empty($row->discount_type === "percent") )
-                                                <div class="marquee-product bg-main">
-                                                    <div class="marquee-wrapper">
-                                                        <div class="initial-child-container">
-                                                            <div class="marquee-child-item">
-                                                                <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
-                                                            </div>
-                                                            <div class="marquee-child-item">
-                                                                <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                                                            </div>
-                                                            <div class="marquee-child-item">
-                                                                <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
-                                                            </div>
-                                                            <div class="marquee-child-item">
-                                                                <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                                                            </div>
-                                                            <div class="marquee-child-item">
-                                                                <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
-                                                            </div>
-                                                            <div class="marquee-child-item">
-                                                                <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                                                            </div>
-                                                            <div class="marquee-child-item">
-                                                                <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
-                                                            </div>
-                                                            <div class="marquee-child-item">
-                                                                <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                                                            </div>
-                                                            <div class="marquee-child-item">
-                                                                <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
-                                                            </div>
-                                                            <div class="marquee-child-item">
-                                                                <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="marquee-wrapper">
-                                                        <div class="initial-child-container">
-                                                            <div class="marquee-child-item">
-                                                                <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
-                                                            </div>
-                                                            <div class="marquee-child-item">
-                                                                <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                                                            </div>
-                                                            <div class="marquee-child-item">
-                                                                <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
-                                                            </div>
-                                                            <div class="marquee-child-item">
-                                                                <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                                                            </div>
-                                                            <div class="marquee-child-item">
-                                                                <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
-                                                            </div>
-                                                            <div class="marquee-child-item">
-                                                                <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                                                            </div>
-                                                            <div class="marquee-child-item">
-                                                                <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
-                                                            </div>
-                                                            <div class="marquee-child-item">
-                                                                <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                                                            </div>
-                                                            <div class="marquee-child-item">
-                                                                <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
-                                                            </div>
-                                                            <div class="marquee-child-item">
-                                                                <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            @endif
-                                        @endif
-
-                                        
-                                        <div class="list-product-btn">
-                                            <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
-                                                <i class='bx bx-heart' style="font-size: 24px;"></i>
-                                                <span class="tooltip">Wishlist</span>
-                                            </a>
-                                            <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
-                                                <i class='bx bx-git-compare' style="font-size: 24px;"></i>
-                                                <span class="tooltip">Compare</span>
-                                            </a>
-                                            <a href="#quickView" data-id={{ $row->id }} data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
-                                                <ion-icon name="eye-outline" style="font-size: 24px;"></ion-icon>
-                                                <span class="tooltip">Quick View</span>
-                                            </a>
-                                        </div>
-                                        <div class="list-btn-main">
-                                            <a href="#quickAdd" data-id={{ $row->id }} data-bs-toggle="modal" class="btn-main-product quickAdd">Quick Add</a>
-                                        </div>
-                                    </div>
-
-
-                                    <div class="card-product-info">
-                                        <a href="{{ route('product.details', $row->slug) }}" class="title link">{{ $row->name }}</a>
-                                        <div class="box-rating">
-                                            <ul class="list-star">
-                                                <li class="bx bxs-star" style="color: #F0A750;"></li>
-                                                <li class="bx bxs-star" style="color: #F0A750;"></li>
-                                                <li class="bx bxs-star" style="color: #F0A750;"></li>
-                                                <li class="bx bxs-star" style="color: #F0A750;"></li>
-                                                <li class="bx bx-star" style="color: #F0A750;"></li>
-                                            </ul>
-                                            <span class="text-caption-1 text-secondary">(1.234)</span>
-                                        </div>
-
-                                        @if ( checkDiscount($row) )
-                                            @if ( !empty($row->discount_type === "amount") )
-                                                <span class="price"><span class="old-price">${{ $row->selling_price }}</span> ${{ $row->selling_price - $row->discount_value }}</span>
-                                            @elseif( !empty($row->discount_type === "percent") )
-                                            @php
-                                                $discount_val = $row->selling_price * $row->discount_value / 100;
-                                            @endphp
-                                                <span class="price"><span class="old-price">${{ $row->selling_price }}</span> ${{ $row->selling_price - $discount_val }}</span>
-                                            @else
-                                                <span class="price"> ${{ $row->selling_price }}</span>
-                                            @endif
-                                        @else
-                                            <span class="price"> ${{ $row->selling_price }}</span>
-                                        @endif
-
-                                        <div class="box-progress-stock">
-                                            <div class="progress">
-                                                <div class="progress-bar" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                            <div class="stock-status d-flex justify-content-between align-items-center">
-                                                <div class="stock-item text-caption-1">
-                                                    <span class="stock-label text-secondary-2">Available:</span>
-                                                    <span class="stock-value">{{ $row->qty }}</span>
-                                                </div>
-                                                <div class="stock-item text-caption-1">
-                                                    <span class="stock-label text-secondary-2">Sold:</span>
-                                                    <span class="stock-value">{{ $row->product_sold }}</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
-
-                        {{-- <!-- card product 2 -->
-                        <div class="card-product grid" data-availability="In stock" data-brand="nike">
-                            <div class="card-product-wrapper">
-                                <a href="product-detail.html" class="product-img">
-                                    <img class="img-product ls-is-cached lazyloaded" data-src="{{ asset('public/frontend/images/products/womens/women-176.jpg') }}" src="{{ asset('public/frontend/images/products/womens/women-176.jpg') }}" alt="image-product">
-                                    <img class="img-hover ls-is-cached lazyloaded" data-src="{{ asset('public/frontend/images/products/womens/women-179.jpg') }}" src="{{ asset('public/frontend/images/products/womens/women-179.jpg') }}" alt="image-product">
-                                </a>
-                                <div class="on-sale-wrap"><span class="on-sale-item">-25%</span></div>
-                                <div class="marquee-product bg-main">
-                                    <div class="marquee-wrapper">
-                                        <div class="initial-child-container">
-                                            <div class="marquee-child-item">
-                                                <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
-                                            </div>
-                                            <div class="marquee-child-item">
-                                                <span class="icon icon-lightning text-critical"></span>
-                                            </div>
-                                            <div class="marquee-child-item">
-                                                <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
-                                            </div>
-                                            <div class="marquee-child-item">
-                                                <span class="icon icon-lightning text-critical"></span>
-                                            </div>
-                                            <div class="marquee-child-item">
-                                                <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
-                                            </div>
-                                            <div class="marquee-child-item">
-                                                <span class="icon icon-lightning text-critical"></span>
-                                            </div>
-                                            <div class="marquee-child-item">
-                                                <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
-                                            </div>
-                                            <div class="marquee-child-item">
-                                                <span class="icon icon-lightning text-critical"></span>
-                                            </div>
-                                            <div class="marquee-child-item">
-                                                <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
-                                            </div>
-                                            <div class="marquee-child-item">
-                                                <span class="icon icon-lightning text-critical"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="marquee-wrapper">
-                                        <div class="initial-child-container">
-                                            <div class="marquee-child-item">
-                                                <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
-                                            </div>
-                                            <div class="marquee-child-item">
-                                                <span class="icon icon-lightning text-critical"></span>
-                                            </div>
-                                            <div class="marquee-child-item">
-                                                <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
-                                            </div>
-                                            <div class="marquee-child-item">
-                                                <span class="icon icon-lightning text-critical"></span>
-                                            </div>
-                                            <div class="marquee-child-item">
-                                                <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
-                                            </div>
-                                            <div class="marquee-child-item">
-                                                <span class="icon icon-lightning text-critical"></span>
-                                            </div>
-                                            <div class="marquee-child-item">
-                                                <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
-                                            </div>
-                                            <div class="marquee-child-item">
-                                                <span class="icon icon-lightning text-critical"></span>
-                                            </div>
-                                            <div class="marquee-child-item">
-                                                <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale 25% OFF</p>
-                                            </div>
-                                            <div class="marquee-child-item">
-                                                <span class="icon icon-lightning text-critical"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="list-product-btn">
-                                    <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
-                                        <span class="icon icon-heart"></span>
-                                        <span class="tooltip">Wishlist</span>
-                                    </a>
-                                    <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
-                                        <span class="icon icon-gitDiff"></span>
-                                        <span class="tooltip">Compare</span>
-                                    </a>
-                                    <a href="#quickView" data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
-                                        <span class="icon icon-eye"></span>
-                                        <span class="tooltip">Quick View</span>
-                                    </a>
-                                </div>
-                                <div class="list-btn-main">
-                                    <a href="#shoppingCart" data-bs-toggle="modal" class="btn-main-product">Add To cart</a>
-                                </div>
-                            </div>
-                            <div class="card-product-info">
-                                <a href="product-detail.html" class="title link">Polarized sunglasses</a>
-                                <div class="price"><span class="old-price">$98.00</span> <span class="current-price">$79.99</span></div>
-                                <ul class="list-color-product">
-                                    <li class="list-color-item color-swatch active line">
-                                        <span class="d-none text-capitalize color-filter">Light Blue</span>
-                                        <span class="swatch-value bg-light-blue"></span>
-                                        <img class=" ls-is-cached lazyloaded" data-src="images/products/womens/women-176.jpg" src="images/products/womens/women-176.jpg" alt="image-product">
-                                    </li>
-                                    <li class="list-color-item color-swatch">
-                                        <span class="d-none text-capitalize color-filter">Light Blue</span>
-                                        <span class="swatch-value bg-light-blue-2"></span>
-                                        <img class=" ls-is-cached lazyloaded" data-src="images/products/womens/women-177.jpg" src="images/products/womens/women-177.jpg" alt="image-product">
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-
+                        @include('frontend.include.render_product_page')
 
                         <!-- pagination -->
                         {{-- <ul class="wg-pagination justify-content-center" style="">
@@ -587,6 +356,241 @@
 @push('add-js')
     <script type="text/javascript" src="{{ asset('public/frontend/js/nouislider.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('public/frontend/js/shop.js') }}"></script>
+
+    <script>
+        $(document).ready(function(){
+            var xhr; 
+            var i = 0;
+
+
+            // Filter Form
+            function filterForm(){
+                if( xhr && xhr.readyState !== 4){
+                    xhr.abort();
+                }
+
+                xhr = $.ajax({
+                    method: 'POST',
+                    url: "{{ url('get_filter_product_ajax') }}",
+                    data: $('#filterForm').serialize(),
+                    dataType: "json",
+                    success: function(data) {
+                        if( data.status === true ){
+                            if( data.count === 0 ){
+                                $('.filter_products_data').removeClass('tf-col-4');
+                                $('.filter_products_data').addClass('tf-col-1');
+                            }
+                            else{
+                                $('.filter_products_data').removeClass('tf-col-1');
+                                $('.filter_products_data').addClass('tf-col-4');
+                            }
+                            $('.filter_products_data').html(data.success); 
+                            $('#product_count').html(data.count); 
+                        }
+                    },
+                    error: function(data) {
+                        // toastr.error('Failed to filtering products');
+                    },
+                });
+            }
+
+            // Category Id
+            $('.change_category').change(function(){
+                var ids = '';
+                $('.change_category').each(function(){
+                    if( this.checked ){
+                        var id = $(this).val();
+                        ids += id + ',';
+                    }
+                })
+
+                // console.log(ids);
+                $('#get_category_id').val(ids);
+                filterForm();
+            })
+
+
+            // SubCategory Id
+            $('.change_subCategory').change(function(){
+                var ids = '';
+                $('.change_subCategory').each(function(){
+                    if( this.checked ){
+                        var id = $(this).val();
+                        ids += id + ',';
+                    }
+                })
+
+                // console.log(ids);
+                $('#get_subCategory_id').val(ids);
+                filterForm();
+            })
+
+
+            // ChildCategory Id
+            $('.change_childCategory').change(function(){
+                var ids = '';
+                $('.change_childCategory').each(function(){
+                    if( this.checked ){
+                        var id = $(this).val();
+                        ids += id + ',';
+                    }
+                })
+
+                // console.log(ids);
+                $('#get_childCategory_id').val(ids);
+                filterForm();
+            })
+  
+            // Size Id
+            $(document).on('click', '.size-check', function () {
+                var id     = $(this).attr('id');
+                var status = $(this).attr('data-val');
+                if( status == 0 ){
+                    $(this).attr('data-val', 1);
+                    $(this).addClass('active');
+                }
+                else{
+                    $(this).attr('data-val', 0);
+                    $(this).removeClass('active');
+                }
+
+                var ids = '';
+                $('.size-check').each(function(){
+                    var status = $(this).attr('data-val');
+
+                    if( status == 1 ){
+                        var id = $(this).attr('id');
+                        ids += id + ',';
+                    }
+                });
+
+                // console.log(ids);
+                $('#get_size_id').val(ids);
+                filterForm();
+            });
+
+            // Color Id 
+            $(document).on('click', '.color-check', function () {
+                var id     = $(this).attr('id');
+                var status = $(this).attr('data-val');
+                if( status == 0 ){
+                    $(this).attr('data-val', 1);
+                    $(this).addClass('active');
+                }
+                else{
+                    $(this).attr('data-val', 0);
+                    $(this).removeClass('active');
+                }
+
+                var ids = '';
+                $('.color-check').each(function(){
+                    var status = $(this).attr('data-val');
+
+                    if( status == 1 ){
+                        var id = $(this).attr('id');
+                        ids += id + ',';
+                    }
+                });
+
+                // console.log(ids);
+                $('#get_color_id').val(ids);
+                filterForm();
+            });
+
+            // Sorting Id
+            $('.select-item').on('click', function(){
+                var id = $(this).attr('data-sort-value');
+                // console.log(id);
+
+                $('#get_sorting_id').val(id);
+                filterForm();
+            })
+
+            // Stock Id
+            $('.change_stock').change(function(){
+                var id = $(this).val();
+                // console.log(id);
+
+                $('#get_stock_id').val(id);
+                filterForm();
+            })
+
+            // Brand Id
+            $('.change_brand').change(function(){
+                var ids = '';
+                $('.change_brand').each(function(){
+                    if( this.checked ){
+                        var id = $(this).val();
+                        ids += id + ',';
+                    }
+                })
+
+                // console.log(ids);
+                $('#get_brand_id').val(ids);
+                filterForm();
+            })
+
+            // Price Range filter
+            var rangeTwoPrice = function() {
+                if ($("#price-value-range").length > 0) {
+                    var skipSlider = document.getElementById("price-value-range");
+                    var skipValues = [
+                        document.getElementById("price-min-value"),
+                        document.getElementById("price-max-value"),
+                    ];
+
+                    var min = parseInt(skipSlider.getAttribute("data-min"));
+                    var max = parseInt(skipSlider.getAttribute("data-max"));
+
+                    noUiSlider.create(skipSlider, {
+                        start: [min, max],
+                        connect: true,
+                        step: 1,
+                        range: {
+                            min: min,
+                            max: max,
+                        },
+                        format: {
+                            from: function(value) {
+                                return parseInt(value);
+                            },
+                            to: function(value) {
+                                return parseInt(value);
+                            },
+                        },
+                    });
+
+                    let debounceTimer;
+                    skipSlider.noUiSlider.on("update", function(val, e) {
+                        $('#get_start_price').val(parseInt(val[0]));
+                        $('#get_end_price').val(parseInt(val[1]));
+                        skipValues[e].innerText = val[e];
+                        
+                        if( i == 0 || i == 1 ){
+                            i++;
+                        }
+                        else{
+                            clearTimeout(debounceTimer);
+                            debounceTimer = setTimeout(() => {
+                                filterForm();
+                            }, 150); // Delay by 150ms
+                        }
+                    });
+                }
+            };
+            
+            // Reset All Values
+            $('#remove_all').click(function () {
+                // Clear all input fields inside the form
+                $('#filterForm').find('input[type="text"]').val('');
+
+                filterForm();
+                rangeTwoPrice();
+            });
+
+            rangeTwoPrice();
+        })
+    </script>
 
     {{-- Add To Cart Ajax --}}
     @include('frontend.include.full_ajax_cart')

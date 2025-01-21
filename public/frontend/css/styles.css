@@ -12166,7 +12166,7 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
 
 .tf-shop-control {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     margin-bottom: 30px;
 }
 
@@ -12461,7 +12461,7 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
     display: flex;
     flex-wrap: wrap;
     column-gap: 12px;
-    row-gap: 16px;
+    row-gap: 10px;
     padding-right: 20px;
 }
 
@@ -12482,8 +12482,9 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
 }
 
 .widget-facet .facet-size-box .size-item:not(.free-size) {
-    width: 44px;
-    height: 44px;
+    /* width: 44px;
+    height: 44px; */
+    padding: 8px 16px;
     display: flex;
     align-items: center;
     justify-content: center;

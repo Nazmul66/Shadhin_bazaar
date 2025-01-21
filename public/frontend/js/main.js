@@ -282,19 +282,19 @@
 
     /* check active 
     -------------------------------------------------------------------------*/
-    var checkClick = function() {
-        $(".size-box,.facet-color-box").on(
-            "click",
-            ".size-item,.color-item",
-            function() {
-                $(this)
-                    .closest(".size-box,.facet-color-box")
-                    .find(".size-item,.color-item")
-                    .removeClass("active");
-                $(this).addClass("active");
-            }
-        );
-    };
+    // var checkClick = function() {
+    //     $(".size-box,.facet-color-box").on(
+    //         "click",
+    //         ".size-item,.color-item",
+    //         function() {
+    //             $(this)
+    //                 .closest(".size-box,.facet-color-box")
+    //                 .find(".size-item,.color-item")
+    //                 .removeClass("active");
+    //             $(this).addClass("active");
+    //         }
+    //     );
+    // };
 
     /* checkPaymentCard 
     -------------------------------------------------------------------------*/
@@ -1225,7 +1225,7 @@
         autoPopup();
         rangePrice();
         clickControl();
-        checkClick();
+        // checkClick();
         write_review();
         customInput();
         chooseOption();

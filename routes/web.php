@@ -57,6 +57,7 @@ use App\Http\Controllers\Frontend\AjaxCallController;
         Route::post('/product/add-to-cart', 'productAddToCart')->name('addToCart');
         Route::get('/remove-cart/{id}/{color_id?}/{size_id?}', 'removeCart')->name('remove.cart');
         Route::get('/get-cart-data', 'getCart')->name('get.cart.data');
+        Route::post('/get_filter_product_ajax', 'get_filter_product_ajax');
     });
     
 

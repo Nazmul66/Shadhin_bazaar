@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\AttributeValue;
 use App\Models\Brand;
 use App\Models\Cart;
 use App\Models\Category;
@@ -28,6 +29,7 @@ class ProductController extends Controller
                 'status' => 1,
             ])->paginate(12);
         }
+        
         elseif( $request->has('sub_categories') ){
             $categoryItems = Subcategory::where('status', 1)->get();
             $subCat = Subcategory::where('slug', $request->sub_categories)->firstOrFail();
@@ -37,6 +39,7 @@ class ProductController extends Controller
                 'status' => 1,
             ])->paginate(12);
         }
+
         else{
             $categoryItems = Category::where('status', 1)->get();
             $products = Product::where([
@@ -45,8 +48,29 @@ class ProductController extends Controller
             ])->orderBy('id', 'DESC')->paginate(12);
         }
 
-        $brands = Brand::where('status', 1)->get();
-        return view('frontend.pages.product_pages.product', compact('products', 'categoryItems', 'brands'));
+        $stockIn        = Product::where('qty', '>', 1)->where([
+                                'is_approved' => 1,
+                                'status' => 1,
+                            ])->count();
+        $stockOut       = Product::where('qty', '<=', 0)->where([
+                                'is_approved' => 1,
+                                'status' => 1,
+                            ])->count();
+        $maxPrice        = Product::max('selling_price') + 1000;
+        $brands          = Brand::where('status', 1)->get();
+        $product_sizes   = AttributeValue::where('attribute', 'size')->where('status', 1)->get();
+        $product_colors  = AttributeValue::where('attribute', 'color')->where('status', 1)->get();
+
+        return view('frontend.pages.product_pages.product', [
+            'products'       => $products,
+            'categoryItems'  => $categoryItems,
+            'product_sizes'  => $product_sizes,
+            'product_colors' => $product_colors,
+            'brands'         => $brands,
+            'maxPrice'       => $maxPrice,
+            'stockIn'        => $stockIn,
+            'stockOut'       => $stockOut,
+        ]);
     }
 
     public function show_product_details($slug)
@@ -93,6 +117,95 @@ class ProductController extends Controller
             'product_images'   => $product_images,
             'related_products' => $related_products,
             'socialLinks'      => $socialLinks,
+        ]);
+    }
+
+
+    public function get_filter_product_ajax(Request $request)
+    {
+        // dd($request->all());
+
+        $products = '';
+            $query = Product::leftJoin('categories', 'categories.id', 'products.category_id')
+                ->leftJoin('subcategories', 'subcategories.id', 'products.subCategory_id')
+                ->leftJoin('child_categories', 'child_categories.id', 'products.childCategory_id')
+                ->leftJoin('brands', 'brands.id', 'products.brand_id');
+
+                // Filter by product category
+                if( !empty($request->product_category_id) ){
+                    $categories_id       = rtrim($request->product_category_id, ',');
+                    $categories_id_array = explode(',', $categories_id);
+                    $query->whereIn('products.category_id', $categories_id_array);
+                }
+
+                // Filter by subCategories
+                if (!empty($request->product_subCategory_id)) {
+                    $subCats_id = rtrim($request->product_subCategory_id, ',');
+                    $subCats_id_array = explode(',', $subCats_id);
+                    $query->whereIn('products.subCategory_id', $subCats_id_array);
+                }
+
+                // Filter by childCategories
+                if (!empty($request->product_childCategory_id)) {
+                    $childCats_id = rtrim($request->product_childCategory_id, ',');
+                    $childCats_id_array = explode(',', $childCats_id);
+                    $query->whereIn('products.childCategory_id', $childCats_id_array);
+                }
+
+                // Range Filter by product price
+                if( !empty($request->start_price) && !empty($request->end_price) ){
+                    $query->where('products.selling_price', '>=', $request->start_price);
+                    $query->where('products.selling_price', "<=", $request->end_price);
+                }
+
+                // Filter by brand
+                if( !empty($request->brand_id)){
+                    $brand_id       = rtrim($request->brand_id, ',');
+                    $brand_id_array = explode(',', $brand_id);
+                    $query->whereIn('products.brand_id', $brand_id_array);
+                }
+
+                // Filter by Stock
+                if( !empty($request->stock_id)){
+                    if( $request->stock_id === 'stock_in' ){
+                        $query->where('products.qty', '>', 1);
+                    }
+                    else{
+                        $query->where('products.qty', '<=', 0);
+                    }
+                }
+
+                // Filter by sorting
+                if( !empty($request->sorting_id)){
+                    if( $request->sorting_id === 'a_z' ){
+                        $query->orderBy('products.name', 'asc');
+                    }
+                    elseif( $request->sorting_id === 'z_a' ){
+                        $query->orderBy('products.name', 'desc');
+                    }
+                    elseif( $request->sorting_id === 'price_low_high' ){
+                        $query->orderBy('products.selling_price', 'asc');
+                    }
+                    elseif( $request->sorting_id === 'price_high_low' ){
+                        $query->orderBy('products.selling_price', 'desc');
+                    }
+                    else{
+                        $query->orderBy('products.created_at', 'desc');
+                    }
+                }
+
+                $products = $query->select('products.id', 'products.name', 'products.slug','products.thumb_image','products.discount_type','products.selling_price','products.qty','products.product_sold','products.is_approved', 'products.status')
+                        ->where('products.is_approved', 1)
+                        ->where('products.status', 1)
+                        ->paginate(12);
+        // dd($products);
+
+        return response()->json([
+            'status'  => true,
+            'count'   => $products->count(),
+            'success' => view('frontend.include.render_product_page',[
+                'products' => $products
+            ])->render(),
         ]);
     }
 
