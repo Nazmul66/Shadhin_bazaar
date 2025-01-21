@@ -51,14 +51,38 @@ class ProductController extends Controller
         return view('backend.pages.products.create', compact('categories', 'subCategories', 'childCategories', 'brands'));
     }
 
-    public function getData()
+    public function getData(Request $request)
     {
         // get all data
-        $products = Product::leftJoin('categories', 'categories.id', 'products.category_id')
+        $products = "";
+           $query = Product::leftJoin('categories', 'categories.id', 'products.category_id')
                     ->leftJoin('subcategories', 'subcategories.id', 'products.subCategory_id')
                     ->leftJoin('child_categories', 'child_categories.id', 'products.childCategory_id')
-                    ->leftJoin('brands', 'brands.id', 'products.brand_id')
-                    ->select('products.*', 'categories.category_name as cat_name', 'subcategories.subcategory_name as subCat_name', 'child_categories.name as childCat_name', 'brands.brand_name')
+                    ->leftJoin('brands', 'brands.id', 'products.brand_id');
+                   
+                    if( !empty($request->category_id) ){
+                        $query->where('products.category_id', $request->category_id);
+                    }
+
+                    if( !empty($request->subCategory_id) ){
+                        $query->where('products.subCategory_id', $request->subCategory_id);
+                    }
+
+                    if( !empty($request->product_qty) ){
+                        $qtyRange = explode('-', $request->product_qty);
+                        if (count($qtyRange) === 2) {
+                            $query->whereBetween('qty', [$qtyRange[0], $qtyRange[1]]);
+                        }
+                    }
+
+                    if( !empty($request->product_price) ){
+                        $priceRange = explode('-', $request->product_price);
+                        if (count($priceRange) === 2) {
+                            $query->whereBetween('selling_price', [$priceRange[0], $priceRange[1]]);
+                        }
+                    }
+
+            $products = $query->select('products.*', 'categories.category_name as cat_name', 'subcategories.subcategory_name as subCat_name', 'child_categories.name as childCat_name', 'brands.brand_name')
                     ->get();
 
         return DataTables::of($products)

@@ -41,10 +41,56 @@
             </div>
         </div>
         
+        <div class="row px-3 pt-3">
+            <div class="col-lg-3">
+                <label for="">Categories</label>
+                <select class="form-select submitable" name="category_id" id="category_id">
+                        <option value="" selected>All</option>
+                    @foreach ($categories as $item)
+                        <option value="{{ $item->id }}" data-image-url="{{ asset($item->category_img) }}">{{ $item->category_name }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="col-lg-3">
+                <label for="">Sub-Categories</label>
+                <select class="form-select submitable" name="subCategory_id" id="subCategory_id">
+                        <option value="" selected>All</option>
+                    @foreach ($subCategories as $item)
+                        <option value="{{ $item->id }}" data-image-url="{{ asset($item->subcategory_img) }}">{{ $item->subcategory_name }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="col-lg-3">
+                <label for="">Product Quantity</label>
+                <select class="form-select submitable" name="product_qty" id="product_qty">
+                    <option value="" selected>All</option>
+                    <option value="0-10">Quantity: 0 - 10</option>
+                    <option value="11-25">Quantity: 11 - 25</option>
+                    <option value="26-50">Quantity: 26 - 50</option>
+                    <option value="51-100">Quantity: 51 - 100</option>
+                    <option value="101-250">Quantity: 101 - 250</option>
+                </select>
+            </div>
+
+            <div class="col-lg-3">
+                <label for="">Product Price</label>
+                <select class="form-select submitable" name="product_price" id="product_price">
+                    <option value="" selected>All</option>
+                    <option value="0-250">Price: {{ getSetting()->currency_symbol }}0 - {{ getSetting()->currency_symbol }}250</option>
+                    <option value="251-500">Price: {{ getSetting()->currency_symbol }}251 - {{ getSetting()->currency_symbol }}500</option>
+                    <option value="501-1000">Price: {{ getSetting()->currency_symbol }}501 - {{ getSetting()->currency_symbol }}1,000</option>
+                    <option value="1001-2000">Price: {{ getSetting()->currency_symbol }}1,001 - {{ getSetting()->currency_symbol }}2,000</option>
+                    <option value="2001-5000">Price: {{ getSetting()->currency_symbol }}2,001 - {{ getSetting()->currency_symbol }}5,000</option>
+                    <option value="5001-10000">Price: {{ getSetting()->currency_symbol }}5,001 - {{ getSetting()->currency_symbol }}10,000</option>
+                </select>
+            </div>
+        </div>
 
         <div class="card-body">
             <div class="">
-                <table class="table table-bordered mb-0" id="datatables">
+                <table class="table table-bordered mb-0 datatables">
                     <thead class="bg-primary text-white">
                         <tr>
                             <th>#SL.</th>
@@ -678,16 +724,22 @@
 
 
             // Show Data through Datatable
-            let datatables = $('#datatables').DataTable({
-                order: [
+            let datatables = $('.datatables').DataTable({
+                "order": [
                     [0, 'desc']
                 ],
-                processing: true,
-                serverSide: true,
-
-                ajax: "{{ route('admin.product-data') }}",
+                "processing": true,
+                "serverSide": true,
+                "ajax": {
+                    "url" : "{{ route('admin.product-data') }}",
+                    "data": function(e){
+                        e.category_id     = $('#category_id').val();
+                        e.subCategory_id  = $('#subCategory_id').val();
+                        e.product_qty     = $('#product_qty').val();
+                        e.product_price   = $('#product_price').val();
+                    }
+                },
                 // pageLength: 30,
-
                 columns: [
                     { 
                         data: 'DT_RowIndex', 
@@ -973,6 +1025,12 @@
                     }
                 })
             })
+        })
+
+
+        // Filterable data
+        $('.submitable').on('change', function(e){
+            $('.datatables').DataTable().ajax.reload();
         })
 
     </script>

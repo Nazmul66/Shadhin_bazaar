@@ -335,6 +335,7 @@
                 })
             })
 
+            // Filterable data
             $('.submitable').on('change', function(e){
                 $('.datatables').DataTable().ajax.reload();
             })

@@ -3,52 +3,17 @@ $(document).ready(function () {
 
     //____ category_id Select2 ____//
     $('#category_id').select2({
-        dropdownParent: $('#createModal'),
+        // dropdownParent: $('#createModal'),
         templateResult: formatState,       // Only Text content when select, it will be shown 
         templateSelection: formatState,    // When select any option, it will be display image and text both
     });
 
-    function formatState (state) {
-        if (!state.id) {
-            return state.text; // Return text for disabled option
-        }
-
-        var imageUrl = $(state.element).data('image-url'); // Access image URL from data attribute
-
-        if (!imageUrl) {
-            return state.text; // Return text if no image URL is available
-        }
-
-        var $state = $(
-            '<span><img src="' + imageUrl + '" style="width: 35px; height: 30px; margin-right: 8px;" /> ' + state.text + '</span>'
-        );
-        return $state;
-    };
-
-
         //____ subCategory_id Select2 ____//
     $('#subCategory_id').select2({
-        dropdownParent: $('#createModal'),
+        // dropdownParent: $('#createModal'),
         templateResult: formatState,
         templateSelection: formatState,
     });
-
-    function formatState (state) {
-        if (!state.id) {
-            return state.text; // Return text for disabled option
-        }
-
-        var imageUrl = $(state.element).data('image-url'); // Access image URL from data attribute
-
-        if (!imageUrl) {
-            return state.text; // Return text if no image URL is available
-        }
-
-        var $state = $(
-            '<span><img src="' + imageUrl + '" style="width: 35px; height: 30px; margin-right: 8px;" /> ' + state.text + '</span>'
-        );
-        return $state;
-    };
 
     //____ childCategory_id Select2 ____//
     $('#childCategory_id').select2({
@@ -57,24 +22,7 @@ $(document).ready(function () {
         templateSelection: formatState,
     });
 
-    function formatState (state) {
-        if (!state.id) {
-            return state.text; // Return text for disabled option
-        }
-
-        var imageUrl = $(state.element).data('image-url'); // Access image URL from data attribute
-
-        if (!imageUrl) {
-            return state.text; // Return text if no image URL is available
-        }
-
-        var $state = $(
-            '<span><img src="' + imageUrl + '" style="width: 35px; height: 30px; margin-right: 8px;" /> ' + state.text + '</span>'
-        );
-        return $state;
-    };
-
-    //____ childCategory_id Select2 ____//
+    //____ brand_id Select2 ____//
     $('#brand_id').select2({
         dropdownParent: $('#createModal'),
         templateResult: formatState,
@@ -108,23 +56,6 @@ $(document).ready(function () {
         templateSelection: formatState, // This will also format the selected item
     });
 
-    function formatState (state) {
-        if (!state.id) {
-            return state.text; // Return text for disabled option
-        }
-
-        var imageUrl = $(state.element).data('image-url'); // Access image URL from data attribute
-
-        if (!imageUrl) {
-            return state.text; // Return text if no image URL is available
-        }
-
-        var $state = $(
-            '<span><img src="' + imageUrl + '" style="width: 35px; height: 30px; margin-right: 8px;" /> ' + state.text + '</span>'
-        );
-        return $state;
-    };
-
 
         //____ subCategory_id Select2 ____//
     $('#up_subCategory_id').select2({
@@ -133,22 +64,6 @@ $(document).ready(function () {
         templateSelection: formatState,
     });
 
-    function formatState (state) {
-        if (!state.id) {
-            return state.text; // Return text for disabled option
-        }
-
-        var imageUrl = $(state.element).data('image-url'); // Access image URL from data attribute
-
-        if (!imageUrl) {
-            return state.text; // Return text if no image URL is available
-        }
-
-        var $state = $(
-            '<span><img src="' + imageUrl + '" style="width: 35px; height: 30px; margin-right: 8px;" /> ' + state.text + '</span>'
-        );
-        return $state;
-    };
 
     //____ childCategory_id Select2 ____//
     $('#up_childCategory_id').select2({
@@ -157,22 +72,6 @@ $(document).ready(function () {
         templateSelection: formatState,
     });
 
-    function formatState (state) {
-        if (!state.id) {
-            return state.text; // Return text for disabled option
-        }
-
-        var imageUrl = $(state.element).data('image-url'); // Access image URL from data attribute
-
-        if (!imageUrl) {
-            return state.text; // Return text if no image URL is available
-        }
-
-        var $state = $(
-            '<span><img src="' + imageUrl + '" style="width: 35px; height: 30px; margin-right: 8px;" /> ' + state.text + '</span>'
-        );
-        return $state;
-    };
 
     //____ brand_id Select2 ____//
     $('#up_brand_id').select2({
