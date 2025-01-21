@@ -34,7 +34,6 @@ use App\Http\Controllers\Frontend\AjaxCallController;
         Route::get('/blogs-details', "blogs_details")->name('blogs.details');
         // Route::get('/wishlist', "wishlist_view")->name('wishlist');
         // Route::get('/compare', "compare_view")->name('compare');
-        Route::get('/shop-page', "shop_page")->name('shop.page');
         Route::get('/track-order', "track_order")->name('track.order');
         Route::get('/register-login', "register_login")->name('register.login');
     });
@@ -52,6 +51,7 @@ use App\Http\Controllers\Frontend\AjaxCallController;
 
     //__ Products __//
     Route::controller(ProductController::class)->group(function () {
+        Route::get('/products', "product_page")->name('product.page');
         Route::get('/product-details/{slug}', "show_product_details")->name('product.details');
         Route::post('/get-color-size-price', 'getColorSizePrice')->name('get.color.size.price');
         Route::post('/product/add-to-cart', 'productAddToCart')->name('addToCart');

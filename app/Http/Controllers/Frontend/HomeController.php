@@ -106,10 +106,6 @@ class HomeController extends Controller
     */
 
 
-    public function shop_page()
-    {
-        return view('frontend.pages.product_pages.shop-page');
-    }
 
     // public function cart_view()
     // {

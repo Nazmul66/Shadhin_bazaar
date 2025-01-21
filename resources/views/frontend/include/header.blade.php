@@ -19,7 +19,7 @@
                         <div class="d-xl-block d-none">
                             <form>
                                 <div class="form-search-select">
-                                    <div class="tf-dropdown-sort" data-bs-toggle="dropdown">
+                                    {{-- <div class="tf-dropdown-sort" data-bs-toggle="dropdown">
                                         <div class="btn-select">
                                             <span class="text-sort-value">All</span>
                                             <i class='bx bx-chevron-down' style="font-size: 24px;"></i>
@@ -50,7 +50,7 @@
                                                 <span class="text-value-item">Date, new to old</span>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <input type="text" placeholder="What are you looking for today?">
                                     <button class="tf-btn"><span class="text">Search</span></button>
                                 </div>
@@ -127,7 +127,7 @@
                                     @endphp
 
                                     <li class="sub-categories2">
-                                        <a href="#" class="categories-item"><span class="inner-left">
+                                        <a href="{{ route('product.page', ['categories' => $item->slug]) }}" class="categories-item"><span class="inner-left">
                                             <img src="{{ asset($item->category_img) }}" alt="{{ $item->slug  }}"> 
                                             {{ $item->category_name }}</span>
 
@@ -140,7 +140,7 @@
                                             <ul class="list-categories-inner">
                                                 @foreach ($subCats as $row)
                                                     <li>
-                                                        <a href="#" class="categories-item">
+                                                        <a href="{{ route('product.page', ['sub_categories' => $row->slug]) }}" class="categories-item">
                                                             <span class="inner-left">
                                                                 <img src="{{ asset($row->subcategory_img) }}" alt="{{ $row->slug  }}">  
                                                                 {{ $row->subcategory_name }}
@@ -155,6 +155,8 @@
                             </ul>
                         </div>
                     </div>
+
+                    
                     <nav class="box-navigation">
                         <ul class="box-nav-ul d-flex align-items-center">
                             <li class="menu-item active">

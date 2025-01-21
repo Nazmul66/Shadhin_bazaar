@@ -4786,7 +4786,7 @@ form .cols>* {
 .tf-check::before {
     font-weight: 500;
     font-family: "icomoon";
-    content: "\e937";
+    content: "\2713";
     position: absolute;
     color: var(--white);
     opacity: 0;
@@ -18009,3 +18009,39 @@ ul.list-text.type-number {
     }
 }
 /*# sourceMappingURL=styles.css.map */
+.meta_filter_shop {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 30px;
+}
+.gridLayout-wrapper #product-count-grid {
+    display: block;
+}
+.meta_filter_shop .count-text {
+    font-size: 14px;
+    line-height: 22px;
+    color: var(--secondary);
+    padding-right: 12px;
+    position: relative;
+}
+.meta_filter_shop .count-text .count {
+    color: var(--main);
+    display: inline-block;
+    margin-right: 2px;
+}
+.meta_filter_shop .count-text::after {
+    position: absolute;
+    top: 4px;
+    bottom: 4px;
+    right: 0;
+    width: 1px;
+    display: block;
+    content: "";
+    background-color: #d9d9d9;
+}
+.meta_filter_shop .remove_all_filters {
+    padding: 4px 12px;
+    border: 1px solid var(--main);
+}
