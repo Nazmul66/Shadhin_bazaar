@@ -210,6 +210,13 @@
                     </ul>
                 </li>
                 
+                {{-- Manage Website --}}
+                <li>
+                    <a href="{{ route('admin.customPage.index') }}" >
+                        <i class='bx bx-grid-alt'></i>
+                        <span >Custom Pages</span>
+                    </a>
+                </li>
 
                 {{-- Manage Website --}}
                 <li>

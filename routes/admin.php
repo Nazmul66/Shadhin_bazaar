@@ -24,6 +24,7 @@ use App\Http\Controllers\Backend\SubcategoryController;
 use App\Http\Controllers\Backend\ChildCategoryController;
 use App\Http\Controllers\Backend\FlashSaleController;
 use App\Http\Controllers\Backend\CouponController;
+use App\Http\Controllers\Backend\CustomPageController;
 use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Backend\ReviewController;
 use App\Http\Controllers\Backend\SliderController;
@@ -190,6 +191,12 @@ Route::middleware('setLanguage')->group(function(){
         Route::resource('/reviews', ReviewController::class)->names('reviews');
         Route::get('/review-data', [ReviewController::class, 'getData'])->name('review-data');
         Route::post('/change-review-status', [ReviewController::class, 'changeReviewStatus'])->name('review.status');
+
+
+        //______ Custom Page _____//
+        Route::resource('/customPage', CustomPageController::class)->names('customPage');
+        Route::get('/customPage-data', [CustomPageController::class, 'getData'])->name('customPage-data');
+        Route::post('/change-customPage-status', [CustomPageController::class, 'changeCustomPageStatus'])->name('customPage.status');
 
 
         //______ Settings _____//

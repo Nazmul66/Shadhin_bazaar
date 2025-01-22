@@ -32,7 +32,7 @@ trait ImageUploadTraits {
                     @unlink($existingImg); 
             }
 
-            $imageName          = $request->slug . rand(1, 99999999) . '.' . $images->getClientOriginalExtension();
+            $imageName          = ($request->slug ?? 'default') . rand(1, 99999999) . '.' . $images->getClientOriginalExtension();
             $imagePath          = 'public/backend/images/' . $path . '/';
             $images->move($imagePath, $imageName);
 
