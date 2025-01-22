@@ -28,8 +28,17 @@
                 {{-- Subscription List --}}
                 <li class="">
                     <a href="{{ route('admin.subscription.index') }}">
-                        <i class='bx bxs-tag-alt'></i>
+                        <i class='bx bx-purchase-tag'></i>
                         <span>Subscriptions</span>
+                    </a>
+                </li>
+
+
+                {{-- Faq List --}}
+                <li class="">
+                    <a href="{{ route('admin.faq.index') }}">
+                        <i class='bx bx-message-dots'></i>
+                        <span>Faq</span>
                     </a>
                 </li>
 
@@ -213,7 +222,7 @@
                 {{-- Manage Website --}}
                 <li>
                     <a href="{{ route('admin.customPage.index') }}" >
-                        <i class='bx bx-grid-alt'></i>
+                        <i class='bx bx-folder-open'></i>
                         <span >Custom Pages</span>
                     </a>
                 </li>

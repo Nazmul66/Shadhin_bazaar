@@ -22,6 +22,7 @@ use App\Http\Controllers\Backend\BrandsController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\SubcategoryController;
 use App\Http\Controllers\Backend\ChildCategoryController;
+use App\Http\Controllers\Backend\FaqController;
 use App\Http\Controllers\Backend\FlashSaleController;
 use App\Http\Controllers\Backend\CouponController;
 use App\Http\Controllers\Backend\CustomPageController;
@@ -69,11 +70,11 @@ Route::middleware('setLanguage')->group(function(){
         Route::get('/subscription-data', [SubscriptionController::class, 'getData'])->name('subscription-data');
 
 
-        //______ Role & Permission _____//
-        Route::resource('/permission', PermissionController::class)->names('permission');
-        Route::get('/permission-data', [PermissionController::class, 'getData'])->name('permission-data');
-        Route::resource('/role', RoleController::class)->names('role');
-        Route::resource('/admin-role', AdminRoleController::class)->names('admin-role');
+        //______ FAQ _____//
+        Route::resource('/faq', FaqController::class)->names('faq');
+        Route::get('/faq-data', [FaqController::class, 'getData'])->name('faq-data');
+        Route::post('/faq/status', [FaqController::class, 'changeFaqStatus'])->name('faq.status');
+        Route::get('/faq/view/{id}', [FaqController::class, 'faqView'])->name('faq.view');
 
 
         //______ Slider _____//
@@ -88,7 +89,6 @@ Route::middleware('setLanguage')->group(function(){
         Route::get('/category-data', [CategoryController::class, 'getData'])->name('category-data');
         Route::post('/categories/status', [CategoryController::class, 'changeCategoryStatus'])->name('category.status');
         Route::get('/categories/view/{id}', [CategoryController::class, 'CategoryView'])->name('category.view');
-        // Route::get('/get-subcategory/{category}', [CategoryController::class, 'getSubCategories'])->name('get.subcategory');
 
 
         //______ Subcategory _____//
@@ -199,10 +199,18 @@ Route::middleware('setLanguage')->group(function(){
         Route::post('/change-customPage-status', [CustomPageController::class, 'changeCustomPageStatus'])->name('customPage.status');
 
 
+        //______ Role & Permission _____//
+        Route::resource('/permission', PermissionController::class)->names('permission');
+        Route::get('/permission-data', [PermissionController::class, 'getData'])->name('permission-data');
+        Route::resource('/role', RoleController::class)->names('role');
+        Route::resource('/admin-role', AdminRoleController::class)->names('admin-role');
+
+
         //______ Settings _____//
         Route::resource('/settings', SettingController::class)->names('settings');
         Route::get('/email-setup', [SettingController::class, 'emailSetupIndex'])->name('email.setup');
         Route::put('/email-setting-update', [SettingController::class, 'emailConfigSettingUpdate'])->name('email.setting.update');
+        
     });
 
 });
