@@ -28,6 +28,7 @@ use App\Http\Controllers\Backend\CouponController;
 use App\Http\Controllers\Backend\CustomPageController;
 use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Backend\ReviewController;
+use App\Http\Controllers\Backend\ContactController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\TransactionController;
@@ -63,6 +64,12 @@ Route::middleware('setLanguage')->group(function(){
         Route::resource('/customer', CustomerController::class)->names('customer');
         Route::get('/customer-data', [CustomerController::class, 'getData'])->name('customer-data');
         Route::get('/customer/view/{id}', [CustomerController::class, 'customerView'])->name('customer.view');
+
+
+        //______ Contacts _____//
+        Route::resource('/contact', ContactController::class)->names('contact');
+        Route::get('/contact-data', [ContactController::class, 'getData'])->name('contact-data');
+        Route::get('/contact/view/{id}', [ContactController::class, 'contactView'])->name('contact.view');
 
 
         //______ Subscription _____//

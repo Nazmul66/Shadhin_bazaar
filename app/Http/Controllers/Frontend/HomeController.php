@@ -64,7 +64,6 @@ class HomeController extends Controller
         $contact->status      = 1;
         $contact->save();
 
-        // set mail config
         $setting = EmailConfiguration::first();
 
         // send email

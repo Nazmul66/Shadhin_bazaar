@@ -19,16 +19,16 @@
                 {{-- Customers List --}}
                 <li class="@yield('all_customer')">
                     <a href="{{ route('admin.customer.index') }}">
-                        <i class='bx bx-support'></i>
-                        <span >All Customers</span>
+                        <i class='bx bx-user'></i>
+                        <span >Customers</span>
                     </a>
                 </li>
 
                 {{-- Contact List --}}
                 <li class="@yield('all_customer')">
-                    <a href="{{ route('admin.customer.index') }}">
-                        <i class='bx bx-support'></i>
-                        <span >All Contacts</span>
+                    <a href="{{ route('admin.contact.index') }}">
+                        <i class='bx bx-phone-call'></i>
+                        <span >Contacts</span>
                     </a>
                 </li>
                 
@@ -40,39 +40,12 @@
                     </a>
                 </li>
 
-
                 {{-- Faq List --}}
                 <li class="">
                     <a href="{{ route('admin.faq.index') }}">
                         <i class='bx bx-message-dots'></i>
                         <span>Faq</span>
                     </a>
-                </li>
-
-                {{-- Role & Permission --}}
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow">
-                        <i class='bx bx-lock'></i>
-                        <span>Admin Permission</span>
-                    </a>
-                    
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li>
-                            <a href="{{ route('admin.permission.index') }}">
-                                <span >Permission</span>
-                            </a>
-                        </li>
-                        <li class="@yield('edit_role')">
-                            <a href="{{ route('admin.role.index') }}">
-                                <span >Role</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('admin.admin-role.index') }}">
-                                <span >User</span>
-                            </a>
-                        </li>
-                    </ul>
                 </li>
 
                 {{-- Attribute --}}
@@ -123,7 +96,6 @@
                     </ul>
                 </li>
                 
-
                 {{-- All Products List --}}
                 <li >
                     <a href="javascript: void(0);" class="has-arrow">
@@ -169,7 +141,6 @@
                     </ul>
                 </li>
 
-
                 {{-- Order List --}}
                 <li class="@yield('all_orders')">
                     <a href="javascript: void(0);" class="has-arrow">
@@ -210,7 +181,6 @@
                     </ul>
                 </li>
 
-
                 {{-- Transaction List --}}
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
@@ -249,6 +219,31 @@
                     </ul>
                 </li>
 
+                {{-- Role & Permission --}}
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow">
+                        <i class='bx bx-lock'></i>
+                        <span>Admin Permission</span>
+                    </a>
+                    
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li>
+                            <a href="{{ route('admin.permission.index') }}">
+                                <span >Permission</span>
+                            </a>
+                        </li>
+                        <li class="@yield('edit_role')">
+                            <a href="{{ route('admin.role.index') }}">
+                                <span >Role</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('admin.admin-role.index') }}">
+                                <span >User</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
 
                 {{-- Setting Website --}}
                 <li>

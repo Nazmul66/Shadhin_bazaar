@@ -1,7 +1,7 @@
 @extends('backend.layout.master')
 
 @push('title')
-    All Customers List
+    All Contacts List
 @endpush
 
 @push('add-css')
@@ -14,12 +14,12 @@
     <div class="row">
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                <h4 class="mb-sm-0 font-size-18">All Customers</h4>
+                <h4 class="mb-sm-0 font-size-18">All Contacts</h4>
 
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="{{ route('admin.dashboards') }}">Dashboard</a></li>
-                        <li class="breadcrumb-item active">Customer</li>
+                        <li class="breadcrumb-item active">Contact</li>
                     </ol>
                 </div>
             </div>
@@ -31,7 +31,7 @@
         <div class="card">
             <div class="card-header">
                 <div class="d-flex justify-content-between align-items-center">
-                    <h4 class="card-title">Customers List</h4>
+                    <h4 class="card-title">Contacts List</h4>
                 </div>
             </div>
     
@@ -41,12 +41,11 @@
                         <thead class="bg-primary text-white">
                             <tr>
                                 <th>#SL.</th>
-                                <th>Image</th>
                                 <th>Name</th>
                                 <th>Email Address</th>
                                 <th>Phone Number</th>
-                                <th>City</th>
-                                <th>Address</th>
+                                <th>Subject</th>
+                                <th>Message</th>
                                 <th>Date</th>
                                 <th>Action</th>
                             </tr>
@@ -66,7 +65,7 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header bg-primary">
-                        <h5 class="modal-title" id="myModalLabel">View Customer List</h5>
+                        <h5 class="modal-title" id="myModalLabel">View Contact List</h5>
 
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
                     </div>
@@ -75,11 +74,6 @@
                         <div class="view_modal_content">
                             <label>Name : </label>
                             <span class="text-dark" id="view_name"></span>
-                        </div>
-
-                        <div class="view_modal_content">
-                            <label>Image : </label>
-                            <div id="viewImageShow"></div>
                         </div>
 
                         <div class="view_modal_content">
@@ -93,13 +87,13 @@
                         </div>
 
                         <div class="view_modal_content">
-                            <label>City : </label>
-                            <div id="view_city"></div>
+                            <label>Subject : </label>
+                            <div id="view_subject"></div>
                         </div>
 
                         <div class="view_modal_content">
-                            <label>Address : </label>
-                            <div id="view_address"></div>
+                            <label>Message : </label>
+                            <div id="view_message"></div>
                         </div>
 
                         <div class="view_modal_content">
@@ -134,7 +128,7 @@
                 "processing": true,
                 "serverSide": true,
                 "ajax": {
-                    "url" : "{{ route('admin.customer-data') }}"
+                    "url" : "{{ route('admin.contact-data') }}"
                 },
                 // pageLength: 30,
 
@@ -146,9 +140,6 @@
                         searchable: false 
                     },
                     {
-                        data: 'image',
-                    },
-                    {
                         data: 'name',
                     },
                     {
@@ -158,10 +149,10 @@
                         data: 'phone',
                     },
                     {
-                        data: 'city',
+                        data: 'subject',
                     },
                     {
-                        data: 'address',
+                        data: 'message',
                     },
                     {
                         data: 'date'
@@ -185,18 +176,17 @@
                     // headers: {
                     //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     // },
-                    url: "{{ url('admin/customer/view') }}/" + id,
+                    url: "{{ url('admin/contact/view') }}/" + id,
                     processData: false,  // Prevent jQuery from processing the data
                     contentType: false,  // Prevent jQuery from setting contentType
                     success: function (res) {
                         let data = res.success;
 
                         $('#view_name').html(data.name);
-                        $('#viewImageShow').html(res.image);
                         $('#view_email').html(res.email);
                         $('#view_phone').html(res.phone);
-                        $('#view_city').html(data.city);
-                        $('#view_address').html(data.address);
+                        $('#view_subject').html(data.subject);
+                        $('#view_message').html(data.message);
                         $('#created_date').html(res.created_date);
                         $('#updated_date').html(res.updated_date);
                     },
