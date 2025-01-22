@@ -16,11 +16,20 @@
                     </a>
                 </li>
 
-                {{-- Order List --}}
+                {{-- Customers List --}}
                 <li class="@yield('all_customer')">
                     <a href="{{ route('admin.customer.index') }}">
                         <i class='bx bx-support'></i>
                         <span >All Customers</span>
+                    </a>
+                </li>
+
+                
+                {{-- Subscription List --}}
+                <li class="">
+                    <a href="{{ route('admin.subscription.index') }}">
+                        <i class='bx bxs-tag-alt'></i>
+                        <span>Subscriptions</span>
                     </a>
                 </li>
 

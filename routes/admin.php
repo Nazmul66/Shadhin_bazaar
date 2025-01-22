@@ -30,6 +30,7 @@ use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\TransactionController;
 use App\Http\Controllers\Backend\CustomerController;
+use App\Http\Controllers\Backend\SubscriptionController;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
 
@@ -60,6 +61,12 @@ Route::middleware('setLanguage')->group(function(){
         Route::resource('/customer', CustomerController::class)->names('customer');
         Route::get('/customer-data', [CustomerController::class, 'getData'])->name('customer-data');
         Route::get('/customer/view/{id}', [CustomerController::class, 'customerView'])->name('customer.view');
+
+
+        //______ Subscription _____//
+        Route::resource('/subscription', SubscriptionController::class)->names('subscription');
+        Route::get('/subscription-data', [SubscriptionController::class, 'getData'])->name('subscription-data');
+
 
         //______ Role & Permission _____//
         Route::resource('/permission', PermissionController::class)->names('permission');
