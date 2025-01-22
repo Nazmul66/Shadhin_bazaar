@@ -13,6 +13,7 @@ use App\Http\Controllers\Frontend\FlashSaleController;
 use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\ShippingRuleController;
 use App\Http\Controllers\Frontend\AjaxCallController;
+use App\Http\Controllers\Frontend\NewsletterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -84,6 +85,13 @@ use App\Http\Controllers\Frontend\AjaxCallController;
     Route::controller(CouponController::class)->group(function () {
         Route::post('/apply-coupon', 'apply_coupon')->name('apply.coupon');
         Route::get('/coupon-calculation', 'coupon_calculation')->name('coupon.calculation');
+    });
+
+
+    //__ Newsletter __//
+    Route::controller(NewsletterController::class)->group(function () {
+        Route::post('/newsletter-request', 'newsletter_request')->name('newsletter.request');
+        Route::get('/newsletter-verify/{token}', 'newsletterEmailVerify')->name('newsletter.verify');
     });
 
 

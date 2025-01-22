@@ -415,6 +415,33 @@
        $('.quick_view_cart').on('click', function() {
            $('.show-shopping-cart').removeClass('show-shopping-cart');
        });
+
+       // Subscription Form
+       $('#newsletter_form').on('submit', function (e) {
+            e.preventDefault();
+            
+            let data = $(this).serialize(); // Serialize form data
+
+            $.ajax({
+                method: 'POST',
+                url: "{{ route('newsletter.request') }}",
+                data: data, // Send form data, including the CSRF token
+                success: function (data) {
+                    if (data.status === 'success') {
+                        toastr.success(data.message);
+                    } else if (data.status === 'error') {
+                        toastr.error(data.message);
+                    }
+                },
+                error: function (data) {
+                    console.log(data);
+                    let errors = data.responseJSON?.errors;
+                    $.each(errors, function (key, value) {
+                        toastr.error(value);
+                    });
+                }
+            });
+        });
    });
 
 </script>
