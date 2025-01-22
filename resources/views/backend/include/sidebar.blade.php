@@ -235,6 +235,11 @@
                                 <span >Profile Update</span>
                             </a>
                         </li>
+                        <li>
+                            <a href="{{ route('admin.email.setup') }}">
+                                <span >Email Configuration</span>
+                            </a>
+                        </li>
                     </ul>
                 </li>
             </ul>

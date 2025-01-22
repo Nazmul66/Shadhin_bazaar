@@ -187,6 +187,8 @@ Route::middleware('setLanguage')->group(function(){
 
         //______ Settings _____//
         Route::resource('/settings', SettingController::class)->names('settings');
+        Route::get('/email-setup', [SettingController::class, 'emailSetupIndex'])->name('email.setup');
+        Route::put('/email-setting-update', [SettingController::class, 'emailConfigSettingUpdate'])->name('email.setting.update');
     });
 
 });
