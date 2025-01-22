@@ -18063,3 +18063,7 @@ ul.list-text.type-number {
     font-size: 18px !important;
     font-weight: 500 !important;
 }
+.contact_gap{
+    display: flex;
+    gap: 8px;
+}

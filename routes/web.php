@@ -26,6 +26,7 @@ use App\Http\Controllers\Frontend\NewsletterController;
         Route::get('/', "home")->name('home');
         Route::get('/about-us', "about_us")->name('about.us');
         Route::get('/contact-us', "contact_us")->name('contact.us');
+        Route::post('/contact-us', "handleContactForm")->name('handle.contact.form');
         Route::get('/faq', "faq_page")->name('faq');
         Route::get('/team', "team_page")->name('team');
         Route::get('/privacy-policy', "privacy_policy")->name('privacy.policy');

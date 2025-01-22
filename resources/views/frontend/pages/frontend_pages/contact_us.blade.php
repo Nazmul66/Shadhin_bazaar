@@ -47,21 +47,31 @@
             <div class="col-12">
                 <div class="contact-us-map">
                     <div class="wrap-map">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d912.5264728357365!2d90.42024442845884!3d23.81483329865861!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c7e38dbe6fc1%3A0x84f05d820d063b60!2skuril%2CBashundhara!5e0!3m2!1sen!2sbd!4v1735432006868!5m2!1sen!2sbd" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        {!! getSetting()->google_map !!}
                     </div>
                     <div class="right">
                         <h4>Information</h4>
                         <div class="mb_20">
                             <div class="text-title mb_8">Phone:</div>
-                            <p class="text-secondary">+1 666 234 8888</p>
+                            @if ( !empty(getSetting()->phone) )
+                                <a href="tel:{{ getSetting()->phone }}" class="text-secondary">{{ getSetting()->phone }}</a>
+                            @else
+                                <a href="tel:{{ getSetting()->phone_optional }}" class="text-secondary">{{ getSetting()->phone_optional }}</a>
+                            @endif
                         </div>
+
                         <div class="mb_20">
                             <div class="text-title mb_8">Email:</div>
-                            <p class="text-secondary">themesflat@gmail.com</p>
+                            @if ( !empty(getSetting()->email) )
+                                <a href="mailto:{{ getSetting()->email }}" class="text-secondary">{{ getSetting()->email }}</a>
+                            @else
+                                <a href="mailto:{{ getSetting()->email_optional }}" class="text-secondary">{{ getSetting()->email_optional }}</a>
+                            @endif
                         </div>
+
                         <div class="mb_20">
                             <div class="text-title mb_8">Address:</div>
-                            <p class="text-secondary">2163 Phillips Gap Rd, West Jefferson, North Carolina, United States</p>
+                            <p class="text-secondary">{{ getSetting()->address }}</p>
                         </div>
                         <div>
                             <div class="text-title mb_8">Open Time:</div>
@@ -83,30 +93,62 @@
 <!-- Get In Touch -->
 <section class="flat-spacing pt-0">
     <div class="container">
-        <div class="heading-section text-center">
-            <h3 class="heading">Get In Touch</h3>
-            <p class="subheading">Use the form below to get in touch with the sales team</p>
-        </div>
-        <form action="" method="post" class="form-leave-comment">
-            <div class="wrap">
-                <div class="cols">
-                    <fieldset class="">
-                        <input class="" type="text" placeholder="Your Name*" name="name" id="name" tabindex="2" value="" aria-required="true" required="">
-                    </fieldset>
-                    <fieldset class="">
-                        <input class="" type="email" placeholder="Your Email*" name="email" id="email" tabindex="2" value="" aria-required="true" required="">
-                    </fieldset>
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2">
+                <div class="heading-section text-center">
+                    <h3 class="heading">Get In Touch</h3>
+                    <p class="subheading">Use the form below to get in touch with the sales team</p>
                 </div>
-                <fieldset class="">
-                    <textarea name="message" id="message" rows="4" placeholder="Your Message*" tabindex="2" aria-required="true" required=""></textarea>
-                </fieldset>
+                
+                <form id="contact_form" method="post" class="form-leave-comment">
+                    @csrf 
+
+                    <div class="wrap">
+                        <div class="cols">
+                            <fieldset class="">
+                                <input class="" type="text" placeholder="Your Name*" name="name" id="name" value="{{ old('name') }}" aria-required="true">
+
+                                <span id="name_validate" class="text-danger mt-1"></span>
+                            </fieldset>
+
+                            <fieldset class="">
+                                <input class="" type="number" placeholder="Phone Number*" name="phone" id="phone" value="{{ old('phone') }}" aria-required="true" >
+
+                                <span id="phone_validate" class="text-danger mt-1"></span>
+                            </fieldset>
+                        </div>
+
+                        <div class="cols">
+                            <fieldset class="">
+                                <input class="" type="email" placeholder="Email Address*" name="email" id="email" value="{{ old('email') }}" aria-required="true">
+
+                                <span id="email_validate" class="text-danger mt-1"></span>
+                            </fieldset>
+                        </div>
+
+                        <div class="cols">
+                            <fieldset class="">
+                                <input class="" type="text" placeholder="Subject Here*" name="subject" id="subject" tabindex="2" value="{{ old('subject') }}" aria-required="true">
+
+                                <span id="subject_validate" class="text-danger mt-1"></span>
+                            </fieldset>
+                        </div>
+
+                        <fieldset class="">
+                            <textarea name="message" id="message" rows="4" placeholder="Your Message*" tabindex="2" aria-required="true">{{ old('message') }}</textarea>
+
+                            <span id="message_validate" class="text-danger mt-1"></span>
+                        </fieldset>
+                    </div>
+
+                    <div class="button-submit send-wrap">
+                        <button class="tf-btn btn-fill tf_contact_btn" type="submit">
+                            <span class="text text-button" id="contact_btn">Send message</span>
+                        </button>
+                    </div>
+                </form>
             </div>
-            <div class="button-submit send-wrap">
-                <button class="tf-btn btn-fill" type="submit">
-                    <span class="text text-button">Send message</span>
-                </button>
-            </div>
-        </form>
+        </div>
     </div>
 </section>
 <!-- /Get In Touch -->
@@ -115,5 +157,49 @@
 
 @push('add-js')
 
+<script>
+    // Subscription Form
+    $('#contact_form').on('submit', function (e) {
+        e.preventDefault();
+        let data = $(this).serialize(); // Serialize form data
+
+        $.ajax({
+            method: 'POST',
+            url: "{{ route('handle.contact.form') }}",
+            data: data, // Send form data, including the CSRF token
+            beforeSend: function(){
+                $('#contact_btn').addClass('contact_gap');
+                $('.tf_contact_btn').attr('disabled', true);
+                $('#contact_btn').html("<i class='bx bx-loader-alt spinners'></i> Sending....");
+            },
+            success: function (data) {
+                if (data.status === 'success') {
+                    toastr.success(data.message);
+                    $('#contact_btn').removeClass('contact_gap');
+                    $('#contact_btn').text("Send Message");
+                    $('#contact_form')[0].reset(); // Reset the form
+                    $('.tf_contact_btn').attr('disabled', false);
+                }
+            },
+            error: function (data) {
+                console.log(data);
+                let errors = data.responseJSON?.errors;
+
+                $('#name_validate').empty().html(errors.name);
+                $('#phone_validate').empty().html(errors.phone);
+                $('#email_validate').empty().html(errors.email);
+                $('#subject_validate').empty().html(errors.subject);
+                $('#message_validate').empty().html(errors.message);
+
+                $.each(errors, function (key, value) {
+                    toastr.error(value);
+                    $('#contact_btn').removeClass('contact_gap');
+                    $('#contact_btn').text("Send Message");
+                    $('.tf_contact_btn').attr('disabled', false);
+                });
+            }
+        });
+    });
+</script>
 
 @endpush

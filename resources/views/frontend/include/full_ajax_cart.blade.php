@@ -416,8 +416,8 @@
            $('.show-shopping-cart').removeClass('show-shopping-cart');
        });
 
-       // Subscription Form
-       $('#newsletter_form').on('submit', function (e) {
+        // Subscription Form
+        $('#newsletter_form').on('submit', function (e) {
             e.preventDefault();
             
             let data = $(this).serialize(); // Serialize form data

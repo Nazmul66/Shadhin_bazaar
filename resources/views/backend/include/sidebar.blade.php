@@ -24,6 +24,13 @@
                     </a>
                 </li>
 
+                {{-- Contact List --}}
+                <li class="@yield('all_customer')">
+                    <a href="{{ route('admin.customer.index') }}">
+                        <i class='bx bx-support'></i>
+                        <span >All Contacts</span>
+                    </a>
+                </li>
                 
                 {{-- Subscription List --}}
                 <li class="">

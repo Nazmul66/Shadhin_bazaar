@@ -31,9 +31,9 @@
                                 <li>
                                     <i class='bx bx-phone-call'></i>
                                     @if ( !empty(getSetting()->phone) )
-                                        <a href="mailto:{{ getSetting()->phone }}" style="color: #A0A0A0;">{{ getSetting()->phone }}</a>
+                                        <a href="tel:{{ getSetting()->phone }}" style="color: #A0A0A0;">{{ getSetting()->phone }}</a>
                                     @else
-                                        <a href="mailto:{{ getSetting()->phone_optional }}" style="color: #A0A0A0;">{{ getSetting()->phone_optional }}</a>
+                                        <a href="tel:{{ getSetting()->phone_optional }}" style="color: #A0A0A0;">{{ getSetting()->phone_optional }}</a>
                                     @endif
                                 </li>
                             </ul>
