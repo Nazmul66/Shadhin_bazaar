@@ -8,30 +8,98 @@
                         <div class="footer-infor">
                             <div class="footer-logo">
                                 <a href="index.html">
-                                    <img src="{{ asset('public/frontend/images/logo/logo-white.svg') }}" alt="">
+                                    @if ( !empty(getSetting()->logo) )
+                                        <img src="{{ asset(getSetting()->logo) }}" alt="{{ getSetting()->site_name }}" style="width: 75px;">
+                                    @else
+                                        <img src="{{ asset('public/frontend/images/logo/logo-white.svg') }}" alt="" style="width: 75px;">
+                                    @endif
                                 </a>
                             </div>
                             <div class="footer-address">
-                                <p>549 Oak St.Crystal Lake, IL 60014</p>
-                                <a href="contact.html" class="tf-btn-default style-white fw-6">GET DIRECTION<i class="icon-arrowUpRight"></i></a>
+                                <p>{{ getSetting()->address }}</p>
+                                <a href="{{ url('/contact-us') }}" class="tf-btn-default style-white fw-6">GET DIRECTION</a>
                             </div>
                             <ul class="footer-info">
                                 <li>
-                                    <i class="icon-mail"></i>
-                                    <p>themesflat@gmail.com</p>
+                                    <i class='bx bx-envelope'></i>
+                                    @if ( !empty(getSetting()->email) )
+                                        <a href="mailto:{{ getSetting()->email }}" style="color: #A0A0A0;">{{ getSetting()->email }}</a>
+                                    @else
+                                        <a href="mailto:{{ getSetting()->email_optional }}" style="color: #A0A0A0;">{{ getSetting()->email_optional }}</a>
+                                    @endif
                                 </li>
                                 <li>
-                                    <i class="icon-phone"></i>
-                                    <p>315-666-6688</p>
+                                    <i class='bx bx-phone-call'></i>
+                                    @if ( !empty(getSetting()->phone) )
+                                        <a href="mailto:{{ getSetting()->phone }}" style="color: #A0A0A0;">{{ getSetting()->phone }}</a>
+                                    @else
+                                        <a href="mailto:{{ getSetting()->phone_optional }}" style="color: #A0A0A0;">{{ getSetting()->phone_optional }}</a>
+                                    @endif
                                 </li>
                             </ul>
                             <ul class="tf-social-icon style-white">
-                                <li><a href="#" class="social-facebook"><i class="icon icon-fb"></i></a></li>
-                                <li><a href="#" class="social-twiter"><i class="icon icon-x"></i></a></li>
-                                <li><a href="#" class="social-instagram"><i class="icon icon-instagram"></i></a></li>
-                                <li><a href="#" class="social-tiktok"><i class="icon icon-tiktok"></i></a></li>
-                                <li><a href="#" class="social-amazon"><i class="icon icon-amazon"></i></a></li>
-                                <li><a href="#" class="social-pinterest"><i class="icon icon-pinterest"></i></a></li>
+                                @if ( !empty(getSetting()->facebook) )
+                                    <li>
+                                        <a href="{{ getSetting()->facebook }}" class="social-facebook">
+                                            <i class='bx bxl-facebook'></i>
+                                        </a>
+                                    </li>
+                                @endif
+
+                                @if ( !empty(getSetting()->twitter) )
+                                    <li>
+                                       <a href="{{ getSetting()->twitter }}" class="social-twiter">
+                                           <i class="fa-brands fa-x-twitter"></i>
+                                        </a>
+                                    </li>
+                                @endif
+
+                                @if ( !empty(getSetting()->quora) )
+                                    <li>
+                                        <a href="{{ getSetting()->quora }}" class="social-pinterest">
+                                            <i class='bx bxl-quora' ></i>
+                                        </a>
+                                    </li>
+                                @endif
+
+                                @if ( !empty(getSetting()->linkedin) )
+                                    <li>
+                                       <a href="{{ getSetting()->twitter }}" class="social-facebook">
+                                            <i class='bx bxl-linkedin' ></i>
+                                        </a>
+                                    </li>
+                                @endif
+
+                                @if ( !empty(getSetting()->youtube) )
+                                    <li>
+                                        <a href="{{ getSetting()->youtube }}" class="social-pinterest">
+                                            <i class="fa-brands fa-youtube"></i>
+                                        </a>
+                                    </li>
+                                @endif
+
+                                @if ( !empty(getSetting()->instagram) )
+                                    <li>
+                                    <a href="{{ getSetting()->instagram }}" class="social-instagram">
+                                            <i class='bx bxl-instagram' ></i>
+                                        </a>
+                                    </li>
+                                @endif
+
+
+                                @if ( !empty(getSetting()->pinterest) )
+                                    <li>
+                                        <a href="{{ getSetting()->pinterest }}" class="social-pinterest">
+                                            <i class='bx bxl-pinterest-alt' ></i>
+                                        </a>
+                                    </li>
+                                @endif
+
+                                {{-- <li>
+                                    <a href="#" class="social-tiktok">
+                                        <i class='bx bxl-tiktok'></i>
+                                    </a>
+                                </li> --}}
                             </ul>
                         </div>
                     </div>
@@ -154,22 +222,22 @@
                     <div class="col-12">
                         <div class="footer-bottom-wrap">
                             <div class="left">
-                                <p class="text-caption-1">©2024 Modave. All Rights Reserved.</p>
+                                <p class="text-caption-1">©{{ date('Y') }} {{ getSetting()->site_name  }}. All Rights Reserved.</p>
                             </div>
 
                             <div class="tf-payment">
                                 <p class="text-caption-1">Payment:</p>
                                 <ul>
                                     <li>
-                                        <img src="{{ asset('public/frontend/images/payment/img-1.png') }}" alt="">
+                                        <img src="{{ asset('public/frontend/images/payment/bkash_bg.png') }}" alt="">
                                     </li>
                                     <li>
-                                        <img src="{{ asset('public/frontend/images/payment/img-2.png') }}" alt="">
+                                        <img src="{{ asset('public/frontend/images/payment/nagad.png') }}" alt="">
                                     </li>
                                     <li>
-                                        <img src="{{ asset('public/frontend/images/payment/img-3.png') }}" alt="">
+                                        <img src="{{ asset('public/frontend/images/payment/ssl_commerz.png') }}" alt="">
                                     </li>
-                                    <li>
+                                    {{-- <li>
                                         <img src="{{ asset('public/frontend/images/payment/img-4.png') }}" alt="">
                                     </li>
                                     <li>
@@ -177,7 +245,7 @@
                                     </li>
                                     <li>
                                         <img src="{{ asset('public/frontend/images/payment/img-6.png') }}" alt="">
-                                    </li>
+                                    </li> --}}
                                 </ul>
                             </div>
                         </div>

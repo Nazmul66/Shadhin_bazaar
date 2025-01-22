@@ -54,12 +54,11 @@
                             <input type="text" class="form-control"
                                 id="site_name"
                                 name="site_name"
-                                readonly
                                 placeholder="Write Here...."
                                 @if ( !empty( $setting ) )
                                     value="{{ $setting->site_name }}"
                                 @else
-                                   value="{{ env('APP_NAME')}}"
+                                   value="{{ old('site_name') }}"
                                 @endif
                                 >
                         </div>
