@@ -6,6 +6,7 @@ use App\Helper\MailHelper;
 use App\Http\Controllers\Controller;
 use App\Mail\SubscriptionVerification;
 use App\Models\NewsletterSubscriber;
+use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
@@ -32,9 +33,18 @@ class NewsletterController extends Controller
 
         $existSubscriber = NewsletterSubscriber::where('email', $request->email)->first();
 
-        if( !empty($existSubscriber) && count($existSubscriber) > 0 ){
+        if( !empty($existSubscriber) ){
             if($existSubscriber->is_verified == 0){
-                 
+                $existSubscriber->verified_token  = Str::random(25);
+                $existSubscriber->save();
+
+                // set mail config
+                MailHelper::setMailConfig();
+
+                // send email
+                Mail::to($existSubscriber->email)->send(new SubscriptionVerification($existSubscriber));
+                
+                return response(['status' => 'success', 'message' => 'A verification link send to your email please check.']);
             }
             elseif($existSubscriber->is_verified == 1){
                 return response(['status' => 'error', 'message' => 'you already subscribed with this email.']);
@@ -60,9 +70,21 @@ class NewsletterController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function newsletterEmailVerify(Request $request)
+    public function newsletterEmailVerify($token)
     {
-        //
+        $verify = NewsletterSubscriber::where('verified_token', $token)->first();
+        if( $verify ){
+            $verify->verified_token  = 'verify';
+            $verify->is_verified     = 1;
+            $verify->save();
+
+            Toastr::success('Email verification successfully.', 'Success', ["positionClass" => "toast-top-right"]);
+            return redirect()->route('home');
+        }
+        else{
+            Toastr::error('Invalid token', 'Error', ["positionClass" => "toast-top-right"]);
+            return redirect()->route('home');
+        }
     }
 
     /**

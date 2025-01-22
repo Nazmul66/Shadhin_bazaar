@@ -18046,3 +18046,20 @@ ul.list-text.type-number {
     padding: 4px 12px;
     border: 1px solid var(--main);
 }
+
+.spinners{
+    margin-left: auto;
+    animation: spin 1s linear infinite;
+}
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+.sib-form .sib-form-container .input {
+    font-size: 18px !important;
+    font-weight: 500 !important;
+}

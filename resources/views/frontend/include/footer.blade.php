@@ -118,7 +118,7 @@
                                                                     </label>
 
                                                                     <div class="entry__field">
-                                                                        <input class="input radius-60" type="text" id="EMAIL" name="email" autocomplete="off" placeholder="Enter your e-mail..." value="{{ old('email') }}" />
+                                                                        <input class="input radius-60 subscribe_input" type="text" id="EMAIL" name="email" autocomplete="off" placeholder="Enter your e-mail..." value="{{ old('email') }}" />
                                                                     </div>
                                                                 </div>
                                                                 <label class="entry__error entry__error--primary"></label>
@@ -130,7 +130,7 @@
 
                                                     <div>
                                                         <div class="sib-form-block">
-                                                            <button class="sib-form-block__button sib-form-block__button-with-loader subscribe-button radius-60" type="submit">
+                                                            <button class="sib-form-block__button sib-form-block__button-with-loader subscribe-button radius-60" type="submit" id="subscription_btn">
                                                                 <i class='bx bx-up-arrow-alt'></i>
                                                             </button>
                                                         </div>

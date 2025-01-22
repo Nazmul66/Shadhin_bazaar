@@ -426,11 +426,22 @@
                 method: 'POST',
                 url: "{{ route('newsletter.request') }}",
                 data: data, // Send form data, including the CSRF token
+                beforeSend: function(){
+                    $('#subscription_btn').html("<i class='bx bx-loader-alt'></i>");
+                    $('#subscription_btn').addClass('spinners');
+                },
                 success: function (data) {
                     if (data.status === 'success') {
                         toastr.success(data.message);
+                        $('#subscription_btn').html("<i class='bx bx-up-arrow-alt'></i>");
+                        $('#subscription_btn').removeClass('spinners');
+                        $('.subscribe_input').val('')
+
                     } else if (data.status === 'error') {
                         toastr.error(data.message);
+                        $('#subscription_btn').html("<i class='bx bx-up-arrow-alt'></i>");
+                        $('#subscription_btn').removeClass('spinners');
+                        $('.subscribe_input').val('');
                     }
                 },
                 error: function (data) {
@@ -438,6 +449,8 @@
                     let errors = data.responseJSON?.errors;
                     $.each(errors, function (key, value) {
                         toastr.error(value);
+                        $('#subscription_btn').html("<i class='bx bx-up-arrow-alt'></i>");
+                        $('#subscription_btn').removeClass('spinners');
                     });
                 }
             });
