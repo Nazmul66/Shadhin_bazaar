@@ -17,7 +17,7 @@
                 </li>
 
                 {{-- Customers List --}}
-                <li class="@yield('all_customer')">
+                <li class="">
                     <a href="{{ route('admin.customer.index') }}">
                         <i class='bx bx-user'></i>
                         <span >Customers</span>
@@ -25,7 +25,7 @@
                 </li>
 
                 {{-- Contact List --}}
-                <li class="@yield('all_customer')">
+                <li class="">
                     <a href="{{ route('admin.contact.index') }}">
                         <i class='bx bx-phone-call'></i>
                         <span >Contacts</span>
@@ -67,7 +67,6 @@
                         </li>
                     </ul>
                 </li>
-
 
                 {{-- E-commerce --}}
                 <li>
@@ -196,8 +195,8 @@
                     </ul>
                 </li>
                 
-                {{-- Manage Website --}}
-                <li>
+                {{-- Custom Pages --}}
+                <li class="@yield('custom_page')">
                     <a href="{{ route('admin.customPage.index') }}" >
                         <i class='bx bx-folder-open'></i>
                         <span >Custom Pages</span>

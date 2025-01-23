@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
 @endpush
 
+@section('custom_page', 'mm-active')
+
 @section('body-content')
 
     <!-- Breadcrumb -->
