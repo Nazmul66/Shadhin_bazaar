@@ -22,13 +22,13 @@
                         <a class="link" href="index.html">Homepage</a>
                     </li>
                     <li>
-                        <i class="icon-arrRight"></i>
+                        <i class='bx bx-chevron-right'></i>
                     </li>
                     <li>
-                        <a class="link" href="#">Pages</a>
+                        <a class="link" href="javascript:void();">Pages</a>
                     </li>
                     <li>
-                        <i class="icon-arrRight"></i>
+                        <i class='bx bx-chevron-right'></i>
                     </li>
                     <li>
                         Contact Us
@@ -201,5 +201,7 @@
         });
     });
 </script>
+
+    @include('frontend.include.full_ajax_cart')
 
 @endpush

@@ -2,6 +2,7 @@
 
   //__ Set Sidebar Item Active __// 
 
+use App\Models\AttributeValue;
 use App\Models\Setting;
 use Carbon\Carbon;
 use Gloudemans\Shoppingcart\Facades\Cart;
@@ -18,6 +19,13 @@ use Illuminate\Support\Facades\Session;
               }
           }
       }
+  }
+
+  function convertToSlug($string)
+  {
+      return collect(explode(' ', str_replace('_', ' ', $string)))
+          ->map(fn($word) => ucfirst(strtolower($word))) // Capitalize each word
+          ->join('-'); // Join with hyphens
   }
   
   if (!function_exists('getSetting')) {

@@ -22,13 +22,13 @@
                         <a class="link" href="index.html">Homepage</a>
                     </li>
                     <li>
-                        <i class="icon-arrRight"></i>
+                        <i class='bx bx-chevron-right'></i>
                     </li>
                     <li>
-                        <a class="link" href="#">Pages</a>
+                        <a class="link" href="javascript:void();">Pages</a>
                     </li>
                     <li>
-                        <i class="icon-arrRight"></i>
+                        <i class='bx bx-chevron-right'></i>
                     </li>
                     <li>
                         Customer Feedbacks
@@ -47,7 +47,7 @@
             <div class="testimonial-item style-4 wow fadeInUp" data-wow-delay="0s">
                 <div class="content-top">
                     <div class="box-icon">
-                        <i class="icon icon-quote"></i>
+                        <i class='bx bxs-quote-right'></i>
                     </div>
                     <div class="text-title">Variety of Styles!</div>
                     <p class="text-secondary">"Fantastic shop! Great selection, fair prices, and friendly staff. Highly recommended. The quality of the products is exceptional, and the prices are very reasonable!"</p>
@@ -56,11 +56,11 @@
                             <div class="text-title author">Sybil Sharp</div>
                         </div>
                         <div class="list-star-default color-primary">
-                            <i class="icon icon-star"></i>
-                            <i class="icon icon-star"></i>
-                            <i class="icon icon-star"></i>
-                            <i class="icon icon-star"></i>
-                            <i class="icon icon-star"></i>
+                           <i class='bx bxs-star icon'></i>
+                           <i class='bx bxs-star icon'></i>
+                           <i class='bx bxs-star icon'></i>
+                           <i class='bx bxs-star icon'></i>
+                           <i class='bx bxs-star icon'></i>
                         </div>
                     </div>
                 </div>
@@ -68,7 +68,7 @@
             <div class="testimonial-item style-4 wow fadeInUp" data-wow-delay="0.1s">
                 <div class="content-top">
                     <div class="box-icon">
-                        <i class="icon icon-quote"></i>
+                         <i class='bx bxs-quote-right'></i>
                     </div>
                     <div class="text-title">Quality of Clothing!</div>
                     <p class="text-secondary">"I absolutely love this shop! The products are high-quality and the customer service is excellent. I always leave with exactly what I need and a smile on my face."</p>
@@ -77,11 +77,11 @@
                             <div class="text-title author">Mark G.</div>
                         </div>
                         <div class="list-star-default color-primary">
-                            <i class="icon icon-star"></i>
-                            <i class="icon icon-star"></i>
-                            <i class="icon icon-star"></i>
-                            <i class="icon icon-star"></i>
-                            <i class="icon icon-star"></i>
+                           <i class='bx bxs-star icon'></i>
+                           <i class='bx bxs-star icon'></i>
+                           <i class='bx bxs-star icon'></i>
+                           <i class='bx bxs-star icon'></i>
+                           <i class='bx bxs-star icon'></i>
                         </div>
                     </div>
                 </div>
@@ -89,7 +89,7 @@
             <div class="testimonial-item style-4 wow fadeInUp" data-wow-delay="0.2s">
                 <div class="content-top">
                     <div class="box-icon">
-                        <i class="icon icon-quote"></i>
+                         <i class='bx bxs-quote-right'></i>
                     </div>
                     <div class="text-title">Customer Service!</div>
                     <p class="text-secondary">"I love this shop! The products are always top-quality, and the staff is incredibly friendly and helpful. They go out of their way to make sure that I'm satisfied with my purchase.”</p>
@@ -98,11 +98,11 @@
                             <div class="text-title author">Emily S.</div>
                         </div>
                         <div class="list-star-default color-primary">
-                            <i class="icon icon-star"></i>
-                            <i class="icon icon-star"></i>
-                            <i class="icon icon-star"></i>
-                            <i class="icon icon-star"></i>
-                            <i class="icon icon-star"></i>
+                           <i class='bx bxs-star icon'></i>
+                           <i class='bx bxs-star icon'></i>
+                           <i class='bx bxs-star icon'></i>
+                           <i class='bx bxs-star icon'></i>
+                           <i class='bx bxs-star icon'></i>
                         </div>
                     </div>
                 </div>
@@ -110,7 +110,7 @@
             <div class="testimonial-item style-4 wow fadeInUp" data-wow-delay="0s">
                 <div class="content-top">
                     <div class="box-icon">
-                        <i class="icon icon-quote"></i>
+                         <i class='bx bxs-quote-right'></i>
                     </div>
                     <div class="text-title">Variety of Styles!</div>
                     <p class="text-secondary">"Fantastic shop! Great selection, fair prices, and friendly staff. Highly recommended. The quality of the products is exceptional, and the prices are very reasonable!"</p>
@@ -119,11 +119,11 @@
                             <div class="text-title author">Sybil Sharp</div>
                         </div>
                         <div class="list-star-default color-primary">
-                            <i class="icon icon-star"></i>
-                            <i class="icon icon-star"></i>
-                            <i class="icon icon-star"></i>
-                            <i class="icon icon-star"></i>
-                            <i class="icon icon-star"></i>
+                           <i class='bx bxs-star icon'></i>
+                           <i class='bx bxs-star icon'></i>
+                           <i class='bx bxs-star icon'></i>
+                           <i class='bx bxs-star icon'></i>
+                           <i class='bx bxs-star icon'></i>
                         </div>
                     </div>
                 </div>
@@ -131,7 +131,7 @@
             <div class="testimonial-item style-4 wow fadeInUp" data-wow-delay="0.1s">
                 <div class="content-top">
                     <div class="box-icon">
-                        <i class="icon icon-quote"></i>
+                         <i class='bx bxs-quote-right'></i>
                     </div>
                     <div class="text-title">Variety of Styles!</div>
                     <p class="text-secondary">"Fantastic shop! Great selection, fair prices, and friendly staff. Highly recommended. The quality of the products is exceptional, and the prices are very reasonable!"</p>
@@ -140,11 +140,11 @@
                             <div class="text-title author">Sybil Sharp</div>
                         </div>
                         <div class="list-star-default color-primary">
-                            <i class="icon icon-star"></i>
-                            <i class="icon icon-star"></i>
-                            <i class="icon icon-star"></i>
-                            <i class="icon icon-star"></i>
-                            <i class="icon icon-star"></i>
+                           <i class='bx bxs-star icon'></i>
+                           <i class='bx bxs-star icon'></i>
+                           <i class='bx bxs-star icon'></i>
+                           <i class='bx bxs-star icon'></i>
+                           <i class='bx bxs-star icon'></i>
                         </div>
                     </div>
                 </div>
@@ -152,7 +152,7 @@
             <div class="testimonial-item style-4 wow fadeInUp" data-wow-delay="0.2s">
                 <div class="content-top">
                     <div class="box-icon">
-                        <i class="icon icon-quote"></i>
+                         <i class='bx bxs-quote-right'></i>
                     </div>
                     <div class="text-title">Quality of Clothing!</div>
                     <p class="text-secondary">"I absolutely love this shop! The products are high-quality and the customer service is excellent. I always leave with exactly what I need and a smile on my face."</p>
@@ -161,11 +161,11 @@
                             <div class="text-title author">Mark G.</div>
                         </div>
                         <div class="list-star-default color-primary">
-                            <i class="icon icon-star"></i>
-                            <i class="icon icon-star"></i>
-                            <i class="icon icon-star"></i>
-                            <i class="icon icon-star"></i>
-                            <i class="icon icon-star"></i>
+                           <i class='bx bxs-star icon'></i>
+                           <i class='bx bxs-star icon'></i>
+                           <i class='bx bxs-star icon'></i>
+                           <i class='bx bxs-star icon'></i>
+                           <i class='bx bxs-star icon'></i>
                         </div>
                     </div>
                 </div>
@@ -173,7 +173,7 @@
             <div class="testimonial-item style-4 wow fadeInUp" data-wow-delay="0s">
                 <div class="content-top">
                     <div class="box-icon">
-                        <i class="icon icon-quote"></i>
+                         <i class='bx bxs-quote-right'></i>
                     </div>
                     <div class="text-title">Customer Service!</div>
                     <p class="text-secondary">"I love this shop! The products are always top-quality, and the staff is incredibly friendly and helpful. They go out of their way to make sure that I'm satisfied with my purchase.”</p>
@@ -182,11 +182,11 @@
                             <div class="text-title author">Emily S.</div>
                         </div>
                         <div class="list-star-default color-primary">
-                            <i class="icon icon-star"></i>
-                            <i class="icon icon-star"></i>
-                            <i class="icon icon-star"></i>
-                            <i class="icon icon-star"></i>
-                            <i class="icon icon-star"></i>
+                           <i class='bx bxs-star icon'></i>
+                           <i class='bx bxs-star icon'></i>
+                           <i class='bx bxs-star icon'></i>
+                           <i class='bx bxs-star icon'></i>
+                           <i class='bx bxs-star icon'></i>
                         </div>
                     </div>
                 </div>
@@ -194,7 +194,7 @@
             <div class="testimonial-item style-4 wow fadeInUp" data-wow-delay="0.1s">
                 <div class="content-top">
                     <div class="box-icon">
-                        <i class="icon icon-quote"></i>
+                         <i class='bx bxs-quote-right'></i>
                     </div>
                     <div class="text-title">Variety of Styles!</div>
                     <p class="text-secondary">"Fantastic shop! Great selection, fair prices, and friendly staff. Highly recommended. The quality of the products is exceptional, and the prices are very reasonable!"</p>
@@ -203,11 +203,11 @@
                             <div class="text-title author">Sybil Sharp</div>
                         </div>
                         <div class="list-star-default color-primary">
-                            <i class="icon icon-star"></i>
-                            <i class="icon icon-star"></i>
-                            <i class="icon icon-star"></i>
-                            <i class="icon icon-star"></i>
-                            <i class="icon icon-star"></i>
+                           <i class='bx bxs-star icon'></i>
+                           <i class='bx bxs-star icon'></i>
+                           <i class='bx bxs-star icon'></i>
+                           <i class='bx bxs-star icon'></i>
+                           <i class='bx bxs-star icon'></i>
                         </div>
                     </div>
                 </div>
@@ -215,7 +215,7 @@
             <div class="testimonial-item style-4 wow fadeInUp" data-wow-delay="0.2s">
                 <div class="content-top">
                     <div class="box-icon">
-                        <i class="icon icon-quote"></i>
+                         <i class='bx bxs-quote-right'></i>
                     </div>
                     <div class="text-title">Variety of Styles!</div>
                     <p class="text-secondary">"Fantastic shop! Great selection, fair prices, and friendly staff. Highly recommended. The quality of the products is exceptional, and the prices are very reasonable!"</p>
@@ -224,11 +224,11 @@
                             <div class="text-title author">Sybil Sharp</div>
                         </div>
                         <div class="list-star-default color-primary">
-                            <i class="icon icon-star"></i>
-                            <i class="icon icon-star"></i>
-                            <i class="icon icon-star"></i>
-                            <i class="icon icon-star"></i>
-                            <i class="icon icon-star"></i>
+                           <i class='bx bxs-star icon'></i>
+                           <i class='bx bxs-star icon'></i>
+                           <i class='bx bxs-star icon'></i>
+                           <i class='bx bxs-star icon'></i>
+                           <i class='bx bxs-star icon'></i>
                         </div>
                     </div>
                 </div>
@@ -256,5 +256,5 @@
 
 
 @push('add-js')
-   
+    @include('frontend.include.full_ajax_cart')
 @endpush

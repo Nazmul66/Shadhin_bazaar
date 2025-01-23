@@ -157,6 +157,22 @@ class ProductController extends Controller
                     $query->where('products.selling_price', '>=', $request->start_price);
                     $query->where('products.selling_price', "<=", $request->end_price);
                 }
+                
+                // Filter by Color
+                if( !empty($request->color_id)){
+                    $color_id       = rtrim($request->color_id, ',');
+                    $color_id_array = explode(',', $color_id);
+                    $query->whereIn('products.brand_id', $color_id_array);
+                }
+
+                // Filter by Size
+                if( !empty($request->size_id)){
+                    $size_id       = rtrim($request->size_id, ',');
+                    $size_id_array = explode(',', $size_id);
+                    $query->join('product_sizes', 'product_sizes.product_id', 'products.id')
+                          ->whereIn('product_sizes.brand_id', $size_id_array);
+                    // $query->whereIn('products.brand_id', $size_id_array);
+                }
 
                 // Filter by brand
                 if( !empty($request->brand_id)){

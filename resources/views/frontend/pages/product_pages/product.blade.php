@@ -27,7 +27,7 @@
                 </h3>
                 <ul class="breadcrumbs d-flex align-items-center justify-content-center">
                     <li>
-                        <a class="link" href="index.html">Homepage</a>
+                        <a class="link" href="{{ route('home') }}">Homepage</a>
                     </li>
                     <li>
                         <i class='bx bx-chevron-right'></i>

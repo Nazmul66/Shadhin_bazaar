@@ -38,7 +38,7 @@
         </div>
 
         <div class="card-body">
-            <form action="{{ route('admin.product.images.store', $id) }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('admin.product.images.store', $product_id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method("PUT")
 
@@ -71,7 +71,7 @@
             </form>
 
             {{-- All Product Size And Product Color --}}
-            <form action="{{ route('admin.product-variant.update', $id) }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('admin.product-variant.update', $product_id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method("PUT")
 
@@ -91,10 +91,11 @@
                                     </tr>
                                 </thead>
     
-                                <tbody class="table-border-bottom-0 table_extend">
+                                <tbody class="table-border-bottom-0 size_table_extend">
                                     @foreach ($productSizes as $row => $item)
-                                        <tr data-value={{ $row }}>
+                                        <tr data-value={{ $item->size_name }}>
                                             <td>
+                                                <input type="hidden" class="form-control" value="{{ $item->size_id }}" name="size_id[]">
                                                 <input type="text" class="form-control" value="{{ $item->size_name }}" name="size_name[]" readonly required>
                                             </td>
                                             <td>
@@ -104,7 +105,7 @@
                                                 <input type="number" value="{{ $item->stock }}" min="0" class="form-control" name="stock[]" required>
                                             </td>
                                             <td>
-                                                <a href="{{ route('admin.product-size.delete', $item->id) }}" type="submit" class="btn btn-danger">Remove</a>
+                                                <a href="{{ route('admin.product-size.delete', $item->id) }}" type="submit" class="btn btn-danger size_delete">Remove</a>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -116,7 +117,7 @@
                                             <select class="form-select" id="product_size">
                                                 <option value="" disabled selected>Select Product Size</option>
                                                 @foreach ($size_value as $item)
-                                                    <option value="{{ $item->value }}">{{ $item->value }}</option>
+                                                    <option value="{{ $item->value }}" data-id="{{ $item->id }}">{{ $item->value }}</option>
                                                 @endforeach
                                             </select>
                                         </th>
@@ -143,18 +144,19 @@
 
                                 <tbody class="table-border-bottom-0 color_table_extend">
                                     @foreach ($productColors as $row => $item)
-                                        <tr data-value="{{ $row }}">
+                                        <tr data-value="{{ $item->color_name }}">
                                             <td>
+                                                <input type="hidden" class="form-control" value="{{ $item->color_id }}" name="color_id[]">
                                                 <input type="text" class="form-control" value="{{ $item->color_name }}" name="color_name[]" readonly required>
                                             </td>
                                             <td>
                                                 <input type="text" class="form-control" value="{{ $item->color_code }}" name="color_code[]" readonly required>
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control" value="{{ $item->color_price }}" name="color_price[]" required>
+                                                <input type="number" class="form-control" value="{{ $item->color_price }}" name="color_price[]" required>
                                             </td>
                                             <td>
-                                                <a href="{{ route('admin.product-color.delete', $item->id) }}" class="btn btn-danger">Remove</a>
+                                                <a href="{{ route('admin.product-color.delete', $item->id) }}" class="btn btn-danger color_delete">Remove</a>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -166,7 +168,7 @@
                                             <select class="form-select" id="product_color">
                                                 <option value="" disabled selected>Select Product Color</option>
                                                 @foreach ($color_value as $item)
-                                                    <option value="{{ $item->value }}"  data-color-code="{{ $item->color_value }}">{{ $item->value }}</option>
+                                                    <option value="{{ $item->value }}" data-id="{{ $item->id }}" data-color-code="{{ $item->color_value }}">{{ $item->value }}</option>
                                                 @endforeach
                                             </select>
                                         </th>
@@ -195,7 +197,7 @@
 $(document).ready(function() {
 
     // Image Sortable System
-    $( "#sortable" ).sortable({
+    $("#sortable").sortable({
         update : function(event, ui){
             var photo_id = [];
            $('.image_sortable').each(function(){
@@ -272,181 +274,188 @@ $(document).ready(function() {
             })
     });
 
-    // Disable already selected sizes on page load
-    @foreach($productSizes as $item)
-        var selectedSize = "{{ $item->size_name }}";
-        var option = $('#product_size').find('option[value="' + selectedSize + '"]');
-        option.prop('disabled', true);  // Disable the option in Select2
-    @endforeach
-
-    // Initialize Select2 plugin
-    $('#product_size').select2();
-
-    // When a new value is selected
-    $('#product_size').on('select2:select', function (e) {
-        var selectedValue = e.params.data.id; // Get the selected value (ID)
-
-        // Disable the selected option in the dropdown
-        var option = $('#product_size').find('option[value="' + selectedValue + '"]');
-        option.prop('disabled', true);
-
-        // Trigger the Select2 to refresh the dropdown options
-        $('#product_size').select2();
-
-        // Append the new size row to the table
-        $('.table_extend').append(`
-            <tr data-value="${selectedValue}">
-                <td>
-                    <input type="text" class="form-control" value="${selectedValue}" name="size_name[]" readonly required>
-                </td>
-                <td>
-                    <input type="number" min="0" value="0" class="form-control" name="size_price[]" required>
-                </td>
-                <td>
-                    <input type="number" min="0" value="0" class="form-control" name="stock[]" required>
-                </td>
-                <td>
-                    <button type="button" class="btn btn-danger">Remove</button>
-                </td>
-            </tr>
-        `);
-
-        // Reset the select dropdown after a value is appended
-        $('#product_size').val('').trigger('change');
-    });
-
-    // Handle removal of a row and re-enable the option
-    $(document).on('click', '.btn-danger', function() {
-        var row = $(this).closest('tr');  // Find the closest row (tr)
-        var removedValue = row.data('value'); // Get the value from the row
-
-        // Re-enable the option in the select dropdown
-        var option = $('#product_size').find('option[value="' + removedValue + '"]');
-        option.prop('disabled', false);
-
-        // Refresh the select2 dropdown to reflect the changes
-        $('#product_size').select2();
-
-        // Remove the row from the table
-        row.remove();
-    });
 });
 </script>
 
 
+{{-- Multiple Size Choose Dropdown --}}
+<script>   
+    $(document).ready(function() {
+        // Disable already selected sizes on page load
+        @foreach ($productSizes as $item)
+            var selectedSize = "{{ $item->size_name }}";
+            var option = $('#product_size').find('option[value="'+ selectedSize +'"]');
+            option.prop('disabled', true);
+        @endforeach
+
+        // Initialize Select2 plugin
+        $('#product_size').select2();
+     
+        // When a new value is selected
+        $('#product_size').on('select2:select', function (e) {
+            var selectedValue = e.params.data.id; // Get the selected value (ID)
+            var selectSizeId = $('#product_size').find('option[value="' + selectedValue + '"]').data('id');
+
+            // Disable the selected option in the dropdown
+            var option = $('#product_size').find('option[value="' + selectedValue + '"]');
+            option.prop('disabled', true);
+
+            // Trigger the Select2 to refresh the dropdown options
+            $('#product_size').select2();
+
+            // Append the new size row to the table
+            $('.size_table_extend').append(`
+                <tr data-value="${selectedValue}">
+                    <td>
+                        <input type="hidden" class="form-control" value="${selectSizeId}" name="size_id[]">
+                        <input type="text" class="form-control" value="${selectedValue}" name="size_name[]" readonly required>
+                    </td>
+                    <td>
+                        <input type="number" min="0" value="0" class="form-control" name="size_price[]" required>
+                    </td>
+                    <td>
+                        <input type="number" min="0" value="0" class="form-control" name="stock[]" required>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-danger size_delete">Remove</button>
+                    </td>
+                </tr>
+            `);
+
+            // Reset the select dropdown after a value is appended
+            $('#product_size').val('').trigger('change');
+        })
+
+
+        // Handle removal of a row and re-enable the option
+        $(document).on('click', '.size_delete', function() {
+            var row = $(this).closest('tr');  // Find the closest row (tr)
+            var removedValue = row.data('value'); // Get the value from the row
+
+            // Re-enable the option in the select dropdown
+            var option = $('#product_size').find('option[value="' + removedValue + '"]');
+            option.prop('disabled', false);
+
+            // Refresh the select2 dropdown to reflect the changes
+            $('#product_size').select2();
+
+            // Remove the row from the table
+            row.remove();
+        });
+    });
+</script>
+
+
+{{-- Multiple Color Choose Dropdown --}}
 <script>
-$(document).ready(function() {
-    // Disable already selected colors on page load
-    @foreach($productColors as $item)
+    $(document).ready(function () {
+        // Disable already selected colors on page load
+        @foreach($productColors as $item)
         var selectedColor = "{{ $item->color_name }}";
-        var selectedColorCode = "{{ $item->color_code }}";
-        var optionColor = $('#product_color').find('option[value="' + selectedColor + '"]');
-        optionColor.prop('disabled', true);  // Disable the option in Select2
-        var optionColorCode = $('#product_color').find('option[value="' + selectedColorCode + '"]');
-        optionColorCode.prop('disabled', true);  // Disable the option in Select2
-    @endforeach
+        var option = $('#product_color').find('option[value="' + selectedColor + '"]');
+        option.prop('disabled', true);
+        @endforeach
 
-    // Initialize Select2 plugin for color dropdown
-    $('#product_color').select2();
-
-    // When a new value is selected in product color
-    $('#product_color').on('select2:select', function (e) {
-        var selectedColorValue = e.params.data.id; // Get the selected value (ID)
-
-        // Get the corresponding color_code for the selected color_name
-        var selectedColorCode = $('#product_color').find('option[value="' + selectedColorValue + '"]').data('color-code');
-
-        // Disable the selected option in the dropdown
-        var optionColor = $('#product_color').find('option[value="' + selectedColorValue + '"]');
-        optionColor.prop('disabled', true);
-
-        // Trigger the Select2 to refresh the dropdown options
+        // Initialize Select2 plugin for the color dropdown
         $('#product_color').select2();
 
-        // Append the new color row to the table with editable color_code and color_name
-        $('.color_table_extend').append(`
-            <tr data-value="${selectedColorValue}">
-                <td>
-                    <input type="text" class="form-control" value="${selectedColorValue}" name="color_name[]" readonly>
-                </td>
-                <td>
-                    <input type="text" class="form-control" value="${selectedColorCode}" name="color_code[]" readonly required> 
-                </td>
-                <td>
-                    <input type="text" class="form-control" value="0" name="color_price[]" required>
-                </td>
-                <td>
-                    <button type="button" class="btn btn-danger">Remove</button>
-                </td>
-            </tr>
-        `);
+        // When a new value is selected in product color
+        $('#product_color').on('select2:select', function (e) {
+            var selectedColorValue = e.params.data.id;
 
-        // Reset the select dropdown after a value is appended
-        $('#product_color').val('').trigger('change');
+            var selectedColorCode = $('#product_color').find('option[value="' + selectedColorValue + '"]').data('color-code');
+            var selectedColorID = $('#product_color').find('option[value="' + selectedColorValue + '"]').data('id');
+
+            // Disable the selected option in the dropdown
+            var optionColor  = $('#product_color').find('option[value="' + selectedColorValue + '"]');
+            optionColor.prop('disabled', true);
+
+            // Trigger Select2 to refresh the dropdown options
+            $('#product_color').select2();
+
+            // Append the new color row to the table with color_id, color_name, and color_code
+            $('.color_table_extend').append(`
+                <tr data-value="${selectedColorValue}">
+                    <td>
+                        <input type="hidden" class="form-control" readonly value="${selectedColorID}" name="color_id[]">
+                        <input type="text" class="form-control" value="${selectedColorValue}" name="color_name[]" readonly required>
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" value="${selectedColorCode}" name="color_code[]" readonly required>
+                    </td>
+                    <td>
+                        <input type="number" class="form-control" name="color_price[]" value="0" required>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-danger color_delete">Remove</button>
+                    </td>
+                </tr>
+            `);
+
+            $('#product_color').val('').trigger('change');
+        });
+
+
+        // Handle removal of a row and re-enable the option in product color
+        $(document).on('click', '.color_delete', function () {
+            var row = $(this).closest('tr');
+            var removedValue = row.data('value');
+
+            // Re-enable the option in the select dropdown
+            var option = $('#product_color').find('option[value="' + removedValue + '"]')
+            option.prop('disabled', false);
+
+            // Refresh the select2 dropdown to reflect the changes
+            $('#product_color').select2();
+
+            // Remove the row from the table
+            row.remove();
+        });
     });
-
-    // Handle removal of a row and re-enable the option in product color
-    $(document).on('click', '.btn-danger', function() {
-        var row = $(this).closest('tr');  // Find the closest row (tr)
-        var removedColorValue = row.data('value'); // Get the value from the row
-
-        // Re-enable the option in the select dropdown
-        var optionColor = $('#product_color').find('option[value="' + removedColorValue + '"]');
-        optionColor.prop('disabled', false);
-
-        // Refresh the select2 dropdown to reflect the changes
-        $('#product_color').select2();
-
-        // Remove the row from the table
-        row.remove();
-    });
-});
-
 </script>
 
 
  {{-- Realtime image show when multiple select --}}
 <script>
-let selectedFiles = []; // Array to track selected files
+    let selectedFiles = []; // Array to track selected files
 
-document.getElementById('fileUploader').addEventListener('change', function (event) {
-    const previewContainer = document.getElementById('previewContainer');
-    const files = Array.from(event.target.files);
+    document.getElementById('fileUploader').addEventListener('change', function (event) {
+        const previewContainer = document.getElementById('previewContainer');
+        const files = Array.from(event.target.files);
 
-    // Add new files to the `selectedFiles` array
-    selectedFiles.push(...files);
+        // Add new files to the `selectedFiles` array
+        selectedFiles.push(...files);
 
-    // Clear the preview container and re-render previews
-    renderPreviews(previewContainer);
-});
-
-function renderPreviews(previewContainer) {
-    previewContainer.innerHTML = ''; // Clear existing previews
-
-    selectedFiles.forEach((file, index) => {
-        const reader = new FileReader();
-        reader.onload = function (e) {
-            const preview = document.createElement('div');
-            preview.className = 'preview';
-            preview.innerHTML = `
-                <img src="${e.target.result}" alt="Preview Image">
-                <button class="delete-btn" data-index="${index}">&times;</button>
-            `;
-            previewContainer.appendChild(preview);
-
-            // Handle delete button
-            preview.querySelector('.delete-btn').addEventListener('click', function () {
-                // Remove the file from the `selectedFiles` array
-                selectedFiles.splice(index, 1);
-
-                // Re-render the previews
-                renderPreviews(previewContainer);
-            });
-        };
-        reader.readAsDataURL(file);
+        // Clear the preview container and re-render previews
+        renderPreviews(previewContainer);
     });
-}
 
+    function renderPreviews(previewContainer) {
+        previewContainer.innerHTML = ''; // Clear existing previews
+
+        selectedFiles.forEach((file, index) => {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const preview = document.createElement('div');
+                preview.className = 'preview';
+                preview.innerHTML = `
+                    <img src="${e.target.result}" alt="Preview Image">
+                    <button class="delete-btn" data-index="${index}">&times;</button>
+                `;
+                previewContainer.appendChild(preview);
+
+                // Handle delete button
+                preview.querySelector('.delete-btn').addEventListener('click', function () {
+                    // Remove the file from the `selectedFiles` array
+                    selectedFiles.splice(index, 1);
+
+                    // Re-render the previews
+                    renderPreviews(previewContainer);
+                });
+            };
+            reader.readAsDataURL(file);
+        });
+    }
 </script>
 
 @endpush

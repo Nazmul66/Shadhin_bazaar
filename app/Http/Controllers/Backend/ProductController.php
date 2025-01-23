@@ -389,15 +389,15 @@ class ProductController extends Controller
     }
 
 
-    public function product_variant($id)
+    public function product_variant($product_id)
     {
         // Product Color
-        $data['id']               = $id;
-        $data['size_value']       = AttributeValue::where('attribute', "size")->get();
-        $data['color_value']      = AttributeValue::where('attribute', "color")->get();
-        $data['productImages']    = ProductImage::where('product_id', $id)->orderBy('order_id', 'asc')->get();
-        $data['productSizes']     = ProductSize::where('product_id', $id)->get();
-        $data['productColors']    = ProductColor::where('product_id', $id)->get();
+        $data['product_id']       = $product_id;
+        $data['size_value']       = AttributeValue::where('attribute', "size")->where('status', 1)->get();
+        $data['color_value']      = AttributeValue::where('attribute', "color")->where('status', 1)->get();
+        $data['productImages']    = ProductImage::where('product_id', $product_id)->orderBy('order_id', 'asc')->get();
+        $data['productSizes']     = ProductSize::where('product_id', $product_id)->get();
+        $data['productColors']    = ProductColor::where('product_id', $product_id)->get();
 
         return view('backend.pages.products.product_variant', $data);
     }
@@ -407,44 +407,47 @@ class ProductController extends Controller
     {
         // dd($request->all());
 
-        // Delete existing product size for the product ID
-        ProductSize::where('product_id', $id)->delete();
-
-        // Handle Product Sizes
+        // Handle Product sizes
         if ($request->has('size_name') && $request->has('size_price')) {
             foreach ($request->size_name as $index => $sizeName) {
-
                 if (!empty($sizeName)) {
-                    $productSize = new ProductSize(); // Assuming ProductSize model exists
-
-                    $productSize->product_id = $id;
-                    $productSize->size_name  = $sizeName;
-                    $productSize->size_price = $request->size_price[$index]; // Match price with size name
-                    $productSize->stock      = $request->stock[$index]; // Match price with size name
-                    $productSize->save();
+                    // Find existing ProductSize by size_id, or create a new one
+                    ProductSize::updateOrCreate(
+                        [
+                            'product_id' => $id, 
+                            'size_id' => $request->size_id[$index] // Match on product_id and size_id
+                        ],
+                        [
+                            'size_name' => $sizeName, // Update or set size_name
+                            'size_price' => $request->size_price[$index], // Update or set size_price
+                            'stock' => $request->stock[$index] // Update or set stock
+                        ]
+                    );
                 }
             }
         }
 
-
-        // Delete existing product colors for the product ID
-        ProductColor::where('product_id', $id)->delete();  
 
         // Handle Product Colors
         if ($request->has('color_name')) {
             foreach ($request->color_name as $row => $colorName) {
-
                 if (!empty($colorName)) {
-                    $productColor = new ProductColor(); // Assuming ProductColor model exists
-
-                    $productColor->product_id     = $id;
-                    $productColor->color_name     = $colorName;
-                    $productColor->color_price    = $request->color_price[$row];
-                    $productColor->color_code     = $request->color_code[$row];
-                    $productColor->save();
+                    // Find existing ProductColor by color_id, or create a new one
+                    $productColor = ProductColor::updateOrCreate(
+                        [
+                            'product_id' => $id, 
+                            'color_id' => $request->color_id[$row] // Match on product_id and color_id
+                        ],
+                        [
+                            'color_name' => $colorName, // Update or set color_name
+                            'color_price' => $request->color_price[$row], // Update or set color_price
+                            'color_code' => $request->color_code[$row] // Update or set color_code
+                        ]
+                    );
                 }
             }
         }
+
 
         Toastr::success('Product variation successfully updated', 'Success', ["positionClass" => "toast-top-right"]);
        return redirect()->back();
@@ -472,6 +475,7 @@ class ProductController extends Controller
         Toastr::success('Product image successfully updated', 'Success', ["positionClass" => "toast-top-right"]);
         return redirect()->back();
     }
+
     public function product_images_sortable(Request $request)
     {
         //  dd($request->photo_id);

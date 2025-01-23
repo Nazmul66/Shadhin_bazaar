@@ -390,4 +390,5 @@
     <!-- simplyCountdown js-->
     <script src="{{ asset('public/frontend/js/simplyCountdown.js') }}"></script>
 
+    @include('frontend.include.full_ajax_cart')
 @endpush

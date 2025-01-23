@@ -76,5 +76,6 @@
 
 @push('add-js')
 
+    @include('frontend.include.full_ajax_cart')
 
 @endpush

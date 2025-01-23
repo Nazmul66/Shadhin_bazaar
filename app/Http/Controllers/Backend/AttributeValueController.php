@@ -57,7 +57,6 @@ class AttributeValueController extends Controller
                     </a>';
                 }
             })
-
             ->addColumn('action', function ($attrName) {
                 return '
                 <div class="btn-group">
@@ -79,7 +78,6 @@ class AttributeValueController extends Controller
                     </div>
                 </div>';
             })
-
             ->rawColumns(['attribute', 'color_value', 'value', 'status', 'action'])
             ->make(true);
     }
@@ -131,9 +129,8 @@ class AttributeValueController extends Controller
             else{
                 $attributeValue->color_value	    = null;
             }
-            $attributeValue->value          	    = Str::title($request->value);
+            $attributeValue->value          	    = convertToSlug($request->value);
             $attributeValue->status                 = 1;
-
             // dd($attributeValue);
             $attributeValue->save();
         }
@@ -184,8 +181,7 @@ class AttributeValueController extends Controller
             else{
                 $attributeValue->color_value	    = null;
             }
-            $attributeValue->value          	    = Str::title($request->value);
-
+            $attributeValue->value          	    = convertToSlug($request->value);
             // dd($attributeValue);
             $attributeValue->save();
         }

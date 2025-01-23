@@ -1509,7 +1509,7 @@
 </section>
 <!-- /Iconbox -->
 
-<!-- Partner -->
+<!-- Brands -->
 <section class="flat-spacing-5 line-top">
     <div dir="ltr" class="swiper tf-sw-partner sw-auto" data-preview="auto" data-tablet="auto" data-mobile-sm="auto" data-mobile="auto" data-space-lg="74" data-space-md="50" data-space="50" data-loop="true" data-auto-play="true" data-delay="0">
         <div class="swiper-wrapper">
@@ -1523,7 +1523,7 @@
         </div>
     </div>
 </section>
-<!-- /Partner -->
+<!-- /Brands -->
 
 @endsection
 
