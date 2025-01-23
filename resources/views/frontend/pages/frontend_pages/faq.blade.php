@@ -19,16 +19,16 @@
                 <h3 class="heading text-center">FAQs</h3>
                 <ul class="breadcrumbs d-flex align-items-center justify-content-center">
                     <li>
-                        <a class="link" href="index.html">Homepage</a>
+                        <a class="link" href="{{ route('home') }}">Homepage</a>
                     </li>
                     <li>
-                        <i class="icon-arrRight"></i>
+                        <i class='bx bx-chevron-right'></i>
                     </li>
                     <li>
-                        <a class="link" href="#">Pages</a>
+                        <a class="link" href="">Pages</a>
                     </li>
                     <li>
-                        <i class="icon-arrRight"></i>
+                        <i class='bx bx-chevron-right'></i>
                     </li>
                     <li>
                         FAQs
@@ -43,247 +43,28 @@
 <!-- FAQs -->
 <section class="flat-spacing">
     <div class="container">
-        <div class="page-faqs-wrap">
-            <div class="list-faqs">
-                <div>
-                    <h5 class="faqs-title">How To Buy</h5>
-                    <ul class="accordion-product-wrap style-faqs" id="accordion-faq-1">
-                        <li class="accordion-product-item">
-                            <a href="#accordion-1" class="accordion-title collapsed current" data-bs-toggle="collapse" aria-expanded="true" aria-controls="accordion-1">
-                                <h6>How does COVID-19 affect my online orders and store purchases?</h6>
-                                <span class="btn-open-sub"></span>
-                            </a>
-                            <div id="accordion-1" class="collapse" data-bs-parent="#accordion-faq-1">
-                                <div class="accordion-faqs-content">
-                                    <p class="text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries. We remind you that you
-                                        can still find us at Mango.com and on all our online channels. Our customer services are still there for you, to answer any questions you may have, although due to the current situation, we are operating
-                                        with longer waiting times.</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="accordion-product-item">
-                            <a href="#accordion-2" class="accordion-title current" data-bs-toggle="collapse" aria-expanded="true" aria-controls="accordion-2">
-                                <h6>I have a promotional or discount code. How do I use it for an online purchase?</h6>
-                                <span class="btn-open-sub"></span>
-                            </a>
-                            <div id="accordion-2" class="collapse show" data-bs-parent="#accordion-faq-1">
-                                <div class="accordion-faqs-content">
-                                    <p class="text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries. We remind you that you
-                                        can still find us at Mango.com and on all our online channels. Our customer services are still there for you, to answer any questions you may have, although due to the current situation, we are operating
-                                        with longer waiting times.</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="accordion-product-item">
-                            <a href="#accordion-3" class="accordion-title collapsed current" data-bs-toggle="collapse" aria-expanded="true" aria-controls="accordion-3">
-                                <h6>NEW! Plus sizes for Woman</h6>
-                                <span class="btn-open-sub"></span>
-                            </a>
-                            <div id="accordion-3" class="collapse" data-bs-parent="#accordion-faq-1">
-                                <div class="accordion-faqs-content">
-                                    <p class="text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries. We remind you that you
-                                        can still find us at Mango.com and on all our online channels. Our customer services are still there for you, to answer any questions you may have, although due to the current situation, we are operating
-                                        with longer waiting times.</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="accordion-product-item">
-                            <a href="#accordion-4" class="accordion-title collapsed current" data-bs-toggle="collapse" aria-expanded="true" aria-controls="accordion-4">
-                                <h6>Where is my order?</h6>
-                                <span class="btn-open-sub"></span>
-                            </a>
-                            <div id="accordion-4" class="collapse" data-bs-parent="#accordion-faq-1">
-                                <div class="accordion-faqs-content">
-                                    <p class="text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries. We remind you that you
-                                        can still find us at Mango.com and on all our online channels. Our customer services are still there for you, to answer any questions you may have, although due to the current situation, we are operating
-                                        with longer waiting times.</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="accordion-product-item">
-                            <a href="#accordion-5" class="accordion-title collapsed current" data-bs-toggle="collapse" aria-expanded="true" aria-controls="accordion-5">
-                                <h6>How can I exchange or return an item purchased online?</h6>
-                                <span class="btn-open-sub"></span>
-                            </a>
-                            <div id="accordion-5" class="collapse" data-bs-parent="#accordion-faq-1">
-                                <div class="accordion-faqs-content">
-                                    <p class="text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries. We remind you that you
-                                        can still find us at Mango.com and on all our online channels. Our customer services are still there for you, to answer any questions you may have, although due to the current situation, we are operating
-                                        with longer waiting times.</p>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <div>
-                    <h5 class="faqs-title">Exchanges & Returns</h5>
-                    <ul class="accordion-product-wrap style-faqs" id="accordion-faq-2">
-                        <li class="accordion-product-item">
-                            <a href="#accordion-6" class="accordion-title collapsed current" data-bs-toggle="collapse" aria-expanded="true" aria-controls="accordion-6">
-                                <h6>Can I cancel or change my order?</h6>
-                                <span class="btn-open-sub"></span>
-                            </a>
-                            <div id="accordion-6" class="collapse" data-bs-parent="#accordion-faq-2">
-                                <div class="accordion-faqs-content">
-                                    <p class="text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries. We remind you that you
-                                        can still find us at Mango.com and on all our online channels. Our customer services are still there for you, to answer any questions you may have, although due to the current situation, we are operating
-                                        with longer waiting times.</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="accordion-product-item">
-                            <a href="#accordion-7" class="accordion-title current" data-bs-toggle="collapse" aria-expanded="true" aria-controls="accordion-7">
-                                <h6>I have a promotional or discount code. How do I use it for an online purchase?</h6>
-                                <span class="btn-open-sub"></span>
-                            </a>
-                            <div id="accordion-7" class="collapse show" data-bs-parent="#accordion-faq-2">
-                                <div class="accordion-faqs-content">
-                                    <p class="text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries. We remind you that you
-                                        can still find us at Mango.com and on all our online channels. Our customer services are still there for you, to answer any questions you may have, although due to the current situation, we are operating
-                                        with longer waiting times.</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="accordion-product-item">
-                            <a href="#accordion-8" class="accordion-title collapsed current" data-bs-toggle="collapse" aria-expanded="true" aria-controls="accordion-8">
-                                <h6>What are the delivery types?</h6>
-                                <span class="btn-open-sub"></span>
-                            </a>
-                            <div id="accordion-8" class="collapse" data-bs-parent="#accordion-faq-2">
-                                <div class="accordion-faqs-content">
-                                    <p class="text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries. We remind you that you
-                                        can still find us at Mango.com and on all our online channels. Our customer services are still there for you, to answer any questions you may have, although due to the current situation, we are operating
-                                        with longer waiting times.</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="accordion-product-item">
-                            <a href="#accordion-9" class="accordion-title collapsed current" data-bs-toggle="collapse" aria-expanded="true" aria-controls="accordion-9">
-                                <h6>How can I pay for my purchases?</h6>
-                                <span class="btn-open-sub"></span>
-                            </a>
-                            <div id="accordion-9" class="collapse" data-bs-parent="#accordion-faq-2">
-                                <div class="accordion-faqs-content">
-                                    <p class="text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries. We remind you that you
-                                        can still find us at Mango.com and on all our online channels. Our customer services are still there for you, to answer any questions you may have, although due to the current situation, we are operating
-                                        with longer waiting times.</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="accordion-product-item">
-                            <a href="#accordion-10" class="accordion-title collapsed current" data-bs-toggle="collapse" aria-expanded="true" aria-controls="accordion-10">
-                                <h6>Can I save an item I like?</h6>
-                                <span class="btn-open-sub"></span>
-                            </a>
-                            <div id="accordion-10" class="collapse" data-bs-parent="#accordion-faq-2">
-                                <div class="accordion-faqs-content">
-                                    <p class="text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries. We remind you that you
-                                        can still find us at Mango.com and on all our online channels. Our customer services are still there for you, to answer any questions you may have, although due to the current situation, we are operating
-                                        with longer waiting times.</p>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <div>
-                    <h5 class="faqs-title">Refund Questions</h5>
-                    <ul class="accordion-product-wrap style-faqs" id="accordion-faq-3">
-                        <li class="accordion-product-item">
-                            <a href="#accordion-11" class="accordion-title collapsed current" data-bs-toggle="collapse" aria-expanded="true" aria-controls="accordion-11">
-                                <h6>I cannot find my size or the colour I like. What should I do?</h6>
-                                <span class="btn-open-sub"></span>
-                            </a>
-                            <div id="accordion-11" class="collapse" data-bs-parent="#accordion-faq-3">
-                                <div class="accordion-faqs-content">
-                                    <p class="text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries. We remind you that you
-                                        can still find us at Mango.com and on all our online channels. Our customer services are still there for you, to answer any questions you may have, although due to the current situation, we are operating
-                                        with longer waiting times.</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="accordion-product-item">
-                            <a href="#accordion-12" class="accordion-title current" data-bs-toggle="collapse" aria-expanded="true" aria-controls="accordion-12">
-                                <h6>I have not received all the items in my order. What should I do?</h6>
-                                <span class="btn-open-sub"></span>
-                            </a>
-                            <div id="accordion-12" class="collapse show" data-bs-parent="#accordion-faq-2">
-                                <div class="accordion-faqs-content">
-                                    <p class="text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries. We remind you that you
-                                        can still find us at Mango.com and on all our online channels. Our customer services are still there for you, to answer any questions you may have, although due to the current situation, we are operating
-                                        with longer waiting times.</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="accordion-product-item">
-                            <a href="#accordion-13" class="accordion-title collapsed current" data-bs-toggle="collapse" aria-expanded="true" aria-controls="accordion-13">
-                                <h6>The items received are incorrect or are defective. What should I do?</h6>
-                                <span class="btn-open-sub"></span>
-                            </a>
-                            <div id="accordion-13" class="collapse" data-bs-parent="#accordion-faq-2">
-                                <div class="accordion-faqs-content">
-                                    <p class="text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries. We remind you that you
-                                        can still find us at Mango.com and on all our online channels. Our customer services are still there for you, to answer any questions you may have, although due to the current situation, we are operating
-                                        with longer waiting times.</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="accordion-product-item">
-                            <a href="#accordion-14" class="accordion-title collapsed current" data-bs-toggle="collapse" aria-expanded="true" aria-controls="accordion-14">
-                                <h6>Are the items included in the shopping basket reserved automatically?</h6>
-                                <span class="btn-open-sub"></span>
-                            </a>
-                            <div id="accordion-14" class="collapse" data-bs-parent="#accordion-faq-2">
-                                <div class="accordion-faqs-content">
-                                    <p class="text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries. We remind you that you
-                                        can still find us at Mango.com and on all our online channels. Our customer services are still there for you, to answer any questions you may have, although due to the current situation, we are operating
-                                        with longer waiting times.</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="accordion-product-item">
-                            <a href="#accordion-15" class="accordion-title collapsed current" data-bs-toggle="collapse" aria-expanded="true" aria-controls="accordion-15">
-                                <h6>In which countries can I shop online?</h6>
-                                <span class="btn-open-sub"></span>
-                            </a>
-                            <div id="accordion-15" class="collapse" data-bs-parent="#accordion-faq-2">
-                                <div class="accordion-faqs-content">
-                                    <p class="text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries. We remind you that you
-                                        can still find us at Mango.com and on all our online channels. Our customer services are still there for you, to answer any questions you may have, although due to the current situation, we are operating
-                                        with longer waiting times.</p>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="ask-question sticky-top">
-                <div class="ask-question-wrap">
-                    <h5 class="mb_4">Ask Your Question</h5>
-                    <p class="mb_20 text-secondary">Ask Anything, We're Here to Help</p>
-                    <form class="form-leave-comment">
-                        <fieldset class="mb_20">
-                            <div class="text-caption-1 mb_8">Name</div>
-                            <input class="" type="text" placeholder="Your Name*" name="text" tabindex="2" value="" aria-required="true" required="">
-                        </fieldset>
-                        <fieldset class="mb_20">
-                            <div class="text-caption-1 mb_8">How can we help you?</div>
-                            <div class="tf-select">
-                                <select class="">
-                                    <option selected="selected">Exchanges & Returns</option>
-                                    <option>Other</option>
-                                </select>
-                            </div>
-                        </fieldset>
-                        <fieldset class="mb_20">
-                            <div class="text-caption-1 mb_8">Name</div>
-                            <textarea class="" rows="4" placeholder="Your Message*" tabindex="2" aria-required="true" required=""></textarea>
-                        </fieldset>
-                        <div class="button-submit">
-                            <button class="btn-style-2 w-100" type="submit">
-                                <span class="text text-button">Send Request</span>
-                            </button>
-                        </div>
-                    </form>
+        <div class="col-lg-8 offset-lg-2">
+            <div class="page-faqs-wrap">
+                <div class="list-faqs">
+                    <div>
+                        <h3 class="faqs-title text-center">Frequently Ask Question</h3>
+    
+                        <ul class="accordion-product-wrap style-faqs" id="accordion-faq-1">
+                            @foreach ($data as $key => $row)
+                                <li class="accordion-product-item">
+                                    <a href="#accordion-{{ $key }}" class="accordion-title {{ $key == 0 ? 'collapsed' : '' }} current" data-bs-toggle="collapse" aria-expanded="true" aria-controls="accordion-{{ $key }}">
+                                        <h5>{{ $row->question }}</h5>
+                                        <span class="btn-open-sub"></span>
+                                    </a>
+                                    <div id="accordion-{{ $key  }}" class="collapse {{ $key == 0 ? 'show' : '' }}" data-bs-parent="#accordion-faq-1">
+                                        <div class="accordion-faqs-content">
+                                            <p class="text-secondary">{{ $row->answer }}</p>
+                                        </div>
+                                    </div>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>

@@ -14863,7 +14863,7 @@ ul.list-text.type-number {
 }
 
 .page-faqs-wrap .list-faqs .faqs-title {
-    margin-bottom: 20px;
+    margin-bottom: 60px;
 }
 
 .page-faqs-wrap .ask-question {
@@ -18066,4 +18066,22 @@ ul.list-text.type-number {
 .contact_gap{
     display: flex;
     gap: 8px;
+}
+.terms-of-use-wrap h2{
+    margin-bottom: 20px;
+}
+.terms-of-use-wrap h3{
+    font-size: 36px;
+    margin-bottom: 12px;
+}
+.terms-of-use-wrap h4{
+    font-size: 30px;
+    margin-bottom: 12px;
+}
+.terms-of-use-wrap h5{
+    font-size: 24px;
+    margin-bottom: 12px;
+}
+.terms-of-use-wrap p{
+    margin-bottom: 20px;
 }

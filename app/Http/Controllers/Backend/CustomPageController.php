@@ -61,10 +61,6 @@ class CustomPageController extends Controller
                             <a class="dropdown-item text-success" href="'. route('admin.customPage.edit', $customPage->id) .'">
                                 <i class="fas fa-edit"></i> Edit
                             </a>
-
-                            <a class="dropdown-item text-danger" href="javascript:void(0)" data-id="'.$customPage->id.'" id="deleteBtn">
-                                <i class="fas fa-trash"></i> Delete
-                            </a>
                         </div>
                     </div>';
             })

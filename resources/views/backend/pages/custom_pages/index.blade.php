@@ -32,9 +32,9 @@
         <div class="card-header">
             <div class="d-flex justify-content-between align-items-center">
                 <h4 class="card-title">Custom Pages List</h4>
-                <a href="{{ route('admin.customPage.create') }}" class="btn btn-primary">
+                {{-- <a href="{{ route('admin.customPage.create') }}" class="btn btn-primary">
                     Add New
-                </a>
+                </a> --}}
             </div>
         </div>
 

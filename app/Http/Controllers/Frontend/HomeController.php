@@ -8,7 +8,9 @@ use App\Mail\ContactMail;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Contact;
+use App\Models\CustomPage;
 use App\Models\EmailConfiguration;
+use App\Models\Faq;
 use App\Models\FlashSale;
 use App\Models\FlashSaleItem;
 use App\Models\Product;
@@ -75,7 +77,8 @@ class HomeController extends Controller
 
     public function faq_page()
     {
-        return view('frontend.pages.frontend_pages.faq');
+        $data = Faq::where('status', 1)->get();
+        return view('frontend.pages.frontend_pages.faq', compact("data"));
     }
 
     public function team_page()
@@ -85,12 +88,26 @@ class HomeController extends Controller
 
     public function privacy_policy()
     {
-        return view('frontend.pages.frontend_pages.privacy_policy');
+        $data = CustomPage::where('slug', 'privacy-policy')->first();
+        return view('frontend.pages.frontend_pages.privacy_policy', compact('data'));
     }
 
     public function terms_condition()
     {
-        return view('frontend.pages.frontend_pages.terms_condition');
+        $data = CustomPage::where('slug', 'terms-condition')->first();
+        return view('frontend.pages.frontend_pages.terms_condition', compact('data'));
+    }
+
+    public function return_refund()
+    {
+        $data = CustomPage::where('slug', 'return-refund')->first();
+        return view('frontend.pages.frontend_pages.return_refund', compact('data'));
+    }
+
+    public function shipping()
+    {
+        $data = CustomPage::where('slug', 'shipping')->first();
+        return view('frontend.pages.frontend_pages.shipping', compact('data'));
     }
 
     public function customer_feedback()

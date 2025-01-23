@@ -31,6 +31,8 @@ use App\Http\Controllers\Frontend\NewsletterController;
         Route::get('/team', "team_page")->name('team');
         Route::get('/privacy-policy', "privacy_policy")->name('privacy.policy');
         Route::get('/terms-condition', "terms_condition")->name('terms.condition');
+        Route::get('/return-refund', "return_refund")->name('return.refund');
+        Route::get('/shipping', "shipping")->name('shipping');
         Route::get('/customer-feedback', "customer_feedback")->name('customer.feedback');
         Route::get('/blogs', "blogs")->name('blogs');
         Route::get('/blogs-details', "blogs_details")->name('blogs.details');
