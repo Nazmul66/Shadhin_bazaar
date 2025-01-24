@@ -5,7 +5,51 @@
 @endpush
 
 @push('add-css')
-
+    <style>
+        .accordion-product-item .btn-open-sub {
+            position: relative;
+            width: 24px;
+            height: 24px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .accordion-product-item .btn-open-sub::before {
+            content: "";
+            position: absolute;
+            z-index: 1;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: var(--main);
+            transition: 0.4s ease 0.1s;
+            margin: auto;
+        }
+        .accordion-product-item .btn-open-sub::after {
+            content: "";
+            position: absolute;
+            z-index: 1;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: var(--main);
+            transition: 0.4s ease 0.1s;
+            margin: auto;
+        }
+        .accordion-product-item .btn-open-sub::after {
+            width: 18px;
+            height: 2px;
+        }
+        .accordion-product-item .btn-open-sub::before {
+            width: 2px;
+            height: 18px;
+        }
+        .accordion-product-item .accordion-title:not(.collapsed) .btn-open-sub::before {
+            transform: rotate(90deg);
+        }
+    </style>
 @endpush
 
 
@@ -162,10 +206,13 @@
                                 </form>
 
                                 {{-- Category Wise Filter --}}
-                                <div class="widget-facet facet-fieldset">
-                                    <h6 class="facet-title" style="font-size: 20px;">Product Categories</h6>
+                                <div class="widget-facet facet-fieldset accordion-product-item">
+                                    <a href="#category" class="facet-title accordion-title current" data-bs-toggle="collapse" aria-expanded="true" aria-controls="category" style="font-size: 20px;">
+                                        <h5>Product Categories</h5>
+                                        <span class="btn-open-sub"></span>
+                                    </a>
 
-                                    <div class="box-fieldset-item">
+                                    <div id="category" class="box-fieldset-item collapse show" data-bs-parent="#accordion-faq-1">
                                         @if ( request()->has('categories') )
                                             @foreach ($categoryItems as $item)
                                                 @php
@@ -242,53 +289,73 @@
                                 </div>
 
                                 {{-- Price Range Filter --}}
-                                <div class="widget-facet facet-price">
-                                    <h6 class="facet-title" style="font-size: 20px;">Price</h6>
-                                    <div class="price-val-range" id="price-value-range" data-min="0" data-max="{{ $maxPrice }}"></div>
-                                    <div class="box-price-product">
-                                        <div class="box-price-item">
-                                            <span class="title-price">Min price</span>
-                                            <div class="price-val price-min-value" id="price-min-value" data-currency="$"></div>
-                                        </div>
-                                        <div class="box-price-item">
-                                            <span class="title-price">Max price</span>
-                                            <div class="price-val price-max-value" id="price-max-value" data-currency="$"></div>
+                                <div class="widget-facet facet-price accordion-product-item">
+                                    <a href="#price_range" class="facet-title accordion-title current" data-bs-toggle="collapse" aria-expanded="true" aria-controls="price_range" style="font-size: 20px;">
+                                        <h5>Price</h5>
+                                        <span class="btn-open-sub"></span>
+                                    </a>
+
+                                    <div id="price_range" class="box-fieldset-item collapse show" data-bs-parent="#accordion-faq-2">
+                                        <div class="price-val-range" id="price-value-range" data-min="0" data-max="{{ $maxPrice }}"></div>
+                                        <div class="box-price-product">
+                                            <div class="box-price-item">
+                                                <span class="title-price">Min price</span>
+                                                <div class="price-val price-min-value" id="price-min-value" data-currency="$"></div>
+                                            </div>
+                                            <div class="box-price-item">
+                                                <span class="title-price">Max price</span>
+                                                <div class="price-val price-max-value" id="price-max-value" data-currency="$"></div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
 
                                 {{-- Size Filter --}}
-                                <div class="widget-facet facet-size">
-                                    <h6 class="facet-title" style="font-size: 20px;">Size</h6>
-                                    <div class="facet-size-box size-box">
-                                        @foreach ($product_sizes as $row)
-                                            <span class="size-item size-check" id={{ $row->id }} data-val="0">{{ $row->value }}</span>
-                                        @endforeach
+                                <div class="widget-facet facet-size accordion-product-item">
+                                    <a href="#size_filter" class="facet-title accordion-title current" data-bs-toggle="collapse" aria-expanded="true" aria-controls="size_filter" style="font-size: 20px;">
+                                        <h5>Size</h5>
+                                        <span class="btn-open-sub"></span>
+                                    </a>
+
+                                    <div id="size_filter" class="size-box collapse show" data-bs-parent="#accordion-faq-3">
+                                        <div class="facet-size-box box-fieldset-item">
+                                            @foreach ($product_sizes as $row)
+                                                <span class="size-item size-check" id={{ $row->id }} data-val="0">{{ $row->value }}</span>
+                                            @endforeach
+                                        </div>
                                     </div>
                                 </div>
 
                                 {{-- Colors Filter --}}
-                                <div class="widget-facet facet-color">
-                                    <h6 class="facet-title accordion-button collapsed" style="font-size: 20px;" data-bs-toggle="collapse" data-bs-target="#stock_filter" aria-expanded="false" aria-controls="stock_filter">Colors</h6>
+                                <div class="widget-facet facet-color accordion-product-item">
+                                    <a href="#color_filter" class="facet-title accordion-title current" data-bs-toggle="collapse" aria-expanded="true" aria-controls="color_filter" style="font-size: 20px;">
+                                        <h5>Color</h5>
+                                        <span class="btn-open-sub"></span>
+                                    </a>
 
-                                    <div id="stock_filter" class="facet-color-box accordion-collapse collapse">
-                                        @foreach ($product_colors as $row)
-                                            <div class="color-item color-check" id={{ $row->id }} data-val="0">
-                                                <span 
-                                                    class="color {{ in_array($row->color_value, ['#FFFFFF', '#FFF', '#F8F8F8']) ? 'line-black' : '' }}" 
-                                                    style="background: {{ $row->color_value }};">
-                                                </span>
-                                                {{ $row->value }}
-                                            </div>
-                                        @endforeach
+                                    <div id="color_filter" class="collapse show" data-bs-parent="#accordion-faq-4">
+                                        <div class="facet-color-box">
+                                            @foreach ($product_colors as $row)
+                                                <div class="color-item color-check" id={{ $row->id }} data-val="0">
+                                                    <span 
+                                                        class="color {{ in_array($row->color_value, ['#FFFFFF', '#FFF', '#F8F8F8']) ? 'line-black' : '' }}" 
+                                                        style="background: {{ $row->color_value }};">
+                                                    </span>
+                                                    {{ $row->value }}
+                                                </div>
+                                            @endforeach
+                                        </div>
                                     </div>
                                 </div>
 
                                 {{-- Stock Filter --}}
-                                <div class="widget-facet facet-fieldset">
-                                    <h6 class="facet-title" style="font-size: 20px;">Availability </h6>
+                                <div  class="widget-facet facet-fieldset accordion-product-item">
+                                    <a href="#stock_available" class="facet-title accordion-title current" data-bs-toggle="collapse" aria-expanded="true" aria-controls="stock_available" style="font-size: 20px;">
+                                        <h5>Availability</h5>
+                                        <span class="btn-open-sub"></span>
+                                    </a>
 
-                                    <div  class="box-fieldset-item">
+                                    <div id="stock_available" class="box-fieldset-item collapse show" data-bs-parent="#accordion-faq-4">
                                         <fieldset class="fieldset-item">
                                             <input type="radio" name="availability"  class="tf-check change_stock" id="inStock" value="stock_in">
                                             <label for="inStock">In stock <span class="count-stock">( {{ $stockIn }} )</span></label>
@@ -302,10 +369,13 @@
                                 </div>
 
                                 {{-- Brands Filter --}}
-                                <div class="widget-facet facet-fieldset">
-                                    <h6 class="facet-title" style="font-size: 20px;" >Brands</h6>
+                                <div class="widget-facet facet-fieldset accordion-product-item">
+                                    <a href="#brand_filter" class="facet-title accordion-title current" data-bs-toggle="collapse" aria-expanded="true" aria-controls="brand_filter" style="font-size: 20px;">
+                                        <h5>Brands</h5>
+                                        <span class="btn-open-sub"></span>
+                                    </a>
 
-                                    <div class="box-fieldset-item">
+                                    <div id="brand_filter" class="box-fieldset-item collapse show" data-bs-parent="#accordion-faq-6">
                                         @foreach ($brands as $item)
                                                 @php
                                                     $count = App\Models\Product::where('brand_id', $item->id)->count();

@@ -52,11 +52,11 @@
                         <ul class="accordion-product-wrap style-faqs" id="accordion-faq-1">
                             @foreach ($data as $key => $row)
                                 <li class="accordion-product-item">
-                                    <a href="#accordion-{{ $key }}" class="accordion-title {{ $key == 0 ? 'collapsed' : '' }} current" data-bs-toggle="collapse" aria-expanded="true" aria-controls="accordion-{{ $key }}">
+                                    <a href="#accordion-{{ $key }}" class="accordion-title {{ $key != 0 ? 'collapsed' : '' }} current" data-bs-toggle="collapse" aria-expanded="true" aria-controls="accordion-{{ $key }}">
                                         <h5>{{ $row->question }}</h5>
                                         <span class="btn-open-sub"></span>
                                     </a>
-                                    <div id="accordion-{{ $key  }}" class="collapse {{ $key == 0 ? 'show' : '' }}" data-bs-parent="#accordion-faq-1">
+                                    <div id="accordion-{{ $key }}" class="collapse {{ $key == 0 ? 'show' : '' }}" data-bs-parent="#accordion-faq-1">
                                         <div class="accordion-faqs-content">
                                             <p class="text-secondary">{{ $row->answer }}</p>
                                         </div>

@@ -12408,6 +12408,10 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
 }
 
 .widget-facet .facet-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
     margin-bottom: 16px;
 }
 
@@ -18084,4 +18088,11 @@ ul.list-text.type-number {
 }
 .terms-of-use-wrap p{
     margin-bottom: 20px;
+}
+.widget-facet .facet_size_box {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 12px;
+    row-gap: 10px;
+    padding-right: 20px;
 }
