@@ -135,7 +135,6 @@ class ProductController extends Controller
     public function get_filter_product_ajax(Request $request)
     {
         // dd($request->all());
-
         $products = '';
             $query = Product::leftJoin('categories', 'categories.id', 'products.category_id')
                 ->leftJoin('subcategories', 'subcategories.id', 'products.subCategory_id')
@@ -224,8 +223,8 @@ class ProductController extends Controller
                     ->distinct()
                     ->where('products.is_approved', 1)
                     ->where('products.status', 1)
-                    ->paginate(12);
-        // dd($products);
+                    // ->paginate(12);
+                    ->get();
 
         return response()->json([
             'status'  => true,

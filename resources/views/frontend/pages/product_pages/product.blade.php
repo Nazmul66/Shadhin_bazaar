@@ -186,7 +186,7 @@
                         <div class="canvas-wrapper">
                             <div class="canvas-header d-flex d-xl-none">
                                 <h5>Filters</h5>
-                                <span class="icon-close close-filter"></span>
+                                <i class='bx bx-x close-filter' style="font-size: 28px; cursor:pointer;"></i>
                             </div>
 
                             <div class="canvas-body">
@@ -398,8 +398,7 @@
 
 
                 <div class="col-xl-9">
-                    <div class="wrapper-shop filter_products_data tf-grid-layout 
-                     {{ $products->count() > 0 ? 'tf-col-4' : 'tf-col-1' }}" 
+                    <div class="wrapper-shop tf-grid-layout tf-col-4" 
                     id="gridLayout" style="">
 
                         @include('frontend.include.render_product_page')
@@ -447,15 +446,7 @@
                     dataType: "json",
                     success: function(data) {
                         if( data.status === true ){
-                            if( data.count === 0 ){
-                                $('.filter_products_data').removeClass('tf-col-4');
-                                $('.filter_products_data').addClass('tf-col-1');
-                            }
-                            else{
-                                $('.filter_products_data').removeClass('tf-col-1');
-                                $('.filter_products_data').addClass('tf-col-4');
-                            }
-                            $('.filter_products_data').html(data.success); 
+                            $('.wrapper-shop').html(data.success); 
                             $('#product_count').html(data.count); 
                         }
                     },
@@ -465,8 +456,10 @@
                 });
             }
 
+
             // Category Id
             $('.change_category').change(function(){
+                console.log('Category changed');
                 var ids = '';
                 $('.change_category').each(function(){
                     if( this.checked ){
@@ -483,6 +476,7 @@
 
             // SubCategory Id
             $('.change_subCategory').change(function(){
+                console.log('change_subCategory');
                 var ids = '';
                 $('.change_subCategory').each(function(){
                     if( this.checked ){
@@ -499,6 +493,7 @@
 
             // ChildCategory Id
             $('.change_childCategory').change(function(){
+                console.log('change_childCategory');
                 var ids = '';
                 $('.change_childCategory').each(function(){
                     if( this.checked ){
@@ -514,6 +509,7 @@
   
             // Size Id
             $(document).on('click', '.size-check', function () {
+                console.log('size-check');
                 var id     = $(this).attr('id');
                 var status = $(this).attr('data-val');
                 if( status == 0 ){
@@ -542,6 +538,7 @@
 
             // Color Id 
             $(document).on('click', '.color-check', function () {
+                console.log('color-check');
                 var id     = $(this).attr('id');
                 var status = $(this).attr('data-val');
                 if( status == 0 ){
@@ -570,6 +567,7 @@
 
             // Sorting Id
             $('.select-item').on('click', function(){
+                console.log('Sorting-check');
                 var id = $(this).attr('data-sort-value');
                 // console.log(id);
 
@@ -579,6 +577,7 @@
 
             // Stock Id
             $('.change_stock').change(function(){
+                console.log('change_stock');
                 var id = $(this).val();
                 // console.log(id);
 
@@ -588,6 +587,7 @@
 
             // Brand Id
             $('.change_brand').change(function(){
+                console.log('change_brand');
                 var ids = '';
                 $('.change_brand').each(function(){
                     if( this.checked ){
@@ -639,6 +639,7 @@
 
                     let debounceTimer;
                     skipSlider.noUiSlider.on("update", function(val, e) {
+                        console.log('get_start_price');
                         $('#get_start_price').val(parseInt(val[0]));
                         $('#get_end_price').val(parseInt(val[1]));
                         skipValues[e].innerText = val[e];
@@ -657,6 +658,7 @@
             };
 
             rangeTwoPrice();
+            
         })
     </script>
 
