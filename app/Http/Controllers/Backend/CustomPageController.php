@@ -147,38 +147,39 @@ class CustomPageController extends Controller
             'title'      => ['required', 'max:155', 'string', 'unique:custom_pages,title,'. $customPage->id],
             'content'    => ['required'],
             'meta_image' => ['image', 'mimes:png,jpg,jpeg,webp', 'max:4096'],
-      ]);
+        ]);
 
-    //   dd($customPage);
+        //   dd($customPage);
 
-      DB::beginTransaction();
-      try {
-          $customPage->title             = $request->title;
-          $customPage->slug              = Str::slug($request->title);
-          $customPage->content           = $request->content;
-          $customPage->status            = $request->status;
-          $customPage->meta_title        = $request->meta_title;
-          $customPage->meta_keyword      = $request->meta_keyword;
-          $customPage->meta_description  = $request->meta_description;
+        DB::beginTransaction();
+        try {
+            $customPage->title             = $request->title;
+            $customPage->slug              = Str::slug($request->title);
+            $customPage->content           = $request->content;
+            $customPage->status            = $request->status;
+            $customPage->meta_title        = $request->meta_title;
+            $customPage->meta_keyword      = $request->meta_keyword;
+            $customPage->meta_description  = $request->meta_description;
 
-          // Handle image with ImageUploadTraits function
-          $uploadImage                   = $this->imageUpload($request, 'meta_image', 'custom_page');
-          $customPage->meta_image        =  $uploadImage;
-          $customPage->save();
-      }
-      catch(\Exception $ex){
-          DB::rollBack();
-          throw $ex;
-          // dd($ex->getMessage());
-      }
+            // Handle image with ImageUploadTraits function
+            $uploadImage                   = $this->imageUpload($request, 'meta_image', 'custom_page');
+            $customPage->meta_image        =  $uploadImage;
+            $customPage->save();
+        }
+        catch(\Exception $ex){
+            DB::rollBack();
+            throw $ex;
+            // dd($ex->getMessage());
+        }
 
-      DB::commit();
-      return redirect()->route('admin.customPage.index');
+        DB::commit();
+        return redirect()->route('admin.customPage.index');
     }
 
-    public function view($id)
+    public function show($id)
     {
-
+        $singleView = CustomPage::findOrFail($id);
+       return view('backend.pages.custom_pages.view', compact('singleView')); 
     }
 
     /**
