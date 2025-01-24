@@ -14,6 +14,7 @@ class AjaxCallController extends Controller
 {
     public function CartQuickView(Request $request)
     {
+        // dd($request->all());
         $Product__sizes = AttributeValue::where('attribute', "size")->get();
         $sizes = array_map(function ($item) {
             return $item['value'];
@@ -24,6 +25,7 @@ class AjaxCallController extends Controller
                     ->where('products.id', $request->id)
                     ->first();
 
+        // dd($product);
         $product_image = ProductImage::where('product_id', $product->id)->orderBy('order_id', 'asc')->get();
         $product_size = ProductSize::where('product_id', $product->id)->get();
         $product_color = ProductColor::where('product_id', $product->id)->get();

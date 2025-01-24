@@ -7,6 +7,7 @@ use App\Models\AttributeValue;
 use App\Models\Brand;
 use App\Models\Cart;
 use App\Models\Category;
+use App\Models\ChildCategory;
 use App\Models\Product;
 use App\Models\ProductColor;
 use App\Models\ProductImage;
@@ -27,7 +28,7 @@ class ProductController extends Controller
                 'category_id' => $category->id,
                 'is_approved' => 1,
                 'status' => 1,
-            ])->paginate(12);
+            ])->orderBy('id', 'DESC')->paginate(12);
         }
         
         elseif( $request->has('sub_categories') ){
@@ -37,7 +38,17 @@ class ProductController extends Controller
                 'subCategory_id' => $subCat->id,
                 'is_approved' => 1,
                 'status' => 1,
-            ])->paginate(12);
+            ])->orderBy('id', 'DESC')->paginate(12);
+        }
+
+        elseif( $request->has('child_categories') ){
+            $categoryItems = ChildCategory::where('status', 1)->get();
+            $childCat = ChildCategory::where('slug', $request->child_categories)->firstOrFail();
+            $products = Product::where([
+                'childCategory_id' => $childCat->id,
+                'is_approved' => 1,
+                'status' => 1,
+            ])->orderBy('id', 'DESC')->paginate(12);
         }
 
         else{
@@ -153,16 +164,16 @@ class ProductController extends Controller
                 }
 
                 // Range Filter by product price
-                if( !empty($request->start_price) && !empty($request->end_price) ){
-                    $query->where('products.selling_price', '>=', $request->start_price);
-                    $query->where('products.selling_price', "<=", $request->end_price);
+                if (!empty($request->start_price) || !empty($request->end_price)) {
+                    $query->whereBetween('products.selling_price', [$request->start_price, $request->end_price]);
                 }
                 
                 // Filter by Color
                 if( !empty($request->color_id)){
                     $color_id       = rtrim($request->color_id, ',');
                     $color_id_array = explode(',', $color_id);
-                    $query->whereIn('products.brand_id', $color_id_array);
+                    $query->join('product_colors', 'product_colors.product_id', 'products.id')
+                          ->whereIn('product_colors.color_id', $color_id_array);
                 }
 
                 // Filter by Size
@@ -170,8 +181,7 @@ class ProductController extends Controller
                     $size_id       = rtrim($request->size_id, ',');
                     $size_id_array = explode(',', $size_id);
                     $query->join('product_sizes', 'product_sizes.product_id', 'products.id')
-                          ->whereIn('product_sizes.brand_id', $size_id_array);
-                    // $query->whereIn('products.brand_id', $size_id_array);
+                          ->whereIn('product_sizes.size_id', $size_id_array);
                 }
 
                 // Filter by brand
@@ -211,9 +221,10 @@ class ProductController extends Controller
                 }
 
                 $products = $query->select('products.id', 'products.name', 'products.slug','products.thumb_image','products.discount_type','products.selling_price','products.qty','products.product_sold','products.is_approved', 'products.status')
-                        ->where('products.is_approved', 1)
-                        ->where('products.status', 1)
-                        ->paginate(12);
+                    ->distinct()
+                    ->where('products.is_approved', 1)
+                    ->where('products.status', 1)
+                    ->paginate(12);
         // dd($products);
 
         return response()->json([

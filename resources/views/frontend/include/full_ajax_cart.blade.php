@@ -2,7 +2,7 @@
      
     $(document).ready(function () {
        //__ Quick View Cart __//
-       $('.quickview').click(function (e) {
+       $(document).on('click', '.quickview', function (e) {
            e.preventDefault(); // Prevent default behavior if necessary
            var id = $(this).data('id'); // Use `data-id` attribute
 
@@ -107,7 +107,7 @@
        });
 
        //__ Quick Add Cart __//
-       $('.quickAdd').click(function (e) {
+       $(document).on('click', '.quickAdd', function (e) {
            e.preventDefault(); // Prevent default behavior if necessary
            var id = $(this).data('id'); // Use `data-id` attribute
 

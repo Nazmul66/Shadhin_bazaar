@@ -248,11 +248,11 @@
                                     <div class="box-price-product">
                                         <div class="box-price-item">
                                             <span class="title-price">Min price</span>
-                                            <div class="price-val" id="price-min-value" data-currency="$"></div>
+                                            <div class="price-val price-min-value" id="price-min-value" data-currency="$"></div>
                                         </div>
                                         <div class="box-price-item">
                                             <span class="title-price">Max price</span>
-                                            <div class="price-val" id="price-max-value" data-currency="$"></div>
+                                            <div class="price-val price-max-value" id="price-max-value" data-currency="$"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -293,6 +293,7 @@
                                             <input type="radio" name="availability"  class="tf-check change_stock" id="inStock" value="stock_in">
                                             <label for="inStock">In stock <span class="count-stock">( {{ $stockIn }} )</span></label>
                                         </fieldset>
+                                        
                                         <fieldset class="fieldset-item">
                                             <input type="radio" name="availability" class="tf-check change_stock" id="outStock" value="stock_out">
                                             <label for="outStock">Out of stock <span class="count-stock">( {{ $stockOut }} )</span></label>
@@ -534,9 +535,15 @@
             var rangeTwoPrice = function() {
                 if ($("#price-value-range").length > 0) {
                     var skipSlider = document.getElementById("price-value-range");
+
+                    // Destroy slider if it exists (prevents duplicate initialization)
+                    if (skipSlider.noUiSlider) {
+                        skipSlider.noUiSlider.destroy();
+                    }
+
                     var skipValues = [
-                        document.getElementById("price-min-value"),
-                        document.getElementById("price-max-value"),
+                        document.querySelector(".price-min-value"),
+                        document.querySelector(".price-max-value"),
                     ];
 
                     var min = parseInt(skipSlider.getAttribute("data-min"));
@@ -578,15 +585,6 @@
                     });
                 }
             };
-            
-            // Reset All Values
-            $('#remove_all').click(function () {
-                // Clear all input fields inside the form
-                $('#filterForm').find('input[type="text"]').val('');
-
-                filterForm();
-                rangeTwoPrice();
-            });
 
             rangeTwoPrice();
         })

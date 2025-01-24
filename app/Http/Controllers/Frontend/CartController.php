@@ -27,7 +27,6 @@ class CartController extends Controller
 
     public function addCart(Request $request)
     {
-        // dd($request->all());
         $product = Product::findOrFail($request->product_id);
 
         if( $product->qty ===  0){

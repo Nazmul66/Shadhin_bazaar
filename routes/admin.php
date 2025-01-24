@@ -151,8 +151,8 @@ Route::middleware('setLanguage')->group(function(){
         Route::delete('/multiple-image/delete/{id}', [ProductController::class, 'delete_multiple_image'])->name('multiple-image.delete'); 
 
 
-        Route::get('/delete/sizes/{id}', [ProductController::class, 'delete_product_size'])->name('product-size.delete'); 
-        Route::get('/delete/colors/{id}', [ProductController::class, 'delete_product_color'])->name('product-color.delete');
+        Route::delete('/size-variants/delete/{id}', [ProductController::class, 'delete_size_variants'])->name('size.variants.delete'); 
+        Route::delete('/color-variants/delete/{id}', [ProductController::class, 'delete_color_variants'])->name('color.variants.delete'); 
 
 
         //______ Orders _____//

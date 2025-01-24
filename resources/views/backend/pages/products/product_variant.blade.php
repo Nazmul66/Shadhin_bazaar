@@ -105,7 +105,7 @@
                                                 <input type="number" value="{{ $item->stock }}" min="0" class="form-control" name="stock[]" required>
                                             </td>
                                             <td>
-                                                <a href="{{ route('admin.product-size.delete', $item->id) }}" type="submit" class="btn btn-danger size_delete">Remove</a>
+                                                <button type="button" class="btn btn-danger size_delete" data-id="{{ $item->id }}" data-variant="size">Remove</button>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -156,7 +156,7 @@
                                                 <input type="number" class="form-control" value="{{ $item->color_price }}" name="color_price[]" required>
                                             </td>
                                             <td>
-                                                <a href="{{ route('admin.product-color.delete', $item->id) }}" class="btn btn-danger color_delete">Remove</a>
+                                                <button type="button" class="btn btn-danger color_delete" data-id="{{ $item->id }}" data-variant="color">Remove</button>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -179,7 +179,7 @@
                     </div>
                 </div>
 
-              <button type="submit" class="btn btn-primary waves-effect waves-light"> Update</button>
+                <button type="submit" class="btn btn-primary waves-effect waves-light"> Update</button>
             </form>
         </div>
     </div>
@@ -193,88 +193,87 @@
     
 {{-- This is for product size setup select2 dropdown --}}
 <script>   
+    $(document).ready(function() {
 
-$(document).ready(function() {
+        // Image Sortable System
+        $("#sortable").sortable({
+            update : function(event, ui){
+                var photo_id = [];
+            $('.image_sortable').each(function(){
+                var id = $(this).data('id');
+                photo_id.push(id);
+                })
+                // console.log(photo_id);
 
-    // Image Sortable System
-    $("#sortable").sortable({
-        update : function(event, ui){
-            var photo_id = [];
-           $('.image_sortable').each(function(){
-               var id = $(this).data('id');
-               photo_id.push(id);
-            })
-            // console.log(photo_id);
-
-            $.ajax({
-                type: "POST",
-                url: "{{ route('admin.product.images.sortable') }}",
-                data: {
-                    // '_token': token,
-                    photo_id: photo_id,
-                    "_token": "{{ csrf_token() }}"
-                },
-                success: function (res) {
-                     console.log(res.status);
-                     if( res.status == 'success' ){
-                          console.log('nice')
-                     }
-                },
-
-                error: function (err) {
-                    console.log(err);
-                }
-            })
-        }
-    });
-
-    // Multi Image delete
-    $(document).on('click', '.delete-image', function () {
-        const imageId = $(this).data('id');
-        const imageContainer = $(`#image-${imageId}`);
-
-        swal.fire({
-                title: "Are you sure?",
-                text: "You won't be able to revert this !",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#d33",
-                cancelButtonColor: "#3085d6",
-                confirmButtonText: "Yes, delete it!"
-            })
-            .then((result) => {
-                if (result.isConfirmed) {
-                    // Remove the image container immediately
-                    imageContainer.fadeOut('fast', function () {
-                        $(this).remove();
-                    });
-
-                    // Send the AJAX request
-                    $.ajax({
-                        url: "{{ url('admin/multiple-image/delete') }}/" + imageId,
-                        type: 'DELETE',
-                        data: {
-                            _token: "{{ csrf_token() }}" // Include CSRF token for security
-                        },
-                        success: function (response) {
-                            if (!response.success) {
-                                alert(response.message);
-                            }
-                        },
-                        error: function () {
-                            alert('An error occurred. Please try again.');
-                            // Reinsert the container if deletion fails
-                            $('body').append(imageContainer);
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('admin.product.images.sortable') }}",
+                    data: {
+                        // '_token': token,
+                        photo_id: photo_id,
+                        "_token": "{{ csrf_token() }}"
+                    },
+                    success: function (res) {
+                        console.log(res.status);
+                        if( res.status == 'success' ){
+                            console.log('nice')
                         }
-                    });
-                } 
-                else {
-                    swal.fire('Your Data is Safe');
-                }
-            })
-    });
+                    },
 
-});
+                    error: function (err) {
+                        console.log(err);
+                    }
+                })
+            }
+        });
+
+        // Multi Image delete
+        $(document).on('click', '.delete-image', function () {
+            const imageId = $(this).data('id');
+            const imageContainer = $(`#image-${imageId}`);
+
+            swal.fire({
+                    title: "Are you sure?",
+                    text: "You won't be able to revert this !",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#d33",
+                    cancelButtonColor: "#3085d6",
+                    confirmButtonText: "Yes, delete it!"
+                })
+                .then((result) => {
+                    if (result.isConfirmed) {
+                        // Remove the image container immediately
+                        imageContainer.fadeOut('fast', function () {
+                            $(this).remove();
+                        });
+
+                        // Send the AJAX request
+                        $.ajax({
+                            url: "{{ url('admin/multiple-image/delete') }}/" + imageId,
+                            type: 'DELETE',
+                            data: {
+                                _token: "{{ csrf_token() }}" // Include CSRF token for security
+                            },
+                            success: function (response) {
+                                if (!response.success) {
+                                    alert(response.message);
+                                }
+                            },
+                            error: function () {
+                                alert('An error occurred. Please try again.');
+                                // Reinsert the container if deletion fails
+                                $('body').append(imageContainer);
+                            }
+                        });
+                    } 
+                    else {
+                        swal.fire('Your Data is Safe');
+                    }
+                })
+        });
+
+    });
 </script>
 
 
@@ -314,7 +313,7 @@ $(document).ready(function() {
                         <input type="number" min="0" value="0" class="form-control" name="size_price[]" required>
                     </td>
                     <td>
-                        <input type="number" min="0" value="0" class="form-control" name="stock[]" required>
+                        <input type="number" min="0" class="form-control" name="stock[]" required>
                     </td>
                     <td>
                         <button type="button" class="btn btn-danger size_delete">Remove</button>
@@ -341,6 +340,7 @@ $(document).ready(function() {
 
             // Remove the row from the table
             row.remove();
+            // toastr.success("Product Variant remove");
         });
     });
 </script>
@@ -456,6 +456,56 @@ $(document).ready(function() {
             reader.readAsDataURL(file);
         });
     }
+
+    // Size Variant Delete
+    $(document).on("click", ".size_delete", function () {
+        let id      = $(this).data('id');
+        let variant = $(this).data('variant');
+
+        $.ajax({
+            type: 'DELETE',
+            url: "{{ url('admin/size-variants/delete') }}/" + id,
+            data: {
+                _token: "{{ csrf_token() }}", // Include CSRF token for security
+                id : id,
+                variant : variant,
+            },
+            success: function (res) {
+                if( res.status === true ){
+                    toastr.success(res.message);
+                }
+            },
+            error: function (err) {
+                console.log('error')
+                toastr.success("Product Variant remove");
+            }
+        })
+    })
+
+    // Color Variant Delete
+    $(document).on("click", ".color_delete", function () {
+        let id      = $(this).data('id');
+        let variant = $(this).data('variant');
+
+        $.ajax({
+            type: 'DELETE',
+            url: "{{ url('admin/color-variants/delete') }}/" + id,
+            data: {
+                _token: "{{ csrf_token() }}", // Include CSRF token for security
+                id : id,
+                variant : variant,
+            },
+            success: function (res) {
+                if( res.status === true ){
+                    toastr.success(res.message);
+                }
+            },
+            error: function (err) {
+                console.log('error')
+                toastr.success("Product Variant remove");
+            }
+        })
+    })
 </script>
 
 @endpush

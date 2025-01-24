@@ -519,34 +519,33 @@ class ProductController extends Controller
     }
 
     // Delete Multiple Product size variants
-    public function delete_product_size($id)
+    public function delete_size_variants(Request $request)
     {
-       $productSize = ProductSize::findOrFail($id);
-       if( !is_null( $productSize ) ){
+        // dd($request->all());
+        $productSize = ProductSize::findOrFail($request->id);
+        if( !is_null( $productSize ) ){
             $productSize->delete();
-       }
+        }
 
-       $notification = [
-            'alert-type' => 'success', 
-            'message' => "Delete Product Size", 
-      ];
-
-       return redirect()->back()->with($notification);
+       return response()->json([
+            'status' => true,
+            'message' => "Product Variant remove",
+       ]);
     }
 
+
     // Delete Multiple Product color variants
-    public function delete_product_color($id)
+    public function delete_color_variants(Request $request)
     {
-       $productColor = ProductColor::findOrFail($id);
-       if( !is_null( $productColor ) ){
+        // dd($request->all());
+        $productColor = ProductColor::findOrFail($request->id);
+        if( !is_null( $productColor ) ){
             $productColor->delete();
-       }
+        }
 
-       $notification = [
-            'alert-type' => 'success', 
-            'message' => "Delete Product Colors", 
-      ];
-
-       return redirect()->back()->with($notification);
+       return response()->json([
+            'status' => true,
+            'message' => "Product Variant remove",
+       ]);
     }
 }
