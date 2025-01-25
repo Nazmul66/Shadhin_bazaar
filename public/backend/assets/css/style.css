@@ -440,6 +440,9 @@ select > option:disabled{
 .icon_design i{
     font-size: 28px;
 }
+.icon_design span{
+    font-size: 28px;
+}
 .cart_text{
     display: flex;
     flex-direction: column;

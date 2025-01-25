@@ -134,12 +134,12 @@
                 <div class="card-body" style="height: 110px;">
                     <div class="analytics_card">
                          <div class="icon_design bg-danger">
-                            <i class='bx bx-dollar'></i>
+                            <span>{{ getSetting()->currency_symbol }}</span>
                          </div>
 
                          <div class="cart_text">
                              <h6>Total Earnings</h6>
-                             <p>${{ $total_amount }}</p>
+                             <p>{{ getSetting()->currency_symbol }}{{ $total_amount }}</p>
                          </div>
                     </div>
                 </div><!-- end card body -->
@@ -158,7 +158,7 @@
 
                          <div class="cart_text">
                              <h6>Today's Earnings</h6>
-                             <p>${{ $todays_amount }}</p>
+                             <p>{{ getSetting()->currency_symbol }}{{ $todays_amount }}</p>
                          </div>
                     </div>
                 </div><!-- end card body -->
@@ -177,7 +177,7 @@
 
                          <div class="cart_text">
                              <h6>This Month Earnings</h6>
-                             <p>${{ $monthly_amount }}</p>
+                             <p>{{ getSetting()->currency_symbol }}{{ $monthly_amount }}</p>
                          </div>
                     </div>
                 </div><!-- end card body -->
@@ -196,7 +196,7 @@
 
                          <div class="cart_text">
                              <h6>This Year Earnings</h6>
-                             <p>${{ $yearly_amount }}</p>
+                             <p>{{ getSetting()->currency_symbol }}{{ $yearly_amount }}</p>
                          </div>
                     </div>
                 </div><!-- end card body -->
