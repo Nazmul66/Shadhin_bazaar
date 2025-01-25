@@ -375,6 +375,51 @@ select > option:disabled{
     color: #495057;
     background-color: #e9e9ef;
 }
+.main_search_product{
+    display: flex;
+    align-items: stretch;
+    gap: 10px;
+}
+
+.search_product{
+    position: relative;
+    width: 100%;
+}
+.search_product i{
+   position: absolute;
+   color: rgba(97, 97, 97, 1);
+   font-size: 20px;
+   top: 50%;
+   left: 14px;
+   transform: translateY(-50%);
+}
+.search_product_btn{
+    padding: 4px 14px;
+    border-radius: 6px;
+    border: none;
+    font-weight: 600;
+    line-height: 30px;
+    background: #FFF;
+    color: rgba(48, 48, 48, 1);
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.55);
+}
+.search_product_btn:focus{
+    box-shadow: 0px -1px 3px rgba(0, 0, 0, 0.55);
+}
+.modal_body_height{
+    height: 350px;
+    overflow-y: scroll;
+}
+.search_product_show{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+.search_product_show h5{
+    margin: 0;
+    font-size: 14px;
+}
 
 
 

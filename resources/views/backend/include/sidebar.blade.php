@@ -48,6 +48,14 @@
                     </a>
                 </li>
 
+                {{-- Custom Pages --}}
+                <li class="@yield('custom_page')">
+                    <a href="{{ route('admin.customPage.index') }}" >
+                        <i class='bx bx-folder-open'></i>
+                        <span >Custom Pages</span>
+                    </a>
+                </li>
+
                 {{-- Attribute --}}
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
@@ -75,12 +83,6 @@
                         <span >E-commerce</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li>
-                            <a href="{{ route('admin.flashSale.item.index') }}">
-                                <span >Flash Sale Product</span>
-                            </a>
-                        </li>
-
                         <li >
                             <a href="{{ route('admin.coupons.index') }}">
                                 <span >Coupons</span>
@@ -90,6 +92,33 @@
                         <li >
                             <a href="{{ route('admin.shipping-rule.index') }}">
                                 <span >Shipping Rule</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                {{-- Marketing --}}
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow">
+                        <i class='bx bx-paper-plane'></i>
+                        <span >Marketing</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li>
+                            <a href="{{ route('admin.flashSale.item.index') }}">
+                                <span >Flash Sale Product</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('admin.product.collection.index') }}">
+                                <span >Collection Product</span>
+                            </a>
+                        </li>
+
+                        <li >
+                            <a href="">
+                                <span >Ad Banner</span>
                             </a>
                         </li>
                     </ul>
@@ -193,14 +222,6 @@
                             </a>
                         </li>
                     </ul>
-                </li>
-                
-                {{-- Custom Pages --}}
-                <li class="@yield('custom_page')">
-                    <a href="{{ route('admin.customPage.index') }}" >
-                        <i class='bx bx-folder-open'></i>
-                        <span >Custom Pages</span>
-                    </a>
                 </li>
 
                 {{-- Manage Website --}}

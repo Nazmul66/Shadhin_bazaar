@@ -30,6 +30,7 @@ use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Backend\ReviewController;
 use App\Http\Controllers\Backend\ContactController;
 use App\Http\Controllers\Backend\SliderController;
+use App\Http\Controllers\Backend\ProductCollectionController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\TransactionController;
 use App\Http\Controllers\Backend\CustomerController;
@@ -153,6 +154,13 @@ Route::middleware('setLanguage')->group(function(){
 
         Route::delete('/size-variants/delete/{id}', [ProductController::class, 'delete_size_variants'])->name('size.variants.delete'); 
         Route::delete('/color-variants/delete/{id}', [ProductController::class, 'delete_color_variants'])->name('color.variants.delete'); 
+
+
+        //______ Product Collection _____//
+        Route::resource('/product-collection', ProductCollectionController::class)->names('product.collection');
+        Route::get('/product-collection-data', [ProductCollectionController::class, 'getData'])->name('product-collection.data');
+        Route::post('/product-collection-change-status', [ProductCollectionController::class, 'changeCollectionStatus'])->name('product.collection.status');
+        Route::delete('/product-collection/delete/{product_id}', [ProductCollectionController::class, 'productCollectionDelete'])->name('product.collection.delete');
 
 
         //______ Orders _____//
