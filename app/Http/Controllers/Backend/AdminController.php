@@ -4,12 +4,20 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
+use App\Models\Brand;
+use App\Models\Category;
+use App\Models\Collection;
+use App\Models\NewsletterSubscriber;
+use App\Models\Order;
+use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Validator;
 use Illuminate\Support\Facades\Artisan;
 use App\Traits\ImageUploadTraits;
 use Brian2694\Toastr\Facades\Toastr;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
@@ -36,7 +44,23 @@ class AdminController extends Controller
 
     public function dashboards()
     {
-        return view('backend.pages.dashboard');
+        $data['total_order']     = Order::get()->count();
+        $data['today_order']     = Order::whereDate('created_at', Carbon::today())->count();
+        $data['pending_order']   = Order::where('order_status', 'pending')->count();
+        $data['delivered_order'] = Order::where('order_status', 'delivered')->count();
+        $data['cancelled_order'] = Order::where('order_status', 'cancelled')->count();
+        $data['total_amount']    = Order::where('order_status', '!=', 'cancelled')->sum('total_amount');
+        $data['todays_amount']   = Order::where('order_status', '!=', 'cancelled')->where('created_at', Carbon::today())->sum('total_amount');
+        $data['monthly_amount']   = Order::where('order_status', '!=', 'cancelled')->where('created_at', Carbon::now()->month)->sum('total_amount');
+        $data['yearly_amount']   = Order::where('order_status', '!=', 'cancelled')->where('created_at', Carbon::now()->year)->sum('total_amount');
+        $data['brands']          = Brand::where('status', 1)->count();
+        $data['categories']      = Category::where('status', 1)->count();
+        $data['subscriber']      = NewsletterSubscriber::count();
+        $data['products']        = Product::where('status', 1)->where('is_approved', 1)->count();
+        $data['collections']     = Collection::where('status', 1)->count();
+        $data['users']           = User::count();
+
+        return view('backend.pages.dashboard', $data);
     }
 
     /**

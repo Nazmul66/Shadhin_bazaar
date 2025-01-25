@@ -29,7 +29,7 @@ class FlashSaleController extends Controller
             FlashSale::updateOrCreate(
                 ['id' => 1],
                 ["end_date" => $request->end_date]
-        );
+            );
         }
         catch(\Exception $ex){
             DB::rollBack();
@@ -56,9 +56,9 @@ class FlashSaleController extends Controller
     {
         // get all data
         $flashSaleItems = FlashSaleItem::leftJoin('products', 'products.id', 'flash_sale_items.product_id')
-                            ->leftJoin('flash_sales', 'flash_sales.id', 'flash_sale_items.flash_sale_id')
-                            ->select('flash_sale_items.*','products.name', 'products.slug', 'products.thumb_image', 'flash_sales.end_date')
-                            ->get();
+            ->leftJoin('flash_sales', 'flash_sales.id', 'flash_sale_items.flash_sale_id')
+            ->select('flash_sale_items.*','products.name', 'products.slug', 'products.thumb_image', 'flash_sales.end_date')
+            ->get();
 
         return DataTables::of($flashSaleItems)
             ->addIndexColumn()
@@ -67,15 +67,12 @@ class FlashSaleController extends Controller
                      <img src="'.asset( $flashSaleItem->thumb_image ).'" width="50px" height="50px">
                 </a>';
             })
-
             ->addColumn('product_name', function ($flashSaleItem) {
                 return '<span class="text-dark"><strong>'. $flashSaleItem->name .'</strong></span>';
             })
-
             ->addColumn('end_date', function ($flashSaleItem) {
                 return '<span class="btn btn-info"><strong>'. $flashSaleItem->end_date .'</strong></span>';
             })
-
             ->addColumn('show_at_home', function ($flashSaleItem) {
                 if ($flashSaleItem->show_at_home == 1) {
                     return ' <a class="show_at_home" id="show_at_home" href="javascript:void(0)"
@@ -89,8 +86,6 @@ class FlashSaleController extends Controller
                     </a>';
                 }
             })
-
-
             ->addColumn('status', function ($flashSaleItem) {
                 if ($flashSaleItem->status == 1) {
                     return ' <a class="status" id="status" href="javascript:void(0)"
@@ -160,7 +155,6 @@ class FlashSaleController extends Controller
         $request->validate(
             [
                 'product_id' => ['required', 'unique:flash_sale_items,product_id'],
-
             ],
             [
                 'product_id.required' => 'Please fill up flash sale items',

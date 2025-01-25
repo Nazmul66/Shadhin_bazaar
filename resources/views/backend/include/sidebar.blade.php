@@ -12,7 +12,7 @@
                 <li >
                     <a href="{{ route('admin.dashboards') }}">
                         <i class='bx bx-home'></i>
-                        <span>{{ __('message.dashboard') }}</span>
+                        <span>Dashboard</span>
                     </a>
                 </li>
 

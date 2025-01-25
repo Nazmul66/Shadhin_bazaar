@@ -158,7 +158,6 @@
                 ],
                 processing: true,
                 serverSide: true,
-
                 ajax: "{{ route('admin.flashSale.item-data') }}",
                 // pageLength: 30,
 
@@ -346,6 +345,36 @@
                             $('#createForm')[0].reset();
                             $('.validation-error').html('');
                             datatables.ajax.reload();
+
+                            // Disable already selected options
+                            @foreach ($products as $item)
+                                var selectedId = "{{ $item->id }}";
+                                var option = $('#product_id').find('option[value="' + selectedId + '"]');
+                                option.prop('disabled', true);
+                            @endforeach
+
+                             //____ product_id Select2 ____//
+                            $('#product_id').select2({
+                                templateResult: formatState,
+                                templateSelection: formatState,
+                            });
+
+                            function formatState (state) {
+                                if (!state.id) {
+                                    return state.text; // Return text for disabled option
+                                }
+
+                                var imageUrl = $(state.element).data('image-url'); // Access image URL from data attribute
+
+                                if (!imageUrl) {
+                                    return state.text; // Return text if no image URL is available
+                                }
+
+                                var $state = $(
+                                    '<span><img src="' + imageUrl + '" style="width: 35px; height: 30px; margin-right: 8px;" /> ' + state.text + '</span>'
+                                );
+                                return $state;
+                            };
 
                             swal.fire({
                                 title: "Success",
