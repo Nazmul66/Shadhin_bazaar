@@ -38,7 +38,6 @@ class PermissionController extends Controller
                     <a class="btn btn-sm btn-danger" href="javascript:void(0)" data-id="'.$permission->id.'" id="deleteBtn"> <i class="fas fa-trash"></i></a>
                 </div>';
             })
-
             ->rawColumns(['name', 'group_name', 'action'])
             ->make(true);
     }
@@ -64,14 +63,11 @@ class PermissionController extends Controller
 
         DB::beginTransaction();
         try {
-            $permission = new Permission();
-
-            $permission->name             = strtolower($request->name);
-            $permission->group_name       = strtolower($request->group_name);
-            $permission->guard_name       = "admin";
-
-            // dd($permission);
-            $permission->save();
+            Permission::create([
+                'name'       => strtolower($request->name),
+                'group_name' => strtolower($request->group_name),
+                'guard_name' => "admin"
+            ]);
         }
         catch(\Exception $ex){
             DB::rollBack();
@@ -80,7 +76,6 @@ class PermissionController extends Controller
         }
 
         DB::commit();
-
         return response()->json(['message'=> "Successfully Permission Created!", 'status' => true]);
     }
 
@@ -96,10 +91,9 @@ class PermissionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Permission $permission)
     {
-        $permission  = Permission::find($id);
-
+        // $permission  = Permission::find($id);
         $request->validate(
             [
                 'name' => ['required', 'unique:permissions,name,'. $permission->id , 'max:255'],
@@ -116,18 +110,17 @@ class PermissionController extends Controller
 
         DB::beginTransaction();
         try {
-            $permission->name             = strtolower($request->name);
-            $permission->group_name       = strtolower($request->group_name);
-            $permission->guard_name       = "admin";
-
-            $permission->save();
+            $permission->update([
+                'name'       => strtolower($request->name),
+                'group_name' => strtolower($request->group_name),
+                'guard_name' => "admin"
+            ]);
         }
         catch(\Exception $ex){
             DB::rollBack();
             throw $ex;
             // dd($ex->getMessage());
         }
-
         DB::commit();
         return response()->json(['message'=> "success"],200);
     }

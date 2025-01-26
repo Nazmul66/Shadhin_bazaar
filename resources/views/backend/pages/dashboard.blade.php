@@ -39,7 +39,7 @@
                 <a href="{{ url('/admin/order/all') }}" class="card-body" style="height: 110px;">
                     <div class="analytics_card">
                          <div class="icon_design bg-primary">
-                            <i class='bx bx-line-chart'></i>
+                            <i class='bx bx-package'></i>
                          </div>
 
                          <div class="cart_text">
@@ -58,7 +58,7 @@
                 <div class="card-body" style="height: 110px;">
                     <div class="analytics_card">
                          <div class="icon_design bg-primary">
-                            <i class='bx bx-package'></i>
+                            <i class='bx bx-line-chart'></i>
                          </div>
 
                          <div class="cart_text">
@@ -81,7 +81,7 @@
                          </div>
 
                          <div class="cart_text">
-                             <h6>Today's Pending Orders</h6>
+                             <h6>Total Pending Orders</h6>
                              <p>{{ $pending_order }}</p>
                          </div>
                     </div>
@@ -100,7 +100,7 @@
                          </div>
 
                          <div class="cart_text">
-                             <h6>Today's Complete Orders</h6>
+                             <h6>Total Complete Orders</h6>
                              <p>{{ $delivered_order }}</p>
                          </div>
                     </div>
@@ -119,7 +119,7 @@
                          </div>
 
                          <div class="cart_text">
-                             <h6>Today's Cancelled Orders</h6>
+                             <h6>Total Cancelled Orders</h6>
                              <p>{{ $cancelled_order }}</p>
                          </div>
                     </div>
