@@ -16,12 +16,12 @@
     <div class="row">
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                <h4 class="mb-sm-0 font-size-18">All Users</h4>
+                <h4 class="mb-sm-0 font-size-18">All Admins</h4>
 
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="{{ route('admin.dashboards') }}">Dashboard</a></li>
-                        <li class="breadcrumb-item active">User List</li>
+                        <li class="breadcrumb-item active">Admin List</li>
                     </ol>
                 </div>
             </div>
@@ -33,9 +33,9 @@
     <div class="card">
         <div class="card-header">
             <div class="d-flex justify-content-between align-items-center">
-                <h4 class="card-title">All Users</h4>
+                <h4 class="card-title">All Admins</h4>
                 <a href="{{ route('admin.admin-role.create') }}" class="btn btn-primary">
-                    Add User
+                    Add Admin
                 </a>
             </div>
         </div>
@@ -56,20 +56,21 @@
                         @foreach ($admins as $row => $admin )
                             <tr>
                                 <td>{{ $row + 1 }}</td>
-                                <td><span class="badge bg-primary">{{ $admin->name }}</span></td>
+                                <td><span class="badge bg-info" style="font-size: 14px; padding: 10px 10px;">{{ $admin->name }}</span></td>
                                 <td>
-                                    <a href="mailto: {{ $admin->email }}" class="badge bg-success">{{ $admin->email }}</a>
+                                    <a href="mailto: {{ $admin->email }}" class="badge bg-info" style="font-size: 14px; padding: 10px 10px;">{{ $admin->email }}</a>
                                 </td>
                                 <td style="width: 600px;">
                                     @foreach ($admin->getRoleNames() as $role)
-                                         <span class="badge bg-secondary">{{ $role }}</span>
+                                         <span class="badge bg-success" style="font-size: 14px; padding: 10px 10px;">{{ $role }}</span>
                                     @endforeach
                                 </td>
                                 <td>
                                     <div class="d-flex gap-3">
-                                        <a class="btn btn-sm btn-info" href="{{ route('admin.admin-role.edit', $admin->id) }}"><i class='bx bx-lock'></i></i></a>
+                                        <a class="btn btn-sm btn-info" href="{{ route('admin.admin-role.edit', $admin->id) }}">
+                                            <i class='bx bx-lock'></i></a>
 
-                                        <form action="" method="POST" style="display:inline;">
+                                        <form action="{{ route('admin.admin-role.destroy', $admin->id) }}" method="POST" style="display:inline;">
                                             @csrf
                                             @method('delete')
 

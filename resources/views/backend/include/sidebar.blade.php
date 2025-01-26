@@ -259,7 +259,7 @@
                         </li>
                         <li>
                             <a href="{{ route('admin.admin-role.index') }}">
-                                <span >User</span>
+                                <span >All Admins</span>
                             </a>
                         </li>
                     </ul>

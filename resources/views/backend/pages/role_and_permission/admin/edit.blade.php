@@ -14,12 +14,12 @@
     <div class="row">
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                <h4 class="mb-sm-0 font-size-18">Update User</h4>
+                <h4 class="mb-sm-0 font-size-18">Update Admin</h4>
 
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="{{ route('admin.dashboards') }}">Dashboard</a></li>
-                        <li class="breadcrumb-item active">User</li>
+                        <li class="breadcrumb-item active">Admin</li>
                     </ol>
                 </div>
             </div>
@@ -31,13 +31,13 @@
     <div class="card">
         <div class="card-header">
             <div class="d-flex justify-content-between align-items-center">
-                <h4>Update User</h4>
+                <h4>Update Admin</h4>
                 <a href="{{ route('admin.admin-role.index') }}" class="btn btn-primary">Back</a>
             </div>
         </div>
 
         <div class="card-body">
-            <form method="POST" action="{{ route('admin.admin-role.update', $admin->id) }}" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('admin.admin-role.update', $admin->id) }}"  enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
 
@@ -55,12 +55,12 @@
 
                         <div class="mb-3">
                             <label for="password" class="form-label">Password</label>
-                            <input class="form-control" type="password" value="{{ $admin->name }}" name="password" id="password" placeholder="****************">
+                            <input class="form-control" type="password" name="password" id="password" placeholder="****************">
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label" for="role">Roles</label>
-                            <select class="form-select" id="role" name="role[]" multiple>
+                            <select class="form-select" id="role" name="roles[]" multiple>
                                 @foreach ($roles as $role)
                                    <option 
                                         value="{{ $role }}"

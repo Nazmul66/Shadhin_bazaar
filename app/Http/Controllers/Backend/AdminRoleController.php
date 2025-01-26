@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Admin;
+use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
@@ -16,7 +17,7 @@ class AdminRoleController extends Controller
      */
     public function index()
     {
-        $admins = Admin::orderBy('id', 'desc')->get();
+        $admins = Admin::all();
         return view('backend.pages.role_and_permission.admin.index',[
             "admins" => $admins,
         ]);
@@ -36,54 +37,74 @@ class AdminRoleController extends Controller
     public function store(Request $request)
     {
         // dd($request->all());
-
         $request->validate(
             [
-                'name' => ['required', 'unique:admins,name', 'max:255'],
-                'email' => ['required', 'email', 'max:255'],
-                'password' => ['required'],
-                'role' => ['required'],
+                'name'     => ['required', 'string', 'unique:admins,name', 'max:255'],
+                'email'    => ['required', 'unique:admins,email', 'email', 'max:255'],
+                'password' => [
+                    $request->isMethod('post') ? 'required' : 'nullable',
+                    'string', 
+                    'min:8', 
+                    'regex:/[a-z]/',    // Must contain at least one lowercase letter
+                    'regex:/[A-Z]/',    // Must contain at least one uppercase letter
+                    'regex:/[0-9]/',    // Must contain at least one number
+                    'regex:/[@$!%*?&#]/' // Must contain a special character
+                ],        
+                'roles' => [
+                    'required', 
+                    'array', 
+                    'exists:roles,name' // Ensure each role exists in the database
+                ],
             ],
             [
-                'name.required' => 'Please fill up the name',
-                'name.max' => 'Character might be 255',
-                'name.unique' => 'Character might be unique',
+                'name.required'     => 'The name field is required.',
+                'name.unique'       => 'This name is already in use.',
+                'email.required'    => 'The email field is required.',
+                'email.email'       => 'Please enter a valid email address.',
+                'email.unique'      => 'This email is already in use.',
+                'password.required' => 'The password field is required.',
+                'password.min'      => 'The password must be at least 8 characters.',
+                'password.regex'    => 'The password must include uppercase, lowercase, numbers, and special characters.',
+                'roles.required'    => 'Please assign at least one role.',
+                'roles.exists'      => 'One or more of the selected roles are invalid.',
             ]
         );
 
         DB::beginTransaction();
         try {
-            $admin = new Admin();
+           $admin =  Admin::create([
+                'name'     => $request->name,
+                'email'    => $request->email,
+                'password' => Hash::make($request->password),
+            ]);
 
-            $admin->name             = $request->name;
-            $admin->email            = $request->email;
-            $admin->password         = Hash::make($request->password);
-            $admin->save();
-
-            $admin->syncRoles($request->role); // sync roles
+            $admin->syncRoles($request->roles); // sync roles
         }
         catch(\Exception $ex){
             DB::rollBack();
-            throw $ex;
+            // throw $ex;
             // dd($ex->getMessage());
+            Toastr::error('New Admin create error', 'Error', ["positionClass" => "toast-top-right"]);
+            return back();
         }
 
         DB::commit();
+        Toastr::success('New Admin create successfully', 'Success', ["positionClass" => "toast-top-right"]);
         return redirect()->route('admin.admin-role.index');
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        $admin = Admin::findOrFail($id);
-        $roles = Role::where('guard_name', 'admin')->pluck('name', 'name')->all();
+        $admin     = Admin::findOrFail($id);
+        $roles     = Role::where('guard_name', 'admin')->pluck('name', 'name')->all();
         $userRoles = $admin->roles->pluck('name', 'name')->all();
         
         return view('backend.pages.role_and_permission.admin.edit',[
-            'admin' => $admin,
-            'roles' => $roles,
+            'admin'     => $admin,
+            'roles'     => $roles,
             'userRoles' => $userRoles,
         ]);
     }
@@ -93,50 +114,80 @@ class AdminRoleController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $admin  = Admin::find($id);
-
         $request->validate(
             [
-                'name' => ['required', 'unique:admins,name,'. $admin->id , 'max:255'],
+                'name'     => ['required', 'string', 'max:255', 'unique:admins,name,' . $id],
+                'email'    => ['required', 'email', 'max:255', 'unique:admins,email,' . $id],
+                'password' => [
+                    $request->isMethod('post') ? 'required' : 'nullable',
+                    'string', 
+                    'min:8', 
+                    'regex:/[a-z]/',    // Must contain at least one lowercase letter
+                    'regex:/[A-Z]/',    // Must contain at least one uppercase letter
+                    'regex:/[0-9]/',    // Must contain at least one number
+                    'regex:/[@$!%*?&#]/' // Must contain a special character
+                ],        
+                'roles' => [
+                    'required', 
+                    'array', 
+                    'exists:roles,name' // Ensure each role exists in the database
+                ],
             ],
             [
-                'name.required' => 'Please fill up the name',
-                'name.max' => 'Character might be 255 word',
-                'name.unique' => 'Character might be unique',
+                'name.required'     => 'The name field is required.',
+                'name.unique'       => 'This name is already in use.',
+                'email.required'    => 'The email field is required.',
+                'email.email'       => 'Please enter a valid email address.',
+                'email.unique'      => 'This email is already in use.',
+                'password.required' => 'The password field is required.',
+                'password.min'      => 'The password must be at least 8 characters.',
+                'password.regex'    => 'The password must include uppercase, lowercase, numbers, and special characters.',
+                'roles.required'    => 'Please assign at least one role.',
+                'roles.exists'      => 'One or more of the selected roles are invalid.',
             ]
         );
 
         DB::beginTransaction();
         try {
-            $admin->name             = $request->name;
-            $admin->email            = $request->email;
+            $admin = Admin::findOrFail($id);
 
-            if( !empty($request->password) ){
-                $admin->password         = Hash::make($request->password);
-            }
-            $admin->update();
-
-            $admin->syncRoles($request->role); // sync roles
+            // Update admin details
+            $admin->update([
+                'name'     => $request->name,
+                'email'    => $request->email,
+                'password' => $request->password ? Hash::make($request->password) : $admin->password, // Update password only if provided
+            ]);
+ 
+            $admin->syncRoles($request->roles); // sync roles
         }
         catch(\Exception $ex){
             DB::rollBack();
-            throw $ex;
+            // throw $ex;
             // dd($ex->getMessage());
+            Toastr::error('Admin updated error', 'Error', ["positionClass" => "toast-top-right"]);
+            return back();
         }
 
         DB::commit();
-
+        Toastr::success('Admin updated successfully', 'Success', ["positionClass" => "toast-top-right"]);
         return redirect()->route('admin.admin-role.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Admin $admin)
+    public function destroy($id)
     {
+        // dd($id);
+        $admin = Admin::findOrFail($id);
+
+        if( !empty($admin->image) ){
+            @unlink($admin->image);
+        }
         $admin->delete();
 
-        return response()->json(['message' => 'Admin Role has been deleted.'], 200);
+        Toastr::success('Admin User delete successfully', 'Success', ["positionClass" => "toast-top-right"]);
+        return redirect()->back();
     }
 
 }
