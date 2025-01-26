@@ -53,24 +53,17 @@
                     
                     <tbody>
                         @foreach ($roles as $row => $role)
-                            @php
-                               $role_permissions = DB::table('role_has_permissions')
-                                    ->where('role_has_permissions.role_id', $role->id)
-                                    ->leftJoin('permissions', 'permissions.id', 'role_has_permissions.permission_id')
-                                    ->where('permissions.guard_name', 'admin')
-                                    ->select('permissions.name as permission_name')
-                                    ->get(); 
-                            @endphp
-
                             <tr>
                                 <td>{{ $row + 1 }}</td>
-                                <td><span class="badge bg-primary">{{ $role->name }}</span></td>
+                                <td><span class="badge bg-info" style="font-size: 14px;
+                                    padding: 10px 10px;">{{ $role->name }}</span></td>
                                 <td>
-                                    <span class="badge bg-success">{{ $role->guard_name }}</span>
+                                    <span class="badge bg-info" style="font-size: 14px;
+                                    padding: 10px 10px;">{{ $role->guard_name }}</span>
                                 </td>
                                 <td style="width: 600px;">
-                                    @foreach ($role_permissions as $role_perm)
-                                         <span class="badge bg-secondary">{{ $role_perm->permission_name }}</span>
+                                    @foreach ($role->permissions as $item)
+                                         <span class="badge bg-success mb-2" style="font-size: 14px; padding: 10px 10px;">{{ $item->name }}</span>
                                     @endforeach
                                 </td>
                                 <td>

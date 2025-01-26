@@ -85,15 +85,13 @@
                             </div>
 
                             <div class="d-flex justify-content-end align-items-center">
-                                <button type="button" class="btn btn-secondary waves-effect me-3"
+                                <button type="button" class="btn btn-danger waves-effect me-3"
                                     data-bs-dismiss="modal">Close </button>
 
                                 <button type="submit" id="btn-store" class="btn btn-primary waves-effect waves-light"> Save changes</button>
                             </div>
                         </form>
                     </div>
-
-
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div>
@@ -131,7 +129,7 @@
                             </div>
 
                             <div class="d-flex justify-content-end align-items-center">
-                                <button type="button" class="btn btn-secondary waves-effect me-3"
+                                <button type="button" class="btn btn-danger waves-effect me-3"
                                     data-bs-dismiss="modal">Close</button>
 
                                 <button type="submit" id="btn-store" class="btn btn-primary waves-effect waves-light"> Update </button>

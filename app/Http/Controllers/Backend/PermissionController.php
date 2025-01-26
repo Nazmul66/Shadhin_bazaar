@@ -26,10 +26,10 @@ class PermissionController extends Controller
 
         return DataTables::of($permissions)
             ->addColumn('name', function ($permission) {
-                return '<span class="badge bg-primary">'. $permission->name .'</span>';
+                return '<span class="badge bg-primary" style="font-size: 14px; padding: 10px 10px;">'. $permission->name .'</span>';
             })
             ->addColumn('group_name', function ($permission) {
-                return '<span class="badge bg-success">'. $permission->group_name .'</span>';
+                return '<span class="badge bg-success" style="font-size: 14px; padding: 10px 10px;">'. $permission->group_name .'</span>';
             })
             ->addColumn('action', function ($permission) {
                 return '<div class="d-flex gap-3">
@@ -64,7 +64,7 @@ class PermissionController extends Controller
         DB::beginTransaction();
         try {
             Permission::create([
-                'name'       => strtolower($request->name),
+                'name'       => convertToSlugDot(strtolower($request->name)),
                 'group_name' => strtolower($request->group_name),
                 'guard_name' => "admin"
             ]);
@@ -111,7 +111,7 @@ class PermissionController extends Controller
         DB::beginTransaction();
         try {
             $permission->update([
-                'name'       => strtolower($request->name),
+                'name'       => convertToSlugDot(strtolower($request->name)),
                 'group_name' => strtolower($request->group_name),
                 'guard_name' => "admin"
             ]);

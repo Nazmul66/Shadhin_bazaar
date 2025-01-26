@@ -27,6 +27,13 @@ use Illuminate\Support\Facades\Session;
           ->map(fn($word) => ucfirst(strtolower($word))) // Capitalize each word
           ->join('-'); // Join with hyphens
   }
+
+  function convertToSlugDot($string)
+  {
+      return collect(explode(' ', str_replace('_', ' ', $string)))
+          ->map(fn($word) => strtolower($word)) 
+          ->join('.'); // Join with hyphens
+  }
   
   if (!function_exists('getSetting')) {
     /**

@@ -217,6 +217,7 @@ Route::middleware('setLanguage')->group(function(){
         //______ Role & Permission _____//
         Route::resource('/permission', PermissionController::class)->names('permission');
         Route::get('/permission-data', [PermissionController::class, 'getData'])->name('permission-data');
+        
         Route::resource('/role', RoleController::class)->names('role');
         Route::resource('/admin-role', AdminRoleController::class)->names('admin-role');
 

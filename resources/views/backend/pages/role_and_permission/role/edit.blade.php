@@ -1,7 +1,5 @@
 @extends('backend.layout.master')
 
-@section('edit_role', 'mm-active')
-
 @push('title')
     Update Role
 @endpush
@@ -16,7 +14,7 @@
     <div class="row">
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                <h4 class="mb-sm-0 font-size-18">Role</h4>
+                <h4 class="mb-sm-0 font-size-18">All Roles</h4>
 
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
@@ -33,61 +31,140 @@
     <div class="card">
         <div class="card-header">
             <div class="d-flex justify-content-between align-items-center">
-                <h3 >Update Role</h3>
-                <a href="{{ route('admin.role.index') }}" class="btn btn-primary">Back</a>
+                <h5 class="m-0">Admin Update Role</h5>
+                <span class="float-right">
+                    <a href="{{ route('admin.role.index') }}" class="btn btn-primary"> Back </a>
+                </span>
             </div>
         </div>
 
         <div class="card-body">
-            <form method="POST" action="{{ route('admin.role.update', $role->id) }}" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('admin.role.update', $role->id) }}">
                 @csrf
                 @method('PUT')
 
-                <div class="row align-items-center mb-5">
-                    <div class="col-lg-6 mb-3">
-                        <input type="text" class="form-control" placeholder="Create Role....." required name="name" value="{{ $role->name }}">
-                    </div>
-
-                    <div class="col-lg-2 offset-lg-4 text-end">
-                        <button type="submit" class="btn btn-primary">Update</button>
-                    </div>
+                <div class="mb-3">
+                    <label for="name" class="form-label">Role Name</label>
+                    <input type="text" value="{{ $role->name }}" class="form-control" name="name" placeholder="Name">
                 </div>
 
-                <div class="mb-5">
-                    <h3 >Permission List</h3>
-                </div>
-
-                <div class="row mb-5">
-                    @foreach($permissions as $groupName => $groupPermissions)  <!-- Loop through groups -->
-                        <div class="col-12 mb-4">
-                            <h5>{{ ucfirst($groupName) }}</h5>  <!-- Display group name -->
-                
-                            @foreach($groupPermissions as $permission)  <!-- Loop through permissions in the group -->
-                                <div class="row mb-2">
-                                    <div class="col-9 offset-1">
-                                        <div class="d-flex align-items-center border-bottom py-2">
-                                            <input 
-                                                class="form-check-input m-0" 
-                                                type="checkbox" 
-                                                name="permission[]" 
-                                                value="{{ $permission->name }}"
-                                                {{ in_array($permission->id , $role_has_permissions) ? "checked" : "" }} 
-                                            >
-                                            <div class="w-100 ms-3">
-                                                <span>{{ $permission->name }}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endforeach
+                <div class="mb-3 alignment_margin">
+                    <div class="row">
+                        <div class="col-3">
+                            <div class="custom-control custom-checkbox">
+                                <input class="form-check-input" 
+                                type="checkbox" 
+                                id="permission_all"
+                                {{ App\Models\Admin::roleHasPermission($role, $permissions) ? 'checked' : '' }}
+                                >
+                                <label for="permission_all" class="custom-control-label text-capitalize">All Permission</label>
+                            </div>
                         </div>
-                    @endforeach
+                    </div>
+
                 </div>
 
+                <div class="mb-3 alignment_margin">
+                    @php $i = 1; @endphp
+                    @foreach ($permission_groups as $row)
+                        @php
+                            $groupPermissions = App\Models\Admin::getPermissionsByGroupName($row->name);
+                            $groupPermissionNames = $groupPermissions->pluck('name')->toArray();
+                        @endphp
+
+
+                        <div class="row">
+                            <!-- Parent Checkbox -->
+                            <div class="col-3">
+                                <div class="custom-control custom-checkbox">
+                                    <input 
+                                    {{ !array_diff($groupPermissionNames, $rolePermissions) ? 'checked' : '' }}
+                                        id="management-{{ $i }}" 
+                                        class="form-check-input group-checkbox" 
+                                        type="checkbox" 
+                                        data-group-id="{{ $i }}">
+                                    <label 
+                                        for="management-{{ $i }}" 
+                                        class="custom-control-label text-capitalize">
+                                        {{ $row->name }}
+                                    </label>
+                                </div>
+                            </div>
+                
+                            <!-- Child Checkboxes -->
+                            <div class="col-9 group-{{ $i }}">
+                                @php
+                                    $permissionss = App\Models\Admin::getPermissionsByGroupName($row->name);
+                                @endphp
+                
+                                @foreach ($permissionss as $item)
+                                    <div class="custom-control custom-checkbox mb-2">
+                                        <input 
+                                            name="permissions[]" 
+                                            class="form-check-input child-checkbox group-{{ $i }}-checkbox" 
+                                            type="checkbox" 
+                                            {{ $role->hasPermissionTo($item->name) ? 'checked' : "" }}
+                                            id="permission_checkbox_{{ $item->id }}" 
+                                            value="{{ $item->name }}" 
+                                            data-group-id="{{ $i }}">
+                                        <label 
+                                            for="permission_checkbox_{{ $item->id }}" 
+                                            class="custom-control-label">
+                                            {{ $item->name }}
+                                        </label>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                        @php $i++; @endphp
+                    @endforeach
+                    <hr>  
+                </div>
+
+                <button type="submit" class="btn btn-primary">Update</button>
             </form>
         </div>
     </div>
 
 @endsection
+
+
+@push('add-script')
+    <script>
+        $(document).ready(function() {
+            // All input checkbox inputs are checked
+            $('#permission_all').click(function() {
+                console.log($(this).is(':checked'));
+                if ($(this).is(':checked')) {
+                    $('input[type=checkbox]').prop('checked', true);
+                } else {
+                    $('input[type=checkbox]').prop('checked', false);
+                }
+            })
+
+            // Handle parent checkbox controlling child checkboxes
+            $('.group-checkbox').on('change', function () {
+                const groupId = $(this).data('group-id'); // Get the group ID from the parent checkbox
+                const $childCheckboxes = $(`.group-${groupId}-checkbox`);
+                
+                // Check/uncheck all child checkboxes based on the parent checkbox status
+                $childCheckboxes.prop('checked', $(this).prop('checked'));
+            });
+
+
+            // Handle child checkboxes affecting the parent checkbox
+            $('.child-checkbox').on('change', function () {
+                const groupId = $(this).data('group-id'); // Get the group ID from the child checkbox
+                const $childCheckboxes = $(`.group-${groupId}-checkbox`);
+                const $groupCheckbox = $(`#management-${groupId}`);
+
+                // If all child checkboxes are checked, check the parent checkbox; otherwise, uncheck it
+                const allChecked = $childCheckboxes.length === $childCheckboxes.filter(':checked').length;
+                $groupCheckbox.prop('checked', allChecked);
+            });
+
+        });
+    </script>
+@endpush
 
 

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Admin;
+use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Permission;
@@ -25,48 +27,42 @@ class RoleController extends Controller
     public function create()
     {
         // [ V.V.V.I ] AKhane 2ta bhag a query run kora hoyese, first get porjonto shob gulo loop kore dekhabe then group by ta alada query hisebe show kore dekhabe, example below-->
-        $permissions = Permission::select('id', 'name', 'guard_name', 'group_name')
-                        ->where('guard_name', 'admin') // always define this guard name
-                        ->orderBy('group_name')
-                        ->get()
-                        ->groupBy('group_name');  // Group permissions by 'group_name'
-       return view('backend.pages.role_and_permission.role.create',[
-             'permissions' => $permissions
-       ]);
+
+        $data['permissions']        = Permission::all();
+        $data['permission_groups']  = Admin::getPermissionGroup();
+       return view('backend.pages.role_and_permission.role.create', $data);
     }
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        $request->validate(
-            [
-                'name' => ['required', 'unique:roles,name', 'max:255'],
-            ],
-            [
-                'name.required' => 'Please fill up the name',
-                'name.max' => 'Character might be 255',
-                'name.unique' => 'Character might be unique',
-            ]
-        );
+        // dd($request->all());
+        $request->validate([
+            'name'          => 'required|string|unique:roles,name|max:255',
+            'permissions'    => 'required|array|min:1', 
+            'permissions.*' => 'string|exists:permissions,name', 
+        ]);
 
         DB::beginTransaction();
         try {
-            $role = new Role();
+            $role = Role::create([
+                    'name'       => $request->name,
+                    'guard_name' => 'admin',
+                ]);
 
-            $role->name             = $request->name;
-            $role->guard_name       = "admin";
-            $role->save();
-
-            $role->syncPermissions($request->permission);  // multiple permissions
+            $role->syncPermissions($request->permissions);  // multiple permissions
         }
         catch(\Exception $ex){
+            // throw $ex;
             DB::rollBack();
-            throw $ex;
+            Toastr::error('Role created error', 'Error', ["positionClass" => "toast-top-right"]);
+            return back();
             // dd($ex->getMessage());
         }
 
         DB::commit();
+        Toastr::success('Role created Successfully', 'Success', ["positionClass" => "toast-top-right"]);
         return redirect()->route('admin.role.index');
     }
 
@@ -75,60 +71,46 @@ class RoleController extends Controller
      */
     public function edit(string $id)
     {
-        $role = Role::findOrFail($id);
-        
-        $role_has_permissions = DB::table('role_has_permissions')
-                    ->where('role_id', $role->id)
-                    ->pluck('permission_id')
-                    ->all();
+        $data['role']               = Role::findOrFail($id);
+        $data['permissions']        = Permission::all();
+        $data['permission_groups']  = Admin::getPermissionGroup(); 
 
-        $permissions = Permission::select('id', 'name', 'guard_name', 'group_name')
-                    ->where('guard_name', 'admin') // always define this guard name
-                    ->orderBy('group_name')
-                    ->get()
-                    ->groupBy('group_name');  // Group permissions by 'group_name'
-                    
-        return view('backend.pages.role_and_permission.role.edit',[
-            "role" => $role,
-            "permissions" => $permissions,
-            "role_has_permissions" => $role_has_permissions,
-        ]);
+        // Get all permissions for this role
+        $data['rolePermissions']   = $data['role']->permissions->pluck('name')->toArray();
+        return view('backend.pages.role_and_permission.role.edit', $data);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Role $role)
     {
-        $role = Role::findOrFail($id);
+        // $role = Role::findOrFail($id);
+        $request->validate([
+            'name'           => 'required|string|max:255|unique:roles,name,' . $role->id,
+            'permissions'    => 'required|array|min:1', 
+            'permissions.*'  => 'string|exists:permissions,name', 
+        ]);
 
-        $request->validate(
-            [
-                'name' => ['required', 'unique:roles,name,'. $role->id , 'max:255'],
-            ],
-            [
-                'name.required' => 'Please fill up the name',
-                'name.max' => 'Character might be 255 word',
-                'name.unique' => 'Character might be unique',
-            ]
-        );
-
-        
         DB::beginTransaction();
         try {
-            $role->name             = $request->name;
-            $role->guard_name       = "admin";
-            $role->save();
+            $role->update([
+                'name'       => $request->name,
+                'guard_name' => 'admin',
+            ]);
 
-            $role->syncPermissions($request->permission);  // multiple permissions
+            $role->syncPermissions($request->permissions);  // multiple permissions
         }
         catch(\Exception $ex){
             DB::rollBack();
-            throw $ex;
+            // throw $ex;
+            Toastr::error('Role Updated error', 'Error', ["positionClass" => "toast-top-right"]);
+            return back();
             // dd($ex->getMessage());
         }
 
         DB::commit();
+        Toastr::success('Role Updated Successfully', 'Success', ["positionClass" => "toast-top-right"]);
         return redirect()->route('admin.role.index');
     }
 
@@ -138,8 +120,15 @@ class RoleController extends Controller
     public function destroy(string $id)
     {
         // dd($id);
-        Role::findOrFail($id)->delete();
+        $role = Role::findOrFail($id);
+
+        // Detach all permissions from the role
+        $role->syncPermissions([]);
+
+        // Delete the role
+        $role->delete();
         
+        Toastr::success('Role Delete Successfully', 'Success', ["positionClass" => "toast-top-right"]);
         return redirect()->back();
     }
 }
