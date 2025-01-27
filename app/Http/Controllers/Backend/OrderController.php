@@ -10,9 +10,21 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Blade;
+use Spatie\Permission\Exceptions\UnauthorizedException;
 
 class OrderController extends Controller
 {
+    public $user;
+    public function __construct()
+    {
+        $this->user = Auth::guard('admin')->user();
+        if (!$this->user) {
+            abort(403, 'Unauthorized access');
+        }
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -59,40 +71,57 @@ class OrderController extends Controller
                 return $amount;
             })
             ->addColumn('payment_status', function ($order) {
-                return '
+                if(auth("admin")->user()->can("payment.status.order"))
+                 {
+                    return '
                     <select class="form-select" id="payment_status" data-id="' . $order->id . '">
                         <option value="0" ' . ($order->payment_status == 0 ? 'selected' : '') . '>Pending</option>
                         <option value="1" ' . ($order->payment_status == 1 ? 'selected' : '') . '>Paid</option>
                         <option value="2" ' . ($order->payment_status == 2 ? 'selected' : '') . '>Due</option>
-                    </select>
-                ';
+                    </select>';
+                 }
+                else{
+                    return '<span class="badge bg-info">N/A</span>'; 
+                }
             })
             ->addColumn('order_status', function ($order) {
-                $orderStatuses = config('order_status_data.order_status'); 
-                $options = '';
-            
-                foreach ($orderStatuses as $key => $status) {
-                    // Compare values properly to avoid matching issues
-                    $selected = (trim($order->order_status) === trim($key)) ? 'selected' : '';
-                    $options .= '<option value="' . $key . '" ' . $selected . '>' . ucfirst($status['status']) . '</option>';
+                if(auth("admin")->user()->can("order.status.order"))
+                {
+                    $orderStatuses = config('order_status_data.order_status'); 
+                    $options = '';
+                
+                    foreach ($orderStatuses as $key => $status) {
+                        // Compare values properly to avoid matching issues
+                        $selected = (trim($order->order_status) === trim($key)) ? 'selected' : '';
+                        $options .= '<option value="' . $key . '" ' . $selected . '>' . ucfirst($status['status']) . '</option>';
+                    }
+                
+                    return '<select class="form-select" id="order_status" data-id="' . $order->id . '">' . $options . '</select>';        
                 }
-            
-                return '<select class="form-select" id="order_status" data-id="' . $order->id . '">' . $options . '</select>';
+                else{
+                    return '<span class="badge bg-info">N/A</span>'; 
+                }
             })
             ->addColumn('action', function ($order) {
-                 return '
-                <div class="btn-group">
-                    <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Actions <i class="mdi mdi-chevron-down"></i>
-                    </button>
+                $actionHtml = Blade::render('
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Actions <i class="mdi mdi-chevron-down"></i>
+                        </button>
 
-                    <div class="dropdown-menu dropdownmenu-primary" style="">
-                        <a class="dropdown-item text-info" href="'. route('admin.order.show', $order->id) .'"><i class="fas fa-eye"></i> Invoice</a>
+                        <div class="dropdown-menu dropdownmenu-primary" style="">
+                            @if(auth("admin")->user()->can("invoice.order"))
+                                <a class="dropdown-item text-info" href="'. route('admin.order.show', $order->id) .'"><i class="fas fa-eye"></i> Invoice</a>
+                            @endif
 
-                        <a class="dropdown-item text-danger" href="javascript:void(0)" data-id="'.$order->id.'" id="deleteBtn">
-                            <i class="fas fa-trash"></i> Delete
-                        </a>
+                            @if(auth("admin")->user()->can("delete.order"))
+                                <a class="dropdown-item text-danger" href="javascript:void(0)" data-id="'.$order->id.'" id="deleteBtn">
+                                    <i class="fas fa-trash"></i> Delete
+                                </a>
+                            @endif
+                        </div>
                     </div>
-                </div>';
+                ', ['order' => $order]);
+                return $actionHtml;
             })
 
             ->rawColumns(['order_date', 'status', 'total_amount', 'product_qty', 'order_status', 'payment_status', 'action'])
@@ -102,6 +131,10 @@ class OrderController extends Controller
 
     public function changePaymentStatus(Request $request)
     {
+        if (!$this->user || !$this->user->can('payment.status.order')) {
+            throw UnauthorizedException::forPermissions(['payment.status.order']);
+        }
+
         $id          = $request->id;
         $status      = $request->status;
 
@@ -115,6 +148,10 @@ class OrderController extends Controller
 
     public function changeOrderStatus(Request $request)
     {
+        if (!$this->user || !$this->user->can('order.status.order')) {
+            throw UnauthorizedException::forPermissions(['order.status.order']);
+        }
+
         $id          = $request->id;
         $status      = $request->status;
 
@@ -130,6 +167,9 @@ class OrderController extends Controller
      */
     public function orderShow(string $id)
     {
+        if (!$this->user || !$this->user->can('invoice.order')) {
+            throw UnauthorizedException::forPermissions(['invoice.order']);
+        }
         $order  = DB::table('orders')
                     ->leftJoin('transactions', 'transactions.order_id', 'orders.order_id')
                     ->where('orders.id', $id)
@@ -143,6 +183,10 @@ class OrderController extends Controller
 
     public function orderDestroy(Order $order)
     {
+        if (!$this->user || !$this->user->can('delete.order')) {
+            throw UnauthorizedException::forPermissions(['delete.order']);
+        }
+
         // dd($order);
         // Delete all related OrderProduct entries
         foreach (OrderProduct::where('order_id', $order->order_id)->get() as $orderItem) {

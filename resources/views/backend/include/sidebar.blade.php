@@ -119,7 +119,7 @@
                         </li>
 
                         <li >
-                            <a href="">
+                            <a href="javascript: void(0);">
                                 <span >Ad Banner</span>
                             </a>
                         </li>

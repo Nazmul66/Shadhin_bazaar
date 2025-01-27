@@ -40,6 +40,7 @@ class FaqController extends Controller
             ->addIndexColumn()
             ->addColumn('status', function ($faq) {
                 if(auth("admin")->user()->can("status.faq"))
+                {
                     if ($faq->status == 1) {
                         return ' <a class="status" id="status" href="javascript:void(0)"
                             data-id="'.$faq->id.'" data-status="'.$faq->status.'"> <i
@@ -51,6 +52,7 @@ class FaqController extends Controller
                                 class="fa-solid fa-toggle-off fa-2x" style="color: grey"></i>
                         </a>';
                     }
+                }
                 else{
                     return '<span class="badge bg-info">N/A</span>'; 
                 }
