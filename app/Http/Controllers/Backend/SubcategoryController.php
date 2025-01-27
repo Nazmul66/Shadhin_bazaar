@@ -12,11 +12,21 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Blade;
+use Spatie\Permission\Exceptions\UnauthorizedException;
 
 class SubcategoryController extends Controller
 {
     use ImageUploadTraits;
-
+    public $user;
+    public function __construct()
+    {
+        $this->user = Auth::guard('admin')->user();
+        if (!$this->user) {
+            abort(403, 'Unauthorized access');
+        }
+    }
     /**
      * Display a listing of the resource.
      */
@@ -38,30 +48,32 @@ class SubcategoryController extends Controller
                 ->get();
 
         return DataTables::of($subCategories)
-
             ->addIndexColumn()
             ->addColumn('subCategoryImg', function ($subCategory) {
                 return '<a href="'.asset( $subCategory->subcategory_img ).'" target="__blank">
                     <img src="'.asset( $subCategory->subcategory_img ).'" width="50px" height="50px">
                 </a>';
             })
-
             ->addColumn('status', function ($subCategory) {
-                if ($subCategory->status == 1) {
-                    return ' <a class="status" id="status" href="javascript:void(0)"
-                        data-id="'.$subCategory->id.'" data-status="'.$subCategory->status.'"> <i
-                            class="fa-solid fa-toggle-on fa-2x"></i>
-                    </a>';
-                } else {
-                    return '<a class="status" id="status" href="javascript:void(0)"
-                        data-id="'.$subCategory->id.'" data-status="'.$subCategory->status.'"> <i
-                            class="fa-solid fa-toggle-off fa-2x" style="color: grey"></i>
-                    </a>';
+                if(auth("admin")->user()->can("status.subcategory"))
+                    if ($subCategory->status == 1) {
+                        return ' <a class="status" id="status" href="javascript:void(0)"
+                            data-id="'.$subCategory->id.'" data-status="'.$subCategory->status.'"> <i
+                                class="fa-solid fa-toggle-on fa-2x"></i>
+                        </a>';
+                    } else {
+                        return '<a class="status" id="status" href="javascript:void(0)"
+                            data-id="'.$subCategory->id.'" data-status="'.$subCategory->status.'"> <i
+                                class="fa-solid fa-toggle-off fa-2x" style="color: grey"></i>
+                        </a>';
+                    }
+                else{
+                    return '<span class="badge bg-info">N/A</span>'; 
                 }
             })
 
             ->addColumn('action', function ($subCategory) {
-                return '
+                $actionHtml = Blade::render('
                     <div class="btn-group">
                         <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Actions <i class="mdi mdi-chevron-down"></i>
                         </button>
@@ -71,15 +83,21 @@ class SubcategoryController extends Controller
                                 <i class="fas fa-eye"></i> View
                             </a>
 
-                            <a class="dropdown-item text-success" id="editButton" href="javascript:void(0)" data-id="'.$subCategory->id.'" data-bs-toggle="modal" data-bs-target="#editModal">
-                                <i class="fas fa-edit"></i> Edit
-                            </a>
+                            @if(auth("admin")->user()->can("update.subcategory"))
+                                <a class="dropdown-item text-success" id="editButton" href="javascript:void(0)" data-id="'.$subCategory->id.'" data-bs-toggle="modal" data-bs-target="#editModal">
+                                    <i class="fas fa-edit"></i> Edit
+                                </a>
+                            @endif
 
-                            <a class="dropdown-item text-danger" href="javascript:void(0)" data-id="'.$subCategory->id.'" id="deleteBtn">
-                                <i class="fas fa-trash"></i> Delete
-                            </a>
+                            @if(auth("admin")->user()->can("delete.subcategory"))
+                                <a class="dropdown-item text-danger" href="javascript:void(0)" data-id="'.$subCategory->id.'" id="deleteBtn">
+                                    <i class="fas fa-trash"></i> Delete
+                                </a>
+                            @endif
                         </div>
-                    </div>';
+                    </div>
+                ', ['subCategory' => $subCategory]);
+                return $actionHtml;
             })
 
             ->rawColumns(['subCategoryImg','status','action'])
@@ -91,6 +109,9 @@ class SubcategoryController extends Controller
      */
     public function store(CreateSubCategoryRequest $request)
     {
+        if (!$this->user || !$this->user->can('create.subcategory')) {
+            throw UnauthorizedException::forPermissions(['create.subcategory']);
+        }
 
         DB::beginTransaction();
         try {
@@ -126,6 +147,10 @@ class SubcategoryController extends Controller
      */
     public function changeSubCategoryStatus(Request $request)
     {
+        if (!$this->user || !$this->user->can('status.subcategory')) {
+            throw UnauthorizedException::forPermissions(['status.subcategory']);
+        }
+
         $id = $request->id;
         $Current_status = $request->status;
 
@@ -148,6 +173,10 @@ class SubcategoryController extends Controller
      */
     public function edit(Subcategory $subcategory)
     {
+        if (!$this->user || !$this->user->can('update.subcategory')) {
+            throw UnauthorizedException::forPermissions(['update.subcategory']);
+        }
+
         // dd($subcategory);
         return response()->json(['success' => $subcategory]);
     }
@@ -157,6 +186,10 @@ class SubcategoryController extends Controller
      */
     public function update(UpdateSubCategoryRequest $request, string $id)
     {
+        if (!$this->user || !$this->user->can('update.subcategory')) {
+            throw UnauthorizedException::forPermissions(['update.subcategory']);
+        }
+
         $subcategory  = Subcategory::find($id);
 
         DB::beginTransaction();
@@ -189,6 +222,10 @@ class SubcategoryController extends Controller
      */
     public function destroy(Subcategory $subcategory)
     {
+        if (!$this->user || !$this->user->can('delete.subcategory')) {
+            throw UnauthorizedException::forPermissions(['delete.subcategory']);
+        }
+
         if ($subcategory->subcategory_img) {
             if (file_exists($subcategory->subcategory_img)) {
                 unlink($subcategory->subcategory_img);
