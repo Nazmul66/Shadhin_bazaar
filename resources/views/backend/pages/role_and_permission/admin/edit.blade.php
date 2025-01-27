@@ -63,9 +63,9 @@
 
                         <div class="mb-3">
                             <label for="phone" class="form-label">Phone</label>
-                            <input class="form-control" type="text" name="phone" id="phone" placeholder="Phone..." value="{{ old('phone', $admin->phone) }}"> 
+                            <input class="form-control" type="text" name="phone" id="phone" placeholder="Phone..." value="{{ old('phone', $admin->phone) }}" pattern="[0-9]{11,15}" oninput="validatePhone(this)"> 
 
-                             @error('phone')
+                            @error('phone')
                                 <span class="text-danger mt-1">{{ $message }}</span>
                             @enderror
                         </div>
@@ -105,4 +105,21 @@
 
 @endsection
 
+
+@push('add-script')
+    <script>
+        function validatePhone(input) {
+            const phone = input.value; // Get the input value
+
+            // Check if the phone number length is within the valid range
+            if (phone.length >= 11 && phone.length <= 19) {
+                input.classList.remove('is-invalid'); // Remove error styling
+                input.classList.add('is-valid'); // Add success styling (optional)
+            } else {
+                input.classList.add('is-invalid'); // Add error styling
+                input.classList.remove('is-valid'); // Remove success styling (optional)
+            }
+        }
+    </script>
+@endpush
 

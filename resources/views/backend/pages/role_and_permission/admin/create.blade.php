@@ -6,6 +6,16 @@
 
 @push('add-css')
     {{-- <link rel="stylesheet" href="https://cdn.datatables.net/2.1.6/css/dataTables.dataTables.min.css"> --}}
+
+    <style>
+        .is-valid {
+            border-color: #198754;
+        }
+
+        .is-invalid {
+            border-color: #dc3545;
+        }
+    </style>
 @endpush
 
 @section('body-content')
@@ -62,17 +72,16 @@
 
                         <div class="mb-3">
                             <label for="phone" class="form-label">Phone</label>
-                            <input class="form-control" type="text" name="phone" id="phone" placeholder="Phone..." value="{{ old('phone') }}"> 
+                            <input class="form-control" type="number" name="phone" id="phone" placeholder="Phone..." pattern="[0-9]{11,15}" value="{{ old('phone') }}" oninput="validatePhone(this)"> 
 
                              @error('phone')
-                                <span class="text-danger mt-1">{{ $message }}</span>
+                                <span id="phone-error" class="text-danger mt-1">{{ $message }}</span>
                             @enderror
                         </div>
 
                         <div class="mb-3">
                             <label for="password" class="form-label">Password</label>
                             <input class="form-control" type="password" name="password" id="password" placeholder="Password...">
-
                             
                             @error('password')
                                 <span class="text-danger mt-1">{{ $message }}</span>
@@ -103,3 +112,19 @@
 @endsection
 
 
+@push('add-script')
+    <script>
+        function validatePhone(input) {
+            const phone = input.value; // Get the input value
+
+            // Check if the phone number length is within the valid range
+            if (phone.length >= 11 && phone.length <= 19) {
+                input.classList.remove('is-invalid'); // Remove error styling
+                input.classList.add('is-valid'); // Add success styling (optional)
+            } else {
+                input.classList.add('is-invalid'); // Add error styling
+                input.classList.remove('is-valid'); // Remove success styling (optional)
+            }
+        }
+    </script>
+@endpush

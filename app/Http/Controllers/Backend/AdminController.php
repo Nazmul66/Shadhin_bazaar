@@ -13,7 +13,6 @@ use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Validator;
 use Illuminate\Support\Facades\Artisan;
 use App\Traits\ImageUploadTraits;
 use Brian2694\Toastr\Facades\Toastr;
@@ -105,6 +104,8 @@ class AdminController extends Controller
     public function logout()
     {
         Auth::guard('admin')->logout();
+        
+        Toastr::success('Admin Logout Successfully', 'Success', ["positionClass" => "toast-top-right"]);
         return redirect('/admin/login');
     }
 
@@ -146,31 +147,19 @@ class AdminController extends Controller
                     'password' => bcrypt($request->new_password)
                 ]);
 
-                $notification = [
-                    'alert-type' => 'success', 
-                    'message' => "Profile updated successfully", 
-                ];
-        
-               return redirect()->route('admin.dashboards')->with($notification);
+                Toastr::success('Profile updated successfully', 'Success', ["positionClass" => "toast-top-right"]);        
+               return redirect()->route('admin.dashboards');
            }
 
            else{
-            $notification = [
-                'alert-type' => 'error', 
-                'message' => "Your New password & Confirm Password not matched", 
-            ];
-    
-           return redirect()->back()->with($notification);
+                Toastr::error('Your New password & Confirm Password not matched', 'Error', ["positionClass" => "toast-top-right"]); 
+                return redirect()->back();
            }
         }
 
         else{
-            $notification = [
-                'alert-type' => 'error', 
-                'message' => "Your Current password is incorrect", 
-            ];
-    
-           return redirect()->back()->with($notification);
+            Toastr::error('Your Current password is incorrect', 'Error', ["positionClass" => "toast-top-right"]); 
+            return redirect()->back();
         }
     }
 

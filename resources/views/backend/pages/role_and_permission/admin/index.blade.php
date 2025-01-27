@@ -51,6 +51,7 @@
                             <th>#SL.</th>
                             <th>Name</th>
                             <th>Email</th>
+                            <th>Phone</th>
                             <th style="width: 600px;">Role</th>
                             <th>Actions</th>
                         </tr>
@@ -62,6 +63,14 @@
                                 <td><span class="badge bg-info" style="font-size: 14px; padding: 10px 10px;">{{ $admin->name }}</span></td>
                                 <td>
                                     <a href="mailto: {{ $admin->email }}" class="badge bg-info" style="font-size: 14px; padding: 10px 10px;">{{ $admin->email }}</a>
+                                </td>
+                                <td>
+                                    @if ( !empty( $admin->phone ) )
+                                        <a href="tel: {{ $admin->phone }}" class="badge bg-info" style="font-size: 14px; padding: 10px 10px;">{{ $admin->phone }}</a>
+                                    @else
+                                        <a href="javascript:void();" class="badge bg-danger" style="font-size: 14px; padding: 10px 10px;">N/A</a>
+                                    @endif
+
                                 </td>
                                 <td style="width: 600px;">
                                     @foreach ($admin->getRoleNames() as $role)

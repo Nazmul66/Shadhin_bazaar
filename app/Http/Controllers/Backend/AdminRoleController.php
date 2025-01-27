@@ -65,6 +65,7 @@ class AdminRoleController extends Controller
             [
                 'name'     => ['required', 'string', 'unique:admins,name', 'max:255'],
                 'email'    => ['required', 'unique:admins,email', 'email', 'max:255'],
+                'phone'    => ['required', 'regex:/^[0-9]{11,15}$/'],
                 'password' => [
                     $request->isMethod('post') ? 'required' : 'nullable',
                     'string', 
@@ -99,6 +100,7 @@ class AdminRoleController extends Controller
            $admin =  Admin::create([
                 'name'     => $request->name,
                 'email'    => $request->email,
+                'phone'    => $request->phone,
                 'password' => Hash::make($request->password),
             ]);
 
@@ -150,6 +152,7 @@ class AdminRoleController extends Controller
             [
                 'name'     => ['required', 'string', 'max:255', 'unique:admins,name,' . $id],
                 'email'    => ['required', 'email', 'max:255', 'unique:admins,email,' . $id],
+                'phone'    => ['required', 'regex:/^[0-9]{11,15}$/'],
                 'password' => [
                     $request->isMethod('post') ? 'required' : 'nullable',
                     'string', 
@@ -187,6 +190,7 @@ class AdminRoleController extends Controller
             $admin->update([
                 'name'     => $request->name,
                 'email'    => $request->email,
+                'phone'    => $request->phone,
                 'password' => $request->password ? Hash::make($request->password) : $admin->password, // Update password only if provided
             ]);
  
