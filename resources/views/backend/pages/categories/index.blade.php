@@ -32,9 +32,12 @@
         <div class="card-header">
             <div class="d-flex justify-content-between align-items-center">
                 <h4 class="card-title">Categories List</h4>
+
+                @if(auth("admin")->user()->can("create.category"))
                 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">
                     Add New
                 </button>
+                @endif
             </div>
         </div>
 

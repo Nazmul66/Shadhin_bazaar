@@ -7,29 +7,25 @@ use App\Http\Requests\Admin\CreateCategoryRequest;
 use App\Http\Requests\Admin\UpdateCategoryRequest;
 use App\Traits\ImageUploadTraits;
 use App\Models\Category;
-use App\Models\Subcategory;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controllers\Middleware;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Blade;
+use Spatie\Permission\Exceptions\UnauthorizedException;
 
-class CategoryController extends Controller implements HasMiddleware
+class CategoryController extends Controller
 {
     use ImageUploadTraits;
 
-    public static function middleware(): array
+    public $user;
+    public function __construct()
     {
-        // dd('are you good');
-        return [
-            // examples with aliases, pipe-separated names, guards, etc:
-            'role_or_permission:manager|edit articles',
-            new Middleware('role:author', only: ['index']),
-            new Middleware(\Spatie\Permission\Middleware\RoleMiddleware::using('manager'), except:['show']),
-            new Middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('delete records,api'), only:['destroy']),
-        ];
+        $this->user = Auth::guard('admin')->user();
+        if (!$this->user) {
+            abort(403, 'Unauthorized access');
+        }
     }
     /**
      * Display a listing of the resource.
@@ -52,21 +48,24 @@ class CategoryController extends Controller implements HasMiddleware
                 </a>';
             })
             ->addColumn('status', function ($category) {
-                if ($category->status == 1) {
-                    return ' <a class="status" id="status" href="javascript:void(0)"
-                        data-id="'.$category->id.'" data-status="'.$category->status.'"> <i
-                            class="fa-solid fa-toggle-on fa-2x"></i>
-                    </a>';
-                } else {
-                    return '<a class="status" id="status" href="javascript:void(0)"
-                        data-id="'.$category->id.'" data-status="'.$category->status.'"> <i
-                            class="fa-solid fa-toggle-off fa-2x" style="color: grey"></i>
-                    </a>';
+                if(auth("admin")->user()->can("status.category"))
+                    if ($category->status == 1) {
+                        return ' <a class="status" id="status" href="javascript:void(0)"
+                            data-id="'.$category->id.'" data-status="'.$category->status.'"> <i
+                                class="fa-solid fa-toggle-on fa-2x"></i>
+                        </a>';
+                    } else {
+                        return '<a class="status" id="status" href="javascript:void(0)"
+                            data-id="'.$category->id.'" data-status="'.$category->status.'"> <i
+                                class="fa-solid fa-toggle-off fa-2x" style="color: grey"></i>
+                        </a>';
+                    }
+                else{
+                    return '<span class="badge bg-info">N/A</span>'; 
                 }
             })
-
             ->addColumn('action', function ($category) {
-                return '
+                $actionHtml = Blade::render('
                     <div class="btn-group">
                         <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Actions <i class="mdi mdi-chevron-down"></i>
                         </button>
@@ -76,15 +75,21 @@ class CategoryController extends Controller implements HasMiddleware
                                 <i class="fas fa-eye"></i> View
                             </a>
 
-                            <a class="dropdown-item text-success" id="editButton" href="javascript:void(0)" data-id="'.$category->id.'" data-bs-toggle="modal" data-bs-target="#editModal">
-                                <i class="fas fa-edit"></i> Edit
-                            </a>
+                            @if(auth("admin")->user()->can("update.category"))
+                                <a class="dropdown-item text-success" id="editButton" href="javascript:void(0)" data-id="'.$category->id.'" data-bs-toggle="modal" data-bs-target="#editModal">
+                                    <i class="fas fa-edit"></i> Edit
+                                </a>
+                            @endif
 
-                            <a class="dropdown-item text-danger" href="javascript:void(0)" data-id="'.$category->id.'" id="deleteBtn">
-                                <i class="fas fa-trash"></i> Delete
-                            </a>
+                            @if(auth("admin")->user()->can("delete.category"))
+                                <a class="dropdown-item text-danger" href="javascript:void(0)" data-id="'.$category->id.'" id="deleteBtn">
+                                    <i class="fas fa-trash"></i> Delete
+                                </a>
+                            @endif
                         </div>
-                    </div>';
+                    </div>
+                ', ['category' => $category]);
+                return $actionHtml;
             })
 
             ->rawColumns(['categoryImg', 'status', 'action'])
@@ -93,6 +98,10 @@ class CategoryController extends Controller implements HasMiddleware
 
     public function changeCategoryStatus(Request $request)
     {
+        if (!$this->user || !$this->user->can('status.category')) {
+            throw UnauthorizedException::forPermissions(['status.category']);
+        }
+
         $id = $request->id;
         $Current_status = $request->status;
 
@@ -115,6 +124,10 @@ class CategoryController extends Controller implements HasMiddleware
      */
     public function store(CreateCategoryRequest $request)
     {
+        if (!$this->user || !$this->user->can('create.category')) {
+            throw UnauthorizedException::forPermissions(['create.category']);
+        }
+
         DB::beginTransaction();
         try {
 
@@ -146,6 +159,10 @@ class CategoryController extends Controller implements HasMiddleware
      */
     public function edit(Category $category)
     {
+        if (!$this->user || !$this->user->can('update.category')) {
+            throw UnauthorizedException::forPermissions(['update.category']);
+        }
+
         // dd($category);
         return response()->json(['success' => $category]);
     }
@@ -155,6 +172,10 @@ class CategoryController extends Controller implements HasMiddleware
      */
     public function update(UpdateCategoryRequest $request, $id)
     {
+        if (!$this->user || !$this->user->can('update.category')) {
+            throw UnauthorizedException::forPermissions(['update.category']);
+        }
+
         $category  = Category::find($id);
 
         DB::beginTransaction();
@@ -185,6 +206,10 @@ class CategoryController extends Controller implements HasMiddleware
      */
     public function destroy(Category $category)
     {
+        if (!$this->user || !$this->user->can('delete.category')) {
+            throw UnauthorizedException::forPermissions(['delete.category']);
+        }
+
         if ($category->category_img) {
             if (file_exists($category->category_img)) {
                 unlink($category->category_img);
