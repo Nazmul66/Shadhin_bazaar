@@ -11,11 +11,21 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Blade;
+use Spatie\Permission\Exceptions\UnauthorizedException;
 
 class BrandsController extends Controller
 {
     use ImageUploadTraits;
-
+    public $user;
+    public function __construct()
+    {
+        $this->user = Auth::guard('admin')->user();
+        if (!$this->user) {
+            abort(403, 'Unauthorized access');
+        }
+    }
     /**
      * Display a listing of the resource.
      */
@@ -37,39 +47,48 @@ class BrandsController extends Controller
                 </a>';
             })
             ->addColumn('status', function ($brand) {
-                if ($brand->status == 1) {
-                    return ' <a class="status" id="status" href="javascript:void(0)"
-                        data-id="'.$brand->id.'" data-status="'.$brand->status.'"> <i
-                            class="fa-solid fa-toggle-on fa-2x"></i>
-                    </a>';
-                } else {
-                    return '<a class="status" id="status" href="javascript:void(0)"
-                        data-id="'.$brand->id.'" data-status="'.$brand->status.'"> <i
-                            class="fa-solid fa-toggle-off fa-2x" style="color: grey"></i>
-                    </a>';
+                if(auth("admin")->user()->can("status.brand"))
+                    if ($brand->status == 1) {
+                        return ' <a class="status" id="status" href="javascript:void(0)"
+                            data-id="'.$brand->id.'" data-status="'.$brand->status.'"> <i
+                                class="fa-solid fa-toggle-on fa-2x"></i>
+                        </a>';
+                    } else {
+                        return '<a class="status" id="status" href="javascript:void(0)"
+                            data-id="'.$brand->id.'" data-status="'.$brand->status.'"> <i
+                                class="fa-solid fa-toggle-off fa-2x" style="color: grey"></i>
+                        </a>';
+                    }
+                else{
+                    return '<span class="badge bg-info">N/A</span>'; 
                 }
             })
-
             ->addColumn('action', function ($brand) {
-                return '
-                <div class="btn-group">
-                    <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Actions <i class="mdi mdi-chevron-down"></i>
-                    </button>
+                $actionHtml = Blade::render('
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Actions <i class="mdi mdi-chevron-down"></i>
+                        </button>
 
-                    <div class="dropdown-menu dropdownmenu-primary" style="">
-                        <a class="dropdown-item text-info" id="viewButton" href="javascript:void(0)" data-id="'.$brand->id.'" data-bs-toggle="modal" data-bs-target="#viewModal">
-                            <i class="fas fa-eye"></i> View
-                        </a>
+                        <div class="dropdown-menu dropdownmenu-primary" style="">
+                            <a class="dropdown-item text-info" id="viewButton" href="javascript:void(0)" data-id="'.$brand->id.'" data-bs-toggle="modal" data-bs-target="#viewModal">
+                                <i class="fas fa-eye"></i> View
+                            </a>
 
-                        <a class="dropdown-item text-success" id="editButton" href="javascript:void(0)" data-id="'.$brand->id.'" data-bs-toggle="modal" data-bs-target="#editModal">
-                            <i class="fas fa-edit"></i> Edit
-                        </a>
+                            @if(auth("admin")->user()->can("update.brand"))
+                                <a class="dropdown-item text-success" id="editButton" href="javascript:void(0)" data-id="'.$brand->id.'" data-bs-toggle="modal" data-bs-target="#editModal">
+                                    <i class="fas fa-edit"></i> Edit
+                                </a>
+                            @endif
 
-                        <a class="dropdown-item text-danger" href="javascript:void(0)" data-id="'.$brand->id.'" id="deleteBtn">
-                            <i class="fas fa-trash"></i> Delete
-                        </a>
+                            @if(auth("admin")->user()->can("delete.brand"))
+                                <a class="dropdown-item text-danger" href="javascript:void(0)" data-id="'.$brand->id.'" id="deleteBtn">
+                                    <i class="fas fa-trash"></i> Delete
+                                </a>
+                            @endif
+                        </div>
                     </div>
-                </div>';
+                ', ['brand' => $brand]);
+                return $actionHtml;
             })
 
             ->rawColumns(['brandImage', 'status', 'action'])
@@ -78,6 +97,10 @@ class BrandsController extends Controller
 
     public function changeBrandStatus(Request $request)
     {
+        if (!$this->user || !$this->user->can('status.brand')) {
+            throw UnauthorizedException::forPermissions(['status.brand']);
+        }
+
         $id = $request->id;
         $Current_status = $request->status;
 
@@ -99,6 +122,10 @@ class BrandsController extends Controller
      */
     public function store(CreateBrandRequest $request)
     {
+        if (!$this->user || !$this->user->can('create.brand')) {
+            throw UnauthorizedException::forPermissions(['create.brand']);
+        }
+
         DB::beginTransaction();
         try {
 
@@ -132,6 +159,10 @@ class BrandsController extends Controller
      */
     public function edit(Brand $brand)
     {
+        if (!$this->user || !$this->user->can('update.brand')) {
+            throw UnauthorizedException::forPermissions(['update.brand']);
+        }
+
         // dd($category);
         return response()->json(['success' => $brand]);
     }
@@ -141,6 +172,10 @@ class BrandsController extends Controller
      */
     public function update(UpdateBrandRequest $request, string $id)
     {
+        if (!$this->user || !$this->user->can('update.brand')) {
+            throw UnauthorizedException::forPermissions(['update.brand']);
+        }
+
         $brand  = Brand::find($id);
 
         DB::beginTransaction();
@@ -171,6 +206,10 @@ class BrandsController extends Controller
      */
     public function destroy(Brand $brand)
     {
+        if (!$this->user || !$this->user->can('delete.brand')) {
+            throw UnauthorizedException::forPermissions(['delete.brand']);
+        }
+
         if ($brand->image) {
             if (file_exists($brand->image)) {
                 unlink($brand->image);
