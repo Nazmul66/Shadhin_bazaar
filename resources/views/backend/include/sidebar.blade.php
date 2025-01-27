@@ -57,24 +57,26 @@
                 </li>
 
                 {{-- Attribute --}}
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow">
-                        <i class='bx bx-message-square-dots'></i>
-                        <span >Attribute</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li >
-                            <a href="{{ route('admin.attribute.name.index') }}">
-                                <span >Attribute Name</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('admin.attribute.value.index') }}">
-                                <span >Attribute Values</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                @if(auth("admin")->user()->can("index.attribute"))
+                    <li>
+                        <a href="javascript: void(0);" class="has-arrow">
+                            <i class='bx bx-message-square-dots'></i>
+                            <span >Attribute</span>
+                        </a>
+                        <ul class="sub-menu" aria-expanded="false">
+                            {{-- <li >
+                                <a href="{{ route('admin.attribute.name.index') }}">
+                                    <span >Attribute Name</span>
+                                </a>
+                            </li> --}}
+                            <li>
+                                <a href="{{ route('admin.attribute.value.index') }}">
+                                    <span >Attributes</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                @endif
 
                 {{-- E-commerce --}}
                 <li>

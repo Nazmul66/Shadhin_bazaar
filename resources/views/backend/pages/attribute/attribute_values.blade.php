@@ -31,9 +31,12 @@
         <div class="card-header">
             <div class="d-flex justify-content-between align-items-center">
                 <h4 class="card-title">Attribute Values List</h4>
-                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">
-                    Add New
-                </button>
+
+                @if(auth("admin")->user()->can("create.attribute"))
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">
+                        Add New
+                    </button>
+                @endif
             </div>
         </div>
 

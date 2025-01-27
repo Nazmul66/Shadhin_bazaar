@@ -9,14 +9,30 @@ use App\Models\AttributeValue;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Blade;
+use Spatie\Permission\Exceptions\UnauthorizedException;
 
 class AttributeValueController extends Controller
 {
+    public $user;
+    public function __construct()
+    {
+        $this->user = Auth::guard('admin')->user();
+        if (!$this->user) {
+            abort(403, 'Unauthorized access');
+        }
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
+        if (!$this->user || !$this->user->can('index.attribute')) {
+            throw UnauthorizedException::forPermissions(['index.attribute']);
+        }
+
         return view('backend.pages.attribute.attribute_values');
     }
 
@@ -45,38 +61,48 @@ class AttributeValueController extends Controller
                 return '<span class="btn btn-secondary">'. $attrValue->value .'</span>';
             })
             ->addColumn('status', function ($attrName) {
-                if ($attrName->status == 1) {
-                    return ' <a class="status" id="status" href="javascript:void(0)"
-                        data-id="'.$attrName->id.'" data-status="'.$attrName->status.'"> <i
-                            class="fa-solid fa-toggle-on fa-2x"></i>
-                    </a>';
-                } else {
-                    return '<a class="status" id="status" href="javascript:void(0)"
-                        data-id="'.$attrName->id.'" data-status="'.$attrName->status.'"> <i
-                            class="fa-solid fa-toggle-off fa-2x" style="color: grey"></i>
-                    </a>';
+                if(auth("admin")->user()->can("status.attribute"))
+                    if ($attrName->status == 1) {
+                        return ' <a class="status" id="status" href="javascript:void(0)"
+                            data-id="'.$attrName->id.'" data-status="'.$attrName->status.'"> <i
+                                class="fa-solid fa-toggle-on fa-2x"></i>
+                        </a>';
+                    } else {
+                        return '<a class="status" id="status" href="javascript:void(0)"
+                            data-id="'.$attrName->id.'" data-status="'.$attrName->status.'"> <i
+                                class="fa-solid fa-toggle-off fa-2x" style="color: grey"></i>
+                        </a>';
+                    }
+                else{
+                    return '<span class="badge bg-info">N/A</span>'; 
                 }
             })
             ->addColumn('action', function ($attrName) {
-                return '
-                <div class="btn-group">
-                    <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Actions <i class="mdi mdi-chevron-down"></i>
-                    </button>
+                $actionHtml = Blade::render('
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Actions <i class="mdi mdi-chevron-down"></i>
+                        </button>
 
-                    <div class="dropdown-menu dropdownmenu-primary" style="">
-                        <a class="dropdown-item text-info" id="viewButton" href="javascript:void(0)" data-id="'.$attrName->id.'" data-bs-toggle="modal" data-bs-target="#viewModal">
-                            <i class="fas fa-eye"></i> View
-                        </a>
+                        <div class="dropdown-menu dropdownmenu-primary" style="">
+                            <a class="dropdown-item text-info" id="viewButton" href="javascript:void(0)" data-id="'.$attrName->id.'" data-bs-toggle="modal" data-bs-target="#viewModal">
+                                <i class="fas fa-eye"></i> View
+                            </a>
 
-                        <a class="dropdown-item text-success" id="editButton" href="javascript:void(0)" data-id="'.$attrName->id.'" data-bs-toggle="modal" data-bs-target="#editModal">
-                            <i class="fas fa-edit"></i> Edit
-                        </a>
+                            @if(auth("admin")->user()->can("update.attribute"))
+                                <a class="dropdown-item text-success" id="editButton" href="javascript:void(0)" data-id="'.$attrName->id.'" data-bs-toggle="modal" data-bs-target="#editModal">
+                                    <i class="fas fa-edit"></i> Edit
+                                </a>
+                            @endif
 
-                        <a class="dropdown-item text-danger" href="javascript:void(0)" data-id="'.$attrName->id.'" id="deleteBtn">
-                            <i class="fas fa-trash"></i> Delete
-                        </a>
+                            @if(auth("admin")->user()->can("delete.attribute"))
+                                <a class="dropdown-item text-danger" href="javascript:void(0)" data-id="'.$attrName->id.'" id="deleteBtn">
+                                    <i class="fas fa-trash"></i> Delete
+                                </a>
+                            @endif
+                        </div>
                     </div>
-                </div>';
+                ', ['attrName' => $attrName]);
+                return $actionHtml;
             })
             ->rawColumns(['attribute', 'color_value', 'value', 'status', 'action'])
             ->make(true);
@@ -84,6 +110,10 @@ class AttributeValueController extends Controller
 
     public function changeStatus(Request $request)
     {
+        if (!$this->user || !$this->user->can('status.attribute')) {
+            throw UnauthorizedException::forPermissions(['status.attribute']);
+        }
+
         $id = $request->id;
         $Current_status = $request->status;
 
@@ -106,6 +136,10 @@ class AttributeValueController extends Controller
      */
     public function store(Request $request)
     {
+        if (!$this->user || !$this->user->can('create.attribute')) {
+            throw UnauthorizedException::forPermissions(['create.attribute']);
+        }
+
         $request->validate(
             [
                 'color_value' => ['nullable'],
@@ -147,6 +181,10 @@ class AttributeValueController extends Controller
 
     public function edit(AttributeValue $attributeValue)
     {
+        if (!$this->user || !$this->user->can('update.attribute')) {
+            throw UnauthorizedException::forPermissions(['update.attribute']);
+        }
+
         // dd($attributeValue);
         return response()->json(['success' => $attributeValue]);
     }
@@ -156,6 +194,10 @@ class AttributeValueController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        if (!$this->user || !$this->user->can('update.attribute')) {
+            throw UnauthorizedException::forPermissions(['update.attribute']);
+        }
+
         $attributeValue  = AttributeValue::find($id);
         // dd($request->all(), $attributeValue);
 
@@ -199,6 +241,10 @@ class AttributeValueController extends Controller
      */
     public function destroy(AttributeValue $attributeValue)
     {
+        if (!$this->user || !$this->user->can('delete.attribute')) {
+            throw UnauthorizedException::forPermissions(['delete.attribute']);
+        }
+
         $attributeValue->delete();
         return response()->json(['message' => 'Attribute Value has been deleted.'], 200);
     }
