@@ -7,9 +7,21 @@ use App\Models\NewsletterSubscriber;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Blade;
+use Spatie\Permission\Exceptions\UnauthorizedException;
 
 class SubscriptionController extends Controller
 {
+    public $user;
+    public function __construct()
+    {
+        $this->user = Auth::guard('admin')->user();
+        if (!$this->user) {
+            abort(403, 'Unauthorized access');
+        }
+    }
+
     public function index()
     {
         return view('backend.pages.subscriber.index');
@@ -39,25 +51,35 @@ class SubscriptionController extends Controller
                 }
             })
             ->addColumn('action', function ($subscriber) {
-                return '
+                $actionHtml = Blade::render('
                     <div class="btn-group">
-                        <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Actions <i class="mdi mdi-chevron-down"></i>
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Actions
+                            @if(auth("admin")->user()->can("delete.subscription")) 
+                                <i class="mdi mdi-chevron-down"></i>
+                            @endif
                         </button>
+                        @if(auth("admin")->user()->can("delete.subscription"))
+                            <div class="dropdown-menu dropdownmenu-primary">
+                                <a class="dropdown-item text-danger" href="javascript:void(0)" data-id="'.$subscriber->id.'" id="deleteBtn">
+                                    <i class="fas fa-trash"></i> Delete
+                                </a>
+                            </div>
+                        @endif
+                    </div>
+                ', ['subscriber' => $subscriber]);
 
-                        <div class="dropdown-menu dropdownmenu-primary" style="">
-                            <a class="dropdown-item text-danger" href="javascript:void(0)" data-id="'.$subscriber->id.'" id="deleteBtn">
-                                <i class="fas fa-trash"></i> Delete
-                            </a>
-                        </div>
-                    </div>';
+                return $actionHtml;
             })
-
             ->rawColumns(['is_verify', 'email', 'action'])
             ->make(true);
     }
 
     public function destroy($id)
     {
+        if (!$this->user || !$this->user->can('delete.subscription')) {
+            throw UnauthorizedException::forPermissions(['delete.subscription']);
+        }
+
         NewsletterSubscriber::where('id', $id)->delete();
         return response()->json(['message' => 'Subscriber has been deleted.'], 200);
     }

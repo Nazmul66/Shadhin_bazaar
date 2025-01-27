@@ -12,14 +12,25 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
 
-class CategoryController extends Controller 
+class CategoryController extends Controller implements HasMiddleware
 {
-
     use ImageUploadTraits;
 
+    public static function middleware(): array
+    {
+        // dd('are you good');
+        return [
+            // examples with aliases, pipe-separated names, guards, etc:
+            'role_or_permission:manager|edit articles',
+            new Middleware('role:author', only: ['index']),
+            new Middleware(\Spatie\Permission\Middleware\RoleMiddleware::using('manager'), except:['show']),
+            new Middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('delete records,api'), only:['destroy']),
+        ];
+    }
     /**
      * Display a listing of the resource.
      */

@@ -55,7 +55,7 @@ Route::middleware('setLanguage')->group(function(){
     Route::match(["get", "post"], '/admin/login', [AdminController::class, "login"]); // login page
 
 
-    Route::group(["as" => 'admin.',"prefix" => '/admin', 'middleware' => ['admin']], function () {
+    Route::group(["as" => 'admin.',"prefix" => '/admin', 'middleware' => ['auth:admin', 'role:SuperAdmin|Admin']], function () {
         Route::get('/dashboards', [AdminController::class, "dashboards"])->name('dashboards');
         Route::get('/profile-update', [AdminController::class, "profileUpdate"])->name('profile-update');
         Route::post('/profile-update', [AdminController::class, "changeProfile"])->name('change-profile');

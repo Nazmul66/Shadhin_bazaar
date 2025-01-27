@@ -8,9 +8,21 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Blade;
+use Spatie\Permission\Exceptions\UnauthorizedException;
 
 class FaqController extends Controller
 {
+    public $user;
+    public function __construct()
+    {
+        $this->user = Auth::guard('admin')->user();
+        if (!$this->user) {
+            abort(403, 'Unauthorized access');
+        }
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -27,21 +39,24 @@ class FaqController extends Controller
         return DataTables::of($faqs)
             ->addIndexColumn()
             ->addColumn('status', function ($faq) {
-                if ($faq->status == 1) {
-                    return ' <a class="status" id="status" href="javascript:void(0)"
-                        data-id="'.$faq->id.'" data-status="'.$faq->status.'"> <i
-                            class="fa-solid fa-toggle-on fa-2x"></i>
-                    </a>';
-                } else {
-                    return '<a class="status" id="status" href="javascript:void(0)"
-                        data-id="'.$faq->id.'" data-status="'.$faq->status.'"> <i
-                            class="fa-solid fa-toggle-off fa-2x" style="color: grey"></i>
-                    </a>';
+                if(auth("admin")->user()->can("status.faq"))
+                    if ($faq->status == 1) {
+                        return ' <a class="status" id="status" href="javascript:void(0)"
+                            data-id="'.$faq->id.'" data-status="'.$faq->status.'"> <i
+                                class="fa-solid fa-toggle-on fa-2x"></i>
+                        </a>';
+                    } else {
+                        return '<a class="status" id="status" href="javascript:void(0)"
+                            data-id="'.$faq->id.'" data-status="'.$faq->status.'"> <i
+                                class="fa-solid fa-toggle-off fa-2x" style="color: grey"></i>
+                        </a>';
+                    }
+                else{
+                    return '<span class="badge bg-info">N/A</span>'; 
                 }
             })
-
             ->addColumn('action', function ($faq) {
-                return '
+                $actionHtml = Blade::render('
                     <div class="btn-group">
                         <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Actions <i class="mdi mdi-chevron-down"></i>
                         </button>
@@ -51,15 +66,21 @@ class FaqController extends Controller
                                 <i class="fas fa-eye"></i> View
                             </a>
 
-                            <a class="dropdown-item text-success" id="editButton" href="javascript:void(0)" data-id="'.$faq->id.'" data-bs-toggle="modal" data-bs-target="#editModal">
-                                <i class="fas fa-edit"></i> Edit
-                            </a>
+                            @if(auth("admin")->user()->can("update.faq"))
+                                <a class="dropdown-item text-success" id="editButton" href="javascript:void(0)" data-id="'.$faq->id.'" data-bs-toggle="modal" data-bs-target="#editModal">
+                                    <i class="fas fa-edit"></i> Edit
+                                </a>
+                            @endif
 
-                            <a class="dropdown-item text-danger" href="javascript:void(0)" data-id="'.$faq->id.'" id="deleteBtn">
-                                <i class="fas fa-trash"></i> Delete
-                            </a>
+                            @if(auth("admin")->user()->can("delete.faq"))
+                                <a class="dropdown-item text-danger" href="javascript:void(0)" data-id="'.$faq->id.'" id="deleteBtn">
+                                    <i class="fas fa-trash"></i> Delete
+                                </a>
+                            @endif
                         </div>
-                    </div>';
+                    </div>
+                ', ['faq' => $faq]);
+                return $actionHtml;
             })
             ->rawColumns(['status', 'action'])
             ->make(true);
@@ -153,6 +174,10 @@ class FaqController extends Controller
      */
     public function destroy(Faq $faq)
     {
+        if (!$this->user || !$this->user->can('delete.subscription')) {
+            throw UnauthorizedException::forPermissions(['delete.subscription']);
+        }
+
         $faq->delete();
         return response()->json(['message' => 'Faq has been deleted.'], 200);
     }

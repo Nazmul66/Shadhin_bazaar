@@ -5,10 +5,23 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\Contact;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Blade;
+use Spatie\Permission\Exceptions\UnauthorizedException;
+use Spatie\Permission\Middleware\PermissionMiddleware;
 use Yajra\DataTables\Facades\DataTables;
 
 class ContactController extends Controller
 {
+    public $user;
+    public function __construct()
+    {
+        $this->user = Auth::guard('admin')->user();
+        if (!$this->user) {
+            abort(403, 'Unauthorized access');
+        }
+    }
     /**
      * Display a listing of the resource.
      */
@@ -47,13 +60,12 @@ class ContactController extends Controller
                 return $date;
             })
             ->addColumn('action', function ($contact) {
-                 return '
-                <div class="btn-group">
-                    <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Actions <i class="mdi mdi-chevron-down"></i>
+                return  '<div class="btn-group">
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        Actions <i class="mdi mdi-chevron-down"></i>
                     </button>
-
-                    <div class="dropdown-menu dropdownmenu-primary" style="">
-                        <a class="dropdown-item text-info" id="viewButton" href="javascript:void(0)" data-id="'.$contact->id.'" data-bs-toggle="modal" data-bs-target="#viewModal">
+                    <div class="dropdown-menu dropdownmenu-primary">
+                        <a class="dropdown-item text-info" id="viewButton" href="javascript:void(0)" data-id="' . $contact->id . '" data-bs-toggle="modal" data-bs-target="#viewModal">
                             <i class="fas fa-eye"></i> View
                         </a>
                     </div>
@@ -65,6 +77,10 @@ class ContactController extends Controller
 
     public function contactView($id)
     {
+        // if (!$this->user || !$this->user->can('view.category')) {
+        //     throw UnauthorizedException::forPermissions(['view.category']);
+        // }
+
         $contact  = Contact::find($id);
         // dd($contact);
 

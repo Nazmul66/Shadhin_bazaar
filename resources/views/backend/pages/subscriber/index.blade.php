@@ -29,30 +29,32 @@
 
     <!-- Content part Start -->
     <div class="card">
-        <div class="card-header">
-            <div class="d-flex justify-content-between align-items-center">
-                {{-- <h4 class="card-title">Subscribers List</h4> --}}
-                <div class="col-lg-8 offset-lg-2">
-                    <h3 class="font-size-18 mb-4">Send Email to all subscribers</h3>
+        @if( auth("admin")->user()->can("send.email.subscription") )
+            <div class="card-header">
+                <div class="d-flex justify-content-between align-items-center">
+                   {{-- <h4 class="card-title">Subscribers List</h4> --}}
+                    <div class="col-lg-8 offset-lg-2">
+                        <h3 class="font-size-18 mb-4">Send Email to all subscribers</h3>
 
-                    <div class="row">
-                        <form action="">
-                            <div class="mb-3">
-                                <label for="subject" class="form-label">Subject</label>
-                                <input class="form-control" type="text" name="subject" id="subject" placeholder="write subject....">
-                            </div>
-        
-                            <div class="mb-3">
-                                <label for="message" class="form-label">Message</label>
-                                <textarea name="message" id="message" class="form-control" cols="30" rows="6" placeholder="write Message...."></textarea>
-                            </div>
+                        <div class="row">
+                            <form action="">
+                                <div class="mb-3">
+                                    <label for="subject" class="form-label">Subject</label>
+                                    <input class="form-control" type="text" name="subject" id="subject" placeholder="write subject....">
+                                </div>
+            
+                                <div class="mb-3">
+                                    <label for="message" class="form-label">Message</label>
+                                    <textarea name="message" id="message" class="form-control" cols="30" rows="6" placeholder="write Message...."></textarea>
+                                </div>
 
-                            <button type="button" class="btn btn-primary waves-effect waves-light">Send</button>
-                        </form>
+                                <button type="button" class="btn btn-primary waves-effect waves-light">Send</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        @endif
 
         <div class="card-body">
             <div class="">
@@ -79,7 +81,8 @@
     <script src="https://cdn.datatables.net/2.1.6/js/dataTables.min.js"></script>
     <script>
         $(document).ready(function () {
-
+            var canDeleteSubscription = @json(auth('admin')->user()->can('delete.subscription'));
+            
             // Show Data through Datatable
             let datatables = $('#datatables').DataTable({
                 order: [
@@ -109,7 +112,13 @@
                     {
                         data: 'action',
                         orderable: false,
-                        searchable: false
+                        searchable: false,
+                        createdCell: function(td, cellData, rowData, row, col) {
+                            // Hide empty action column
+                            if (cellData.trim() === '') {
+                                $(td).closest('tr').find('td:eq(' + col + ')').hide();
+                            }
+                        }
                     },
                 ]
             });

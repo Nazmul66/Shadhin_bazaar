@@ -16,11 +16,11 @@
                     </a>
                 </li>
 
-                {{-- Customers List --}}
+                {{-- Users List --}}
                 <li class="">
                     <a href="{{ route('admin.customer.index') }}">
                         <i class='bx bx-user'></i>
-                        <span >Customers</span>
+                        <span >Users</span>
                     </a>
                 </li>
 
