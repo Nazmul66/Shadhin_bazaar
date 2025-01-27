@@ -30,6 +30,10 @@ class OrderController extends Controller
      */
     public function index($status)
     {
+        if (!$this->user || !$this->user->can('index.order')) {
+            throw UnauthorizedException::forPermissions(['index.order']);
+        }
+
         return view('backend.pages.order.index', compact('status'));
     }
 

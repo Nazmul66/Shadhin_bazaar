@@ -172,59 +172,63 @@
                 </li>
 
                 {{-- Order List --}}
-                <li class="@yield('all_orders')">
-                    <a href="javascript: void(0);" class="has-arrow">
-                        <i class='bx bx-line-chart'></i>
-                        <span >Order Panel</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li class="@yield('all_orders')">
-                            <a href="{{ route('admin.order.index', ['status' => 'all']) }}">
-                                <span >All Orders</span>
-                            </a>
-                        </li>
-                        <li class="@yield('all_orders')">
-                            <a href="{{ route('admin.order.index', ['status' => 'pending']) }}">
-                                <span >Pending Order</span>
-                            </a>
-                        </li>
-                        <li class="@yield('all_orders')">
-                            <a href="{{ route('admin.order.index', ['status' => 'dropped_off']) }}">
-                                <span >Dropped Off Order</span>
-                            </a>
-                        </li>
-                        <li class="@yield('all_orders')">
-                            <a href="{{ route('admin.order.index', ['status' => 'shipped']) }}">
-                                <span >Shipped Order</span>
-                            </a>
-                        </li>
-                        <li class="@yield('all_orders')">
-                            <a href="{{ route('admin.order.index', ['status' => 'delivered']) }}">
-                                <span >Delivered Order</span>
-                            </a>
-                        </li>
-                        <li class="@yield('all_orders')">
-                            <a href="{{ route('admin.order.index', ['status' => 'cancelled']) }}">
-                                <span >Cancelled Order</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                @if(auth("admin")->user()->can("index.order"))
+                    <li class="@yield('all_orders')">
+                        <a href="javascript: void(0);" class="has-arrow">
+                            <i class='bx bx-line-chart'></i>
+                            <span >Order Panel</span>
+                        </a>
+                        <ul class="sub-menu" aria-expanded="false">
+                            <li class="@yield('all_orders')">
+                                <a href="{{ route('admin.order.index', ['status' => 'all']) }}">
+                                    <span >All Orders</span>
+                                </a>
+                            </li>
+                            <li class="@yield('all_orders')">
+                                <a href="{{ route('admin.order.index', ['status' => 'pending']) }}">
+                                    <span >Pending Order</span>
+                                </a>
+                            </li>
+                            <li class="@yield('all_orders')">
+                                <a href="{{ route('admin.order.index', ['status' => 'dropped_off']) }}">
+                                    <span >Dropped Off Order</span>
+                                </a>
+                            </li>
+                            <li class="@yield('all_orders')">
+                                <a href="{{ route('admin.order.index', ['status' => 'shipped']) }}">
+                                    <span >Shipped Order</span>
+                                </a>
+                            </li>
+                            <li class="@yield('all_orders')">
+                                <a href="{{ route('admin.order.index', ['status' => 'delivered']) }}">
+                                    <span >Delivered Order</span>
+                                </a>
+                            </li>
+                            <li class="@yield('all_orders')">
+                                <a href="{{ route('admin.order.index', ['status' => 'cancelled']) }}">
+                                    <span >Cancelled Order</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                @endif
 
                 {{-- Transaction List --}}
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow">
-                        <i class='bx bx-pie-chart-alt-2'></i>
-                        <span >Transaction Panel</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li>
-                            <a href="{{ route('admin.transaction.index') }}">
-                                <span >All Transactions</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                @if(auth("admin")->user()->can("index.transaction"))
+                    <li>
+                        <a href="javascript: void(0);" class="has-arrow">
+                            <i class='bx bx-pie-chart-alt-2'></i>
+                            <span >Transaction Panel</span>
+                        </a>
+                        <ul class="sub-menu" aria-expanded="false">
+                            <li>
+                                <a href="{{ route('admin.transaction.index') }}">
+                                    <span >All Transactions</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                @endif
 
                 {{-- Manage Website --}}
                 <li>

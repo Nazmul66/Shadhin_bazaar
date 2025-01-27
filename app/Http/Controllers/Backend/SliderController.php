@@ -11,11 +11,21 @@ use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
 use App\Models\Slider;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Blade;
+use Spatie\Permission\Exceptions\UnauthorizedException;
 
 class SliderController extends Controller
 {
     use ImageUploadTraits;
-
+    public $user;
+    public function __construct()
+    {
+        $this->user = Auth::guard('admin')->user();
+        if (!$this->user) {
+            abort(403, 'Unauthorized access');
+        }
+    }
     /**
      * Display a listing of the resource.
      */
@@ -72,46 +82,61 @@ class SliderController extends Controller
             //     }
             // })
             ->addColumn('status', function ($slider) {
-                if ($slider->status == 1) {
-                    return ' <a class="status" id="status" href="javascript:void(0)"
-                        data-id="'.$slider->id.'" data-status="'.$slider->status.'"> <i
-                            class="fa-solid fa-toggle-on fa-2x"></i>
-                    </a>';
-                } else {
-                    return '<a class="status" id="status" href="javascript:void(0)"
-                        data-id="'.$slider->id.'" data-status="'.$slider->status.'"> <i
-                            class="fa-solid fa-toggle-off fa-2x" style="color: grey"></i>
-                    </a>';
+                if(auth("admin")->user()->can("status.slider"))
+                {
+                    if ($slider->status == 1) {
+                        return ' <a class="status" id="status" href="javascript:void(0)"
+                            data-id="'.$slider->id.'" data-status="'.$slider->status.'"> <i
+                                class="fa-solid fa-toggle-on fa-2x"></i>
+                        </a>';
+                    } else {
+                        return '<a class="status" id="status" href="javascript:void(0)"
+                            data-id="'.$slider->id.'" data-status="'.$slider->status.'"> <i
+                                class="fa-solid fa-toggle-off fa-2x" style="color: grey"></i>
+                        </a>';
+                    }
+                }
+                else{
+                    return '<span class="badge bg-info">N/A</span>'; 
                 }
             })
             ->addColumn('action', function ($slider) {
-                return '
-                <div class="btn-group">
-                    <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Actions <i class="mdi mdi-chevron-down"></i>
-                    </button>
+                $actionHtml = Blade::render('
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Actions <i class="mdi mdi-chevron-down"></i>
+                        </button>
 
-                    <div class="dropdown-menu dropdownmenu-primary" style="">
-                        <a class="dropdown-item text-info" id="viewButton" href="javascript:void(0)" data-id="'.$slider->id.'" data-bs-toggle="modal" data-bs-target="#viewModal">
-                            <i class="fas fa-eye"></i> View
-                        </a>
+                        <div class="dropdown-menu dropdownmenu-primary" style="">
+                            <a class="dropdown-item text-info" id="viewButton" href="javascript:void(0)" data-id="'.$slider->id.'" data-bs-toggle="modal" data-bs-target="#viewModal">
+                                <i class="fas fa-eye"></i> View
+                            </a>
 
-                        <a class="dropdown-item text-success" id="editButton" href="javascript:void(0)" data-id="'.$slider->id.'" data-bs-toggle="modal" data-bs-target="#editModal">
-                            <i class="fas fa-edit"></i> Edit
-                        </a>
+                            @if(auth("admin")->user()->can("update.slider"))
+                                <a class="dropdown-item text-success" id="editButton" href="javascript:void(0)" data-id="'.$slider->id.'" data-bs-toggle="modal" data-bs-target="#editModal">
+                                    <i class="fas fa-edit"></i> Edit
+                                </a>
+                            @endif
 
-                        <a class="dropdown-item text-danger" href="javascript:void(0)" data-id="'.$slider->id.'" id="deleteBtn">
-                            <i class="fas fa-trash"></i> Delete
-                        </a>
+                            @if(auth("admin")->user()->can("delete.slider"))
+                                <a class="dropdown-item text-danger" href="javascript:void(0)" data-id="'.$slider->id.'" id="deleteBtn">
+                                    <i class="fas fa-trash"></i> Delete
+                                </a>
+                            @endif
+                        </div>
                     </div>
-                </div>';
+                ', ['slider' => $slider]);
+                return $actionHtml;
             })
-
             ->rawColumns(['slider_image', 'starting_price', 'title', 'status','action'])
             ->make(true);
     }
 
     public function changeSliderStatus(Request $request)
     {
+        if (!$this->user || !$this->user->can('status.slider')) {
+            throw UnauthorizedException::forPermissions(['status.slider']);
+        }
+
         $id = $request->id;
         $Current_status = $request->status;
 
@@ -133,6 +158,10 @@ class SliderController extends Controller
      */
     public function store(CreateSliderRequest $request)
     {
+        if (!$this->user || !$this->user->can('create.slider')) {
+            throw UnauthorizedException::forPermissions(['create.slider']);
+        }
+
         DB::beginTransaction();
         try {
             $slider = new Slider();
@@ -166,6 +195,10 @@ class SliderController extends Controller
      */
     public function edit(Slider $slider)
     {
+        if (!$this->user || !$this->user->can('update.slider')) {
+            throw UnauthorizedException::forPermissions(['update.slider']);
+        }
+
         // dd($slider);
         return response()->json(['success' => $slider]);
     }
@@ -175,6 +208,10 @@ class SliderController extends Controller
      */
     public function update(UpdateSliderRequest $request, string $id)
     {
+        if (!$this->user || !$this->user->can('update.slider')) {
+            throw UnauthorizedException::forPermissions(['update.slider']);
+        }
+
         $slider =  Slider::find($id);
 
         DB::beginTransaction();
@@ -207,6 +244,10 @@ class SliderController extends Controller
      */
     public function destroy(Slider $slider)
     {
+        if (!$this->user || !$this->user->can('delete.slider')) {
+            throw UnauthorizedException::forPermissions(['delete.slider']);
+        }
+
         if ($slider->slider_image) {
             if (file_exists($slider->slider_image)) {
                 unlink($slider->slider_image);
