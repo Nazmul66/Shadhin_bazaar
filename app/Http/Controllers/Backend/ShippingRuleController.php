@@ -10,9 +10,21 @@ use App\Models\ShippingRule;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Blade;
+use Spatie\Permission\Exceptions\UnauthorizedException;
 
 class ShippingRuleController extends Controller
 {
+    public $user;
+    public function __construct()
+    {
+        $this->user = Auth::guard('admin')->user();
+        if (!$this->user) {
+            abort(403, 'Unauthorized access');
+        }
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -40,38 +52,48 @@ class ShippingRuleController extends Controller
                 return '<h6 style="white-space: wrap;">Cost: <span class="badge bg-success">'. $shippingRule->cost .' Tk</span></h6>';
             })
             ->addColumn('status', function ($shippingRule) {
-                if ($shippingRule->status == 1) {
-                    return ' <a class="status" id="status" href="javascript:void(0)"
-                        data-id="'.$shippingRule->id.'" data-status="'.$shippingRule->status.'"> <i
-                            class="fa-solid fa-toggle-on fa-2x"></i>
-                    </a>';
-                } else {
-                    return '<a class="status" id="status" href="javascript:void(0)"
-                        data-id="'.$shippingRule->id.'" data-status="'.$shippingRule->status.'"> <i
-                            class="fa-solid fa-toggle-off fa-2x" style="color: grey"></i>
-                    </a>';
+                if(auth("admin")->user()->can("status.shipping"))
+                    if ($shippingRule->status == 1) {
+                        return ' <a class="status" id="status" href="javascript:void(0)"
+                            data-id="'.$shippingRule->id.'" data-status="'.$shippingRule->status.'"> <i
+                                class="fa-solid fa-toggle-on fa-2x"></i>
+                        </a>';
+                    } else {
+                        return '<a class="status" id="status" href="javascript:void(0)"
+                            data-id="'.$shippingRule->id.'" data-status="'.$shippingRule->status.'"> <i
+                                class="fa-solid fa-toggle-off fa-2x" style="color: grey"></i>
+                        </a>';
+                    }
+                else{
+                    return '<span class="badge bg-info">N/A</span>'; 
                 }
             })
             ->addColumn('action', function ($shippingRule) {
-                return '
-                <div class="btn-group">
-                    <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Actions <i class="mdi mdi-chevron-down"></i>
-                    </button>
+                $actionHtml = Blade::render('
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Actions <i class="mdi mdi-chevron-down"></i>
+                        </button>
 
-                    <div class="dropdown-menu dropdownmenu-primary" style="">
-                        <a class="dropdown-item text-info" id="viewButton" href="javascript:void(0)" data-id="'.$shippingRule->id.'" data-bs-toggle="modal" data-bs-target="#viewModal">
-                            <i class="fas fa-eye"></i> View
-                        </a>
+                        <div class="dropdown-menu dropdownmenu-primary" style="">
+                            <a class="dropdown-item text-info" id="viewButton" href="javascript:void(0)" data-id="'.$shippingRule->id.'" data-bs-toggle="modal" data-bs-target="#viewModal">
+                                <i class="fas fa-eye"></i> View
+                            </a>
 
-                        <a class="dropdown-item text-success" id="editButton" href="javascript:void(0)" data-id="'.$shippingRule->id.'" data-bs-toggle="modal" data-bs-target="#editModal">
-                            <i class="fas fa-edit"></i> Edit
-                        </a>
+                            @if(auth("admin")->user()->can("update.shipping"))
+                                <a class="dropdown-item text-success" id="editButton" href="javascript:void(0)" data-id="'.$shippingRule->id.'" data-bs-toggle="modal" data-bs-target="#editModal">
+                                    <i class="fas fa-edit"></i> Edit
+                                </a>
+                            @endif
 
-                        <a class="dropdown-item text-danger" href="javascript:void(0)" data-id="'.$shippingRule->id.'" id="deleteBtn">
-                            <i class="fas fa-trash"></i> Delete
-                        </a>
+                            @if(auth("admin")->user()->can("delete.shipping"))
+                                <a class="dropdown-item text-danger" href="javascript:void(0)" data-id="'.$shippingRule->id.'" id="deleteBtn">
+                                    <i class="fas fa-trash"></i> Delete
+                                </a>
+                            @endif
+                        </div>
                     </div>
-                </div>';
+                ', ['shippingRule' => $shippingRule]);
+                return $actionHtml;
             })
             ->rawColumns(['name', 'type', 'min_cost', 'cost', 'status', 'action'])
             ->make(true);
@@ -82,6 +104,10 @@ class ShippingRuleController extends Controller
      */
     public function store(CreateShippingRuleRequest $request)
     {
+        if (!$this->user || !$this->user->can('create.shipping')) {
+            throw UnauthorizedException::forPermissions(['create.shipping']);
+        }
+
         $shippingRule = new ShippingRule();
 
         DB::beginTransaction();
@@ -107,6 +133,10 @@ class ShippingRuleController extends Controller
 
     public function changeShippingRuleStatus(Request $request)
     {
+        if (!$this->user || !$this->user->can('status.shipping')) {
+            throw UnauthorizedException::forPermissions(['status.shipping']);
+        }
+
         $id = $request->id;
         $Current_status = $request->status;
 
@@ -128,6 +158,10 @@ class ShippingRuleController extends Controller
      */
     public function edit(ShippingRule $shippingRule)
     {
+        if (!$this->user || !$this->user->can('update.shipping')) {
+            throw UnauthorizedException::forPermissions(['update.shipping']);
+        }
+
         // dd($shippingRule);
         return response()->json(['success' => $shippingRule]);
     }
@@ -138,6 +172,10 @@ class ShippingRuleController extends Controller
      */
     public function update(UpdateShippingRuleRequest $request, $id)
     {
+        if (!$this->user || !$this->user->can('update.shipping')) {
+            throw UnauthorizedException::forPermissions(['update.shipping']);
+        }
+
         $shippingRule = ShippingRule::findOrFail($id);
     
         DB::beginTransaction();
@@ -169,6 +207,10 @@ class ShippingRuleController extends Controller
      */
     public function destroy(ShippingRule $shippingRule)
     {
+        if (!$this->user || !$this->user->can('delete.shipping')) {
+            throw UnauthorizedException::forPermissions(['delete.shipping']);
+        }
+
         $shippingRule->delete();
         return response()->json(['message' => 'Shipping Rule has been deleted.'], 200);
     }

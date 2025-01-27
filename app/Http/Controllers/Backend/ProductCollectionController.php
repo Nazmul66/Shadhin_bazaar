@@ -5,11 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Traits\ImageUploadTraits;
-use App\Models\Category;
-use App\Models\Subcategory;
-use App\Models\ChildCategory;
 use App\Models\Product;
-use App\Models\Brand;
 use App\Models\Collection;
 use App\Models\ProductCollection;
 use Brian2694\Toastr\Facades\Toastr;
@@ -17,11 +13,22 @@ use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Blade;
+use Spatie\Permission\Exceptions\UnauthorizedException;
 
 class ProductCollectionController extends Controller
 {
     use ImageUploadTraits;
 
+    public $user;
+    public function __construct()
+    {
+        $this->user = Auth::guard('admin')->user();
+        if (!$this->user) {
+            abort(403, 'Unauthorized access');
+        }
+    }
     /**
      * Display a listing of the resource.
      */
@@ -33,6 +40,10 @@ class ProductCollectionController extends Controller
 
     public function create()
     {
+        if (!$this->user || !$this->user->can('create.product.collection')) {
+            throw UnauthorizedException::forPermissions(['create.product.collection']);
+        }
+
         $products = Product::where('is_approved', 1)->where('status', 1)->where('qty', '>', 0)->get();
         return view('backend.pages.product_collection.create', compact('products'));
     }
@@ -57,32 +68,42 @@ class ProductCollectionController extends Controller
                 return '<span class="text-dark">'. date("F d, Y", strtotime($collection->created_at)) .'</span>';
             }) 
             ->addColumn('status', function ($collection) {
-                if ($collection->status == 1) {
-                    return ' <a class="status" id="status" href="javascript:void(0)"
-                        data-id="'.$collection->id.'" data-status="'.$collection->status.'"> <i
-                            class="fa-solid fa-toggle-on fa-2x"></i>
-                    </a>';
-                } else {
-                    return '<a class="status" id="status" href="javascript:void(0)"
-                        data-id="'.$collection->id.'" data-status="'.$collection->status.'"> <i
-                            class="fa-solid fa-toggle-off fa-2x" style="color: grey"></i>
-                    </a>';
+                if(auth("admin")->user()->can("status.product.collection"))
+                    if ($collection->status == 1) {
+                        return ' <a class="status" id="status" href="javascript:void(0)"
+                            data-id="'.$collection->id.'" data-status="'.$collection->status.'"> <i
+                                class="fa-solid fa-toggle-on fa-2x"></i>
+                        </a>';
+                    } else {
+                        return '<a class="status" id="status" href="javascript:void(0)"
+                            data-id="'.$collection->id.'" data-status="'.$collection->status.'"> <i
+                                class="fa-solid fa-toggle-off fa-2x" style="color: grey"></i>
+                        </a>';
+                    }
+                else{
+                    return '<span class="badge bg-info">N/A</span>'; 
                 }
             })
             ->addColumn('action', function ($collection) {
-                 return '
-                <div class="btn-group">
-                    <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Actions <i class="mdi mdi-chevron-down"></i>
-                    </button>
+                $actionHtml = Blade::render('
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Actions <i class="mdi mdi-chevron-down"></i>
+                        </button>
 
-                    <div class="dropdown-menu dropdownmenu-primary" style="">
-                        <a class="dropdown-item text-primary" href="'. route('admin.product.collection.edit', $collection->id) .'"><i class="fas fa-edit"></i> Edit</a>
+                        <div class="dropdown-menu dropdownmenu-primary" style="">
+                            @if(auth("admin")->user()->can("update.product.collection"))
+                                <a class="dropdown-item text-primary" href="'. route('admin.product.collection.edit', $collection->id) .'"><i class="fas fa-edit"></i> Edit</a>
+                            @endif
 
-                        <a class="dropdown-item text-danger" href="javascript:void(0)" data-id="'.$collection->id.'" id="deleteBtn">
-                            <i class="fas fa-trash"></i> Delete
-                        </a>
+                            @if(auth("admin")->user()->can("delete.product.collection"))
+                                <a class="dropdown-item text-danger" href="javascript:void(0)" data-id="'.$collection->id.'" id="deleteBtn">
+                                    <i class="fas fa-trash"></i> Delete
+                                </a>
+                            @endif
+                        </div>
                     </div>
-                </div>';
+                ', ['collection' => $collection]);
+                return $actionHtml;
             })
 
             ->rawColumns(['image', 'total_product', 'date', 'status', 'action'])
@@ -91,6 +112,10 @@ class ProductCollectionController extends Controller
 
     public function changeCollectionStatus(Request $request)
     {
+        if (!$this->user || !$this->user->can('status.product.collection')) {
+            throw UnauthorizedException::forPermissions(['status.product.collection']);
+        }
+
         $id = $request->id;
         $Current_status = $request->status;
 
@@ -112,6 +137,10 @@ class ProductCollectionController extends Controller
      */
     public function store(Request $request)
     {
+        if (!$this->user || !$this->user->can('create.product.collection')) {
+            throw UnauthorizedException::forPermissions(['create.product.collection']);
+        }
+
         // dd($request->all());
         $request->validate(
             [
@@ -163,6 +192,10 @@ class ProductCollectionController extends Controller
      */
     public function edit($id)
     {
+        if (!$this->user || !$this->user->can('update.product.collection')) {
+            throw UnauthorizedException::forPermissions(['update.product.collection']);
+        }
+
         $productCollections = ProductCollection::
                     leftJoin('collections', 'collections.id', 'product_collections.collect_id')
                     ->leftJoin('products', 'products.id', 'product_collections.product_id')
@@ -180,6 +213,10 @@ class ProductCollectionController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        if (!$this->user || !$this->user->can('update.product.collection')) {
+            throw UnauthorizedException::forPermissions(['update.product.collection']);
+        }
+
         //  dd($request->all());
         $collection                = Collection::find($id);
         $request->validate(
@@ -246,6 +283,10 @@ class ProductCollectionController extends Controller
      */
     public function destroy($id)
     {
+        if (!$this->user || !$this->user->can('delete.product.collection')) {
+            throw UnauthorizedException::forPermissions(['delete.product.collection']);
+        }
+
         // dd($id);
         $collection = Collection::find($id);
 
@@ -280,18 +321,6 @@ class ProductCollectionController extends Controller
             'message' => "Product Collection Remove",
        ]);
     }
-
-
-    // public function show($id)
-    // {
-    //     $product = Product::leftJoin('categories', 'categories.id', 'products.category_id')
-    //             ->leftJoin('subcategories', 'subcategories.id', 'products.subCategory_id')
-    //             ->select('products.*', 'categories.category_name as cat_name', 'subcategories.subcategory_name as subCat_name')
-    //             ->where('products.id', $id)
-    //             ->first();
-    //     // dd($product);
-    //    return view('backend.pages.product_collection.view', compact('product'));
-    // }
 
 }
 
