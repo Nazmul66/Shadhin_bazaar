@@ -10,9 +10,21 @@ use App\Models\Coupon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Blade;
+use Spatie\Permission\Exceptions\UnauthorizedException;
 
 class CouponController extends Controller
 {
+    public $user;
+    public function __construct()
+    {
+        $this->user = Auth::guard('admin')->user();
+        if (!$this->user) {
+            abort(403, 'Unauthorized access');
+        }
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -64,21 +76,24 @@ class CouponController extends Controller
                 </div>';
             })
             ->addColumn('status', function ($coupon) {
-                if ($coupon->status == 1) {
-                    return ' <a class="status" id="status" href="javascript:void(0)"
-                        data-id="'.$coupon->id.'" data-status="'.$coupon->status.'"> <i
-                            class="fa-solid fa-toggle-on fa-2x"></i>
-                    </a>';
-                } else {
-                    return '<a class="status" id="status" href="javascript:void(0)"
-                        data-id="'.$coupon->id.'" data-status="'.$coupon->status.'"> <i
-                            class="fa-solid fa-toggle-off fa-2x" style="color: grey"></i>
-                    </a>';
+                if(auth("admin")->user()->can("status.coupon"))
+                    if ($coupon->status == 1) {
+                        return ' <a class="status" id="status" href="javascript:void(0)"
+                            data-id="'.$coupon->id.'" data-status="'.$coupon->status.'"> <i
+                                class="fa-solid fa-toggle-on fa-2x"></i>
+                        </a>';
+                    } else {
+                        return '<a class="status" id="status" href="javascript:void(0)"
+                            data-id="'.$coupon->id.'" data-status="'.$coupon->status.'"> <i
+                                class="fa-solid fa-toggle-off fa-2x" style="color: grey"></i>
+                        </a>';
+                    }
+                else{
+                    return '<span class="badge bg-info">N/A</span>'; 
                 }
             })
-
             ->addColumn('action', function ($coupon) {
-                return '
+                $actionHtml = Blade::render('
                     <div class="btn-group">
                         <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Actions <i class="mdi mdi-chevron-down"></i>
                         </button>
@@ -88,15 +103,21 @@ class CouponController extends Controller
                                 <i class="fas fa-eye"></i> View
                             </a>
 
-                            <a class="dropdown-item text-success" id="editButton" href="javascript:void(0)" data-id="'.$coupon->id.'" data-bs-toggle="modal" data-bs-target="#editModal">
-                                <i class="fas fa-edit"></i> Edit
-                            </a>
+                            @if(auth("admin")->user()->can("update.coupon"))
+                                <a class="dropdown-item text-success" id="editButton" href="javascript:void(0)" data-id="'.$coupon->id.'" data-bs-toggle="modal" data-bs-target="#editModal">
+                                    <i class="fas fa-edit"></i> Edit
+                                </a>
+                            @endif
 
-                            <a class="dropdown-item text-danger" href="javascript:void(0)" data-id="'.$coupon->id.'" id="deleteBtn">
-                                <i class="fas fa-trash"></i> Delete
-                            </a>
+                            @if(auth("admin")->user()->can("delete.coupon"))
+                                <a class="dropdown-item text-danger" href="javascript:void(0)" data-id="'.$coupon->id.'" id="deleteBtn">
+                                    <i class="fas fa-trash"></i> Delete
+                                </a>
+                            @endif
                         </div>
-                    </div>';
+                    </div>
+                ', ['coupon' => $coupon]);
+                return $actionHtml;
             })
             
             ->rawColumns(['info', 'discount_type', 'discount', 'start_date', 'end_date', 'used', 'status', 'action'])
@@ -108,6 +129,10 @@ class CouponController extends Controller
      */
     public function store(CreateCouponRequest $request)
     {
+        if (!$this->user || !$this->user->can('create.coupon')) {
+            throw UnauthorizedException::forPermissions(['create.coupon']);
+        }
+
         // dd($request->all());
         $coupon = new Coupon();
 
@@ -137,6 +162,10 @@ class CouponController extends Controller
 
     public function changeCouponStatus(Request $request)
     {
+        if (!$this->user || !$this->user->can('status.coupon')) {
+            throw UnauthorizedException::forPermissions(['status.coupon']);
+        }
+
         $id = $request->id;
         $Current_status = $request->status;
 
@@ -158,6 +187,10 @@ class CouponController extends Controller
      */
     public function edit(Coupon $coupon)
     {
+        if (!$this->user || !$this->user->can('update.coupon')) {
+            throw UnauthorizedException::forPermissions(['update.coupon']);
+        }
+
         // dd($coupon);
         return response()->json(['success' => $coupon]);
     }
@@ -168,6 +201,10 @@ class CouponController extends Controller
      */
     public function update(UpdateCouponRequest $request, $id)
     {
+        if (!$this->user || !$this->user->can('update.coupon')) {
+            throw UnauthorizedException::forPermissions(['update.coupon']);
+        }
+
         $coupon = Coupon::findOrFail($id);
     
         DB::beginTransaction();
@@ -209,8 +246,11 @@ class CouponController extends Controller
      */
     public function destroy(Coupon $coupon)
     {
-        $coupon->delete();
-        
+        if (!$this->user || !$this->user->can('delete.coupon')) {
+            throw UnauthorizedException::forPermissions(['delete.coupon']);
+        }
+
+        $coupon->delete();  
         return response()->json(['message' => 'Coupon has been deleted.'], 200);
     }
     
