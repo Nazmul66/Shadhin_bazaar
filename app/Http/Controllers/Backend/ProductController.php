@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\CreateProductRequest;
 use App\Http\Requests\Admin\UpdateProductRequest;
-use App\Models\AttributeName;
 use App\Models\AttributeValue;
 use Illuminate\Http\Request;
 use App\Traits\ImageUploadTraits;
@@ -17,17 +16,27 @@ use App\Models\Brand;
 use App\Models\ProductColor;
 use App\Models\ProductImage;
 use App\Models\ProductSize;
-use Attribute;
 use Brian2694\Toastr\Facades\Toastr;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Blade;
+use Spatie\Permission\Exceptions\UnauthorizedException;
 
 class ProductController extends Controller
 {
     use ImageUploadTraits;
 
+    public $user;
+    public function __construct()
+    {
+        $this->user = Auth::guard('admin')->user();
+        if (!$this->user) {
+            abort(403, 'Unauthorized access');
+        }
+    }
     /**
      * Display a listing of the resource.
      */
@@ -44,6 +53,10 @@ class ProductController extends Controller
 
     public function create()
     {
+        if (!$this->user || !$this->user->can('create.product')) {
+            throw UnauthorizedException::forPermissions(['create.product']);
+        }
+
         $categories        = Category::get_data();
         $subCategories     = Subcategory::get_data();
         $childCategories   = ChildCategory::get_data();
@@ -121,38 +134,50 @@ class ProductController extends Controller
                 </div>';
             })
             ->addColumn('status', function ($product) {
-                if ($product->status == 1) {
-                    return ' <a class="status" id="status" href="javascript:void(0)"
-                        data-id="'.$product->id.'" data-status="'.$product->status.'"> <i
-                            class="fa-solid fa-toggle-on fa-2x"></i>
-                    </a>';
-                } else {
-                    return '<a class="status" id="status" href="javascript:void(0)"
-                        data-id="'.$product->id.'" data-status="'.$product->status.'"> <i
-                            class="fa-solid fa-toggle-off fa-2x" style="color: grey"></i>
-                    </a>';
+                if(auth("admin")->user()->can("status.product"))
+                    if ($product->status == 1) {
+                        return ' <a class="status" id="status" href="javascript:void(0)"
+                            data-id="'.$product->id.'" data-status="'.$product->status.'"> <i
+                                class="fa-solid fa-toggle-on fa-2x"></i>
+                        </a>';
+                    } else {
+                        return '<a class="status" id="status" href="javascript:void(0)"
+                            data-id="'.$product->id.'" data-status="'.$product->status.'"> <i
+                                class="fa-solid fa-toggle-off fa-2x" style="color: grey"></i>
+                        </a>';
+                    }
+                else{
+                    return '<span class="badge bg-info">N/A</span>'; 
                 }
             })
             ->addColumn('action', function ($product) {
-                 return '
-                <div class="btn-group">
-                    <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Actions <i class="mdi mdi-chevron-down"></i>
-                    </button>
+                $actionHtml = Blade::render('
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Actions <i class="mdi mdi-chevron-down"></i>
+                        </button>
 
-                    <div class="dropdown-menu dropdownmenu-primary" style="">
-                        <a class="dropdown-item text-info" href="'. route('admin.product.show', $product->id) .'"><i class="fas fa-eye"></i> View</a>
+                        <div class="dropdown-menu dropdownmenu-primary" style="">
+                            <a class="dropdown-item text-info" href="'. route('admin.product.show', $product->id) .'"><i class="fas fa-eye"></i> View</a>
 
-                        <a class="dropdown-item text-primary" href="'. route('admin.product.edit', $product->id) .'"><i class="fas fa-edit"></i> Edit</a>
+                            @if(auth("admin")->user()->can("update.product"))
+                                <a class="dropdown-item text-primary" href="'. route('admin.product.edit', $product->id) .'"><i class="fas fa-edit"></i> Edit</a>
+                            @endif
 
-                        <a class="dropdown-item text-danger" href="javascript:void(0)" data-id="'.$product->id.'" id="deleteBtn">
-                            <i class="fas fa-trash"></i> Delete
-                        </a>
+                            @if(auth("admin")->user()->can("delete.product"))
+                                <a class="dropdown-item text-danger" href="javascript:void(0)" data-id="'.$product->id.'" id="deleteBtn">
+                                    <i class="fas fa-trash"></i> Delete
+                                </a>
+                            @endif
 
-                        <a class="dropdown-item text-success" href="'. route('admin.product-variant', $product->id) .'" ><i class="bx bx-cog"></i>
-                           Product Variants
-                        </a>
+                            @if(auth("admin")->user()->can("variant.product"))
+                                <a class="dropdown-item text-success" href="'. route('admin.product-variant', $product->id) .'" ><i class="bx bx-cog"></i>
+                                Product Variants
+                                </a>
+                            @endif
+                        </div>
                     </div>
-                </div>';
+                ', ['product' => $product]);
+                return $actionHtml;
             })
 
             ->rawColumns(['categorized', 'quantity', 'special_featured', 'product_details', 'product_img', 'status', 'action'])
@@ -161,6 +186,10 @@ class ProductController extends Controller
 
     public function changeProductStatus(Request $request)
     {
+        if (!$this->user || !$this->user->can('status.product')) {
+            throw UnauthorizedException::forPermissions(['status.product']);
+        }
+
         $id = $request->id;
         $Current_status = $request->status;
 
@@ -182,6 +211,10 @@ class ProductController extends Controller
      */
     public function store(CreateProductRequest $request)
     {
+        if (!$this->user || !$this->user->can('create.product')) {
+            throw UnauthorizedException::forPermissions(['create.product']);
+        }
+
         // dd($request->all());
         DB::beginTransaction();
         try {
@@ -248,6 +281,10 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
+        if (!$this->user || !$this->user->can('update.product')) {
+            throw UnauthorizedException::forPermissions(['update.product']);
+        }
+
         // dd($product);
         $categories        = Category::get_data();
         $subCategories     = Subcategory::get_data();
@@ -265,6 +302,10 @@ class ProductController extends Controller
      */
     public function update(UpdateProductRequest $request, string $id)
     {
+        if (!$this->user || !$this->user->can('update.product')) {
+            throw UnauthorizedException::forPermissions(['update.product']);
+        }
+
         $product  = Product::find($id);
 
         DB::beginTransaction();
@@ -330,6 +371,10 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
+        if (!$this->user || !$this->user->can('delete.product')) {
+            throw UnauthorizedException::forPermissions(['delete.product']);
+        }
+
         if ($product->thumb_image) {
             if (file_exists($product->thumb_image)) {
                 unlink($product->thumb_image);
@@ -391,6 +436,10 @@ class ProductController extends Controller
 
     public function product_variant($product_id)
     {
+        if (!$this->user || !$this->user->can('variant.product')) {
+            throw UnauthorizedException::forPermissions(['variant.product']);
+        }
+
         // Product Color
         $data['product_id']       = $product_id;
         $data['size_value']       = AttributeValue::where('attribute', "size")->where('status', 1)->get();

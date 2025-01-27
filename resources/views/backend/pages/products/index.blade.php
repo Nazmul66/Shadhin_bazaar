@@ -35,9 +35,12 @@
         <div class="card-header">
             <div class="d-flex justify-content-between align-items-center">
                 <h4 class="card-title">Products List</h4>
-                <a href="{{ route('admin.product.create') }}" class="btn btn-primary">
-                    Add New
-                </a>
+
+                @if(auth("admin")->user()->can("create.product"))
+                    <a href="{{ route('admin.product.create') }}" class="btn btn-primary">
+                        Add New
+                    </a>
+                @endif
             </div>
         </div>
         
