@@ -10,13 +10,28 @@ use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Blade;
+use Spatie\Permission\Exceptions\UnauthorizedException;
 
 class SettingController extends Controller
 {
     use ImageUploadTraits;
+    public $user;
+    public function __construct()
+    {
+        $this->user = Auth::guard('admin')->user();
+        if (!$this->user) {
+            abort(403, 'Unauthorized access');
+        }
+    }
 
     public function index()
     {
+        if (!$this->user || !$this->user->can('general.setting')) {
+            throw UnauthorizedException::forPermissions(['general.setting']);
+        }
+
         $setting = Setting::first();
         return view("backend.pages.settings.index", compact('setting'));
     }
@@ -27,6 +42,10 @@ class SettingController extends Controller
      */
     public function store(Request $request)
     {
+        if (!$this->user || !$this->user->can('create.general.setting')) {
+            throw UnauthorizedException::forPermissions(['create.general.setting']);
+        }
+
         // dd($request->all());
         $request->validate(
             [
@@ -119,6 +138,10 @@ class SettingController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        if (!$this->user || !$this->user->can('create.general.setting')) {
+            throw UnauthorizedException::forPermissions(['create.general.setting']);
+        }
+
         $request->validate(
             [
                 'phone' => ['required'],
@@ -208,13 +231,21 @@ class SettingController extends Controller
 
     public function emailSetupIndex()
     {
+        if (!$this->user || !$this->user->can('email.config.setting')) {
+            throw UnauthorizedException::forPermissions(['email.config.setting']);
+        }
+
         $email_setting = EmailConfiguration::first();
         return view('backend.pages.email_configuration.index', compact('email_setting'));
     }
 
     public function emailConfigSettingUpdate(Request $request)
     {
-    //   dd($request->all());
+        if (!$this->user || !$this->user->can('create.email.config.setting')) {
+            throw UnauthorizedException::forPermissions(['create.email.config.setting']);
+        }
+
+        //   dd($request->all());
         $request->validate([
             'email'       => ['required', 'email'],
             'host'        => ['required', 'max: 200'],

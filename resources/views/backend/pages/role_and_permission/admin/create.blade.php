@@ -61,9 +61,19 @@
                         </div>
 
                         <div class="mb-3">
+                            <label for="phone" class="form-label">Phone</label>
+                            <input class="form-control" type="text" name="phone" id="phone" placeholder="Phone..." value="{{ old('phone') }}"> 
+
+                             @error('phone')
+                                <span class="text-danger mt-1">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <div class="mb-3">
                             <label for="password" class="form-label">Password</label>
                             <input class="form-control" type="password" name="password" id="password" placeholder="Password...">
 
+                            
                             @error('password')
                                 <span class="text-danger mt-1">{{ $message }}</span>
                             @enderror

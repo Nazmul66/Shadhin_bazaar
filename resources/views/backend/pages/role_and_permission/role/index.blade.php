@@ -32,9 +32,12 @@
         <div class="card-header">
             <div class="d-flex justify-content-between align-items-center">
                 <h4 class="card-title">Role List</h4>
-                <a href="{{ route('admin.role.create') }}" class="btn btn-primary">
-                    Create Role
-                </a>
+
+                @if(auth("admin")->user()->can("create.role"))
+                    <a href="{{ route('admin.role.create') }}" class="btn btn-primary">
+                        Create Role
+                    </a>
+                @endif
             </div>
         </div>
 
@@ -68,16 +71,20 @@
                                 </td>
                                 <td>
                                     <div class="d-flex gap-3">
-                                        <a class="btn btn-sm btn-info" href="{{ route('admin.role.edit', $role->id) }}"><i class='bx bx-lock'></i></i></a>
+                                        @if(auth("admin")->user()->can("update.role"))
+                                            <a class="btn btn-sm btn-info" href="{{ route('admin.role.edit', $role->id) }}"><i class='bx bx-lock'></i></i></a>
+                                        @endif
 
-                                        <form action="{{ route('admin.role.destroy', $role->id) }}" method="POST" style="display:inline;">
-                                            @csrf
-                                            @method('DELETE')
+                                        @if(auth("admin")->user()->can("delete.role"))
+                                            <form action="{{ route('admin.role.destroy', $role->id) }}" method="POST" style="display:inline;">
+                                                @csrf
+                                                @method('DELETE')
 
-                                            <button type="submit" class="btn btn-sm btn-danger">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
-                                        </form>
+                                                <button type="submit" class="btn btn-sm btn-danger">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </form>
+                                        @endif
                                     </div>
                                 </td>
                             </tr>

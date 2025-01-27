@@ -9,14 +9,30 @@ use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Blade;
+use Spatie\Permission\Exceptions\UnauthorizedException;
 
 class AdminRoleController extends Controller
 {
+    public $user;
+    public function __construct()
+    {
+        $this->user = Auth::guard('admin')->user();
+        if (!$this->user) {
+            abort(403, 'Unauthorized access');
+        }
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
+        if (!$this->user || !$this->user->can('index.admin-role')) {
+            throw UnauthorizedException::forPermissions(['index.admin-role']);
+        }
+
         $admins = Admin::all();
         return view('backend.pages.role_and_permission.admin.index',[
             "admins" => $admins,
@@ -25,6 +41,10 @@ class AdminRoleController extends Controller
 
     public function create()
     {
+        if (!$this->user || !$this->user->can('create.admin-role')) {
+            throw UnauthorizedException::forPermissions(['create.admin-role']);
+        }
+
         $roles = Role::where('guard_name', 'admin')->pluck('name', 'name')->all();
         return view('backend.pages.role_and_permission.admin.create',[
             'roles' => $roles
@@ -36,6 +56,10 @@ class AdminRoleController extends Controller
      */
     public function store(Request $request)
     {
+        if (!$this->user || !$this->user->can('create.admin-role')) {
+            throw UnauthorizedException::forPermissions(['create.admin-role']);
+        }
+
         // dd($request->all());
         $request->validate(
             [
@@ -98,6 +122,10 @@ class AdminRoleController extends Controller
      */
     public function edit($id)
     {
+        if (!$this->user || !$this->user->can('update.admin-role')) {
+            throw UnauthorizedException::forPermissions(['update.admin-role']);
+        }
+
         $admin     = Admin::findOrFail($id);
         $roles     = Role::where('guard_name', 'admin')->pluck('name', 'name')->all();
         $userRoles = $admin->roles->pluck('name', 'name')->all();
@@ -114,6 +142,10 @@ class AdminRoleController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        if (!$this->user || !$this->user->can('update.admin-role')) {
+            throw UnauthorizedException::forPermissions(['update.admin-role']);
+        }
+
         $request->validate(
             [
                 'name'     => ['required', 'string', 'max:255', 'unique:admins,name,' . $id],
@@ -178,6 +210,10 @@ class AdminRoleController extends Controller
      */
     public function destroy($id)
     {
+        if (!$this->user || !$this->user->can('delete.admin-role')) {
+            throw UnauthorizedException::forPermissions(['delete.admin-role']);
+        }
+
         // dd($id);
         $admin = Admin::findOrFail($id);
 

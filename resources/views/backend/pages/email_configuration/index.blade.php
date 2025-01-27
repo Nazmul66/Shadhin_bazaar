@@ -63,7 +63,9 @@
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-primary waves-effect waves-light">Update</button>
+                    @if(auth("admin")->user()->can("create.email.config.setting"))
+                        <button type="submit" class="btn btn-primary waves-effect waves-light">Update</button>
+                    @endif
                 </form>
             </div>
         </div>

@@ -5,11 +5,9 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\Contact;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controllers\Middleware;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Exceptions\UnauthorizedException;
-use Spatie\Permission\Middleware\PermissionMiddleware;
 use Yajra\DataTables\Facades\DataTables;
 
 class ContactController extends Controller
@@ -27,6 +25,10 @@ class ContactController extends Controller
      */
     public function index()
     {
+        if (!$this->user || !$this->user->can('index.contact')) {
+            throw UnauthorizedException::forPermissions(['index.contact']);
+        }
+
         return view('backend.pages.contact_us.index');
     }
 

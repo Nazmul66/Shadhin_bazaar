@@ -45,17 +45,38 @@
                     <div class="col-lg-8 ">
                         <div class="mb-3">
                             <label for="name" class="form-label">Name</label>
-                            <input class="form-control" type="text" value="{{ $admin->name }}" name="name" id="name" placeholder="Write Your Name.....">
+                            <input class="form-control" type="text" value="{{ old('name', $admin->name) }}" name="name" id="name" placeholder="Write Your Name.....">
+
+                            @error('name')
+                                <span class="text-danger mt-1">{{ $message }}</span>
+                            @enderror
                         </div>
 
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
                             <input class="form-control" type="email" value="{{ $admin->email }}" name="email" id="email" readonly placeholder="Write Your Email.....">
+
+                            @error('email')
+                                <span class="text-danger mt-1">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="phone" class="form-label">Phone</label>
+                            <input class="form-control" type="text" name="phone" id="phone" placeholder="Phone..." value="{{ old('phone', $admin->phone) }}"> 
+
+                             @error('phone')
+                                <span class="text-danger mt-1">{{ $message }}</span>
+                            @enderror
                         </div>
 
                         <div class="mb-3">
                             <label for="password" class="form-label">Password</label>
                             <input class="form-control" type="password" name="password" id="password" placeholder="****************">
+
+                            @error('password')
+                                <span class="text-danger mt-1">{{ $message }}</span>
+                            @enderror
                         </div>
 
                         <div class="mb-3">
@@ -68,6 +89,10 @@
                                         >{{ $role }}</option>
                                 @endforeach
                             </select>
+
+                            @error('roles')
+                                <span class="text-danger mt-1">{{ $message }}</span>
+                            @enderror
                         </div>
 
                         <button type="submit" class="btn btn-success">Update</button>

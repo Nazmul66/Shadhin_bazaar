@@ -10,14 +10,30 @@ use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Blade;
+use Spatie\Permission\Exceptions\UnauthorizedException;
 
 class RoleController extends Controller
 {
+    public $user;
+    public function __construct()
+    {
+        $this->user = Auth::guard('admin')->user();
+        if (!$this->user) {
+            abort(403, 'Unauthorized access');
+        }
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
+        if (!$this->user || !$this->user->can('index.role')) {
+            throw UnauthorizedException::forPermissions(['index.role']);
+        }
+        
         $roles = Role::where('guard_name', 'admin')->get();
         return view('backend.pages.role_and_permission.role.index',[
             "roles" => $roles
@@ -26,6 +42,10 @@ class RoleController extends Controller
 
     public function create()
     {
+        if (!$this->user || !$this->user->can('create.role')) {
+            throw UnauthorizedException::forPermissions(['create.role']);
+        }
+
         // [ V.V.V.I ] AKhane 2ta bhag a query run kora hoyese, first get porjonto shob gulo loop kore dekhabe then group by ta alada query hisebe show kore dekhabe, example below-->
 
         $data['permissions']        = Permission::all();
@@ -37,6 +57,10 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
+        if (!$this->user || !$this->user->can('create.role')) {
+            throw UnauthorizedException::forPermissions(['create.role']);
+        }
+
         // dd($request->all());
         $request->validate([
             'name'          => 'required|string|unique:roles,name|max:255',
@@ -71,6 +95,10 @@ class RoleController extends Controller
      */
     public function edit(string $id)
     {
+        if (!$this->user || !$this->user->can('update.role')) {
+            throw UnauthorizedException::forPermissions(['update.role']);
+        }
+
         $data['role']               = Role::findOrFail($id);
         $data['permissions']        = Permission::all();
         $data['permission_groups']  = Admin::getPermissionGroup(); 
@@ -85,6 +113,10 @@ class RoleController extends Controller
      */
     public function update(Request $request, Role $role)
     {
+        if (!$this->user || !$this->user->can('update.role')) {
+            throw UnauthorizedException::forPermissions(['update.role']);
+        }
+
         // $role = Role::findOrFail($id);
         $request->validate([
             'name'           => 'required|string|max:255|unique:roles,name,' . $role->id,
@@ -119,6 +151,10 @@ class RoleController extends Controller
      */
     public function destroy(string $id)
     {
+        if (!$this->user || !$this->user->can('delete.role')) {
+            throw UnauthorizedException::forPermissions(['delete.role']);
+        }
+
         // dd($id);
         $role = Role::findOrFail($id);
 

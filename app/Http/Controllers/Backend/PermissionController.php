@@ -6,16 +6,31 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Blade;
+use Spatie\Permission\Exceptions\UnauthorizedException;
 
 class PermissionController extends Controller
 {
+    public $user;
+    public function __construct()
+    {
+        $this->user = Auth::guard('admin')->user();
+        if (!$this->user) {
+            abort(403, 'Unauthorized access');
+        }
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
+        if (!$this->user || !$this->user->can('index.permission')) {
+            throw UnauthorizedException::forPermissions(['index.permission']);
+        }
+
         return view('backend.pages.role_and_permission.permission.index');
     }
 
@@ -32,11 +47,18 @@ class PermissionController extends Controller
                 return '<span class="badge bg-success" style="font-size: 14px; padding: 10px 10px;">'. $permission->group_name .'</span>';
             })
             ->addColumn('action', function ($permission) {
-                return '<div class="d-flex gap-3">
-                    <a class="btn btn-sm btn-primary" id="editButton" href="javascript:void(0)" data-id="'.$permission->id.'" data-bs-toggle="modal" data-bs-target="#editModal"><i class="fas fa-edit"></i></a>
+                $actionHtml = Blade::render('
+                    <div class="d-flex gap-3">
+                        @if(auth("admin")->user()->can("update.permission"))
+                            <a class="btn btn-sm btn-primary" id="editButton" href="javascript:void(0)" data-id="'.$permission->id.'" data-bs-toggle="modal" data-bs-target="#editModal"><i class="fas fa-edit"></i></a>
+                        @endif
 
-                    <a class="btn btn-sm btn-danger" href="javascript:void(0)" data-id="'.$permission->id.'" id="deleteBtn"> <i class="fas fa-trash"></i></a>
-                </div>';
+                        @if(auth("admin")->user()->can("delete.permission"))
+                            <a class="btn btn-sm btn-danger" href="javascript:void(0)" data-id="'.$permission->id.'" id="deleteBtn"> <i class="fas fa-trash"></i></a>
+                        @endif
+                    </div>
+            ', ['permission' => $permission]);
+            return $actionHtml;
             })
             ->rawColumns(['name', 'group_name', 'action'])
             ->make(true);
@@ -47,6 +69,10 @@ class PermissionController extends Controller
      */
     public function store(Request $request)
     {
+        if (!$this->user || !$this->user->can('create.permission')) {
+            throw UnauthorizedException::forPermissions(['create.permission']);
+        }
+
         $request->validate(
             [
                 'name' => ['required', 'unique:permissions,name', 'max:255'],
@@ -84,6 +110,10 @@ class PermissionController extends Controller
      */
     public function edit(Permission $permission)
     {
+        if (!$this->user || !$this->user->can('update.permission')) {
+            throw UnauthorizedException::forPermissions(['update.permission']);
+        }
+
         // dd($permission);
         return response()->json(['success' => $permission]);
     }
@@ -93,6 +123,10 @@ class PermissionController extends Controller
      */
     public function update(Request $request, Permission $permission)
     {
+        if (!$this->user || !$this->user->can('update.permission')) {
+            throw UnauthorizedException::forPermissions(['update.permission']);
+        }
+
         // $permission  = Permission::find($id);
         $request->validate(
             [
@@ -130,8 +164,11 @@ class PermissionController extends Controller
      */
     public function destroy(Permission $permission)
     {
-        $permission->delete();
+        if (!$this->user || !$this->user->can('delete.permission')) {
+            throw UnauthorizedException::forPermissions(['delete.permission']);
+        }
 
+        $permission->delete();
         return response()->json(['message' => 'Permission has been deleted.'], 200);
     }
 

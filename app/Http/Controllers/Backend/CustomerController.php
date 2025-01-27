@@ -6,14 +6,29 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Exceptions\UnauthorizedException;
 
 class CustomerController extends Controller
 {
+    public $user;
+    public function __construct()
+    {
+        $this->user = Auth::guard('admin')->user();
+        if (!$this->user) {
+            abort(403, 'Unauthorized access');
+        }
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
+        if (!$this->user || !$this->user->can('index.user')) {
+            throw UnauthorizedException::forPermissions(['index.user']);
+        }
+
         return view('backend.pages.customer.index');
     }
 

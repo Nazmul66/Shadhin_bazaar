@@ -17,20 +17,24 @@
                 </li>
 
                 {{-- Users List --}}
-                <li class="">
-                    <a href="{{ route('admin.customer.index') }}">
-                        <i class='bx bx-user'></i>
-                        <span >Users</span>
-                    </a>
-                </li>
+                @if(auth("admin")->user()->can("index.user"))
+                    <li class="">
+                        <a href="{{ route('admin.customer.index') }}">
+                            <i class='bx bx-user'></i>
+                            <span >Users</span>
+                        </a>
+                    </li>
+                @endif
 
                 {{-- Contact List --}}
-                <li class="">
-                    <a href="{{ route('admin.contact.index') }}">
-                        <i class='bx bx-phone-call'></i>
-                        <span >Contacts</span>
-                    </a>
-                </li>
+                @if(auth("admin")->user()->can("index.contact"))
+                    <li class="">
+                        <a href="{{ route('admin.contact.index') }}">
+                            <i class='bx bx-phone-call'></i>
+                            <span >Contacts</span>
+                        </a>
+                    </li>
+                @endif
                 
                 {{-- Subscription List --}}
                 <li class="">
@@ -246,6 +250,7 @@
                 </li>
 
                 {{-- Role & Permission --}}
+                @if(auth("admin")->user()->can("main-admin-access"))
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i class='bx bx-lock'></i>
@@ -253,23 +258,32 @@
                     </a>
                     
                     <ul class="sub-menu" aria-expanded="false">
-                        <li>
-                            <a href="{{ route('admin.permission.index') }}">
-                                <span >Permission</span>
-                            </a>
-                        </li>
-                        <li class="@yield('edit_role')">
-                            <a href="{{ route('admin.role.index') }}">
-                                <span >Role</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('admin.admin-role.index') }}">
-                                <span >All Admins</span>
-                            </a>
-                        </li>
+                        @if(auth("admin")->user()->can("index.permission"))
+                            <li>
+                                <a href="{{ route('admin.permission.index') }}">
+                                    <span >Permission</span>
+                                </a>
+                            </li>
+                        @endif
+
+                        @if(auth("admin")->user()->can("index.role"))
+                            <li class="@yield('edit_role')">
+                                <a href="{{ route('admin.role.index') }}">
+                                    <span >Role</span>
+                                </a>
+                            </li>
+                        @endif
+
+                        @if(auth("admin")->user()->can("index.admin-role"))
+                            <li>
+                                <a href="{{ route('admin.admin-role.index') }}">
+                                    <span >All Admins</span>
+                                </a>
+                            </li>
+                        @endif
                     </ul>
                 </li>
+                @endif
 
                 {{-- Setting Website --}}
                 <li>
@@ -278,21 +292,27 @@
                         <span >Settings</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li>
-                            <a href="{{ route('admin.settings.index') }}">
-                                <span >General Settings</span>
-                            </a>
-                        </li>
+                        @if(auth("admin")->user()->can("general.setting"))
+                            <li>
+                                <a href="{{ route('admin.settings.index') }}">
+                                    <span >General Settings</span>
+                                </a>
+                            </li>
+                        @endif
+
                         <li>
                             <a href="{{ route('admin.profile-update') }}">
                                 <span >Profile Update</span>
                             </a>
                         </li>
-                        <li>
-                            <a href="{{ route('admin.email.setup') }}">
-                                <span >Email Configuration</span>
-                            </a>
-                        </li>
+
+                        @if(auth("admin")->user()->can("email.config.setting"))
+                            <li>
+                                <a href="{{ route('admin.email.setup') }}">
+                                    <span >Email Configuration</span>
+                                </a>
+                            </li>
+                        @endif
                     </ul>
                 </li>
             </ul>
