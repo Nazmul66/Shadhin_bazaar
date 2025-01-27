@@ -88,6 +88,10 @@ class FaqController extends Controller
 
     public function changeFaqStatus(Request $request)
     {
+        if (!$this->user || !$this->user->can('status.faq')) {
+            throw UnauthorizedException::forPermissions(['status.faq']);
+        }
+
         $id = $request->id;
         $Current_status = $request->status;
 
@@ -109,6 +113,10 @@ class FaqController extends Controller
      */
     public function store(Request $request)
     {
+        if (!$this->user || !$this->user->can('create.faq')) {
+            throw UnauthorizedException::forPermissions(['create.faq']);
+        }
+
         $request->validate([
             'question'  => ['required', 'unique:faqs,question'],
             'answer'    => ['required'],
@@ -137,6 +145,9 @@ class FaqController extends Controller
      */
     public function edit(Faq $faq)
     {
+        if (!$this->user || !$this->user->can('update.faq')) {
+            throw UnauthorizedException::forPermissions(['update.faq']);
+        }
         // dd($faq);
         return response()->json(['success' => $faq]);
     }
@@ -146,6 +157,10 @@ class FaqController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (!$this->user || !$this->user->can('update.faq')) {
+            throw UnauthorizedException::forPermissions(['update.faq']);
+        }
+
         $faq  = Faq::find($id);
         $request->validate([
             'question'  => ['required', 'unique:faqs,question,' . $faq->id],
@@ -174,8 +189,8 @@ class FaqController extends Controller
      */
     public function destroy(Faq $faq)
     {
-        if (!$this->user || !$this->user->can('delete.subscription')) {
-            throw UnauthorizedException::forPermissions(['delete.subscription']);
+        if (!$this->user || !$this->user->can('delete.faq')) {
+            throw UnauthorizedException::forPermissions(['delete.faq']);
         }
 
         $faq->delete();
