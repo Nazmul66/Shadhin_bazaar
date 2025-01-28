@@ -57,6 +57,23 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td><span class="badge bg-info" style="font-size: 14px; padding: 10px 10px;">SuperAdmin</span></td>
+                            <td>
+                                <a href="javascript:void();" class="badge bg-danger" style="font-size: 14px; padding: 10px 10px;">N/A</a>
+                            </td>
+                            <td>
+                                <a href="javascript:void();" class="badge bg-danger" style="font-size: 14px; padding: 10px 10px;">N/A</a>
+                            </td>
+                            <td style="width: 600px;">
+                                <span class="badge bg-success" style="font-size: 14px; padding: 10px 10px;">SuperAdmin</span>
+                            </td>
+                            <td>
+                                
+                            </td>
+                        </tr>
+
                         @foreach ($admins as $row => $admin )
                             <tr>
                                 <td>{{ $row + 1 }}</td>

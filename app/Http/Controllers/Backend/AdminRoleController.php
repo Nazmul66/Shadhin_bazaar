@@ -33,7 +33,7 @@ class AdminRoleController extends Controller
             throw UnauthorizedException::forPermissions(['index.admin-role']);
         }
 
-        $admins = Admin::all();
+        $admins = Admin::where('id', '!=', Admin::min('id'))->get();
         return view('backend.pages.role_and_permission.admin.index',[
             "admins" => $admins,
         ]);

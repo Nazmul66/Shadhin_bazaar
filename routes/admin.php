@@ -57,8 +57,10 @@ Route::middleware('setLanguage')->group(function(){
 
     Route::group(["as" => 'admin.',"prefix" => '/admin', 'middleware' => ['auth:admin', 'role:SuperAdmin|Admin']], function () {
         Route::get('/dashboards', [AdminController::class, "dashboards"])->name('dashboards');
+        Route::get('/profiles', [AdminController::class, "profiles"])->name('profiles');
         Route::get('/profile-update', [AdminController::class, "profileUpdate"])->name('profile-update');
-        Route::post('/profile-update', [AdminController::class, "changeProfile"])->name('change-profile');
+        Route::put('/profile-update', [AdminController::class, "changeProfile"])->name('change-profile');
+        Route::put('/change-password', [AdminController::class, "changePassword"])->name('change-password');
         Route::post('/current-password', [AdminController::class, "checkCurrentPassword"])->name('current-password');
 
         //______ Customers _____//

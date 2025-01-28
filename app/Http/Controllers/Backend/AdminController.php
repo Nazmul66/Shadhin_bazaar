@@ -17,13 +17,13 @@ use Illuminate\Support\Facades\Artisan;
 use App\Traits\ImageUploadTraits;
 use Brian2694\Toastr\Facades\Toastr;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
 
     use ImageUploadTraits;
-
 
     public function cacheClear()
     {
@@ -109,46 +109,103 @@ class AdminController extends Controller
         return redirect('/admin/login');
     }
 
+    public function profiles()
+    {
+        return view('backend.pages.profile-update.index');
+    }
+
      /**
      * Admin Profile update
      */
     public function profileUpdate()
     {
         $admin = Admin::where('id', Auth::guard('admin')->user()->id)->first();
-        return view('backend.pages.profile-update.index', compact('admin'));
+        return view('backend.pages.profile-update.profile_update', compact('admin'));
     }
 
     public function changeProfile(Request $request)
     {
         // dd($request->all());
-        $admin  =  Admin::where('id', Auth::guard('admin')->user()->id)->first();
+        $request->validate(
+            [
+                'name'     => ['required', 'string', 'max:255'],
+                'email'    => ['required', 'max:255'],
+                'phone'    => ['required', 'regex:/^[0-9]{11,15}$/'],
+            ],
+            [
+                'name.required'     => 'The name field is required.',
+                'email.required'    => 'The email field is required.',
+                'email.email'       => 'Please enter a valid email address.',
+                'phone.required'    => 'The phone field is required.',
+            ]
+        );
 
-        $admin->name =  $request->name;
+        DB::beginTransaction();
+        try {
+            $admin          =  Admin::where('id', Auth::guard('admin')->user()->id)->first();
+            $admin->name    =  $request->name;
+            $admin->email   =  $request->email;
+            $admin->phone   =  $request->phone;
 
-        // Handle image with ImageUploadTraits function
-         if( $request->hasFile('image') ){
+            // Handle image with ImageUploadTraits function
+            if( $request->hasFile('image') ){
+                if( !empty($admin->image) && file_exists($admin->image)){
+                    unlink($admin->image);
+                }
 
-            if( !empty($admin->image) && file_exists($admin->image)){
-                  unlink($admin->image);
+                $uploadImage           = $this->imageUpload($request, 'image', 'settings');
+                $admin->image          =  $uploadImage;
             }
-
-            $uploadImage           = $this->imageUpload($request, 'image', 'settings');
-            $admin->image          =  $uploadImage;
+            $admin->save();
+        }
+        catch(\Exception $ex){
+            DB::rollBack();
+            // throw $ex;
+            // dd($ex->getMessage());
+            Toastr::error('Profile updated error', 'Error', ["positionClass" => "toast-top-right"]);
+            return back();
         }
 
-        $admin->save();
+        DB::commit();
+        Toastr::success('Profile updated successfully', 'Success', ["positionClass" => "toast-top-right"]);
+        return back();
+    }
 
+    public function changePassword(Request $request)
+    {
+        $request->validate(
+            [
+                'new_password' => [
+                    'string', 
+                    'min:8', 
+                    'regex:/[a-z]/',    // Must contain at least one lowercase letter
+                    'regex:/[A-Z]/',    // Must contain at least one uppercase letter
+                    'regex:/[0-9]/',    // Must contain at least one number
+                    'regex:/[@$!%*?&#]/' // Must contain a special character
+                ],        
+                'confirm_password' => [
+                    'same:new_password', // Ensure it matches the new password
+                ],      
+            ],
+            [
+                'new_password.required'    => 'The new password field is required.',
+                'new_password.string'      => 'The new password must be a valid string.',
+                'new_password.min'         => 'The new password must be at least 8 characters long.',
+                'new_password.regex'       => 'The new password must include at least one lowercase letter, one uppercase letter, one number, and one special character.',
+                'confirm_password.required' => 'The confirm password field is required.',
+                'confirm_password.same'     => 'The confirm password must match the new password.',
+            ]
+        );
 
         // Password Update
         if( Hash::check($request->current_password, Auth::guard('admin')->user()->password) ){
-
             if( $request->new_password === $request->confirm_password ){
                 Admin::where('id', Auth::guard('admin')->user()->id)->update([
                     'password' => bcrypt($request->new_password)
                 ]);
 
                 Toastr::success('Profile updated successfully', 'Success', ["positionClass" => "toast-top-right"]);        
-               return redirect()->route('admin.dashboards');
+                return redirect()->back();
            }
 
            else{

@@ -301,7 +301,7 @@
                         @endif
 
                         <li>
-                            <a href="{{ route('admin.profile-update') }}">
+                            <a href="{{ route('admin.profiles') }}">
                                 <span >Profile Update</span>
                             </a>
                         </li>
