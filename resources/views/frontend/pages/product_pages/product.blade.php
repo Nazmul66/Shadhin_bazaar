@@ -403,20 +403,8 @@
 
 
                 <div class="col-xl-9">
-                    <div class="wrapper-shop tf-grid-layout tf-col-4" 
-                    id="gridLayout" style="">
-
+                    <div class="wrapper-shop">
                         @include('frontend.include.render_product_page')
-
-                        <!-- pagination -->
-                        {{-- <ul class="wg-pagination justify-content-center" style="">
-                            <li><a href="#" class="pagination-item text-button">1</a></li>
-                            <li class="active">
-                                <div class="pagination-item text-button">2</div>
-                            </li>
-                            <li><a href="#" class="pagination-item text-button">3</a></li>
-                            <li><a href="#" class="pagination-item text-button"><i class="icon-arrRight"></i></a></li>
-                        </ul> --}}
                     </div>
                 </div>
             </div>
@@ -663,6 +651,30 @@
             };
 
             rangeTwoPrice();
+
+            // pagination
+            $(document).on("click", ".pagination a", function(e){
+                e.preventDefault();
+                let page = $(this).attr("href").split('page=')[1];
+                let formData = $('#filterForm').serialize(); // Serialize the filter form data
+                // console.log(page);
+
+                $.ajax({
+                    url: "{{ url('/pagination/paginate-data') }}?page=" + page,
+                    method: "GET",
+                    data: formData, // Send filter data along with pagination
+                    success: function(data) {
+                        if( data.status === true ){
+                            $('.wrapper-shop').html(data.success); 
+                            $('#product_count').html(data.count); 
+                        }
+                    },
+                    error: function(data) {
+                        // toastr.error('Failed to filtering products');
+                    },
+                });
+
+            })
             
         })
     </script>

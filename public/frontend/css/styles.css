@@ -18096,3 +18096,54 @@ ul.list-text.type-number {
     row-gap: 10px;
     padding-right: 20px;
 }
+
+
+.pagination_page {
+    margin: 5rem 0 0 0; 
+}
+.pagination_page nav {
+    display: inline-block;
+}
+.pagination_page .pagination {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.pagination_page .pagination li {
+    margin: 0 5px;
+}
+
+.pagination_page .pagination li a,
+.pagination_page .pagination li span {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #181818;
+    font-weight: 600;
+    border: 1px solid var(--line);
+    border-radius: 5px;
+    overflow: hidden;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.pagination_page .pagination li a:hover {
+    background-color: #181818;
+    border-color: #181818;
+    color: #FFF;
+}
+
+.pagination_page .pagination li.active span {
+    background-color: #181818;
+    border-color: #181818;
+    color: #FFF;
+}
+
+.pagination_page .pagination li.disabled span {
+    background-color: #f4f4f4;
+    color: #000;
+    border-color: #ddd;
+    cursor: not-allowed;
+}

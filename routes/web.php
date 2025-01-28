@@ -62,6 +62,7 @@ use App\Http\Controllers\Frontend\NewsletterController;
         Route::get('/remove-cart/{id}/{color_id?}/{size_id?}', 'removeCart')->name('remove.cart');
         Route::get('/get-cart-data', 'getCart')->name('get.cart.data');
         Route::post('/get_filter_product_ajax', 'get_filter_product_ajax');
+        Route::get('/pagination/paginate-data', 'pagination');
     });
     
 
