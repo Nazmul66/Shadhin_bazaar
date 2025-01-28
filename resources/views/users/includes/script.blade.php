@@ -5,49 +5,49 @@
 
 
 <!--jquery library js-->
-<script src="{{ asset('public/frontend/js/jquery-3.6.0.min.js') }}"></script>
+<script src="{{ asset('public/user/js/jquery-3.6.0.min.js') }}"></script>
 <!--bootstrap js-->
-<script src="{{ asset('public/frontend/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('public/user/js/bootstrap.bundle.min.js') }}"></script>
 <!--font-awesome js-->
-<script src="{{ asset('public/frontend/js/Font-Awesome.js') }}"></script>
-{{-- <!--select2 js-->
-<script src="{{ asset('public/frontend/js/select2.min.js') }}"></script> --}}
+<script src="{{ asset('public/user/js/Font-Awesome.js') }}"></script>
+<!--select2 js-->
+<script src="{{ asset('public/user/js/select2.min.js') }}"></script>
 <!--slick slider js-->
-<script src="{{ asset('public/frontend/js/slick.min.js') }}"></script>
-{{-- <!-- simplyCountdown js-->
-<script src="{{ asset('public/frontend/js/simplyCountdown.js') }}"></script> --}}
+<script src="{{ asset('public/user/js/slick.min.js') }}"></script>
+<!-- simplyCountdown js-->
+<script src="{{ asset('public/user/js/simplyCountdown.js') }}"></script>
 
-{{-- <!--product zoomer js-->
-<script src="{{ asset('public/frontend/js/jquery.exzoom.js') }}"></script> --}}
+<!--product zoomer js-->
+<script src="{{ asset('public/user/js/jquery.exzoom.js') }}"></script>
 <!--nice-number js-->
-<script src="{{ asset('public/frontend/js/jquery.nice-number.min.js') }}"></script>
+<script src="{{ asset('public/user/js/jquery.nice-number.min.js') }}"></script>
 <!--counter js-->
-<script src="{{ asset('public/frontend/js/jquery.waypoints.min.js') }}"></script>
-<script src="{{ asset('public/frontend/js/jquery.countup.min.js') }}"></script>
+<script src="{{ asset('public/user/js/jquery.waypoints.min.js') }}"></script>
+<script src="{{ asset('public/user/js/jquery.countup.min.js') }}"></script>
 <!--add row js-->
-<script src="{{ asset('public/frontend/js/add_row_custon.js') }}"></script>
-{{-- <!--multiple-image-video js-->
-<script src="{{ asset('public/frontend/js/multiple-image-video.js') }}"></script> --}}
+<script src="{{ asset('public/user/js/add_row_custon.js') }}"></script>
+<!--multiple-image-video js-->
+<script src="{{ asset('public/user/js/multiple-image-video.js') }}"></script>
 
 <!--sticky sidebar js For product Details page-->
-<script src="{{ asset('public/frontend/js/sticky_sidebar.js') }}"></script>
+<script src="{{ asset('public/user/js/sticky_sidebar.js') }}"></script>
 
-{{-- <!--price ranger js-->
-<script src="{{ asset('public/frontend/js/ranger_jquery-ui.min.js') }}"></script>
-<script src="{{ asset('public/frontend/js/ranger_slider.js') }}"></script> --}}
+<!--price ranger js-->
+<script src="{{ asset('public/user/js/ranger_jquery-ui.min.js') }}"></script>
+<script src="{{ asset('public/user/js/ranger_slider.js') }}"></script>
 
 <!--Toaster Js Implement-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
 <!--isotope js-->
-<script src="{{ asset('public/frontend/js/isotope.pkgd.min.js') }}"></script>
+<script src="{{ asset('public/user/js/isotope.pkgd.min.js') }}"></script>
 <!--venobox js-->
-<script src="{{ asset('public/frontend/js/venobox.min.js') }}"></script>
+<script src="{{ asset('public/user/js/venobox.min.js') }}"></script>
 <!--classycountdown js-->
-{{-- <script src="{{ asset('public/frontend/js/jquery.classycountdown.js') }}"></script> --}}
+<script src="{{ asset('public/user/js/jquery.classycountdown.js') }}"></script>
 
 <!--main/custom js-->
-<script src="{{ asset('public/frontend/js/main.js') }}"></script>
+<script src="{{ asset('public/user/js/main.js') }}"></script>
 
 
 @stack('add-js')

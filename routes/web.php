@@ -14,6 +14,7 @@ use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\ShippingRuleController;
 use App\Http\Controllers\Frontend\AjaxCallController;
 use App\Http\Controllers\Frontend\NewsletterController;
+use App\Http\Controllers\Frontend\AccountController;
 
 /*
 |--------------------------------------------------------------------------
@@ -127,11 +128,21 @@ use App\Http\Controllers\Frontend\NewsletterController;
     });
 
 
-
-    
-
     // Route::get('/change-password', [HomeController::class, "changePassword"])->name('change.password');
-    // Route::get('/forget-password', [HomeController::class, "forgetPassword"])->name('forget.password');   
+    // Route::get('/forget-password', [HomeController::class, "forgetPassword"])->name('forget.password'); 
+    
+    
+    
+    Route::group(["as" => 'user.',"prefix" => '/user', 'middleware' => ['auth', 'userMiddleware']], function () {
+
+        Route::controller(AccountController::class)->group(function () {
+            Route::get('/dashboard', "dashboard")->name('dashboard');
+            Route::get('/dashboard/profile', "dashboard_profile")->name('dashboard.profile');
+            Route::get('/dashboard/orders', "dashboard_orders")->name('dashboard.orders');
+            Route::get('/dashboard/order-view/{id}', "dashboard_orders_views")->name('dashboard.order.view');
+            Route::get('/dashboard/wishlist', "dashboard_wishlist")->name('dashboard.wishlist');
+        });
+    });
     
 
 
@@ -145,4 +156,4 @@ use App\Http\Controllers\Frontend\NewsletterController;
 
 require __DIR__.'/auth.php';
 require __DIR__.'/admin.php';
-require __DIR__.'/user.php';
+// require __DIR__.'/user.php';

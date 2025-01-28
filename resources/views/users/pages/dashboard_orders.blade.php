@@ -191,7 +191,7 @@
         </div>
       </div>
     </div>
-  </div>dashboard_orders_views
+  </div>
 
 @endsection
 

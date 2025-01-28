@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Order;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -22,7 +23,12 @@ class UserController extends Controller
 
     public function dashboard_orders()
     {
-        return view('users.pages.dashboard_orders');
+        $orders = Order::leftJoin('order_products', 'order_products.id', 'orders.order_id')
+            ->leftJoin('transactions', 'transactions.order_id', 'orders.order_id')
+            ->leftJoin('users', 'users.id', 'orders.user_id')
+            ->select('orders.*', 'order_products.product_name', 'order_products.variants', 'order_products.variant_total', 'order_products.unit_price', 'order_products.qty', 'users.id as user_id', 'users.name as cus_name', 'users.email as cus_email', 'users.phone as cus_phone')
+            ->get();
+        return view('users.pages.dashboard_orders', compact('orders'));
     }
 
 

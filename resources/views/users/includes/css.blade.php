@@ -16,26 +16,26 @@
     <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
-    <link rel="stylesheet" href="{{ asset('public/frontend/css/all.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('public/frontend/css/bootstrap.min.css') }}">
-    {{-- <link rel="stylesheet" href="{{ asset('public/frontend/css/select2.min.css') }}"> --}}
-    <link rel="stylesheet" href="{{ asset('public/frontend/css/slick.css') }}">
-    <link rel="stylesheet" href="{{ asset('public/frontend/css/jquery.nice-number.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('public/frontend/css/jquery.calendar.css') }}">
+    <link rel="stylesheet" href="{{ asset('public/user/css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('public/user/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('public/user/css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('public/user/css/slick.css') }}">
+    <link rel="stylesheet" href="{{ asset('public/user/css/jquery.nice-number.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('public/user/css/jquery.calendar.css') }}">
 
     <!-- toaster css plugin -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
-    <link rel="stylesheet" href="{{ asset('public/frontend/css/add_row_custon.css') }}">
-    <link rel="stylesheet" href="{{ asset('public/frontend/css/mobile_menu.css') }}">
-    {{-- <link rel="stylesheet" href="{{ asset('public/frontend/css/jquery.exzoom.css') }}"> --}}
-    {{-- <link rel="stylesheet" href="{{ asset('public/frontend/css/multiple-image-video.css') }}"> --}}
-    {{-- <link rel="stylesheet" href="{{ asset('public/frontend/css/ranger_style.css') }}"> --}}
-    {{-- <link rel="stylesheet" href="{{ asset('public/frontend/css/jquery.classycountdown.css') }}"> --}}
-    <link rel="stylesheet" href="{{ asset('public/frontend/css/venobox.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('public/user/css/add_row_custon.css') }}">
+    <link rel="stylesheet" href="{{ asset('public/user/css/mobile_menu.css') }}">
+    <link rel="stylesheet" href="{{ asset('public/user/css/jquery.exzoom.css') }}">
+    <link rel="stylesheet" href="{{ asset('public/user/css/multiple-image-video.css') }}">
+    <link rel="stylesheet" href="{{ asset('public/user/css/ranger_style.css') }}">
+    <link rel="stylesheet" href="{{ asset('public/user/css/jquery.classycountdown.css') }}">
+    <link rel="stylesheet" href="{{ asset('public/user/css/venobox.min.css') }}">
 
-    <link rel="stylesheet" href="{{ asset('public/frontend/css/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('public/frontend/css/responsive.css') }}">
+    <link rel="stylesheet" href="{{ asset('public/user/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('public/user/css/responsive.css') }}">
     <!-- <link rel="stylesheet" href="css/rtl.css"> -->
 
     @stack('add-css')
