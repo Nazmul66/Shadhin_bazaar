@@ -10,6 +10,17 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
+if (!function_exists('getSetting')) {
+    /**
+     * @return mixed
+     */
+    function getSetting()
+    {
+        $setting = Setting::first();
+        return $setting;
+    }
+}
+
   function setActive(array $route)
   {
       if( is_array($route) ){
@@ -35,16 +46,6 @@ use Illuminate\Support\Facades\Session;
           ->join('.'); // Join with hyphens
   }
   
-  if (!function_exists('getSetting')) {
-    /**
-     * @return mixed
-     */
-    function getSetting()
-    {
-        $setting = Setting::first();
-        return $setting;
-    }
-}
 
   //__ Check discount for products __//  
   function checkDiscount($product)

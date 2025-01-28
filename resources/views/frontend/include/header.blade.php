@@ -13,48 +13,21 @@
                 </div>
                 <div class="col-xl-8 col-md-4 col-6">
                     <div class="wrapper-header-left justify-content-center justify-content-xl-start">
-                        <a href="index.html" class="logo-header">
-                            <img src="{{ asset('public/frontend/images/logo/logo-white.svg') }}" alt="logo" class="logo">
+                        <a href="{{ route('home') }}" class="logo-header">
+                            @if ( !empty(getSetting()->logo) )
+                                <img src="{{ asset(getSetting()->logo) }}" alt="logo" class="logo" style="width: 75px;">
+                            @else
+                                <img src="{{ asset('public/frontend/images/logo/logo-white.svg') }}" alt="logo" class="logo">
+                            @endif
                         </a>
                         <div class="d-xl-block d-none">
-                            <form>
+                            <form action="{{ route('product.page') }}">
                                 <div class="form-search-select">
-                                    {{-- <div class="tf-dropdown-sort" data-bs-toggle="dropdown">
-                                        <div class="btn-select">
-                                            <span class="text-sort-value">All</span>
-                                            <i class='bx bx-chevron-down' style="font-size: 24px;"></i>
-                                        </div>
-                                        <div class="dropdown-menu">
-                                            <div class="select-item active">
-                                                <span class="text-value-item">All</span>
-                                            </div>
-                                            <div class="select-item">
-                                                <span class="text-value-item">Best selling</span>
-                                            </div>
-                                            <div class="select-item">
-                                                <span class="text-value-item">Alphabetically, A-Z</span>
-                                            </div>
-                                            <div class="select-item">
-                                                <span class="text-value-item">Alphabetically, Z-A</span>
-                                            </div>
-                                            <div class="select-item">
-                                                <span class="text-value-item">Price, low to high</span>
-                                            </div>
-                                            <div class="select-item">
-                                                <span class="text-value-item">Price, high to low</span>
-                                            </div>
-                                            <div class="select-item">
-                                                <span class="text-value-item">Date, old to new</span>
-                                            </div>
-                                            <div class="select-item">
-                                                <span class="text-value-item">Date, new to old</span>
-                                            </div>
-                                        </div>
-                                    </div> --}}
-                                    <input type="text" placeholder="What are you looking for today?">
-                                    <button class="tf-btn"><span class="text">Search</span></button>
+                                    <input type="text" name="search" placeholder="What are you looking for today?" value="{{ request()->search }}">
+                                    <button class="tf-btn" type="submit">
+                                        <span class="text">Search</span>
+                                    </button>
                                 </div>
-
                             </form>
                         </div>
                     </div>
@@ -65,7 +38,7 @@
                         <div class="d-none d-xl-flex box-support">
                             <i class='bx bxs-color text-white ' style="font-size: 32px;"></i>
                             <div>
-                                <div class="text-title text-white">Hotline: +01 1234 8888</div>
+                                <a href="tel: {{ getSetting()->phone_optional ?? getSetting()->phone }}" class="text-title text-white">Hotline: +{{ getSetting()->phone_optional ?? getSetting()->phone }}</a>
                                 <div class="text-white text-caption-2">24/7 Support Center</div>
                             </div>
                         </div>

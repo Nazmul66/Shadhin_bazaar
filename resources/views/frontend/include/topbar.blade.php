@@ -2,11 +2,11 @@
     <div class="container">
         <div class="tf-topbar_wrap d-flex align-items-center justify-content-center justify-content-xl-between">
             <ul class="topbar-left">
-                <li><a class="text-caption-1 text-white" href="tel:315-666-6688">315-666-6688</a></li>
-                <li><a class="text-caption-1 text-white" href="#">themesflat@gmail.com</a></li>
-                <li><a class="text-caption-1 text-white text-decoration-underline" href="store-list.html">Our Store</a></li>
+                <li><a class="text-caption-1 text-white" href="tel:{{ getSetting()->phone ?? getSetting()->phone_optional }}">Phone : {{ getSetting()->phone ?? getSetting()->phone_optional }}</a></li>
+                <li><a class="text-caption-1 text-white" href="mailto:{{ getSetting()->email ?? getSetting()->email_optional }}">Email : {{ getSetting()->email ?? getSetting()->email_optional }}</a></li>
+                {{-- <li><a class="text-caption-1 text-white text-decoration-underline" href="store-list.html">Our Store</a></li> --}}
             </ul>
-            <div class="topbar-right d-none d-xl-block">
+            {{-- <div class="topbar-right d-none d-xl-block">
                 <div class="tf-cur justify-content-end">
                     <div class="tf-currencies">
                         <select class="image-select center style-default type-currencies color-white">
@@ -21,7 +21,7 @@
                         </select>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
 </div>

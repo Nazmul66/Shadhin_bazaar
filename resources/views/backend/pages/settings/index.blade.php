@@ -92,7 +92,7 @@
                         </div>
 
                         <div class="col mb-3">
-                            <label class="form-label" for="phone_optional">Phone ( Optional )</label>
+                            <label class="form-label" for="phone_optional">Support Number</label>
                             <input type="text" class="form-control" id="phone_optional" name="phone_optional"
                                 @if ( !empty( $setting ) )
                                     value="{{ $setting->phone_optional }}"

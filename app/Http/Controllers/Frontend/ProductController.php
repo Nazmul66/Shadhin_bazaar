@@ -51,6 +51,17 @@ class ProductController extends Controller
             ])->orderBy('id', 'DESC')->paginate(12);
         }
 
+        elseif( $request->has('search') ){
+            $categoryItems = Category::where('status', 1)->get();
+            $products = Product::where(function($query) use ($request){
+                $query->where('name', 'like', '%'. $request->search .'%')
+                ->OrWhere('short_description', 'like', '%'. $request->search .'%')
+                ->OrWhere('long_description', 'like', '%'. $request->search .'%');
+            })
+            ->orderBy('id', 'DESC')
+            ->paginate(12);
+        }
+
         else{
             $categoryItems = Category::where('status', 1)->get();
             $products = Product::where([

@@ -12,7 +12,12 @@
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta content="Themesbrand" name="author" />
     <!-- App favicon -->
-    <link rel="shortcut icon" href="{{ asset('public/backend/assets/images/favicon.ico') }}">
+
+    @if ( !empty(getSetting()->favicon) )
+        <link rel="shortcut icon" href="{{ asset(getSetting()->favicon) }}">
+    @else
+        <link rel="shortcut icon" href="{{ asset('public/backend/assets/images/favicon.ico') }}">
+    @endif
 
     <!-- plugin css -->
     <link href="{{ asset('public/backend/assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css') }}" rel="stylesheet" type="text/css" />

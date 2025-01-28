@@ -5,19 +5,37 @@
             <div class="navbar-brand-box">
                 <a href="index.html" class="logo logo-dark">
                     <span class="logo-sm">
-                        <img src="{{ asset('public/backend/assets/images/logo-sm.svg') }}" alt="" height="24">
+                        @if ( !empty(getSetting()->logo) )
+                            <img src="{{ asset(getSetting()->logo) }}" alt="" height="50">
+                        @else
+                            <img src="{{ asset('public/backend/assets/images/logo-sm.svg') }}" alt="" height="50">
+                        @endif
                     </span>
+
                     <span class="logo-lg">
-                        <img src="{{ asset('public/backend/assets/images/logo-sm.svg') }}" alt="" height="24"> <span class="logo-txt">Minia</span>
+                        @if ( !empty(getSetting()->logo) )
+                            <img src="{{ asset(getSetting()->logo) }}" alt="" height="50"> <span class="logo-txt">{{ getSetting()->site_name ?? 'Minia' }}</span>
+                        @else
+                            <img src="{{ asset('public/backend/assets/images/logo-sm.svg') }}" alt="" height="50"> <span class="logo-txt">{{ getSetting()->site_name ?? 'Minia' }}</span>
+                        @endif
                     </span>
                 </a>
 
                 <a href="index.html" class="logo logo-light">
                     <span class="logo-sm">
-                        <img src="{{ asset('public/backend/assets/images/logo-sm.svg') }}" alt="" height="24">
+                        @if ( !empty(getSetting()->logo) )
+                            <img src="{{ asset(getSetting()->logo) }}" alt="" height="50">
+                        @else
+                            <img src="{{ asset('public/backend/assets/images/logo-sm.svg') }}" alt="" height="50">
+                        @endif
                     </span>
+
                     <span class="logo-lg">
-                        <img src="{{ asset('public/backend/assets/images/logo-sm.svg') }}" alt="" height="24"> <span class="logo-txt">Minia</span>
+                        @if ( !empty(getSetting()->logo) )
+                            <img src="{{ asset(getSetting()->logo) }}" alt="" height="50"> <span class="logo-txt">{{ getSetting()->site_name ?? 'Minia' }}</span>
+                        @else
+                            <img src="{{ asset('public/backend/assets/images/logo-sm.svg') }}" alt="" height="50"> <span class="logo-txt">{{ getSetting()->site_name ?? 'Minia' }}</span>
+                        @endif
                     </span>
                 </a>
             </div>
