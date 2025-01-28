@@ -1515,7 +1515,7 @@
         <div class="swiper-wrapper">
             @foreach ($brands as $row)
                 <div class="swiper-slide">
-                    <a href="{{ asset($row->image) }}" class="brand-item">
+                    <a href="{{ route('product.page', ['brands' => $row->slug]) }}" class="brand-item">
                         <img src="{{ asset($row->image) }}" alt="{{ $row->slug }}">
                     </a>
                 </div>

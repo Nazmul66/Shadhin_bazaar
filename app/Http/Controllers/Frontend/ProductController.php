@@ -50,6 +50,16 @@ class ProductController extends Controller
                 'status' => 1,
             ])->orderBy('id', 'DESC')->paginate(12);
         }
+    
+        elseif( $request->has('brands') ){
+            $categoryItems = Category::where('status', 1)->get();
+            $brandData = Brand::where('slug', $request->brands)->firstOrFail();
+            $products = Product::where([
+                'brand_id' => $brandData->id,
+                'is_approved' => 1,
+                'status' => 1,
+            ])->orderBy('id', 'DESC')->paginate(12);
+        }
 
         elseif( $request->has('search') ){
             $categoryItems = Category::where('status', 1)->get();

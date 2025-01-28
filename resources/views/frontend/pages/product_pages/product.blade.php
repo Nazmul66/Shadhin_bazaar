@@ -284,7 +284,6 @@
                                                 </fieldset>
                                             @endforeach
                                         @endif
-
                                     </div>
                                 </div>
 
@@ -381,7 +380,13 @@
                                                     $count = App\Models\Product::where('brand_id', $item->id)->count();
                                                 @endphp
                                             <fieldset class="fieldset-item">
-                                                <input type="checkbox" name="brand" class="tf-check change_brand" value="{{ $item->id }}" id="{{ $item->slug }}">
+                                                <input type="checkbox" 
+                                                name="brand" 
+                                                class="tf-check change_brand" 
+                                                value="{{ $item->id }}" 
+                                                id="{{ $item->slug }}"
+                                                {{ request()->brands == $item->slug ? 'checked' : '' }}
+                                                >
                                                 <label for="{{ $item->slug }}">{{ $item->brand_name }} <span class="count-brand">( {{ $count }} )</span></label>
                                             </fieldset>
                                         @endforeach
