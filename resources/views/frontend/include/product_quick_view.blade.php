@@ -39,7 +39,7 @@
                         <div class="tf-product-info-name">
                             <div class="text text-btn-uppercase" id="category_name">Clothing</div>
                             <h3 class="name" id="product_name">Stretch Strap Top</h3>
-                            <div class="sub">
+                            {{-- <div class="sub">
                                 <div class="tf-product-info-rate">
                                     <ul class="list-star">
                                         <li class="bx bxs-star" style="color: #F0A750;"></li>
@@ -54,7 +54,7 @@
                                     <ion-icon name="flash-outline" class="text-critical"></ion-icon>
                                     <div class="text text-caption-1"><span id="sold_product"></span> product sold</div>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                         <div class="tf-product-info-desc">
                             <div class="tf-product-info-price">

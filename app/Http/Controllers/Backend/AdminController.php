@@ -12,6 +12,7 @@ use App\Models\Order;
 use App\Models\Product;
 use App\Models\ProductReview;
 use App\Models\User;
+use App\Models\Wishlist;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Artisan;
@@ -51,7 +52,7 @@ class AdminController extends Controller
         $data['cancelled_order'] = Order::where('order_status', 'cancelled')->count();
         $data['total_amount']    = Order::where('order_status', '!=', 'cancelled')->sum('total_amount');
         $data['todays_amount']   = Order::where('order_status', '!=', 'cancelled')->where('created_at', Carbon::today())->sum('total_amount');
-        $data['monthly_amount']   = Order::where('order_status', '!=', 'cancelled')->where('created_at', Carbon::now()->month)->sum('total_amount');
+        $data['monthly_amount']  = Order::where('order_status', '!=', 'cancelled')->where('created_at', Carbon::now()->month)->sum('total_amount');
         $data['yearly_amount']   = Order::where('order_status', '!=', 'cancelled')->where('created_at', Carbon::now()->year)->sum('total_amount');
         $data['brands']          = Brand::where('status', 1)->count();
         $data['categories']      = Category::where('status', 1)->count();
@@ -60,6 +61,7 @@ class AdminController extends Controller
         $data['collections']     = Collection::where('status', 1)->count();
         $data['users']           = User::count();
         $data['reviews']         = ProductReview::count();
+        $data['wishlists']       = Wishlist::count();
 
         return view('backend.pages.dashboard', $data);
     }

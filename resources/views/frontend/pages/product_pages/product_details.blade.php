@@ -115,19 +115,26 @@
                                     <div class="sub">
                                         <div class="tf-product-info-rate">
                                             <div class="list-star">
-                                                <li class="bx bxs-star" style="color: #F0A750;"></li>
-                                                <li class="bx bxs-star" style="color: #F0A750;"></li>
-                                                <li class="bx bxs-star" style="color: #F0A750;"></li>
-                                                <li class="bx bxs-star" style="color: #F0A750;"></li>
-                                                <li class="bx bx-star" style="color: #F0A750;"></li>
+                                                @php
+                                                    $avgRatings = App\Models\ProductReview::where('product_id', $product->id)->where('status', 1)->avg('ratings');
+                                                    $reviews = App\Models\ProductReview::where('product_id', $product->id)->where('status', 1)->count();
+                                                @endphp
+
+                                                @for ( $i = 1; $i <= 5; $i++ )
+                                                    @if ( $i <= round($avgRatings))
+                                                        <li class="bx bxs-star" style="color: #F0A750;"></li>
+                                                    @else
+                                                        <li class="bx bx-star" style="color: #F0A750;"></li>
+                                                    @endif
+                                                @endfor
                                             </div>
-                                            <div class="text text-caption-1">(134 reviews)</div>
+                                            <div class="text text-caption-1">({{ $reviews }} reviews)</div>
                                         </div>
 
-                                        <div class="tf-product-info-sold">
+                                        {{-- <div class="tf-product-info-sold">
                                             <ion-icon name="flash-outline" class="text-critical"></ion-icon>
                                             <div class="text text-caption-1">{{ $product->product_sold }} product sold</div>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                 </div>
 
@@ -345,7 +352,6 @@
                                             </div>
                                         </div> --}}
 
-
                                         <a href="#share_social" data-bs-toggle="modal" class="tf-product-extra-icon d-flex align-items-center gap-1">
                                             <div class="icon">
                                                 <i class='bx bx-share-alt' ></i>
@@ -552,60 +558,57 @@
                                 <div class="tab-reviews-heading">
 
                                     {{-- Ratings Ratio --}}
+                                     @php
+                                        $productReviews = App\Models\ProductReview::where('product_id', $product->id)
+                                            ->where('status', 1)
+                                            ->selectRaw('ratings, COUNT(*) as count')
+                                            ->groupBy('ratings')
+                                            ->pluck('count', 'ratings')
+                                            ->toArray();
+
+                                        $totalRatings = array_sum($productReviews);
+                                        $avgRating = App\Models\ProductReview::where('product_id', $product->id)
+                                            ->where('status', 1)
+                                            ->avg('ratings');
+
+                                        $starCounts = [
+                                            5 => $productReviews[5] ?? 0,
+                                            4 => $productReviews[4] ?? 0,
+                                            3 => $productReviews[3] ?? 0,
+                                            2 => $productReviews[2] ?? 0,
+                                            1 => $productReviews[1] ?? 0,
+                                        ];
+                                    @endphp
+
                                     <div class="top">
                                         <div class="text-center">
-                                            <div class="number title-display">4.9</div>
+                                            <div class="number title-display">{{ number_format($avgRating, 1) }}</div>
                                             <div class="list-star">
-                                                <li class="bx bxs-star" style="color: #000;"></li>
-                                                <li class="bx bxs-star" style="color: #000;"></li>
-                                                <li class="bx bxs-star" style="color: #000;"></li>
-                                                <li class="bx bxs-star" style="color: #000;"></li>
-                                                <li class="bx bxs-star" style="color: #000;"></li>
+                                                @for ( $i = 1; $i <= 5; $i++ )
+                                                    @if ( $i <= round($avgRatings))
+                                                        <li class="bx bxs-star" style="color: #F0A750;"></li>
+                                                    @else
+                                                        <li class="bx bx-star" style="color: #F0A750;"></li>
+                                                    @endif
+                                                @endfor
                                             </div>
-                                            <p>({{ $total_Reviews }} Ratings)</p>
+                                            <p>({{ $reviews }} Ratings)</p>
                                         </div>
 
                                         <div class="rating-score">
-                                            <div class="item">
-                                                <div class="number-1 text-caption-1">5</div>
-                                                <li class="icon bx bxs-star" style="color: #000;"></li>
-                                                <div class="line-bg">
-                                                    <div style="width: 94.67%;"></div>
+                                            @foreach([5, 4, 3, 2, 1] as $star)
+                                                @php
+                                                    $percentage = $totalRatings ? ($starCounts[$star] / $totalRatings) * 100 : 0;
+                                                @endphp
+                                                <div class="item">
+                                                    <div class="number-1 text-caption-1">{{ $star }}</div>
+                                                    <li class="icon bx bxs-star" style="color: #000;"></li>
+                                                    <div class="line-bg">
+                                                        <div style="width: {{ $percentage }}%;"></div>
+                                                    </div>
+                                                    <div class="number-2 text-caption-1">{{ $starCounts[$star] }}</div>
                                                 </div>
-                                                <div class="number-2 text-caption-1">59</div>
-                                            </div>
-                                            <div class="item">
-                                                <div class="number-1 text-caption-1">4</div>
-                                                <li class="icon bx bxs-star" style="color: #000;"></li>
-                                                <div class="line-bg">
-                                                    <div style="width: 60%;"></div>
-                                                </div>
-                                                <div class="number-2 text-caption-1">46</div>
-                                            </div>
-                                            <div class="item">
-                                                <div class="number-1 text-caption-1">3</div>
-                                                <li class="icon bx bxs-star" style="color: #000;"></li>
-                                                <div class="line-bg">
-                                                    <div style="width: 0%;"></div>
-                                                </div>
-                                                <div class="number-2 text-caption-1">0</div>
-                                            </div>
-                                            <div class="item">
-                                                <div class="number-1 text-caption-1">2</div>
-                                                <li class="icon bx bxs-star" style="color: #000;"></li>
-                                                <div class="line-bg">
-                                                    <div style="width: 0%;"></div>
-                                                </div>
-                                                <div class="number-2 text-caption-1">0</div>
-                                            </div>
-                                            <div class="item">
-                                                <div class="number-1 text-caption-1">1</div>
-                                                <li class="icon bx bxs-star" style="color: #000;"></li>
-                                                <div class="line-bg">
-                                                    <div style="width: 0%;"></div>
-                                                </div>
-                                                <div class="number-2 text-caption-1">0</div>
-                                            </div>
+                                            @endforeach
                                         </div>
                                     </div>
 

@@ -355,6 +355,25 @@
             </div><!-- end card -->
         </div><!-- end col -->
 
+        <div class="col-xl-3 col-md-6">
+            <!-- card -->
+            <div class="card card-h-100">
+                <!-- card body -->
+                <div class="card-body" style="height: 110px;">
+                    <div class="analytics_card">
+                         <div class="icon_design bg-dark">
+                            <i class='bx bx-heart'></i>
+                         </div>
+
+                         <div class="cart_text">
+                             <h6>Total Wishlist</h6>
+                             <p>{{ $wishlists }}</p>
+                         </div>
+                    </div>
+                </div><!-- end card body -->
+            </div><!-- end card -->
+        </div><!-- end col -->
+
     </div><!-- end row-->
 
 @endsection

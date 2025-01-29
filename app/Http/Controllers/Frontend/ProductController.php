@@ -120,7 +120,6 @@ class ProductController extends Controller
 
         $product->increment('product_view');
 
-        $total_Reviews    = ProductReview::where('status', 1)->count();
         $product_sizes    = ProductSize::where('product_id', $product->id)->get();
         $product_colors   = ProductColor::where('product_id', $product->id)->get();
         $product_images   = ProductImage::where('product_id', $product->id)->orderBy('order_id', 'desc')->get();
@@ -158,7 +157,6 @@ class ProductController extends Controller
             'product_images'     => $product_images,
             'related_products'   => $related_products,
             'socialLinks'        => $socialLinks,
-            'total_Reviews'      => $total_Reviews,
         ]);
     }
 
