@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Review;
+use App\Models\ProductReview;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
 
@@ -18,24 +18,16 @@ class ReviewController extends Controller
         return view('backend.pages.review.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
     public function getData()
     {
-        $reviews= DB::table('reviews')
-                  ->join('users', 'users.id' ,'reviews.user_id')
-                  ->join('products', 'products.id', 'reviews.product_id')
-                  ->select('users.*', 'products.*','reviews.*') 
+       $reviews   = DB::table('product_reviews')
+                  ->leftJoin('users', 'users.id' ,'product_reviews.user_id')
+                  ->leftJoin('products', 'products.id', 'product_reviews.product_id')
+                  ->select('product_reviews.*', 'products.name as product_name','users.name as user_name') 
                   ->get();
         
         return DataTables::of($reviews)
-
+            ->addIndexColumn()
             ->addColumn('status', function ($review) {
                 if ($review->status == 1) {
                     return ' <a class="status" id="status" href="javascript:void(0)"
@@ -49,40 +41,15 @@ class ReviewController extends Controller
                     </a>';
                 }
             })
-
             ->addColumn('action', function ($review) {
                 return '<div class="d-flex gap-3"> 
                     <a class="btn btn-sm btn-danger" href="javascript:void(0)" data-id="'.$review->id.'" id="deleteBtn"> <i class="fas fa-trash"></i></a>
                 </div>';
             })
-            
             ->rawColumns(['status','action'])
             ->make(true);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Review $review)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Review $review)
-    {
-        //
-    }
 
     public function changeReviewStatus(Request $request)
     {
@@ -95,7 +62,7 @@ class ReviewController extends Controller
             $status = 1;
         }
 
-        $page = Review::findOrFail($id);
+        $page = ProductReview::findOrFail($id);
         $page->status = $status;
         $page->save();
 
@@ -113,10 +80,9 @@ class ReviewController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Review $review)
+    public function destroy(ProductReview $review)
     {
         $review->delete();
-        
         return response()->json(['message' => 'Review has been deleted.'], 200);
     }
 }

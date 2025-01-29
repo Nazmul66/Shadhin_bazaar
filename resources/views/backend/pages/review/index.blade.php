@@ -51,13 +51,12 @@
                     <thead class="bg-primary text-white">
                     <tr>
                         <th>#SL.</th>
-                        <th>Reviewer Name</th>
-                        <th>Reviewer Image</th>
-                        <th>Reviewer Text</th>
+                        <th>Product Name</th>
+                        <th>User Name</th>
                         <th>Ratings</th>
+                        <th>Review</th>
                         <th>Review Date</th>
                         <th>Status</th>
-                        <th>Action</th>
                     </tr>
                     </thead>
 
@@ -92,33 +91,31 @@
                 // pageLength: 30,
 
                 columns: [
-                    {
-                        data: 'id',
+                    { 
+                        data: 'DT_RowIndex', 
+                        name: 'DT_RowIndex', 
+                        orderable: false, 
+                        searchable: false 
                     },
                     {
-                        data: 'reviewer_name',
+                        data: 'product_name',
                     },
                     {
-                        data: 'reviewer_img',
+                        data: 'user_name',
                     },
                     {
-                        data: 'review_text',
+                        data: 'ratings',
                     },
                     {
-                        data: 'rating',
+                        data: 'review',
                     },
                     {
-                        data: 'review_date',
+                        data: 'created_at',
                     },
                     {
                         data: 'status',
                         orderable: false,
                         searchable: false,
-                    },
-                    {
-                        data: 'action',
-                        orderable: false,
-                        searchable: false
                     },
                 ]
             });
