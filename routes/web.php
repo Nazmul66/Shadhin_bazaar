@@ -149,6 +149,7 @@ use App\Http\Controllers\Frontend\WishlistController;
             Route::get('/dashboard/orders', "dashboard_orders")->name('dashboard.orders');
             Route::get('/dashboard/order-view/{id}', "dashboard_orders_views")->name('dashboard.order.view');
             Route::get('/dashboard/wishlist', "dashboard_wishlist")->name('dashboard.wishlist');
+            Route::delete('/dashboard/wishlist-remove/{id}', "dashboard_wishlist_remove")->name('dashboard.wishlist.remove');
 
             Route::post('/dashboard/current-password', "checkCurrentPassword")->name('current-password');
             Route::put('/dashboard/change-password', "changePassword")->name('change-password');

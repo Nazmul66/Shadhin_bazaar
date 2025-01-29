@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\OrderProduct;
 use App\Models\User;
+use App\Models\Wishlist;
 use App\Traits\ImageUploadTraits;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
@@ -26,6 +27,7 @@ class AccountController extends Controller
         $data['pending_orders'] = Order::where('user_id', Auth::user()->id)->where('order_status', 'pending')->count();
         $data['complete_order'] = Order::where('user_id', Auth::user()->id)->where('order_status', 'delivered')->count();
         $data['total_spend']    = Order::where('user_id', Auth::user()->id)->where('order_status', '!=', 'cancelled')->sum('total_amount');
+        $data['wishlists']      = Wishlist::where('user_id', Auth::user()->id)->count();
         return view('frontend.pages.user.dashboard', $data);
     }
 
@@ -181,7 +183,23 @@ class AccountController extends Controller
     */
     public function dashboard_wishlist()
     {
-        return view('frontend.pages.user.dashboard_wishlist');
+        $wishlists = Wishlist::leftJoin('products', 'products.id', 'wishlists.product_id')
+        ->select('products.*', 'wishlists.id as wish_id')
+        ->where('wishlists.user_id', Auth::id())
+                ->get();
+        return view('frontend.pages.user.dashboard_wishlist', compact('wishlists'));
+    }
+
+    public function dashboard_wishlist_remove(string $id)
+    {
+        // dd($id);
+        $wishlist = Wishlist::findOrFail($id);
+        $wishlist->delete();
+
+        return response()->json([
+            'status'   => 'success',
+            'message'  => 'Wishlist product removed successfully'
+        ]);
     }
 
 }

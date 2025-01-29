@@ -117,6 +117,25 @@
                                         <!-- card body -->
                                         <div class="card-body" style="height: 110px;">
                                             <div class="analytics_card">
+                                                 <div class="icon_design bg-warning">
+                                                    <i class='bx bx-cart'></i>
+                                                 </div>
+                        
+                                                 <div class="cart_text">
+                                                     <h6>Total Wishlist</h6>
+                                                     <p>{{ $wishlists }}</p>
+                                                 </div>
+                                            </div>
+                                        </div><!-- end card body -->
+                                    </div><!-- end card -->
+                                </div>
+
+                                <div class="col-xl-6 col-md-6 mb-3">
+                                    <!-- card -->
+                                    <div class="card card-h-100">
+                                        <!-- card body -->
+                                        <div class="card-body" style="height: 110px;">
+                                            <div class="analytics_card">
                                                  <div class="icon_design bg-success">
                                                     <i class="bx bx-money"></i>
                                                  </div>

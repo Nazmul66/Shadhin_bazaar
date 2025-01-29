@@ -54,71 +54,52 @@
                             <table>
                                 <thead>
                                     <tr>
-                                        <th class="fw-6">Order</th>
-                                        <th class="fw-6">Date</th>
-                                        <th class="fw-6">Status</th>
-                                        <th class="fw-6">Total</th>
+                                        <th class="fw-6">Image</th>
+                                        <th class="fw-6">Product Name</th>
+                                        <th class="fw-6">Quantity</th>
+                                        <th class="fw-6">Price</th>
                                         <th class="fw-6">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="tf-order-item">
-                                        <td>
-                                            #123
-                                        </td>
-                                        <td>
-                                            August 1, 2024
-                                        </td>
-                                        <td>
-                                            On hold
-                                        </td>
-                                        <td>
-                                            $200.0 for 1 items
-                                        </td>
-                                        <td>
-                                            <a href="my-account-orders-details.html" class="tf-btn btn-fill radius-4">
-                                                <span class="text">View</span>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <tr class="tf-order-item">
-                                        <td>
-                                            #345
-                                        </td>
-                                        <td>
-                                            August 2, 2024
-                                        </td>
-                                        <td>
-                                            On hold
-                                        </td>
-                                        <td>
-                                            $300.0 for 1 items
-                                        </td>
-                                        <td>
-                                            <a href="my-account-orders-details.html" class="tf-btn btn-fill radius-4">
-                                                <span class="text">View</span>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <tr class="tf-order-item">
-                                        <td>
-                                            #567
-                                        </td>
-                                        <td>
-                                            August 3, 2024
-                                        </td>
-                                        <td>
-                                            On hold
-                                        </td>
-                                        <td>
-                                            $400.0 for 1 items
-                                        </td>
-                                        <td>
-                                            <a href="my-account-orders-details.html" class="tf-btn btn-fill radius-4">
-                                                <span class="text">View</span>
-                                            </a>
-                                        </td>
-                                    </tr>
+                                    @foreach ($wishlists as $row)
+                                        <tr class="tf-order-item" data-id={{ $row->wish_id }}>
+                                            <td>
+                                                <a href="{{ route('product.details', $row->slug) }}">
+                                                    <img src="{{ asset($row->thumb_image) }}" alt="{{ $row->slug }}">
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a href="{{ route('product.details', $row->slug) }}">
+                                                    {{ $row->name }}
+                                                </a>
+                                            </td>
+                                            <td>
+                                                {{ $row->qty }} Pcs
+                                            </td>
+                                            <td>
+                                                @if ( checkDiscount($row) )
+                                                    @if ( $row->discount_type === "amount")
+                                                        ${{ $row->selling_price }} ${{ $row->selling_price - $row->discount_value }}
+                                                    @elseif( $row->discount_type === "percent" )
+                                                        @php
+                                                            $discount_val = $row->selling_price * $row->discount_value / 100;
+                                                        @endphp
+                                                        ${{ $row->selling_price }}${{ $row->selling_price - $discount_val }}</
+                                                    @else
+                                                        ${{ $row->selling_price }}
+                                                    @endif
+                                                @else
+                                                     ${{ $row->selling_price }}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                <a href="javascript:void();" data-id="{{ $row->wish_id }}" class="tf-btn btn-fill radius-4 product_wishlist_remove">
+                                                    <span class="text">Remove</span>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -132,6 +113,37 @@
 @endsection
 
 @push('add-js')
+
+  <script>
+        // Product Wishlist Remove 
+        $(document).on('click', '.product_wishlist_remove', function(e){
+            e.preventDefault();
+            let id = $(this).data('id'); 
+            // console.log(id);
+
+            $.ajax({
+                method: 'DELETE',
+                url: "{{ url('/user/dashboard/wishlist-remove') }}/" + id,
+                data: { 
+                    _token: "{{ csrf_token() }}",
+                    id: id ,
+                },
+                success: function (res) {
+                    if(res.status === 'success') {
+                        toastr.success(res.message);
+                        $('.tf-order-item[data-id="' + id + '"]').remove(); // Fix selector
+                    }
+                },
+                error: function (data) {
+                    console.log(data);
+                    let errors = data.responseJSON?.errors;
+                    $.each(errors, function (key, value) {
+                        toastr.error(value);
+                    });
+                }
+            });
+        });
+  </script>
 
     @include('frontend.include.full_ajax_cart')
 
