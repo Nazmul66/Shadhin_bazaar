@@ -461,7 +461,7 @@
             e.preventDefault();
             let button = $(this); // Target the specific button clicked
             let productId = button.data('id');
-            let cardProduct = button.closest('.card-product');
+            let cardProduct = button.closest('.wishlist_product');
             let wishlistContainer = $('.wishlist-product-data'); 
             console.log(productId);
 
@@ -472,11 +472,12 @@
                 success: function (response) {
                     if (response.status === 'added') {
                         toastr.success(response.message);
-                        button.addClass('active');
+                        // button.addClass('active');
+                        $('.wishlist[data-id="' + productId + '"]').addClass('active');
                         getWishlistCount();
                     } else if (response.status === 'removed') {
                         toastr.info(response.message);
-                        button.removeClass('active');
+                        $('.wishlist[data-id="' + productId + '"]').removeClass('active');
 
                         // Remove the specific wishlist product
                         cardProduct.fadeOut(300, function() {
@@ -505,7 +506,6 @@
                 }
             });
         });
-
 
         //__ Wishlist Count __//
         function getWishlistCount(){

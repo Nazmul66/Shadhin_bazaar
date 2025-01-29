@@ -418,7 +418,7 @@
 
                                                 
                                                 <div class="list-product-btn">
-                                                    <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action" data-id="{{ $row->id }}">
+                                                    <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action {{ in_array($row->id, $wishlistItems) ? 'active' : '' }}" data-id="{{ $row->id }}">
                                                         <i class='bx bx-heart' style="font-size: 24px;"></i>
                                                         <span class="tooltip">Wishlist</span>
                                                     </a>

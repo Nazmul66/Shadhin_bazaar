@@ -44,7 +44,7 @@
                     @endphp
 
                     <!-- card product {{ $key + 1 }} -->
-                    <div class="card-product wow fadeInUp" data-wow-delay="0.1s" data-id="{{ $row->id }}">
+                    <div class="card-product wishlist_product wow fadeInUp" data-wow-delay="0.1s" data-id="{{ $row->id }}">
                         <div class="card-product-wrapper">
                             <a href="{{ route('product.details', $row->slug) }}" class="product-img">
                                 <img class="lazyload img-product" data-src="{{ asset($row->thumb_image) }}" src="{{ asset($row->thumb_image) }}" alt="{{ $row->slug }}">
