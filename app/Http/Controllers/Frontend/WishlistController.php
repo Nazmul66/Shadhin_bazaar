@@ -14,11 +14,15 @@ class WishlistController extends Controller
      */
     public function index()
     {
-        $wishlists = Wishlist::
-                    leftJoin('products', 'products.id', 'wishlists.product_id')
-                    ->select('products.*', 'wishlists.id as wish_id')
-                    ->where('wishlists.user_id', Auth::user()->id)
-                    ->get();
+        $wishlists = collect(); // Initialize as an empty collection
+
+        if (Auth::check()) {
+            $wishlists = Wishlist::leftJoin('products', 'products.id', 'wishlists.product_id')
+                ->select('products.*', 'wishlists.id as wish_id')
+                ->where('wishlists.user_id', Auth::id())
+                ->get();
+        }
+
         return view('frontend.pages.product_pages.wishlist_view', compact('wishlists'));
     }
 
@@ -74,7 +78,7 @@ class WishlistController extends Controller
 
     public function wishlist_count()
     {
-        $wishlistCount = Wishlist::count();
+        $wishlistCount = Wishlist::where('user_id', Auth::user()->id)->count();
 
         return response()->json([
             'status'  => 'success',

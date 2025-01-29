@@ -495,6 +495,8 @@
                             }
                         });
                         getWishlistCount();
+                    } else if (response.status === 'error') {
+                        window.location.href = '{{ url("/login") }}'
                     }
                 },
                 error: function (data) {
