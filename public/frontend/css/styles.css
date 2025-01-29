@@ -1900,7 +1900,8 @@ a:hover {
     display: inline-block;
 }
 
-#header .nav-icon .count-box {
+#header .nav-icon .count-box,
+#header .nav-icon .wishlist_box {
     position: absolute;
     line-height: 14px;
     height: 14px;
@@ -8886,6 +8887,11 @@ form .cols>* {
 }
 
 .card-product .box-icon:hover {
+    background-color: var(--main) !important;
+    color: var(--white) !important;
+    border-color: var(--main) !important;
+}
+.card-product .box-icon.active {
     background-color: var(--main) !important;
     color: var(--white) !important;
     border-color: var(--main) !important;

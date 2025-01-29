@@ -15,6 +15,7 @@ use App\Http\Controllers\Frontend\ShippingRuleController;
 use App\Http\Controllers\Frontend\AjaxCallController;
 use App\Http\Controllers\Frontend\NewsletterController;
 use App\Http\Controllers\Frontend\AccountController;
+use App\Http\Controllers\Frontend\WishlistController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,7 +38,6 @@ use App\Http\Controllers\Frontend\AccountController;
         Route::get('/customer-feedback', "customer_feedback")->name('customer.feedback');
         Route::get('/blogs', "blogs")->name('blogs');
         Route::get('/blogs-details', "blogs_details")->name('blogs.details');
-        // Route::get('/wishlist', "wishlist_view")->name('wishlist');
         // Route::get('/compare', "compare_view")->name('compare');
         Route::get('/track-order', "track_order")->name('track.order');
         Route::get('/register-login', "register_login")->name('register.login');
@@ -47,7 +47,6 @@ use App\Http\Controllers\Frontend\AccountController;
     Route::controller(AjaxCallController::class)->group(function () {
         Route::get('/cart-quick-view', "cartQuickView")->name('cart.quick.view');
     });
-
 
     //__ Flash Sales __//
     Route::controller(FlashSaleController::class)->group(function () {
@@ -65,8 +64,16 @@ use App\Http\Controllers\Frontend\AccountController;
         Route::post('/get_filter_product_ajax', 'get_filter_product_ajax');
         Route::get('/pagination/paginate-data', 'pagination');
     });
-    
 
+
+    //__ Wishlist __//
+    Route::controller(WishlistController::class)->group(function () {
+        Route::get('/wishlist', "index")->name('wishlist.index');
+        Route::get('/wishlist/add-product', "addToWishlist")->name('wishlist.store');
+        Route::get('/wishlist/count', "wishlist_count")->name('wishlist.count');
+    });
+    
+    
     //__ Carts __//
     Route::controller(CartController::class)->group(function () {
         Route::get('/cart', 'cart_view')->name('show-cart');

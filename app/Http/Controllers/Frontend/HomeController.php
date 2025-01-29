@@ -150,23 +150,6 @@ class HomeController extends Controller
     {
         return view('frontend.pages.auth.forgetPassword');
     }
-
-
-    /**
-     *  All Product Pages template shown
-    */
-
-
-
-    // public function cart_view()
-    // {
-    //     return view('frontend.pages.product_pages.cart_view');
-    // }
-
-    public function wishlist_view()
-    {
-        return view('frontend.pages.product_pages.wishlist_view');
-    }
     
     public function compare_view()
     {

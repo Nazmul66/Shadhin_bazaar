@@ -4,10 +4,13 @@
     <title>Sazao || e-Commerce HTML Template</title>
 @endpush
 
-
 @push('add-css')
 
 @endpush
+
+{{-- @php
+    $wishlistItems = App\Models\Wishlist::where('user_id', auth()->id())->pluck('product_id')->toArray();
+@endphp --}}
 
 
 @section('body-content')
@@ -113,6 +116,9 @@
                         <div class="swiper-wrapper">
 
                             @foreach ($products as $row)
+                                @php
+                                    $wishlistItems = App\Models\Wishlist::where('user_id', auth()->id())->pluck('product_id')->toArray();
+                                @endphp
                                 <div class="swiper-slide">
                                     <div class="card-product wow fadeInUp" data-wow-delay="0.1s">
                                         <div class="card-product-wrapper">
@@ -131,6 +137,7 @@
                                                             $discount = '-'. $row->discount_value . "%";
                                                         }
                                                     }
+                                                    
                                                 @endphp
 
                                                 @if (!empty($image))
@@ -221,10 +228,11 @@
 
                                             
                                             <div class="list-product-btn">
-                                                <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
+                                                <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action {{ in_array($row->id, $wishlistItems) ? 'active' : '' }}" data-id="{{ $row->id }}">
                                                     <i class='bx bx-heart' style="font-size: 24px;"></i>
                                                     <span class="tooltip">Wishlist</span>
                                                 </a>
+
                                                 <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
                                                     <i class='bx bx-git-compare' style="font-size: 24px;"></i>
                                                     <span class="tooltip">Compare</span>
@@ -299,6 +307,10 @@
 
                             <div class="swiper-wrapper">
                                 @foreach (App\Models\Product::where('category_id', $item->id)->where('is_approved', 1)->where('status', 1)->get(); as $row)
+                                    @php
+                                        $wishlistItems = App\Models\Wishlist::where('user_id', auth()->id())->pluck('product_id')->toArray();
+                                    @endphp
+                                    
                                     <div class="swiper-slide">
                                         <div class="card-product wow fadeInUp" data-wow-delay="0.1s">
                                             <div class="card-product-wrapper">
@@ -406,7 +418,7 @@
 
                                                 
                                                 <div class="list-product-btn">
-                                                    <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
+                                                    <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action" data-id="{{ $row->id }}">
                                                         <i class='bx bx-heart' style="font-size: 24px;"></i>
                                                         <span class="tooltip">Wishlist</span>
                                                     </a>

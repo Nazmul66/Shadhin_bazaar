@@ -455,6 +455,74 @@
                 }
             });
         });
+
+        // Wishlist Add 
+        $('.wishlist').on('click', function(e){
+            e.preventDefault();
+            let button = $(this); // Target the specific button clicked
+            let productId = button.data('id');
+            let cardProduct = button.closest('.card-product');
+            let wishlistContainer = $('.wishlist-product-data'); 
+            console.log(productId);
+
+            $.ajax({
+                method: 'GET',
+                url: "{{ route('wishlist.store') }}",
+                data: { id: productId },
+                success: function (response) {
+                    if (response.status === 'added') {
+                        toastr.success(response.message);
+                        button.addClass('active');
+                        getWishlistCount();
+                    } else if (response.status === 'removed') {
+                        toastr.info(response.message);
+                        button.removeClass('active');
+
+                        // Remove the specific wishlist product
+                        cardProduct.fadeOut(300, function() {
+                            $(this).remove();
+
+                            // If wishlist is empty, show the message
+                            if (response.wishlist_count === 0) {
+                                wishlistContainer.html(`
+                                    <div class="tf-grid-layout md-col-12 xl-col-12">
+                                        <div class="alert alert-danger text-center no-wishlist-message" role="alert">
+                                            There is no wishlist product available
+                                        </div>
+                                    </div>
+                                `);
+                            }
+                        });
+                        getWishlistCount();
+                    }
+                },
+                error: function (data) {
+                    console.log(data);
+                    let errors = data.responseJSON?.errors;
+                    $.each(errors, function (key, value) {
+                        toastr.error(value);
+                    });
+                }
+            });
+        });
+
+
+        //__ Wishlist Count __//
+        function getWishlistCount(){
+            $.ajax({
+                method: 'GET',
+                url: "{{ route('wishlist.count') }}",
+                success: function(data) {
+                    console.log(data);
+                    if( data.status === 'success' ){
+                        $('.wishlist_box').text(data.wishlistCount);
+                    }
+                },
+                error: function(data) {
+                    // console.log('Error adding product to cart:', data);
+                },
+            });
+        }
    });
 
 </script>

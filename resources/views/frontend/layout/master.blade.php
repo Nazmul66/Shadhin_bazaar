@@ -294,7 +294,7 @@
     <!-- /shoppingCart Sidebar -->
 
     <!-- wishlist Mobile Sidebar -->
-        @include('frontend.include.wishlist_sidebar')
+        {{-- @include('frontend.include.wishlist_sidebar') --}}
     <!-- /wishlist Mobile Sidebar -->
 
     <!-- size-guide -->
