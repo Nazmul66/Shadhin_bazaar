@@ -138,9 +138,13 @@ use App\Http\Controllers\Frontend\AccountController;
         Route::controller(AccountController::class)->group(function () {
             Route::get('/dashboard', "dashboard")->name('dashboard');
             Route::get('/dashboard/profile', "dashboard_profile")->name('dashboard.profile');
+            Route::put('/dashboard/profile-update/{id}', "dashboard_profile_update")->name('dashboard.profile.update');
             Route::get('/dashboard/orders', "dashboard_orders")->name('dashboard.orders');
             Route::get('/dashboard/order-view/{id}', "dashboard_orders_views")->name('dashboard.order.view');
             Route::get('/dashboard/wishlist', "dashboard_wishlist")->name('dashboard.wishlist');
+
+            Route::post('/dashboard/current-password', "checkCurrentPassword")->name('current-password');
+            Route::put('/dashboard/change-password', "changePassword")->name('change-password');
         });
     });
     

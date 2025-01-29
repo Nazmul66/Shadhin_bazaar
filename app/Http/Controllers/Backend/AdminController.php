@@ -129,8 +129,9 @@ class AdminController extends Controller
         $request->validate(
             [
                 'name'     => ['required', 'string', 'max:255'],
-                'email'    => ['required', 'max:255'],
+                'email'    => ['required', 'email', 'max:255'],
                 'phone'    => ['required', 'regex:/^[0-9]{11,15}$/'],
+                'image'    => ['image', 'mimes:jpg,png,webp,jpeg', 'max: 4096'],
             ],
             [
                 'name.required'     => 'The name field is required.',
