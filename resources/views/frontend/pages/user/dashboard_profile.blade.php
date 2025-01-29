@@ -92,7 +92,7 @@
                                     </fieldset>
 
                                     <fieldset class="">
-                                        <input class="" type="email" placeholder="Email address*" name="email" tabindex="2" value="{{ old('email', Auth::user()->email) }}" readonly aria-required="true" required="">
+                                        <input class="" type="email" placeholder="Email address*" name="email" tabindex="2" value="{{ old('email', Auth::user()->email) }}" aria-required="true" required="">
 
                                         @error('email')
                                             <span id="phone-error" class="text-danger mt-1">{{ $message }}</span>

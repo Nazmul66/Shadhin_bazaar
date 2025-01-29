@@ -11,6 +11,7 @@ use App\Models\ChildCategory;
 use App\Models\Product;
 use App\Models\ProductColor;
 use App\Models\ProductImage;
+use App\Models\ProductReview;
 use App\Models\ProductSize;
 use App\Models\Subcategory;
 use Illuminate\Http\Request;
@@ -107,7 +108,7 @@ class ProductController extends Controller
     public function show_product_details($slug)
     {
         $products = Product::where('status', 1)->orderBy('product_view', 'desc')->get();
-        $product = Product::leftJoin('categories', 'categories.id', 'products.category_id')
+        $product  = Product::leftJoin('categories', 'categories.id', 'products.category_id')
                 ->select('products.*', 'categories.category_name as cat_name')
                 ->where('products.slug', $slug)
                 ->first();
@@ -119,15 +120,23 @@ class ProductController extends Controller
 
         $product->increment('product_view');
 
-        $product_sizes  = ProductSize::where('product_id', $product->id)->get();
-        $product_colors = ProductColor::where('product_id', $product->id)->get();
-        $product_images = ProductImage::where('product_id', $product->id)->orderBy('order_id', 'desc')->get();
+        $total_Reviews    = ProductReview::where('status', 1)->count();
+        $product_sizes    = ProductSize::where('product_id', $product->id)->get();
+        $product_colors   = ProductColor::where('product_id', $product->id)->get();
+        $product_images   = ProductImage::where('product_id', $product->id)->orderBy('order_id', 'desc')->get();
 
         $related_products = 
                     Product::where('category_id', '=', $product->category_id)
                     ->where('id', '!=', $product->id)
                     ->where('status', 1)
                     ->get();
+
+        $product_reviews  = ProductReview::
+                leftJoin('users', 'users.id', 'product_reviews.user_id')
+                ->select('product_reviews.*', 'users.name', 'users.image')  
+                ->where('product_id', $product->id)
+                ->where('status', 1)
+                ->get();
 
         $socialLinks = \Share::page(url()->current(), 'Share title')
                 ->facebook()
@@ -141,13 +150,15 @@ class ProductController extends Controller
         $socialLinks = str_replace('<a ', '<a target="_blank" ', $socialLinks);
 
         return view('frontend.pages.product_pages.product_details', [
-            'products'         => $products,
-            'product'          => $product,
-            'product_sizes'    => $product_sizes,
-            'product_colors'   => $product_colors,
-            'product_images'   => $product_images,
-            'related_products' => $related_products,
-            'socialLinks'      => $socialLinks,
+            'products'           => $products,
+            'product'            => $product,
+            'product_reviews'    => $product_reviews,
+            'product_sizes'      => $product_sizes,
+            'product_colors'     => $product_colors,
+            'product_images'     => $product_images,
+            'related_products'   => $related_products,
+            'socialLinks'        => $socialLinks,
+            'total_Reviews'      => $total_Reviews,
         ]);
     }
 

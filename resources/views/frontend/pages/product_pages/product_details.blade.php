@@ -538,15 +538,20 @@
                     </ul>
 
                     <div class="widget-content-tab">
+                        {{-- Long Description --}}
                         <div class="widget-content-inner active">
                             <div class="tab_description">
                                  {!! $product->long_description !!}
                             </div>
                         </div>
 
+                        {{-- Customer Review --}}
                         <div class="widget-content-inner">
                             <div class="tab-reviews write-cancel-review-wrap">
+                                {{-- Review Ratings --}}
                                 <div class="tab-reviews-heading">
+
+                                    {{-- Ratings Ratio --}}
                                     <div class="top">
                                         <div class="text-center">
                                             <div class="number title-display">4.9</div>
@@ -557,8 +562,9 @@
                                                 <li class="bx bxs-star" style="color: #000;"></li>
                                                 <li class="bx bxs-star" style="color: #000;"></li>
                                             </div>
-                                            <p>(168 Ratings)</p>
+                                            <p>({{ $total_Reviews }} Ratings)</p>
                                         </div>
+
                                         <div class="rating-score">
                                             <div class="item">
                                                 <div class="number-1 text-caption-1">5</div>
@@ -602,13 +608,41 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div>
-                                        <div class="btn-style-4 text-btn-uppercase letter-1 btn-comment-review btn-cancel-review">Cancel Review</div>
-                                        <div class="btn-style-4 text-btn-uppercase letter-1 btn-comment-review btn-write-review">Write a review</div>
-                                    </div>
+
+                                    @php
+                                        if( Auth::check() ){
+                                            $isBought = false;
+                                            $orders = App\Models\Order::where([
+                                                ['user_id', Auth::user()->id],
+                                                ['order_status', 'delivered']
+                                            ])->get();
+                                    
+                                            foreach ($orders as $order) {
+                                                $existItem = App\Models\OrderProduct::where('order_id', $order->order_id)
+                                                    ->where('product_id', $product->id)
+                                                    ->get();
+
+                                                if ($existItem) {
+                                                    $isBought = true;
+                                                }
+                                            }
+                                        }
+                                        else{
+                                            $isBought = false;
+                                        }
+                                    @endphp
+                                    
+                                    @if ( $isBought === true )
+                                        <div>
+                                            <div class="btn-style-4 text-btn-uppercase letter-1 btn-comment-review btn-cancel-review">Cancel Review</div>
+                                            <div class="btn-style-4 text-btn-uppercase letter-1 btn-comment-review btn-write-review">Write a review</div>
+                                        </div>
+                                    @endif
                                 </div>
+
+                                {{-- All Review Comments --}}
                                 <div class="reply-comment style-1 cancel-review-wrap">
-                                    <div class="d-flex mb_24 gap-20 align-items-center justify-content-between flex-wrap">
+                                    {{-- <div class="d-flex mb_24 gap-20 align-items-center justify-content-between flex-wrap">
                                         <h4 class="">03 Comments</h4>
                                         <div class="d-flex align-items-center gap-12">
                                             <div class="text-caption-1">Sort by:</div>
@@ -630,25 +664,38 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="reply-comment-wrap">
-                                        <div class="reply-comment-item">
-                                            <div class="user">
-                                                <div class="image">
-                                                    <img src="{{ asset('public/frontend/images/avatar/user-default.jpg') }}" alt="">
-                                                </div>
-                                                <div>
-                                                    <h6>
-                                                        <a href="#" class="link">Superb quality apparel that exceeds expectations</a>
-                                                    </h6>
-                                                    <div class="day text-secondary-2 text-caption-1">1 days ago &nbsp;&nbsp;&nbsp;-</div>
-                                                </div>
-                                            </div>
-                                            <p class="text-secondary">Great theme - we were looking for a theme with lots of built in features and flexibility and this was perfect. We expected to need to employ a developer to add a few finishing touches. But we actually
-                                                managed to do everything ourselves. We did have one small query and the support given was swift and helpful.</p>
-                                        </div>
 
-                                        <div class="reply-comment-item type-reply">
+                                        @if ( $product_reviews->count() < 1 )
+                                            <div class="alert alert-danger text-center" role="alert">
+                                                There is no review here
+                                            </div>
+                                        @else
+                                            @foreach ($product_reviews as $row)
+                                                <div class="reply-comment-item">
+                                                    <div class="user">
+                                                        <div class="image">
+                                                            @if ( !empty($row->image) )
+                                                                <img src="{{ asset($row->image) }}" alt=""> 
+                                                            @else
+                                                                <img src="{{ asset('public/frontend/images/avatar/user-default.jpg') }}" alt="">
+                                                            @endif
+                                                        </div>
+
+                                                        <div>
+                                                            <h6>
+                                                                <a href="#" class="link">{{ $row->name }}</a>
+                                                            </h6>
+                                                            <div class="day text-secondary-2 text-caption-1">{{ $row->created_at->diffForHumans() }} &nbsp;&nbsp;&nbsp;-</div>
+                                                        </div>
+                                                    </div>
+                                                    <p class="text-secondary">{{ $row->review }}</p>
+                                                </div>
+                                            @endforeach
+                                        @endif
+
+                                        {{-- <div class="reply-comment-item type-reply">
                                             <div class="user">
                                                 <div class="image">
                                                     <img src="{{ asset('public/frontend/images/avatar/user-modave.jpg') }}" alt="">
@@ -662,8 +709,9 @@
                                             </div>
                                             <p class="text-secondary">We love to hear it! Part of what we love most about Modave is how much it empowers store owners like yourself to build a beautiful website without having to hire a developer :) Thank you for this fantastic
                                                 review!</p>
-                                        </div>
-                                        <div class="reply-comment-item">
+                                        </div> --}}
+
+                                        {{-- <div class="reply-comment-item">
                                             <div class="user">
                                                 <div class="image">
                                                     <img src="{{ asset('public/frontend/images/avatar/user-default.jpg') }}" alt="">
@@ -677,37 +725,44 @@
                                             </div>
                                             <p class="text-secondary">Great theme - we were looking for a theme with lots of built in features and flexibility and this was perfect. We expected to need to employ a developer to add a few finishing touches. But we actually
                                                 managed to do everything ourselves. We did have one small query and the support given was swift and helpful.</p>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                 </div>
 
-                                
-                                <form class="form-write-review write-review-wrap">
+                                {{-- Review Form --}}
+                                <form class="form-write-review write-review-wrap" method="POST" action="{{ route('review.store') }}">
+                                    @csrf
+
+                                    <input type="hidden" name="product_id" value="{{ $product->id }}" >
+
                                     <div class="heading">
                                         <h4>Write a review:</h4>
                                         <div class="list-rating-check">
-                                            <input type="radio" id="star5" name="rate" value="5">
+                                            <input type="radio" id="star5" name="ratings" value="5">
                                             <label for="star5" title="text"></label>
-                                            <input type="radio" id="star4" name="rate" value="4">
+                                            <input type="radio" id="star4" name="ratings" value="4">
                                             <label for="star4" title="text"></label>
-                                            <input type="radio" id="star3" name="rate" value="3">
+                                            <input type="radio" id="star3" name="ratings" value="3">
                                             <label for="star3" title="text"></label>
-                                            <input type="radio" id="star2" name="rate" value="2">
+                                            <input type="radio" id="star2" name="ratings" value="2">
                                             <label for="star2" title="text"></label>
-                                            <input type="radio" id="star1" name="rate" value="1">
+                                            <input type="radio" id="star1" name="ratings" value="1">
                                             <label for="star1" title="text"></label>
                                         </div>
                                     </div>
+
                                     <div class="mb_32">
-                                        <div class="mb_8">Review Title</div>
+                                        {{-- <div class="mb_8">Review Title</div>
                                         <fieldset class="mb_20">
                                             <input class="" type="text" placeholder="Give your review a title" name="text" tabindex="2" value="" aria-required="true" required="">
-                                        </fieldset>
+                                        </fieldset> --}}
+
                                         <div class="mb_8">Review</div>
                                         <fieldset class="d-flex mb_20">
-                                            <textarea class="" rows="4" placeholder="Write your comment here" tabindex="2" aria-required="true" required=""></textarea>
+                                            <textarea class="" rows="4" placeholder="Write your comment here" tabindex="2" aria-required="true" name="review"></textarea>
                                         </fieldset>
-                                        <div class="cols mb_20">
+
+                                        {{-- <div class="cols mb_20">
                                             <fieldset class="">
                                                 <input class="" type="text" placeholder="You Name (Public)" name="text" tabindex="2" value="" aria-required="true" required="">
                                             </fieldset>
@@ -718,7 +773,7 @@
                                         <div class="d-flex align-items-center check-save">
                                             <input type="checkbox" name="availability" class="tf-check" id="check1">
                                             <label class="text-secondary text-caption-1" for="check1">Save my name, email, and website in this browser for the next time I comment.</label>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                     <div class="button-submit">
                                         <button class="text-btn-uppercase" type="submit">Submit Reviews</button>
@@ -727,6 +782,7 @@
                             </div>
                         </div>
 
+                        {{-- Shipping Return Description --}}
                         @if ( !empty($product->shipping_return) )
                             <div class="widget-content-inner">
                                 <div class="tab_description">
@@ -735,6 +791,7 @@
                             </div>
                         @endif
 
+                        {{-- Return Policy Description --}}
                         @if (!empty($product->return_policy))
                             <div class="widget-content-inner">
                                 <div class="tab_description">

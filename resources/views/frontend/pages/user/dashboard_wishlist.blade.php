@@ -66,7 +66,7 @@
                                         <tr class="tf-order-item" data-id={{ $row->wish_id }}>
                                             <td>
                                                 <a href="{{ route('product.details', $row->slug) }}">
-                                                    <img src="{{ asset($row->thumb_image) }}" alt="{{ $row->slug }}">
+                                                    <img src="{{ asset($row->thumb_image) }}" alt="{{ $row->slug }}" style="width: 50px;">
                                                 </a>
                                             </td>
                                             <td>
@@ -80,17 +80,17 @@
                                             <td>
                                                 @if ( checkDiscount($row) )
                                                     @if ( $row->discount_type === "amount")
-                                                        ${{ $row->selling_price }} ${{ $row->selling_price - $row->discount_value }}
+                                                        {{ getSetting()->currency_symbol }}{{ $row->selling_price }} ${{ $row->selling_price - $row->discount_value }}
                                                     @elseif( $row->discount_type === "percent" )
                                                         @php
                                                             $discount_val = $row->selling_price * $row->discount_value / 100;
                                                         @endphp
-                                                        ${{ $row->selling_price }}${{ $row->selling_price - $discount_val }}</
+                                                        {{ getSetting()->currency_symbol }}{{ $row->selling_price }}${{ $row->selling_price - $discount_val }}</
                                                     @else
-                                                        ${{ $row->selling_price }}
+                                                        {{ getSetting()->currency_symbol }}{{ $row->selling_price }}
                                                     @endif
                                                 @else
-                                                     ${{ $row->selling_price }}
+                                                    {{ getSetting()->currency_symbol }}{{ $row->selling_price }}
                                                 @endif
                                             </td>
                                             <td>

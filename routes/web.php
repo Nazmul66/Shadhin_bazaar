@@ -15,6 +15,7 @@ use App\Http\Controllers\Frontend\ShippingRuleController;
 use App\Http\Controllers\Frontend\AjaxCallController;
 use App\Http\Controllers\Frontend\NewsletterController;
 use App\Http\Controllers\Frontend\AccountController;
+use App\Http\Controllers\Frontend\ProductReviewController;
 use App\Http\Controllers\Frontend\WishlistController;
 
 /*
@@ -63,6 +64,12 @@ use App\Http\Controllers\Frontend\WishlistController;
         Route::get('/get-cart-data', 'getCart')->name('get.cart.data');
         Route::post('/get_filter_product_ajax', 'get_filter_product_ajax');
         Route::get('/pagination/paginate-data', 'pagination');
+    });
+
+
+    //__ Products Review __//
+    Route::controller(ProductReviewController::class)->group(function () {
+        Route::post('/review', 'review_store')->name('review.store');
     });
 
 
@@ -145,6 +152,7 @@ use App\Http\Controllers\Frontend\WishlistController;
         Route::controller(AccountController::class)->group(function () {
             Route::get('/dashboard', "dashboard")->name('dashboard');
             Route::get('/dashboard/profile', "dashboard_profile")->name('dashboard.profile');
+            Route::get('/dashboard/review', "dashboard_review")->name('dashboard.review');
             Route::put('/dashboard/profile-update/{id}', "dashboard_profile_update")->name('dashboard.profile.update');
             Route::get('/dashboard/orders', "dashboard_orders")->name('dashboard.orders');
             Route::get('/dashboard/order-view/{id}', "dashboard_orders_views")->name('dashboard.order.view');

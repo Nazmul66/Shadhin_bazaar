@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\OrderProduct;
+use App\Models\ProductReview;
 use App\Models\User;
 use App\Models\Wishlist;
 use App\Traits\ImageUploadTraits;
@@ -28,6 +29,7 @@ class AccountController extends Controller
         $data['complete_order'] = Order::where('user_id', Auth::user()->id)->where('order_status', 'delivered')->count();
         $data['total_spend']    = Order::where('user_id', Auth::user()->id)->where('order_status', '!=', 'cancelled')->sum('total_amount');
         $data['wishlists']      = Wishlist::where('user_id', Auth::user()->id)->count();
+        $data['reviews']        = ProductReview::where('user_id', Auth::user()->id)->count();
         return view('frontend.pages.user.dashboard', $data);
     }
 
@@ -37,6 +39,16 @@ class AccountController extends Controller
     public function dashboard_profile()
     {
         return view('frontend.pages.user.dashboard_profile');
+    }
+
+    public function dashboard_review()
+    {
+        $user_reviews = ProductReview::leftJoin('users', 'users.id', 'product_reviews.user_id')
+                    ->leftJoin('products', 'products.id', 'product_reviews.product_id')
+                    ->select('product_reviews.*', 'products.name as prdt_name', 'users.name as user_name', 'products.slug')
+                    ->where('user_id', Auth::user()->id)
+                    ->get();
+        return view('frontend.pages.user.dashboard_review', compact('user_reviews'));
     }
 
     public function dashboard_profile_update(Request $request, string $id)

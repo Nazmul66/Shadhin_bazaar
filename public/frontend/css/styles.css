@@ -18226,3 +18226,8 @@ ul.list-text.type-number {
     background-color: transparent;
     border: none;
 }
+.tf-order-item td{
+    font-size: 14px;
+    vertical-align: middle !important;
+    line-height: 21px;
+}

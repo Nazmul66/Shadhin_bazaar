@@ -161,7 +161,7 @@
                         
                                                  <div class="cart_text">
                                                      <h6>Total Review</h6>
-                                                     <p>3</p>
+                                                     <p>{{ $reviews }}</p>
                                                  </div>
                                             </div>
                                         </div><!-- end card body -->
