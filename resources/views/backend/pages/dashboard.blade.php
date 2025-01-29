@@ -207,7 +207,7 @@
             <!-- card -->
             <div class="card card-h-100">
                 <!-- card body -->
-                <a href="#" class="card-body" style="height: 110px;">
+                <a href="{{ url('/admin/reviews') }}" class="card-body" style="height: 110px;">
                     <div class="analytics_card">
                          <div class="icon_design bg-warning">
                             <i class='bx bxs-star' ></i>
@@ -215,7 +215,7 @@
 
                          <div class="cart_text">
                              <h6>Total Reviews</h6>
-                             <p>0</p>
+                             <p>{{ $reviews }}</p>
                          </div>
                     </div>
                 </a><!-- end card body -->

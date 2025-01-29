@@ -10,6 +10,7 @@ use App\Models\Collection;
 use App\Models\NewsletterSubscriber;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\ProductReview;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -58,6 +59,7 @@ class AdminController extends Controller
         $data['products']        = Product::where('status', 1)->where('is_approved', 1)->count();
         $data['collections']     = Collection::where('status', 1)->count();
         $data['users']           = User::count();
+        $data['reviews']         = ProductReview::count();
 
         return view('backend.pages.dashboard', $data);
     }
