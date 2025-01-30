@@ -246,6 +246,12 @@
                                 <span >Slider</span>
                             </a>
                         </li>
+
+                        <li>
+                            <a href="{{ route('admin.home.page.setting') }}">
+                                <span >Home Setting</span>
+                            </a>
+                        </li>
                     </ul>
                 </li>
 

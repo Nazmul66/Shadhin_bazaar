@@ -35,6 +35,7 @@ use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\TransactionController;
 use App\Http\Controllers\Backend\CustomerController;
 use App\Http\Controllers\Backend\SubscriptionController;
+use App\Http\Controllers\Backend\HomeSettingController;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
 
@@ -124,9 +125,9 @@ Route::middleware('setLanguage')->group(function(){
 
 
         //______ Attribute Name _____//
-        Route::resource('/attribute-name', AttributeNameController::class)->names('attribute.name')->except(['show']);
-        Route::get('/attribute-name/data', [AttributeNameController::class, 'getData'])->name('attribute-name.data');
-        Route::post('/attribute-name-status', [AttributeNameController::class, 'changeStatus'])->name('attribute-name.status');
+        // Route::resource('/attribute-name', AttributeNameController::class)->names('attribute.name')->except(['show']);
+        // Route::get('/attribute-name/data', [AttributeNameController::class, 'getData'])->name('attribute-name.data');
+        // Route::post('/attribute-name-status', [AttributeNameController::class, 'changeStatus'])->name('attribute-name.status');
 
 
         //______ Attribute Values _____//
@@ -157,6 +158,19 @@ Route::middleware('setLanguage')->group(function(){
         Route::delete('/size-variants/delete/{id}', [ProductController::class, 'delete_size_variants'])->name('size.variants.delete'); 
         Route::delete('/color-variants/delete/{id}', [ProductController::class, 'delete_color_variants'])->name('color.variants.delete'); 
 
+
+        //______ Home Settings _____//
+        Route::controller(HomeSettingController::class)->group(function () {
+            Route::get('/home-page-setting', 'index')->name('home.page.setting');
+            Route::put('/popular-category-section', 'updatePopularCategorySection')->name('popular.category.section');
+            Route::put('/product-slider-section-one', 'updateProductSliderSectionOne')->name('product.slider.section.one');
+            Route::put('/product-slider-section-two', 'updateProductSliderSectionTwo')->name('product.slider.section.two');
+            Route::put('/product-slider-section-three', 'updateProductSliderSectionThree')->name('product.slider.section.three');
+
+            // ajax call 
+            Route::get('/get-subCategory-data', 'get_subCategory_data')->name('get.subCategory.data');
+            Route::get('/get-childCategory-data', 'get_childCategory_data')->name('get.childCategory.data');
+        });
 
         //______ Product Collection _____//
         Route::resource('/product-collection', ProductCollectionController::class)->names('product.collection');
