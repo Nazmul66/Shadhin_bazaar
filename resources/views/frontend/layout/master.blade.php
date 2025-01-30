@@ -12,7 +12,7 @@
 
     <div id="wrapper">
         <!-- Top Bar -->
-            @include('frontend.include.topbar')
+            {{-- @include('frontend.include.topbar') --}}
         <!-- /Top Bar -->
 
         <!-- Header -->

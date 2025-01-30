@@ -7,14 +7,17 @@ use App\Http\Controllers\Controller;
 use App\Mail\ContactMail;
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\Collection;
 use App\Models\Contact;
 use App\Models\CustomPage;
 use App\Models\EmailConfiguration;
 use App\Models\Faq;
 use App\Models\FlashSale;
 use App\Models\FlashSaleItem;
+use App\Models\HomeSetting;
 use App\Models\Product;
 use App\Models\Slider;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
@@ -26,12 +29,19 @@ class HomeController extends Controller
      */
     public function home()
     {
-        $data['sliders']        = Slider::where('status', 1)->orderBy('id', 'desc')->get();
-        $data['categories']     = Category::get_data();
-        $data['brands']         = Brand::where('status', 1)->get();
-        $data['flashSaleDate']  = FlashSale::first();
-        $data['flashSaleItems'] = FlashSaleItem::where('show_at_home', 1)->where('status', 1)->get();
-        $data['products']       = Product::where('is_approved', 1)->where('status', 1)->get();
+        $data['sliders']              = Slider::where('status', 1)->orderBy('id', 'desc')->get();
+        $data['categories']           = Category::where('status', 1)->orderBy('id', "desc")->limit(5)->get();
+        $data['brands']               = Brand::where('status', 1)->get();
+        $data['flashSaleDate']        = FlashSale::first();
+        $data['flashSaleItems']       = FlashSaleItem::where('show_at_home', 1)->where('status', 1)->get();
+        $data['products']             = Product::where('is_approved', 1)->where('status', 1)->get();
+        $data['collections']          = Collection::where('status', 1)->get();
+        $data['featured_products']    = Product::where('is_featured', 1)->where('is_approved', 1)->where('status', 1)->get();
+        $data['best_products']        = Product::where('is_best', 1)->where('is_approved', 1)->where('status', 1)->get();
+        $data['top_products']         = Product::where('is_top', 1)->where('is_approved', 1)->where('status', 1)->get();
+        $data['view_products']        = Product::orderBy('product_view', 'desc')->where('is_approved', 1)->where('status', 1)->limit(3)->get();
+        $data['random_products']      = Product::inRandomOrder()->where('is_approved', 1)->where('status', 1)->limit(3)->get();
+        $data['new_products']        = Product::where('created_at', '>=', Carbon::now()->subMonths(2))->where('is_approved', 1)->where('status', 1)->limit(3)->get();
 
         return view('frontend.pages.home', $data);
     }

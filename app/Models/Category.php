@@ -13,7 +13,7 @@ class Category extends Model
     // For Categories
     static public function get_data()
     {
-        return Self::where('status', 1)->where('status', 1)->get();
+        return Self::where('status', 1)->get();
     }
 
     public function subCategory()

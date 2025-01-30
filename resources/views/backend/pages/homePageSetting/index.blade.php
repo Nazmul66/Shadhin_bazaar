@@ -494,7 +494,7 @@
             templateSelection: formatState,    
         });
 
-
+        //____ Ajax subCategory ____//
         $('body').on('change', '.main-category', function(e){
             e.preventDefault();
             let id = $(this).val();
@@ -526,7 +526,7 @@
             })
         })
 
-
+        //____ Ajax childCategory ____//
         $('body').on('change', '.sub-category', function(e){
             e.preventDefault();
             let id = $(this).val();

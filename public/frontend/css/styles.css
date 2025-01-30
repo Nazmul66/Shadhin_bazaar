@@ -7982,6 +7982,16 @@ form .cols>* {
 .collection-position {
     position: relative;
 }
+.collection-position::before{
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.35);
+    z-index: 10;
+}
 
 .collection-position .img-style {
     display: block;
@@ -8004,6 +8014,7 @@ form .cols>* {
     right: 15px;
     transform: translateY(-50%);
     text-align: center;
+    z-index: 12;
 }
 
 .collection-position.radius {
@@ -8109,9 +8120,11 @@ form .cols>* {
     position: absolute;
     right: 28px;
     width: 20px;
+    font-size: 26px;
     opacity: 0;
     visibility: hidden;
-    transform: translateX(10px);
+    transform: rotateZ(28deg) translateX(10px);
+    transform-origin: initial;
     -webkit-transition: all 0.3s ease;
     -moz-transition: all 0.3s ease;
     -ms-transition: all 0.3s ease;
@@ -8240,7 +8253,8 @@ form .cols>* {
 .collection-position-2.style-2 .content:hover .icon {
     opacity: 1;
     visibility: visible;
-    transform: translateX(0);
+    transform: rotateZ(28deg) translateX(10px);
+    transform-origin: right;
 }
 
 .collection-position-2.style-3 .content:hover .count-item,
@@ -16076,6 +16090,7 @@ ul.list-text.type-number {
     }
     .collection-position.style-lg .content {
         gap: 12px;
+        z-index: 12;
     }
     .collection-position-2 .content {
         left: 20px;
