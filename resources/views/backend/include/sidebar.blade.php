@@ -319,6 +319,12 @@
                                 </a>
                             </li>
                         @endif
+
+                        <li>
+                            <a href="{{ route('admin.marquee.index') }}">
+                                <span >Slide Advertise</span>
+                            </a>
+                        </li>
                     </ul>
                 </li>
             </ul>

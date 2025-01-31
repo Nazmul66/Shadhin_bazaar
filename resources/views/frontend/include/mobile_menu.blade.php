@@ -62,15 +62,18 @@
                         </svg>  
                         Login
                     </a>
-
                 </div>
+
                 <div class="mb-notice">
                     <a href="contact.html" class="text-need">Need Help?</a>
                 </div>
+
                 <div class="mb-contact">
                     <p class="text-caption-1">{{ getSetting()->address }}</p>
-                    <a href="{{ url('/contact-us') }}" class="tf-btn-default text-btn-uppercase">GET DIRECTION<i class='bx bx-right-top-arrow-circle'></i></a>
+                    <a href="{{ url('/contact-us') }}" class="tf-btn-default text-btn-uppercase">GET DIRECTION<i class='bx bx-right-top-arrow-circle'></i>
+                    </a>
                 </div>
+
                 <ul class="mb-info">
                     <li>
                         <i class='bx bx-envelope me-2'></i>
@@ -91,7 +94,8 @@
                 </ul>
             </div>
         </div>
-        <div class="mb-bottom">
+
+        {{-- <div class="mb-bottom">
             <div class="bottom-bar-language">
                 <div class="tf-currencies">
                     <select class="image-select center style-default type-currencies">
@@ -106,6 +110,6 @@
                     </select>
                 </div>
             </div>
-        </div>
+        </div> --}}
     </div>
 </div>

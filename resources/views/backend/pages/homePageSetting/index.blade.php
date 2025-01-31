@@ -84,7 +84,7 @@
                                                     @endphp
                                                     <label class="form-label">Sub Category</label>
                                                     <select class="form-select sub-category" name="subCat_one">
-                                                        <option value="" selected disabled>Select</option>
+                                                        <option value="" selected>Select</option>
                                                         @foreach ($subCategories as $row)
                                                             <option value="{{ $row->id }}" data-image-url="{{ asset($row->subcategory_img) }}"
                                                             {{ $row->id == $popularCategorySection[0]['sub_category'] ? 'selected' : ''}}
@@ -101,7 +101,7 @@
                                                     @endphp
                                                     <label class="form-label" >Child Category</label>
                                                     <select class="form-select child-category" name="childCat_one">
-                                                        <option value="" selected disabled>Select</option>
+                                                        <option value="" selected>Select</option>
                                                         @foreach ($childCategories as $row)
                                                             <option value="{{ $row->id }}" data-image-url="{{ asset($row->img) }}"
                                                             {{ $row->id == $popularCategorySection[0]['child_category'] ? 'selected' : ''}}
@@ -135,8 +135,7 @@
                                                     @endphp
                                                     <label class="form-label">Sub Category</label>
                                                     <select class="form-select sub-category" name="subCat_two">
-                                                        <option value="" selected disabled>Select</option>
-                                                         <option value="" selected disabled>Select</option>
+                                                        <option value="" selected >Select</option>
                                                         @foreach ($subCategories as $row)
                                                             <option value="{{ $row->id }}" data-image-url="{{ asset($row->subcategory_img) }}"
                                                             {{ $row->id == $popularCategorySection[1]['sub_category'] ? 'selected' : ''}}
@@ -153,7 +152,7 @@
                                                     @endphp
                                                     <label class="form-label" >Child Category</label>
                                                     <select class="form-select child-category" name="childCat_two">
-                                                        <option value="" selected disabled>Select</option>
+                                                        <option value="" selected>Select</option>
                                                         @foreach ($childCategories as $row)
                                                             <option value="{{ $row->id }}" data-image-url="{{ asset($row->img) }}"
                                                             {{ $row->id == $popularCategorySection[1]['child_category'] ? 'selected' : ''}}
@@ -187,7 +186,7 @@
                                                     @endphp
                                                     <label class="form-label">Sub Category</label>
                                                     <select class="form-select sub-category" name="subCat_three">
-                                                        <option value="" selected disabled>Select</option>
+                                                        <option value="" selected>Select</option>
                                                         @foreach ($subCategories as $row)
                                                             <option value="{{ $row->id }}" data-image-url="{{ asset($row->subcategory_img) }}"
                                                             {{ $row->id == $popularCategorySection[2]['sub_category'] ? 'selected' : ''}}
@@ -204,7 +203,7 @@
                                                     @endphp
                                                     <label class="form-label" >Child Category</label>
                                                     <select class="form-select child-category" name="childCat_three">
-                                                        <option value="" selected disabled>Select</option>
+                                                        <option value="" selected>Select</option>
                                                         @foreach ($childCategories as $row)
                                                             <option value="{{ $row->id }}" data-image-url="{{ asset($row->img) }}"
                                                             {{ $row->id == $popularCategorySection[2]['child_category'] ? 'selected' : ''}}
@@ -238,7 +237,7 @@
                                                     @endphp
                                                     <label class="form-label">Sub Category</label>
                                                     <select class="form-select sub-category" name="subCat_four">
-                                                        <option value="" selected disabled>Select</option>
+                                                        <option value="" selected>Select</option>
                                                         @foreach ($subCategories as $row)
                                                             <option value="{{ $row->id }}" data-image-url="{{ asset($row->subcategory_img) }}"
                                                             {{ $row->id == $popularCategorySection[3]['sub_category'] ? 'selected' : ''}}
@@ -255,7 +254,7 @@
                                                     @endphp
                                                     <label class="form-label" >Child Category</label>
                                                     <select class="form-select child-category" name="childCat_four">
-                                                        <option value="" selected disabled>Select</option>
+                                                        <option value="" selected>Select</option>
                                                         @foreach ($childCategories as $row)
                                                             <option value="{{ $row->id }}" data-image-url="{{ asset($row->img) }}"
                                                             {{ $row->id == $popularCategorySection[3]['child_category'] ? 'selected' : ''}}
@@ -302,7 +301,7 @@
                                                     @endphp
                                                     <label class="form-label">Sub Category</label>
                                                     <select class="form-select sub-category" name="subCat_one">
-                                                        <option value="" selected disabled>Select</option>
+                                                        <option value="" selected>Select</option>
                                                         @foreach ($subCategories as $row)
                                                             <option value="{{ $row->id }}" data-image-url="{{ asset($row->subcategory_img) }}"
                                                             {{ $row->id == $productSliderSectionOne['sub_category'] ? 'selected' : ''}}
@@ -319,7 +318,7 @@
                                                     @endphp
                                                     <label class="form-label" >Child Category</label>
                                                     <select class="form-select child-category" name="childCat_one">
-                                                        <option value="" selected disabled>Select</option>
+                                                        <option value="" selected>Select</option>
                                                         @foreach ($childCategories as $row)
                                                             <option value="{{ $row->id }}" data-image-url="{{ asset($row->img) }}"
                                                             {{ $row->id == $productSliderSectionOne['child_category'] ? 'selected' : ''}}
@@ -366,7 +365,7 @@
                                                     @endphp
                                                     <label class="form-label">Sub Category</label>
                                                     <select class="form-select sub-category" name="subCat_one">
-                                                        <option value="" selected disabled>Select</option>
+                                                        <option value="" selected>Select</option>
                                                         @foreach ($subCategories as $row)
                                                             <option value="{{ $row->id }}" data-image-url="{{ asset($row->subcategory_img) }}"
                                                             {{ $row->id == $productSliderSectionTwo['sub_category'] ? 'selected' : ''}}
@@ -383,7 +382,7 @@
                                                     @endphp
                                                     <label class="form-label" >Child Category</label>
                                                     <select class="form-select child-category" name="childCat_one">
-                                                        <option value="" selected disabled>Select</option>
+                                                        <option value="" selected>Select</option>
                                                         @foreach ($childCategories as $row)
                                                             <option value="{{ $row->id }}" data-image-url="{{ asset($row->img) }}"
                                                             {{ $row->id == $productSliderSectionTwo['child_category'] ? 'selected' : ''}}
@@ -430,7 +429,7 @@
                                                     @endphp
                                                     <label class="form-label">Sub Category</label>
                                                     <select class="form-select sub-category" name="subCat_one">
-                                                        <option value="" selected disabled>Select</option>
+                                                        <option value="" selected>Select</option>
                                                         @foreach ($subCategories as $row)
                                                             <option value="{{ $row->id }}" data-image-url="{{ asset($row->subcategory_img) }}"
                                                             {{ $row->id == $productSliderSectionThree['sub_category'] ? 'selected' : ''}}
@@ -447,7 +446,7 @@
                                                     @endphp
                                                     <label class="form-label" >Child Category</label>
                                                     <select class="form-select child-category" name="childCat_one">
-                                                        <option value="" selected disabled>Select</option>
+                                                        <option value="" selected>Select</option>
                                                         @foreach ($childCategories as $row)
                                                             <option value="{{ $row->id }}" data-image-url="{{ asset($row->img) }}"
                                                             {{ $row->id == $productSliderSectionThree['child_category'] ? 'selected' : ''}}
@@ -507,7 +506,7 @@
                 success: function(res){
                     console.log(res.data);
                     let selector = row.find('.sub-category'); // Only update the sub-category in the same row
-                    selector.html('<option value="" selected disabled>Select</option>');
+                    selector.html('<option value="" selected>Select</option>');
 
                     $.each(res.data, function(i, item){
                         selector.append(`<option value="${item.id}" data-image-url="${item.image_url}">${item.subcategory_name}</option>`);
@@ -539,7 +538,7 @@
                 success: function(res){
                     console.log(res.data);
                     let selector = row.find('.child-category'); // Only update the child-category in the same row
-                    selector.html('<option value="" selected disabled>Select</option>');
+                    selector.html('<option value="" selected>Select</option>');
 
                     $.each(res.data, function(i, item){
                         selector.append(`<option value="${item.id}" data-image-url="${item.image_url}">${item.name}</option>`);

@@ -27,6 +27,7 @@ use App\Http\Controllers\Backend\FlashSaleController;
 use App\Http\Controllers\Backend\CouponController;
 use App\Http\Controllers\Backend\CustomPageController;
 use App\Http\Controllers\Backend\OrderController;
+use App\Http\Controllers\Backend\MarqueeController;
 use App\Http\Controllers\Backend\ReviewController;
 use App\Http\Controllers\Backend\ContactController;
 use App\Http\Controllers\Backend\SliderController;
@@ -242,6 +243,12 @@ Route::middleware('setLanguage')->group(function(){
         Route::resource('/settings', SettingController::class)->names('settings');
         Route::get('/email-setup', [SettingController::class, 'emailSetupIndex'])->name('email.setup');
         Route::put('/email-setting-update', [SettingController::class, 'emailConfigSettingUpdate'])->name('email.setting.update');
+
+        //______ Marquee _____//
+        Route::resource('/marquee', MarqueeController::class)->names('marquee');
+        Route::get('/marquee-data', [MarqueeController::class, 'getData'])->name('marquee-data');
+        Route::post('/marquee/status', [MarqueeController::class, 'changeMarqueeStatus'])->name('marquee.status');
+        Route::get('/marquee/view/{id}', [MarqueeController::class, 'marqueeView'])->name('marquee.view');
         
     });
 

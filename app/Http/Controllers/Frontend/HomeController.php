@@ -41,7 +41,9 @@ class HomeController extends Controller
         $data['top_products']         = Product::where('is_top', 1)->where('is_approved', 1)->where('status', 1)->get();
         $data['view_products']        = Product::orderBy('product_view', 'desc')->where('is_approved', 1)->where('status', 1)->limit(3)->get();
         $data['random_products']      = Product::inRandomOrder()->where('is_approved', 1)->where('status', 1)->limit(3)->get();
-        $data['new_products']        = Product::where('created_at', '>=', Carbon::now()->subMonths(2))->where('is_approved', 1)->where('status', 1)->limit(3)->get();
+        $data['new_products']         = Product::where('created_at', '>=', Carbon::now()->subMonths(2))->where('is_approved', 1)->where('status', 1)->limit(3)->get();
+        $data['catSliderSectionOne']  = HomeSetting::where('key', 'product_slider_section_one')->first();
+        $data['catSliderSectionTwo']  = HomeSetting::where('key', 'product_slider_section_two')->first();
 
         return view('frontend.pages.home', $data);
     }
