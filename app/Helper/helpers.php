@@ -32,6 +32,13 @@ if (!function_exists('getSetting')) {
       }
   }
 
+  if (!function_exists('isActive')) {
+    function isActive($routeName)
+    {
+        return request()->routeIs($routeName) ? 'active' : '';
+    }
+}
+
   function convertToSlug($string)
   {
       return collect(explode(' ', str_replace('_', ' ', $string)))

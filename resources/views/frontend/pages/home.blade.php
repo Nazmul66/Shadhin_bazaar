@@ -689,11 +689,11 @@
 </section>
 <!-- /Collection -->
 
-<!-- Top Selling Products -->
+<!-- Top Products -->
 <section class="flat-spacing-4 pt-0">
     <div class="container">
         <div class="heading-section-2 wow fadeInUp">
-            <h4 style="font-size: 30px!important;">Top Selling Products</h4>
+            <h4 style="font-size: 30px!important;">Top Products</h4>
             <a href="shop-default-grid.html" class="line-under">See All Products</a>
         </div>
 
@@ -1751,7 +1751,7 @@
                 </div>
                 <div class="swiper-slide">
                     <div class="tf-icon-box">
-                        <div class="icon-box"><span class="icon icon-shipping"></span></div>
+                        <div class="icon-box"><i class='bx bxs-truck' ></i></div>
                         <div class="content text-center">
                             <h6>Free Shipping</h6>
                             <p class="text-secondary">No extra costs, just the price you see.</p>
@@ -1760,7 +1760,7 @@
                 </div>
                 <div class="swiper-slide">
                     <div class="tf-icon-box">
-                        <div class="icon-box"><span class="icon icon-headset"></span></div>
+                        <div class="icon-box"><i class='bx bx-support'></i></div>
                         <div class="content text-center">
                             <h6>24/7 Support</h6>
                             <p class="text-secondary">24/7 support, always here just for you</p>
@@ -1769,7 +1769,7 @@
                 </div>
                 <div class="swiper-slide">
                     <div class="tf-icon-box">
-                        <div class="icon-box"><span class="icon icon-sealCheck"></span></div>
+                        <div class="icon-box"><i class='bx bx-badge-check'></i></div>
                         <div class="content text-center">
                             <h6>Member Discounts</h6>
                             <p class="text-secondary">Special prices for our loyal customers.</p>
