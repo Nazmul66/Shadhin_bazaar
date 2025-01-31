@@ -401,7 +401,7 @@
                    </div>
 
                    <div class="text-center">
-                       <a class="link text-btn-uppercase" href="shop-default-grid.html">Or continue shopping</a>
+                       <a class="link text-btn-uppercase" href="{{ route('product.page') }}">Or continue shopping</a>
                    </div>    
                </div>
            `);

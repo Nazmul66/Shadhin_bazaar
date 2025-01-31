@@ -16,11 +16,11 @@
     <div class="container">
         <h3 class="heading text-center">Check Out</h3>
         <ul class="breadcrumbs d-flex align-items-center justify-content-center">
-            <li><a class="link" href="index.html">Homepage</a></li>
+            <li><a class="link" href="{{ route('home') }}">Homepage</a></li>
             <li><i class='bx bx-chevron-right'></i></li>
-            <li><a class="link" href="shop-default-grid.html">Shop</a></li>
+            <li><a class="link" href="{{ route('product.page') }}">Shop</a></li>
             <li><i class='bx bx-chevron-right'></i></li>
-            <li>View Cart</li>
+            <li><a class="link" href="{{ route('show-cart') }}">View Cart</a></li>
         </ul>
     </div>
 </div>

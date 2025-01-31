@@ -1,7 +1,14 @@
 @extends('frontend.layout.master')
 
 @push('add-meta')
-    <title>Sazao || About-us Template</title>
+    <title>{{ env('APP_NAME') }} || Shopping Cart</title>
+    <meta name="description" content="{{ getSetting()->meta_description }}">
+
+    <meta property="og:title" content="{{ env('APP_NAME') }} || Shopping Cart">
+    <meta property="og:description" content="{{ getSetting()->meta_description ?? 'Default Description' }}">
+    <meta property="og:image" content="{{ asset(getSetting()->logo ) }}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url()->current() }}">
 @endpush
 
 @push('add-css')
@@ -18,7 +25,7 @@
         <ul class="breadcrumbs d-flex align-items-center justify-content-center">
             <li><a class="link" href="{{ url('/') }}">Homepage</a></li>
             <li><i class='bx bx-chevron-right'></i></li>
-            <li><a class="link" href="shop-default-grid.html">Shop</a></li>
+            <li><a class="link" href="{{ route('product.page') }}">Shop</a></li>
             <li><i class='bx bx-chevron-right'></i></li>
             <li>Shopping Cart</li>
         </ul>
@@ -46,7 +53,6 @@
                         </div>
                     </div>
                 </div> --}}
-
 
                 <table class="tf-table-page-cart">
                     <thead>
@@ -79,7 +85,7 @@
                                         <div class="variant-box">
                                             <div class="tf-select">
                                                 <div class="product_variant">
-                                                    Color : {{ trans($row->options->color_name) }} ( ${{ $row->options->color_price }} )
+                                                    Color : {{ strtoupper($row->options->color_name) }} ( {{ getSetting()->currency_symbol}}{{ $row->options->color_price }} )
                                                 </div>
                                                 {{-- <select>
                                                     <option selected="selected">Blue</option>
@@ -92,7 +98,7 @@
                                             </div>
                                             <div class="tf-select">
                                                 <div class="product_variant">
-                                                    Size : {{ strtoupper($row->options->size_name) }} ( ${{ $row->options->size_price }} )
+                                                    Size : {{ strtoupper($row->options->size_name) }} ( {{ getSetting()->currency_symbol}}{{ $row->options->size_price }} )
                                                 </div>
                                                 {{-- <select>
                                                     <option selected="selected">XL</option>
@@ -109,7 +115,7 @@
                                 </td>
 
                                 <td data-cart-title="Price" class="tf-cart-item_price text-center">
-                                    <div class="cart_price text-button price_on_sale">${{ $row->price }}</div>
+                                    <div class="cart_price text-button price_on_sale">{{ getSetting()->currency_symbol}}{{ $row->price }}</div>
                                 </td>
 
                                 <td data-cart-title="Quantity" class="tf-cart-item_quantity">
@@ -120,7 +126,7 @@
                                     </div>
                                 </td>
                                 <td data-cart-title="Total" class="tf-cart-item_total text-center">
-                                    <div id="{{ $row->rowId }}" class="cart_total text-button total_price">${{ $totalPrice }}</div>
+                                    <div id="{{ $row->rowId }}" class="cart_total text-button total_price">{{ getSetting()->currency_symbol}}{{ $totalPrice }}</div>
                                 </td>
                                 <td class="remove-cart remove_item_alignemnt" id="remove_cart">
                                     <i class='icon bx bx-x icon-close-popup remove_product_cart' style="font-size: 20px;" data-id="{{ $row->rowId }}"></i>
@@ -144,8 +150,8 @@
                         <div class="tf-select mb-3">
                             <label for="" class="mb-2">Delivery Charge</label>
                             <select class="text-title" id="shippingRules" style="border-radius: 8px;">
-                                <option value="30" {{ session('shippingCost') == 30 ? 'selected' : '' }}>InSide Dhaka ( $30 )</option>
-                                <option value="60" {{ session('shippingCost') == 60 ? 'selected' : '' }}>OutSide Dhaka ( $60 )</option>
+                                <option value="{{ getSetting()->inside_city }}" {{ session('shippingCost') == getSetting()->inside_city ? 'selected' : '' }}>InSide Dhaka ( {{ getSetting()->currency_symbol}}{{ getSetting()->inside_city }} )</option>
+                                <option value="{{ getSetting()->outside_city }}" {{ session('shippingCost') ==  getSetting()->outside_city ? 'selected' : '' }}>OutSide Dhaka ( {{ getSetting()->currency_symbol }}{{ getSetting()->outside_city }} )</option>
                             </select>
                         </div>
                     </div>
@@ -176,7 +182,7 @@
                                                 <div class="text-caption-1">Discount</div>
                                                 <span class="sale-off text-btn-uppercase">
                                                     @if ( $item->discount_type === "amount" )
-                                                        ${{ $item->discount }} OFF
+                                                    {{ getSetting()->currency_symbol }}{{ $item->discount }} OFF
                                                     @elseif( $item->discount_type === "percent")
                                                         {{ $item->discount }}% OFF
                                                     @endif
@@ -184,7 +190,7 @@
                                             </div>
 
                                             <div class="discount-from">
-                                                <p class="text-caption-1">For all orders <br> from <span class="main_cart_total">${{ getMainCartTotal() }}</span></p>
+                                                <p class="text-caption-1">For all orders <br> from <span class="main_cart_total">{{ getSetting()->currency_symbol }}{{ getMainCartTotal() }}</span></p>
                                             </div>
                                         </div>
 
@@ -239,7 +245,7 @@
                         <h5 class="title">Order Summary</h5>
                         <div class="subtotal text-button d-flex justify-content-between align-items-center">
                             <span>Subtotal</span>
-                            <span class="subTotal">${{ getCartTotal() }}</span>
+                            <span class="subTotal">{{ getSetting()->currency_symbol }}{{ getCartTotal() }}</span>
                         </div>
 
                         <div class="discount text-button d-flex justify-content-between align-items-center">
@@ -254,12 +260,12 @@
                             <span class="total_discount">
                                 @if ( Session::has('coupon') )
                                     @if ( Session::get('coupon')['discount_type'] === "amount")
-                                        ${{ Session::get('coupon')['discount'] }}
+                                        {{ getSetting()->currency_symbol }}{{ Session::get('coupon')['discount'] }}
                                     @elseif( Session::get('coupon')['discount_type'] === "percent" )
-                                        ${{ ( getCartTotal() * Session::get('coupon')['discount'] ) / 100; }}
+                                        {{ getSetting()->currency_symbol }}{{ ( getCartTotal() * Session::get('coupon')['discount'] ) / 100; }}
                                    @endif
                                 @else
-                                    $0
+                                    {{ getSetting()->currency_symbol }}0
                                 @endif
                             </span>
                         </div>
@@ -269,16 +275,16 @@
                             <span>(+) Delivery Charge</span>
                             <span class="shipping_amount">
                                 @if ( Session::has('shippingCost') && Session::get('shippingCost'))
-                                    ${{ Session::get('shippingCost') }}
+                                    {{ getSetting()->currency_symbol }}{{ Session::get('shippingCost') }}
                                 @else
-                                    $0
+                                    {{ getSetting()->currency_symbol }}0
                                 @endif
                             </span>
                         </div>
 
                         {{-- <div class="subtotal text-button d-flex justify-content-between align-items-center">
                             <span>(-)Tax</span>
-                            <span class="tax">$0</span>
+                            <span class="tax">{{ getSetting()->currency_symbol }}0</span>
                         </div> --}}
 
                         {{-- <div class="ship">
@@ -288,21 +294,21 @@
                                     <input type="radio" name="ship-check" class="tf-check-rounded" id="free" checked>
                                     <label for="free">
                                         <span>Free Shipping</span>
-                                        <span class="price">$0.00</span>
+                                        <span class="price">{{ getSetting()->currency_symbol }}0.00</span>
                                     </label>
                                 </fieldset>
                                 <fieldset class="ship-item">
                                     <input type="radio" name="ship-check" class="tf-check-rounded" id="local">
                                     <label for="local">
                                         <span>Local:</span>
-                                        <span class="price">$35.00</span>
+                                        <span class="price">{{ getSetting()->currency_symbol }}35.00</span>
                                     </label>
                                 </fieldset>
                                 <fieldset class="ship-item">
                                     <input type="radio" name="ship-check" class="tf-check-rounded" id="rate">
                                     <label for="rate">
                                         <span>Flat Rate:</span>
-                                        <span class="price">$35.00</span>
+                                        <span class="price">{{ getSetting()->currency_symbol }}35.00</span>
                                     </label>
                                 </fieldset>
                             </div>
@@ -310,7 +316,7 @@
 
                         <h5 class="total-order d-flex justify-content-between align-items-center">
                             <span>Total</span>
-                            <span class="main_cart_total">${{ getMainCartTotal() }}</span>
+                            <span class="main_cart_total">{{ getSetting()->currency_symbol }}{{ getMainCartTotal() }}</span>
                         </h5>
 
                         <div class="box-progress-checkout mt-5">
@@ -321,7 +327,7 @@
                                 </label>
                             </fieldset> --}}
                             <a href="{{ route('checkout') }}" class="tf-btn btn-reset">Process To Checkout</a>
-                            <p class="text-button text-center">Or continue shopping</p>
+                            <a href="{{ route('product.page') }}" class="text-button text-center">Or continue shopping</a>
                         </div>
                     </div>
                 </div>
@@ -339,7 +345,11 @@
         </div>
         <div dir="ltr" class="swiper tf-sw-recent" data-preview="4" data-tablet="3" data-mobile="2" data-space-lg="30" data-space-md="30" data-space="15" data-pagination="1" data-pagination-md="1" data-pagination-lg="1">
             <div class="swiper-wrapper">
+
                 @foreach ($products as $row)
+                    @php
+                        $wishlistItems = App\Models\Wishlist::where('user_id', auth()->id())->pluck('product_id')->toArray();
+                    @endphp
                     <div class="swiper-slide">
                         <div class="card-product wow fadeInUp" data-wow-delay="0.1s">
                             <div class="card-product-wrapper">
@@ -444,78 +454,84 @@
                                         </div>
                                     @endif
                                 @endif
+
                                 
                                 <div class="list-product-btn">
-                                    <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
+                                    <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action {{ in_array($row->id, $wishlistItems) ? 'active' : '' }}" data-id="{{ $row->id }}">
                                         <i class='bx bx-heart' style="font-size: 24px;"></i>
                                         <span class="tooltip">Wishlist</span>
                                     </a>
 
-                                    <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
+                                    {{-- <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
                                         <i class='bx bx-git-compare' style="font-size: 24px;"></i>
                                         <span class="tooltip">Compare</span>
-                                    </a>
-
+                                    </a> --}}
                                     <a href="#quickView" data-id={{ $row->id }} data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
                                         <ion-icon name="eye-outline" style="font-size: 24px;"></ion-icon>
                                         <span class="tooltip">Quick View</span>
                                     </a>
                                 </div>
-
                                 <div class="list-btn-main">
                                     <a href="#quickAdd" data-id={{ $row->id }} data-bs-toggle="modal" class="btn-main-product quickAdd">Quick Add</a>
                                 </div>
                             </div>
 
+                            @php
+                                $avgRatings = App\Models\ProductReview::where('product_id', $row->id)->where('status', 1)->avg('ratings');
+                                $reviews = App\Models\ProductReview::where('product_id', $row->id)->where('status', 1)->count();
+                            @endphp
 
                             <div class="card-product-info">
                                 <a href="{{ route('product.details', $row->slug) }}" class="title link">{{ $row->name }}</a>
                                 <div class="box-rating">
                                     <ul class="list-star">
-                                        <li class="bx bxs-star" style="color: #F0A750;"></li>
-                                        <li class="bx bxs-star" style="color: #F0A750;"></li>
-                                        <li class="bx bxs-star" style="color: #F0A750;"></li>
-                                        <li class="bx bxs-star" style="color: #F0A750;"></li>
-                                        <li class="bx bx-star" style="color: #F0A750;"></li>
+                                        
+                                        @for ( $i = 1; $i <= 5; $i++ )
+                                            @if ( $i <= round($avgRatings))
+                                                <li class="bx bxs-star" style="color: #F0A750;"></li>
+                                            @else
+                                                <li class="bx bx-star" style="color: #F0A750;"></li>
+                                            @endif
+                                        @endfor
                                     </ul>
-                                    <span class="text-caption-1 text-secondary">(1.234)</span>
+                                    <span class="text-caption-1 text-secondary">({{ $reviews }} )</span>
                                 </div>
 
                                 @if ( checkDiscount($row) )
-                                    @if ( $row->discount_type === "amount")
-                                        <span class="price"><span class="old-price">${{ $row->selling_price }}</span> ${{ $row->selling_price - $row->discount_value }}</span>
-                                    @elseif( $row->discount_type === "percent" )
+                                    @if ( !empty($row->discount_type === "amount") )
+                                        <span class="price"><span class="old-price">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> {{ getSetting()->currency_symbol }}{{ $row->selling_price - $row->discount_value }}</span>
+                                    @elseif( !empty($row->discount_type === "percent") )
                                     @php
                                         $discount_val = $row->selling_price * $row->discount_value / 100;
                                     @endphp
-                                        <span class="price"><span class="old-price">${{ $row->selling_price }}</span> ${{ $row->selling_price - $discount_val }}</span>
+                                        <span class="price"><span class="old-price">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> {{ getSetting()->currency_symbol }}{{ $row->selling_price - $discount_val }}</span>
                                     @else
-                                        <span class="price"> ${{ $row->selling_price }}</span>
+                                        <span class="price"> {{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span>
                                     @endif
                                 @else
-                                    <span class="price"> ${{ $row->selling_price }}</span>
+                                    <span class="price"> {{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span>
                                 @endif
-                            
 
                                 <div class="box-progress-stock">
                                     <div class="progress">
-                                        <div class="progress-bar" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                     <div class="stock-status d-flex justify-content-between align-items-center">
                                         <div class="stock-item text-caption-1">
-                                            <span class="stock-label text-secondary-2">Available:</span>
+                                            <span class="stock-label text-secondary-2">Stock:</span>
                                             <span class="stock-value">{{ $row->qty }}</span>
                                         </div>
-                                        <div class="stock-item text-caption-1">
+                                        {{-- <div class="stock-item text-caption-1">
                                             <span class="stock-label text-secondary-2">Sold:</span>
                                             <span class="stock-value">{{ $row->product_sold }}</span>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 @endforeach
+
             </div>
             <div class="sw-pagination-recent sw-dots type-circle justify-content-center"></div>
         </div>
@@ -529,6 +545,9 @@
 
 <script>
     $(document).ready(function(){
+        var currency_symbol = "{{ getSetting()->currency_symbol }}";
+        var currency_name   = "{{ getSetting()->currency_name }}";
+        
         //__ Product Quantity Increament __//
         $('.product-increase').on('click', function(){
             let input = $(this).siblings('.product_quantity');
@@ -549,10 +568,10 @@
                     console.log(data);
                     if( data.status === 'success' ){ 
                         let productId = '#' + rowId;
-                        $(productId).text('$' + data.productTotal);
+                        $(productId).text(`${currency_symbol}` + data.productTotal);
                         calculationCouponDiscount();
-                        getSidebarCartTotal();
                         sidebarCartData();
+                        getSidebarCartTotal();
                         toastr.success(data.message);
                     }
                     else if( data.status === 'error' ){
@@ -590,7 +609,7 @@
                     // console.log(data);
                     if( data.status === 'success' ){ 
                         let productId = '#' + rowId;
-                        $(productId).text('$' + data.productTotal);
+                        $(productId).text(`${currency_symbol}` + data.productTotal);
                         calculationCouponDiscount();
                         getSidebarCartTotal();
                         sidebarCartData();
@@ -633,7 +652,7 @@
                                     <td colspan="5">
                                         <div class="alert alert-danger text-center" role="alert" style="margin: 0 24px;">
                                             <p class="mb-3">No items in the cart. </p>
-                                            <a href="{{ route('checkout') }}" class="tf-btn btn-reset">Continue Shopping</a>
+                                            <a href="{{ route('product.page') }}" class="tf-btn btn-reset">Continue Shopping</a>
                                         </div>
                                     </td>
                                 </tr>
@@ -680,7 +699,7 @@
                             tableBody.html(`
                                 <div class="alert alert-danger text-center" role="alert" style="margin: 0 24px;">
                                     <p class="mb-3">No items in the cart. </p>
-                                    <a href="{{ route('checkout') }}" class="tf-btn btn-reset">Continue Shopping</a>
+                                    <a href="{{ route('product.page') }}" class="tf-btn btn-reset">Continue Shopping</a>
                                 </div>
                             `);
                             $('.tf-mini-cart-threshold').remove();
@@ -700,6 +719,7 @@
             })
         })
 
+
         // Fetch all cart data from Sidebar
         function sidebarCartData(){
             $.ajax({
@@ -714,7 +734,7 @@
                             cartHtml = `
                                 <div class="alert alert-danger text-center" role="alert" style="margin: 0 24px;">
                                     <p class="mb-3">No items in the cart. </p>
-                                    <a href="{{ route('checkout') }}" class="tf-btn btn-reset">Continue Shopping</a>
+                                    <a href="{{ route('product.page') }}" class="tf-btn btn-reset">Continue Shopping</a>
                                 </div>
                             `;
                         } else {
@@ -734,14 +754,14 @@
                                             </div>
                                             <div class="d-flex align-items-center justify-content-between de-flex gap-12">
                                                 <div class="text-secondary-2">
-                                                    ${item.size_name ? item.size_name.toUpperCase() + ` ($${item.size_price})` : ''} 
-                                                    ${item.color_name ? ` / ${item.color_name} ($${item.color_price})` : ''}
+                                                    ${item.size_name ? item.size_name.toUpperCase() + ` (${currency_symbol}${item.size_price})` : ''} 
+                                                    ${item.color_name ? ` / ${item.color_name} (${currency_symbol}${item.color_price})` : ''}
                                                 </div>
-                                                <div class="text-button">${item.qty} X $${item.price}</div>
+                                                <div class="text-button">${item.qty} X ${currency_symbol}${item.price}</div>
                                             </div>
                                             <div class="d-flex align-items-center justify-content-between de-flex gap-12">
                                                 <div class="text-secondary-2">Amount</div>
-                                                <div class="text-button">$${item.total}</div>
+                                                <div class="text-button">${currency_symbol}${item.total}</div>
                                             </div>
                                         </div>
                                     </div>
@@ -751,6 +771,7 @@
 
                         // Update the cart sidebar body
                         $('#cart-sidebar-table-body').html(cartHtml);
+                        sidebarCartActionElement();
                     }
                 },
                 error: function(err) {
@@ -774,11 +795,11 @@
                     },
                     success: function (res) {
                         if (res.status === true) {
-                            $('.shipping_amount').text('$' + res.shippingCost);
-                            $('.main_cart_total').text('$' + res.cartTotal);
+                            $('.shipping_amount').text(`${currency_symbol}` + res.shippingCost);
+                            $('.main_cart_total').text(`${currency_symbol}` + res.cartTotal);
                             toastr.success(res.message);
                         } else {
-                            $('.shipping_amount').text('$' + res.shippingCost);
+                            $('.shipping_amount').text(`${currency_symbol}` + res.shippingCost);
                             toastr.error(res.message);
                         }
                     },
@@ -814,7 +835,7 @@
                                     <td colspan="5">
                                         <div class="alert alert-danger text-center" role="alert">
                                             <p class="mb-3">There is no cart item</p>
-                                            <a href="{{ route('checkout') }}" class="tf-btn btn-reset">Continue Shopping</a>
+                                            <a href="{{ route('product.page') }}" class="tf-btn btn-reset">Continue Shopping</a>
                                         </div>
                                     </td>
                                 </tr>
@@ -832,19 +853,19 @@
                                                 <div class="variant-box">
                                                     <div class="tf-select">
                                                         <div class="product_variant">
-                                                            Color: ${item.color_name || 'N/A'} ($${item.color_price})
+                                                            Color: ${item.color_name || 'N/A'} (${currency_symbol}${item.color_price})
                                                         </div>
                                                     </div>
                                                     <div class="tf-select">
                                                         <div class="product_variant">
-                                                            Size: ${item.size_name || 'N/A'} ($${item.size_price})
+                                                            Size: ${item.size_name || 'N/A'} (${currency_symbol}${item.size_price})
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </td>
                                         <td data-cart-title="Price" class="tf-cart-item_price text-center">
-                                            <div class="cart_price text-button price_on_sale">$${item.price}</div>
+                                            <div class="cart_price text-button price_on_sale">${currency_symbol}${item.price}</div>
                                         </td>
                                         <td data-cart-title="Quantity" class="tf-cart-item_quantity">
                                             <div class="wg-quantity mx-md-auto">
@@ -854,7 +875,7 @@
                                             </div>
                                         </td>
                                         <td data-cart-title="Total" class="tf-cart-item_total text-center">
-                                            <div id="${item.rowId}" class="cart_total text-button total_price">$${item.total}</div>
+                                            <div id="${item.rowId}" class="cart_total text-button total_price">${currency_symbol}${item.total}</div>
                                         </td>
                                         <td class="remove-cart remove_item_alignemnt" id="remove_cart">
                                             <i class="icon bx bx-x icon-close-popup remove_product_cart" style="font-size: 20px;" data-id="${item.rowId}"></i>
@@ -908,7 +929,7 @@
                                             <td colspan="5">
                                                 <div class="alert alert-danger text-center"  role="alert" style="margin: 0 24px;">
                                                     <p class="mb-3">No items in the cart. </p>
-                                                    <a href="{{ route('checkout') }}" class="tf-btn btn-reset">Continue Shopping</a>
+                                                    <a href="{{ route('product.page') }}" class="tf-btn btn-reset">Continue Shopping</a>
                                                 </div>
                                             </td>
                                         </tr>
@@ -941,45 +962,17 @@
                 method: 'GET',
                 url: "{{ route('cart.sidebar-product-total') }}",
                 success: function(data) {
-                    console.log('get total', data);
+                    // console.log('get total', data);
                     if( data.status === 'success' ){
-                       $('.tf-totals-total-value').text('$' + data.total);
-                       $('.subTotal').text('$' + data.total);
+                        console.log('kaj kore subtotal')
+                       $('.tf-totals-total-value').text(`${currency_symbol}` + data.total);
+                       $('.subTotal').text(`${currency_symbol}` + data.total);
                     }
                 },
                 error: function(data) {
                     console.log('Error adding product to cart:', data);
                 },
             });
-        }
-
-        //__ Sidebar Cart Element __//
-        function sidebarCartActionElement(){
-            $('.mini-cart-actions').html(`
-                <div id="tf-mini-cart-actions-field">
-                    <div class="tf-cart-checkbox">
-                        <div class="tf-checkbox-wrapp">
-                            <input class="" type="checkbox" id="CartDrawer-Form_agree" name="agree_checkbox">
-                            <div>
-                                <i class="icon-check"></i>
-                            </div>
-                        </div>
-                        <label for="CartDrawer-Form_agree">
-                            I agree with 
-                            <a href="term-of-use.html" title="Terms of Service">Terms & Conditions</a>
-                        </label>
-                    </div>
-
-                    <div class="tf-mini-cart-view-checkout">
-                        <a href="{{ route('show-cart') }}" class="tf-btn w-100 btn-white radius-4 has-border"><span class="text">View cart</span></a>
-                        <a href="{{ route('checkout') }}" class="tf-btn w-100 btn-fill radius-4"><span class="text">Check Out</span></a>
-                    </div>
-
-                    <div class="text-center">
-                        <a class="link text-btn-uppercase" href="shop-default-grid.html">Or continue shopping</a>
-                    </div>    
-                </div>
-            `);
         }
 
         //__ Cart Count __//
@@ -1037,8 +1030,8 @@
                 success: function(data) {
                     // console.log(data.cart_total, data.discount);
                     if( data.status === 'success' ){ 
-                        $('.total_discount').text('$'+ data.discount);
-                        $('.main_cart_total').text('$'+ data.cart_total);
+                        $('.total_discount').text(`${currency_symbol}`+ data.discount);
+                        $('.main_cart_total').text(`${currency_symbol}`+ data.cart_total);
 
                         if( data.discount_type === "percent" ){
                             $('.percent_show').text('(' + data.discount_percent + '%)');
@@ -1048,7 +1041,7 @@
                         }
 
                         // Update shipping cost
-                        $('.shipping_amount').text('$' + data.shipping_cost);
+                        $('.shipping_amount').text(`${currency_symbol}` + data.shipping_cost);
                     }
                 },
                 error: function(err) {
@@ -1087,7 +1080,7 @@
                    $('.tf-product-info-price').html(res.price_val);
                    $('#short_desc').text(`${product.short_description}`);
                    $('#product_view').text(`${product.product_view}`);
-                   // $('.total_price').text('$' + res.product_price);
+                   // $('.total_price').text(`${currency_symbol}` + res.product_price);
 
                    var imagesHtml = '';
 
@@ -1118,7 +1111,7 @@
                                        data-scroll-quickview="${color.color_name.toLowerCase()}"
                                        >
                                        <span class="btn-checkbox" style="background-color:${color.color_code || ''}"></span>
-                                       <span class="tooltip">${color.color_name} ( TK ${color.color_price} )</span>
+                                       <span class="tooltip">${color.color_name} ( ${currency_name} ${color.color_price} )</span>
                                    </label>
                                </div>
                            `;
@@ -1130,7 +1123,7 @@
                        var firstColor = res.product_color[0]; // Get the first color
                        $('.text-title.color_variant').text(firstColor.color_name);
                    } else {
-                       $('#color_variant').html('<p>No colors available for this product.</p>');
+                       $('#color_variant').html('');
                        $('.text-title.color_variant').text('No Color');
                    }
 
@@ -1146,7 +1139,7 @@
                                    <input type="radio" name="size_id" data-price="${size.size_price}" id="size${size.id}" value="${size.id}" ${index === 0 ? 'checked' : ''}>
                                    <label class="hover-tooltip tooltip-bot style-text size-btn for="size${size.id}" data-value="${size.size_name.toUpperCase()}" data-size-price="${size.size_price}" >
                                        <span class="text-title">${size.size_name.toUpperCase()}</span>
-                                       <span class="tooltip">${size.size_name} ( TK ${size.size_price} )</span>
+                                       <span class="tooltip">${size.size_name} ( ${currency_name} ${size.size_price} )</span>
                                    </label>
                                </div>
                            `;
@@ -1159,7 +1152,7 @@
                        var firstSize = res.product_sizes[0]; // Get the first size
                        $('.text-title.size_variant').text(firstSize.size_name.toUpperCase());
                    } else {
-                       $('#size_variant').html('<p>No sizes available for this product.</p>');
+                       $('#size_variant').html('');
                        $('.text-title.size_variant').text('No Size');
                    }
                },
@@ -1204,7 +1197,7 @@
                                        data-scroll-quickview="${color.color_name.toLowerCase()}"
                                        >
                                        <span class="btn-checkbox" style="background-color:${color.color_code || ''}"></span>
-                                       <span class="tooltip">${color.color_name} ( TK ${color.color_price} )</span>
+                                       <span class="tooltip">${color.color_name} ( ${currency_name} ${color.color_price} )</span>
                                    </label>
                                </div>
                            `;
@@ -1216,7 +1209,7 @@
                        var firstColor = res.product_color[0]; // Get the first color
                        $('.text-title.color_variant').text(firstColor.color_name);
                    } else {
-                       $('#color_variant').html('<p>No colors available for this product.</p>');
+                       $('#color_variant').html('');
                        $('.text-title.color_variant').text('No Color');
                    }
 
@@ -1232,7 +1225,7 @@
                                    <input type="radio" name="size_id" data-price="${size.size_price}" id="size${size.id}" value="${size.id}" ${index === 0 ? 'checked' : ''}>
                                    <label class="hover-tooltip tooltip-bot style-text size-btn for="size${size.id}" data-value="${size.size_name.toUpperCase()}" data-size-price="${size.size_price}" >
                                        <span class="text-title">${size.size_name.toUpperCase()}</span>
-                                       <span class="tooltip">${size.size_name} ( TK ${size.size_price} )</span>
+                                       <span class="tooltip">${size.size_name} ( ${currency_name} ${size.size_price} )</span>
                                    </label>
                                </div>
                            `;
@@ -1332,130 +1325,6 @@
            });
        });
 
-       // Fetch all sidebar cart data
-       function sidebarCartData(){
-           $.ajax({
-               method: 'GET',
-               url: "{{ route('get.sidebar.cart') }}",
-               success: function(response) {
-                   if (response.status === true) {
-                       let cartHtml = '';
-                       response.cartItems.forEach(item => {
-                           cartHtml += `
-                               <div class="tf-mini-cart-item file_delete" id="side_remove-${item.rowId}">
-                                   <div class="tf-mini-cart-image">
-                                       <img class="lazyload" data-src="${item.image}" src="${item.image}" alt="${item.slug}">
-                                   </div>
-                                   <div class="tf-mini-cart-info flex-grow-1">
-                                       <div class="mb_12 d-flex align-items-center justify-content-between de-flex gap-12">
-                                           <div class="text-title">
-                                               <a href="/product-details/${item.slug}" class="link text-line-clamp-1">${item.name}</a>
-                                           </div>
-                                           <div class="text-button tf-btn-remove remove side_remove_cart" data-row_id="${item.rowId}">Remove</div>
-                                       </div>
-                                       <div class="d-flex align-items-center justify-content-between de-flex gap-12">
-                                           <div class="text-secondary-2">
-                                               ${item.size_name ? item.size_name.toUpperCase() + ` ($${item.size_price})` : ''} 
-                                               ${item.color_name ? ` / ${item.color_name} ($${item.color_price})` : ''}
-                                           </div>
-                                           <div class="text-button">${item.qty} X $${item.price}</div>
-                                       </div>
-                                       <div class="d-flex align-items-center justify-content-between de-flex gap-12">
-                                           <div class="text-secondary-2">Amount</div>
-                                           <div class="text-button">$${item.total}</div>
-                                       </div>
-                                   </div>
-                               </div>
-                           `;
-                       });
-
-                       // Update the cart sidebar body
-                       $('#cart-sidebar-table-body').html(cartHtml);
-
-                       sidebarCartActionElement();
-                   }
-               },
-               error: function(err) {
-                   toastr.error('Failed to fetch cart data.');
-                   console.log(err);
-               }
-           });
-       }
-
-       //__ Sidebar Single product clear __//
-       $(document).on('click', '.side_remove_cart', function(e) {
-           e.preventDefault();
-           let id = $(this).data('row_id');    
-           // console.log(id); 
-
-           $.ajax({
-               url: "{{ url('/cart/remove-product') }}/" + id,
-               method: 'GET',
-               dataType: 'json',
-               data: { id: id },
-               success: function(data) {
-                   // console.log(data);
-                   if( data.status === 'success' ){ 
-                       getSidebarCartTotal();
-                       let singleProductRemove = '#side_remove-' +id;
-                       $(singleProductRemove).remove();
-
-                       // Check if the table is empty and display the message
-                       const tableBody = $('#cart-sidebar-table-body'); // Replace with the actual tbody ID or class
-                       if (tableBody.children('.tf-mini-cart-item').length === 0) {
-                           tableBody.html(`
-                               <div class="alert alert-danger text-center" role="alert" style="margin: 0 24px;">
-                                   <a href="{{ route('checkout') }}" class="tf-btn btn-reset">Continue Shopping</a>
-                               </div>
-                           `);
-                           $('.tf-mini-cart-threshold').remove();
-                           $('#tf-mini-cart-actions-field').remove();
-                       }
-
-                       getCartCount(); 
-                       toastr.success(data.message);
-                   }
-               },
-               error: function(err) {
-                   console.log(err);
-               },
-           })
-       })
-
-       //__ Cart Count __//
-       function getCartCount(){
-           $.ajax({
-               method: 'GET',
-               url: "{{ route('cart.count') }}",
-               success: function(data) {
-                   console.log(data);
-                   if( data.status === 'success' ){
-                      $('.count-box').text(data.cartCount);
-                   }
-               },
-               error: function(data) {
-                   // console.log('Error adding product to cart:', data);
-               },
-           });
-       }
-
-       //__ Cart subTotal __//
-       function getSidebarCartTotal(){
-           $.ajax({
-               method: 'GET',
-               url: "{{ route('cart.sidebar-product-total') }}",
-               success: function(data) {
-                   console.log('get total', data);
-                   if( data.status === 'success' ){
-                      $('.tf-totals-total-value').text('$' + data.total);
-                   }
-               },
-               error: function(data) {
-                   console.log('Error adding product to cart:', data);
-               },
-           });
-       }
-
        //__ Sidebar Cart Element __//
        function sidebarCartActionElement(){
            $('.mini-cart-actions').html(`
@@ -1467,7 +1336,7 @@
                    </div>
 
                    <div class="text-center">
-                       <a class="link text-btn-uppercase" href="shop-default-grid.html">Or continue shopping</a>
+                       <a class="link text-btn-uppercase" href="{{ route('product.page') }}">Or continue shopping</a>
                    </div>    
                </div>
            `);
@@ -1476,6 +1345,114 @@
        $('.quick_view_cart').on('click', function() {
            $('.show-shopping-cart').removeClass('show-shopping-cart');
        });
+
+        // Subscription Form
+        $('#newsletter_form').on('submit', function (e) {
+            e.preventDefault();
+            let data = $(this).serialize(); // Serialize form data
+
+            $.ajax({
+                method: 'POST',
+                url: "{{ route('newsletter.request') }}",
+                data: data, // Send form data, including the CSRF token
+                beforeSend: function(){
+                    $('#subscription_btn').html("<i class='bx bx-loader-alt'></i>");
+                    $('#subscription_btn').addClass('spinners');
+                },
+                success: function (data) {
+                    if (data.status === 'success') {
+                        toastr.success(data.message);
+                        $('#subscription_btn').html("<i class='bx bx-up-arrow-alt'></i>");
+                        $('#subscription_btn').removeClass('spinners');
+                        $('.subscribe_input').val('')
+                    } else if (data.status === 'error') {
+                        toastr.error(data.message);
+                        $('#subscription_btn').html("<i class='bx bx-up-arrow-alt'></i>");
+                        $('#subscription_btn').removeClass('spinners');
+                        $('.subscribe_input').val('');
+                    }
+                },
+                error: function (data) {
+                    console.log(data);
+                    let errors = data.responseJSON?.errors;
+                    $.each(errors, function (key, value) {
+                        toastr.error(value);
+                        $('#subscription_btn').html("<i class='bx bx-up-arrow-alt'></i>");
+                        $('#subscription_btn').removeClass('spinners');
+                    });
+                }
+            });
+        });
+
+        // Wishlist Add 
+        $('.wishlist').on('click', function(e){
+            e.preventDefault();
+            let button = $(this); // Target the specific button clicked
+            let productId = button.data('id');
+            let cardProduct = button.closest('.wishlist_product');
+            let wishlistContainer = $('.wishlist-product-data'); 
+            console.log(productId);
+
+            $.ajax({
+                method: 'GET',
+                url: "{{ route('wishlist.store') }}",
+                data: { id: productId },
+                success: function (response) {
+                    if (response.status === 'added') {
+                        toastr.success(response.message);
+                        // button.addClass('active');
+                        $('.wishlist[data-id="' + productId + '"]').addClass('active');
+                        getWishlistCount();
+                    } else if (response.status === 'removed') {
+                        toastr.info(response.message);
+                        $('.wishlist[data-id="' + productId + '"]').removeClass('active');
+
+                        // Remove the specific wishlist product
+                        cardProduct.fadeOut(300, function() {
+                            $(this).remove();
+
+                            // If wishlist is empty, show the message
+                            if (response.wishlist_count === 0) {
+                                wishlistContainer.html(`
+                                    <div class="tf-grid-layout md-col-12 xl-col-12">
+                                        <div class="alert alert-danger text-center no-wishlist-message" role="alert">
+                                            There is no wishlist product available
+                                        </div>
+                                    </div>
+                                `);
+                            }
+                        });
+                        getWishlistCount();
+                    } else if (response.status === 'error') {
+                        window.location.href = '{{ url("/login") }}'
+                    }
+                },
+                error: function (data) {
+                    console.log(data);
+                    let errors = data.responseJSON?.errors;
+                    $.each(errors, function (key, value) {
+                        toastr.error(value);
+                    });
+                }
+            });
+        });
+
+        //__ Wishlist Count __//
+        function getWishlistCount(){
+            $.ajax({
+                method: 'GET',
+                url: "{{ route('wishlist.count') }}",
+                success: function(data) {
+                    console.log(data);
+                    if( data.status === 'success' ){
+                        $('.wishlist_box').text(data.wishlistCount);
+                    }
+                },
+                error: function(data) {
+                    // console.log('Error adding product to cart:', data);
+                },
+            });
+        }
    });
 </script>
 
