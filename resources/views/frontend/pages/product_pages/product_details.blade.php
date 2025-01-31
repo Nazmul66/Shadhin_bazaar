@@ -1,7 +1,14 @@
 @extends('frontend.layout.master')
 
 @push('add-meta')
-    <title>Sazao || About-us Template</title>
+    <title>{{ env('APP_NAME') }} || {{ $product->slug }}</title>
+    <meta name="description" content="{{ $product->short_description }}">
+
+    <meta property="og:title" content="{{ $product->name ?? 'Default Title' }}">
+    <meta property="og:description" content="{{ $product->short_description ?? 'Default Description' }}">
+    <meta property="og:image" content="{{ asset($product->thumb_image) }}">
+    <meta property="og:type" content="product">
+    <meta property="og:url" content="{{ url()->current() }}">
 @endpush
 
 @push('add-css')
@@ -17,9 +24,9 @@
     <div class="container">
         <div class="tf-breadcrumb-wrap">
             <div class="tf-breadcrumb-list">
-                <a href="index.html" class="text text-caption-1">Homepage</a>
+                <a href="{{ route('home') }}" class="text text-caption-1">Homepage</a>
                 <i class='bx bx-chevron-right'></i>
-                <a href="#" class="text text-caption-1">{{ $product->cat_name }}</a>
+                <a href="javascript:void();" class="text text-caption-1">{{ $product->cat_name }}</a>
                 <i class='bx bx-chevron-right'></i>
                 <span class="text text-caption-1">{{ $product->slug }}</span>
             </div>
@@ -29,7 +36,7 @@
 <!-- /breadcrumb -->
 
 
-<!-- tf-add-cart-success -->
+{{-- <!-- tf-add-cart-success -->
 <div class="tf-add-cart-success">
     <div class="tf-add-cart-heading">
         <h5>Shopping Cart</h5>
@@ -49,7 +56,7 @@
     </div>
     <a href="shopping-cart.html" class="tf-btn w-100 btn-fill radius-4"><span class="text text-btn-uppercase">View cart</span></a>
 </div>
-<!-- /tf-add-cart-success -->
+<!-- /tf-add-cart-success --> --}}
 
 
 <!-- Product_Main -->
@@ -110,8 +117,8 @@
                         <div class="tf-product-info-list other-image-zoom">
                             <div class="tf-product-info-heading">
                                 <div class="tf-product-info-name">
-                                    <div class="text text-btn-uppercase">{{ $product->cat_name }}</div>
-                                    <h3 class="name">{{ $product->slug }}</h3>
+                                    <div class="text text-btn-uppercase mb-2" style="text-transform: uppercase;font-size: 18px;">{{ $product->cat_name }}</div>
+                                    <h3 class="name">{{ $product->name }}</h3>
                                     <div class="sub">
                                         <div class="tf-product-info-rate">
                                             <div class="list-star">
@@ -139,12 +146,12 @@
                                 </div>
 
                                 <div class="tf-product-info-desc">
-                                    <div class="tf-product-info-price">
+                                    <div class="tf_product_info_price">
                                             @if ( $product->discount_type === "amount" )
-                                            <h5 class="price_on_sale font-2 me-2">${{ $product->selling_price - $product->discount_value }}</h5>
-                                            <div class="compare-at-price font-2">${{ $product->selling_price }}</div>
+                                            <h5 class="price_on_sale font-2 me-2">{{ getSetting()->currency_symbol }}{{ $product->selling_price - $product->discount_value }}</h5>
+                                            <div class="compare-at-price font-2">{{ getSetting()->currency_symbol }}{{ $product->selling_price }}</div>
                                             <div class="badges-on-sale text-btn-uppercase">
-                                                -${{ $product->discount_value }}
+                                                -{{ getSetting()->currency_symbol }}{{ $product->discount_value }}
                                             </div>
 
                                         @elseif( $product->discount_type === "percent" )
@@ -152,13 +159,13 @@
                                                 $discount_val = $product->selling_price * $product->discount_value / 100;
                                             @endphp
 
-                                            <h5 class="price_on_sale font-2 me-2">${{ $product->selling_price - $discount_val }}</h5>
-                                            <div class="compare-at-price font-2">${{ $product->selling_price }}</div>
+                                            <h5 class="price_on_sale font-2 me-2">{{ getSetting()->currency_symbol }}{{ $product->selling_price - $discount_val }}</h5>
+                                            <div class="compare-at-price font-2">{{ getSetting()->currency_symbol }}{{ $product->selling_price }}</div>
                                             <div class="badges-on-sale text-btn-uppercase">
                                                 -{{ $product->discount_value }}%
                                             </div>
                                         @else
-                                            <h5 class="price_on_sale font-2">${{ $product->selling_price }}</h5>
+                                            <h5 class="price_on_sale font-2">{{ getSetting()->currency_symbol }}{{ $product->selling_price }}</h5>
                                         @endif
                                     </div>
 
@@ -185,16 +192,11 @@
 
                                             <div class="variant-picker-values">
                                                 @foreach ($product_colors as $index => $row)
-                                                    <input id="color{{ $row->id }}" type="radio" data-price="{{ $row->color_price }}" name="color_id" value="{{ $row->id }}" {{ $index === 0 ? 'checked' : '' }}>
-                                                    <label class="hover-tooltip tooltip-bot radius-60 color-btns main_color_show {{ $index == 0 ? 'active' : '' }}" 
-                                                        data-slide="0" 
-                                                        data-price="{{ $row->color_price || '' }}" 
-                                                        for="color{{ $row->id }}" 
-                                                        data-value="{{ $row->color_name }}" 
-                                                        data-scroll-quickview="{{ $row->color_name }}"
-                                                        >
+                                                    <input id="color{{ $row->id }}" type="radio" name="color_id" value="{{ $row->id }}" data-price="{{ $row->color_price }}" {{ $index === 0 ? 'checked' : '' }}>
+                                                    <label for="color{{ $row->id }}" class="hover-tooltip tooltip-bot radius-60 color-btns main_color_show {{ $index == 0 ? 'active' : '' }}" 
+                                                        data-value="{{ $row->color_name }}">
                                                         <span class="btn-checkbox" style="background-color:{{ $row->color_code }}"></span>
-                                                        <span class="tooltip">{{ $row->color_name }} ( $ {{ $row->color_price }} )</span>
+                                                        <span class="tooltip">{{ $row->color_name }} ( {{ getSetting()->currency_name }} {{ $row->color_price }} )</span>
                                                     </label>
                                                 @endforeach
                                             </div>
@@ -214,9 +216,12 @@
                                                 @foreach ($product_sizes as $index => $row)
                                                     <input type="radio" name="size_id" data-price="{{ $row->size_price }}" id="size{{ $row->id }}" value="{{ $row->id }}" {{ $index === 0 ? 'checked' : '' }}>
 
-                                                    <label class="hover-tooltip tooltip-bot style-text main_size_btn" for="size{{ $row->id }}" data-value="{{ $row->size_name }}" data-size-price="{{ $row->size_price }}" >
+                                                    <label class="hover-tooltip tooltip-bot style-text main_size_btn" 
+                                                        for="size{{ $row->id }}" 
+                                                        data-value="{{ $row->size_name }}" 
+                                                        data-size-price="{{ $row->size_price }}" >
                                                         <span class="text-title">{{ strtoupper($row->size_name) }}</span>
-                                                        <span class="tooltip">{{ strtoupper($row->size_name) }} ( ${{ $row->size_price }} )</span>
+                                                        <span class="tooltip">{{ strtoupper($row->size_name) }} ( {{ getSetting()->currency_name }}{{ $row->size_price }} )</span>
                                                     </label>
                                                 @endforeach
                                             </div>
@@ -236,12 +241,14 @@
                                         <div class="tf-product-info-by-btn mb_10">
                                             <button type="submit" name="button" value="add_cart" class="btn-style-2 flex-grow-1 text-btn-uppercase fw-6 ">
                                                 <span>Add to cart</span> -
-                                                <span class="tf-qty-price total_price">$79.99</span>
+                                                <span class="tf-qty-price total_price">{{ getSetting()->currency_symbol }} 79.99</span>
                                             </button>
-                                            <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon hover-tooltip compare btn-icon-action show-compare">
+
+                                            {{-- <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon hover-tooltip compare btn-icon-action show-compare">
                                                 <i class='bx bx-git-compare' style="font-size: 24px;"></i>
                                                 <span class="tooltip text-caption-2">Compare</span>
-                                            </a>
+                                            </a> --}}
+
                                             <a href="javascript:void(0);" class="box-icon hover-tooltip text-caption-2 wishlist btn-icon-action">
                                                 <i class='bx bx-heart' style="font-size: 24px;"></i>
                                                 <span class="tooltip text-caption-2">Wishlist</span>
@@ -829,7 +836,11 @@
             <div class="tab-pane active show" id="ralatedProducts" role="tabpanel">
                 <div dir="ltr" class="swiper tf-sw-latest" data-preview="4" data-tablet="3" data-mobile="2" data-space-lg="30" data-space-md="30" data-space="15" data-pagination="1" data-pagination-md="1" data-pagination-lg="1">
                     <div class="swiper-wrapper">
+
                         @foreach ($related_products as $row)
+                            @php
+                                $wishlistItems = App\Models\Wishlist::where('user_id', auth()->id())->pluck('product_id')->toArray();
+                            @endphp
                             <div class="swiper-slide">
                                 <div class="card-product wow fadeInUp" data-wow-delay="0.1s">
                                     <div class="card-product-wrapper">
@@ -937,14 +948,15 @@
 
                                         
                                         <div class="list-product-btn">
-                                            <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
+                                            <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action {{ in_array($row->id, $wishlistItems) ? 'active' : '' }}" data-id="{{ $row->id }}">
                                                 <i class='bx bx-heart' style="font-size: 24px;"></i>
                                                 <span class="tooltip">Wishlist</span>
                                             </a>
-                                            <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
+
+                                            {{-- <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
                                                 <i class='bx bx-git-compare' style="font-size: 24px;"></i>
                                                 <span class="tooltip">Compare</span>
-                                            </a>
+                                            </a> --}}
                                             <a href="#quickView" data-id={{ $row->id }} data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
                                                 <ion-icon name="eye-outline" style="font-size: 24px;"></ion-icon>
                                                 <span class="tooltip">Quick View</span>
@@ -955,55 +967,62 @@
                                         </div>
                                     </div>
 
+                                    @php
+                                        $avgRatings = App\Models\ProductReview::where('product_id', $row->id)->where('status', 1)->avg('ratings');
+                                        $reviews = App\Models\ProductReview::where('product_id', $row->id)->where('status', 1)->count();
+                                    @endphp
 
                                     <div class="card-product-info">
                                         <a href="{{ route('product.details', $row->slug) }}" class="title link">{{ $row->name }}</a>
                                         <div class="box-rating">
                                             <ul class="list-star">
-                                                <li class="bx bxs-star" style="color: #F0A750;"></li>
-                                                <li class="bx bxs-star" style="color: #F0A750;"></li>
-                                                <li class="bx bxs-star" style="color: #F0A750;"></li>
-                                                <li class="bx bxs-star" style="color: #F0A750;"></li>
-                                                <li class="bx bx-star" style="color: #F0A750;"></li>
+                                                
+                                                @for ( $i = 1; $i <= 5; $i++ )
+                                                    @if ( $i <= round($avgRatings))
+                                                        <li class="bx bxs-star" style="color: #F0A750;"></li>
+                                                    @else
+                                                        <li class="bx bx-star" style="color: #F0A750;"></li>
+                                                    @endif
+                                                @endfor
                                             </ul>
-                                            <span class="text-caption-1 text-secondary">(1.234)</span>
+                                            <span class="text-caption-1 text-secondary">({{ $reviews }} )</span>
                                         </div>
 
                                         @if ( checkDiscount($row) )
-                                            @if ( $row->discount_type === "amount")
-                                                <span class="price"><span class="old-price">${{ $row->selling_price }}</span> ${{ $row->selling_price - $row->discount_value }}</span>
-                                            @elseif( $row->discount_type === "percent" )
+                                            @if ( !empty($row->discount_type === "amount") )
+                                                <span class="price"><span class="old-price">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> {{ getSetting()->currency_symbol }}{{ $row->selling_price - $row->discount_value }}</span>
+                                            @elseif( !empty($row->discount_type === "percent") )
                                             @php
                                                 $discount_val = $row->selling_price * $row->discount_value / 100;
                                             @endphp
-                                                <span class="price"><span class="old-price">${{ $row->selling_price }}</span> ${{ $row->selling_price - $discount_val }}</span>
+                                                <span class="price"><span class="old-price">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> {{ getSetting()->currency_symbol }}{{ $row->selling_price - $discount_val }}</span>
                                             @else
-                                                <span class="price"> ${{ $row->selling_price }}</span>
+                                                <span class="price"> {{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span>
                                             @endif
                                         @else
-                                            <span class="price"> ${{ $row->selling_price }}</span>
+                                            <span class="price"> {{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span>
                                         @endif
-                                    
 
                                         <div class="box-progress-stock">
                                             <div class="progress">
-                                                <div class="progress-bar" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                                <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                                             </div>
                                             <div class="stock-status d-flex justify-content-between align-items-center">
                                                 <div class="stock-item text-caption-1">
-                                                    <span class="stock-label text-secondary-2">Available:</span>
+                                                    <span class="stock-label text-secondary-2">Stock:</span>
                                                     <span class="stock-value">{{ $row->qty }}</span>
                                                 </div>
-                                                <div class="stock-item text-caption-1">
+                                                {{-- <div class="stock-item text-caption-1">
                                                     <span class="stock-label text-secondary-2">Sold:</span>
                                                     <span class="stock-value">{{ $row->product_sold }}</span>
-                                                </div>
+                                                </div> --}}
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         @endforeach
+
                     </div>
                     <div class="sw-pagination-latest sw-dots type-circle justify-content-center"></div>
                 </div>
@@ -1013,180 +1032,193 @@
             <div class="tab-pane" id="recentlyViewed" role="tabpanel">
                 <div dir="ltr" class="swiper tf-sw-recent" data-preview="4" data-tablet="3" data-mobile="2" data-space-lg="30" data-space-md="30" data-space="15" data-pagination="1" data-pagination-md="1" data-pagination-lg="1">
                     <div class="swiper-wrapper">
-                        @foreach ($products as $row)
-                            <div class="swiper-slide">
-                                <div class="card-product wow fadeInUp" data-wow-delay="0.1s">
-                                    <div class="card-product-wrapper">
-                                        <a href="{{ route('product.details', $row->slug) }}" class="product-img">
-                                            <img class="lazyload img-product" data-src="{{ asset($row->thumb_image) }}" src="{{ asset($row->thumb_image) }}" alt="{{ $row->slug }}">
+                        
+                    @foreach ($products as $row)
+                        @php
+                            $wishlistItems = App\Models\Wishlist::where('user_id', auth()->id())->pluck('product_id')->toArray();
+                        @endphp
+                        <div class="swiper-slide">
+                            <div class="card-product wow fadeInUp" data-wow-delay="0.1s">
+                                <div class="card-product-wrapper">
+                                    <a href="{{ route('product.details', $row->slug) }}" class="product-img">
+                                        <img class="lazyload img-product" data-src="{{ asset($row->thumb_image) }}" src="{{ asset($row->thumb_image) }}" alt="{{ $row->slug }}">
 
-                                            @php
-                                                $image = App\Models\ProductImage::where('product_id', $row->id)->first();
+                                        @php
+                                            $image = App\Models\ProductImage::where('product_id', $row->id)->first();
 
-                                                $discount = '';
-                                                if( checkDiscount($row) ){
-                                                    if ( !empty($row->discount_type === "amount" ) ){
-                                                        $discount = '-'. $row->discount_value . "Tk";
-                                                    }   
-                                                    else if( $row->discount_type === "percent" ){
-                                                        $discount = '-'. $row->discount_value . "%";
-                                                    }
+                                            $discount = '';
+                                            if( checkDiscount($row) ){
+                                                if ( !empty($row->discount_type === "amount" ) ){
+                                                    $discount = '-'. $row->discount_value . "Tk";
+                                                }   
+                                                else if( $row->discount_type === "percent" ){
+                                                    $discount = '-'. $row->discount_value . "%";
                                                 }
-                                            @endphp
+                                            }
+                                        @endphp
 
-                                            @if (!empty($image))
-                                                <img class="lazyload img-hover" data-src="{{ asset($image->images) }}" src="{{ asset($image->images) }}" alt="{{ $row->slug }}">
-                                            @endif
-                                        </a>
-                                        <div class="on-sale-wrap">
-                                            <span class="on-sale-item">
-                                                {{ $discount }}
-                                            </span>
-                                        </div>
-
-                                        @if ( checkDiscount($row) )
-                                            @if ( !empty($row->discount_type === "amount") || !empty($row->discount_type === "percent") )
-                                                <div class="marquee-product bg-main">
-                                                    <div class="marquee-wrapper">
-                                                        <div class="initial-child-container">
-                                                            <div class="marquee-child-item">
-                                                                <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
-                                                            </div>
-                                                            <div class="marquee-child-item">
-                                                                <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                                                            </div>
-                                                            <div class="marquee-child-item">
-                                                                <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
-                                                            </div>
-                                                            <div class="marquee-child-item">
-                                                                <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                                                            </div>
-                                                            <div class="marquee-child-item">
-                                                                <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
-                                                            </div>
-                                                            <div class="marquee-child-item">
-                                                                <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                                                            </div>
-                                                            <div class="marquee-child-item">
-                                                                <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
-                                                            </div>
-                                                            <div class="marquee-child-item">
-                                                                <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                                                            </div>
-                                                            <div class="marquee-child-item">
-                                                                <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
-                                                            </div>
-                                                            <div class="marquee-child-item">
-                                                                <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="marquee-wrapper">
-                                                        <div class="initial-child-container">
-                                                            <div class="marquee-child-item">
-                                                                <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
-                                                            </div>
-                                                            <div class="marquee-child-item">
-                                                                <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                                                            </div>
-                                                            <div class="marquee-child-item">
-                                                                <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
-                                                            </div>
-                                                            <div class="marquee-child-item">
-                                                                <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                                                            </div>
-                                                            <div class="marquee-child-item">
-                                                                <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
-                                                            </div>
-                                                            <div class="marquee-child-item">
-                                                                <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                                                            </div>
-                                                            <div class="marquee-child-item">
-                                                                <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
-                                                            </div>
-                                                            <div class="marquee-child-item">
-                                                                <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                                                            </div>
-                                                            <div class="marquee-child-item">
-                                                                <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
-                                                            </div>
-                                                            <div class="marquee-child-item">
-                                                                <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            @endif
+                                        @if (!empty($image))
+                                            <img class="lazyload img-hover" data-src="{{ asset($image->images) }}" src="{{ asset($image->images) }}" alt="{{ $row->slug }}">
                                         @endif
-                                        
-                                        <div class="list-product-btn">
-                                            <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
-                                                <i class='bx bx-heart' style="font-size: 24px;"></i>
-                                                <span class="tooltip">Wishlist</span>
-                                            </a>
-                                            <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
-                                                <i class='bx bx-git-compare' style="font-size: 24px;"></i>
-                                                <span class="tooltip">Compare</span>
-                                            </a>
-                                            <a href="#quickView" data-id={{ $row->id }} data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
-                                                <ion-icon name="eye-outline" style="font-size: 24px;"></ion-icon>
-                                                <span class="tooltip">Quick View</span>
-                                            </a>
-                                        </div>
-
-                                        <div class="list-btn-main">
-                                            <a href="#quickAdd" data-id="{{ $row->id }}" data-bs-toggle="modal" class="btn-main-product quickAdd">Quick Add</a>
-                                        </div>
+                                    </a>
+                                    <div class="on-sale-wrap">
+                                        <span class="on-sale-item">
+                                            {{ $discount }}
+                                        </span>
                                     </div>
 
-                                    <div class="card-product-info">
-                                        <a href="{{ route('product.details', $row->slug) }}" class="title link">{{ $row->name }}</a>
-                                        <div class="box-rating">
-                                            <ul class="list-star">
-                                                <li class="bx bxs-star" style="color: #F0A750;"></li>
-                                                <li class="bx bxs-star" style="color: #F0A750;"></li>
-                                                <li class="bx bxs-star" style="color: #F0A750;"></li>
-                                                <li class="bx bxs-star" style="color: #F0A750;"></li>
-                                                <li class="bx bx-star" style="color: #F0A750;"></li>
-                                            </ul>
-                                            <span class="text-caption-1 text-secondary">(1.234)</span>
-                                        </div>
-
-                                        @if ( checkDiscount($row) )
-                                            @if ( $row->discount_type === "amount")
-                                                <span class="price"><span class="old-price">${{ $row->selling_price }}</span> ${{ $row->selling_price - $row->discount_value }}</span>
-                                            @elseif( $row->discount_type === "percent" )
-                                            @php
-                                                $discount_val = $row->selling_price * $row->discount_value / 100;
-                                            @endphp
-                                                <span class="price"><span class="old-price">${{ $row->selling_price }}</span> ${{ $row->selling_price - $discount_val }}</span>
-                                            @else
-                                                <span class="price"> ${{ $row->selling_price }}</span>
-                                            @endif
-                                        @else
-                                            <span class="price"> ${{ $row->selling_price }}</span>
+                                    @if ( checkDiscount($row) )
+                                        @if ( !empty($row->discount_type === "amount") || !empty($row->discount_type === "percent") )
+                                            <div class="marquee-product bg-main">
+                                                <div class="marquee-wrapper">
+                                                    <div class="initial-child-container">
+                                                        <div class="marquee-child-item">
+                                                            <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
+                                                        </div>
+                                                        <div class="marquee-child-item">
+                                                            <ion-icon name="flash-outline" class="text-critical"></ion-icon>
+                                                        </div>
+                                                        <div class="marquee-child-item">
+                                                            <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
+                                                        </div>
+                                                        <div class="marquee-child-item">
+                                                            <ion-icon name="flash-outline" class="text-critical"></ion-icon>
+                                                        </div>
+                                                        <div class="marquee-child-item">
+                                                            <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
+                                                        </div>
+                                                        <div class="marquee-child-item">
+                                                            <ion-icon name="flash-outline" class="text-critical"></ion-icon>
+                                                        </div>
+                                                        <div class="marquee-child-item">
+                                                            <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
+                                                        </div>
+                                                        <div class="marquee-child-item">
+                                                            <ion-icon name="flash-outline" class="text-critical"></ion-icon>
+                                                        </div>
+                                                        <div class="marquee-child-item">
+                                                            <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
+                                                        </div>
+                                                        <div class="marquee-child-item">
+                                                            <ion-icon name="flash-outline" class="text-critical"></ion-icon>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="marquee-wrapper">
+                                                    <div class="initial-child-container">
+                                                        <div class="marquee-child-item">
+                                                            <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
+                                                        </div>
+                                                        <div class="marquee-child-item">
+                                                            <ion-icon name="flash-outline" class="text-critical"></ion-icon>
+                                                        </div>
+                                                        <div class="marquee-child-item">
+                                                            <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
+                                                        </div>
+                                                        <div class="marquee-child-item">
+                                                            <ion-icon name="flash-outline" class="text-critical"></ion-icon>
+                                                        </div>
+                                                        <div class="marquee-child-item">
+                                                            <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
+                                                        </div>
+                                                        <div class="marquee-child-item">
+                                                            <ion-icon name="flash-outline" class="text-critical"></ion-icon>
+                                                        </div>
+                                                        <div class="marquee-child-item">
+                                                            <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
+                                                        </div>
+                                                        <div class="marquee-child-item">
+                                                            <ion-icon name="flash-outline" class="text-critical"></ion-icon>
+                                                        </div>
+                                                        <div class="marquee-child-item">
+                                                            <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
+                                                        </div>
+                                                        <div class="marquee-child-item">
+                                                            <ion-icon name="flash-outline" class="text-critical"></ion-icon>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         @endif
-                                    
+                                    @endif
 
-                                        <div class="box-progress-stock">
-                                            <div class="progress">
-                                                <div class="progress-bar" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                    
+                                    <div class="list-product-btn">
+                                        <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action {{ in_array($row->id, $wishlistItems) ? 'active' : '' }}" data-id="{{ $row->id }}">
+                                            <i class='bx bx-heart' style="font-size: 24px;"></i>
+                                            <span class="tooltip">Wishlist</span>
+                                        </a>
+
+                                        {{-- <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
+                                            <i class='bx bx-git-compare' style="font-size: 24px;"></i>
+                                            <span class="tooltip">Compare</span>
+                                        </a> --}}
+                                        <a href="#quickView" data-id={{ $row->id }} data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
+                                            <ion-icon name="eye-outline" style="font-size: 24px;"></ion-icon>
+                                            <span class="tooltip">Quick View</span>
+                                        </a>
+                                    </div>
+                                    <div class="list-btn-main">
+                                        <a href="#quickAdd" data-id={{ $row->id }} data-bs-toggle="modal" class="btn-main-product quickAdd">Quick Add</a>
+                                    </div>
+                                </div>
+
+                                @php
+                                    $avgRatings = App\Models\ProductReview::where('product_id', $row->id)->where('status', 1)->avg('ratings');
+                                    $reviews = App\Models\ProductReview::where('product_id', $row->id)->where('status', 1)->count();
+                                @endphp
+
+                                <div class="card-product-info">
+                                    <a href="{{ route('product.details', $row->slug) }}" class="title link">{{ $row->name }}</a>
+                                    <div class="box-rating">
+                                        <ul class="list-star">
+                                            
+                                            @for ( $i = 1; $i <= 5; $i++ )
+                                                @if ( $i <= round($avgRatings))
+                                                    <li class="bx bxs-star" style="color: #F0A750;"></li>
+                                                @else
+                                                    <li class="bx bx-star" style="color: #F0A750;"></li>
+                                                @endif
+                                            @endfor
+                                        </ul>
+                                        <span class="text-caption-1 text-secondary">({{ $reviews }} )</span>
+                                    </div>
+
+                                    @if ( checkDiscount($row) )
+                                        @if ( !empty($row->discount_type === "amount") )
+                                            <span class="price"><span class="old-price">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> {{ getSetting()->currency_symbol }}{{ $row->selling_price - $row->discount_value }}</span>
+                                        @elseif( !empty($row->discount_type === "percent") )
+                                        @php
+                                            $discount_val = $row->selling_price * $row->discount_value / 100;
+                                        @endphp
+                                            <span class="price"><span class="old-price">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> {{ getSetting()->currency_symbol }}{{ $row->selling_price - $discount_val }}</span>
+                                        @else
+                                            <span class="price"> {{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span>
+                                        @endif
+                                    @else
+                                        <span class="price"> {{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span>
+                                    @endif
+
+                                    <div class="box-progress-stock">
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <div class="stock-status d-flex justify-content-between align-items-center">
+                                            <div class="stock-item text-caption-1">
+                                                <span class="stock-label text-secondary-2">Stock:</span>
+                                                <span class="stock-value">{{ $row->qty }}</span>
                                             </div>
-                                            <div class="stock-status d-flex justify-content-between align-items-center">
-                                                <div class="stock-item text-caption-1">
-                                                    <span class="stock-label text-secondary-2">Available:</span>
-                                                    <span class="stock-value">{{ $row->qty }}</span>
-                                                </div>
-                                                <div class="stock-item text-caption-1">
-                                                    <span class="stock-label text-secondary-2">Sold:</span>
-                                                    <span class="stock-value">{{ $row->product_sold }}</span>
-                                                </div>
-                                            </div>
+                                            {{-- <div class="stock-item text-caption-1">
+                                                <span class="stock-label text-secondary-2">Sold:</span>
+                                                <span class="stock-value">{{ $row->product_sold }}</span>
+                                            </div> --}}
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        @endforeach
+                        </div>
+                    @endforeach
+
                     </div>
                     <div class="sw-pagination-recent sw-dots type-circle justify-content-center"></div>
                 </div>
@@ -1206,25 +1238,22 @@
     <script type="module" src="{{ asset('public/frontend/js/zoom.js') }}"></script>
 
 <script>
+    var currency_symbol = "{{ getSetting()->currency_symbol }}";
         // For color select
-        $(document).on('click', '.main_color_show', function () {
-            var radioId = $(this).attr('for');
-            var $radioInput = $('#' + radioId);
+        $(document).on('change', 'input[name="color_id"]', function () {
+            var colorId = $(this).attr('id'); // Get the ID of the selected input
+            var colorName = $('label[for="' + colorId + '"]').attr('data-value'); // Find the corresponding label
 
-            if ($radioInput.length) {
-                $radioInput.prop('checked', true);
+            $('.color_variant').text(colorName);
 
-                var colorName = $(this).attr('data-value');
-                $('.color_variant').text(colorName);
+            $('.main_color_show').removeClass('active'); // Remove active class from all
+            $('label[for="' + colorId + '"]').addClass('active'); // Add active class to the selected label
 
-                $('.main_color_show').removeClass('active');
-                $(this).addClass('active');
-                calculateTotalPrice();
-            }
+            calculateTotalPrice();
         });
 
         // For size select
-        $(document).on('click', '.main_size_btn', function () {
+        $(document).on('change', '.main_size_btn', function () {
             var radioInput = $(this).prev('input[type="radio"]');
             radioInput.prop('checked', true);
 
@@ -1250,12 +1279,12 @@
 
         function calculateTotalPrice() {
             var priceText = $('.price_on_sale').text(); 
-            var priceValue = parseInt(priceText.replace('$', '').trim()); 
+            var priceValue = parseInt(priceText.replace(`${currency_symbol}`, '').trim()); 
             var qty = $('.quantity-product').val();
             var color_price = $('input[name="color_id"]:checked').data('price') || 0; // Default to 0 if undefined
             var size_price = $('input[name="size_id"]:checked').data('price') || 0;  // Default to 0 if undefined
             var total = ( priceValue * qty ) + ( qty * (parseFloat(color_price) + parseFloat(size_price)) ) ;
-            $('.total_price').text('$' + total); // Update total price
+            $('.total_price').text(`${currency_symbol}` + total); // Update total price
             // console.log('Initial:', qty, color_price, size_price);
         }
 
@@ -1286,8 +1315,8 @@
         });
 </script>
 
-
-<script>
+@include('frontend.include.full_ajax_cart')
+{{-- <script>
 
     $(document).ready(function () {
        //__ Quick View Cart __//
@@ -1704,6 +1733,6 @@
        });
    });
 
-</script>
+</script> --}}
 
 @endpush

@@ -15,7 +15,9 @@ use App\Models\Faq;
 use App\Models\FlashSale;
 use App\Models\FlashSaleItem;
 use App\Models\HomeSetting;
+use App\Models\Marquee;
 use App\Models\Product;
+use App\Models\ProductReview;
 use App\Models\Slider;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -44,6 +46,11 @@ class HomeController extends Controller
         $data['new_products']         = Product::where('created_at', '>=', Carbon::now()->subMonths(2))->where('is_approved', 1)->where('status', 1)->limit(3)->get();
         $data['catSliderSectionOne']  = HomeSetting::where('key', 'product_slider_section_one')->first();
         $data['catSliderSectionTwo']  = HomeSetting::where('key', 'product_slider_section_two')->first();
+        $data['marquee']              = Marquee::where('status', 1)->get();
+        $data['productReviews']       = ProductReview::
+                                        leftJoin('users', 'users.id', 'product_reviews.user_id')->leftJoin('products', 'products.id', 'product_reviews.product_id')
+                                        ->select('product_reviews.*', 'users.name as user_name', 'users.image as user_img', 'products.name as product_name', 'products.id as product_id')
+                                        ->where('product_reviews.status', 1)->get();
 
         return view('frontend.pages.home', $data);
     }

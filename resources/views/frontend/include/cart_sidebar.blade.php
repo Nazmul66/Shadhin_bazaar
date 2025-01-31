@@ -72,15 +72,15 @@
                                                         <div class="text-title"><a href="{{ route('product.details', $row->options->slug) }}" class="link text-line-clamp-1">{{ $row->name }}</a></div>
                                                         <div class="text-button tf-btn-remove remove side_remove_cart" data-row_id="{{ $row->rowId }}" >Remove</div>
                                                     </div>
-
+                                                   
                                                     <div class="d-flex align-items-center justify-content-between de-flex gap-12">
-                                                        <div class="text-secondary-2">{{ strtoupper($row->options->size_name) }} ( ${{ $row->options->size_price }} ) / {{ strtoupper($row->options->color_name) }} ( ${{ $row->options->color_price }} )</div>
-                                                        <div class="text-button">{{ $row->qty }} X ${{ $row->price }}</div>
+                                                        <div class="text-secondary-2">{{ strtoupper($row->options->size_name) }} (  {{ getSetting()->currency_symbol }}{{ $row->options->size_price }} ) / {{ strtoupper($row->options->color_name) }} (  {{ getSetting()->currency_symbol }}{{ $row->options->color_price }} )</div>
+                                                        <div class="text-button">{{ $row->qty }} X  {{ getSetting()->currency_symbol }}{{ $row->price }}</div>
                                                     </div>
 
                                                     <div class="d-flex align-items-center justify-content-between de-flex gap-12">
                                                         <div class="text-secondary-2">Amount</div>
-                                                        <div class="text-button">${{ $totalPrice }}</div>
+                                                        <div class="text-button"> {{ getSetting()->currency_symbol }}{{ $totalPrice }}</div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -88,7 +88,7 @@
                                     @else
                                         <div class="alert alert-danger text-center" style="margin: 0 24px;" role="alert">
                                             <p class="mb-3">No items in the cart. </p>
-                                            <a href="{{ route('checkout') }}" class="tf-btn btn-reset">Continue Shopping</a>
+                                            <a href="{{ route('product.page') }}" class="tf-btn btn-reset">Continue Shopping</a>
                                         </div>
                                     @endif     
                                 </div>
@@ -133,7 +133,7 @@
                             <div class="tf-mini-cart-bottom-wrap">
                                 <div class="tf-cart-totals-discounts">
                                     <h5>Subtotal</h5>
-                                    <h5 class="tf-totals-total-value" id="cart_total_value">${{ getCartTotal() }}</h5>
+                                    <h5 class="tf-totals-total-value" id="cart_total_value"> {{ getSetting()->currency_symbol }}{{ getCartTotal() }}</h5>
                                 </div>
 
                                 <div class="mini-cart-actions">
@@ -158,7 +158,7 @@
                                             </div>
 
                                             <div class="text-center">
-                                                <a class="link text-btn-uppercase" href="shop-default-grid.html">Or continue shopping</a>
+                                                <a class="link text-btn-uppercase" href="{{ route('product.page') }}">Or continue shopping</a>
                                             </div>
                                         </div>
                                     @endif

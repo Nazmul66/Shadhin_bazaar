@@ -6877,6 +6877,9 @@ form .cols>* {
 .canvas-search .tf-loop-item .tf-product-info-price>div {
     font-size: 14px;
 }
+.canvas-search .tf-loop-item .tf_product_info_price>div {
+    font-size: 14px;
+}
 
 .offcanvas-compare {
     height: max-content !important;
@@ -9723,12 +9726,27 @@ form .cols>* {
     display: flex;
     align-items: center;
 }
+.tf_product_info_price {
+    display: flex;
+    align-items: center;
+}
 
 .tf-product-info-price .price-on-sale {
     margin-right: 8px;
 }
+.tf_product_info_price .price-on-sale {
+    margin-right: 8px;
+}
 
 .tf-product-info-price .compare-at-price {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19.52px;
+    color: var(--secondary-2);
+    text-decoration: line-through;
+    margin-right: 16px;
+}
+.tf_product_info_price .compare-at-price {
     font-size: 16px;
     font-weight: 400;
     line-height: 19.52px;
@@ -9744,8 +9762,21 @@ form .cols>* {
     color: var(--white);
     letter-spacing: 0.1em;
 }
+.tf_product_info_price .badges-on-sale {
+    padding: 0 8px;
+    background-color: var(--critical);
+    border-radius: 999px;
+    color: var(--white);
+    letter-spacing: 0.1em;
+}
 
 .tf-product-info-price.type-small .price-on-sale {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 26px;
+    margin-right: 4px;
+}
+.tf_product_info_price.type-small .price-on-sale {
     font-size: 16px;
     font-weight: 600;
     line-height: 26px;
@@ -9758,8 +9789,20 @@ form .cols>* {
     line-height: 22px;
     margin-right: 4px;
 }
+.tf_product_info_price.type-small .compare-at-price {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
+    margin-right: 4px;
+}
 
 .tf-product-info-price.type-small .badges-on-sale {
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 20px;
+    letter-spacing: 0.1em;
+}
+.tf_product_info_price.type-small .badges-on-sale {
     font-size: 10px;
     font-weight: 700;
     line-height: 20px;
@@ -9769,8 +9812,18 @@ form .cols>* {
 .tf-product-info-price.type-1 .price-on-sale {
     margin-right: 25px;
 }
+.tf_product_info_price.type-1 .price-on-sale {
+    margin-right: 25px;
+}
 
 .tf-product-info-price.type-1 .compare-at-price {
+    margin-right: 12px;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 28px;
+    position: relative;
+}
+.tf_product_info_price.type-1 .compare-at-price {
     margin-right: 12px;
     font-size: 20px;
     font-weight: 500;
@@ -9788,8 +9841,24 @@ form .cols>* {
     top: 50%;
     transform: translateY(-50%);
 }
+.tf_product_info_price.type-1 .compare-at-price::before {
+    position: absolute;
+    content: "";
+    width: 1px;
+    height: 16px;
+    left: -13px;
+    background-color: var(--line);
+    top: 50%;
+    transform: translateY(-50%);
+}
 
 .tf-product-info-price.type-1 .badges-on-sale {
+    padding: 2px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 20px;
+}
+.tf_product_info_price.type-1 .badges-on-sale {
     padding: 2px 12px;
     font-size: 12px;
     font-weight: 600;
@@ -10645,8 +10714,15 @@ form .cols>* {
 .flat-single-home .tf-product-info-list .tf-product-info-price .price-on-sale {
     margin-right: 24px;
 }
+.flat-single-home .tf-product-info-list .tf_product_info_price .price-on-sale {
+    margin-right: 24px;
+}
 
 .flat-single-home .tf-product-info-list .tf-product-info-price .old-price {
+    margin-right: 12px;
+    position: relative;
+}
+.flat-single-home .tf-product-info-list .tf_product_info_price .old-price {
     margin-right: 12px;
     position: relative;
 }
@@ -10661,8 +10737,22 @@ form .cols>* {
     top: 50%;
     transform: translateY(-50%);
 }
+.flat-single-home .tf-product-info-list .tf_product_info_price .old-price::before {
+    position: absolute;
+    content: "";
+    width: 1px;
+    height: 16px;
+    left: -13px;
+    background-color: var(--line);
+    top: 50%;
+    transform: translateY(-50%);
+}
 
 .flat-single-home .tf-product-info-list .tf-product-info-price .old-price-sold {
+    color: var(--secondary-2);
+    text-decoration: line-through;
+}
+.flat-single-home .tf-product-info-list .tf_product_info_price .old-price-sold {
     color: var(--secondary-2);
     text-decoration: line-through;
 }

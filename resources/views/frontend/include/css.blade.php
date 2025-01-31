@@ -6,12 +6,11 @@
 @stack('add-meta')
 
 <!-- Favicon and Touch Icons  -->
-<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="icon" type="image/png" href="{{ asset('public/frontend/images/logo/favicon.png') }}">
 <link rel="shortcut icon" href="{{ asset('public/frontend/images/logo/favicon.png') }}">
 <link rel="apple-touch-icon-precomposed" href="{{ asset('public/frontend/images/logo/favicon.png') }}">
 
 <meta name="author" content="">
-<meta name="description" content="">
 
 <!-- font -->
 <link rel="stylesheet" href="{{ asset('public/frontend/fonts/fonts.css') }}">

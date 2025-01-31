@@ -1,7 +1,14 @@
 @extends('frontend.layout.master')
 
 @push('add-meta')
-    <title>Sazao || e-Commerce HTML Template</title>
+    <title>{{ env('APP_NAME') }} || {{ getSetting()->meta_title }}</title>
+    <meta name="description" content="{{ getSetting()->meta_description }}">
+
+    <meta property="og:title" content="{{ getSetting()->meta_title ?? 'Default Title' }}">
+    <meta property="og:description" content="{{ getSetting()->meta_description ?? 'Default Description' }}">
+    <meta property="og:image" content="{{ asset(getSetting()->logo ) }}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url()->current() }}">
 @endpush
 
 @push('add-css')
@@ -58,83 +65,16 @@
 <section class="tf-marquee">
             <div class="marquee-wrapper">
                 <div class="initial-child-container">
-                    <div class="marquee-child-item">
-                        <p class="text-btn-uppercase">Free shipping on all orders over $20.00</p>
-                    </div>
-                    <div class="marquee-child-item">
-                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                    </div>
-                    <div class="marquee-child-item">
-                        <p class="text-btn-uppercase">Returns are free within 14 days</p>
-                    </div>
-                    <div class="marquee-child-item">
-                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                    </div>
-                    <!-- 2 -->
-                    <div class="marquee-child-item">
-                        <p class="text-btn-uppercase">Free shipping on all orders over $20.00</p>
-                    </div>
-                    <div class="marquee-child-item">
-                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                    </div>
-                    <div class="marquee-child-item">
-                        <p class="text-btn-uppercase">Returns are free within 14 days</p>
-                    </div>
-                    <div class="marquee-child-item">
-                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                    </div>
-                    <!-- 3 -->
-                    <div class="marquee-child-item">
-                        <p class="text-btn-uppercase">Free shipping on all orders over $20.00</p>
-                    </div>
-                    <div class="marquee-child-item">
-                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                    </div>
-                    <div class="marquee-child-item">
-                        <p class="text-btn-uppercase">Returns are free within 14 days</p>
-                    </div>
-                    <div class="marquee-child-item">
-                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                    </div>
-                    <!-- 4 -->
-                    <div class="marquee-child-item">
-                        <p class="text-btn-uppercase">Free shipping on all orders over $20.00</p>
-                    </div>
-                    <div class="marquee-child-item">
-                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                    </div>
-                    <div class="marquee-child-item">
-                        <p class="text-btn-uppercase">Returns are free within 14 days</p>
-                    </div>
-                    <div class="marquee-child-item">
-                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                    </div>
-                    <!-- 5 -->
-                    <div class="marquee-child-item">
-                        <p class="text-btn-uppercase">Free shipping on all orders over $20.00</p>
-                    </div>
-                    <div class="marquee-child-item">
-                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                    </div>
-                    <div class="marquee-child-item">
-                        <p class="text-btn-uppercase">Returns are free within 14 days</p>
-                    </div>
-                    <div class="marquee-child-item">
-                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                    </div>
-                    <!-- 6 -->
-                    <div class="marquee-child-item">
-                        <p class="text-btn-uppercase">Free shipping on all orders over $20.00</p>
-                    </div>
-                    <div class="marquee-child-item">
-                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                    </div>
-                    <div class="marquee-child-item">
-                        <p class="text-btn-uppercase">Returns are free within 14 days</p>
-                    </div>
-                    <div class="marquee-child-item">
-                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                    </div>
+                    @for ($i = 0; $i < 5; $i++)
+                        @foreach ($marquee as $key => $row)
+                            <div class="marquee-child-item">
+                                <p class="text-btn-uppercase" style="text-transform: uppercase;">{{ $row->name }}</p>
+                            </div>
+                            <div class="marquee-child-item">
+                                <ion-icon name="flash-outline" class="text-critical"></ion-icon>
+                            </div>
+                        @endforeach
+                    @endfor
                 </div>
             </div>
         </section>
@@ -288,7 +228,6 @@
                                                             $discount = '-'. $row->discount_value . "%";
                                                         }
                                                     }
-                                                    
                                                 @endphp
 
                                                 @if (!empty($image))
@@ -300,7 +239,6 @@
                                                     {{ $discount }}
                                                 </span>
                                             </div>
-
 
                                             @if ( checkDiscount($row) )
                                                 @if ( !empty($row->discount_type === "amount") || !empty($row->discount_type === "percent") )
@@ -421,17 +359,17 @@
 
                                             @if ( checkDiscount($row) )
                                                 @if ( !empty($row->discount_type === "amount") )
-                                                    <span class="price"><span class="old-price">${{ $row->selling_price }}</span> ${{ $row->selling_price - $row->discount_value }}</span>
+                                                    <span class="price"><span class="old-price">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> {{ getSetting()->currency_symbol }}{{ $row->selling_price - $row->discount_value }}</span>
                                                 @elseif( !empty($row->discount_type === "percent") )
                                                 @php
                                                     $discount_val = $row->selling_price * $row->discount_value / 100;
                                                 @endphp
-                                                    <span class="price"><span class="old-price">${{ $row->selling_price }}</span> ${{ $row->selling_price - $discount_val }}</span>
+                                                    <span class="price"><span class="old-price">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> {{ getSetting()->currency_symbol }}{{ $row->selling_price - $discount_val }}</span>
                                                 @else
-                                                    <span class="price"> ${{ $row->selling_price }}</span>
+                                                    <span class="price"> {{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span>
                                                 @endif
                                             @else
-                                                <span class="price"> ${{ $row->selling_price }}</span>
+                                                <span class="price"> {{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span>
                                             @endif
 
                                             <div class="box-progress-stock">
@@ -453,6 +391,7 @@
                                     </div>
                                 </div>
                             @endforeach
+                            
                         </div>
                         <div class="sw-pagination-latest sw-dots type-circle justify-content-center"></div>
                     </div>
@@ -854,17 +793,17 @@
 
                                 @if ( checkDiscount($row) )
                                     @if ( !empty($row->discount_type === "amount") )
-                                        <span class="price"><span class="old-price">${{ $row->selling_price }}</span> ${{ $row->selling_price - $row->discount_value }}</span>
+                                        <span class="price"><span class="old-price">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> {{ getSetting()->currency_symbol }}{{ $row->selling_price - $row->discount_value }}</span>
                                     @elseif( !empty($row->discount_type === "percent") )
                                     @php
                                         $discount_val = $row->selling_price * $row->discount_value / 100;
                                     @endphp
-                                        <span class="price"><span class="old-price">${{ $row->selling_price }}</span> ${{ $row->selling_price - $discount_val }}</span>
+                                        <span class="price"><span class="old-price">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> {{ getSetting()->currency_symbol }}{{ $row->selling_price - $discount_val }}</span>
                                     @else
-                                        <span class="price"> ${{ $row->selling_price }}</span>
+                                        <span class="price"> {{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span>
                                     @endif
                                 @else
-                                    <span class="price"> ${{ $row->selling_price }}</span>
+                                    <span class="price"> {{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span>
                                 @endif
 
                                 <div class="box-progress-stock">
@@ -1058,17 +997,17 @@
 
                                 @if ( checkDiscount($row) )
                                     @if ( !empty($row->discount_type === "amount") )
-                                        <span class="price"><span class="old-price">${{ $row->selling_price }}</span> ${{ $row->selling_price - $row->discount_value }}</span>
+                                        <span class="price"><span class="old-price">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> {{ getSetting()->currency_symbol }}{{ $row->selling_price - $row->discount_value }}</span>
                                     @elseif( !empty($row->discount_type === "percent") )
                                     @php
                                         $discount_val = $row->selling_price * $row->discount_value / 100;
                                     @endphp
-                                        <span class="price"><span class="old-price">${{ $row->selling_price }}</span> ${{ $row->selling_price - $discount_val }}</span>
+                                        <span class="price"><span class="old-price">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> {{ getSetting()->currency_symbol }}{{ $row->selling_price - $discount_val }}</span>
                                     @else
-                                        <span class="price"> ${{ $row->selling_price }}</span>
+                                        <span class="price"> {{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span>
                                     @endif
                                 @else
-                                    <span class="price"> ${{ $row->selling_price }}</span>
+                                    <span class="price"> {{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span>
                                 @endif
 
                                 <div class="box-progress-stock">
@@ -1170,17 +1109,17 @@
 
                                         @if ( checkDiscount($row) )
                                             @if ( !empty($row->discount_type === "amount") )
-                                                <span class="price"><span class="old-price">${{ $row->selling_price }}</span> ${{ $row->selling_price - $row->discount_value }}</span>
+                                                <span class="price"><span class="old-price">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> {{ getSetting()->currency_symbol }}{{ $row->selling_price - $row->discount_value }}</span>
                                             @elseif( !empty($row->discount_type === "percent") )
                                             @php
                                                 $discount_val = $row->selling_price * $row->discount_value / 100;
                                             @endphp
-                                                <span class="price"><span class="old-price">${{ $row->selling_price }}</span> ${{ $row->selling_price - $discount_val }}</span>
+                                                <span class="price"><span class="old-price">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> {{ getSetting()->currency_symbol }}{{ $row->selling_price - $discount_val }}</span>
                                             @else
-                                                <span class="price"> ${{ $row->selling_price }}</span>
+                                                <span class="price"> {{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span>
                                             @endif
                                         @else
-                                            <span class="price"> ${{ $row->selling_price }}</span>
+                                            <span class="price"> {{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span>
                                         @endif
 
                                     </div>
@@ -1252,17 +1191,17 @@
 
                                         @if ( checkDiscount($row) )
                                             @if ( !empty($row->discount_type === "amount") )
-                                                <span class="price"><span class="old-price">${{ $row->selling_price }}</span> ${{ $row->selling_price - $row->discount_value }}</span>
+                                                <span class="price"><span class="old-price">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> {{ getSetting()->currency_symbol }}{{ $row->selling_price - $row->discount_value }}</span>
                                             @elseif( !empty($row->discount_type === "percent") )
                                             @php
                                                 $discount_val = $row->selling_price * $row->discount_value / 100;
                                             @endphp
-                                                <span class="price"><span class="old-price">${{ $row->selling_price }}</span> ${{ $row->selling_price - $discount_val }}</span>
+                                                <span class="price"><span class="old-price">{{ getSetting()->currency_symbol }}${{ $row->selling_price }}</span> {{ getSetting()->currency_symbol }}{{ $row->selling_price - $discount_val }}</span>
                                             @else
-                                                <span class="price"> ${{ $row->selling_price }}</span>
+                                                <span class="price"> {{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span>
                                             @endif
                                         @else
-                                            <span class="price"> ${{ $row->selling_price }}</span>
+                                            <span class="price"> {{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span>
                                         @endif
 
                                     </div>
@@ -1333,17 +1272,17 @@
 
                                         @if ( checkDiscount($row) )
                                             @if ( !empty($row->discount_type === "amount") )
-                                                <span class="price"><span class="old-price">${{ $row->selling_price }}</span> ${{ $row->selling_price - $row->discount_value }}</span>
+                                                <span class="price"><span class="old-price">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> {{ getSetting()->currency_symbol }}{{ $row->selling_price - $row->discount_value }}</span>
                                             @elseif( !empty($row->discount_type === "percent") )
                                             @php
                                                 $discount_val = $row->selling_price * $row->discount_value / 100;
                                             @endphp
-                                                <span class="price"><span class="old-price">${{ $row->selling_price }}</span> ${{ $row->selling_price - $discount_val }}</span>
+                                                <span class="price"><span class="old-price">${{ $row->selling_price }}</span> {{ getSetting()->currency_symbol }}{{ $row->selling_price - $discount_val }}</span>
                                             @else
-                                                <span class="price"> ${{ $row->selling_price }}</span>
+                                                <span class="price"> {{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span>
                                             @endif
                                         @else
-                                            <span class="price"> ${{ $row->selling_price }}</span>
+                                            <span class="price"> {{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span>
                                         @endif
 
                                     </div>
@@ -1396,7 +1335,6 @@
                                                 $discount = '-'. $row->discount_value . "%";
                                             }
                                         }
-                                        
                                     @endphp
 
                                     @if (!empty($image))
@@ -1529,17 +1467,17 @@
 
                                 @if ( checkDiscount($row) )
                                     @if ( !empty($row->discount_type === "amount") )
-                                        <span class="price"><span class="old-price">${{ $row->selling_price }}</span> ${{ $row->selling_price - $row->discount_value }}</span>
+                                        <span class="price"><span class="old-price">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> {{ getSetting()->currency_symbol }}{{ $row->selling_price - $row->discount_value }}</span>
                                     @elseif( !empty($row->discount_type === "percent") )
                                     @php
                                         $discount_val = $row->selling_price * $row->discount_value / 100;
                                     @endphp
-                                        <span class="price"><span class="old-price">${{ $row->selling_price }}</span> ${{ $row->selling_price - $discount_val }}</span>
+                                        <span class="price"><span class="old-price">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> {{ getSetting()->currency_symbol }}{{ $row->selling_price - $discount_val }}</span>
                                     @else
-                                        <span class="price"> ${{ $row->selling_price }}</span>
+                                        <span class="price"> {{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span>
                                     @endif
                                 @else
-                                    <span class="price"> ${{ $row->selling_price }}</span>
+                                    <span class="price"> {{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span>
                                 @endif
 
 
@@ -1766,17 +1704,17 @@
 
                                 @if ( checkDiscount($row) )
                                     @if ( !empty($row->discount_type === "amount") )
-                                        <span class="price"><span class="old-price">${{ $row->selling_price }}</span> ${{ $row->selling_price - $row->discount_value }}</span>
+                                        <span class="price"><span class="old-price">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> {{ getSetting()->currency_symbol }}{{ $row->selling_price - $row->discount_value }}</span>
                                     @elseif( !empty($row->discount_type === "percent") )
                                     @php
                                         $discount_val = $row->selling_price * $row->discount_value / 100;
                                     @endphp
-                                        <span class="price"><span class="old-price">${{ $row->selling_price }}</span> ${{ $row->selling_price - $discount_val }}</span>
+                                        <span class="price"><span class="old-price">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> {{ getSetting()->currency_symbol }}{{ $row->selling_price - $discount_val }}</span>
                                     @else
-                                        <span class="price"> ${{ $row->selling_price }}</span>
+                                        <span class="price"> {{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span>
                                     @endif
                                 @else
-                                    <span class="price"> ${{ $row->selling_price }}</span>
+                                    <span class="price"> {{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span>
                                 @endif
 
 
@@ -1989,7 +1927,6 @@
                                 <a href="{{ route('product.details', $row->slug) }}" class="title link">{{ $row->name }}</a>
                                 <div class="box-rating">
                                     <ul class="list-star">
-                                        
                                         @for ( $i = 1; $i <= 5; $i++ )
                                             @if ( $i <= round($avgRatings))
                                                 <li class="bx bxs-star" style="color: #F0A750;"></li>
@@ -2003,19 +1940,18 @@
 
                                 @if ( checkDiscount($row) )
                                     @if ( !empty($row->discount_type === "amount") )
-                                        <span class="price"><span class="old-price">${{ $row->selling_price }}</span> ${{ $row->selling_price - $row->discount_value }}</span>
+                                        <span class="price"><span class="old-price">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> {{ getSetting()->currency_symbol }}{{ $row->selling_price - $row->discount_value }}</span>
                                     @elseif( !empty($row->discount_type === "percent") )
                                     @php
                                         $discount_val = $row->selling_price * $row->discount_value / 100;
                                     @endphp
-                                        <span class="price"><span class="old-price">${{ $row->selling_price }}</span> ${{ $row->selling_price - $discount_val }}</span>
+                                        <span class="price"><span class="old-price">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> {{ getSetting()->currency_symbol }}{{ $row->selling_price - $discount_val }}</span>
                                     @else
-                                        <span class="price"> ${{ $row->selling_price }}</span>
+                                        <span class="price"> {{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span>
                                     @endif
                                 @else
-                                    <span class="price"> ${{ $row->selling_price }}</span>
+                                    <span class="price"> {{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span>
                                 @endif
-
 
                                 <div class="box-progress-stock">
                                     <div class="progress">
@@ -2026,6 +1962,7 @@
                                             <span class="stock-label text-secondary-2">Stock:</span>
                                             <span class="stock-value">{{ $row->qty }}</span>
                                         </div>
+
                                         {{-- <div class="stock-item text-caption-1">
                                             <span class="stock-label text-secondary-2">Sold:</span>
                                             <span class="stock-value">{{ $row->product_sold }}</span>
@@ -2045,165 +1982,76 @@
 <!-- /Category Section One Products -->
 
 <!-- Testimonials -->
-<section class="flat-spacing-4">
+<section class="flat-spacing">
     <div class="container">
-        <div class="heading-section text-center wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;">
-            <h3 class="heading">Customer Say!</h3>
+        <div class="heading-section text-center wow fadeInUp">
+            <h3 class="heading">Customer Feedback!</h3>
             <p class="subheading">Our customers adore our products, and we constantly aim to delight them.</p>
         </div>
-        <div dir="ltr" class="swiper tf-sw-testimonial wow fadeInUp swiper-initialized swiper-horizontal swiper-pointer-events swiper-backface-hidden" data-wow-delay="0.1s" data-preview="3" data-tablet="2" data-mobile="1" data-space-lg="30" data-space-md="30" data-space="15" data-pagination="1" data-pagination-md="1" data-pagination-lg="1" style="visibility: visible; animation-delay: 0.1s; animation-name: fadeInUp;">
-            <div class="swiper-wrapper" id="swiper-wrapper-da194db3f7f84887" aria-live="polite" style="transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;">
-                <div class="swiper-slide swiper-slide-active" role="group" aria-label="1 / 4" style="width: 410px; margin-right: 30px;">
-                    <div class="testimonial-item style-2">
-                        <div class="content-top">
-                            <div class="list-star-default">
-                                <i class="icon icon-star"></i>
-                                <i class="icon icon-star"></i>
-                                <i class="icon icon-star"></i>
-                                <i class="icon icon-star"></i>
-                                <i class="icon icon-star"></i>
+
+        <div dir="ltr" class="swiper tf-sw-testimonial wow fadeInUp" data-wow-delay="0.1s" data-preview="3" data-tablet="2" data-mobile="1" data-space-lg="30" data-space-md="30" data-space="15" data-pagination="1" data-pagination-md="1" data-pagination-lg="1">
+            <div class="swiper-wrapper">
+                @foreach ( $productReviews as $row )
+                    @php
+                        $avgRatings = App\Models\ProductReview::where('product_id', $row->id)->where('status', 1)->avg('ratings');
+                    @endphp
+                    
+                    <div class="swiper-slide">
+                        <div class="testimonial-item style-2">
+                            <div class="content-top">
+                                <div class="list-star-default">
+                                    @for ( $i = 1; $i <= 5; $i++ )
+                                        @if ( $i <= round($avgRatings))
+                                            <i class="bx bxs-star" style="color: #F0A750;"></i>
+                                        @else
+                                            <i class="bx bx-star" style="color: #F0A750;"></i>
+                                        @endif
+                                    @endfor
+                                </div>
+
+                                <p class="text-secondary">{{ $row->review }}</p>
+
+                                <div class="box-author">
+                                    <div class="text-title author">{{ $row->user_name }}</div>
+                                    <svg class="icon" width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <g clip-path="url(#clip0_15758_14563)">
+                                        <path d="M6.875 11.6255L8.75 13.5005L13.125 9.12549" stroke="#3DAB25" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M10 18.5005C14.1421 18.5005 17.5 15.1426 17.5 11.0005C17.5 6.85835 14.1421 3.50049 10 3.50049C5.85786 3.50049 2.5 6.85835 2.5 11.0005C2.5 15.1426 5.85786 18.5005 10 18.5005Z" stroke="#3DAB25" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </g>
+                                        <defs>
+                                        <clipPath id="clip0_15758_14563">
+                                        <rect width="20" height="20" fill="white" transform="translate(0 0.684082)"/>
+                                        </clipPath>
+                                        </defs>
+                                    </svg>
+                                </div>
                             </div>
-                            <p class="text-secondary">"Fantastic shop! Great selection, fair prices, and friendly staff. Highly recommended. The quality of the products is exceptional, and the prices are very reasonable!"</p>
-                            <div class="box-author">
-                                <div class="text-title author">Sybil Sharp</div>
-                                <svg class="icon" width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <g clip-path="url(#clip0_15758_14563)">
-                                    <path d="M6.875 11.6255L8.75 13.5005L13.125 9.12549" stroke="#3DAB25" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                    <path d="M10 18.5005C14.1421 18.5005 17.5 15.1426 17.5 11.0005C17.5 6.85835 14.1421 3.50049 10 3.50049C5.85786 3.50049 2.5 6.85835 2.5 11.0005C2.5 15.1426 5.85786 18.5005 10 18.5005Z" stroke="#3DAB25" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                    </g>
-                                    <defs>
-                                    <clipPath id="clip0_15758_14563">
-                                    <rect width="20" height="20" fill="white" transform="translate(0 0.684082)"></rect>
-                                    </clipPath>
-                                    </defs>
-                                </svg> 
-                            </div>
-                        </div>
-                        <div class="box-avt">
-                            <div class="avatar avt-60 round">
-                                <img src="images/avatar/user-4.jpg" alt="avt">
-                            </div>
-                            <div class="box-price">
-                                <p class="text-title text-line-clamp-1">Contrasting sheepskin sweatshirt</p>
-                                <div class="text-button price">$60.00</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-slide swiper-slide-next" role="group" aria-label="2 / 4" style="width: 410px; margin-right: 30px;">
-                    <div class="testimonial-item style-2">
-                        <div class="content-top">
-                            <div class="list-star-default">
-                                <i class="icon icon-star"></i>
-                                <i class="icon icon-star"></i>
-                                <i class="icon icon-star"></i>
-                                <i class="icon icon-star"></i>
-                                <i class="icon icon-star"></i>
-                            </div>
-                            <p class="text-secondary">"I absolutely love this shop! The products are high-quality and the customer service is excellent. I always leave with exactly what I need and a smile on my face."</p>
-                            <div class="box-author">
-                                <div class="text-title author">Mark G.</div>
-                                <svg class="icon" width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <g clip-path="url(#clip0_15758_14)">
-                                    <path d="M6.875 11.6255L8.75 13.5005L13.125 9.12549" stroke="#3DAB25" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                    <path d="M10 18.5005C14.1421 18.5005 17.5 15.1426 17.5 11.0005C17.5 6.85835 14.1421 3.50049 10 3.50049C5.85786 3.50049 2.5 6.85835 2.5 11.0005C2.5 15.1426 5.85786 18.5005 10 18.5005Z" stroke="#3DAB25" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                    </g>
-                                    <defs>
-                                    <clipPath id="clip0_15758_14">
-                                    <rect width="20" height="20" fill="white" transform="translate(0 0.684082)"></rect>
-                                    </clipPath>
-                                    </defs>
-                                </svg> 
+
+                            <div class="box-avt">
+                                <div class="avatar avt-60 round">
+                                    @if ( !empty($row->user_img) )
+                                        <img src="{{ asset($row->user_img) }}" alt="avt">
+                                    @else
+                                        <img src="{{ asset('public/backend/assets/images/no_Image_available.jpg') }}" alt="avt">
+                                    @endif
+                                </div>
+
+                                @php
+                                    $total_sum = App\Models\OrderProduct::where('product_id', $row->product_id)->sum(DB::raw('(variant_total + unit_price) * qty'));
+                                @endphp
+
+                                <div class="box-price">
+                                    <p class="text-title text-line-clamp-1">{{ $row->product_name }}</p>
+                                    <div class="text-button price">{{ getSetting()->currency_symbol }}{{ $total_sum }}</div>
+                                </div>
                             </div>
                         </div>
-                        <div class="box-avt">
-                            <div class="avatar avt-60 round">
-                                <img src="images/avatar/user-5.jpg" alt="avt">
-                            </div>
-                            <div class="box-price">
-                                <p class="text-title text-line-clamp-1">Contrasting sheepskin sweatshirt</p>
-                                <div class="text-button price">$60.00</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-slide" role="group" aria-label="3 / 4" style="width: 410px; margin-right: 30px;">
-                    <div class="testimonial-item style-2">
-                        <div class="content-top">
-                            <div class="list-star-default">
-                                <i class="icon icon-star"></i>
-                                <i class="icon icon-star"></i>
-                                <i class="icon icon-star"></i>
-                                <i class="icon icon-star"></i>
-                                <i class="icon icon-star"></i>
-                            </div>
-                            <p class="text-secondary">"I love this shop! Top-quality products and incredibly friendly staff. They always go the extra mile to ensure I'm satisfied with my purchase."</p>
-                            <div class="box-author">
-                                <div class="text-title author">Emily S.</div>
-                                <svg class="icon" width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <g clip-path="url(#clip0_15758_145)">
-                                    <path d="M6.875 11.6255L8.75 13.5005L13.125 9.12549" stroke="#3DAB25" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                    <path d="M10 18.5005C14.1421 18.5005 17.5 15.1426 17.5 11.0005C17.5 6.85835 14.1421 3.50049 10 3.50049C5.85786 3.50049 2.5 6.85835 2.5 11.0005C2.5 15.1426 5.85786 18.5005 10 18.5005Z" stroke="#3DAB25" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                    </g>
-                                    <defs>
-                                    <clipPath id="clip0_15758_145">
-                                    <rect width="20" height="20" fill="white" transform="translate(0 0.684082)"></rect>
-                                    </clipPath>
-                                    </defs>
-                                </svg> 
-                            </div>
-                        </div>
-                        <div class="box-avt">
-                            <div class="avatar avt-60 round">
-                                <img src="images/avatar/user-6.jpg" alt="avt">
-                            </div>
-                            <div class="box-price">
-                                <p class="text-title text-line-clamp-1">Contrasting sheepskin sweatshirt</p>
-                                <div class="text-button price">$60.00</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-slide" role="group" aria-label="4 / 4" style="width: 410px; margin-right: 30px;">
-                    <div class="testimonial-item style-2">
-                        <div class="content-top">
-                            <div class="list-star-default">
-                                <i class="icon icon-star"></i>
-                                <i class="icon icon-star"></i>
-                                <i class="icon icon-star"></i>
-                                <i class="icon icon-star"></i>
-                                <i class="icon icon-star"></i>
-                            </div>
-                            <p class="text-secondary">"Fantastic shop! Great selection, fair prices, and friendly staff. Highly recommended. The quality of the products is exceptional, and the prices are very reasonable!"</p>
-                            <div class="box-author">
-                                <div class="text-title author">Sybil Sharp</div>
-                                <svg class="icon" width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <g clip-path="url(#clip0_15758_1456)">
-                                    <path d="M6.875 11.6255L8.75 13.5005L13.125 9.12549" stroke="#3DAB25" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                    <path d="M10 18.5005C14.1421 18.5005 17.5 15.1426 17.5 11.0005C17.5 6.85835 14.1421 3.50049 10 3.50049C5.85786 3.50049 2.5 6.85835 2.5 11.0005C2.5 15.1426 5.85786 18.5005 10 18.5005Z" stroke="#3DAB25" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                    </g>
-                                    <defs>
-                                    <clipPath id="clip0_15758_1456">
-                                    <rect width="20" height="20" fill="white" transform="translate(0 0.684082)"></rect>
-                                    </clipPath>
-                                    </defs>
-                                </svg> 
-                            </div>
-                        </div>
-                        <div class="box-avt">
-                            <div class="avatar avt-60 round">
-                                <img src="images/avatar/user-4.jpg" alt="avt">
-                            </div>
-                            <div class="box-price">
-                                <p class="text-title text-line-clamp-1">Contrasting sheepskin sweatshirt</p>
-                                <div class="text-button price">$60.00</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                    </div>    
+                @endforeach
             </div>
-            <div class="sw-pagination-testimonial sw-dots type-circle d-flex justify-content-center swiper-pagination-clickable swiper-pagination-bullets swiper-pagination-horizontal"><span class="swiper-pagination-bullet swiper-pagination-bullet-active" tabindex="0" role="button" aria-label="Go to slide 1" aria-current="true"></span><span class="swiper-pagination-bullet" tabindex="0" role="button" aria-label="Go to slide 2"></span></div>
-        <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span></div>
+
+            <div class="sw-pagination-testimonial sw-dots type-circle d-flex justify-content-center"></div>
+        </div>
     </div>
 </section>
 <!-- /Testimonials -->
@@ -2273,7 +2121,6 @@
 <!-- /Brands -->
 
 @endsection
-
 
 @push('add-js')
 

@@ -15,6 +15,7 @@ class AjaxCallController extends Controller
     public function CartQuickView(Request $request)
     {
         // dd($request->all());
+        $currency = getSetting()->currency_symbol;
         $Product__sizes = AttributeValue::where('attribute', "size")->get();
         $sizes = array_map(function ($item) {
             return $item['value'];
@@ -56,28 +57,28 @@ class AjaxCallController extends Controller
                 $discounted_price = $product->selling_price - $product->discount_value;
             
                 $price_val = '
-                    <h5 class="price-on-sale font-2">$' . number_format($discounted_price, 2) . '</h5>
-                    <div class="compare-at-price font-2">$' . number_format($product->selling_price, 2) . '</div>
+                    <h5 class="price-on-sale font-2">'. $currency . number_format($discounted_price, 2) . '</h5>
+                    <div class="compare-at-price font-2">'. $currency . number_format($product->selling_price, 2) . '</div>
                     <div class="badges-on-sale text-btn-uppercase">
-                        -' . $product->discount_value. '$
+                        -' . $product->discount_value. $currency.'
                     </div>';
             } elseif ($product->discount_type === 'percent') {
                 $discounted_price = $product->selling_price - ($product->selling_price * $product->discount_value / 100);
             
                 $price_val = '
-                    <h5 class="price-on-sale font-2">$' . number_format($discounted_price, 2) . '</h5>
-                    <div class="compare-at-price font-2">$' . number_format($product->selling_price, 2) . '</div>
+                    <h5 class="price-on-sale font-2">'. $currency . number_format($discounted_price, 2) . '</h5>
+                    <div class="compare-at-price font-2">'. $currency . number_format($product->selling_price, 2) . '</div>
                     <div class="badges-on-sale text-btn-uppercase">
                         -' . $product->discount_value. '%
                     </div>';
             } else {
                 $price_val = '
-                    <h5 class="price-on-sale font-2">$' . number_format($product->selling_price, 2) . '</h5>';
+                    <h5 class="price-on-sale font-2">'. $currency . number_format($product->selling_price, 2) . '</h5>';
             }
         }
         else{
             $price_val = '
-                    <h5 class="price-on-sale font-2">$' . number_format($product->selling_price, 2) . '</h5>';
+                <h5 class="price-on-sale font-2">'. $currency . number_format($product->selling_price, 2) . '</h5>';
         }
 
 

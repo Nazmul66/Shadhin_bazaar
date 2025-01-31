@@ -1,6 +1,9 @@
 <script>
      
     $(document).ready(function () {
+        var currencySymbol = "{{ getSetting()->currency_symbol }}"; 
+        var currencyName = "{{ getSetting()->currency_name }}"; 
+
        //__ Quick View Cart __//
        $(document).on('click', '.quickview', function (e) {
            e.preventDefault(); // Prevent default behavior if necessary
@@ -55,7 +58,7 @@
                                        data-scroll-quickview="${color.color_name.toLowerCase()}"
                                        >
                                        <span class="btn-checkbox" style="background-color:${color.color_code || ''}"></span>
-                                       <span class="tooltip">${color.color_name} ( TK ${color.color_price} )</span>
+                                       <span class="tooltip">${color.color_name} ( ${currencyName} ${color.color_price} )</span>
                                    </label>
                                </div>
                            `;
@@ -83,7 +86,7 @@
                                    <input type="radio" name="size_id" data-price="${size.size_price}" id="size${size.id}" value="${size.id}" ${index === 0 ? 'checked' : ''}>
                                    <label class="hover-tooltip tooltip-bot style-text size-btn for="size${size.id}" data-value="${size.size_name.toUpperCase()}" data-size-price="${size.size_price}" >
                                        <span class="text-title">${size.size_name.toUpperCase()}</span>
-                                       <span class="tooltip">${size.size_name} ( TK ${size.size_price} )</span>
+                                       <span class="tooltip">${size.size_name} ( ${currencyName} ${size.size_price} )</span>
                                    </label>
                                </div>
                            `;
@@ -141,7 +144,7 @@
                                        data-scroll-quickview="${color.color_name.toLowerCase()}"
                                        >
                                        <span class="btn-checkbox" style="background-color:${color.color_code || ''}"></span>
-                                       <span class="tooltip">${color.color_name} ( TK ${color.color_price} )</span>
+                                       <span class="tooltip">${color.color_name} ( ${currencyName} ${color.color_price} )</span>
                                    </label>
                                </div>
                            `;
@@ -158,7 +161,6 @@
                    }
 
 
-
                    if (res.product_sizes && res.product_sizes.length > 0) {
                        var sizesHtml = '';
 
@@ -169,7 +171,7 @@
                                    <input type="radio" name="size_id" data-price="${size.size_price}" id="size${size.id}" value="${size.id}" ${index === 0 ? 'checked' : ''}>
                                    <label class="hover-tooltip tooltip-bot style-text size-btn for="size${size.id}" data-value="${size.size_name.toUpperCase()}" data-size-price="${size.size_price}" >
                                        <span class="text-title">${size.size_name.toUpperCase()}</span>
-                                       <span class="tooltip">${size.size_name} ( TK ${size.size_price} )</span>
+                                       <span class="tooltip">${size.size_name} ( ${currencyName} ${size.size_price} )</span>
                                    </label>
                                </div>
                            `;
@@ -221,7 +223,6 @@
            $(this).addClass('active');
        });
 
-
        // Product add to cart
        $('.add-to-cart-form').on('submit', function(e) {
            e.preventDefault(); 
@@ -229,9 +230,7 @@
            // Get the value of the clicked button
            const clickedButton = $('button[type="submit"]:focus');
            const buttonValue = clickedButton.val(); // 'add_cart' or 'buy_now'
-
            let formData = $(this).serialize() + '&button_value=' + buttonValue;
-
            $.ajax({
                method: 'POST',
                data: formData,
@@ -260,7 +259,6 @@
                    else if( data.status === 'error' ){
                        toastr.error(data.message);
                    }
-
                },
                error: function(data) {
                    // Handle error
@@ -269,7 +267,6 @@
                },
            });
        });
-
 
        // Fetch all sidebar cart data
        function sidebarCartData(){
@@ -294,14 +291,14 @@
                                        </div>
                                        <div class="d-flex align-items-center justify-content-between de-flex gap-12">
                                            <div class="text-secondary-2">
-                                               ${item.size_name ? item.size_name.toUpperCase() + ` ($${item.size_price})` : ''} 
-                                               ${item.color_name ? ` / ${item.color_name} ($${item.color_price})` : ''}
+                                               ${item.size_name ? item.size_name.toUpperCase() + ` (${currencySymbol}${item.size_price})` : ''} 
+                                               ${item.color_name ? ` / ${item.color_name} (${currencySymbol}${item.color_price})` : ''}
                                            </div>
-                                           <div class="text-button">${item.qty} X $${item.price}</div>
+                                           <div class="text-button">${item.qty} X ${currencySymbol}${item.price}</div>
                                        </div>
                                        <div class="d-flex align-items-center justify-content-between de-flex gap-12">
                                            <div class="text-secondary-2">Amount</div>
-                                           <div class="text-button">$${item.total}</div>
+                                           <div class="text-button">${currencySymbol}${item.total}</div>
                                        </div>
                                    </div>
                                </div>
@@ -310,7 +307,6 @@
 
                        // Update the cart sidebar body
                        $('#cart-sidebar-table-body').html(cartHtml);
-
                        sidebarCartActionElement();
                    }
                },
@@ -344,13 +340,12 @@
                        if (tableBody.children('.tf-mini-cart-item').length === 0) {
                            tableBody.html(`
                                <div class="alert alert-danger text-center" role="alert" style="margin: 0 24px;">
-                                   <a href="{{ route('checkout') }}" class="tf-btn btn-reset">Continue Shopping</a>
+                                   <a href="{{ route('product.page') }}" class="tf-btn btn-reset">Continue Shopping</a>
                                </div>
                            `);
                            $('.tf-mini-cart-threshold').remove();
                            $('#tf-mini-cart-actions-field').remove();
                        }
-
                        getCartCount(); 
                        toastr.success(data.message);
                    }
@@ -386,7 +381,7 @@
                success: function(data) {
                    console.log('get total', data);
                    if( data.status === 'success' ){
-                      $('.tf-totals-total-value').text('$' + data.total);
+                      $('.tf-totals-total-value').text(`${currencySymbol}` + data.total);
                    }
                },
                error: function(data) {
@@ -419,7 +414,6 @@
         // Subscription Form
         $('#newsletter_form').on('submit', function (e) {
             e.preventDefault();
-            
             let data = $(this).serialize(); // Serialize form data
 
             $.ajax({
@@ -436,7 +430,6 @@
                         $('#subscription_btn').html("<i class='bx bx-up-arrow-alt'></i>");
                         $('#subscription_btn').removeClass('spinners');
                         $('.subscribe_input').val('')
-
                     } else if (data.status === 'error') {
                         toastr.error(data.message);
                         $('#subscription_btn').html("<i class='bx bx-up-arrow-alt'></i>");

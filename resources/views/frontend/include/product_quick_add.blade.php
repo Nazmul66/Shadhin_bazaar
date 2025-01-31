@@ -105,14 +105,14 @@
                                         <span>Add to cart</span>
                                         {{-- <span class="tf-qty-price total_price">$79.99</span> --}}
                                     </button>
-                                    <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon hover-tooltip compare btn-icon-action show-compare">
+                                    {{-- <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon hover-tooltip compare btn-icon-action show-compare">
                                         <i class='bx bx-git-compare' style="font-size: 24px;"></i>
                                         <span class="tooltip text-caption-2">Compare</span>
                                     </a>
                                     <a href="javascript:void(0);" class="box-icon hover-tooltip text-caption-2 wishlist btn-icon-action">
                                         <i class='bx bx-heart' style="font-size: 24px;"></i>
                                         <span class="tooltip text-caption-2">Wishlist</span>
-                                    </a>
+                                    </a> --}}
                                 </div>
                                 <button type="submit" name="button" value="buy_now" class="fw-6 buy_now_btn btn-style-3 text-btn-uppercase">Buy it now</button>
                             </div>
