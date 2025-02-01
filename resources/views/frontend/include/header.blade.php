@@ -140,8 +140,8 @@
                                 <a href="{{ route('product.page') }}" class="item-link">Shop Page</a>
                             </li>
 
-                            <li class="menu-item">
-                                <a href="#" class="item-link">About Us </a>
+                            <li class="menu-item {{ isActive('about.us') }}">
+                                <a href="{{ route('about.us') }}" class="item-link">About Us </a>
                             </li>
 
                             <li class="menu-item {{ isActive('contact.us') }}">

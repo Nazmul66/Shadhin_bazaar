@@ -1,7 +1,14 @@
 @extends('frontend.layout.master')
 
 @push('add-meta')
-    <title>Products Page</title>
+    <title>{{ env('APP_NAME') }} || Shop Page</title>
+    <meta name="description" content="">
+
+    <meta property="og:title" content="Shop Page">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url()->current() }}">
 @endpush
 
 @push('add-css')

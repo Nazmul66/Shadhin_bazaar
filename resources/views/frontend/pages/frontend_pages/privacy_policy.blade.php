@@ -1,7 +1,14 @@
 @extends('frontend.layout.master')
 
 @push('add-meta')
-    <title>Sazao || About-us Template</title>
+    <title>{{ env('APP_NAME') }} || {{ $data->meta_title ?? 'privacy-policy' }}</title>
+    <meta name="description" content="{{ $data->meta_description ?? '' }}">
+
+    <meta property="og:title" content="{{ $data->meta_title ?? 'privacy-policy' }}">
+    <meta property="og:description" content="{{ $data->meta_description ?? '' }}">
+    <meta property="og:image" content="{{ asset($data->meta_image) ?? '' }}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url()->current() }}">
 @endpush
 
 @push('add-css')

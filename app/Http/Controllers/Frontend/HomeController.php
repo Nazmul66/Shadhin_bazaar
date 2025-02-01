@@ -48,21 +48,25 @@ class HomeController extends Controller
         $data['catSliderSectionTwo']  = HomeSetting::where('key', 'product_slider_section_two')->first();
         $data['marquee']              = Marquee::where('status', 1)->get();
         $data['productReviews']       = ProductReview::
-                                        leftJoin('users', 'users.id', 'product_reviews.user_id')->leftJoin('products', 'products.id', 'product_reviews.product_id')
-                                        ->select('product_reviews.*', 'users.name as user_name', 'users.image as user_img', 'products.name as product_name', 'products.id as product_id')
-                                        ->where('product_reviews.status', 1)->get();
+                                leftJoin('users', 'users.id', 'product_reviews.user_id')->leftJoin('products', 'products.id', 'product_reviews.product_id')
+                                ->select('product_reviews.*', 'users.name as user_name', 'users.image as user_img', 'products.name as product_name', 'products.id as product_id')
+                                ->where('product_reviews.status', 1)->get();
 
         return view('frontend.pages.home', $data);
     }
 
     public function about_us()
     {
-        return view('frontend.pages.frontend_pages.about_us');
+        $data['title']       = 'About us'; 
+        $data['description'] = ''; 
+        return view('frontend.pages.frontend_pages.about_us', $data);
     }
 
     public function contact_us()
     {
-        return view('frontend.pages.frontend_pages.contact_us');
+        $data['title']       = 'Contact us'; 
+        $data['description'] = ''; 
+        return view('frontend.pages.frontend_pages.contact_us', $data);
     }
 
     public function handleContactForm(Request $request)
@@ -131,7 +135,14 @@ class HomeController extends Controller
 
     public function customer_feedback()
     {
-        return view('frontend.pages.frontend_pages.customer_feedback');
+        $data['title']           = 'Customer Feedback'; 
+        $data['description']     = ''; 
+        $data['productReviews']  = ProductReview::
+                    leftJoin('users', 'users.id', 'product_reviews.user_id')->leftJoin('products', 'products.id', 'product_reviews.product_id')
+                    ->select('product_reviews.*', 'users.name as user_name', 'users.image as user_img', 'products.name as product_name', 'products.id as product_id')
+                    ->where('product_reviews.status', 1)->get();
+                            
+        return view('frontend.pages.frontend_pages.customer_feedback', $data);
     }
 
     public function blogs()

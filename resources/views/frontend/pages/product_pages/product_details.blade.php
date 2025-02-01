@@ -147,23 +147,27 @@
 
                                 <div class="tf-product-info-desc">
                                     <div class="tf_product_info_price">
+                                        @if ( checkDiscount($row) )
                                             @if ( $product->discount_type === "amount" )
-                                            <h5 class="price_on_sale font-2 me-2">{{ getSetting()->currency_symbol }}{{ $product->selling_price - $product->discount_value }}</h5>
-                                            <div class="compare-at-price font-2">{{ getSetting()->currency_symbol }}{{ $product->selling_price }}</div>
-                                            <div class="badges-on-sale text-btn-uppercase">
-                                                -{{ getSetting()->currency_symbol }}{{ $product->discount_value }}
-                                            </div>
+                                                <h5 class="price_on_sale font-2 me-2">{{ getSetting()->currency_symbol }}{{ $product->selling_price - $product->discount_value }}</h5>
+                                                <div class="compare-at-price font-2">{{ getSetting()->currency_symbol }}{{ $product->selling_price }}</div>
+                                                <div class="badges-on-sale text-btn-uppercase">
+                                                    -{{ getSetting()->currency_symbol }}{{ $product->discount_value }}
+                                                </div>
 
-                                        @elseif( $product->discount_type === "percent" )
-                                            @php
-                                                $discount_val = $product->selling_price * $product->discount_value / 100;
-                                            @endphp
+                                            @elseif( $product->discount_type === "percent" )
+                                                @php
+                                                    $discount_val = $product->selling_price * $product->discount_value / 100;
+                                                @endphp
 
-                                            <h5 class="price_on_sale font-2 me-2">{{ getSetting()->currency_symbol }}{{ $product->selling_price - $discount_val }}</h5>
-                                            <div class="compare-at-price font-2">{{ getSetting()->currency_symbol }}{{ $product->selling_price }}</div>
-                                            <div class="badges-on-sale text-btn-uppercase">
-                                                -{{ $product->discount_value }}%
-                                            </div>
+                                                <h5 class="price_on_sale font-2 me-2">{{ getSetting()->currency_symbol }}{{ $product->selling_price - $discount_val }}</h5>
+                                                <div class="compare-at-price font-2">{{ getSetting()->currency_symbol }}{{ $product->selling_price }}</div>
+                                                <div class="badges-on-sale text-btn-uppercase">
+                                                    -{{ $product->discount_value }}%
+                                                </div>
+                                            @else
+                                                <h5 class="price_on_sale font-2">{{ getSetting()->currency_symbol }}{{ $product->selling_price }}</h5>
+                                            @endif
                                         @else
                                             <h5 class="price_on_sale font-2">{{ getSetting()->currency_symbol }}{{ $product->selling_price }}</h5>
                                         @endif

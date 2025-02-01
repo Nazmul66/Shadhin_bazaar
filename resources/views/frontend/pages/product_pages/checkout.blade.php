@@ -1,7 +1,14 @@
 @extends('frontend.layout.master')
 
 @push('add-meta')
-    <title>Sazao || About-us Template</title>
+    <title>{{ env('APP_NAME') }} || Checkout</title>
+    <meta name="description" content="">
+
+    <meta property="og:title" content="Checkout">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="{{ asset(getSetting()->logo ) }}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url()->current() }}">
 @endpush
 
 @push('add-css')
@@ -237,7 +244,7 @@
                                             <div class="info">
                                                 <a href="{{ route('product.details', $item->options->slug) }}" class="name-product link text-title">{{ $item->name }}</a>
 
-                                                <div class="variant text-caption-1 text-secondary"><span class="size">{{ strtoupper($item->options->size_name) }} ( ${{ $item->options->size_price }} )</span> / <span class="color">{{ $item->options->color_name }} ( ${{ $item->options->color_price }} )</span></div>
+                                                <div class="variant text-caption-1 text-secondary"><span class="size">{{ strtoupper($item->options->size_name) }} ( {{ getSetting()->currency_symbol }}{{ $item->options->size_price }} )</span> / <span class="color">{{ $item->options->color_name }} ( {{ getSetting()->currency_symbol }}{{ $item->options->color_price }} )</span></div>
 
                                                 <div class="wg-quantity">
                                                     <span class="btn-quantity product-decrease">-</span>
@@ -251,10 +258,10 @@
 
                                                 <div class="">
                                                     <span class="count" data-row_id="{{ $item->rowId }}" id="qty{{ $item->rowId }}">{{ $item->qty }}</span>
-                                                    <span class="x-mark">X</span>  <span class="price">${{ $item->price }}</span>
+                                                    <span class="x-mark">X</span>  <span class="price">{{ getSetting()->currency_symbol }}{{ $item->price }}</span>
                                                 </div>
 
-                                                <div id="{{ $item->rowId }}" class="cart_total text-button total_price">${{ $totalPrice }}</div>
+                                                <div id="{{ $item->rowId }}" class="cart_total text-button total_price">{{ getSetting()->currency_symbol }}{{ $totalPrice }}</div>
                                             </div>
                                         </div>
                                     </div>
@@ -262,7 +269,7 @@
                             @else
                                 <div class="alert alert-danger text-center" style="margin: 0 24px;" role="alert">
                                     <p class="mb-3">No items in the cart. </p>
-                                    <a href="{{ route('checkout') }}" class="tf-btn btn-reset">Continue Shopping</a>
+                                    <a href="{{ route('product.page') }}" class="tf-btn btn-reset">Continue Shopping</a>
                                 </div>
                             @endif
                         </div>
@@ -282,7 +289,7 @@
                                                                         <div class="text-caption-1">Discount</div>
                                                                         <span class="sale-off text-btn-uppercase">
                                                                             @if ( $item->discount_type === "amount" )
-                                                                                ${{ $item->discount }} OFF
+                                                                                {{ getSetting()->currency_symbol }}{{ $item->discount }} OFF
                                                                             @elseif( $item->discount_type === "percent")
                                                                                 {{ $item->discount }}% OFF
                                                                             @endif
@@ -290,7 +297,7 @@
                                                                     </div>
 
                                                                     <div class="discount-from">
-                                                                        <p class="text-caption-1">For all orders <br> from <span class="main_cart_total">${{ getMainCartTotal() }}</span></p>
+                                                                        <p class="text-caption-1">For all orders <br> from <span class="main_cart_total">{{ getSetting()->currency_symbol }}{{ getMainCartTotal() }}</span></p>
                                                                     </div>
                                                                 </div>
 
@@ -329,7 +336,7 @@
                                 <h5 class="item d-flex align-items-center justify-content-between ">
                                     <span>SubTotal</span>
                                     <span class="tf-totals-total-value">
-                                        ${{ getCartTotal() }}
+                                        {{ getSetting()->currency_symbol }}{{ getCartTotal() }}
                                     </span>
                                 </h5>
 
@@ -345,12 +352,12 @@
                                     <span class="total_discount">
                                         @if ( Session::has('coupon') )
                                             @if ( Session::get('coupon')['discount_type'] === "amount")
-                                                ${{ Session::get('coupon')['discount'] }}
+                                                {{ getSetting()->currency_symbol }}{{ Session::get('coupon')['discount'] }}
                                             @elseif( Session::get('coupon')['discount_type'] === "percent" )
-                                                ${{ ( getCartTotal() * Session::get('coupon')['discount'] ) / 100; }}
+                                                {{ getSetting()->currency_symbol }}{{ ( getCartTotal() * Session::get('coupon')['discount'] ) / 100; }}
                                            @endif
                                         @else
-                                            $0
+                                            {{ getSetting()->currency_symbol }}0
                                         @endif
                                     </span>
                                 </div>
@@ -360,7 +367,7 @@
                                     <span>(+) Delivery Charge</span>
                                     <span class="shipping_amount">
                                         @if ( Session::has('shippingCost') && Session::get('shippingCost'))
-                                            ${{ Session::get('shippingCost') ?: 0 }}
+                                            {{ getSetting()->currency_symbol }}{{ Session::get('shippingCost') ?: 0 }}
                                         @endif
                                     </span>
                                 </div>
@@ -368,7 +375,7 @@
                             <div class="bottom">
                                 <h5 class="d-flex justify-content-between">
                                     <span>Total</span>
-                                    <span class="total-price-checkout main_cart_total">${{ getMainCartTotal() }}</span>
+                                    <span class="total-price-checkout main_cart_total">{{ getSetting()->currency_symbol }}{{ getMainCartTotal() }}</span>
                                 </h5>
                             </div>
                         </div>
@@ -386,6 +393,9 @@
 
 <script>
     $(document).ready(function(){
+        var currency_symbol = "{{ getSetting()->currency_symbol }}";
+        var currency_name   = "{{ getSetting()->currency_name }}";
+
         //__ Product Quantity Increament __//
         $(document).on('click', '.product-increase', function() {
             let input = $(this).siblings('.product_quantity');
@@ -407,7 +417,7 @@
                     if( data.status === 'success' ){ 
                         let productId = '#' + rowId;
                         let qtyId = '#qty' + rowId;
-                        $(productId).text('$' + data.productTotal);
+                        $(productId).text(`${currency_symbol}` + data.productTotal);
                         $(qtyId).text(data.productQty);
 
                         calculationCouponDiscount();
@@ -451,7 +461,7 @@
                     if( data.status === 'success' ){ 
                         let productId = '#' + rowId;
                         let qtyId = '#qty' + rowId;
-                        $(productId).text('$' + data.productTotal);
+                        $(productId).text(`${currency_symbol}` + data.productTotal);
                         $(qtyId).text(data.productQty);
 
                         calculationCouponDiscount();
@@ -496,7 +506,7 @@
                                     <td colspan="5">
                                         <div class="alert alert-danger text-center" role="alert" style="margin: 0 24px;">
                                             <p class="mb-3">No items in the cart. </p>
-                                            <a href="{{ route('checkout') }}" class="tf-btn btn-reset">Continue Shopping</a>
+                                            <a href="{{ route('product.page') }}" class="tf-btn btn-reset">Continue Shopping</a>
                                         </div>
                                     </td>
                                 </tr>
@@ -507,7 +517,6 @@
                             $('#coupon_codes').val('');
                             $('.group-discount').remove();
                         }
-                        
                         sidebarCartData();
                         getCartCount(); 
                         toastr.success(data.message);
@@ -543,7 +552,7 @@
                             tableBody.html(`
                                 <div class="alert alert-danger text-center" role="alert" style="margin: 0 24px;">
                                     <p class="mb-3">No items in the cart. </p>
-                                    <a href="{{ route('checkout') }}" class="tf-btn btn-reset">Continue Shopping</a>
+                                    <a href="{{ route('product.page') }}" class="tf-btn btn-reset">Continue Shopping</a>
                                 </div>
                             `);
                             $('.tf-mini-cart-threshold').remove();
@@ -583,7 +592,7 @@
                             $('#list_product').html(`
                                 <div class="alert alert-danger text-center" role="alert" style="margin: 0 24px;">
                                     <p class="mb-3">No items in the cart.</p>
-                                    <a href="{{ route('checkout') }}" class="tf-btn btn-reset">Continue Shopping</a>
+                                    <a href="{{ route('product.page') }}" class="tf-btn btn-reset">Continue Shopping</a>
                                 </div>
                             `);
                             $('.tf-mini-cart-threshold').remove();
@@ -621,11 +630,11 @@
                     },
                     success: function (res) {
                         if (res.status === true) {
-                            $('.shipping_amount').text('$' + res.shippingCost);
-                            $('.main_cart_total').text('$' + res.cartTotal);
+                            $('.shipping_amount').text(`${currency_symbol}` + res.shippingCost);
+                            $('.main_cart_total').text(`${currency_symbol}` + res.cartTotal);
                             toastr.success(res.message);
                         } else {
-                            $('.shipping_amount').text('$' + res.shippingCost);
+                            $('.shipping_amount').text(`${currency_symbol}` + res.shippingCost);
                             toastr.error(res.message);
                         }
                     },
@@ -659,7 +668,7 @@
                         cartHtml = `
                             <div class="alert alert-danger text-center" role="alert" style="margin: 0 24px;">
                                 <p class="mb-3">No items in the cart.</p>
-                                <a href="{{ route('checkout') }}" class="tf-btn btn-reset">Continue Shopping</a>
+                                <a href="{{ route('product.page') }}" class="tf-btn btn-reset">Continue Shopping</a>
                             </div>
                         `;
                     } else {
@@ -679,14 +688,14 @@
                                         </div>
                                         <div class="d-flex align-items-center justify-content-between de-flex gap-12">
                                             <div class="text-secondary-2">
-                                                ${item.size_name ? item.size_name.toUpperCase() + ` ($${item.size_price})` : ''} 
-                                                ${item.color_name ? ` / ${item.color_name} ($${item.color_price})` : ''}
+                                                ${item.size_name ? item.size_name.toUpperCase() + ` (${currency_symbol}${item.size_price})` : ''} 
+                                                ${item.color_name ? ` / ${item.color_name} (${currency_symbol}${item.color_price})` : ''}
                                             </div>
-                                            <div class="text-button">${item.qty} X $${item.price}</div>
+                                            <div class="text-button">${item.qty} X ${currency_symbol}${item.price}</div>
                                         </div>
                                         <div class="d-flex align-items-center justify-content-between de-flex gap-12">
                                             <div class="text-secondary-2">Amount</div>
-                                            <div class="text-button">$${item.total}</div>
+                                            <div class="text-button">${currency_symbol}${item.total}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -740,19 +749,19 @@
                                                 <div class="variant-box">
                                                     <div class="tf-select">
                                                         <div class="product_variant">
-                                                            Color: ${item.color_name || 'N/A'} ($${item.color_price})
+                                                            Color: ${item.color_name || 'N/A'} (${currency_symbol}${item.color_price})
                                                         </div>
                                                     </div>
                                                     <div class="tf-select">
                                                         <div class="product_variant">
-                                                            Size: ${item.size_name || 'N/A'} ($${item.size_price})
+                                                            Size: ${item.size_name || 'N/A'} (${currency_symbol}${item.size_price})
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </td>
                                         <td data-cart-title="Price" class="tf-cart-item_price text-center">
-                                            <div class="cart_price text-button price_on_sale">$${item.price}</div>
+                                            <div class="cart_price text-button price_on_sale">${currency_symbol}${item.price}</div>
                                         </td>
                                         <td data-cart-title="Quantity" class="tf-cart-item_quantity">
                                             <div class="wg-quantity mx-md-auto">
@@ -762,7 +771,7 @@
                                             </div>
                                         </td>
                                         <td data-cart-title="Total" class="tf-cart-item_total text-center">
-                                            <div id="${item.rowId}" class="cart_total text-button total_price">$${item.total}</div>
+                                            <div id="${item.rowId}" class="cart_total text-button total_price">${currency_symbol}${item.total}</div>
                                         </td>
                                         <td class="remove-cart remove_item_alignemnt" id="remove_cart">
                                             <i class="icon bx bx-x icon-close-popup remove_product_cart" style="font-size: 20px;" data-id="${item.rowId}"></i>
@@ -797,7 +806,7 @@
                             cartHtml = `
                                 <div class="alert alert-danger text-center" role="alert" style="margin: 0 24px;">
                                     <p class="mb-3">No items in the cart.</p>
-                                    <a href="{{ route('checkout') }}" class="tf-btn btn-reset">Continue Shopping</a>
+                                    <a href="{{ route('product.page') }}" class="tf-btn btn-reset">Continue Shopping</a>
                                 </div>
                             `;
                         } else {
@@ -813,7 +822,7 @@
                                             <div class="info">
                                                 <a href="/product-details/${item.slug}" class="name-product link text-title">${item.name}</a>
 
-                                                <div class="variant text-caption-1 text-secondary"><span class="size">${item.color_name || 'N/A'} ( $${item.color_price} )</span> / <span class="color">${item.size_name || 'N/A'} ( $${item.size_price} )</span></div>
+                                                <div class="variant text-caption-1 text-secondary"><span class="size">${item.color_name || 'N/A'} ( ${currency_symbol}${item.color_price} )</span> / <span class="color">${item.size_name || 'N/A'} ( ${currency_symbol}${item.size_price} )</span></div>
 
                                                 <div class="wg-quantity">
                                                     <span class="btn-quantity product-decrease">-</span>
@@ -827,10 +836,10 @@
 
                                                 <div class="">
                                                     <span class="count" data-row_id="${item.rowId}" id="qty${item.rowId}">1</span>
-                                                    <span class="x-mark">X</span>  <span class="price">$${item.variant_price}</span>
+                                                    <span class="x-mark">X</span>  <span class="price">${currency_symbol}${item.variant_price}</span>
                                                 </div>
 
-                                                <div id="${item.rowId}" class="cart_total text-button total_price">$2450</div>
+                                                <div id="${item.rowId}" class="cart_total text-button total_price">${currency_symbol}2450</div>
                                             </div>
                                         </div>
                                     </div>
@@ -882,7 +891,7 @@
                                             <td colspan="5">
                                                 <div class="alert alert-danger text-center"  role="alert" style="margin: 0 24px;">
                                                     <p class="mb-3">No items in the cart. </p>
-                                                    <a href="{{ route('checkout') }}" class="tf-btn btn-reset">Continue Shopping</a>
+                                                    <a href="{{ route('product.page') }}" class="tf-btn btn-reset">Continue Shopping</a>
                                                 </div>
                                             </td>
                                         </tr>
@@ -917,8 +926,8 @@
                 success: function(data) {
                     console.log('get total', data);
                     if( data.status === 'success' ){
-                       $('.tf-totals-total-value').text('$' + data.total);
-                       $('.subTotal').text('$' + data.total);
+                       $('.tf-totals-total-value').text(`${currency_symbol}` + data.total);
+                       $('.subTotal').text(`${currency_symbol}` + data.total);
                     //    $('.main_cart_total').text('$' + data.total);
                     }
                 },
@@ -932,18 +941,6 @@
         function sidebarCartActionElement(){
             $('.mini-cart-actions').html(`
                 <div id="tf-mini-cart-actions-field">
-                    <div class="tf-cart-checkbox">
-                        <div class="tf-checkbox-wrapp">
-                            <input class="" type="checkbox" id="CartDrawer-Form_agree" name="agree_checkbox">
-                            <div>
-                                <i class="icon-check"></i>
-                            </div>
-                        </div>
-                        <label for="CartDrawer-Form_agree">
-                            I agree with 
-                            <a href="term-of-use.html" title="Terms of Service">Terms & Conditions</a>
-                        </label>
-                    </div>
 
                     <div class="tf-mini-cart-view-checkout">
                         <a href="{{ route('show-cart') }}" class="tf-btn w-100 btn-white radius-4 has-border"><span class="text">View cart</span></a>
@@ -951,7 +948,7 @@
                     </div>
 
                     <div class="text-center">
-                        <a class="link text-btn-uppercase" href="shop-default-grid.html">Or continue shopping</a>
+                        <a class="link text-btn-uppercase" href="{{ route('product.page') }}">Or continue shopping</a>
                     </div>    
                 </div>
             `);
@@ -1012,8 +1009,8 @@
                 success: function(data) {
                     // console.log(data.cart_total, data.discount);
                     if( data.status === 'success' ){ 
-                        $('.total_discount').text('$'+ data.discount);
-                        $('.main_cart_total').text('$'+ data.cart_total);
+                        $('.total_discount').text(`${currency_symbol}`+ data.discount);
+                        $('.main_cart_total').text(`${currency_symbol}`+ data.cart_total);
 
                         if( data.discount_type === "percent" ){
                             $('.percent_show').text('(' + data.discount_percent + '%)');
@@ -1023,7 +1020,7 @@
                         }
 
                         // Update shipping cost
-                        $('.shipping_amount').text('$' + data.shipping_cost);
+                        $('.shipping_amount').text(`${currency_symbol}` + data.shipping_cost);
                     }
                 },
                 error: function(err) {
@@ -1061,7 +1058,7 @@
                    $('.tf-product-info-price').html(res.price_val);
                    $('#short_desc').text(`${product.short_description}`);
                    $('#product_view').text(`${product.product_view}`);
-                   // $('.total_price').text('$' + res.product_price);
+                   // $('.total_price').text(`${currency_symbol}` + res.product_price);
 
                    var imagesHtml = '';
 
@@ -1093,7 +1090,7 @@
                                        data-scroll-quickview="${color.color_name.toLowerCase()}"
                                        >
                                        <span class="btn-checkbox" style="background-color:${color.color_code || ''}"></span>
-                                       <span class="tooltip">${color.color_name} ( TK ${color.color_price} )</span>
+                                       <span class="tooltip">${color.color_name} ( ${currency_name} ${color.color_price} )</span>
                                    </label>
                                </div>
                            `;
@@ -1105,7 +1102,7 @@
                        var firstColor = res.product_color[0]; // Get the first color
                        $('.text-title.color_variant').text(firstColor.color_name);
                     } else {
-                       $('#color_variant').html('<p>No colors available for this product.</p>');
+                       $('#color_variant').html('');
                        $('.text-title.color_variant').text('No Color');
                     }
 
@@ -1119,7 +1116,7 @@
                                     <input type="radio" name="size_id" data-price="${size.size_price}" id="size${size.id}" value="${size.id}" ${index === 0 ? 'checked' : ''}>
                                     <label class="hover-tooltip tooltip-bot style-text size-btn" for="size${size.id}" data-value="${size.size_name.toUpperCase()}" data-size-price="${size.size_price}">
                                         <span class="text-title">${size.size_name.toUpperCase()}</span>
-                                        <span class="tooltip">${size.size_name} ( TK ${size.size_price} )</span>
+                                        <span class="tooltip">${size.size_name} ( ${currency_name} ${size.size_price} )</span>
                                     </label>
                                 </div>
                             `;
@@ -1178,7 +1175,7 @@
                                        data-scroll-quickview="${color.color_name.toLowerCase()}"
                                        >
                                        <span class="btn-checkbox" style="background-color:${color.color_code || ''}"></span>
-                                       <span class="tooltip">${color.color_name} ( TK ${color.color_price} )</span>
+                                       <span class="tooltip">${color.color_name} ( ${currency_name} ${color.color_price} )</span>
                                    </label>
                                </div>
                            `;
@@ -1190,7 +1187,7 @@
                        var firstColor = res.product_color[0]; // Get the first color
                        $('.text-title.color_variant').text(firstColor.color_name);
                    } else {
-                       $('#color_variant').html('<p>No colors available for this product.</p>');
+                       $('#color_variant').html('');
                        $('.text-title.color_variant').text('No Color');
                    }
                    
@@ -1205,7 +1202,7 @@
                                    <input type="radio" name="size_id" data-price="${size.size_price}" id="size${size.id}" value="${size.id}" ${index === 0 ? 'checked' : ''}>
                                    <label class="hover-tooltip tooltip-bot style-text size-btn for="size${size.id}" data-value="${size.size_name.toUpperCase()}" data-size-price="${size.size_price}" >
                                        <span class="text-title">${size.size_name.toUpperCase()}</span>
-                                       <span class="tooltip">${size.size_name} ( TK ${size.size_price} )</span>
+                                       <span class="tooltip">${size.size_name} ( ${currency_name} ${size.size_price} )</span>
                                    </label>
                                </div>
                            `;
@@ -1305,150 +1302,118 @@
            });
        });
 
-       // Fetch all sidebar cart data
-    //    function sidebarCartData(){
-    //        $.ajax({
-    //            method: 'GET',
-    //            url: "{{ route('get.sidebar.cart') }}",
-    //            success: function(response) {
-    //                if (response.status === true) {
-    //                    let cartHtml = '';
-    //                    response.cartItems.forEach(item => {
-    //                        cartHtml += `
-    //                            <div class="tf-mini-cart-item file_delete" id="side_remove-${item.rowId}">
-    //                                <div class="tf-mini-cart-image">
-    //                                    <img class="lazyload" data-src="${item.image}" src="${item.image}" alt="${item.slug}">
-    //                                </div>
-    //                                <div class="tf-mini-cart-info flex-grow-1">
-    //                                    <div class="mb_12 d-flex align-items-center justify-content-between de-flex gap-12">
-    //                                        <div class="text-title">
-    //                                            <a href="/product-details/${item.slug}" class="link text-line-clamp-1">${item.name}</a>
-    //                                        </div>
-    //                                        <div class="text-button tf-btn-remove remove side_remove_cart" data-row_id="${item.rowId}">Remove</div>
-    //                                    </div>
-    //                                    <div class="d-flex align-items-center justify-content-between de-flex gap-12">
-    //                                        <div class="text-secondary-2">
-    //                                            ${item.size_name ? item.size_name.toUpperCase() + ` ($${item.size_price})` : ''} 
-    //                                            ${item.color_name ? ` / ${item.color_name} ($${item.color_price})` : ''}
-    //                                        </div>
-    //                                        <div class="text-button">${item.qty} X $${item.price}</div>
-    //                                    </div>
-    //                                    <div class="d-flex align-items-center justify-content-between de-flex gap-12">
-    //                                        <div class="text-secondary-2">Amount</div>
-    //                                        <div class="text-button">$${item.total}</div>
-    //                                    </div>
-    //                                </div>
-    //                            </div>
-    //                        `;
-    //                    });
-
-    //                    // Update the cart sidebar body
-    //                    $('#cart-sidebar-table-body').html(cartHtml);
-
-    //                    sidebarCartActionElement();
-    //                }
-    //            },
-    //            error: function(err) {
-    //                toastr.error('Failed to fetch cart data.');
-    //                console.log(err);
-    //            }
-    //        });
-    //    }
-
-       //__ Sidebar Single product clear __//
-       $(document).on('click', '.side_remove_cart', function(e) {
-           e.preventDefault();
-           let id = $(this).data('row_id');    
-           // console.log(id); 
-
-           $.ajax({
-               url: "{{ url('/cart/remove-product') }}/" + id,
-               method: 'GET',
-               dataType: 'json',
-               data: { id: id },
-               success: function(data) {
-                   // console.log(data);
-                   if( data.status === 'success' ){ 
-                       getSidebarCartTotal();
-                       let singleProductRemove = '#side_remove-' +id;
-                       $(singleProductRemove).remove();
-
-                       // Check if the table is empty and display the message
-                       const tableBody = $('#cart-sidebar-table-body'); // Replace with the actual tbody ID or class
-                       if (tableBody.children('.tf-mini-cart-item').length === 0) {
-                           tableBody.html(`
-                               <div class="alert alert-danger text-center" role="alert" style="margin: 0 24px;">
-                                   <a href="{{ route('checkout') }}" class="tf-btn btn-reset">Continue Shopping</a>
-                               </div>
-                           `);
-                           $('.tf-mini-cart-threshold').remove();
-                           $('#tf-mini-cart-actions-field').remove();
-                       }
-
-                       getCartCount(); 
-                       toastr.success(data.message);
-                   }
-               },
-               error: function(err) {
-                   console.log(err);
-               },
-           })
-       })
-
-       //__ Cart Count __//
-       function getCartCount(){
-           $.ajax({
-               method: 'GET',
-               url: "{{ route('cart.count') }}",
-               success: function(data) {
-                   console.log(data);
-                   if( data.status === 'success' ){
-                      $('.count-box').text(data.cartCount);
-                   }
-               },
-               error: function(data) {
-                   // console.log('Error adding product to cart:', data);
-               },
-           });
-       }
-
-       //__ Cart subTotal __//
-       function getSidebarCartTotal(){
-           $.ajax({
-               method: 'GET',
-               url: "{{ route('cart.sidebar-product-total') }}",
-               success: function(data) {
-                   console.log('get total', data);
-                   if( data.status === 'success' ){
-                      $('.tf-totals-total-value').text('$' + data.total);
-                   }
-               },
-               error: function(data) {
-                   console.log('Error adding product to cart:', data);
-               },
-           });
-       }
-
-       //__ Sidebar Cart Element __//
-       function sidebarCartActionElement(){
-           $('.mini-cart-actions').html(`
-               <div id="tf-mini-cart-actions-field">
-
-                   <div class="tf-mini-cart-view-checkout">
-                       <a href="{{ route('show-cart') }}" class="tf-btn w-100 btn-white radius-4 has-border"><span class="text">View cart</span></a>
-                       <a href="{{ route('checkout') }}" class="tf-btn w-100 btn-fill radius-4"><span class="text">Check Out</span></a>
-                   </div>
-
-                   <div class="text-center">
-                       <a class="link text-btn-uppercase" href="shop-default-grid.html">Or continue shopping</a>
-                   </div>    
-               </div>
-           `);
-       }
 
        $('.quick_view_cart').on('click', function() {
            $('.show-shopping-cart').removeClass('show-shopping-cart');
        });
+
+        // Subscription Form
+        $('#newsletter_form').on('submit', function (e) {
+            e.preventDefault();
+            let data = $(this).serialize(); // Serialize form data
+
+            $.ajax({
+                method: 'POST',
+                url: "{{ route('newsletter.request') }}",
+                data: data, // Send form data, including the CSRF token
+                beforeSend: function(){
+                    $('#subscription_btn').html("<i class='bx bx-loader-alt'></i>");
+                    $('#subscription_btn').addClass('spinners');
+                },
+                success: function (data) {
+                    if (data.status === 'success') {
+                        toastr.success(data.message);
+                        $('#subscription_btn').html("<i class='bx bx-up-arrow-alt'></i>");
+                        $('#subscription_btn').removeClass('spinners');
+                        $('.subscribe_input').val('')
+                    } else if (data.status === 'error') {
+                        toastr.error(data.message);
+                        $('#subscription_btn').html("<i class='bx bx-up-arrow-alt'></i>");
+                        $('#subscription_btn').removeClass('spinners');
+                        $('.subscribe_input').val('');
+                    }
+                },
+                error: function (data) {
+                    console.log(data);
+                    let errors = data.responseJSON?.errors;
+                    $.each(errors, function (key, value) {
+                        toastr.error(value);
+                        $('#subscription_btn').html("<i class='bx bx-up-arrow-alt'></i>");
+                        $('#subscription_btn').removeClass('spinners');
+                    });
+                }
+            });
+        });
+
+        // Wishlist Add 
+        $('.wishlist').on('click', function(e){
+            e.preventDefault();
+            let button = $(this); // Target the specific button clicked
+            let productId = button.data('id');
+            let cardProduct = button.closest('.wishlist_product');
+            let wishlistContainer = $('.wishlist-product-data'); 
+            console.log(productId);
+
+            $.ajax({
+                method: 'GET',
+                url: "{{ route('wishlist.store') }}",
+                data: { id: productId },
+                success: function (response) {
+                    if (response.status === 'added') {
+                        toastr.success(response.message);
+                        // button.addClass('active');
+                        $('.wishlist[data-id="' + productId + '"]').addClass('active');
+                        getWishlistCount();
+                    } else if (response.status === 'removed') {
+                        toastr.info(response.message);
+                        $('.wishlist[data-id="' + productId + '"]').removeClass('active');
+
+                        // Remove the specific wishlist product
+                        cardProduct.fadeOut(300, function() {
+                            $(this).remove();
+
+                            // If wishlist is empty, show the message
+                            if (response.wishlist_count === 0) {
+                                wishlistContainer.html(`
+                                    <div class="tf-grid-layout md-col-12 xl-col-12">
+                                        <div class="alert alert-danger text-center no-wishlist-message" role="alert">
+                                            There is no wishlist product available
+                                        </div>
+                                    </div>
+                                `);
+                            }
+                        });
+                        getWishlistCount();
+                    } else if (response.status === 'error') {
+                        window.location.href = '{{ url("/login") }}'
+                    }
+                },
+                error: function (data) {
+                    console.log(data);
+                    let errors = data.responseJSON?.errors;
+                    $.each(errors, function (key, value) {
+                        toastr.error(value);
+                    });
+                }
+            });
+        });
+
+        //__ Wishlist Count __//
+        function getWishlistCount(){
+            $.ajax({
+                method: 'GET',
+                url: "{{ route('wishlist.count') }}",
+                success: function(data) {
+                    console.log(data);
+                    if( data.status === 'success' ){
+                        $('.wishlist_box').text(data.wishlistCount);
+                    }
+                },
+                error: function(data) {
+                    // console.log('Error adding product to cart:', data);
+                },
+            });
+        }
 
    });
 </script>

@@ -1,8 +1,16 @@
 @extends('frontend.layout.master')
 
 @push('add-meta')
-    <title>Sazao || About-us Template</title>
+    <title>{{ env('APP_NAME') }} || view order dashboard</title>
+    <meta name="description" content="">
+
+    <meta property="og:title" content="view order dashboard">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url()->current() }}">
 @endpush
+
 
 @push('add-css')
    
@@ -41,16 +49,16 @@
                     <h3 class="heading text-center">My Account</h3>
                     <ul class="breadcrumbs d-flex align-items-center justify-content-center">
                         <li>
-                            <a class="link" href="index.html">Homepage</a>
+                            <a class="link" href="{{ route('home') }}">Homepage</a>
                         </li>
                         <li>
-                            <i class="icon-arrRight"></i>
+                            <i class='bx bx-chevron-right'></i>
                         </li>
                         <li>
-                            <a class="link" href="#">Pages</a>
+                            <a class="link" href="{{ route('product.page') }}">Shop</a>
                         </li>
                         <li>
-                            <i class="icon-arrRight"></i>
+                            <i class='bx bx-chevron-right'></i>
                         </li>
                         <li>
                             My Account

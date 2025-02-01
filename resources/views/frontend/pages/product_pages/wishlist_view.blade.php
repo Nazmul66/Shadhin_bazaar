@@ -1,7 +1,14 @@
 @extends('frontend.layout.master')
 
 @push('add-meta')
-    <title>Sazao || About-us Template</title>
+    <title>{{ env('APP_NAME') }} || wishlist</title>
+    <meta name="description" content="">
+
+    <meta property="og:title" content="wishlist">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url()->current() }}">
 @endpush
 
 @push('add-css')
@@ -32,8 +39,9 @@
     <div class="container wishlist-product-data">
         @if ( $wishlists->count() < 1 )
             <div class="tf-grid-layout md-col-12 xl-col-12">
-                <div class="alert alert-danger text-center" role="alert">
-                    There is no wishlist product available
+                <div class="alert alert-danger text-center" style="margin: 0 24px;" role="alert">
+                    <p class="mb-3">There is no wishlist product available</p>
+                    <a href="{{ route('product.page') }}" class="tf-btn btn-reset">Continue Shopping</a>
                 </div>
             </div>
         @else

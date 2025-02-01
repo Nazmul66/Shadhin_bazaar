@@ -1,7 +1,14 @@
 @extends('frontend.layout.master')
 
 @push('add-meta')
-    <title>Sazao || About-us Template</title>
+    <title>{{ env('APP_NAME') }} || {{ $title }}</title>
+    <meta name="description" content="{{ $description }}">
+
+    <meta property="og:title" content="{{ $title ?? 'Default Title' }}">
+    <meta property="og:description" content="{{ $description ?? 'Default Description' }}">
+    <meta property="og:image" content="{{ asset(getSetting()->logo ) }}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url()->current() }}">
 @endpush
 
 @push('add-css')
@@ -19,7 +26,7 @@
                 <h3 class="heading text-center">Contact Us</h3>
                 <ul class="breadcrumbs d-flex align-items-center justify-content-center">
                     <li>
-                        <a class="link" href="index.html">Homepage</a>
+                        <a class="link" href="{{ route('home') }}">Homepage</a>
                     </li>
                     <li>
                         <i class='bx bx-chevron-right'></i>

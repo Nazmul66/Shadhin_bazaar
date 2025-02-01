@@ -1,7 +1,14 @@
 @extends('frontend.layout.master')
 
 @push('add-meta')
-    <title>Sazao || About-us Template</title>
+    <title>{{ env('APP_NAME') }} || {{ $title }}</title>
+    <meta name="description" content="{{ $description }}">
+
+    <meta property="og:title" content="{{ $title ?? 'Default Title' }}">
+    <meta property="og:description" content="{{ $description ?? 'Default Description' }}">
+    <meta property="og:image" content="{{ asset(getSetting()->logo ) }}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url()->current() }}">
 @endpush
 
 @push('add-css')
@@ -19,7 +26,7 @@
                 <h3 class="heading text-center">Customer Feedbacks</h3>
                 <ul class="breadcrumbs d-flex align-items-center justify-content-center">
                     <li>
-                        <a class="link" href="index.html">Homepage</a>
+                        <a class="link" href="{{ route('home') }}">Homepage</a>
                     </li>
                     <li>
                         <i class='bx bx-chevron-right'></i>
@@ -44,197 +51,64 @@
 <section class="flat-spacing">
     <div class="container">
         <div class="tf-grid-layout md-col-3 mb_30">
-            <div class="testimonial-item style-4 wow fadeInUp" data-wow-delay="0s">
-                <div class="content-top">
-                    <div class="box-icon">
-                        <i class='bx bxs-quote-right'></i>
-                    </div>
-                    <div class="text-title">Variety of Styles!</div>
-                    <p class="text-secondary">"Fantastic shop! Great selection, fair prices, and friendly staff. Highly recommended. The quality of the products is exceptional, and the prices are very reasonable!"</p>
-                    <div class="box-rate-author">
-                        <div class="box-author">
-                            <div class="text-title author">Sybil Sharp</div>
+            @foreach ( $productReviews as $row )
+                @php
+                    $avgRatings = App\Models\ProductReview::where('product_id', $row->id)->where('status', 1)->avg('ratings');
+                @endphp
+
+                <div class="testimonial-item style-2">
+                    <div class="content-top">
+                        <div class="list-star-default">
+                            @for ( $i = 1; $i <= 5; $i++ )
+                                @if ( $i <= round($avgRatings))
+                                    <i class="bx bxs-star" style="color: #F0A750;"></i>
+                                @else
+                                    <i class="bx bx-star" style="color: #F0A750;"></i>
+                                @endif
+                            @endfor
                         </div>
-                        <div class="list-star-default color-primary">
-                           <i class='bx bxs-star icon'></i>
-                           <i class='bx bxs-star icon'></i>
-                           <i class='bx bxs-star icon'></i>
-                           <i class='bx bxs-star icon'></i>
-                           <i class='bx bxs-star icon'></i>
+
+                        <p class="text-secondary">{{ $row->review }}</p>
+
+                        <div class="box-author">
+                            <div class="text-title author">{{ $row->user_name }}</div>
+                            <svg class="icon" width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <g clip-path="url(#clip0_15758_14563)">
+                                <path d="M6.875 11.6255L8.75 13.5005L13.125 9.12549" stroke="#3DAB25" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M10 18.5005C14.1421 18.5005 17.5 15.1426 17.5 11.0005C17.5 6.85835 14.1421 3.50049 10 3.50049C5.85786 3.50049 2.5 6.85835 2.5 11.0005C2.5 15.1426 5.85786 18.5005 10 18.5005Z" stroke="#3DAB25" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </g>
+                                <defs>
+                                <clipPath id="clip0_15758_14563">
+                                <rect width="20" height="20" fill="white" transform="translate(0 0.684082)"/>
+                                </clipPath>
+                                </defs>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div class="box-avt">
+                        <div class="avatar avt-60 round">
+                            @if ( !empty($row->user_img) )
+                                <img src="{{ asset($row->user_img) }}" alt="avt">
+                            @else
+                                <img src="{{ asset('public/backend/assets/images/no_Image_available.jpg') }}" alt="avt">
+                            @endif
+                        </div>
+
+                        @php
+                            $total_sum = App\Models\OrderProduct::where('product_id', $row->product_id)->sum(DB::raw('(variant_total + unit_price) * qty'));
+                        @endphp
+
+                        <div class="box-price">
+                            <p class="text-title text-line-clamp-1">{{ $row->product_name }}</p>
+                            <div class="text-button price">{{ getSetting()->currency_symbol }}{{ $total_sum }}</div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="testimonial-item style-4 wow fadeInUp" data-wow-delay="0.1s">
-                <div class="content-top">
-                    <div class="box-icon">
-                         <i class='bx bxs-quote-right'></i>
-                    </div>
-                    <div class="text-title">Quality of Clothing!</div>
-                    <p class="text-secondary">"I absolutely love this shop! The products are high-quality and the customer service is excellent. I always leave with exactly what I need and a smile on my face."</p>
-                    <div class="box-rate-author">
-                        <div class="box-author">
-                            <div class="text-title author">Mark G.</div>
-                        </div>
-                        <div class="list-star-default color-primary">
-                           <i class='bx bxs-star icon'></i>
-                           <i class='bx bxs-star icon'></i>
-                           <i class='bx bxs-star icon'></i>
-                           <i class='bx bxs-star icon'></i>
-                           <i class='bx bxs-star icon'></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="testimonial-item style-4 wow fadeInUp" data-wow-delay="0.2s">
-                <div class="content-top">
-                    <div class="box-icon">
-                         <i class='bx bxs-quote-right'></i>
-                    </div>
-                    <div class="text-title">Customer Service!</div>
-                    <p class="text-secondary">"I love this shop! The products are always top-quality, and the staff is incredibly friendly and helpful. They go out of their way to make sure that I'm satisfied with my purchase.”</p>
-                    <div class="box-rate-author">
-                        <div class="box-author">
-                            <div class="text-title author">Emily S.</div>
-                        </div>
-                        <div class="list-star-default color-primary">
-                           <i class='bx bxs-star icon'></i>
-                           <i class='bx bxs-star icon'></i>
-                           <i class='bx bxs-star icon'></i>
-                           <i class='bx bxs-star icon'></i>
-                           <i class='bx bxs-star icon'></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="testimonial-item style-4 wow fadeInUp" data-wow-delay="0s">
-                <div class="content-top">
-                    <div class="box-icon">
-                         <i class='bx bxs-quote-right'></i>
-                    </div>
-                    <div class="text-title">Variety of Styles!</div>
-                    <p class="text-secondary">"Fantastic shop! Great selection, fair prices, and friendly staff. Highly recommended. The quality of the products is exceptional, and the prices are very reasonable!"</p>
-                    <div class="box-rate-author">
-                        <div class="box-author">
-                            <div class="text-title author">Sybil Sharp</div>
-                        </div>
-                        <div class="list-star-default color-primary">
-                           <i class='bx bxs-star icon'></i>
-                           <i class='bx bxs-star icon'></i>
-                           <i class='bx bxs-star icon'></i>
-                           <i class='bx bxs-star icon'></i>
-                           <i class='bx bxs-star icon'></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="testimonial-item style-4 wow fadeInUp" data-wow-delay="0.1s">
-                <div class="content-top">
-                    <div class="box-icon">
-                         <i class='bx bxs-quote-right'></i>
-                    </div>
-                    <div class="text-title">Variety of Styles!</div>
-                    <p class="text-secondary">"Fantastic shop! Great selection, fair prices, and friendly staff. Highly recommended. The quality of the products is exceptional, and the prices are very reasonable!"</p>
-                    <div class="box-rate-author">
-                        <div class="box-author">
-                            <div class="text-title author">Sybil Sharp</div>
-                        </div>
-                        <div class="list-star-default color-primary">
-                           <i class='bx bxs-star icon'></i>
-                           <i class='bx bxs-star icon'></i>
-                           <i class='bx bxs-star icon'></i>
-                           <i class='bx bxs-star icon'></i>
-                           <i class='bx bxs-star icon'></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="testimonial-item style-4 wow fadeInUp" data-wow-delay="0.2s">
-                <div class="content-top">
-                    <div class="box-icon">
-                         <i class='bx bxs-quote-right'></i>
-                    </div>
-                    <div class="text-title">Quality of Clothing!</div>
-                    <p class="text-secondary">"I absolutely love this shop! The products are high-quality and the customer service is excellent. I always leave with exactly what I need and a smile on my face."</p>
-                    <div class="box-rate-author">
-                        <div class="box-author">
-                            <div class="text-title author">Mark G.</div>
-                        </div>
-                        <div class="list-star-default color-primary">
-                           <i class='bx bxs-star icon'></i>
-                           <i class='bx bxs-star icon'></i>
-                           <i class='bx bxs-star icon'></i>
-                           <i class='bx bxs-star icon'></i>
-                           <i class='bx bxs-star icon'></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="testimonial-item style-4 wow fadeInUp" data-wow-delay="0s">
-                <div class="content-top">
-                    <div class="box-icon">
-                         <i class='bx bxs-quote-right'></i>
-                    </div>
-                    <div class="text-title">Customer Service!</div>
-                    <p class="text-secondary">"I love this shop! The products are always top-quality, and the staff is incredibly friendly and helpful. They go out of their way to make sure that I'm satisfied with my purchase.”</p>
-                    <div class="box-rate-author">
-                        <div class="box-author">
-                            <div class="text-title author">Emily S.</div>
-                        </div>
-                        <div class="list-star-default color-primary">
-                           <i class='bx bxs-star icon'></i>
-                           <i class='bx bxs-star icon'></i>
-                           <i class='bx bxs-star icon'></i>
-                           <i class='bx bxs-star icon'></i>
-                           <i class='bx bxs-star icon'></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="testimonial-item style-4 wow fadeInUp" data-wow-delay="0.1s">
-                <div class="content-top">
-                    <div class="box-icon">
-                         <i class='bx bxs-quote-right'></i>
-                    </div>
-                    <div class="text-title">Variety of Styles!</div>
-                    <p class="text-secondary">"Fantastic shop! Great selection, fair prices, and friendly staff. Highly recommended. The quality of the products is exceptional, and the prices are very reasonable!"</p>
-                    <div class="box-rate-author">
-                        <div class="box-author">
-                            <div class="text-title author">Sybil Sharp</div>
-                        </div>
-                        <div class="list-star-default color-primary">
-                           <i class='bx bxs-star icon'></i>
-                           <i class='bx bxs-star icon'></i>
-                           <i class='bx bxs-star icon'></i>
-                           <i class='bx bxs-star icon'></i>
-                           <i class='bx bxs-star icon'></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="testimonial-item style-4 wow fadeInUp" data-wow-delay="0.2s">
-                <div class="content-top">
-                    <div class="box-icon">
-                         <i class='bx bxs-quote-right'></i>
-                    </div>
-                    <div class="text-title">Variety of Styles!</div>
-                    <p class="text-secondary">"Fantastic shop! Great selection, fair prices, and friendly staff. Highly recommended. The quality of the products is exceptional, and the prices are very reasonable!"</p>
-                    <div class="box-rate-author">
-                        <div class="box-author">
-                            <div class="text-title author">Sybil Sharp</div>
-                        </div>
-                        <div class="list-star-default color-primary">
-                           <i class='bx bxs-star icon'></i>
-                           <i class='bx bxs-star icon'></i>
-                           <i class='bx bxs-star icon'></i>
-                           <i class='bx bxs-star icon'></i>
-                           <i class='bx bxs-star icon'></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            @endforeach
         </div>
-        <ul class="wg-pagination justify-content-center">
+
+        {{-- <ul class="wg-pagination justify-content-center">
             <li>
                 <a href="#" class="pagination-item text-button">1</a>
             </li>
@@ -247,14 +121,15 @@
             <li>
                 <a href="#" class="pagination-item text-button"><i class="icon-arrRight"></i></a>
             </li>
-        </ul>
+        </ul> --}}
     </div>
 </section>
 <!-- /Customer Feedbacks -->
-
 @endsection
 
 
 @push('add-js')
+
     @include('frontend.include.full_ajax_cart')
+
 @endpush

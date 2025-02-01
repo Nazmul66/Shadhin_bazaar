@@ -161,7 +161,7 @@
                                         </li>
 
                                         <li class="text-caption-1">
-                                            <a href="wish-list.html" class="footer-menu_item">My Wishlist</a>
+                                            <a href="{{ route('wishlist.index') }}" class="footer-menu_item">My Wishlist</a>
                                         </li>
                                     </ul>
                                 </div>
