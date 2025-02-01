@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 
 class AjaxCallController extends Controller
 {
-    public function CartQuickView(Request $request)
+    public function cartQuickView(Request $request)
     {
         // dd($request->all());
         $currency = getSetting()->currency_symbol;

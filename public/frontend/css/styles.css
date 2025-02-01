@@ -9603,6 +9603,11 @@ form .cols>* {
     color: var(--white);
     border-color: var(--main);
 }
+.tf-product-info-list .tf-product-info-by-btn .box-icon.active {
+    background-color: var(--main);
+    color: var(--white);
+    border-color: var(--main);
+}
 
 .tf-product-info-list .tf-product-info-help {
     padding-bottom: 19px;
@@ -18335,4 +18340,188 @@ ul.list-text.type-number {
     font-size: 14px;
     vertical-align: middle !important;
     line-height: 21px;
+}
+.tracking-wrap{
+    background: #fff;
+    padding: 40px;
+    text-align: center;
+    margin-bottom: 62px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: rgb(0 0 0 / 16%) 0px 1px 4px;
+}
+.wsus__track_header_single {
+    border-right: 1px solid #eee;
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: rgb(0 0 0 / 16%) 0px 1px 4px;
+}
+@media (max-width: 575.99px) {
+    .wsus__track_header_single {
+        margin-top: 20px;
+        border: 0;
+    }
+}
+@media (min-width: 576px) and (max-width: 767.99px) {
+    .wsus__track_header_single {
+        margin-top: 20px;
+        border: 0;
+    }
+}
+@media (min-width: 768px) and (max-width: 991.99px) {
+    .wsus__track_header_single {
+        margin-top: 20px;
+        border: 0;
+    }
+}
+@media (min-width: 992px) and (max-width: 1199.99px) {
+    .wsus__track_header_single {
+        text-align: center;
+    }
+}
+
+.progtrckr li {
+    display: inline-block;
+    text-align: center;
+    width: 24.75%;
+    text-transform: capitalize;
+    font-size: 18px;
+    font-weight: 700;
+    padding-bottom: 30px;
+    position: relative;
+}
+.progtrckr li:nth-child(1)::before {
+    content: "\f061";
+}
+.progtrckr li::before {
+    position: absolute;
+    font-family: "Font Awesome 5 Free";
+    left: 50%;
+    content: "\f00c";
+    color: silver;
+    background: #fff;
+    font-size: 23px;
+    bottom: -23px;
+    width: 45px;
+    height: 45px;
+    line-height: 43px;
+    border-radius: 50%;
+    transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+    border: 2px solid silver;
+    z-index: 1;
+}
+.check_mark::before {
+    background: #08C !important;
+    color: #fff !important;
+    border-color: #08C !important;
+}
+.progtrckr li::after {
+    position: absolute;
+    content: "";
+    width: 102%;
+    height: 4px;
+    background: silver;
+    bottom: -4px;
+    left: 0;
+}
+.progtrckr li:nth-child(1)::after {
+    background: #08C;
+}
+.check_mark::after {
+    background: #08C !important;
+}
+.progtrckr li:nth-child(2)::before {
+    content: "\f2f1";
+}
+.progtrckr li:nth-child(3)::before {
+    content: "\f0d1";
+}
+.red_mark::before {
+    content: "\f00d" !important;
+    background: #dc3545 !important;
+    border-color: #dc3545 !important;
+    color: #fff !important;
+}
+.red_mark::after {
+    background: #dc3545 !important;
+}
+.wsus__track_area .common_btn {
+    margin-top: 25px;
+}
+
+.common_btn {
+    font-size: 14px;
+    text-transform: capitalize;
+    font-weight: 600;
+    color: #fff;
+    background: #08C;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 30px;
+    outline: none;
+    transition: all linear 0.3s;
+    -webkit-transition: all linear 0.3s ease;
+    -moz-transition: all linear 0.3s ease;
+    -ms-transition: all linear 0.3s ease;
+    -o-transition: all linear 0.3s ease;
+}
+
+@media (max-width: 575.99px) {
+    .progtrckr {
+        margin: 50px 0px 0px 0px;
+    }
+    .progtrckr li {
+        width: 100%;
+        margin-bottom: 45px;
+    }
+}
+@media (min-width: 576px) and (max-width: 767.99px) {
+    .progtrckr {
+        margin: 50px 0px 0px 0px;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+    .progtrckr li {
+        width: 50%;
+        margin-bottom: 45px;
+        font-size: 14px;
+    }
+}
+@media (min-width: 768px) and (max-width: 991.99px) {
+    .progtrckr {
+        margin: 50px 0px 0px 0px;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+    .progtrckr li {
+        margin-bottom: 45px;
+        font-size: 14px;
+    }
+}
+@media (min-width: 992px) and (max-width: 1199.99px) {
+    .progtrckr {
+        display: flex;
+        justify-content: space-between;
+    }
+    .progtrckr li {
+        font-size: 14px;
+    }
+}
+@media (min-width: 1200px) and (max-width: 1399.99px) {
+    .progtrckr {
+        margin: 50px 0px 0px 0px;
+        display: flex;
+        justify-content: space-between;
+    }
+    .progtrckr li {
+        margin-bottom: 50px;
+    }
 }

@@ -148,8 +148,8 @@
                                 <a href="{{ route('contact.us') }}" class="item-link">Contact Us </a>
                             </li>
 
-                            <li class="menu-item">
-                                <a href="#" class="item-link">Tracking Orders </a>
+                            <li class="menu-item {{ isActive('track.order') }}">
+                                <a href="{{ route('track.order') }}" class="item-link">Tracking Orders </a>
                             </li>
 
                             {{-- <li class="menu-item position-relative">

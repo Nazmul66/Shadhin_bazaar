@@ -182,7 +182,6 @@
                             </div>
 
                             <div class="tf-product-info-choose-option">
-
                                 <form class="add-to-cart-form">
                                     @csrf
 
@@ -253,7 +252,11 @@
                                                 <span class="tooltip text-caption-2">Compare</span>
                                             </a> --}}
 
-                                            <a href="javascript:void(0);" class="box-icon hover-tooltip text-caption-2 wishlist btn-icon-action">
+                                            @php
+                                                $wishlistItems = App\Models\Wishlist::where('user_id', auth()->id())->pluck('product_id')->toArray();
+                                            @endphp
+
+                                            <a href="javascript:void(0);" class="box-icon hover-tooltip text-caption-2 wishlist btn-icon-action {{ in_array($row->id, $wishlistItems) ? 'active' : '' }}" data-id="{{ $row->id }}">
                                                 <i class='bx bx-heart' style="font-size: 24px;"></i>
                                                 <span class="tooltip text-caption-2">Wishlist</span>
                                             </a>

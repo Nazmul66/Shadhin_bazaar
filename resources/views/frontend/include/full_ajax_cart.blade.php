@@ -38,9 +38,7 @@
                            </div>
                        `;
                    });
-
                    $('.multiple_image').html(imagesHtml);
-
 
                    if (res.product_color && res.product_color.length > 0) {
                         var colorsHtml = '';
@@ -70,7 +68,7 @@
                        var firstColor = res.product_color[0]; // Get the first color
                        $('.text-title.color_variant').text(firstColor.color_name);
                    } else {
-                       $('#color_variant').html('<p>No colors available for this product.</p>');
+                       $('#color_variant').html('');
                        $('.text-title.color_variant').text('No Color');
                    }
 
@@ -99,7 +97,7 @@
                        var firstSize = res.product_sizes[0]; // Get the first size
                        $('.text-title.size_variant').text(firstSize.size_name.toUpperCase());
                    } else {
-                       $('#size_variant').html('<p>No sizes available for this product.</p>');
+                       $('#size_variant').html('');
                        $('.text-title.size_variant').text('No Size');
                    }
                },
@@ -156,7 +154,7 @@
                        var firstColor = res.product_color[0]; // Get the first color
                        $('.text-title.color_variant').text(firstColor.color_name);
                    } else {
-                       $('#color_variant').html('<p>No colors available for this product.</p>');
+                       $('#color_variant').html('');
                        $('.text-title.color_variant').text('No Color');
                    }
 
