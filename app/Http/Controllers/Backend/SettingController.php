@@ -116,6 +116,10 @@ class SettingController extends Controller
             $uploadImage                   = $this->imageUpload($request, 'favicon', 'settings');
             $setting->favicon              =  $uploadImage;
 
+            // Handle image with ImageUploadTraits function
+            $uploadImage                    = $this->imageUpload($request, 'banner_breadcrumb_img', 'settings');
+            $setting->banner_breadcrumb_img =  $uploadImage;
+
             $setting->save();
 
         }
@@ -210,9 +214,13 @@ class SettingController extends Controller
             $setting->favicon              =  $uploadImages;
 
 
+            // existing favicon delete with ImageUploadTraits function
+            $uploadImages                    = $this->deleteImageAndUpload($request, 'banner_breadcrumb_img', 'settings', $setting->banner_breadcrumb_img );
+            $setting->banner_breadcrumb_img  =  $uploadImages;
+
+
             // dd($setting);
             $setting->save();
-
         }
         catch(\Exception $ex){
             DB::rollBack();

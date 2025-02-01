@@ -40,7 +40,7 @@
                     </li>
 
                     <li class="nav-mb-item">
-                        <a href="{{ route('product.page') }}" class="mb-menu-link">
+                        <a href="{{ route('track.order') }}" class="mb-menu-link">
                             <span>Tracking Order</span>
                         </a>
                     </li>

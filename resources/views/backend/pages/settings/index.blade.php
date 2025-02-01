@@ -177,6 +177,30 @@
                 </div>
             </div>
 
+            {{-- Breadcrumb Banner Image --}}
+            <div class="mb-0">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5>Breadcrumb Banner Image</h5>
+                </div>
+
+                <div class="card-body">
+                    <div class="multiple-image">
+                        <label class="file_div" for="fileUploader" id="image_preview" style="padding: 20px;">
+                            @if ( !empty($setting->banner_breadcrumb_img) )
+                                <img src="{{ asset($setting->banner_breadcrumb_img) }}" alt="" style="width: 100%; height: 100%; object-fit: cover;">    
+                            @else
+                                <img src="{{ asset('public/backend/images/Upload_icon.png') }}" alt="" class="img_upload" />
+                                <h3>Upload Files or <span>Browse</span></h3>
+                                <p>Supported formates: JPEG, PNG, JPG</p>
+                                <figcaption class="file_name d-none" ></figcaption>
+                            @endif
+                        </label>
+                        <input type="file" class="d-none" id="fileUploader" accept=".jpg, .png, .jpeg, .webp" name="banner_breadcrumb_img" >
+                    </div>
+                </div>
+            </div>
+
+
             {{-- Social Links --}}
             <div class="mb-0">
                 <div class="card-header d-flex justify-content-between align-items-center">
@@ -443,6 +467,32 @@
     <script src="https://cdn.jsdelivr.net/npm/choices.js@9.0.1/public/assets/scripts/choices.min.js"></script>    
 
     <script>
+        document.getElementById('fileUploader').addEventListener('change', function(event) {
+            const imagePreview = document.getElementById('image_preview');
+            const files = event.target.files;
+
+            if (files.length > 0) {
+                // Clear existing content
+                imagePreview.innerHTML = '';
+
+                // Loop through selected files and display previews
+                Array.from(files).forEach(file => {
+                    if (file.type.match('image.*')) {
+                        const reader = new FileReader();
+                        reader.onload = e => {
+                            const img = document.createElement('img');
+                            img.src = e.target.result;
+                            img.style.width = '100%';
+                            img.style.height = '240px';
+                            // img.style.objectFit = 'cover';
+                            imagePreview.appendChild(img);
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+            }
+        });
+
         const meta_keywords = new Choices('.meta-keywords',{
             removeItems: true,
             duplicateItemsAllowed: false,

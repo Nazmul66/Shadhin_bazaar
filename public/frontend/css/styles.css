@@ -7703,6 +7703,9 @@ form .cols>* {
 .tf-icon-box .icon-box {
     font-size: 40px;
 }
+.tf-icon-box .icon-box img{
+    width: 50px;
+}
 
 .tf-icon-box .content {
     display: grid;

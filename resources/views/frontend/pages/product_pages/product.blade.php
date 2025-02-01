@@ -63,7 +63,14 @@
 @section('body-content')
 
    <!-- page-title -->
-   <div class="page-title" style="background-image: url({{ asset('public/frontend/images/section/page-title.jpg') }});">
+   <div class="page-title" style="background-image: url(
+    @if( !empty(getSetting()->banner_breadcrumb_img) )
+        {{ asset(getSetting()->banner_breadcrumb_img) }}
+    @else
+        {{ asset('public/frontend/images/section/page-title.jpg') }}
+    @endif
+    );">
+    
     <div class="container-full">
         <div class="row">
             <div class="col-12">

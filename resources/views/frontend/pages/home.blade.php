@@ -1982,6 +1982,7 @@
 <!-- /Category Section One Products -->
 
 <!-- Testimonials -->
+@if ( $productReviews->count() > 0 )
 <section class="flat-spacing">
     <div class="container">
         <div class="heading-section text-center wow fadeInUp">
@@ -2054,51 +2055,61 @@
         </div>
     </div>
 </section>
+@endif
+
 <!-- /Testimonials -->
 
 <!-- Iconbox -->
 <section class="flat-spacing-4 line-top-container">
     <div class="container">
-        <div dir="ltr" class="swiper tf-sw-iconbox" data-preview="4" data-tablet="3" data-mobile-sm="2" data-mobile="1" data-space-lg="30" data-space-md="30" data-space="15" data-pagination="1" data-pagination-sm="2" data-pagination-md="3" data-pagination-lg="4">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                    <div class="tf-icon-box">
-                        <div class="icon-box"><span class="icon icon-return"></span></div>
-                        <div class="content text-center">
-                            <h6>14-Day Returns</h6>
-                            <p class="text-secondary">Risk-free shopping with easy returns.</p>
-                        </div>
+        <div class="row">
+            <div class="col-lg-3 col-xl-3 col-md-6 mb-5">
+                <div class="tf-icon-box">
+                    <div class="icon-box">
+                        <img src="{{ asset('public/frontend/images/icons/return.png') }}" alt="">
                     </div>
-                </div>
-                <div class="swiper-slide">
-                    <div class="tf-icon-box">
-                        <div class="icon-box"><i class='bx bxs-truck' ></i></div>
-                        <div class="content text-center">
-                            <h6>Free Shipping</h6>
-                            <p class="text-secondary">No extra costs, just the price you see.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-slide">
-                    <div class="tf-icon-box">
-                        <div class="icon-box"><i class='bx bx-support'></i></div>
-                        <div class="content text-center">
-                            <h6>24/7 Support</h6>
-                            <p class="text-secondary">24/7 support, always here just for you</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-slide">
-                    <div class="tf-icon-box">
-                        <div class="icon-box"><i class='bx bx-badge-check'></i></div>
-                        <div class="content text-center">
-                            <h6>Member Discounts</h6>
-                            <p class="text-secondary">Special prices for our loyal customers.</p>
-                        </div>
+                    <div class="content text-center">
+                        <h5 style="font-size: 18px;">14-Day Returns</h5>
+                        <p class="text-secondary">Risk-free shopping with easy returns.</p>
                     </div>
                 </div>
             </div>
-            <div class="sw-pagination-iconbox sw-dots type-circle justify-content-center"></div>
+            
+            <div class="col-lg-3 col-xl-3 col-md-6 mb-5">
+                <div class="tf-icon-box">
+                    <div class="icon-box">
+                        <img src="{{ asset('public/frontend/images/icons/truck.png') }}" alt="">
+                    </div>
+                    <div class="content text-center">
+                        <h5 style="font-size: 18px;">Free Shipping</h5>
+                        <p class="text-secondary">No extra costs, just the price you see.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-xl-3 col-md-6 mb-5">
+                <div class="tf-icon-box">
+                    <div class="icon-box">
+                        <img src="{{ asset('public/frontend/images/icons/suport.png') }}" alt="">
+                    </div>
+                    <div class="content text-center">
+                        <h5 style="font-size: 18px;">24/7 Support</h5>
+                        <p class="text-secondary">24/7 support, always here just for you</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-xl-3 col-md-6 mb-5">
+                <div class="tf-icon-box">
+                    <div class="icon-box">
+                        <img src="{{ asset('public/frontend/images/icons/verify.png') }}" alt="">
+                    </div>
+                    <div class="content text-center">
+                        <h5 style="font-size: 18px;">Member Discounts</h5>
+                        <p class="text-secondary">Special prices for our loyal customers.</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>

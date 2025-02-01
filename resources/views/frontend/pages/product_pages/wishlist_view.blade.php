@@ -19,7 +19,14 @@
 @section('body-content')
 
   <!-- page-title -->
-  <div class="page-title" style="background-image: url({{ asset('public/frontend/images/section/page-title.jpg') }});">
+  <div class="page-title" style="background-image: url(
+    @if( !empty(getSetting()->banner_breadcrumb_img) )
+        {{ asset(getSetting()->banner_breadcrumb_img) }}
+    @else
+        {{ asset('public/frontend/images/section/page-title.jpg') }}
+    @endif
+    );">
+    
     <div class="container">
         <h3 class="heading text-center">Your Wishlist</h3>
         <ul class="breadcrumbs d-flex align-items-center justify-content-center">

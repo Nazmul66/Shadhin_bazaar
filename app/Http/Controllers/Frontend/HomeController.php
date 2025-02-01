@@ -16,6 +16,7 @@ use App\Models\FlashSale;
 use App\Models\FlashSaleItem;
 use App\Models\HomeSetting;
 use App\Models\Marquee;
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\ProductReview;
 use App\Models\Slider;
@@ -155,10 +156,22 @@ class HomeController extends Controller
         return view('frontend.pages.frontend_pages.blogs_details');
     }
 
-    public function track_order()
+    public function track_order(Request $request)
     {
-        return view('frontend.pages.frontend_pages.track_order');
+        $request->validate([
+            'tracker' => ['nullable', 'numeric']
+        ]);
+
+        if( $request->has('tracker') ){
+            $order = Order::where('order_id', $request->tracker)->first();
+            // dd($order);
+            return view('frontend.pages.frontend_pages.track_order', compact('order'));
+        }
+        else{
+            return view('frontend.pages.frontend_pages.track_order');
+        }
     }
+
 
     public function register_login()
     {
