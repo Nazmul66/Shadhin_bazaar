@@ -47,6 +47,8 @@ class HomeController extends Controller
         $data['new_products']         = Product::where('created_at', '>=', Carbon::now()->subMonths(2))->where('is_approved', 1)->where('status', 1)->limit(3)->get();
         $data['catSliderSectionOne']  = HomeSetting::where('key', 'product_slider_section_one')->first();
         $data['catSliderSectionTwo']  = HomeSetting::where('key', 'product_slider_section_two')->first();
+        $data['catSliderSectionThree']  = HomeSetting::where('key', 'product_slider_section_three')->first();
+        $data['website_rules']        = HomeSetting::where('key', 'website_rules')->first();
         $data['marquee']              = Marquee::where('status', 1)->get();
         $data['productReviews']       = ProductReview::
                                 leftJoin('users', 'users.id', 'product_reviews.user_id')->leftJoin('products', 'products.id', 'product_reviews.product_id')
@@ -65,8 +67,9 @@ class HomeController extends Controller
 
     public function contact_us()
     {
-        $data['title']       = 'Contact us'; 
-        $data['description'] = ''; 
+        $data['title']         = 'Contact us'; 
+        $data['description']   = ''; 
+        $data['time_schedule'] = HomeSetting::where('key', 'time_schedule_section')->first();
         return view('frontend.pages.frontend_pages.contact_us', $data);
     }
 

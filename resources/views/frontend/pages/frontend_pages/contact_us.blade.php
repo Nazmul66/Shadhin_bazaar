@@ -15,6 +15,11 @@
    
 @endpush
 
+@php
+    $time_schedule = json_decode($time_schedule->value, true);
+    // dd($time_schedule[0]);
+@endphp
+
 
 @section('body-content')
 
@@ -90,10 +95,10 @@
                         <div>
                             <div class="text-title mb_8">Open Time:</div>
                             <p class="mb_4 open-time">
-                                <span class="text-secondary">Mon - Sat:</span> 7:30am - 8:00pm PST
+                                <span class="text-secondary">{{ $time_schedule[0]['day'] }}:</span> {{ date('h:i a', strtotime($time_schedule[0]['start_time'])) .' - '. date('h:i a', strtotime($time_schedule[0]['end_time'])) }}
                             </p>
                             <p class="open-time">
-                                <span class="text-secondary">Sunday:</span> 9:00am - 5:00pm PST
+                                <span class="text-secondary">{{ $time_schedule[1]['day'] }}:</span> {{ date('h:i a', strtotime($time_schedule[1]['start_time'])) .' - '. date('h:i a', strtotime($time_schedule[1]['end_time'])) }}
                             </p>
                         </div>
                     </div>

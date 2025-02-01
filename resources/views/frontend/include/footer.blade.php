@@ -176,7 +176,7 @@
                             </div>
                             <div class="tf-collapse-content">
                                 <div class="footer-newsletter">
-                                    <p class="text-caption-1">Sign up for our newsletter and get 10% off your first purchase</p>
+                                    <p class="text-caption-1">Sign up for our newsletter and get discount offers</p>
                                     <div class="sib-form">
                                         <div id="sib-form-container" class="sib-form-container">
                                             <div id="sib-container" class="sib-container--large sib-container--vertical">
