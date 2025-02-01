@@ -301,28 +301,34 @@
                         @if(auth("admin")->user()->can("general.setting"))
                             <li>
                                 <a href="{{ route('admin.settings.index') }}">
-                                    <span >General Settings</span>
+                                    <span>General Settings</span>
                                 </a>
                             </li>
                         @endif
 
                         <li>
                             <a href="{{ route('admin.profiles') }}">
-                                <span >Profile Update</span>
+                                <span>Profile Update</span>
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="{{ route('admin.essential.setting') }}">
+                                <span>Essential Setting</span>
                             </a>
                         </li>
 
                         @if(auth("admin")->user()->can("email.config.setting"))
                             <li>
                                 <a href="{{ route('admin.email.setup') }}">
-                                    <span >Email Configuration</span>
+                                    <span>Email Configuration</span>
                                 </a>
                             </li>
                         @endif
 
                         <li>
                             <a href="{{ route('admin.marquee.index') }}">
-                                <span >Slide Advertise</span>
+                                <span>Slide Advertise</span>
                             </a>
                         </li>
                     </ul>

@@ -37,6 +37,7 @@ use App\Http\Controllers\Backend\TransactionController;
 use App\Http\Controllers\Backend\CustomerController;
 use App\Http\Controllers\Backend\SubscriptionController;
 use App\Http\Controllers\Backend\HomeSettingController;
+use App\Http\Controllers\Backend\EssentialSettingController;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
 
@@ -249,7 +250,13 @@ Route::middleware('setLanguage')->group(function(){
         Route::get('/marquee-data', [MarqueeController::class, 'getData'])->name('marquee-data');
         Route::post('/marquee/status', [MarqueeController::class, 'changeMarqueeStatus'])->name('marquee.status');
         Route::get('/marquee/view/{id}', [MarqueeController::class, 'marqueeView'])->name('marquee.view');
-        
+
+        //______ Essential Setting _____//
+        Route::controller(EssentialSettingController::class)->group(function () {
+            Route::get('/essential-setting', 'index')->name('essential.setting');
+            Route::put('/time-schedule', 'timeScheduleSection')->name('time.schedule');
+            Route::put('/website-rules', 'websiteRules')->name('website-rules');
+        });  
     });
 
 });
