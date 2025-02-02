@@ -8,14 +8,14 @@
             <div class="row wrapper-header align-items-center line-top-rgba">
                 <div class="col-md-4 col-3 d-xl-none">
                     <a href="#mobileMenu" class="mobile-menu" data-bs-toggle="offcanvas" aria-controls="mobileMenu">
-                        <i class='bx bx-menu-alt-left text-white' style="font-size: 36px;"></i>
+                        <i class='bx bx-menu-alt-left text-white' style="font-size: 32px;"></i>
                     </a>
                 </div>
                 <div class="col-xl-8 col-md-4 col-6">
                     <div class="wrapper-header-left justify-content-center justify-content-xl-start">
                         <a href="{{ route('home') }}" class="logo-header">
                             @if ( !empty(getSetting()->logo) )
-                                <img src="{{ asset(getSetting()->logo) }}" alt="logo" class="logo" style="width: 75px;">
+                                <img src="{{ asset(getSetting()->logo) }}" alt="logo" class="logo" style="width: 55px;">
                             @else
                                 <img src="{{ asset('public/frontend/images/logo/logo-white.svg') }}" alt="logo" class="logo">
                             @endif
@@ -128,7 +128,6 @@
                             </ul>
                         </div>
                     </div>
-
                     
                     <nav class="box-navigation">
                         <ul class="box-nav-ul d-flex align-items-center">
@@ -140,9 +139,9 @@
                                 <a href="{{ route('product.page') }}" class="item-link">Shop Page</a>
                             </li>
 
-                            <li class="menu-item {{ isActive('about.us') }}">
+                            {{-- <li class="menu-item {{ isActive('about.us') }}">
                                 <a href="{{ route('about.us') }}" class="item-link">About Us </a>
-                            </li>
+                            </li> --}}
 
                             <li class="menu-item {{ isActive('contact.us') }}">
                                 <a href="{{ route('contact.us') }}" class="item-link">Contact Us </a>

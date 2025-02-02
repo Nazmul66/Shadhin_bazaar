@@ -113,22 +113,34 @@
                                 </div>
                                 <div class="tf-collapse-content">
                                     <ul class="footer-menu-list">
-                                        <li class="text-caption-1">
+                                        {{-- <li class="text-caption-1">
                                             <a href="{{ route('about.us') }}" class="footer-menu_item">About Us</a>
+                                        </li> --}}
+                                        <li class="text-caption-1">
+                                            <a href="{{ route('wishlist.index') }}" class="footer-menu_item">My Wishlist</a>
                                         </li>
 
                                         <li class="text-caption-1">
                                             <a href="{{ route('customer.feedback') }}" class="footer-menu_item">Customer Feedback</a>
                                         </li>
+
+                                        <li class="text-caption-1">
+                                            <a href="{{ route('faq') }}" class="footer-menu_item">Orders FAQs</a>
+                                        </li>
+
                                         {{-- <li class="text-caption-1">
                                             <a href="#" class="footer-menu_item">Size Guide</a>
                                         </li> --}}
+
                                         <li class="text-caption-1">
                                             <a href="{{ route('contact.us') }}" class="footer-menu_item">Contact us</a>
                                         </li>
-                                        <li class="text-caption-1">
-                                            <a href="my-account.html" class="footer-menu_item">My Account</a>
-                                        </li>
+
+                                         @if ( Auth::Check() )
+                                            <li class="text-caption-1">
+                                                <a href="{{ route('user.dashboard') }}" class="footer-menu_item">My Account</a>
+                                            </li>
+                                         @endif
                                     </ul>
                                 </div>
                             </div>
@@ -136,7 +148,7 @@
 
                             <div class="footer-col-block">
                                 <div class="footer-heading text-button footer-heading-mobile">
-                                    Customer Services
+                                    Info Links
                                 </div>
                                 <div class="tf-collapse-content">
                                     <ul class="footer-menu-list">
@@ -154,14 +166,6 @@
 
                                         <li class="text-caption-1">
                                             <a href="{{ route('shipping') }}" class="footer-menu_item">Shipping</a>
-                                        </li>
-
-                                        <li class="text-caption-1">
-                                            <a href="{{ route('faq') }}" class="footer-menu_item">Orders FAQs</a>
-                                        </li>
-
-                                        <li class="text-caption-1">
-                                            <a href="{{ route('wishlist.index') }}" class="footer-menu_item">My Wishlist</a>
                                         </li>
                                     </ul>
                                 </div>

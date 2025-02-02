@@ -262,6 +262,12 @@
                                             </a>
                                         </div>
                                         <button type="submit" name="button" value="buy_now" class="fw-6 buy_now_btn btn-style-3 text-btn-uppercase">Buy it now</button>
+
+                                        <div class="btn_direct_contact">
+                                            <a href="{{ getSetting()->phone }}" name="button" class="fw-6 mt-2 preOrder_btn"><i class='bx bx-phone-call' ></i> Preorder- {{ getSetting()->whatsapp }}</a>
+
+                                            <a href="{{ getSetting()->whatsapp }}" name="button" value="buy_now" class="fw-6 mt-2 whatsapp_btn"><i class='bx bxl-whatsapp'></i> Whatsapp - {{ getSetting()->whatsapp }}</a>
+                                        </div>
                                     </div>
                                 </form>
 

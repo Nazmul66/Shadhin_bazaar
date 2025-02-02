@@ -57,6 +57,7 @@
                     @php
                         $wishlistItems = App\Models\Wishlist::where('user_id', auth()->id())->pluck('product_id')->toArray();
                     @endphp
+                    {{-- @dd($row->slug); --}}
 
                     <!-- card product {{ $key + 1 }} -->
                     <div class="card-product wishlist_product wow fadeInUp" data-wow-delay="0.1s" data-id="{{ $row->id }}">
@@ -172,10 +173,10 @@
                                     <span class="tooltip">Wishlist</span>
                                 </a>
 
-                                <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
+                                {{-- <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
                                     <i class='bx bx-git-compare' style="font-size: 24px;"></i>
                                     <span class="tooltip">Compare</span>
-                                </a>
+                                </a> --}}
                                 <a href="#quickView" data-id={{ $row->id }} data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
                                     <ion-icon name="eye-outline" style="font-size: 24px;"></ion-icon>
                                     <span class="tooltip">Quick View</span>
@@ -186,48 +187,55 @@
                             </div>
                         </div>
 
+                        @php
+                            $avgRatings = App\Models\ProductReview::where('product_id', $row->id)->where('status', 1)->avg('ratings');
+                            $reviews = App\Models\ProductReview::where('product_id', $row->id)->where('status', 1)->count();
+                        @endphp
 
                         <div class="card-product-info">
                             <a href="{{ route('product.details', $row->slug) }}" class="title link">{{ $row->name }}</a>
                             <div class="box-rating">
                                 <ul class="list-star">
-                                    <li class="bx bxs-star" style="color: #F0A750;"></li>
-                                    <li class="bx bxs-star" style="color: #F0A750;"></li>
-                                    <li class="bx bxs-star" style="color: #F0A750;"></li>
-                                    <li class="bx bxs-star" style="color: #F0A750;"></li>
-                                    <li class="bx bx-star" style="color: #F0A750;"></li>
+                                    @for ( $i = 1; $i <= 5; $i++ )
+                                        @if ( $i <= round($avgRatings))
+                                            <li class="bx bxs-star" style="color: #F0A750;"></li>
+                                        @else
+                                            <li class="bx bx-star" style="color: #F0A750;"></li>
+                                        @endif
+                                    @endfor
                                 </ul>
-                                <span class="text-caption-1 text-secondary">(1.234)</span>
+                                <span class="text-caption-1 text-secondary">({{ $reviews }} )</span>
                             </div>
 
                             @if ( checkDiscount($row) )
                                 @if ( !empty($row->discount_type === "amount") )
-                                    <span class="price"><span class="old-price">${{ $row->selling_price }}</span> ${{ $row->selling_price - $row->discount_value }}</span>
+                                    <span class="price"><span class="old-price">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> {{ getSetting()->currency_symbol }}{{ $row->selling_price - $row->discount_value }}</span>
                                 @elseif( !empty($row->discount_type === "percent") )
                                 @php
                                     $discount_val = $row->selling_price * $row->discount_value / 100;
                                 @endphp
-                                    <span class="price"><span class="old-price">${{ $row->selling_price }}</span> ${{ $row->selling_price - $discount_val }}</span>
+                                    <span class="price"><span class="old-price">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> {{ getSetting()->currency_symbol }}{{ $row->selling_price - $discount_val }}</span>
                                 @else
-                                    <span class="price"> ${{ $row->selling_price }}</span>
+                                    <span class="price"> {{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span>
                                 @endif
                             @else
-                                <span class="price"> ${{ $row->selling_price }}</span>
+                                <span class="price"> {{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span>
                             @endif
 
                             <div class="box-progress-stock">
                                 <div class="progress">
-                                    <div class="progress-bar" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                                 <div class="stock-status d-flex justify-content-between align-items-center">
                                     <div class="stock-item text-caption-1">
-                                        <span class="stock-label text-secondary-2">Available:</span>
+                                        <span class="stock-label text-secondary-2">Stock:</span>
                                         <span class="stock-value">{{ $row->qty }}</span>
                                     </div>
-                                    <div class="stock-item text-caption-1">
+
+                                    {{-- <div class="stock-item text-caption-1">
                                         <span class="stock-label text-secondary-2">Sold:</span>
                                         <span class="stock-value">{{ $row->product_sold }}</span>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
                         </div>

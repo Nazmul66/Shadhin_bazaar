@@ -2598,8 +2598,8 @@ a:hover {
 
 .header-style-5 .main-header .wrapper-header {
     min-height: 68px;
-    padding-top: 12px;
-    padding-bottom: 12px;
+    padding-top: 8px;
+    padding-bottom: 8px;
 }
 
 .header-style-5 .logo-header img {
@@ -3494,6 +3494,22 @@ footer.has-pb {
     display: flex;
     gap: 8px;
     overflow-x: auto;
+}
+
+@media ( min-width: 320px ) and ( max-width: 576px ){
+    .tab-product-v3 {
+        flex-wrap: wrap;
+    }
+}
+@media ( min-width: 577px ) and ( max-width: 768px ){
+    .tab-product-v3 {
+        flex-wrap: wrap;
+    }
+}
+@media ( min-width: 769px ) and ( max-width: 992px ){
+    .tab-product-v3 {
+        flex-wrap: wrap;
+    }
 }
 
 .tab-product-v3 a {
@@ -18527,4 +18543,52 @@ ul.list-text.type-number {
     .progtrckr li {
         margin-bottom: 50px;
     }
+}
+
+.btn_direct_contact{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.btn_direct_contact .preOrder_btn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    border: none;
+    font-size: 13px;
+    padding: 14px 15px;
+    border-radius: 999px;
+    color: #FFF;
+    letter-spacing: 0.1em;
+    background: #796CD0;
+    opacity: 1;
+    transition: all 0.3s ease-in-out;
+}
+.btn_direct_contact .preOrder_btn:hover{
+    opacity: 0.9
+}
+.btn_direct_contact .whatsapp_btn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    border: none;
+    font-size: 13px;
+    padding: 14px 15px;
+    border-radius: 999px;
+    color: #FFF;
+    letter-spacing: 0.1em;
+    background: #1B8755;
+    opacity: 1;
+    transition: all 0.3s ease-in-out;
+}
+.btn_direct_contact .whatsapp_btn i,
+.btn_direct_contact .preOrder_btn i{
+    font-size: 22px;
+}
+.btn_direct_contact .whatsapp_btn:hover{
+    opacity: 0.9
 }

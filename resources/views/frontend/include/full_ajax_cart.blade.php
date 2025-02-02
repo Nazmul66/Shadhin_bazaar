@@ -477,11 +477,12 @@
                             // If wishlist is empty, show the message
                             if (response.wishlist_count === 0) {
                                 wishlistContainer.html(`
-                                    <div class="tf-grid-layout md-col-12 xl-col-12">
-                                        <div class="alert alert-danger text-center no-wishlist-message" role="alert">
-                                            There is no wishlist product available
-                                        </div>
+                                <div class="tf-grid-layout md-col-12 xl-col-12">
+                                    <div class="alert alert-danger text-center" style="margin: 0 24px;" role="alert">
+                                        <p class="mb-3">There is no wishlist product available</p>
+                                        <a href="{{ route('product.page') }}" class="tf-btn btn-reset">Continue Shopping</a>
                                     </div>
+                                </div>
                                 `);
                             }
                         });
