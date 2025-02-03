@@ -36,7 +36,6 @@ class CustomerController extends Controller
     {
         // get all data
         $customers = User::all();
-
         return DataTables::of($customers)
             ->addIndexColumn()
             ->addColumn('image', function ($customer) {
@@ -87,7 +86,6 @@ class CustomerController extends Controller
                     </div>
                 </div>';
             })
-
             ->rawColumns(['date', 'email', 'phone', 'image', 'action'])
             ->make(true);
     }

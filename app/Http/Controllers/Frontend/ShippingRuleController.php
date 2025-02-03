@@ -21,7 +21,6 @@ class ShippingRuleController extends Controller
 
             Session::put('shippingCost', $shippingCost);
 
-    
             // Apply coupon discount if available
             if (Session::has('coupon')) {
                 $coupon = Session::get('coupon');

@@ -272,7 +272,6 @@ class ProductController extends Controller
         }
 
         DB::commit();
-        // return response()->json(['message'=> "Successfully Product Created!", 'status' => true]);
         Toastr::success('Product Create Successfully', 'Success', ["positionClass" => "toast-top-right"]);
         return redirect()->route('admin.product.index');
     }
@@ -294,8 +293,6 @@ class ProductController extends Controller
         $product           = Product::findOrFail($id);
 
         return view('backend.pages.products.edit', compact('categories', 'subCategories', 'childCategories', 'brands', 'product'));
-        
-        // return response()->json(['success' => $product]);
     }
 
     /**
@@ -353,7 +350,6 @@ class ProductController extends Controller
             $uploadImages                     = $this->deleteImageAndUpload($request, 'thumb_image', 'product', $product->thumb_image );
             $product->thumb_image           =  $uploadImages;
         
-            // dd($product);
             $product->update();
         }
         catch(Exception $ex){
@@ -384,7 +380,6 @@ class ProductController extends Controller
         }
 
         $product->delete();
-
         return response()->json(['message' => 'Product has been deleted.'], 200);
     }
 
@@ -431,7 +426,7 @@ class ProductController extends Controller
                 ->select('products.*', 'categories.category_name as cat_name', 'subcategories.subcategory_name as subCat_name', 'child_categories.name as childCat_name', 'brands.brand_name')
                 ->where('products.id', $id)
                 ->first();
-        // dd($product);
+
        return view('backend.pages.products.view', compact('product'));
     }
 
@@ -456,8 +451,6 @@ class ProductController extends Controller
     
     public function update_product_variant(Request $request, $id)
     {
-        // dd($request->all());
-
         // Handle Product sizes
         if ($request->has('size_name') && $request->has('size_price')) {
             foreach ($request->size_name as $index => $sizeName) {
@@ -588,7 +581,6 @@ class ProductController extends Controller
     // Delete Multiple Product color variants
     public function delete_color_variants(Request $request)
     {
-        // dd($request->all());
         $productColor = ProductColor::findOrFail($request->id);
         if( !is_null( $productColor ) ){
             $productColor->delete();

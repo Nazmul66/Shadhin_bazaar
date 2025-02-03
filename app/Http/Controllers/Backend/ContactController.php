@@ -36,7 +36,6 @@ class ContactController extends Controller
     {
         // get all data
         $contacts = Contact::all();
-
         return DataTables::of($contacts)
             ->addIndexColumn()
             ->addColumn('email', function ($contact) {

@@ -186,7 +186,6 @@ class AccountController extends Controller
         ->first();
         
         $order_products = OrderProduct::where('order_id', $order->order_id)->get();
-        
         return view('frontend.pages.user.dashboard_order_view', compact('order', 'order_products'));
     }
 
@@ -197,8 +196,7 @@ class AccountController extends Controller
     {
         $wishlists = Wishlist::leftJoin('products', 'products.id', 'wishlists.product_id')
         ->select('products.*', 'wishlists.id as wish_id')
-        ->where('wishlists.user_id', Auth::id())
-                ->get();
+        ->where('wishlists.user_id', Auth::id())->get();
         return view('frontend.pages.user.dashboard_wishlist', compact('wishlists'));
     }
 

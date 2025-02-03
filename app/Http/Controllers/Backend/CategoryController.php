@@ -91,7 +91,6 @@ class CategoryController extends Controller
                 ', ['category' => $category]);
                 return $actionHtml;
             })
-
             ->rawColumns(['categoryImg', 'status', 'action'])
             ->make(true);
     }
@@ -132,7 +131,6 @@ class CategoryController extends Controller
         try {
 
             $category = new Category();
-
             $category->category_name          = $request->category_name;
             $category->slug                   = Str::slug($request->category_name);
             $category->status                 = $request->status;
@@ -140,8 +138,6 @@ class CategoryController extends Controller
             // Handle image with ImageUploadTraits function
             $uploadImage                      = $this->imageUpload($request, 'category_img', 'category');
             $category->category_img           =  $uploadImage;
-
-            // dd($category);
             $category->save();
         }
         catch(\Exception $ex){
@@ -220,13 +216,6 @@ class CategoryController extends Controller
 
         return response()->json(['message' => 'Category has been deleted.'], 200);
     }
-
-    // public function getSubCategories(Category $category)
-    // {
-    //     $subcats= SubCategory::where('category_id', $category->id)->get();
-
-    //     return response()->json(['message' => 'success', 'data' => $subcats], 200);
-    // }
 
     public function CategoryView($id)
     {

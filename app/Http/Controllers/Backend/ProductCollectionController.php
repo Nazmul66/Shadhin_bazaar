@@ -105,7 +105,6 @@ class ProductCollectionController extends Controller
                 ', ['collection' => $collection]);
                 return $actionHtml;
             })
-
             ->rawColumns(['image', 'total_product', 'date', 'status', 'action'])
             ->make(true);
     }
@@ -147,7 +146,6 @@ class ProductCollectionController extends Controller
                 'title'         => 'required|string|max:255|unique:collections,title',
                 'description'   => 'nullable',
                 'image'         => 'required|image|mimes:jpeg,png,jpg,webp|max:4096', 
-                // 'bulk_product'  => 'required', 
             ]
         );
 
@@ -178,7 +176,7 @@ class ProductCollectionController extends Controller
         }
         catch(Exception $ex){
             DB::rollBack();
-            throw $ex;
+            // throw $ex;
             Toastr::error('Collection create error', 'Error', ["positionClass" => "toast-top-right"]);
         }
 
@@ -217,14 +215,12 @@ class ProductCollectionController extends Controller
             throw UnauthorizedException::forPermissions(['update.product.collection']);
         }
 
-        //  dd($request->all());
         $collection                = Collection::find($id);
         $request->validate(
             [
                 'title'         => 'required|string|max:255|unique:collections,title,' .$collection->id,
                 'description'   => 'nullable',
                 'image'         => 'image|mimes:jpeg,png,jpg,webp|max:4096', 
-                // 'bulk_products'  => 'required', 
             ]
         );
          DB::beginTransaction();
@@ -287,7 +283,6 @@ class ProductCollectionController extends Controller
             throw UnauthorizedException::forPermissions(['delete.product.collection']);
         }
 
-        // dd($id);
         $collection = Collection::find($id);
 
         if ( !empty($collection->image) ) {

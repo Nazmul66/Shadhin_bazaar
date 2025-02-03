@@ -33,7 +33,6 @@ class SubcategoryController extends Controller
     public function index()
     {
         $categories = Category::all();
-        // dd($categories);
         return view('backend.pages.subcategories.index', compact('categories'));
     }
 
@@ -99,7 +98,6 @@ class SubcategoryController extends Controller
                 ', ['subCategory' => $subCategory]);
                 return $actionHtml;
             })
-
             ->rawColumns(['subCategoryImg','status','action'])
             ->make(true);
     }
@@ -128,14 +126,11 @@ class SubcategoryController extends Controller
             $uploadImage                         = $this->imageUpload($request, 'subcategory_img', 'subCategory');
             $SubCategory->subcategory_img        =  $uploadImage;
 
-            // dd($SubCategory);
             $SubCategory->save();
-
         }
         catch(\Exception $ex){
             DB::rollBack();
             throw $ex;
-            // dd($ex->getMessage());
         }
 
         DB::commit();
@@ -164,7 +159,6 @@ class SubcategoryController extends Controller
         $page->status = $status;
         $page->save();
 
-        //Debugged this code --> return response()->json(['message' => 'success', 'status' => $status, 'id' => $id]);
         return response()->json(['message' => 'success', 'status' => $status, 'id' => $id]);
     }
 
@@ -177,7 +171,6 @@ class SubcategoryController extends Controller
             throw UnauthorizedException::forPermissions(['update.subcategory']);
         }
 
-        // dd($subcategory);
         return response()->json(['success' => $subcategory]);
     }
 
@@ -203,17 +196,14 @@ class SubcategoryController extends Controller
             // Handle image with ImageUploadTraits function
             $uploadImages                        = $this->deleteImageAndUpload($request, 'subcategory_img', 'subCategory', $subcategory->subcategory_img );
             $subcategory->subcategory_img        =  $uploadImages;
-
             $subcategory->save();
         }
         catch(\Exception $ex){
             DB::rollBack();
             throw $ex;
-            // dd($ex->getMessage());
         }
 
         DB::commit();
-
         return response()->json(['message'=> "success"],200);
     }
 
@@ -232,7 +222,6 @@ class SubcategoryController extends Controller
             }
         }
         $subcategory->delete();
-
         return response()->json(['message' => 'SubCategory has been deleted.'], 200);
     }
 
@@ -244,7 +233,6 @@ class SubcategoryController extends Controller
                     ->select('categories.category_name', 'subcategories.*')
                     ->where('subcategories.id', $id)
                     ->first();
-        // dd($subcategory);
 
         $statusHtml = '';
         if ($subcategory->status === 1) {

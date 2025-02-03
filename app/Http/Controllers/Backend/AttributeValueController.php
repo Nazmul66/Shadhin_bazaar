@@ -216,7 +216,7 @@ class AttributeValueController extends Controller
         DB::beginTransaction();
         try {
             // Handle image with ImageUploadTraits function
-            $attributeValue->attribute             = $request->attribute;
+            $attributeValue->attribute              = $request->attribute;
             if( $request->attribute === 'color' ){
                 $attributeValue->color_value	    = $request->color_value;
             }

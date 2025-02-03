@@ -118,13 +118,11 @@ class ShippingRuleController extends Controller
             $shippingRule->cost            = $request->cost;
             $shippingRule->status          = $request->status;
             
-            // dd($shippingRule);
             $shippingRule->save();
         }
         catch(\Exception $ex){
             DB::rollBack();
             throw $ex;
-            // dd($ex->getMessage());
         }
 
         DB::commit();        
@@ -162,7 +160,6 @@ class ShippingRuleController extends Controller
             throw UnauthorizedException::forPermissions(['update.shipping']);
         }
 
-        // dd($shippingRule);
         return response()->json(['success' => $shippingRule]);
     }
 
@@ -196,7 +193,6 @@ class ShippingRuleController extends Controller
         catch(\Exception $ex){
             DB::rollBack();
             throw $ex;
-            // dd($ex->getMessage());
         }
         DB::commit();        
         return response()->json(['message'=> "Successfully Shipping Rule Updated!", 'status' => true]);
@@ -219,7 +215,6 @@ class ShippingRuleController extends Controller
     public function shippingRuleView($id)
     {
         $shippingRule  = ShippingRule::find($id);
-        // dd($shippingRule);
 
         $statusHtml = '';
         if ($shippingRule->status === 1) {

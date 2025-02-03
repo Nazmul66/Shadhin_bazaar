@@ -135,7 +135,6 @@ class FaqController extends Controller
         catch(\Exception $ex){
             DB::rollBack();
             throw $ex;
-            // dd($ex->getMessage());
         }
 
         DB::commit();
@@ -150,7 +149,7 @@ class FaqController extends Controller
         if (!$this->user || !$this->user->can('update.faq')) {
             throw UnauthorizedException::forPermissions(['update.faq']);
         }
-        // dd($faq);
+
         return response()->json(['success' => $faq]);
     }
 
@@ -179,7 +178,6 @@ class FaqController extends Controller
         catch(\Exception $ex){
             DB::rollBack();
             throw $ex;
-            // dd($ex->getMessage());
         }
         
         DB::commit();

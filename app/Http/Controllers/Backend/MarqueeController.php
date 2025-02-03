@@ -81,7 +81,6 @@ class MarqueeController extends Controller
                 ', ['marquee' => $marquee]);
                 return $actionHtml;
             })
-
             ->rawColumns(['status', 'action'])
             ->make(true);
     }
@@ -105,7 +104,6 @@ class MarqueeController extends Controller
         $page->status = $status;
         $page->save();
 
-        //Debugged this code --> return response()->json(['message' => 'success', 'status' => $status, 'id' => $id]);
         return response()->json(['message' => 'success', 'status' => $status, 'id' => $id]);
     }
 
@@ -124,18 +122,14 @@ class MarqueeController extends Controller
 
         DB::beginTransaction();
         try {
-
             $marquee    = new Marquee();
             $marquee->name         = $request->name;
             $marquee->status       = $request->status;
-
-            // dd($marquee);
             $marquee->save();
         }
         catch(\Exception $ex){
             DB::rollBack();
             throw $ex;
-            // dd($ex->getMessage());
         }
 
         DB::commit();
@@ -151,7 +145,6 @@ class MarqueeController extends Controller
             throw UnauthorizedException::forPermissions(['update.marquee']);
         }
 
-        // dd($category);
         return response()->json(['success' => $marquee]);
     }
 
@@ -180,7 +173,6 @@ class MarqueeController extends Controller
         catch(\Exception $ex){
             DB::rollBack();
             throw $ex;
-            // dd($ex->getMessage());
         }
 
         DB::commit();

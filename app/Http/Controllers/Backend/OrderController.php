@@ -82,11 +82,11 @@ class OrderController extends Controller
                 if(auth("admin")->user()->can("payment.status.order"))
                  {
                     return '
-                    <select class="form-select" id="payment_status" data-id="' . $order->id . '">
-                        <option value="0" ' . ($order->payment_status == 0 ? 'selected' : '') . '>Pending</option>
-                        <option value="1" ' . ($order->payment_status == 1 ? 'selected' : '') . '>Paid</option>
-                        <option value="2" ' . ($order->payment_status == 2 ? 'selected' : '') . '>Due</option>
-                    </select>';
+                        <select class="form-select" id="payment_status" data-id="' . $order->id . '">
+                            <option value="0" ' . ($order->payment_status == 0 ? 'selected' : '') . '>Pending</option>
+                            <option value="1" ' . ($order->payment_status == 1 ? 'selected' : '') . '>Paid</option>
+                            <option value="2" ' . ($order->payment_status == 2 ? 'selected' : '') . '>Due</option>
+                        </select>';
                  }
                 else{
                     return '<span class="badge bg-info">N/A</span>'; 
@@ -103,7 +103,6 @@ class OrderController extends Controller
                         $selected = (trim($order->order_status) === trim($key)) ? 'selected' : '';
                         $options .= '<option value="' . $key . '" ' . $selected . '>' . ucfirst($status['status']) . '</option>';
                     }
-                
                     return '<select class="form-select" id="order_status" data-id="' . $order->id . '">' . $options . '</select>';        
                 }
                 else{
@@ -131,7 +130,6 @@ class OrderController extends Controller
                 ', ['order' => $order]);
                 return $actionHtml;
             })
-
             ->rawColumns(['order_date', 'status', 'total_amount', 'product_qty', 'order_status', 'payment_status', 'order_id', 'action'])
             ->make(true);
     }
@@ -185,7 +183,6 @@ class OrderController extends Controller
                     ->first();
                     
         $order_products = OrderProduct::where('order_id', $order->order_id)->get();
-
         return view('backend.pages.order.order-invoice', compact('order', 'order_products'));
     }
 
@@ -195,18 +192,14 @@ class OrderController extends Controller
             throw UnauthorizedException::forPermissions(['delete.order']);
         }
 
-        // dd($order);
         // Delete all related OrderProduct entries
         foreach (OrderProduct::where('order_id', $order->order_id)->get() as $orderItem) {
             $orderItem->delete();
         }
 
-        // Delete the single Transaction entry related to the order
         Transaction::where('order_id', $order->order_id)->delete();
 
-        // Delete the Order itself
         $order->delete();
-        
         return response()->json(['message' => 'Order and its related data have been deleted.'], 200);
     }
 
@@ -219,7 +212,6 @@ class OrderController extends Controller
             ->first();
         
         $data['order_products'] = OrderProduct::where('order_id', $data['order']->order_id)->get();
-
         $pdf = Pdf::loadView('backend.pages.order.invoice_pdf', $data);
         return $pdf->download('invoice.pdf');
     }

@@ -76,24 +76,39 @@ class AdminController extends Controller
 
            // validation
            $rules = [
-              "email" => 'required|email|max:255',
-              "password" => 'required|max:30',
+                'email' => [
+                    'required',
+                    'string',
+                    'email:rfc,dns', // Ensures a valid email format & checks domain existence
+                    'max:255'
+                ],
+                'password' => [
+                    'required',
+                    'string',
+                    'min:8',          // Minimum 8 characters
+                    'max:30',         // Maximum 30 characters
+                ]
            ];
 
            $customMessage = [
-               "email.required" => 'Email is required',
-               "email.email" => 'Valid Email is required',
-               "password.required" => 'Password is required',
-           ];
+                "email.required"    => 'The email field is required.',
+                "email.email"       => 'Please enter a valid email address.',
+                "email.unique"      => 'This email is already registered.',
+                "password.required" => 'The password field is required.',
+                "password.min"      => 'Password must be at least 8 characters long.',
+                "password.max"      => 'Password cannot exceed 30 characters.',
+                "password.regex"    => 'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.',
+            ];
 
            $request->validate($rules, $customMessage);
 
-
            if( $admin = Auth::guard('admin')->attempt(["email" => $data['email'], "password" => $data['password']]) ){
-              return redirect('/admin/dashboards');
+                Toastr::success('Login Successfully', 'Success', ["positionClass" => "toast-top-right"]);
+                return redirect('/admin/dashboards');
            }
            else{
-              return redirect()->back()->with('error_message', "Invalid Email or Password");
+                Toastr::error('Invalid Email or Password', 'Error', ["positionClass" => "toast-top-right"]);
+                return redirect()->back();
            }
         }
 

@@ -47,7 +47,6 @@ class CustomPageController extends Controller
     {
         // get all data
         $customPages = CustomPage::all();
-
         return DataTables::of($customPages)
             ->addIndexColumn()
             ->addColumn('status', function ($customPage) {
@@ -111,7 +110,6 @@ class CustomPageController extends Controller
         $page->status = $status;
         $page->save();
 
-        //Debugged this code --> return response()->json(['message' => 'success', 'status' => $status, 'id' => $id]);
         return response()->json(['message' => 'success', 'status' => $status, 'id' => $id]);
     }
 
@@ -133,7 +131,6 @@ class CustomPageController extends Controller
 
         DB::beginTransaction();
         try {
-
             $customPage = new CustomPage();
 
             $customPage->title             = $request->title;
@@ -152,7 +149,6 @@ class CustomPageController extends Controller
         catch(\Exception $ex){
             DB::rollBack();
             throw $ex;
-            // dd($ex->getMessage());
         }
 
         DB::commit();
@@ -188,8 +184,6 @@ class CustomPageController extends Controller
             'meta_image' => ['image', 'mimes:png,jpg,jpeg,webp', 'max:4096'],
         ]);
 
-        //   dd($customPage);
-
         DB::beginTransaction();
         try {
             $customPage->title             = $request->title;
@@ -218,7 +212,7 @@ class CustomPageController extends Controller
     public function show($id)
     {
         $singleView = CustomPage::findOrFail($id);
-       return view('backend.pages.custom_pages.view', compact('singleView')); 
+        return view('backend.pages.custom_pages.view', compact('singleView')); 
     }
 
     /**
@@ -226,7 +220,6 @@ class CustomPageController extends Controller
      */
     public function destroy(CustomPage $customPage)
     {
-
         if ($customPage->meta_image) {
             if (file_exists($customPage->meta_image)) {
                 unlink($customPage->meta_image);

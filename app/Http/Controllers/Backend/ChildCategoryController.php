@@ -103,7 +103,6 @@ class ChildCategoryController extends Controller
                 ', ['childCategory' => $childCategory]);
                 return $actionHtml;
             })
-
             ->rawColumns(['childCategoryImg','status','action'])
             ->make(true);
     }
@@ -131,7 +130,6 @@ class ChildCategoryController extends Controller
             // Handle image with ImageUploadTraits function
             $uploadImage                           = $this->imageUpload($request, 'img', 'childCategory');
             $childCategory->img                    =  $uploadImage;
-
             // dd($childCategory);
             $childCategory->save();
         }
@@ -142,7 +140,6 @@ class ChildCategoryController extends Controller
         }
 
         DB::commit();
-
         return response()->json(['message'=> "Successfully ChildCategory Created!", 'status' => true]);
     }
 
@@ -168,7 +165,6 @@ class ChildCategoryController extends Controller
         $page->status = $status;
         $page->save();
 
-        //Debugged this code --> return response()->json(['message' => 'success', 'status' => $status, 'id' => $id]);
         return response()->json(['message' => 'success', 'status' => $status, 'id' => $id]);
     }
 
@@ -181,7 +177,6 @@ class ChildCategoryController extends Controller
         if (!$this->user || !$this->user->can('update.childcategory')) {
             throw UnauthorizedException::forPermissions(['update.childcategory']);
         }
-
         // dd($childCategory);
         return response()->json(['success' => $childCategory]);
     }
@@ -199,7 +194,6 @@ class ChildCategoryController extends Controller
 
         DB::beginTransaction();
         try {
-
             $childCategory->category_id            = $request->category_id;
             $childCategory->subCategory_id         = $request->subCategory_id;
             $childCategory->name                   = $request->name;
@@ -209,7 +203,6 @@ class ChildCategoryController extends Controller
             // Handle image with ImageUploadTraits function
             $uploadImages                          = $this->deleteImageAndUpload($request, 'img', 'childCategory', $childCategory->img );
             $childCategory->img                    =  $uploadImages;
-
             $childCategory->save();
         }
         catch(\Exception $ex){
@@ -237,7 +230,6 @@ class ChildCategoryController extends Controller
             }
         }
         $childCategory->delete();
-        
         return response()->json(['message' => 'ChildCategory has been deleted.'], 200);
     }
 
@@ -272,7 +264,6 @@ class ChildCategoryController extends Controller
     {
         // dd($request->all());
         $subCategories = Subcategory::where('category_id', $request->id)->where('status', 1)->get();
-
         return response()->json(['status' => true, 'data' => $subCategories]);
     }
 }

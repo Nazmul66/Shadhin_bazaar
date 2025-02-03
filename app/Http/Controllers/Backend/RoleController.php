@@ -25,9 +25,6 @@ class RoleController extends Controller
         }
     }
 
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         if (!$this->user || !$this->user->can('index.role')) {
@@ -155,7 +152,6 @@ class RoleController extends Controller
             throw UnauthorizedException::forPermissions(['delete.role']);
         }
 
-        // dd($id);
         $role = Role::findOrFail($id);
 
         // Detach all permissions from the role

@@ -31,13 +31,6 @@ class HomeSettingController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -171,9 +164,7 @@ class HomeSettingController extends Controller
      */
     public function get_subCategory_data(Request $request)
     {
-        // dd($request->all());
         $subCategories = Subcategory::where('category_id', $request->id)->where('status', 1)->get();
-        // dd($subCategories);
 
         // 'subcategory_img' is the column name where image filename is stored
         foreach ($subCategories as $subCategory) {
@@ -185,9 +176,7 @@ class HomeSettingController extends Controller
 
     public function get_childCategory_data(Request $request)
     {
-        // dd($request->all());
         $childCategories = ChildCategory::where('subCategory_id', $request->id)->where('status', 1)->get();
-        // dd($childCategories);
 
         foreach ($childCategories as $childCategory) {
             $childCategory->image_url = asset($childCategory->img); 
@@ -196,27 +185,4 @@ class HomeSettingController extends Controller
         return response()->json(['status' => true, 'data' => $childCategories]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 }

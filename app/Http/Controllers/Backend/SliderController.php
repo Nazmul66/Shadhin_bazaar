@@ -176,14 +176,11 @@ class SliderController extends Controller
             // Handle image with ImageUploadTraits function
             $uploadImage                    = $this->imageUpload($request, 'slider_image', 'slider');
             $slider->slider_image           =  $uploadImage;
-
-            // dd($slider);
             $slider->save();
         }
         catch(\Exception $ex){
             DB::rollBack();
             throw $ex;
-            // dd($ex->getMessage());
         }
 
         DB::commit();
@@ -199,7 +196,6 @@ class SliderController extends Controller
             throw UnauthorizedException::forPermissions(['update.slider']);
         }
 
-        // dd($slider);
         return response()->json(['success' => $slider]);
     }
 
@@ -226,7 +222,6 @@ class SliderController extends Controller
             // Handle image with ImageUploadTraits function
             $uploadImages                       = $this->deleteImageAndUpload($request, 'slider_image', 'slider', $slider->slider_image );
             $slider->slider_image               =  $uploadImages;
-
             $slider->save();
         }
         catch(\Exception $ex){
@@ -254,14 +249,12 @@ class SliderController extends Controller
             }
         }
         $slider->delete();
-
         return response()->json(['message' => 'Slider has been deleted.'], 200);
     }
 
     public function sliderView($id)
     {
         $slider  = Slider::find($id);
-        // dd($slider);
 
         $statusHtml = '';
         if ($slider->status === 1) {

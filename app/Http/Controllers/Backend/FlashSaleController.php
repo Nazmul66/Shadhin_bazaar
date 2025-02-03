@@ -173,14 +173,11 @@ class FlashSaleController extends Controller
             $flashSaleItem->product_id          = $request->product_id;
             $flashSaleItem->show_at_home        = 0;
             $flashSaleItem->status              = 1;
-
-            // dd($flashSaleItem);
             $flashSaleItem->save();
         }
         catch(\Exception $ex){
             DB::rollBack();
             throw $ex;
-            // dd($ex->getMessage());
         }
 
         DB::commit();
@@ -193,7 +190,6 @@ class FlashSaleController extends Controller
     public function destroy(FlashSaleItem $flashSaleItem)
     {
         $flashSaleItem->delete();
-
         return response()->json(['message' => 'Flash Sale Item has been deleted.'], 200);
     }
 }

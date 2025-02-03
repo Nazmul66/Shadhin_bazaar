@@ -52,15 +52,6 @@ class TransactionController extends Controller
                 $amount = getSetting()->currency_symbol . $transaction->amount;
                 return $amount;
             })
-            // ->addColumn('payment_status', function ($transaction) {
-            //     return '
-            //         <select class="form-select" id="payment_status" data-id="' . $order->id . '">
-            //             <option value="0" ' . ($order->payment_status == 0 ? 'selected' : '') . '>Pending</option>
-            //             <option value="1" ' . ($order->payment_status == 1 ? 'selected' : '') . '>Paid</option>
-            //             <option value="2" ' . ($order->payment_status == 2 ? 'selected' : '') . '>Due</option>
-            //         </select>
-            //     ';
-            // })
             ->addColumn('action', function ($transaction) {
                  return '
                 <div class="btn-group">
@@ -75,7 +66,6 @@ class TransactionController extends Controller
                     
                 </div>';
             })
-
             ->rawColumns(['date','total_amount', 'payment_status', 'action'])
             ->make(true);
     }
@@ -90,7 +80,6 @@ class TransactionController extends Controller
                 ->select('orders.*', 'users.name as cus_name', 'transactions.transaction_id', 'transactions.amount', 'transactions.payment_method','transactions.created_at','transactions.updated_at' )
                 ->where('transactions.id', $id)
                 ->first();
-        // dd($transaction);
 
         $created_date   = date('d F, Y', strtotime($transaction->created_at));
         $updated_date   = date('d F, Y', strtotime($transaction->updated_at));

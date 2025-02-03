@@ -36,7 +36,6 @@ class CouponController extends Controller
     public function getData()
     {
         $coupons= Coupon::all();
-        
         return DataTables::of($coupons)
             ->addIndexColumn()
             ->addColumn('info', function ($coupon) {
@@ -119,7 +118,6 @@ class CouponController extends Controller
                 ', ['coupon' => $coupon]);
                 return $actionHtml;
             })
-            
             ->rawColumns(['info', 'discount_type', 'discount', 'start_date', 'end_date', 'used', 'status', 'action'])
             ->make(true);
     }
@@ -132,12 +130,11 @@ class CouponController extends Controller
         if (!$this->user || !$this->user->can('create.coupon')) {
             throw UnauthorizedException::forPermissions(['create.coupon']);
         }
-
         // dd($request->all());
-        $coupon = new Coupon();
-
         DB::beginTransaction();
         try {
+            $coupon = new Coupon();
+
             $coupon->name            = $request->name;
             $coupon->code            = Str::lower($request->code);
             $coupon->quantity        = $request->quantity;
@@ -147,7 +144,6 @@ class CouponController extends Controller
             $coupon->start_date      = $request->start_date;
             $coupon->end_date        = $request->end_date;
             $coupon->status          = $request->status;
-            
             $coupon->save();
         }
         catch(\Exception $ex){
@@ -178,7 +174,6 @@ class CouponController extends Controller
         $page = Coupon::findOrFail($id);
         $page->status = $status;
         $page->save();
-
         return response()->json(['message' => 'success', 'status' => $status, 'id' => $id]);
     }
 
@@ -190,7 +185,6 @@ class CouponController extends Controller
         if (!$this->user || !$this->user->can('update.coupon')) {
             throw UnauthorizedException::forPermissions(['update.coupon']);
         }
-
         // dd($coupon);
         return response()->json(['success' => $coupon]);
     }
@@ -206,7 +200,7 @@ class CouponController extends Controller
         }
 
         $coupon = Coupon::findOrFail($id);
-    
+
         DB::beginTransaction();
         try {
             // Updating coupon details
@@ -219,25 +213,18 @@ class CouponController extends Controller
             $coupon->start_date = $request->start_date;
             $coupon->end_date = $request->end_date;
             $coupon->status = $request->status;
-    
-            // Save coupon
+
             $coupon->save();
-    
-            // Commit the transaction
-            DB::commit();
-    
-            // Return success response
-            return response()->json(['message' => "Successfully Coupon Updated!", 'status' => true], 200);
         } catch (\Exception $ex) {
             // Rollback if there is an error
             DB::rollBack();
-            
-            // Log the exception for debugging
-            // \Log::error('Update failed: ' . $ex->getMessage());
     
             // Return error response
             return response()->json(['message' => "Failed to update coupon!", 'error' => $ex->getMessage()], 500);
         }
+
+        DB::commit();
+        return response()->json(['message' => "Successfully Coupon Updated!", 'status' => true], 200);
     }
     
 

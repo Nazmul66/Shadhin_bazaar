@@ -98,7 +98,6 @@ class PermissionController extends Controller
         catch(\Exception $ex){
             DB::rollBack();
             throw $ex;
-            // dd($ex->getMessage());
         }
 
         DB::commit();
@@ -127,7 +126,6 @@ class PermissionController extends Controller
             throw UnauthorizedException::forPermissions(['update.permission']);
         }
 
-        // $permission  = Permission::find($id);
         $request->validate(
             [
                 'name' => ['required', 'unique:permissions,name,'. $permission->id , 'max:255'],
@@ -153,7 +151,6 @@ class PermissionController extends Controller
         catch(\Exception $ex){
             DB::rollBack();
             throw $ex;
-            // dd($ex->getMessage());
         }
         DB::commit();
         return response()->json(['message'=> "success"],200);

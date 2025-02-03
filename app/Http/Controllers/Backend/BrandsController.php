@@ -18,6 +18,7 @@ use Spatie\Permission\Exceptions\UnauthorizedException;
 class BrandsController extends Controller
 {
     use ImageUploadTraits;
+    
     public $user;
     public function __construct()
     {
@@ -90,7 +91,6 @@ class BrandsController extends Controller
                 ', ['brand' => $brand]);
                 return $actionHtml;
             })
-
             ->rawColumns(['brandImage', 'status', 'action'])
             ->make(true);
     }
@@ -128,9 +128,7 @@ class BrandsController extends Controller
 
         DB::beginTransaction();
         try {
-
             $brand = new Brand();
-
             $brand->brand_name             = Str::title($request->brand_name);
             $brand->slug                   = Str::slug($request->brand_name);
             $brand->status                 = $request->status;
@@ -216,7 +214,6 @@ class BrandsController extends Controller
             }
         }
         $brand->delete();
-
         return response()->json(['message' => 'Brand has been deleted.'], 200);
     }
 
