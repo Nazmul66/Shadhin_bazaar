@@ -93,6 +93,7 @@ class CartController extends Controller
 
         $cartData['options']['variants_total']  = ( $product_color->color_price ?? 0 ) + ( $product_size->size_price ?? 0 );
         $cartData['options']['slug']            = $product->slug;
+        $cartData['options']['units']           = $product->units;
         $cartData['options']['image']           = $product->thumb_image;
         $cartData['options']['image']           = $product->thumb_image;
 
@@ -113,6 +114,7 @@ class CartController extends Controller
                 'rowId' => $item->rowId,
                 'name' => $item->name,
                 'qty' => $item->qty,
+                'units' => $item->options->units,
                 'price' => $item->price,
                 'size_name' => $item->options->size_name ?? null,
                 'size_price' => $item->options->size_price ?? 0,

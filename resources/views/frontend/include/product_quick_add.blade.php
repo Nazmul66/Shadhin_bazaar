@@ -91,7 +91,7 @@
                             </div>
 
                             <div class="tf-product-info-quantity">
-                                <div class="title mb_12">Quantity: <span class="prdt_qty">10</span></div>
+                                <div class="title mb_12">Quantity: <span class="prdt_qty me-1">10 </span><span class="product_units">Pcs</span></div>
                                 <div class="wg-quantity mb-3">
                                     <span class="btn-quantity btn-decrease">-</span>
                                     <input class="quantity-product" id="quick_add_qty" type="text" name="qty" value="1">

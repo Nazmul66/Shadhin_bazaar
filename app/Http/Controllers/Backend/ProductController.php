@@ -230,6 +230,7 @@ class ProductController extends Controller
             $product->childCategory_id          = $request->childCategory_id;
             $product->brand_id                  = $request->brand_id;
             $product->qty                       = $request->qty;
+            $product->units                     = $request->units;
             $product->video_link                = $request->video_link;
             $product->tags                      = $request->tags;
             $product->purchase_price            = $request->purchase_price;
@@ -321,6 +322,7 @@ class ProductController extends Controller
             $product->childCategory_id          = $request->childCategory_id;
             $product->brand_id                  = $request->brand_id;
             $product->qty                       = $request->qty;
+            $product->units                     = $request->units;
             $product->video_link                = $request->video_link;
             $product->tags                      = $request->tags;
             $product->purchase_price            = $request->purchase_price;

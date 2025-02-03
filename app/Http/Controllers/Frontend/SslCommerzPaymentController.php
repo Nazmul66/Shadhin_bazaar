@@ -215,6 +215,7 @@ class SslCommerzPaymentController extends Controller
             $orderProduct->variant_total  = $item->options->variants_total;
             $orderProduct->unit_price     = $item->price;
             $orderProduct->qty            = $item->qty;
+            $orderProduct->units          = $product->units;
             $orderProduct->save();
         }
 

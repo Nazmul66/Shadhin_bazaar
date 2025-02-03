@@ -23,6 +23,7 @@
                    $('#category_name').text(`${product.cat_name}`);
                    $('#product_name').text(`${product.name}`);
                    $('.prdt_qty').text(`${product.qty}`);
+                   $('.product_units').text(`${product.units}`);
                    $('#sold_product').text(`${product.product_sold}`);
                    $('.tf-product-info-price').html(res.price_val);
                    $('#short_desc').text(`${product.short_description}`);
@@ -129,11 +130,11 @@
                    $('.prdt_qty').text(`${product.qty}`);
                    $('#quick_thumb_image').html(res.main_image);
                    $('#quick_product_name').text(`${product.name}`);
+                   $('.product_units').text(`${product.units}`);
                    $('.tf-product-info-price').html(res.price_val);
                    $('.main_color_variant').removeClass('d-none');
                    $('.main_size_variant').removeClass('d-none');
                    
-
                    if (res.product_color && res.product_color.length > 0) {
                         var colorsHtml = '';
 
@@ -298,7 +299,7 @@
                                                ${item.size_name ? item.size_name.toUpperCase() + ` (${currencySymbol}${item.size_price})` : ''} 
                                                ${item.color_name ? ` / ${item.color_name} (${currencySymbol}${item.color_price})` : ''}
                                            </div>
-                                           <div class="text-button">${item.qty} X ${currencySymbol}${item.price}</div>
+                                           <div class="text-button">${item.qty} ${item.units} X ${currencySymbol}${item.price}</div>
                                        </div>
                                        <div class="d-flex align-items-center justify-content-between de-flex gap-12">
                                            <div class="text-secondary-2">Amount</div>

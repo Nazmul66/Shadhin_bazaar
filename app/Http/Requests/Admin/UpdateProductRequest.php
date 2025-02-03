@@ -53,6 +53,7 @@ class UpdateProductRequest extends FormRequest
                 },
             ],
             'qty' => ['required', 'numeric', 'min:0'],
+            'units' => ['required', 'string'],
             'discount_type' => ['in:none,amount,percent'],
             'discount_value' => [
                 'nullable',

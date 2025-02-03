@@ -18,6 +18,7 @@ use App\Models\HomeSetting;
 use App\Models\Marquee;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\ProductCollection;
 use App\Models\ProductReview;
 use App\Models\Slider;
 use Carbon\Carbon;
@@ -157,6 +158,20 @@ class HomeController extends Controller
     public function blogs_details()
     {
         return view('frontend.pages.frontend_pages.blogs_details');
+    }
+
+    public function product_collection(string $slug)
+    {
+        $collection = Collection::where('slug', $slug)->first();
+        $productCollections = ProductCollection::
+                            leftJoin('products', 'products.id', 'product_collections.product_id')
+                            ->select('products.*', 'product_collections.collect_id')
+                            ->where('product_collections.collect_id', $collection->id)
+                            ->get();
+        return view('frontend.pages.product_pages.product-collection', [
+            'productCollections' => $productCollections,
+            'collection'         => $collection,
+        ]);
     }
 
     public function track_order(Request $request)

@@ -184,15 +184,6 @@
                             <option value="percent" {{ old('discount_type', $product->discount_type ?? '') === 'percent' ? 'selected' : '' }}>Percent ( % )</option>
                         </select>
                     </div>
-    
-                    <div class="col-md-4 mb-3 discount_value d-none">
-                        <label class="form-label" for="discount_value">Discount Value <span class="text-danger">*</span></label>
-                        <input class="form-control" type="number" id="discount_value" name="discount_value" value="{{ old('discount_value', $product->discount_value ?? 0) }}"  placeholder="Discount Value....">
-
-                        <span id="long_validate" class="text-danger mt-1">
-                            @error('discount_value'){{ $message }}@enderror
-                        </span>
-                    </div>
 
                     <div class="col-md-4 mb-3">
                         <label class="form-label" for="qty">Stock Quantity <span class="text-danger">*</span></label>
@@ -202,9 +193,27 @@
                             @error('qty'){{ $message }}@enderror
                         </span>
                     </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label" for="units">Units</label>
+                        <select class="form-select" id="units" name="units">
+                            @foreach (config('units_data.units') as $key => $row)
+                                <option value="{{ $key }}"  {{ (old('units', $product->units ?? '') == $key) ? 'selected' : '' }}>{{ $row }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
 
                 <div class="row">
+                    <div class="col-md-4 mb-3 discount_value d-none">
+                        <label class="form-label" for="discount_value">Discount Value <span class="text-danger">*</span></label>
+                        <input class="form-control" type="number" id="discount_value" name="discount_value" value="{{ old('discount_value', $product->discount_value ?? 0) }}"  placeholder="Discount Value....">
+
+                        <span id="long_validate" class="text-danger mt-1">
+                            @error('discount_value'){{ $message }}@enderror
+                        </span>
+                    </div>
+
                     <div class="col-md-4 mb-3 offer_start_value d-none">
                         <label class="form-label" for="offer_start_date">Offer Start Date <span class="text-danger">*</span></label>
                         <input class="form-control offer_start_date" type="date" id="offer_start_date" name="offer_start_date" placeholder="Select a date...." value="{{ old('offer_start_date', $product->offer_start_date) }}">

@@ -159,7 +159,7 @@
                                         <div class="cart-price text-button price-on-sale">{{ $order_details->currency_symbol }}{{ number_format($item->unit_price, 2, '.', ''); }}</div>
                                     </td>
                                     <td class="tf-cart-item_quantity">
-                                        <div class="cart-price text-button price-on-sale">{{ $item->qty }} Qty</div>
+                                        <div class="cart-price text-button price-on-sale">{{ $item->qty }} {{ $item->units }}</div>
                                     </td>
                                     <td class="tf-cart-item_total text-center">
                                         <div class="cart-total text-button total-price">{{ $order_details->currency_symbol }}{{ number_format($total_price, 2, '.', ''); }}</div>

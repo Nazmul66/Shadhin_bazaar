@@ -39,6 +39,7 @@ use App\Http\Controllers\Frontend\WishlistController;
         Route::get('/customer-feedback', "customer_feedback")->name('customer.feedback');
         Route::get('/blogs', "blogs")->name('blogs');
         Route::get('/blogs-details', "blogs_details")->name('blogs.details');
+        Route::get('/product-collection/{slug}', "product_collection")->name('product.collection');
         // Route::get('/compare', "compare_view")->name('compare');
         Route::get('/tracking-order', "track_order")->name('track.order');
         Route::get('/register-login', "register_login")->name('register.login');

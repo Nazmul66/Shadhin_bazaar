@@ -614,9 +614,9 @@
                             <img class=" ls-is-cached lazyloaded" data-src="{{ asset($row->image) }}" src="{{ asset($row->image) }}" alt="{{ $row->slug }}" style="height: 400px;">
                         </a>
                         <div class="content">
-                            <h3 class="title wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;"><a href="shop-collection.html" class="link text-white">{{ $row->title }}</a></h3>
+                            <h3 class="title wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;"><a href="{{ route('product.collection', $row->slug) }}" class="link text-white">{{ $row->title }}</a></h3>
                             <div class="wow fadeInUp" data-wow-delay="0.2s" style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">
-                                <a href="shop-collection.html" class="btn-line style-white">Shop Now</a>
+                                <a href="{{ route('product.collection', $row->slug) }}" class="btn-line style-white">Shop Now</a>
                             </div>
                         </div>
                     </div>
@@ -1036,7 +1036,7 @@
 </section>
 <!-- /Featured Products -->
 
-<!-- banner -->
+{{-- <!-- banner -->
 <section class="" style="background-image: url('http://localhost/shadhin_bazaar/public/backend/images/slider/29183700.jpg');">
     <div class="container">
         <div class="banner-supper-sale">
@@ -1047,7 +1047,7 @@
         </div>
     </div>
 </section>
-<!-- /banner -->
+<!-- /banner --> --}}
 
 <!-- product -->
 <section class="flat-spacing-4">

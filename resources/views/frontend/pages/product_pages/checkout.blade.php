@@ -270,7 +270,7 @@
                                                         <div class="text-button tf-btn-remove remove checkout_remove_cart" data-row_id="{{ $item->rowId }}">Remove</div>
 
                                                         <div class="">
-                                                            <span class="count" data-row_id="{{ $item->rowId }}" id="qty{{ $item->rowId }}">{{ $item->qty }}</span>
+                                                            <span class="count" data-row_id="{{ $item->rowId }}" id="qty{{ $item->rowId }}">{{ $item->qty .' '. $item->options->units }}</span>
                                                             <span class="x-mark">X</span>  <span class="price">{{ getSetting()->currency_symbol }}{{ $item->price }}</span>
                                                         </div>
 
@@ -368,7 +368,7 @@
                                                         {{ getSetting()->currency_symbol }}{{ Session::get('coupon')['discount'] }}
                                                     @elseif( Session::get('coupon')['discount_type'] === "percent" )
                                                         {{ getSetting()->currency_symbol }}{{ ( getCartTotal() * Session::get('coupon')['discount'] ) / 100; }}
-                                                @endif
+                                                    @endif
                                                 @else
                                                     {{ getSetting()->currency_symbol }}0
                                                 @endif
@@ -630,7 +630,7 @@
                                 <div class="row my-5">
                                     <div class="alert alert-danger text-center" style="margin: 0 24px; padding: 4rem 0;" role="alert">
                                         <p class="mb-3">Oops! Your cart looks empty. Find something amazing and add it to your cart.</p>
-                                        <a href="http://localhost/shadhin_bazaar/products" class="tf-btn btn-reset">Continue Shopping</a>
+                                        <a href="{{ route('product.page') }}" class="tf-btn btn-reset">Continue Shopping</a>
                                     </div>
                                 </div>
                             `);
@@ -730,7 +730,7 @@
                                                 ${item.size_name ? item.size_name.toUpperCase() + ` (${currency_symbol}${item.size_price})` : ''} 
                                                 ${item.color_name ? ` / ${item.color_name} (${currency_symbol}${item.color_price})` : ''}
                                             </div>
-                                            <div class="text-button">${item.qty} X ${currency_symbol}${item.price}</div>
+                                            <div class="text-button">${item.qty} ${item.units} X ${currency_symbol}${item.price}</div>
                                         </div>
                                         <div class="d-flex align-items-center justify-content-between de-flex gap-12">
                                             <div class="text-secondary-2">Amount</div>
@@ -853,36 +853,35 @@
                             response.cartItems.forEach(item => {
                                 cartHtml += `
                                 <div class="item-product checkout_product" id="checkout-${item.rowId}">
-                                        <a href="/product-details/${item.slug}" class="img-product">
-                                            <img src="${item.image}" alt="${item.slug}">
-                                        </a>
+                                    <a href="/product-details/${item.slug}" class="img-product">
+                                        <img src="${item.image}" alt="${item.slug}">
+                                    </a>
 
-                                        <div class="content-box">
-                                            <div class="info">
-                                                <a href="/product-details/${item.slug}" class="name-product link text-title">${item.name}</a>
+                                    <div class="content-box">
+                                        <div class="info">
+                                            <a href="/product-details/${item.slug}" class="name-product link text-title">${item.name}</a>
 
-                                                <div class="variant text-caption-1 text-secondary"><span class="size">${item.color_name || 'N/A'} ( ${currency_symbol}${item.color_price} )</span> / <span class="color">${item.size_name || 'N/A'} ( ${currency_symbol}${item.size_price} )</span></div>
+                                            <div class="variant text-caption-1 text-secondary"><span class="size">${item.color_name || 'N/A'} ( ${currency_symbol}${item.color_price} )</span> / <span class="color">${item.size_name || 'N/A'} ( ${currency_symbol}${item.size_price} )</span></div>
 
-                                                <div class="wg-quantity">
-                                                    <span class="btn-quantity product-decrease">-</span>
-                                                    <input type="text" name="number" class="product_quantity" data-row_id="${item.rowId}" value="${item.qty}">
-                                                    <span class="btn-quantity product-increase">+</span>
-                                                </div>
-                                            </div>
-
-                                            <div class="total-price text-button" style="flex-direction: column">
-                                                <div class="text-button tf-btn-remove remove checkout_remove_cart" data-row_id="${item.rowId}">Remove</div>
-
-                                                <div class="">
-                                                    <span class="count" data-row_id="${item.rowId}" id="qty${item.rowId}">1</span>
-                                                    <span class="x-mark">X</span>  <span class="price">${currency_symbol}${item.variant_price}</span>
-                                                </div>
-
-                                                <div id="${item.rowId}" class="cart_total text-button total_price">${currency_symbol}2450</div>
+                                            <div class="wg-quantity">
+                                                <span class="btn-quantity product-decrease">-</span>
+                                                <input type="text" name="number" class="product_quantity" data-row_id="${item.rowId}" value="${item.qty}">
+                                                <span class="btn-quantity product-increase">+</span>
                                             </div>
                                         </div>
+
+                                        <div class="total-price text-button" style="flex-direction: column">
+                                            <div class="text-button tf-btn-remove remove checkout_remove_cart" data-row_id="${item.rowId}">Remove</div>
+
+                                            <div class="">
+                                                <span class="count" data-row_id="${item.rowId}" id="qty${item.rowId}">${item.qty} ${item.units}</span>
+                                                <span class="x-mark">X</span>  <span class="price">${currency_symbol}${item.variant_price}</span>
+                                            </div>
+
+                                            <div id="${item.rowId}" class="cart_total text-button total_price">${currency_symbol}2450</div>
+                                        </div>
                                     </div>
-                                `;
+                                </div>`;
                             });
                         }
 
@@ -1092,6 +1091,7 @@
                    $('#product_id').val(`${product.id}`);
                    $('#thumb_image').html(res.main_image);
                    $('.prdt_qty').text(`${product.qty}`);
+                   $('.product_units').text(`${product.units}`);
                    $('#category_name').text(`${product.cat_name}`);
                    $('#product_name').text(`${product.name}`);
                    $('#sold_product').text(`${product.product_sold}`);
@@ -1199,6 +1199,7 @@
                    $('#quick_product_id').val(`${product.id}`);
                    $('#quick_thumb_image').html(res.main_image);
                    $('.prdt_qty').text(`${product.qty}`);
+                   $('.product_units').text(`${product.units}`);
                    $('#quick_product_name').text(`${product.name}`);
                    $('.tf-product-info-price').html(res.price_val);
                    $('.main_color_variant').removeClass('d-none');
