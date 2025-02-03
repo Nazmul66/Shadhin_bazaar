@@ -79,17 +79,17 @@ class CartController extends Controller
         $cartData['price']                     = $productPrice;
         $cartData['weight']                    = 10;
 
-        if ($product_size) {
-            $cartData['options']['size_id']     = $product_size->id;
-            $cartData['options']['size_name']   = $product_size->size_name;
-            $cartData['options']['size_price']  = $product_size->size_price;
-        }
+        // if ($product_size) {
+            $cartData['options']['size_id']     = $product_size->id ?? null;
+            $cartData['options']['size_name']   = $product_size->size_name ?? null;
+            $cartData['options']['size_price']  = $product_size->size_price ?? null;
+        // }
 
-        if ($product_color) {
-            $cartData['options']['color_id']    = $product_color->id;
-            $cartData['options']['color_name']  = $product_color->color_name;
-            $cartData['options']['color_price'] = $product_color->color_price;
-        }
+        // if ($product_color) {
+            $cartData['options']['color_id']    = $product_color->id ?? null;
+            $cartData['options']['color_name']  = $product_color->color_name ?? null;
+            $cartData['options']['color_price'] = $product_color->color_price ?? null;
+        // }
 
         $cartData['options']['variants_total']  = ( $product_color->color_price ?? 0 ) + ( $product_size->size_price ?? 0 );
         $cartData['options']['slug']            = $product->slug;

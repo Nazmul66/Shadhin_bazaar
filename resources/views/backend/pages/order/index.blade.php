@@ -70,7 +70,7 @@
                         <thead class="bg-primary text-white">
                             <tr>
                                 <th>#SL.</th>
-                                <th>Invoice Id</th>
+                                <th>Order Id</th>
                                 <th>Customer Name</th>
                                 <th>Product Quantity</th>
                                 <th>Total Amount</th>
@@ -141,7 +141,7 @@
                         searchable: false 
                     },
                     {
-                        data: 'invoice_id',
+                        data: 'order_id',
                     },
                     {
                         data: 'cus_name',

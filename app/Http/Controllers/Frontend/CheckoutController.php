@@ -23,10 +23,10 @@ class CheckoutController extends Controller
         //     return redirect()->route('home');
         // }
 
-        if (!Auth::guard('web')->check()) {
-            session(['custom_redirect_url' => url()->full()]);
-            return redirect()->route('login');
-        }
+        // if (!Auth::guard('web')->check()) {
+        //     session(['custom_redirect_url' => url()->full()]);
+        //     return redirect()->route('login');
+        // }
         
         // Session::forget('custom_redirect_url');
 

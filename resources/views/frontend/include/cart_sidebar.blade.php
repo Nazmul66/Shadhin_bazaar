@@ -74,7 +74,11 @@
                                                     </div>
                                                    
                                                     <div class="d-flex align-items-center justify-content-between de-flex gap-12">
-                                                        <div class="text-secondary-2">{{ strtoupper($row->options->size_name) }} (  {{ getSetting()->currency_symbol }}{{ $row->options->size_price }} ) / {{ strtoupper($row->options->color_name) }} (  {{ getSetting()->currency_symbol }}{{ $row->options->color_price }} )</div>
+                                                        <div class="text-secondary-2">
+                                                            
+                                                            {{ strtoupper($row->options->size_name) }} (  {{ getSetting()->currency_symbol }}{{ $row->options->size_price ?? 0 }} ) / {{ strtoupper($row->options->color_name) }} (  {{ getSetting()->currency_symbol }}{{ $row->options->color_price ?? 0 }} )
+                                                        
+                                                        </div>
                                                         <div class="text-button">{{ $row->qty }} X  {{ getSetting()->currency_symbol }}{{ $row->price }}</div>
                                                     </div>
 

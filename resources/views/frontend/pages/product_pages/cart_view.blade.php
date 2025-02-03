@@ -92,7 +92,7 @@
                                         <div class="variant-box">
                                             <div class="tf-select">
                                                 <div class="product_variant">
-                                                    Color : {{ strtoupper($row->options->color_name) }} ( {{ getSetting()->currency_symbol}}{{ $row->options->color_price }} )
+                                                    Color : {{ strtoupper($row->options->color_name) }} ( {{ getSetting()->currency_symbol}}{{ $row->options->color_price ?? 0 }} )
                                                 </div>
                                                 {{-- <select>
                                                     <option selected="selected">Blue</option>
@@ -105,7 +105,7 @@
                                             </div>
                                             <div class="tf-select">
                                                 <div class="product_variant">
-                                                    Size : {{ strtoupper($row->options->size_name) }} ( {{ getSetting()->currency_symbol}}{{ $row->options->size_price }} )
+                                                    Size : {{ strtoupper($row->options->size_name) }} ( {{ getSetting()->currency_symbol}}{{ $row->options->size_price ?? 0 }} )
                                                 </div>
                                                 {{-- <select>
                                                     <option selected="selected">XL</option>
@@ -1083,11 +1083,14 @@
                    $('#thumb_image').html(res.main_image);
                    $('#category_name').text(`${product.cat_name}`);
                    $('#product_name').text(`${product.name}`);
+                   $('.prdt_qty').text(`${product.qty}`);
                    $('#sold_product').text(`${product.product_sold}`);
                    $('.tf-product-info-price').html(res.price_val);
                    $('#short_desc').text(`${product.short_description}`);
                    $('#product_view').text(`${product.product_view}`);
                    // $('.total_price').text(`${currency_symbol}` + res.product_price);
+                   $('.main_color_variant').removeClass('d-none');
+                   $('.main_size_variant').removeClass('d-none');
 
                    var imagesHtml = '';
 
@@ -1131,7 +1134,7 @@
                        $('.text-title.color_variant').text(firstColor.color_name);
                    } else {
                        $('#color_variant').html('');
-                       $('.text-title.color_variant').text('No Color');
+                       $('.main_color_variant').addClass('d-none');
                    }
 
 
@@ -1160,7 +1163,7 @@
                        $('.text-title.size_variant').text(firstSize.size_name.toUpperCase());
                    } else {
                        $('#size_variant').html('');
-                       $('.text-title.size_variant').text('No Size');
+                       $('.main_size_variant').addClass('d-none');
                    }
                },
                error: function (err) {
@@ -1184,9 +1187,12 @@
 
                    $('#quick_add_qty').val(1);
                    $('#quick_product_id').val(`${product.id}`);
+                   $('.prdt_qty').text(`${product.qty}`);
                    $('#quick_thumb_image').html(res.main_image);
                    $('#quick_product_name').text(`${product.name}`);
                    $('.tf-product-info-price').html(res.price_val);
+                   $('.main_color_variant').removeClass('d-none');
+                   $('.main_size_variant').removeClass('d-none');
 
                    if (res.product_color && res.product_color.length > 0) {
                         var colorsHtml = '';
@@ -1217,7 +1223,7 @@
                        $('.text-title.color_variant').text(firstColor.color_name);
                    } else {
                        $('#color_variant').html('');
-                       $('.text-title.color_variant').text('No Color');
+                       $('.main_color_variant').addClass('d-none');
                    }
 
 
@@ -1246,7 +1252,7 @@
                        $('.text-title.size_variant').text(firstSize.size_name.toUpperCase());
                    } else {
                        $('#quick_size_variant').html('');
-                       $('.text-title.size_variant').text('No Size');
+                       $('.main_size_variant').addClass('d-none');
                    }
                    
                },

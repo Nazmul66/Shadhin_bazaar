@@ -80,23 +80,25 @@ class SslCommerzPaymentController extends Controller
         $post_data['value_c'] = "ref003";
         $post_data['value_d'] = "ref004";
 
-        $user             = User::find(Auth::user()->id);
+        if( Auth::Check() ){
+            $user             = User::find(Auth::user()->id);
         
-        $user->name       = $request->input('full_name');
-        // Update email if it is different
-        if ($user->email !== $request->input('email')) {
-            $user->email = $request->input('email');
+            $user->name       = $request->input('full_name');
+            // Update email if it is different
+            if ($user->email !== $request->input('email')) {
+                $user->email = $request->input('email');
+            }
+            // Update phone if it is different
+            if ($user->phone !== $request->input('phone')) {
+                $user->phone = $request->input('phone');
+            }
+            $user->city       = $request->input('city');
+            $user->address    = $request->input('address');
+            $user->update();
         }
-        // Update phone if it is different
-        if ($user->phone !== $request->input('phone')) {
-            $user->phone = $request->input('phone');
-        }
-        $user->city       = $request->input('city');
-        $user->address    = $request->input('address');
-        $user->update();
 
         //__ Store all data __//
-        $this->storeOrder($post_data['tran_id'], $order_address_data, $payment_method, 0);
+        $this->storeOrder($post_data['tran_id'], $order_address_data, $payment_method, 1);
 
         //__ clear session __//
         $this->clearSession();  
@@ -185,7 +187,7 @@ class SslCommerzPaymentController extends Controller
         $order->tracking_number   = 'TRK' . rand(1000, 99999) . now()->format('Ymd') ;
         $order->order_id          = $maxOrderId ? $maxOrderId + 1 : 14529937801;
         $order->invoice_id        = 'INV-1737' . rand(100000000, 9999999999);
-        $order->user_id           = Auth::user()->id;
+        $order->user_id           = Auth::check() ? Auth::user()->id : null;
         $order->subtotal          = getCartTotal();
         $order->total_amount      = getMainCartTotal();
         $order->currency_name     = getSetting()->currency_name;

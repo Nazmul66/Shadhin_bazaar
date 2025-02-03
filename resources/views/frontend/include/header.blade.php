@@ -207,7 +207,7 @@
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="{{ route('user.dashboard') }}">My Account</a></li>
                                     <li><a class="dropdown-item" href="{{ route('user.dashboard.orders') }}">My Order List</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('user.dashboard.wishlist') }}#">Wishlist</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('user.dashboard.wishlist') }}">Wishlist</a></li>
                                     <li>
                                         <form method="POST" class="dropdown-item" action="{{ route('logout') }}">
                                             @csrf

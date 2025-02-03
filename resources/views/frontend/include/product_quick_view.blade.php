@@ -78,8 +78,8 @@
 
                             <input type="hidden" name="product_id" id="product_id">
 
-                            <div class="variant-picker-item">
-                                <div class="variant-picker-label mb_12 mb-2">
+                            <div class="variant-picker-item main_color_variant mb-3">
+                                <div class="variant-picker-label mb_12  mb-2">
                                     Colors:<span class="text-title color_variant variant-picker-label-value">Beige</span>
                                 </div>
 
@@ -112,9 +112,9 @@
                                 </div>
                             </div>
     
-                            <div class="variant-picker-item">
+                            <div class="variant-picker-item main_size_variant mb-3">
                                 <div class="d-flex justify-content-between mb_12">
-                                    <div class="variant-picker-label">
+                                    <div class="variant-picker-label ">
                                         Size:<span class="text-title size_variant variant-picker-label-value">L</span>
                                     </div>
                                     {{-- <a class="size-guide text-title link show-size-guide">Size Guide</a> --}}
@@ -143,7 +143,7 @@
                             </div>
     
                             <div class="tf-product-info-quantity">
-                                <div class="title mb_12">Quantity:</div>
+                                <div class="title mb_12">Quantity: <span class="prdt_qty">10</span></div>
                                 <div class="wg-quantity">
                                     <span class="btn-quantity btn-decrease">-</span>
                                     <input class="quantity-product" id="modal_qty" type="text" name="qty" value="1">

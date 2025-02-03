@@ -30,7 +30,7 @@
                             <input type="hidden" name="product_id" id="quick_product_id">
 
                             <div class="variant-picker-item">
-                                <div class="variant-picker-label mb-2">
+                                <div class="variant-picker-label main_color_variant mb-2">
                                     Colors:<span class="text-title variant-picker-label-value color_variant">Beige</span>
                                 </div>
 
@@ -63,7 +63,7 @@
                             </div>
 
                             <div class="variant-picker-item">
-                                <div class="variant-picker-label mb-2">
+                                <div class="variant-picker-label main_size_variant mb-2">
                                     Size:<span class="text-title variant-picker-label-value size_variant">L</span>
                                 </div>
 
@@ -91,7 +91,7 @@
                             </div>
 
                             <div class="tf-product-info-quantity">
-                                <div class="title mb_12">Quantity:</div>
+                                <div class="title mb_12">Quantity: <span class="prdt_qty">10</span></div>
                                 <div class="wg-quantity mb-3">
                                     <span class="btn-quantity btn-decrease">-</span>
                                     <input class="quantity-product" id="quick_add_qty" type="text" name="qty" value="1">

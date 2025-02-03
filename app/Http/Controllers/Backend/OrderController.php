@@ -66,6 +66,10 @@ class OrderController extends Controller
                 $date = date('F d, Y', strtotime($order->created_at));
                 return $date;
             })
+            ->addColumn('order_id', function ($order) {
+                $id = '#'.$order->order_id;
+                return $id;
+            })
             ->addColumn('product_qty', function ($order) {
                 $qty = $order->product_qty . ' Qty';
                 return $qty;
@@ -128,7 +132,7 @@ class OrderController extends Controller
                 return $actionHtml;
             })
 
-            ->rawColumns(['order_date', 'status', 'total_amount', 'product_qty', 'order_status', 'payment_status', 'action'])
+            ->rawColumns(['order_date', 'status', 'total_amount', 'product_qty', 'order_status', 'payment_status', 'order_id', 'action'])
             ->make(true);
     }
 
