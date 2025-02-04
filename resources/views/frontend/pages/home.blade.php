@@ -21,70 +21,81 @@
 
 @section('body-content')
 
-<!-- Slider -->
-<div class="tf-slideshow slider-style2 slider-electronic slider-position slider-effect-fade">
-    <div dir="ltr" class="swiper tf-sw-slideshow" data-effect="fade" data-preview="1" data-tablet="1" data-mobile="1" data-centered="false" data-space="0" data-space-mb="0" data-loop="true" data-auto-play="true">
-        <div class="swiper-wrapper">
 
-            @foreach ($sliders as $row)
-                <div class="swiper-slide">
-                    <div class="wrap-slider">
-                        <img src="{{ asset($row->slider_image) }}" alt="{{ $row->title }}">
-                        <div class="box-content">
-                            <div class="container">
-                                <div class="content-slider">
-                                    <div class="box-title-slider">
-                                        <div>
-                                            <p class="fade-item fade-item-1 subtitle text-btn-uppercase text-primary">{{ $row->type }}</p>
-                                            <div class="fade-item fade-item-2 title-display heading">{{ $row->title }}</div>
+
+<!-- Slider -->
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="tf-slideshow banner_slider slider-style2 slider-electronic slider-position slider-effect-fade">
+
+                <div dir="ltr" class="swiper tf-sw-slideshow" data-effect="fade" data-preview="1" data-tablet="1" data-mobile="1" data-centered="false" data-space="0" data-space-mb="0" data-loop="true" data-auto-play="true">
+                    <div class="swiper-wrapper">
+            
+                        @foreach ($sliders as $row)
+                            <div class="swiper-slide">
+                                <div class="wrap-slider">
+                                    <img src="{{ asset($row->slider_image) }}" alt="{{ $row->title }}" loading="lazy">
+                                    <div class="box-content">
+                                        <div class="container">
+                                            <div class="content-slider">
+                                                <div class="box-title-slider">
+                                                    <div>
+                                                        <p class="fade-item fade-item-1 subtitle text-btn-uppercase text-primary">{{ $row->type }}</p>
+                                                        <div class="fade-item fade-item-2 title-display heading">{{ $row->title }}</div>
+                                                    </div>
+                                                    <p class="fade-item fade-item-3 body-text-1 subheading"><strong>Price: {{ $row->starting_price }} Tk </strong></p>
+                                                </div>
+                                                <div class="fade-item fade-item-4 box-btn-slider">
+                                                    <a href="{{ url($row->btn_url ?? "/" ) }}" class="tf-btn btn-fill">
+                                                        <span class="text">Shop Now</span>
+                                                        <i class='bx bx-right-arrow-alt'></i></a>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <p class="fade-item fade-item-3 body-text-1 subheading"><strong>Price: {{ $row->starting_price }} Tk </strong></p>
-                                    </div>
-                                    <div class="fade-item fade-item-4 box-btn-slider">
-                                        <a href="{{ url($row->btn_url ?? "/" ) }}" class="tf-btn btn-fill">
-                                            <span class="text">Shop Now</span>
-                                            <i class='bx bx-right-arrow-alt'></i></a>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
-            @endforeach
-        </div>
-    </div>
-    <div class="wrap-pagination d-block">
-        <div class="container">
-            <div class="sw-dots sw-pagination-slider type-square justify-content-center"></div>
+                <div class="wrap-pagination d-block">
+                    <div class="container">
+                        <div class="sw-dots sw-pagination-slider type-square justify-content-center"></div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 <!-- /Slider -->
 
+<div class="loader"></div>
+
 <!-- Marquee -->
-<section class="tf-marquee">
-            <div class="marquee-wrapper">
-                <div class="initial-child-container">
-                    @for ($i = 0; $i < 5; $i++)
-                        @foreach ($marquee as $key => $row)
-                            <div class="marquee-child-item">
-                                <p class="text-btn-uppercase" style="text-transform: uppercase;">{{ $row->name }}</p>
-                            </div>
-                            <div class="marquee-child-item">
-                                <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                            </div>
-                        @endforeach
-                    @endfor
-                </div>
+    <section class="tf-marquee">
+        <div class="marquee-wrapper">
+            <div class="initial-child-container">
+                @for ($i = 0; $i < 5; $i++)
+                    @foreach ($marquee as $key => $row)
+                        <div class="marquee-child-item skeleton">
+                            <p class="text-btn-uppercase" style="text-transform: uppercase;">{{ $row->name }}</p>
+                        </div>
+                        <div class="marquee-child-item ">
+                            <ion-icon name="flash-outline" class="text-critical skeleton"></ion-icon>
+                        </div>
+                    @endforeach
+                @endfor
             </div>
-        </section>
+        </div>
+    </section>
 <!-- /Marquee -->
 
 <!-- Categories -->
 <section class="flat-spacing">
     <div class="container">
         <div class="heading-section-2 wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;">
-            <h3 class="heading">Popular Categories</h3>
+            <h3 class="heading skeleton">Popular Categories</h3>
             {{-- <a href="shop-collection.html" class="btn-line py_8">View All Collection</a> --}}
         </div>
     </div>
@@ -93,91 +104,23 @@
         <div dir="ltr" class="swiper tf-sw-collection swiper-initialized swiper-horizontal swiper-pointer-events swiper-backface-hidden" data-preview="5.1" data-tablet="3.1" data-mobile="2.1" data-space-lg="20" data-space-md="20" data-space="15" data-pagination="1" data-pagination-md="1" data-pagination-lg="1">
             <div class="swiper-wrapper" id="swiper-wrapper-bce54eacbb9682ae" aria-live="polite" style="transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;">
 
-
                 @foreach ( App\Models\Category::where('status', 1)->orderBy('id', "desc")->get(); as $key => $item)
                     <!-- {{ $key + 1 }} -->
                     <div class="swiper-slide swiper-slide-next" role="group" aria-label="1 / 7" style="width: 256.275px; margin-right: 20px;">
                         <div class="collection-position-2 style-3 hover-img wow fadeInUp" data-wow-delay="0s" style="visibility: visible; animation-delay: 0s; animation-name: fadeInUp;">
-                            <a class="img-style">
-                                <img class=" ls-is-cached lazyloaded" data-src="{{ asset($item->category_img) }}" src="{{ asset($item->category_img) }}" alt="{{ $item->slug }}" style="height: 300px;">
+                            <a class="img-style skeleton">
+                                <img class="ls-is-cached lazyloaded " data-src="{{ asset($item->category_img) }}" src="{{ asset($item->category_img) }}" alt="{{ $item->slug }}" style="height: 300px;">
                             </a>
                             @php
                                 $subcategory = App\Models\Subcategory::where('category_id', $item->id)->where('status', 1)->count();
                             @endphp
                             <div class="content">
-                                <a href="{{ route('product.page', ['categories' => $item->slug]) }}" class="cls-btn"><h6 class="text" style="font-size: 15px;">{{ $item->category_name }}</h6> <span class="count-item text-secondary">{{ $subcategory }} items</span><i class='icon bx bx-up-arrow-alt'></i></a>
+                                <a href="{{ route('product.page', ['categories' => $item->slug]) }}" class="cls-btn skeleton2"><h6 class="text" style="font-size: 15px;">{{ $item->category_name }}</h6> <span class="count-item text-secondary">{{ $subcategory }} items</span><i class='icon bx bx-up-arrow-alt'></i></a>
                             </div>
                         </div>
                     </div>
                 @endforeach
 
-
-                {{-- <!-- 2 -->
-                <div class="swiper-slide swiper-slide-next" role="group" aria-label="2 / 7" style="width: 256.275px; margin-right: 20px;">
-                    <div class="collection-position-2 style-3 hover-img wow fadeInUp" data-wow-delay="0.1s" style="visibility: visible; animation-delay: 0.1s; animation-name: fadeInUp;">
-                        <a class="img-style">
-                            <img class=" ls-is-cached lazyloaded" data-src="images/collections/cls10.jpg" src="images/collections/cls10.jpg" alt="banner-cls">
-                        </a>
-                        <div class="content">
-                            <a href="shop-collection.html" class="cls-btn"><h6 class="text">Tops</h6><span class="count-item text-secondary">12 items</span><i class="icon icon-arrowUpRight"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <!-- 3 -->
-                <div class="swiper-slide" role="group" aria-label="3 / 7" style="width: 256.275px; margin-right: 20px;">
-                    <div class="collection-position-2 style-3 hover-img wow fadeInUp" data-wow-delay="0.2s" style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">
-                        <a class="img-style">
-                            <img class=" ls-is-cached lazyloaded" data-src="images/collections/cls11.jpg" src="images/collections/cls11.jpg" alt="banner-cls">
-                        </a>
-                        <div class="content">
-                            <a href="shop-collection.html" class="cls-btn"><h6 class="text">Bottoms</h6><span class="count-item text-secondary">12 items</span><i class="icon icon-arrowUpRight"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <!-- 4 -->
-                <div class="swiper-slide" role="group" aria-label="4 / 7" style="width: 256.275px; margin-right: 20px;">
-                    <div class="collection-position-2 style-3 hover-img wow fadeInUp" data-wow-delay="0.3s" style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInUp;">
-                        <a class="img-style">
-                            <img class=" ls-is-cached lazyloaded" data-src="images/collections/cls12.jpg" src="images/collections/cls12.jpg" alt="banner-cls">
-                        </a>
-                        <div class="content">
-                            <a href="shop-collection.html" class="cls-btn"><h6 class="text">Outerwear</h6><span class="count-item text-secondary">12 items</span><i class="icon icon-arrowUpRight"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <!-- 5 -->
-                <div class="swiper-slide" role="group" aria-label="5 / 7" style="width: 256.275px; margin-right: 20px;">
-                    <div class="collection-position-2 style-3 hover-img wow fadeInUp" data-wow-delay="0.4s" style="visibility: visible; animation-delay: 0.4s; animation-name: fadeInUp;">
-                        <a class="img-style">
-                            <img class=" ls-is-cached lazyloaded" data-src="images/collections/cls4.jpg" src="images/collections/cls4.jpg" alt="banner-cls">
-                        </a>
-                        <div class="content">
-                            <a href="shop-collection.html" class="cls-btn"><h6 class="text">Shoes</h6><span class="count-item text-secondary">12 items</span><i class="icon icon-arrowUpRight"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <!-- 6 -->
-                <div class="swiper-slide" role="group" aria-label="6 / 7" style="width: 256.275px; margin-right: 20px;">
-                    <div class="collection-position-2 style-3 hover-img">
-                        <a class="img-style">
-                            <img class=" ls-is-cached lazyloaded" data-src="images/collections/cls6.jpg" src="images/collections/cls6.jpg" alt="banner-cls">
-                        </a>
-                        <div class="content">
-                            <a href="shop-collection.html" class="cls-btn"><h6 class="text">Accessories</h6><span class="count-item text-secondary">12 items</span><i class="icon icon-arrowUpRight"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <!-- 7 -->
-                <div class="swiper-slide" role="group" aria-label="7 / 7" style="width: 256.275px; margin-right: 20px;">
-                    <div class="collection-position-2 style-3 hover-img wow fadeInUp" data-wow-delay="0.3s" style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInUp;">
-                        <a class="img-style">
-                            <img class=" ls-is-cached lazyloaded" data-src="images/collections/cls12.jpg" src="images/collections/cls12.jpg" alt="banner-cls">
-                        </a>
-                        <div class="content">
-                            <a href="shop-collection.html" class="cls-btn"><h6 class="text">Outerwear</h6><span class="count-item text-secondary">12 items</span><i class="icon icon-arrowUpRight"></i></a>
-                        </div>
-                    </div>
-                </div> --}}
             </div>
         <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span></div>
     </div>
@@ -188,8 +131,8 @@
 <section class="flat-spacing-4 space-30">
     <div class="container">
         <div class="heading-section-2 wow fadeInUp">
-            <h4 style="font-size: 30px!important;">Popular Category Products</h4>
-            <ul class="tab-product-v3 justify-content-sm-center" role="tablist">
+            <h4 class="skeleton" style="font-size: 30px!important;">Popular Category Products</h4>
+            <ul class="tab-product-v3 justify-content-sm-center skeleton" role="tablist">
                 <li class="nav-tab-item" role="presentation">
                     <a href="#AllProducts" class="active text-caption-1" data-bs-toggle="tab">All Products</a>
                 </li>
@@ -213,7 +156,7 @@
                                 <div class="swiper-slide">
                                     <div class="card-product wow fadeInUp" data-wow-delay="0.1s">
                                         <div class="card-product-wrapper">
-                                            <a href="{{ route('product.details', $row->slug) }}" class="product-img">
+                                            <a href="{{ route('product.details', $row->slug) }}" class="product-img skeleton">
                                                 <img class="lazyload img-product" data-src="{{ asset($row->thumb_image) }}" src="{{ asset($row->thumb_image) }}" alt="{{ $row->slug }}">
 
                                                 @php
@@ -315,7 +258,6 @@
                                                 @endif
                                             @endif
 
-                                            
                                             <div class="list-product-btn">
                                                 <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action {{ in_array($row->id, $wishlistItems) ? 'active' : '' }}" data-id="{{ $row->id }}">
                                                     <i class='bx bx-heart' style="font-size: 24px;"></i>
@@ -332,7 +274,7 @@
                                                 </a>
                                             </div>
                                             <div class="list-btn-main">
-                                                <a href="#quickAdd" data-id={{ $row->id }} data-bs-toggle="modal" class="btn-main-product quickAdd">Quick Add</a>
+                                                <a href="#quickAdd" data-id={{ $row->id }} data-bs-toggle="modal" class="btn-main-product quickAdd">Quick Order</a>
                                             </div>
                                         </div>
 
@@ -342,10 +284,9 @@
                                         @endphp
 
                                         <div class="card-product-info">
-                                            <a href="{{ route('product.details', $row->slug) }}" class="title link">{{ $row->name }}</a>
+                                            <a href="{{ route('product.details', $row->slug) }}" class="title link skeleton">{{ $row->name }}</a>
                                             <div class="box-rating">
-                                                <ul class="list-star">
-                                                    
+                                                <ul class="list-star skeleton">
                                                     @for ( $i = 1; $i <= 5; $i++ )
                                                         @if ( $i <= round($avgRatings))
                                                             <li class="bx bxs-star" style="color: #F0A750;"></li>
@@ -354,25 +295,26 @@
                                                         @endif
                                                     @endfor
                                                 </ul>
-                                                <span class="text-caption-1 text-secondary">({{ $reviews }} )</span>
+                                                <span class="text-caption-1 text-secondary skeleton">({{ $reviews }} )</span>
                                             </div>
 
                                             @if ( checkDiscount($row) )
                                                 @if ( !empty($row->discount_type === "amount") )
-                                                    <span class="price"><span class="old-price">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> {{ getSetting()->currency_symbol }}{{ $row->selling_price - $row->discount_value }}</span>
+                                                    <span class="price"><span class="old-price skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> <span class="skeleton">
+                                                        {{ getSetting()->currency_symbol }}{{ $row->selling_price - $row->discount_value }}</span></span>
                                                 @elseif( !empty($row->discount_type === "percent") )
                                                 @php
                                                     $discount_val = $row->selling_price * $row->discount_value / 100;
                                                 @endphp
-                                                    <span class="price"><span class="old-price">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> {{ getSetting()->currency_symbol }}{{ $row->selling_price - $discount_val }}</span>
+                                                    <span class="price"><span class="old-price skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> <span class="skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price - $discount_val }}</span></span>
                                                 @else
-                                                    <span class="price"> {{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span>
+                                                    <span class="price "><span class="skeleton"> {{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span></span>
                                                 @endif
                                             @else
-                                                <span class="price"> {{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span>
+                                                <span class="price "> <span class="skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span></span>
                                             @endif
 
-                                            <div class="box-progress-stock">
+                                            {{-- <div class="box-progress-stock">
                                                 <div class="progress">
                                                     <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
@@ -381,18 +323,18 @@
                                                         <span class="stock-label text-secondary-2">Stock:</span>
                                                         <span class="stock-value">{{ $row->qty }}</span>
                                                     </div>
-                                                    {{-- <div class="stock-item text-caption-1">
+                                                    <div class="stock-item text-caption-1">
                                                         <span class="stock-label text-secondary-2">Sold:</span>
                                                         <span class="stock-value">{{ $row->product_sold }}</span>
-                                                    </div> --}}
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                         </div>
                                     </div>
                                 </div>
                             @endforeach
-                            
                         </div>
+
                         <div class="sw-pagination-latest sw-dots type-circle justify-content-center"></div>
                     </div>
                 </div>
@@ -609,14 +551,14 @@
         <div class="row">
             @foreach ($collections as $row)
                 <div class="col-lg-4 mb-3">
-                    <div class="collection-position style-lg hover-img">
+                    <div class="collection-position style-lg hover-img skeleton">
                         <a class="img-style">
-                            <img class=" ls-is-cached lazyloaded" data-src="{{ asset($row->image) }}" src="{{ asset($row->image) }}" alt="{{ $row->slug }}" style="height: 400px;">
+                            <img class="ls-is-cached lazyloaded" data-src="{{ asset($row->image) }}" src="{{ asset($row->image) }}" alt="{{ $row->slug }}" style="height: 400px;">
                         </a>
                         <div class="content">
-                            <h3 class="title wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;"><a href="{{ route('product.collection', $row->slug) }}" class="link text-white">{{ $row->title }}</a></h3>
+                            <h3 class="title wow fadeInUp skeleton2" style="visibility: visible; animation-name: fadeInUp;"><a href="{{ route('product.collection', $row->slug) }}" class="link text-white">{{ $row->title }}</a></h3>
                             <div class="wow fadeInUp" data-wow-delay="0.2s" style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">
-                                <a href="{{ route('product.collection', $row->slug) }}" class="btn-line style-white">Shop Now</a>
+                                <a href="{{ route('product.collection', $row->slug) }}" class="btn-line style-white skeleton2">Shop Now</a>
                             </div>
                         </div>
                     </div>
@@ -631,8 +573,8 @@
 <section class="flat-spacing-4 pt-0">
     <div class="container">
         <div class="heading-section-2 wow fadeInUp">
-            <h4 style="font-size: 30px!important;">Top Products</h4>
-            <a href="{{ route('product.page') }}" class="line-under">See All Products</a>
+            <h4 class="skeleton" style="font-size: 30px!important;">Top Products</h4>
+            <a href="{{ route('product.page') }}" class="line-under skeleton">See All Products</a>
         </div>
 
         <div dir="ltr" class="swiper tf-sw-recent" data-preview="6" data-tablet="4" data-mobile="2" data-space-lg="30" data-space-md="30" data-space="15" data-pagination="1" data-pagination-md="1" data-pagination-lg="1">
@@ -645,7 +587,7 @@
                     <div class="swiper-slide">
                         <div class="card-product wow fadeInUp" data-wow-delay="0.1s">
                             <div class="card-product-wrapper">
-                                <a href="{{ route('product.details', $row->slug) }}" class="product-img">
+                                <a href="{{ route('product.details', $row->slug) }}" class="product-img skeleton">
                                     <img class="lazyload img-product" data-src="{{ asset($row->thumb_image) }}" src="{{ asset($row->thumb_image) }}" alt="{{ $row->slug }}">
 
                                     @php
@@ -660,7 +602,6 @@
                                                 $discount = '-'. $row->discount_value . "%";
                                             }
                                         }
-                                        
                                     @endphp
 
                                     @if (!empty($image))
@@ -672,7 +613,6 @@
                                         {{ $discount }}
                                     </span>
                                 </div>
-
 
                                 @if ( checkDiscount($row) )
                                     @if ( !empty($row->discount_type === "amount") || !empty($row->discount_type === "percent") )
@@ -749,7 +689,6 @@
                                     @endif
                                 @endif
 
-                                
                                 <div class="list-product-btn">
                                     <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action {{ in_array($row->id, $wishlistItems) ? 'active' : '' }}" data-id="{{ $row->id }}">
                                         <i class='bx bx-heart' style="font-size: 24px;"></i>
@@ -766,7 +705,7 @@
                                     </a>
                                 </div>
                                 <div class="list-btn-main">
-                                    <a href="#quickAdd" data-id={{ $row->id }} data-bs-toggle="modal" class="btn-main-product quickAdd">Quick Add</a>
+                                    <a href="#quickAdd" data-id={{ $row->id }} data-bs-toggle="modal" class="btn-main-product quickAdd">Quick Order</a>
                                 </div>
                             </div>
 
@@ -776,10 +715,9 @@
                             @endphp
 
                             <div class="card-product-info">
-                                <a href="{{ route('product.details', $row->slug) }}" class="title link">{{ $row->name }}</a>
+                                <a href="{{ route('product.details', $row->slug) }}" class="title link skeleton">{{ $row->name }}</a>
                                 <div class="box-rating">
-                                    <ul class="list-star">
-                                        
+                                    <ul class="list-star skeleton">
                                         @for ( $i = 1; $i <= 5; $i++ )
                                             @if ( $i <= round($avgRatings))
                                                 <li class="bx bxs-star" style="color: #F0A750;"></li>
@@ -788,25 +726,26 @@
                                             @endif
                                         @endfor
                                     </ul>
-                                    <span class="text-caption-1 text-secondary">({{ $reviews }} )</span>
+                                    <span class="text-caption-1 text-secondary skeleton">({{ $reviews }} )</span>
                                 </div>
 
                                 @if ( checkDiscount($row) )
                                     @if ( !empty($row->discount_type === "amount") )
-                                        <span class="price"><span class="old-price">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> {{ getSetting()->currency_symbol }}{{ $row->selling_price - $row->discount_value }}</span>
+                                        <span class="price"><span class="old-price skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> <span class="skeleton">
+                                            {{ getSetting()->currency_symbol }}{{ $row->selling_price - $row->discount_value }}</span></span>
                                     @elseif( !empty($row->discount_type === "percent") )
                                     @php
                                         $discount_val = $row->selling_price * $row->discount_value / 100;
                                     @endphp
-                                        <span class="price"><span class="old-price">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> {{ getSetting()->currency_symbol }}{{ $row->selling_price - $discount_val }}</span>
+                                        <span class="price"><span class="old-price skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> <span class="skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price - $discount_val }}</span></span>
                                     @else
-                                        <span class="price"> {{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span>
+                                        <span class="price "><span class="skeleton"> {{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span></span>
                                     @endif
                                 @else
-                                    <span class="price"> {{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span>
+                                    <span class="price "> <span class="skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span></span>
                                 @endif
 
-                                <div class="box-progress-stock">
+                                {{-- <div class="box-progress-stock">
                                     <div class="progress">
                                         <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
@@ -815,16 +754,17 @@
                                             <span class="stock-label text-secondary-2">Stock:</span>
                                             <span class="stock-value">{{ $row->qty }}</span>
                                         </div>
-                                        {{-- <div class="stock-item text-caption-1">
+                                        <div class="stock-item text-caption-1">
                                             <span class="stock-label text-secondary-2">Sold:</span>
                                             <span class="stock-value">{{ $row->product_sold }}</span>
-                                        </div> --}}
+                                        </div>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </div>
                 @endforeach
+
             </div>
             <div class="sw-pagination-recent sw-dots type-circle justify-content-center"></div>
         </div>
@@ -836,8 +776,8 @@
 <section class="flat-spacing-4 pt-0">
     <div class="container">
         <div class="heading-section-2 wow fadeInUp">
-            <h4 style="font-size: 30px!important;">Featured Products</h4>
-            <a href="{{ route('product.page') }}" class="line-under">See All Products</a>
+            <h4 class="skeleton" style="font-size: 30px!important;">Featured Products</h4>
+            <a href="{{ route('product.page') }}" class="line-under skeleton">See All Products</a>
         </div>
 
         <div dir="ltr" class="swiper tf-sw-recent" data-preview="6" data-tablet="4" data-mobile="2" data-space-lg="30" data-space-md="30" data-space="15" data-pagination="1" data-pagination-md="1" data-pagination-lg="1">
@@ -850,7 +790,7 @@
                     <div class="swiper-slide">
                         <div class="card-product wow fadeInUp" data-wow-delay="0.1s">
                             <div class="card-product-wrapper">
-                                <a href="{{ route('product.details', $row->slug) }}" class="product-img">
+                                <a href="{{ route('product.details', $row->slug) }}" class="product-img skeleton">
                                     <img class="lazyload img-product" data-src="{{ asset($row->thumb_image) }}" src="{{ asset($row->thumb_image) }}" alt="{{ $row->slug }}">
 
                                     @php
@@ -865,7 +805,6 @@
                                                 $discount = '-'. $row->discount_value . "%";
                                             }
                                         }
-                                        
                                     @endphp
 
                                     @if (!empty($image))
@@ -877,7 +816,6 @@
                                         {{ $discount }}
                                     </span>
                                 </div>
-
 
                                 @if ( checkDiscount($row) )
                                     @if ( !empty($row->discount_type === "amount") || !empty($row->discount_type === "percent") )
@@ -954,7 +892,6 @@
                                     @endif
                                 @endif
 
-                                
                                 <div class="list-product-btn">
                                     <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action {{ in_array($row->id, $wishlistItems) ? 'active' : '' }}" data-id="{{ $row->id }}">
                                         <i class='bx bx-heart' style="font-size: 24px;"></i>
@@ -971,7 +908,7 @@
                                     </a>
                                 </div>
                                 <div class="list-btn-main">
-                                    <a href="#quickAdd" data-id={{ $row->id }} data-bs-toggle="modal" class="btn-main-product quickAdd">Quick Add</a>
+                                    <a href="#quickAdd" data-id={{ $row->id }} data-bs-toggle="modal" class="btn-main-product quickAdd">Quick Order</a>
                                 </div>
                             </div>
 
@@ -981,9 +918,9 @@
                             @endphp
 
                             <div class="card-product-info">
-                                <a href="{{ route('product.details', $row->slug) }}" class="title link">{{ $row->name }}</a>
+                                <a href="{{ route('product.details', $row->slug) }}" class="title link skeleton">{{ $row->name }}</a>
                                 <div class="box-rating">
-                                    <ul class="list-star"> 
+                                    <ul class="list-star skeleton">
                                         @for ( $i = 1; $i <= 5; $i++ )
                                             @if ( $i <= round($avgRatings))
                                                 <li class="bx bxs-star" style="color: #F0A750;"></li>
@@ -992,25 +929,26 @@
                                             @endif
                                         @endfor
                                     </ul>
-                                    <span class="text-caption-1 text-secondary">({{ $reviews }} )</span>
+                                    <span class="text-caption-1 text-secondary skeleton">({{ $reviews }} )</span>
                                 </div>
 
                                 @if ( checkDiscount($row) )
                                     @if ( !empty($row->discount_type === "amount") )
-                                        <span class="price"><span class="old-price">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> {{ getSetting()->currency_symbol }}{{ $row->selling_price - $row->discount_value }}</span>
+                                        <span class="price"><span class="old-price skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> <span class="skeleton">
+                                            {{ getSetting()->currency_symbol }}{{ $row->selling_price - $row->discount_value }}</span></span>
                                     @elseif( !empty($row->discount_type === "percent") )
                                     @php
                                         $discount_val = $row->selling_price * $row->discount_value / 100;
                                     @endphp
-                                        <span class="price"><span class="old-price">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> {{ getSetting()->currency_symbol }}{{ $row->selling_price - $discount_val }}</span>
+                                        <span class="price"><span class="old-price skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> <span class="skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price - $discount_val }}</span></span>
                                     @else
-                                        <span class="price"> {{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span>
+                                        <span class="price "><span class="skeleton"> {{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span></span>
                                     @endif
                                 @else
-                                    <span class="price"> {{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span>
+                                    <span class="price "> <span class="skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span></span>
                                 @endif
 
-                                <div class="box-progress-stock">
+                                {{-- <div class="box-progress-stock">
                                     <div class="progress">
                                         <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
@@ -1019,12 +957,12 @@
                                             <span class="stock-label text-secondary-2">Stock:</span>
                                             <span class="stock-value">{{ $row->qty }}</span>
                                         </div>
-                                        {{-- <div class="stock-item text-caption-1">
+                                        <div class="stock-item text-caption-1">
                                             <span class="stock-label text-secondary-2">Sold:</span>
                                             <span class="stock-value">{{ $row->product_sold }}</span>
-                                        </div> --}}
+                                        </div>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </div>
@@ -1055,13 +993,13 @@
         <div class="grid-card-product tf-grid-layout lg-col-3 md-col-2">
 
             <div class="column-card-product">
-                <h5 class="heading wow fadeInUp">View products</h5>
+                <h5 class="heading wow fadeInUp skeleton">View products</h5>
                 <div class="list-card-product">
 
                     @foreach ($view_products as $row)
                         <div class="card-product list-st-2 wow fadeInUp">
                             <div class="card-product-wrapper">
-                                <a href="{{ route('product.details', $row->slug) }}" class="product-img">
+                                <a href="{{ route('product.details', $row->slug) }}" class="product-img skeleton">
                                     <img class="lazyload img-product" data-src="{{ asset($row->thumb_image) }}" src="{{ asset($row->thumb_image) }}" alt="{{ $row->slug }}">
 
                                     @php
@@ -1085,7 +1023,7 @@
                                 <div class="on-sale-wrap"><span class="on-sale-item">{{ $discount }}</span></div>
                             </div>
                             <div class="card-product-info">
-                                <a href="{{ route('product.details', $row->slug) }}" class="title link">{{ $row->name }}</a>
+                                <a href="{{ route('product.details', $row->slug) }}" class="title link skeleton">{{ $row->name }}</a>
 
                                 @php
                                     $avgRatings = App\Models\ProductReview::where('product_id', $row->id)->where('status', 1)->avg('ratings');
@@ -1095,7 +1033,7 @@
                                 <div class="bottom">
                                     <div class="inner-left">
                                         <div class="box-rating">
-                                            <ul class="list-star">
+                                            <ul class="list-star skeleton">
                                                 @for ( $i = 1; $i <= 5; $i++ )
                                                     @if ( $i <= round($avgRatings))
                                                         <li class="bx bxs-star" style="color: #F0A750;"></li>
@@ -1104,26 +1042,26 @@
                                                     @endif
                                                 @endfor
                                             </ul>
-                                            <span class="text-caption-1 text-secondary">({{ $reviews }} )</span>
+                                            <span class="text-caption-1 text-secondary skeleton">({{ $reviews }} )</span>
                                         </div>
 
                                         @if ( checkDiscount($row) )
                                             @if ( !empty($row->discount_type === "amount") )
-                                                <span class="price"><span class="old-price">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> {{ getSetting()->currency_symbol }}{{ $row->selling_price - $row->discount_value }}</span>
+                                                <span class="price"><span class="old-price skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> <span class="skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price - $row->discount_value }}</span></span>
                                             @elseif( !empty($row->discount_type === "percent") )
                                             @php
                                                 $discount_val = $row->selling_price * $row->discount_value / 100;
                                             @endphp
-                                                <span class="price"><span class="old-price">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> {{ getSetting()->currency_symbol }}{{ $row->selling_price - $discount_val }}</span>
+                                                <span class="price"><span class="old-price skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> <span class="skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price - $discount_val }}</span></span>
                                             @else
-                                                <span class="price"> {{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span>
+                                                <span class="price"> <span class="skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span></span>
                                             @endif
                                         @else
-                                            <span class="price"> {{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span>
+                                            <span class="price"> <span class="skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span></span>
                                         @endif
 
                                     </div>
-                                    <a href="#quickAdd" data-id={{ $row->id }} data-bs-toggle="modal" class="box-icon quickAdd">
+                                    <a href="#quickAdd" data-id={{ $row->id }} data-bs-toggle="modal" class="box-icon quickAdd skeleton">
                                         <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M16.2187 10.3327V5.99935C16.2187 4.85008 15.7622 3.74788 14.9495 2.93522C14.1369 2.12256 13.0347 1.66602 11.8854 1.66602C10.7361 1.66602 9.63394 2.12256 8.82129 2.93522C8.00863 3.74788 7.55208 4.85008 7.55208 5.99935V10.3327M4.30208 8.16602H19.4687L20.5521 21.166H3.21875L4.30208 8.16602Z" stroke="#181818" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
                                         </svg>   
@@ -1137,13 +1075,13 @@
             </div>
 
             <div class="column-card-product">
-                <h5 class="heading wow fadeInUp">New Arrivals</h5>
+                <h5 class="heading wow fadeInUp skeleton">New Arrivals</h5>
                 <div class="list-card-product">
                     
                     @foreach ($new_products as $row)
                         <div class="card-product list-st-2 wow fadeInUp">
                             <div class="card-product-wrapper">
-                                <a href="{{ route('product.details', $row->slug) }}" class="product-img">
+                                <a href="{{ route('product.details', $row->slug) }}" class="product-img skeleton">
                                     <img class="lazyload img-product" data-src="{{ asset($row->thumb_image) }}" src="{{ asset($row->thumb_image) }}" alt="{{ $row->slug }}">
 
                                     @php
@@ -1167,7 +1105,7 @@
                                 <div class="on-sale-wrap"><span class="on-sale-item">{{ $discount }}</span></div>
                             </div>
                             <div class="card-product-info">
-                                <a href="{{ route('product.details', $row->slug) }}" class="title link">{{ $row->name }}</a>
+                                <a href="{{ route('product.details', $row->slug) }}" class="title link skeleton">{{ $row->name }}</a>
 
                                 @php
                                     $avgRatings = App\Models\ProductReview::where('product_id', $row->id)->where('status', 1)->avg('ratings');
@@ -1177,7 +1115,7 @@
                                 <div class="bottom">
                                     <div class="inner-left">
                                         <div class="box-rating">
-                                            <ul class="list-star">
+                                            <ul class="list-star skeleton">
                                                 @for ( $i = 1; $i <= 5; $i++ )
                                                     @if ( $i <= round($avgRatings))
                                                         <li class="bx bxs-star" style="color: #F0A750;"></li>
@@ -1186,26 +1124,26 @@
                                                     @endif
                                                 @endfor
                                             </ul>
-                                            <span class="text-caption-1 text-secondary">({{ $reviews }} )</span>
+                                            <span class="text-caption-1 text-secondary skeleton">({{ $reviews }} )</span>
                                         </div>
 
                                         @if ( checkDiscount($row) )
                                             @if ( !empty($row->discount_type === "amount") )
-                                                <span class="price"><span class="old-price">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> {{ getSetting()->currency_symbol }}{{ $row->selling_price - $row->discount_value }}</span>
+                                                <span class="price"><span class="old-price skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> <span class="skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price - $row->discount_value }}</span></span>
                                             @elseif( !empty($row->discount_type === "percent") )
                                             @php
                                                 $discount_val = $row->selling_price * $row->discount_value / 100;
                                             @endphp
-                                                <span class="price"><span class="old-price">{{ getSetting()->currency_symbol }}${{ $row->selling_price }}</span> {{ getSetting()->currency_symbol }}{{ $row->selling_price - $discount_val }}</span>
+                                                <span class="price"><span class="old-price skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> <span class="skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price - $discount_val }}</span></span>
                                             @else
-                                                <span class="price"> {{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span>
+                                                <span class="price"> <span class="skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span></span>
                                             @endif
                                         @else
-                                            <span class="price"> {{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span>
+                                            <span class="price"> <span class="skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span></span>
                                         @endif
 
                                     </div>
-                                    <a href="#quickAdd" data-id={{ $row->id }} data-bs-toggle="modal" class="box-icon quickAdd">
+                                    <a href="#quickAdd" data-id={{ $row->id }} data-bs-toggle="modal" class="box-icon quickAdd skeleton">
                                         <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M16.2187 10.3327V5.99935C16.2187 4.85008 15.7622 3.74788 14.9495 2.93522C14.1369 2.12256 13.0347 1.66602 11.8854 1.66602C10.7361 1.66602 9.63394 2.12256 8.82129 2.93522C8.00863 3.74788 7.55208 4.85008 7.55208 5.99935V10.3327M4.30208 8.16602H19.4687L20.5521 21.166H3.21875L4.30208 8.16602Z" stroke="#181818" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
                                         </svg>   
@@ -1219,12 +1157,12 @@
             </div>
 
             <div class="column-card-product">
-                <h5 class="heading wow fadeInUp">Maybe you will love</h5>
+                <h5 class="heading wow fadeInUp skeleton">Maybe you will love</h5>
                 <div class="list-card-product">
                     @foreach ($random_products as $row)
                         <div class="card-product list-st-2 wow fadeInUp">
                             <div class="card-product-wrapper">
-                                <a href="{{ route('product.details', $row->slug) }}" class="product-img">
+                                <a href="{{ route('product.details', $row->slug) }}" class="product-img skeleton">
                                     <img class="lazyload img-product" data-src="{{ asset($row->thumb_image) }}" src="{{ asset($row->thumb_image) }}" alt="{{ $row->slug }}">
 
                                     @php
@@ -1248,7 +1186,7 @@
                                 <div class="on-sale-wrap"><span class="on-sale-item">{{ $discount }}</span></div>
                             </div>
                             <div class="card-product-info">
-                                <a href="{{ route('product.details', $row->slug) }}" class="title link">{{ $row->name }}</a>
+                                <a href="{{ route('product.details', $row->slug) }}" class="title link skeleton">{{ $row->name }}</a>
 
                                 @php
                                     $avgRatings = App\Models\ProductReview::where('product_id', $row->id)->where('status', 1)->avg('ratings');
@@ -1258,7 +1196,7 @@
                                 <div class="bottom">
                                     <div class="inner-left">
                                         <div class="box-rating">
-                                            <ul class="list-star">
+                                            <ul class="list-star skeleton">
                                                 @for ( $i = 1; $i <= 5; $i++ )
                                                     @if ( $i <= round($avgRatings))
                                                         <li class="bx bxs-star" style="color: #F0A750;"></li>
@@ -1267,26 +1205,26 @@
                                                     @endif
                                                 @endfor
                                             </ul>
-                                            <span class="text-caption-1 text-secondary">({{ $reviews }} )</span>
+                                            <span class="text-caption-1 text-secondary skeleton">({{ $reviews }} )</span>
                                         </div>
 
                                         @if ( checkDiscount($row) )
                                             @if ( !empty($row->discount_type === "amount") )
-                                                <span class="price"><span class="old-price">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> {{ getSetting()->currency_symbol }}{{ $row->selling_price - $row->discount_value }}</span>
+                                                <span class="price"><span class="old-price skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> <span class="skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price - $row->discount_value }}</span></span>
                                             @elseif( !empty($row->discount_type === "percent") )
                                             @php
                                                 $discount_val = $row->selling_price * $row->discount_value / 100;
                                             @endphp
-                                                <span class="price"><span class="old-price">${{ $row->selling_price }}</span> {{ getSetting()->currency_symbol }}{{ $row->selling_price - $discount_val }}</span>
+                                                <span class="price"><span class="old-price skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> <span class="skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price - $discount_val }}</span></span>
                                             @else
-                                                <span class="price"> {{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span>
+                                                <span class="price"> <span class="skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span></span>
                                             @endif
                                         @else
-                                            <span class="price"> {{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span>
+                                            <span class="price"> <span class="skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span></span>
                                         @endif
 
                                     </div>
-                                    <a href="#quickAdd" data-id={{ $row->id }} data-bs-toggle="modal" class="box-icon quickAdd">
+                                    <a href="#quickAdd" data-id={{ $row->id }} data-bs-toggle="modal" class="box-icon quickAdd skeleton">
                                         <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M16.2187 10.3327V5.99935C16.2187 4.85008 15.7622 3.74788 14.9495 2.93522C14.1369 2.12256 13.0347 1.66602 11.8854 1.66602C10.7361 1.66602 9.63394 2.12256 8.82129 2.93522C8.00863 3.74788 7.55208 4.85008 7.55208 5.99935V10.3327M4.30208 8.16602H19.4687L20.5521 21.166H3.21875L4.30208 8.16602Z" stroke="#181818" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
                                         </svg>   
@@ -1306,8 +1244,8 @@
 <section class="flat-spacing-4 pt-0">
     <div class="container">
         <div class="heading-section-2 wow fadeInUp">
-            <h4 style="font-size: 30px!important;">Best Products</h4>
-            <a href="{{ route('product.page') }}" class="line-under">See All Products</a>
+            <h4 class="skeleton" style="font-size: 30px!important;">Best Products</h4>
+            <a href="{{ route('product.page') }}" class="line-under skeleton">See All Products</a>
         </div>
 
         <div dir="ltr" class="swiper tf-sw-products" data-preview="6" data-tablet="4" data-mobile="2" data-space-lg="30" data-space-md="30" data-space="15" data-pagination="1" data-pagination-md="1" data-pagination-lg="1">
@@ -1320,7 +1258,7 @@
                     <div class="swiper-slide">
                         <div class="card-product wow fadeInUp" data-wow-delay="0.1s">
                             <div class="card-product-wrapper">
-                                <a href="{{ route('product.details', $row->slug) }}" class="product-img">
+                                <a href="{{ route('product.details', $row->slug) }}" class="product-img skeleton">
                                     <img class="lazyload img-product" data-src="{{ asset($row->thumb_image) }}" src="{{ asset($row->thumb_image) }}" alt="{{ $row->slug }}">
 
                                     @php
@@ -1346,7 +1284,6 @@
                                         {{ $discount }}
                                     </span>
                                 </div>
-
 
                                 @if ( checkDiscount($row) )
                                     @if ( !empty($row->discount_type === "amount") || !empty($row->discount_type === "percent") )
@@ -1423,7 +1360,6 @@
                                     @endif
                                 @endif
 
-                                
                                 <div class="list-product-btn">
                                     <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action {{ in_array($row->id, $wishlistItems) ? 'active' : '' }}" data-id="{{ $row->id }}">
                                         <i class='bx bx-heart' style="font-size: 24px;"></i>
@@ -1440,7 +1376,7 @@
                                     </a>
                                 </div>
                                 <div class="list-btn-main">
-                                    <a href="#quickAdd" data-id={{ $row->id }} data-bs-toggle="modal" class="btn-main-product quickAdd">Quick Add</a>
+                                    <a href="#quickAdd" data-id={{ $row->id }} data-bs-toggle="modal" class="btn-main-product quickAdd">Quick Order</a>
                                 </div>
                             </div>
 
@@ -1450,10 +1386,9 @@
                             @endphp
 
                             <div class="card-product-info">
-                                <a href="{{ route('product.details', $row->slug) }}" class="title link">{{ $row->name }}</a>
+                                <a href="{{ route('product.details', $row->slug) }}" class="title link skeleton">{{ $row->name }}</a>
                                 <div class="box-rating">
-                                    <ul class="list-star">
-                                        
+                                    <ul class="list-star skeleton">
                                         @for ( $i = 1; $i <= 5; $i++ )
                                             @if ( $i <= round($avgRatings))
                                                 <li class="bx bxs-star" style="color: #F0A750;"></li>
@@ -1462,26 +1397,26 @@
                                             @endif
                                         @endfor
                                     </ul>
-                                    <span class="text-caption-1 text-secondary">({{ $reviews }} )</span>
+                                    <span class="text-caption-1 text-secondary skeleton">({{ $reviews }} )</span>
                                 </div>
 
                                 @if ( checkDiscount($row) )
                                     @if ( !empty($row->discount_type === "amount") )
-                                        <span class="price"><span class="old-price">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> {{ getSetting()->currency_symbol }}{{ $row->selling_price - $row->discount_value }}</span>
+                                        <span class="price"><span class="old-price skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> <span class="skeleton">
+                                            {{ getSetting()->currency_symbol }}{{ $row->selling_price - $row->discount_value }}</span></span>
                                     @elseif( !empty($row->discount_type === "percent") )
                                     @php
                                         $discount_val = $row->selling_price * $row->discount_value / 100;
                                     @endphp
-                                        <span class="price"><span class="old-price">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> {{ getSetting()->currency_symbol }}{{ $row->selling_price - $discount_val }}</span>
+                                        <span class="price"><span class="old-price skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> <span class="skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price - $discount_val }}</span></span>
                                     @else
-                                        <span class="price"> {{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span>
+                                        <span class="price "><span class="skeleton"> {{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span></span>
                                     @endif
                                 @else
-                                    <span class="price"> {{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span>
+                                    <span class="price "> <span class="skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span></span>
                                 @endif
 
-
-                                <div class="box-progress-stock">
+                                {{-- <div class="box-progress-stock">
                                     <div class="progress">
                                         <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
@@ -1490,12 +1425,12 @@
                                             <span class="stock-label text-secondary-2">Stock:</span>
                                             <span class="stock-value">{{ $row->qty }}</span>
                                         </div>
-                                        {{-- <div class="stock-item text-caption-1">
+                                        <div class="stock-item text-caption-1">
                                             <span class="stock-label text-secondary-2">Sold:</span>
                                             <span class="stock-value">{{ $row->product_sold }}</span>
-                                        </div> --}}
+                                        </div>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </div>
@@ -1542,8 +1477,8 @@
 
 
         <div class="heading-section-2 wow fadeInUp">
-            <h4 style="font-size: 30px!important;">{{ $item_name }} Category</h4>
-            <a href="{{ route('product.page') }}" class="line-under">See All Products</a>
+            <h4 style="font-size: 30px!important;" class="skeleton">{{ $item_name }} Category</h4>
+            <a href="{{ route('product.page') }}" class="line-under skeleton">See All Products</a>
         </div>
 
         <div dir="ltr" class="swiper tf-sw-products" data-preview="6" data-tablet="4" data-mobile="2" data-space-lg="30" data-space-md="30" data-space="15" data-pagination="1" data-pagination-md="1" data-pagination-lg="1">
@@ -1556,7 +1491,7 @@
                     <div class="swiper-slide">
                         <div class="card-product wow fadeInUp" data-wow-delay="0.1s">
                             <div class="card-product-wrapper">
-                                <a href="{{ route('product.details', $row->slug) }}" class="product-img">
+                                <a href="{{ route('product.details', $row->slug) }}" class="product-img skeleton">
                                     <img class="lazyload img-product" data-src="{{ asset($row->thumb_image) }}" src="{{ asset($row->thumb_image) }}" alt="{{ $row->slug }}">
 
                                     @php
@@ -1571,7 +1506,6 @@
                                                 $discount = '-'. $row->discount_value . "%";
                                             }
                                         }
-                                        
                                     @endphp
 
                                     @if (!empty($image))
@@ -1583,7 +1517,6 @@
                                         {{ $discount }}
                                     </span>
                                 </div>
-
 
                                 @if ( checkDiscount($row) )
                                     @if ( !empty($row->discount_type === "amount") || !empty($row->discount_type === "percent") )
@@ -1660,7 +1593,6 @@
                                     @endif
                                 @endif
 
-                                
                                 <div class="list-product-btn">
                                     <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action {{ in_array($row->id, $wishlistItems) ? 'active' : '' }}" data-id="{{ $row->id }}">
                                         <i class='bx bx-heart' style="font-size: 24px;"></i>
@@ -1677,7 +1609,7 @@
                                     </a>
                                 </div>
                                 <div class="list-btn-main">
-                                    <a href="#quickAdd" data-id={{ $row->id }} data-bs-toggle="modal" class="btn-main-product quickAdd">Quick Add</a>
+                                    <a href="#quickAdd" data-id={{ $row->id }} data-bs-toggle="modal" class="btn-main-product quickAdd">Quick Order</a>
                                 </div>
                             </div>
 
@@ -1687,10 +1619,9 @@
                             @endphp
 
                             <div class="card-product-info">
-                                <a href="{{ route('product.details', $row->slug) }}" class="title link">{{ $row->name }}</a>
+                                <a href="{{ route('product.details', $row->slug) }}" class="title link skeleton">{{ $row->name }}</a>
                                 <div class="box-rating">
-                                    <ul class="list-star">
-                                        
+                                    <ul class="list-star skeleton">
                                         @for ( $i = 1; $i <= 5; $i++ )
                                             @if ( $i <= round($avgRatings))
                                                 <li class="bx bxs-star" style="color: #F0A750;"></li>
@@ -1699,26 +1630,26 @@
                                             @endif
                                         @endfor
                                     </ul>
-                                    <span class="text-caption-1 text-secondary">({{ $reviews }} )</span>
+                                    <span class="text-caption-1 text-secondary skeleton">({{ $reviews }} )</span>
                                 </div>
 
                                 @if ( checkDiscount($row) )
                                     @if ( !empty($row->discount_type === "amount") )
-                                        <span class="price"><span class="old-price">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> {{ getSetting()->currency_symbol }}{{ $row->selling_price - $row->discount_value }}</span>
+                                        <span class="price"><span class="old-price skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> <span class="skeleton">
+                                            {{ getSetting()->currency_symbol }}{{ $row->selling_price - $row->discount_value }}</span></span>
                                     @elseif( !empty($row->discount_type === "percent") )
                                     @php
                                         $discount_val = $row->selling_price * $row->discount_value / 100;
                                     @endphp
-                                        <span class="price"><span class="old-price">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> {{ getSetting()->currency_symbol }}{{ $row->selling_price - $discount_val }}</span>
+                                        <span class="price"><span class="old-price skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> <span class="skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price - $discount_val }}</span></span>
                                     @else
-                                        <span class="price"> {{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span>
+                                        <span class="price "><span class="skeleton"> {{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span></span>
                                     @endif
                                 @else
-                                    <span class="price"> {{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span>
+                                    <span class="price "> <span class="skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span></span>
                                 @endif
 
-
-                                <div class="box-progress-stock">
+                                {{-- <div class="box-progress-stock">
                                     <div class="progress">
                                         <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
@@ -1727,12 +1658,12 @@
                                             <span class="stock-label text-secondary-2">Stock:</span>
                                             <span class="stock-value">{{ $row->qty }}</span>
                                         </div>
-                                        {{-- <div class="stock-item text-caption-1">
+                                        <div class="stock-item text-caption-1">
                                             <span class="stock-label text-secondary-2">Sold:</span>
                                             <span class="stock-value">{{ $row->product_sold }}</span>
-                                        </div> --}}
+                                        </div>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </div>
@@ -1779,8 +1710,8 @@
 
 
         <div class="heading-section-2 wow fadeInUp">
-            <h4 style="font-size: 30px!important;">{{ $item_name }} Category</h4>
-            <a href="{{ route('product.page') }}" class="line-under">See All Products</a>
+            <h4 style="font-size: 30px!important;" class="skeleton">{{ $item_name }} Category</h4>
+            <a href="{{ route('product.page') }}" class="line-under skeleton">See All Products</a>
         </div>
 
         <div dir="ltr" class="swiper tf-sw-products" data-preview="6" data-tablet="4" data-mobile="2" data-space-lg="30" data-space-md="30" data-space="15" data-pagination="1" data-pagination-md="1" data-pagination-lg="1">
@@ -1793,7 +1724,7 @@
                     <div class="swiper-slide">
                         <div class="card-product wow fadeInUp" data-wow-delay="0.1s">
                             <div class="card-product-wrapper">
-                                <a href="{{ route('product.details', $row->slug) }}" class="product-img">
+                                <a href="{{ route('product.details', $row->slug) }}" class="product-img skeleton">
                                     <img class="lazyload img-product" data-src="{{ asset($row->thumb_image) }}" src="{{ asset($row->thumb_image) }}" alt="{{ $row->slug }}">
 
                                     @php
@@ -1808,7 +1739,6 @@
                                                 $discount = '-'. $row->discount_value . "%";
                                             }
                                         }
-                                        
                                     @endphp
 
                                     @if (!empty($image))
@@ -1820,7 +1750,6 @@
                                         {{ $discount }}
                                     </span>
                                 </div>
-
 
                                 @if ( checkDiscount($row) )
                                     @if ( !empty($row->discount_type === "amount") || !empty($row->discount_type === "percent") )
@@ -1897,7 +1826,6 @@
                                     @endif
                                 @endif
 
-                                
                                 <div class="list-product-btn">
                                     <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action {{ in_array($row->id, $wishlistItems) ? 'active' : '' }}" data-id="{{ $row->id }}">
                                         <i class='bx bx-heart' style="font-size: 24px;"></i>
@@ -1914,7 +1842,7 @@
                                     </a>
                                 </div>
                                 <div class="list-btn-main">
-                                    <a href="#quickAdd" data-id={{ $row->id }} data-bs-toggle="modal" class="btn-main-product quickAdd">Quick Add</a>
+                                    <a href="#quickAdd" data-id={{ $row->id }} data-bs-toggle="modal" class="btn-main-product quickAdd">Quick Order</a>
                                 </div>
                             </div>
 
@@ -1924,9 +1852,9 @@
                             @endphp
 
                             <div class="card-product-info">
-                                <a href="{{ route('product.details', $row->slug) }}" class="title link">{{ $row->name }}</a>
+                                <a href="{{ route('product.details', $row->slug) }}" class="title link skeleton">{{ $row->name }}</a>
                                 <div class="box-rating">
-                                    <ul class="list-star">
+                                    <ul class="list-star skeleton">
                                         @for ( $i = 1; $i <= 5; $i++ )
                                             @if ( $i <= round($avgRatings))
                                                 <li class="bx bxs-star" style="color: #F0A750;"></li>
@@ -1935,25 +1863,26 @@
                                             @endif
                                         @endfor
                                     </ul>
-                                    <span class="text-caption-1 text-secondary">({{ $reviews }} )</span>
+                                    <span class="text-caption-1 text-secondary skeleton">({{ $reviews }} )</span>
                                 </div>
 
                                 @if ( checkDiscount($row) )
                                     @if ( !empty($row->discount_type === "amount") )
-                                        <span class="price"><span class="old-price">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> {{ getSetting()->currency_symbol }}{{ $row->selling_price - $row->discount_value }}</span>
+                                        <span class="price"><span class="old-price skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> <span class="skeleton">
+                                            {{ getSetting()->currency_symbol }}{{ $row->selling_price - $row->discount_value }}</span></span>
                                     @elseif( !empty($row->discount_type === "percent") )
                                     @php
                                         $discount_val = $row->selling_price * $row->discount_value / 100;
                                     @endphp
-                                        <span class="price"><span class="old-price">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> {{ getSetting()->currency_symbol }}{{ $row->selling_price - $discount_val }}</span>
+                                        <span class="price"><span class="old-price skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> <span class="skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price - $discount_val }}</span></span>
                                     @else
-                                        <span class="price"> {{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span>
+                                        <span class="price "><span class="skeleton"> {{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span></span>
                                     @endif
                                 @else
-                                    <span class="price"> {{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span>
+                                    <span class="price "> <span class="skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span></span>
                                 @endif
 
-                                <div class="box-progress-stock">
+                                {{-- <div class="box-progress-stock">
                                     <div class="progress">
                                         <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
@@ -1962,13 +1891,12 @@
                                             <span class="stock-label text-secondary-2">Stock:</span>
                                             <span class="stock-value">{{ $row->qty }}</span>
                                         </div>
-
-                                        {{-- <div class="stock-item text-caption-1">
+                                        <div class="stock-item text-caption-1">
                                             <span class="stock-label text-secondary-2">Sold:</span>
                                             <span class="stock-value">{{ $row->product_sold }}</span>
-                                        </div> --}}
+                                        </div>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </div>
@@ -1980,7 +1908,6 @@
     </div>
 </section>
 <!-- /Category Section Two Products -->
-
 
 <!-- Category Section Three Products -->
 <section class="flat-spacing-4 pt-0">
@@ -2016,8 +1943,8 @@
 
 
         <div class="heading-section-2 wow fadeInUp">
-            <h4 style="font-size: 30px!important;">{{ $item_name }} Category</h4>
-            <a href="{{ route('product.page') }}" class="line-under">See All Products</a>
+            <h4 style="font-size: 30px!important;" class="skeleton">{{ $item_name }} Category</h4>
+            <a href="{{ route('product.page') }}" class="line-under skeleton">See All Products</a>
         </div>
 
         <div dir="ltr" class="swiper tf-sw-products" data-preview="6" data-tablet="4" data-mobile="2" data-space-lg="30" data-space-md="30" data-space="15" data-pagination="1" data-pagination-md="1" data-pagination-lg="1">
@@ -2030,7 +1957,7 @@
                     <div class="swiper-slide">
                         <div class="card-product wow fadeInUp" data-wow-delay="0.1s">
                             <div class="card-product-wrapper">
-                                <a href="{{ route('product.details', $row->slug) }}" class="product-img">
+                                <a href="{{ route('product.details', $row->slug) }}" class="product-img skeleton">
                                     <img class="lazyload img-product" data-src="{{ asset($row->thumb_image) }}" src="{{ asset($row->thumb_image) }}" alt="{{ $row->slug }}">
 
                                     @php
@@ -2045,7 +1972,6 @@
                                                 $discount = '-'. $row->discount_value . "%";
                                             }
                                         }
-                                        
                                     @endphp
 
                                     @if (!empty($image))
@@ -2057,7 +1983,6 @@
                                         {{ $discount }}
                                     </span>
                                 </div>
-
 
                                 @if ( checkDiscount($row) )
                                     @if ( !empty($row->discount_type === "amount") || !empty($row->discount_type === "percent") )
@@ -2134,7 +2059,6 @@
                                     @endif
                                 @endif
 
-                                
                                 <div class="list-product-btn">
                                     <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action {{ in_array($row->id, $wishlistItems) ? 'active' : '' }}" data-id="{{ $row->id }}">
                                         <i class='bx bx-heart' style="font-size: 24px;"></i>
@@ -2151,7 +2075,7 @@
                                     </a>
                                 </div>
                                 <div class="list-btn-main">
-                                    <a href="#quickAdd" data-id={{ $row->id }} data-bs-toggle="modal" class="btn-main-product quickAdd">Quick Add</a>
+                                    <a href="#quickAdd" data-id={{ $row->id }} data-bs-toggle="modal" class="btn-main-product quickAdd">Quick Order</a>
                                 </div>
                             </div>
 
@@ -2161,9 +2085,9 @@
                             @endphp
 
                             <div class="card-product-info">
-                                <a href="{{ route('product.details', $row->slug) }}" class="title link">{{ $row->name }}</a>
+                                <a href="{{ route('product.details', $row->slug) }}" class="title link skeleton">{{ $row->name }}</a>
                                 <div class="box-rating">
-                                    <ul class="list-star">
+                                    <ul class="list-star skeleton">
                                         @for ( $i = 1; $i <= 5; $i++ )
                                             @if ( $i <= round($avgRatings))
                                                 <li class="bx bxs-star" style="color: #F0A750;"></li>
@@ -2172,25 +2096,26 @@
                                             @endif
                                         @endfor
                                     </ul>
-                                    <span class="text-caption-1 text-secondary">({{ $reviews }} )</span>
+                                    <span class="text-caption-1 text-secondary skeleton">({{ $reviews }} )</span>
                                 </div>
 
                                 @if ( checkDiscount($row) )
                                     @if ( !empty($row->discount_type === "amount") )
-                                        <span class="price"><span class="old-price">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> {{ getSetting()->currency_symbol }}{{ $row->selling_price - $row->discount_value }}</span>
+                                        <span class="price"><span class="old-price skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> <span class="skeleton">
+                                            {{ getSetting()->currency_symbol }}{{ $row->selling_price - $row->discount_value }}</span></span>
                                     @elseif( !empty($row->discount_type === "percent") )
                                     @php
                                         $discount_val = $row->selling_price * $row->discount_value / 100;
                                     @endphp
-                                        <span class="price"><span class="old-price">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> {{ getSetting()->currency_symbol }}{{ $row->selling_price - $discount_val }}</span>
+                                        <span class="price"><span class="old-price skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> <span class="skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price - $discount_val }}</span></span>
                                     @else
-                                        <span class="price"> {{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span>
+                                        <span class="price "><span class="skeleton"> {{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span></span>
                                     @endif
                                 @else
-                                    <span class="price"> {{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span>
+                                    <span class="price "> <span class="skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span></span>
                                 @endif
 
-                                <div class="box-progress-stock">
+                                {{-- <div class="box-progress-stock">
                                     <div class="progress">
                                         <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
@@ -2199,13 +2124,12 @@
                                             <span class="stock-label text-secondary-2">Stock:</span>
                                             <span class="stock-value">{{ $row->qty }}</span>
                                         </div>
-
-                                        {{-- <div class="stock-item text-caption-1">
+                                        <div class="stock-item text-caption-1">
                                             <span class="stock-label text-secondary-2">Sold:</span>
                                             <span class="stock-value">{{ $row->product_sold }}</span>
-                                        </div> --}}
+                                        </div>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </div>
@@ -2223,8 +2147,8 @@
 <section class="flat-spacing">
     <div class="container">
         <div class="heading-section text-center wow fadeInUp">
-            <h3 class="heading">Customer Feedback!</h3>
-            <p class="subheading">Our customers adore our products, and we constantly aim to delight them.</p>
+            <h3 class="heading"><span class="skeleton">Customer Feedback!</span></h3>
+            <p class="subheading"><span class="skeleton">Our customers adore our products, and we constantly aim to delight them.</span></p>
         </div>
 
         <div dir="ltr" class="swiper tf-sw-testimonial wow fadeInUp" data-wow-delay="0.1s" data-preview="3" data-tablet="2" data-mobile="1" data-space-lg="30" data-space-md="30" data-space="15" data-pagination="1" data-pagination-md="1" data-pagination-lg="1">
@@ -2237,7 +2161,7 @@
                     <div class="swiper-slide">
                         <div class="testimonial-item style-2">
                             <div class="content-top">
-                                <div class="list-star-default">
+                                <div class="list-star-default skeleton">
                                     @for ( $i = 1; $i <= 5; $i++ )
                                         @if ( $i <= round($avgRatings))
                                             <i class="bx bxs-star" style="color: #F0A750;"></i>
@@ -2247,9 +2171,9 @@
                                     @endfor
                                 </div>
 
-                                <p class="text-secondary">{{ $row->review }}</p>
+                                <p class="text-secondary skeleton">{{ $row->review }}</p>
 
-                                <div class="box-author">
+                                <div class="box-author skeleton">
                                     <div class="text-title author">{{ $row->user_name }}</div>
                                     <svg class="icon" width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <g clip-path="url(#clip0_15758_14563)">
@@ -2266,7 +2190,7 @@
                             </div>
 
                             <div class="box-avt">
-                                <div class="avatar avt-60 round">
+                                <div class="avatar avt-60 round skeleton">
                                     @if ( !empty($row->user_img) )
                                         <img src="{{ asset($row->user_img) }}" alt="avt">
                                     @else
@@ -2279,8 +2203,8 @@
                                 @endphp
 
                                 <div class="box-price">
-                                    <p class="text-title text-line-clamp-1">{{ $row->product_name }}</p>
-                                    <div class="text-button price">{{ getSetting()->currency_symbol }}{{ $total_sum }}</div>
+                                    <p class="text-title text-line-clamp-1 skeleton">{{ $row->product_name }}</p>
+                                    <div class="text-button price skeleton">{{ getSetting()->currency_symbol }}{{ $total_sum }}</div>
                                 </div>
                             </div>
                         </div>
@@ -2305,7 +2229,7 @@
         <div class="row">
             <div class="col-lg-3 col-xl-3 col-md-6 mb-5">
                 <div class="tf-icon-box">
-                    <div class="icon-box">
+                    <div class="icon-box skeleton">
                         @if ( !empty($website_rules[0]['image']) )
                             <img src="{{ asset($website_rules[0]['image']) }}" alt="">
                         @else
@@ -2313,15 +2237,15 @@
                         @endif
                     </div>
                     <div class="content text-center">
-                        <h5 style="font-size: 18px;">{{ $website_rules[0]['title'] }}</h5>
-                        <p class="text-secondary">{{ $website_rules[0]['content'] }}</p>
+                        <h5 style="font-size: 18px;" class="skeleton">{{ $website_rules[0]['title'] }}</h5>
+                        <p class="text-secondary skeleton">{{ $website_rules[0]['content'] }}</p>
                     </div>
                 </div>
             </div>
             
             <div class="col-lg-3 col-xl-3 col-md-6 mb-5">
                 <div class="tf-icon-box">
-                    <div class="icon-box">
+                    <div class="icon-box skeleton">
                         @if ( !empty($website_rules[1]['image']) )
                             <img src="{{ asset($website_rules[1]['image']) }}" alt="">
                         @else
@@ -2329,15 +2253,15 @@
                         @endif
                     </div>
                     <div class="content text-center">
-                        <h5 style="font-size: 18px;">{{ $website_rules[1]['title'] }}</h5>
-                        <p class="text-secondary">{{ $website_rules[1]['content'] }}</p>
+                        <h5 style="font-size: 18px;" class="skeleton">{{ $website_rules[1]['title'] }}</h5>
+                        <p class="text-secondary skeleton">{{ $website_rules[1]['content'] }}</p>
                     </div>
                 </div>
             </div>
 
             <div class="col-lg-3 col-xl-3 col-md-6 mb-5">
                 <div class="tf-icon-box">
-                    <div class="icon-box">
+                    <div class="icon-box skeleton">
                         @if ( !empty($website_rules[2]['image']) )
                             <img src="{{ asset($website_rules[2]['image']) }}" alt="">
                         @else
@@ -2345,15 +2269,15 @@
                         @endif
                     </div>
                     <div class="content text-center">
-                        <h5 style="font-size: 18px;">{{ $website_rules[2]['title'] }}</h5>
-                        <p class="text-secondary">{{ $website_rules[2]['content'] }}</p>
+                        <h5 style="font-size: 18px;" class="skeleton">{{ $website_rules[2]['title'] }}</h5>
+                        <p class="text-secondary skeleton">{{ $website_rules[2]['content'] }}</p>
                     </div>
                 </div>
             </div>
 
             <div class="col-lg-3 col-xl-3 col-md-6 mb-5">
                 <div class="tf-icon-box">
-                    <div class="icon-box">
+                    <div class="icon-box skeleton">
                         @if ( !empty($website_rules[3]['image']) )
                             <img src="{{ asset($website_rules[3]['image']) }}" alt="">
                         @else
@@ -2361,8 +2285,8 @@
                         @endif
                     </div>
                     <div class="content text-center">
-                        <h5 style="font-size: 18px;">{{ $website_rules[3]['title'] }}</h5>
-                        <p class="text-secondary">{{ $website_rules[3]['content'] }}</p>
+                        <h5 style="font-size: 18px;" class="skeleton">{{ $website_rules[3]['title'] }}</h5>
+                        <p class="text-secondary skeleton">{{ $website_rules[3]['content'] }}</p>
                     </div>
                 </div>
             </div>
@@ -2377,7 +2301,7 @@
         <div class="swiper-wrapper">
             @foreach ($brands as $row)
                 <div class="swiper-slide">
-                    <a href="{{ route('product.page', ['brands' => $row->slug]) }}" class="brand-item">
+                    <a href="{{ route('product.page', ['brands' => $row->slug]) }}" class="brand-item skeleton">
                         <img src="{{ asset($row->image) }}" alt="{{ $row->slug }}">
                     </a>
                 </div>

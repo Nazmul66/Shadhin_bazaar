@@ -100,11 +100,11 @@
                             </div>
 
                             <div class="mt-3">
-                                <div class="tf-product-info-by-btn mb_10">
+                                {{-- <div class="tf-product-info-by-btn mb_10">
                                     <button type="submit" name="button" value="add_cart" class="btn-style-2 flex-grow-1 text-btn-uppercase fw-6 ">
                                         <span>Add to cart</span>
-                                        {{-- <span class="tf-qty-price total_price">$79.99</span> --}}
-                                    </button>
+                                        <span class="tf-qty-price total_price">$79.99</span>
+                                    </button> --}}
                                     {{-- <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon hover-tooltip compare btn-icon-action show-compare">
                                         <i class='bx bx-git-compare' style="font-size: 24px;"></i>
                                         <span class="tooltip text-caption-2">Compare</span>
@@ -114,7 +114,7 @@
                                         <span class="tooltip text-caption-2">Wishlist</span>
                                     </a> --}}
                                 </div>
-                                <button type="submit" name="button" value="buy_now" class="fw-6 buy_now_btn btn-style-3 text-btn-uppercase">Buy it now</button>
+                                <button type="submit" name="button" value="buy_now" class="fw-6 buy_now_btn btn-style-3 text-btn-uppercase">Order now</button>
                             </div>
                         </form>
                     </div>

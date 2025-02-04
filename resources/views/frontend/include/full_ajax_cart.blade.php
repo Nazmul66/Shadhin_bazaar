@@ -192,7 +192,6 @@
                         $('.main_size_variant').addClass('d-none');
                         $('#quick_size_variant').html('');
                    }
-                   
                },
                error: function (err) {
                    console.log(err);

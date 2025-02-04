@@ -26,8 +26,8 @@
                 <div class="tracking-wrap ">
                     <div class="left">
                         <div class="heading mb-5 text-center">
-                            <h4 class="mb-1" style="font-size: 30px;">Order Tracking</h4>
-                            <p>Tracking Your Order Status</p>
+                            <h4 class="mb-1 skeleton" style="font-size: 30px;">Order Tracking</h4>
+                            <p class="skeleton">Tracking Your Order Status</p>
                         </div>
 
                         <form method="GET" action="{{ route('track.order') }}" class="form-login">
@@ -38,13 +38,13 @@
                                     <input type="text" placeholder="E.X: TRK98220020">
                                 </fieldset> --}}
 
-                                <fieldset class="text-start">
+                                <fieldset class="text-start skeleton">
                                     <label for="" class="mb-2" style="font-weight: 500;">Order Id*</label>
                                     <input type="number" value="{{ @$order->order_id }}" name="tracker" placeholder="E.X: 158287801">  
                                 </fieldset>
                             </div>
 
-                            <div class="button-submit">
+                            <div class="button-submit skeleton">
                                 <button class="tf-btn btn-fill" type="submit">
                                     <span class="text">Tracking Orders</span>
                                 </button>

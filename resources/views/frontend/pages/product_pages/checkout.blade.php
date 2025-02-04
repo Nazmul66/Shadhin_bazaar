@@ -12,7 +12,7 @@
 @endpush
 
 @push('add-css')
-    <link rel="stylesheet" href="{{ asset('public/frontend/css/select2.min.css') }}">
+    {{-- <link rel="stylesheet" href="{{ asset('public/frontend/css/select2.min.css') }}"> --}}
 @endpush
 
 
@@ -44,366 +44,310 @@
     <!-- Section checkout -->
     <section class="">
         <div class="container main_checkout_data">
-            @if ($cartItems->count() > 0)
-                <div class="row">
-                    <div class="col-xl-6">
-                        <div class="flat-spacing tf-page-checkout">
 
-                            @if ( !Auth::guard('web')->check() )
-                                <div class="wrap">
-                                    <div class="title-login">
-                                        <p>Create New Account?</p>
-                                        <a href="{{ route('register') }}" class="text-button">Register here</a>
-                                    </div>
+            <div class="row">
+                <div class="col-xl-6">
+                    <div class="flat-spacing tf-page-checkout">
 
-                                    <form class="login-box" method="POST" action="{{ route('login') }}">
-                                        @csrf
-
-                                        <div class="grid-2">
-                                            <div class="">
-                                                <input type="text" placeholder="Email Address or Phone Number" name="login" tabindex="2" value="{{ old('login') }}" aria-required="true">
-                                                <x-input-error :messages="$errors->get('login')" class="mt-1 text-danger" style="margin-top: -20px !important; " />
-                                            </div>
-                                            
-                                            <div class="">
-                                                <input type="password" name="password" placeholder="Password" aria-required="true" autocomplete="off">
-                                                <x-input-error :messages="$errors->get('password')" class="mt-1 text-danger" style="margin-top: -20px !important;" />
-                                            </div>
-                                        </div>
-
-                                        <button class="tf-btn" type="submit">
-                                            <span class="text">Login</span>
-                                        </button>
-                                    </form>
-                                </div>
-                            @endif
-
+                        {{-- @if ( !Auth::guard('web')->check() )
                             <div class="wrap">
-                                <h5 class="title">Information</h5>
+                                <div class="title-login">
+                                    <p>Create New Account?</p>
+                                    <a href="{{ route('register') }}" class="text-button">Register here</a>
+                                </div>
 
-                                <form id="payment-form" class="form-payment info-box" action="" method="POST">
-                                    @csrf 
+                                <form class="login-box" method="POST" action="{{ route('login') }}">
+                                    @csrf
 
-                                    <div class="grid-1">
-                                        <label for="" class="mb-2" style="font-weight: 500;">Full Name <span class="text-danger">*</span></label>
-                                        <input type="text" name="full_name" placeholder="Full Name*" value="{{ old('full_name', Auth::check() ? Auth::user()->name : '') }}">
-
-                                        @error('full_name')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-
-                                    <div class="grid-1">
-                                        <label for="" class="mb-2" style="font-weight: 500;">Email Address </label>
-                                        <input type="text" name="email" class="" placeholder="Email Address" @if( !empty(Auth::user()->email) ) disabled @endif value="{{ old('email', Auth::check() ? Auth::user()->email : '') }}">
-
-                                        @error('email')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-
-                                    <div class="grid-1">
-                                        <label for="" class="mb-2" style="font-weight: 500;">Phone Number <span class="text-danger">*</span></label>
-                                        <input type="text" name="phone" pattern="^0\d{10}$" maxlength="11" placeholder="Phone Number*" value="{{ old('phone', Auth::check() ? Auth::user()->phone : '') }}">
-
-                                        @error('phone')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-
-                                    <div class="grid-1">
-                                        <label for="" class="mb-2" style="font-weight: 500;">Town/City </label>
-                                        <input type="text" name="city" placeholder="Town/City" value="{{ old('city', Auth::check() ? Auth::user()->city : '') }}">
-
-                                        @error('city')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-
-                                    <div class="grid-1">
-                                        <label for="" class="mb-2" style="font-weight: 500;">Full Address <span class="text-danger">*</span></label>
-                                        <textarea name="address" id="address" placeholder="Address*" cols="30" rows="6">{{ old('address', Auth::check() ? Auth::user()->address : '') }}</textarea>
-
-                                        @error('address')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-
-                                    @if ( !empty(getSetting()->inside_city) && !empty(getSetting()->outside_city) )
-                                        <div class="tf-select">
-                                            <select class="text-title" id="shippingRules" style="border-radius: 8px;" required>
-                                                <option value="{{ getSetting()->inside_city }}" {{ session('shippingCost') == getSetting()->inside_city ? 'selected' : '' }}>InSide Dhaka ( {{ getSetting()->currency_symbol . getSetting()->inside_city }} )</option>
-                                                <option value="{{ getSetting()->outside_city }}" {{ session('shippingCost') == getSetting()->outside_city ? 'selected' : '' }}>OutSide Dhaka ( {{ getSetting()->currency_symbol . getSetting()->outside_city }} )</option>
-                                            </select>
+                                    <div class="grid-2">
+                                        <div class="">
+                                            <input type="text" placeholder="Email Address or Phone Number" name="login" tabindex="2" value="{{ old('login') }}" aria-required="true">
+                                            <x-input-error :messages="$errors->get('login')" class="mt-1 text-danger" style="margin-top: -20px !important; " />
                                         </div>
-                                    @endif
-                                    
-
-                                    {{-- <div class="grid-2">
-                                        <div class="tf-select">
-                                            <select class="text-title" data-default="">
-                                                <option selected value="Choose State">Choose State</option>
-                                                <option value="California">California</option>
-                                                <option value="Alabama">Alabam</option>
-                                                <option value="Alaska">Alaska</option>
-                                                <option value="Arizona">Arizona</option>
-                                                <option value="Arkansas">Arkansas</option>
-                                                <option value="Florida">Florida</option>
-                                                <option value="Georgia">Georgia</option>
-                                                <option value="Hawaii">Hawaii</option>
-                                                <option value="Washington">Washington</option>
-                                                <option value="Texas">Texas</option>
-                                                <option value="Iowa">Iowa</option>
-                                                <option value="Nevada">Nevada</option>
-                                                <option value="Illinois">Illinois</option>
-                                            </select>
+                                        
+                                        <div class="">
+                                            <input type="password" name="password" placeholder="Password" aria-required="true" autocomplete="off">
+                                            <x-input-error :messages="$errors->get('password')" class="mt-1 text-danger" style="margin-top: -20px !important;" />
                                         </div>
-                                        <input type="text" placeholder="Postal Code*">
-                                    </div> --}}
-
-                                    {{-- <textarea placeholder="Write note..."></textarea> --}}
-                                    {{-- </form> --}}
-
-                                    <h5 class="title mt-5">Choose payment Option:</h5>
-
-                                    <div class="payment-box" id="payment-box">
-                                        {{-- <div class="payment-item payment-choose-card active">
-                                            <label for="credit-card-method" class="payment-header" data-bs-toggle="collapse" data-bs-target="#credit-card-payment" aria-controls="credit-card-payment">
-                                                <input type="radio" name="payment-method" class="tf-check-rounded" id="credit-card-method" checked>
-                                                <span class="text-title">Credit Card</span>
-                                            </label>
-                                            <div id="credit-card-payment" class="collapse show" data-bs-parent="#payment-box">
-                                                <div class="payment-body">
-                                                    <p class="text-secondary">Make your payment directly into our bank account. Your order will not be shipped until the funds have cleared in our account.</p>
-                                                    <div class="input-payment-box">
-                                                        <input type="text" placeholder="Name On Card*">
-                                                        <div class="ip-card">
-                                                            <input type="text" placeholder="Card Numbers*">
-                                                            <div class="list-card">
-                                                                <img src="images/payment/img-7.png" width="48" height="16" alt="card">
-                                                                <img src="images/payment/img-8.png" width="21" height="16" alt="card">
-                                                                <img src="images/payment/img-9.png" width="22" height="16" alt="card">
-                                                                <img src="images/payment/img-10.png" width="24" height="16" alt="card">
-                                                            </div>
-                                                        </div>
-                                                        <div class="grid-2">
-                                                            <input type="date">
-                                                            <input type="text" placeholder="CVV*">
-                                                        </div>
-                                                    </div>
-                                                    <div class="check-save">
-                                                        <input type="checkbox" class="tf-check" id="check-card" checked>
-                                                        <label for="check-card">Save Card Details</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div> --}}
-
-                                        {{-- <input type="hidden" name="payment_method" id="selected-payment-method" /> --}}
-
-                                        <!-- Cash on Delivery -->
-                                        <div class="payment-item">
-                                            <label for="delivery-method" class="payment-header" data-payment-route="{{ route('payment.cod') }}">
-                                                <input type="radio" name="payment-method" class="tf-check-rounded" required id="delivery-method" value="cod">
-                                                <span class="text-title">Cash on delivery</span>
-                                            </label>
-                                        </div>
-
-                                        <div class="payment-item">
-                                            <label for="sslcommerz-method" class="payment-header" data-payment-route="{{ route('payment.ssl_commercz') }}">
-                                                <input type="radio" name="payment-method" class="tf-check-rounded" id="sslcommerz-method" value="sslcommerz" required>
-                                                <span class="text-title apple-pay-title align-items-center"><img src="{{ asset('public/frontend/images/payment/ssl_commerz.png') }}" alt=""></span>
-                                            </label>
-                                        </div>
-
-                                        {{-- <div class="payment-item paypal-item">
-                                            <label for="bKash-method" class="payment-header" data-payment-route="{{ route('payment.bkash') }}">
-                                                <input type="radio" name="payment-method" class="tf-check-rounded" id="bKash-method" value="bkash">
-                                                <span class="paypal-title apple-pay-title align-items-center"><img src="{{ asset('public/frontend/images/payment/Bkash.png') }}" alt=""></span>
-                                            </label>
-                                        </div> --}}
                                     </div>
 
-                                    <button type="submit" id="pay-now-button" class="tf-btn btn-reset">Payment</button>
+                                    <button class="tf-btn" type="submit">
+                                        <span class="text">Login</span>
+                                    </button>
                                 </form>
                             </div>
+                        @endif --}}
+
+                        <div class="wrap">
+                            <h5 class="title">Information</h5>
+
+                            <form id="payment-form" class="form-payment info-box" action="" method="POST">
+                                @csrf 
+
+                                <div class="row">
+                                    <div class="col-lg-6 ">
+                                        <label for="" class="mb-2" style="font-weight: 500;">Full Name <span class="text-danger">*</span></label>
+
+                                        <input type="text" name="full_name" placeholder="Full Name*" value="{{ old('full_name', Auth::check() ? Auth::user()->name : '') }}" class="mb-1">
+    
+                                        @error('full_name')
+                                            <div class="text-danger error_validation" >{{ $message }}</div>
+                                        @enderror
+                                    </div>
+    
+                                    <div class="col-lg-6">
+                                        <label for="" class="mb-2" style="font-weight: 500;">Email Address ( Optional )</label>
+
+                                        <input type="text" name="email" class="" placeholder="Email Address" @if( !empty(Auth::user()->email) ) disabled @endif value="{{ old('email', Auth::check() ? Auth::user()->email : '') }}">
+    
+                                        @error('email')
+                                            <div class="text-danger error_validation" >{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-6 mb-2">
+                                        <label for="" class="mb-2" style="font-weight: 500;">Phone Number <span class="text-danger">*</span></label>
+
+                                        <input type="text" name="phone" pattern="^0\d{10}$" maxlength="11" placeholder="Phone Number*" value="{{ old('phone', Auth::check() ? Auth::user()->phone : '') }}" class="mb-1">
+    
+                                        @error('phone')
+                                            <div class="text-danger error_validation" >{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
+                                    <div class="col-lg-6 mb-2">
+                                        <label for="" class="mb-2" style="font-weight: 500;">Delivery Charge <span class="text-danger">*</span></label>
+
+                                        @if ( !empty(getSetting()->inside_city) && !empty(getSetting()->outside_city) )
+                                            <div class="tf-select">
+                                                <select class="text-title" id="shippingRules" style="border-radius: 8px;" required>
+                                                    <option value="{{ getSetting()->inside_city }}" {{ session('shippingCost') == getSetting()->inside_city ? 'selected' : '' }}>InSide Dhaka ( {{ getSetting()->currency_symbol . getSetting()->inside_city }} )</option>
+                                                    <option value="{{ getSetting()->outside_city }}" {{ session('shippingCost') == getSetting()->outside_city ? 'selected' : '' }}>OutSide Dhaka ( {{ getSetting()->currency_symbol . getSetting()->outside_city }} )</option>
+                                                </select>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                {{-- <div class="grid-1">
+                                    <label for="" class="mb-2" style="font-weight: 500;">Town/City </label>
+                                    <input type="text" name="city" placeholder="Town/City" value="{{ old('city', Auth::check() ? Auth::user()->city : '') }}">
+
+                                    @error('city')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div> --}}
+
+                                <div class="grid-1">
+                                    <label for="" class="mb-2" style="font-weight: 500;">Full Address <span class="text-danger">*</span></label>
+                                    <textarea name="address" id="address" placeholder="Address*" cols="30" rows="6">{{ old('address', Auth::check() ? Auth::user()->address : '') }}</textarea>
+
+                                    @error('address')
+                                        <div class="text-danger error_validation">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <h5 class="title mt-5">Choose payment Option:</h5>
+
+                                <div class="payment-box" id="payment-box">
+                                    <!-- Cash on Delivery -->
+                                    <div class="payment-item">
+                                        <label for="delivery-method" class="payment-header" data-payment-route="{{ route('payment.cod') }}">
+                                            <input type="radio" name="payment-method" class="tf-check-rounded" required id="delivery-method" value="cod">
+                                            <span class="text-title">Cash on delivery</span>
+                                        </label>
+                                    </div>
+
+                                    <div class="payment-item">
+                                        <label for="sslcommerz-method" class="payment-header" data-payment-route="{{ route('payment.ssl_commercz') }}">
+                                            <input type="radio" name="payment-method" class="tf-check-rounded" id="sslcommerz-method" value="sslcommerz" required>
+                                            <span class="text-title apple-pay-title align-items-center"><img src="{{ asset('public/frontend/images/payment/ssl_commerz.png') }}" alt=""></span>
+                                        </label>
+                                    </div>
+
+                                    {{-- <div class="payment-item paypal-item">
+                                        <label for="bKash-method" class="payment-header" data-payment-route="{{ route('payment.bkash') }}">
+                                            <input type="radio" name="payment-method" class="tf-check-rounded" id="bKash-method" value="bkash">
+                                            <span class="paypal-title apple-pay-title align-items-center"><img src="{{ asset('public/frontend/images/payment/Bkash.png') }}" alt=""></span>
+                                        </label>
+                                    </div> --}}
+                                </div>
+
+                                <button type="submit" id="pay-now-button" class="tf-btn btn-reset">Payment</button>
+                            </form>
                         </div>
                     </div>
+                </div>
 
-                    <div class="col-xl-1">
-                        <div class="line-separation"></div>
-                    </div>
+                <div class="col-xl-1">
+                    <div class="line-separation"></div>
+                </div>
 
-                    <div class="col-xl-5">
-                        <div class="flat-spacing flat-sidebar-checkout">
-                            <div class="sidebar-checkout-content">
-                                <h5 class="title">Shopping Cart</h5>
-                                <div class="list-product" id="list_product">
+                <div class="col-xl-5">
+                    <div class="flat-spacing flat-sidebar-checkout">
+                        <div class="sidebar-checkout-content">
+                            <h5 class="title">Shopping Cart</h5>
+                            <div class="list-product" id="list_product">
 
-                                    @if ($cartItems->count() > 0)
-                                        @foreach ($cartItems as $item)
-                                            @php
-                                                $totalPrice = ($item->price + ($item->options->size_price ?? 0) + ($item->options->color_price ?? 0)) * $item->qty;
+                                @if ($cartItems->count() > 0)
+                                    @foreach ($cartItems as $item)
+                                        @php
+                                            $totalPrice = ($item->price + ($item->options->size_price ?? 0) + ($item->options->color_price ?? 0)) * $item->qty;
 
-                                                $variant_price = ($item->price + ($item->options->size_price ?? 0) + ($item->options->color_price ?? 0));
-                                            @endphp
+                                            $variant_price = ($item->price + ($item->options->size_price ?? 0) + ($item->options->color_price ?? 0));
+                                        @endphp
 
-                                            <div class="item-product checkout_product" id="checkout-{{ $item->rowId }}">
-                                                <a href="{{ route('product.details', $item->options->slug) }}" class="img-product">
-                                                    <img src="{{ asset($item->options->image) }}" alt="{{ $item->slug }}">
-                                                </a>
+                                        <div class="item-product checkout_product" id="checkout-{{ $item->rowId }}">
+                                            <a href="{{ route('product.details', $item->options->slug) }}" class="img-product">
+                                                <img src="{{ asset($item->options->image) }}" alt="{{ $item->slug }}">
+                                            </a>
 
-                                                <div class="content-box">
-                                                    <div class="info">
-                                                        <a href="{{ route('product.details', $item->options->slug) }}" class="name-product link text-title">{{ $item->name }}</a>
+                                            <div class="content-box">
+                                                <div class="info">
+                                                    <a href="{{ route('product.details', $item->options->slug) }}" class="name-product link text-title">{{ $item->name }}</a>
 
-                                                        <div class="variant text-caption-1 text-secondary"><span class="size">{{ strtoupper($item->options->size_name) }} ( {{ getSetting()->currency_symbol }}{{ $item->options->size_price ?? 0 }} )</span> / <span class="color">{{ $item->options->color_name }} ( {{ getSetting()->currency_symbol }}{{ $item->options->color_price ?? 0 }} )</span></div>
+                                                    <div class="variant text-caption-1 text-secondary"><span class="size">{{ strtoupper($item->options->size_name) }} ( {{ getSetting()->currency_symbol }}{{ $item->options->size_price ?? 0 }} )</span> / <span class="color">{{ $item->options->color_name }} ( {{ getSetting()->currency_symbol }}{{ $item->options->color_price ?? 0 }} )</span></div>
 
-                                                        <div class="wg-quantity">
-                                                            <span class="btn-quantity product-decrease">-</span>
-                                                            <input type="text" name="number" class="product_quantity" data-row_id="{{ $item->rowId }}" value="{{ $item->qty }}">
-                                                            <span class="btn-quantity product-increase">+</span>
-                                                        </div>
+                                                    <div class="wg-quantity">
+                                                        <span class="btn-quantity product-decrease">-</span>
+                                                        <input type="text" name="number" class="product_quantity" data-row_id="{{ $item->rowId }}" value="{{ $item->qty }}">
+                                                        <span class="btn-quantity product-increase">+</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="total-price text-button" style="flex-direction: column">
+                                                    <div class="text-button tf-btn-remove remove checkout_remove_cart" data-row_id="{{ $item->rowId }}">Remove</div>
+
+                                                    <div class="">
+                                                        <span class="count" data-row_id="{{ $item->rowId }}" id="qty{{ $item->rowId }}">{{ $item->qty .' '. $item->options->units }}</span>
+                                                        <span class="x-mark">X</span>  <span class="price">{{ getSetting()->currency_symbol }}{{ $item->price }}</span>
                                                     </div>
 
-                                                    <div class="total-price text-button" style="flex-direction: column">
-                                                        <div class="text-button tf-btn-remove remove checkout_remove_cart" data-row_id="{{ $item->rowId }}">Remove</div>
-
-                                                        <div class="">
-                                                            <span class="count" data-row_id="{{ $item->rowId }}" id="qty{{ $item->rowId }}">{{ $item->qty .' '. $item->options->units }}</span>
-                                                            <span class="x-mark">X</span>  <span class="price">{{ getSetting()->currency_symbol }}{{ $item->price }}</span>
-                                                        </div>
-
-                                                        <div id="{{ $item->rowId }}" class="cart_total text-button total_price">{{ getSetting()->currency_symbol }}{{ $totalPrice }}</div>
-                                                    </div>
+                                                    <div id="{{ $item->rowId }}" class="cart_total text-button total_price">{{ getSetting()->currency_symbol }}{{ $totalPrice }}</div>
                                                 </div>
                                             </div>
-                                        @endforeach
-                                    @else
-                                        <div class="alert alert-danger text-center" style="margin: 0 24px;" role="alert">
-                                            <p class="mb-3">No items in the cart. </p>
-                                            <a href="{{ route('product.page') }}" class="tf-btn btn-reset">Continue Shopping</a>
                                         </div>
-                                    @endif
-                                </div>
+                                    @endforeach
+                                @else
+                                    <div class="alert alert-danger text-center" style="margin: 0 24px;" role="alert">
+                                        <p class="mb-1">No items in the cart. </p>
+                                        <a href="{{ route('product.page') }}" class="tf-btn btn-reset">Continue Shopping</a>
+                                    </div>
+                                @endif
+                            </div>
 
-                                <div class="whole_discount_container">
-                                    <div class="group-discount" style="display: block;">
-                                        <div class="sec-discount">
-                                            @if ( getCartTotal() > 0 )
-                                                <div dir="ltr" class="swiper tf-sw-categories" data-preview="2.25" data-tablet="3" data-mobile-sm="2.5" data-mobile="1.2" data-space-lg="20" data-space-md="20" data-space="15" data-pagination="1" data-pagination-md="1" data-pagination-lg="1">
-                                                    <div class="swiper-wrapper">
-                                                        @foreach ($coupons as $item)
-                                                            <div class="swiper-slide">
-                                                                @if ( date('Y-m-d') >= $item->start_date && date('Y-m-d') <= $item->end_date && $item->quantity >= $item->total_used)
-                                                                    <div class="box-discount {{ $item->code }} {{ Session::has('coupon') && Session::get('coupon')['coupon_code'] === $item->code ? 'active' : '' }}">
-                                                                        <div class="discount-top">
-                                                                            <div class="discount-off">
-                                                                                <div class="text-caption-1">Discount</div>
-                                                                                <span class="sale-off text-btn-uppercase">
-                                                                                    @if ( $item->discount_type === "amount" )
-                                                                                        {{ getSetting()->currency_symbol }}{{ $item->discount }} OFF
-                                                                                    @elseif( $item->discount_type === "percent")
-                                                                                        {{ $item->discount }}% OFF
-                                                                                    @endif
-                                                                                </span>
-                                                                            </div>
-
-                                                                            <div class="discount-from">
-                                                                                <p class="text-caption-1">For all orders <br> from <span class="main_cart_total">{{ getSetting()->currency_symbol }}{{ getMainCartTotal() }}</span></p>
-                                                                            </div>
+                            <div class="whole_discount_container">
+                                <div class="group-discount" style="display: block;">
+                                    <div class="sec-discount">
+                                        @if ( getCartTotal() > 0 )
+                                            <div dir="ltr" class="swiper tf-sw-categories" data-preview="2.25" data-tablet="3" data-mobile-sm="2.5" data-mobile="1.2" data-space-lg="20" data-space-md="20" data-space="15" data-pagination="1" data-pagination-md="1" data-pagination-lg="1">
+                                                <div class="swiper-wrapper">
+                                                    @foreach ($coupons as $item)
+                                                        <div class="swiper-slide">
+                                                            @if ( date('Y-m-d') >= $item->start_date && date('Y-m-d') <= $item->end_date && $item->quantity >= $item->total_used)
+                                                                <div class="box-discount {{ $item->code }} {{ Session::has('coupon') && Session::get('coupon')['coupon_code'] === $item->code ? 'active' : '' }}">
+                                                                    <div class="discount-top">
+                                                                        <div class="discount-off">
+                                                                            <div class="text-caption-1">Discount</div>
+                                                                            <span class="sale-off text-btn-uppercase">
+                                                                                @if ( $item->discount_type === "amount" )
+                                                                                    {{ getSetting()->currency_symbol }}{{ $item->discount }} OFF
+                                                                                @elseif( $item->discount_type === "percent")
+                                                                                    {{ $item->discount }}% OFF
+                                                                                @endif
+                                                                            </span>
                                                                         </div>
 
-                                                                        <div class="discount-bot">
-                                                                            <span class="text-btn-uppercase">{{ $item->code }}</span>
-                                                                            <button type="button" class="tf-btn tf_btn_discount" data-code="{{ $item->code }}"><span class="text">Apply Code</span></button>
+                                                                        <div class="discount-from">
+                                                                            <p class="text-caption-1">For all orders <br> from <span class="main_cart_total">{{ getSetting()->currency_symbol }}{{ getMainCartTotal() }}</span></p>
                                                                         </div>
                                                                     </div>
-                                                                @endif
-                                                            </div>
-                                                        @endforeach
-                                                    </div>
-                                                </div>
-                                            @endif
 
-                                            <form class="coupon_form">
-                                                @csrf
-                            
-                                                <div class="ip-discount-code">
-                                                    <input type="text" name="coupon_code" id="coupon_codes" placeholder="Add voucher discount"
-                                                    @if ( Session::has('coupon') )
-                                                        value="{{ Session::get('coupon')['coupon_code'] }}"
-                                                    @endif
-                                                    >
-                                                    <button type="submit" class="tf-btn"><span class="text">Apply Code</span></button>
+                                                                    <div class="discount-bot">
+                                                                        <span class="text-btn-uppercase">{{ $item->code }}</span>
+                                                                        <button type="button" class="tf-btn tf_btn_discount" data-code="{{ $item->code }}"><span class="text">Apply Code</span></button>
+                                                                    </div>
+                                                                </div>
+                                                            @endif
+                                                        </div>
+                                                    @endforeach
                                                 </div>
-                                            </form>
+                                            </div>
+                                        @endif
 
-                                            {{-- <p>Discount code is only used for orders with a total value of products over $500.00</p> --}}
-                                        </div>
+                                        <form class="coupon_form">
+                                            @csrf
+                        
+                                            <div class="ip-discount-code">
+                                                <input type="text" name="coupon_code" id="coupon_codes" placeholder="Add voucher discount"
+                                                @if ( Session::has('coupon') )
+                                                    value="{{ Session::get('coupon')['coupon_code'] }}"
+                                                @endif
+                                                >
+                                                <button type="submit" class="tf-btn"><span class="text">Apply Code</span></button>
+                                            </div>
+                                        </form>
+
+                                        {{-- <p>Discount code is only used for orders with a total value of products over $500.00</p> --}}
                                     </div>
                                 </div>
+                            </div>
 
-                                <div class="sec-total-price">
-                                    <div class="top">
-                                        <h5 class="item d-flex align-items-center justify-content-between ">
-                                            <span>SubTotal</span>
-                                            <span class="tf-totals-total-value">
-                                                {{ getSetting()->currency_symbol }}{{ getCartTotal() }}
-                                            </span>
-                                        </h5>
+                            <div class="sec-total-price">
+                                <div class="top">
+                                    <h5 class="item d-flex align-items-center justify-content-between ">
+                                        <span>SubTotal</span>
+                                        <span class="tf-totals-total-value">
+                                            {{ getSetting()->currency_symbol }}{{ getCartTotal() }}
+                                        </span>
+                                    </h5>
 
-                                        <div class="item d-flex align-items-center justify-content-between text-button">
-                                            <span>(-) Discounts
-                                                <code class="percent_show">
-                                                    @if ( Session::has('coupon') && Session::get('coupon')['discount_type'] === "percent")
-                                                        ({{ Session::get('coupon')['discount'] }}%)
-                                                    @endif
-                                                </code>
-                                            </span>
-
-                                            <span class="total_discount">
-                                                @if ( Session::has('coupon') )
-                                                    @if ( Session::get('coupon')['discount_type'] === "amount")
-                                                        {{ getSetting()->currency_symbol }}{{ Session::get('coupon')['discount'] }}
-                                                    @elseif( Session::get('coupon')['discount_type'] === "percent" )
-                                                        {{ getSetting()->currency_symbol }}{{ ( getCartTotal() * Session::get('coupon')['discount'] ) / 100; }}
-                                                    @endif
-                                                @else
-                                                    {{ getSetting()->currency_symbol }}0
+                                    <div class="item d-flex align-items-center justify-content-between text-button">
+                                        <span>(-) Discounts
+                                            <code class="percent_show">
+                                                @if ( Session::has('coupon') && Session::get('coupon')['discount_type'] === "percent")
+                                                    ({{ Session::get('coupon')['discount'] }}%)
                                                 @endif
-                                            </span>
-                                        </div>
+                                            </code>
+                                        </span>
 
-                                        <div class="item d-flex align-items-center justify-content-between text-button">
-                                            {{-- <span>(+) Shipping</span> --}}
-                                            <span>(+) Delivery Charge</span>
-                                            <span class="shipping_amount">
-                                                @if ( Session::has('shippingCost') && Session::get('shippingCost'))
-                                                    {{ getSetting()->currency_symbol }}{{ Session::get('shippingCost') ?: 0 }}
+                                        <span class="total_discount">
+                                            @if ( Session::has('coupon') )
+                                                @if ( Session::get('coupon')['discount_type'] === "amount")
+                                                    {{ getSetting()->currency_symbol }}{{ Session::get('coupon')['discount'] }}
+                                                @elseif( Session::get('coupon')['discount_type'] === "percent" )
+                                                    {{ getSetting()->currency_symbol }}{{ ( getCartTotal() * Session::get('coupon')['discount'] ) / 100; }}
                                                 @endif
-                                            </span>
-                                        </div>
+                                            @else
+                                                {{ getSetting()->currency_symbol }}0
+                                            @endif
+                                        </span>
                                     </div>
-                                    <div class="bottom">
-                                        <h5 class="d-flex justify-content-between">
-                                            <span>Total</span>
-                                            <span class="total-price-checkout main_cart_total">{{ getSetting()->currency_symbol }}{{ getMainCartTotal() }}</span>
-                                        </h5>
+
+                                    <div class="item d-flex align-items-center justify-content-between text-button">
+                                        {{-- <span>(+) Shipping</span> --}}
+                                        <span>(+) Delivery Charge</span>
+                                        <span class="shipping_amount">
+                                            @if ( Session::has('shippingCost') && Session::get('shippingCost'))
+                                                {{ getSetting()->currency_symbol }}{{ Session::get('shippingCost') ?: 0 }}
+                                            @endif
+                                        </span>
                                     </div>
+                                </div>
+                                <div class="bottom">
+                                    <h5 class="d-flex justify-content-between">
+                                        <span>Total</span>
+                                        <span class="total-price-checkout main_cart_total">{{ getSetting()->currency_symbol }}{{ getMainCartTotal() }}</span>
+                                    </h5>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            @else
-                <div class="row my-5">
-                    <div class="alert alert-danger text-center" style="margin: 0 24px; padding: 4rem 0;" role="alert">
-                        <p class="mb-3">Oops! Your cart looks empty. Find something amazing and add it to your cart.</p>
-                        <a href="http://localhost/shadhin_bazaar/products" class="tf-btn btn-reset">Continue Shopping</a>
-                    </div>
-                </div>
-            @endif
+            </div>
+
         </div>
     </section>
     <!-- /Section checkout -->
@@ -502,53 +446,53 @@
         })
 
         //__ Single product clear __//
-        $(document).on('click', '.remove_product_cart', function(e) {
-            e.preventDefault();
-            let id = $(this).data('id');    
-            // console.log(id); 
+        // $(document).on('click', '.remove_product_cart', function(e) {
+        //     e.preventDefault();
+        //     let id = $(this).data('id');    
+        //     // console.log(id); 
 
-            $.ajax({
-                url: "{{ url('/cart/remove-product') }}/" + id,
-                method: 'GET',
-                dataType: 'json',
-                data: { id: id },
-                success: function(data) {
-                    // console.log(data);
-                    if( data.status === 'success' ){ 
-                        calculationCouponDiscount();
-                        getSidebarCartTotal();
-                        let singleProductRemove = '#remove-' +id;
-                        $(singleProductRemove).remove();
+        //     $.ajax({
+        //         url: "{{ url('/cart/remove-product') }}/" + id,
+        //         method: 'GET',
+        //         dataType: 'json',
+        //         data: { id: id },
+        //         success: function(data) {
+        //             // console.log(data);
+        //             if( data.status === 'success' ){ 
+        //                 calculationCouponDiscount();
+        //                 getSidebarCartTotal();
+        //                 let singleProductRemove = '#remove-' +id;
+        //                 $(singleProductRemove).remove();
 
-                        // Check if the table is empty and display the message
-                        const tableBody = $('#cart-table-body');
-                        if (tableBody.children('tr.tf-cart-item').length === 0) {
-                            tableBody.html(`
-                                <tr>
-                                    <td colspan="5">
-                                        <div class="alert alert-danger text-center" role="alert" style="margin: 0 24px;">
-                                            <p class="mb-3">No items in the cart. </p>
-                                            <a href="{{ route('product.page') }}" class="tf-btn btn-reset">Continue Shopping</a>
-                                        </div>
-                                    </td>
-                                </tr>
-                            `);
+        //                 // Check if the table is empty and display the message
+        //                 const tableBody = $('#cart-table-body');
+        //                 if (tableBody.children('tr.tf-cart-item').length === 0) {
+        //                     tableBody.html(`
+        //                         <tr>
+        //                             <td colspan="5">
+        //                                 <div class="alert alert-danger text-center" role="alert" style="margin: 0 24px;">
+        //                                     <p class="mb-1">No items in the cart. </p>
+        //                                     <a href="{{ route('product.page') }}" class="tf-btn btn-reset">Continue Shopping</a>
+        //                                 </div>
+        //                             </td>
+        //                         </tr>
+        //                     `);
 
-                            $('.tf-mini-cart-threshold').remove();
-                            $('#tf-mini-cart-actions-field').remove();
-                            $('#coupon_codes').val('');
-                            $('.group-discount').remove();
-                        }
-                        sidebarCartData();
-                        getCartCount(); 
-                        toastr.success(data.message);
-                    }
-                },
-                error: function(err) {
-                    console.log(err);
-                },
-            })
-        })
+        //                     $('.tf-mini-cart-threshold').remove();
+        //                     $('#tf-mini-cart-actions-field').remove();
+        //                     $('#coupon_codes').val('');
+        //                     $('.group-discount').remove();
+        //                 }
+        //                 sidebarCartData();
+        //                 getCartCount(); 
+        //                 toastr.success(data.message);
+        //             }
+        //         },
+        //         error: function(err) {
+        //             console.log(err);
+        //         },
+        //     })
+        // })
 
         //__ Sidebar Single product clear __//
         $(document).on('click', '.side_remove_cart', function(e) {
@@ -578,14 +522,14 @@
                                 </div>
                             `);
 
-                            $('.main_checkout_data').html(`
-                                <div class="row my-5">
-                                    <div class="alert alert-danger text-center" style="margin: 0 24px; padding: 4rem 0;" role="alert">
-                                        <p class="mb-3">Oops! Your cart looks empty. Find something amazing and add it to your cart.</p>
-                                        <a href="http://localhost/shadhin_bazaar/products" class="tf-btn btn-reset">Continue Shopping</a>
-                                    </div>
-                                </div>
-                            `);
+                            // $('.main_checkout_data').html(`
+                            //     <div class="row my-5">
+                            //         <div class="alert alert-danger text-center" style="margin: 0 24px; padding: 4rem 0;" role="alert">
+                            //             <p class="mb-3">Oops! Your cart looks empty. Find something amazing and add it to your cart.</p>
+                            //             <a href="http://localhost/shadhin_bazaar/products" class="tf-btn btn-reset">Continue Shopping</a>
+                            //         </div>
+                            //     </div>
+                            // `);
                             $('.tf-mini-cart-threshold').remove();
                             $('#tf-mini-cart-actions-field').remove();
                             $('#coupon_codes').val('');
@@ -626,14 +570,14 @@
                                     <a href="{{ route('product.page') }}" class="tf-btn btn-reset">Continue Shopping</a>
                                 </div>
                             `);
-                            $('.main_checkout_data').html(`
-                                <div class="row my-5">
-                                    <div class="alert alert-danger text-center" style="margin: 0 24px; padding: 4rem 0;" role="alert">
-                                        <p class="mb-3">Oops! Your cart looks empty. Find something amazing and add it to your cart.</p>
-                                        <a href="{{ route('product.page') }}" class="tf-btn btn-reset">Continue Shopping</a>
-                                    </div>
-                                </div>
-                            `);
+                            // $('.main_checkout_data').html(`
+                            //     <div class="row my-5">
+                            //         <div class="alert alert-danger text-center" style="margin: 0 24px; padding: 4rem 0;" role="alert">
+                            //             <p class="mb-3">Oops! Your cart looks empty. Find something amazing and add it to your cart.</p>
+                            //             <a href="{{ route('product.page') }}" class="tf-btn btn-reset">Continue Shopping</a>
+                            //         </div>
+                            //     </div>
+                            // `);
                             $('.tf-mini-cart-threshold').remove();
                             $('#tf-mini-cart-actions-field').remove();
                             $('#coupon_codes').val('');

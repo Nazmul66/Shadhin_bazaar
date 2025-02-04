@@ -479,7 +479,7 @@
                                     </a>
                                 </div>
                                 <div class="list-btn-main">
-                                    <a href="#quickAdd" data-id={{ $row->id }} data-bs-toggle="modal" class="btn-main-product quickAdd">Quick Add</a>
+                                    <a href="#quickAdd" data-id={{ $row->id }} data-bs-toggle="modal" class="btn-main-product quickAdd">Quick Order</a>
                                 </div>
                             </div>
 

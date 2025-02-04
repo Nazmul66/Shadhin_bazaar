@@ -186,9 +186,9 @@
         </div>
         <div class="wrapper-control-shop">
             <div class="meta_filter_shop">
-                <div class="count-text">
+                {{-- <div class="count-text">
                     <span class="count"><span id="product_count">{{ $products->count() }}</span> Products Found</span>
-                </div>
+                </div> --}}
                 {{-- <div id="product-count-list" class="count-text"></div> --}}
                 {{-- <div id="applied-filters"></div> --}}
                 {{-- <button id="remove_all" class="remove_all_filters text-btn-uppercase">Reset Filters <i class='bx bx-x' style="font-size: 20px;"></i></button> --}}
@@ -463,7 +463,6 @@
                 });
             }
 
-
             // Category Id
             $('.change_category').change(function(){
                 console.log('Category changed');
@@ -480,7 +479,6 @@
                 filterForm();
             })
 
-
             // SubCategory Id
             $('.change_subCategory').change(function(){
                 console.log('change_subCategory');
@@ -496,7 +494,6 @@
                 $('#get_subCategory_id').val(ids);
                 filterForm();
             })
-
 
             // ChildCategory Id
             $('.change_childCategory').change(function(){

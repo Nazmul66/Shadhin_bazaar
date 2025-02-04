@@ -8,7 +8,7 @@
 
 <body class="preload-wrapper">
 
-    @include('frontend.include.scroll_preloader') 
+    {{-- @include('frontend.include.scroll_preloader')  --}}
 
     <div id="wrapper">
         <!-- Top Bar -->
@@ -41,7 +41,7 @@
         @include('frontend.include.search')
     <!-- /search -->
 
-    <!-- modalDemo -->
+    {{-- <!-- modalDemo -->
     <div class="modal fade modalDemo" id="modalDemo">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -275,7 +275,7 @@
             </div>
         </div>
     </div>
-    <!-- /modalDemo -->
+    <!-- /modalDemo --> --}}
 
     <!-- mobile menu -->
         @include('frontend.include.mobile_menu')
@@ -435,9 +435,9 @@
     </div> --}}
     <!-- /size-guide -->
 
-    <!-- compare -->
+    {{-- <!-- compare -->
         @include('frontend.include.compare_modal')
-    <!-- /compare -->
+    <!-- /compare --> --}}
 
     <!-- Product quickAdd -->
         @include('frontend.include.product_quick_add')

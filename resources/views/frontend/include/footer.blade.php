@@ -6,8 +6,8 @@
 
                     <div class="col-lg-4">
                         <div class="footer-infor">
-                            <div class="footer-logo">
-                                <a href="index.html">
+                            <div class="footer-logo ">
+                                <a href="{{ route('home') }}">
                                     @if ( !empty(getSetting()->logo) )
                                         <img src="{{ asset(getSetting()->logo) }}" alt="{{ getSetting()->site_name }}" style="width: 75px;">
                                     @else
