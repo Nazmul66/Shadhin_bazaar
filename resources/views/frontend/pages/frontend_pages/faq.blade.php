@@ -19,7 +19,7 @@
 @section('body-content')
 
 <!-- page-title -->
-<div class="page-title" style="background-image: url(
+<div class="page-title skeleton" style="background-image: url(
     @if( !empty(getSetting()->banner_breadcrumb_img) )
         {{ asset(getSetting()->banner_breadcrumb_img) }}
     @else
@@ -30,7 +30,7 @@
     <div class="container-full">
         <div class="row">
             <div class="col-12">
-                <h3 class="heading text-center">FAQs</h3>
+                <h3 class="heading text-center ">FAQs</h3>
                 <ul class="breadcrumbs d-flex align-items-center justify-content-center">
                     <li>
                         <a class="link" href="{{ route('home') }}">Homepage</a>
@@ -61,16 +61,17 @@
             <div class="page-faqs-wrap">
                 <div class="list-faqs">
                     <div>
-                        <h3 class="faqs-title text-center">Frequently Ask Question</h3>
+                        <h3 class="faqs-title text-center skeleton">Frequently Ask Question</h3>
     
                         <ul class="accordion-product-wrap style-faqs" id="accordion-faq-1">
                             @foreach ($data as $key => $row)
                                 <li class="accordion-product-item">
-                                    <a href="#accordion-{{ $key }}" class="accordion-title {{ $key != 0 ? 'collapsed' : '' }} current" data-bs-toggle="collapse" aria-expanded="true" aria-controls="accordion-{{ $key }}">
+                                    <a href="#accordion-{{ $key }}" class="accordion-title skeleton {{ $key != 0 ? 'collapsed' : '' }} current" data-bs-toggle="collapse" aria-expanded="true" aria-controls="accordion-{{ $key }}">
                                         <h5>{{ $row->question }}</h5>
                                         <span class="btn-open-sub"></span>
                                     </a>
-                                    <div id="accordion-{{ $key }}" class="collapse {{ $key == 0 ? 'show' : '' }}" data-bs-parent="#accordion-faq-1">
+
+                                    <div id="accordion-{{ $key }}" class="collapse skeleton {{ $key == 0 ? 'show' : '' }}" data-bs-parent="#accordion-faq-1">
                                         <div class="accordion-faqs-content">
                                             <p class="text-secondary">{{ $row->answer }}</p>
                                         </div>

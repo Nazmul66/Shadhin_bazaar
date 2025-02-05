@@ -202,7 +202,7 @@
                                     <span class="price"> {{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span>
                                 @endif
 
-                                <div class="box-progress-stock">
+                                {{-- <div class="box-progress-stock">
                                     <div class="progress">
                                         <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
@@ -212,12 +212,12 @@
                                             <span class="stock-value">{{ $row->qty }}</span>
                                         </div>
 
-                                        {{-- <div class="stock-item text-caption-1">
+                                        <div class="stock-item text-caption-1">
                                             <span class="stock-label text-secondary-2">Sold:</span>
                                             <span class="stock-value">{{ $row->product_sold }}</span>
-                                        </div> --}}
+                                        </div>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </div>

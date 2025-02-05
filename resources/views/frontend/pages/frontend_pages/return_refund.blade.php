@@ -19,7 +19,7 @@
 @section('body-content')
 
     <!-- page-title -->
-    <div class="page-title" style="background-image: url(
+    <div class="page-title skeleton" style="background-image: url(
         @if( !empty(getSetting()->banner_breadcrumb_img) )
             {{ asset(getSetting()->banner_breadcrumb_img) }}
         @else
@@ -59,7 +59,7 @@
         <div class="container">
             <div class="col-lg-10 offset-lg-1">
                 <div class="terms-of-use-wrap">
-                    <div class="right terms-of-use-item ">
+                    <div class="right terms-of-use-item skeleton">
 
                         {!! $data->content !!}
 

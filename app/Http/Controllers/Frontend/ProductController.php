@@ -109,7 +109,7 @@ class ProductController extends Controller
     {
         $products = Product::where('status', 1)->orderBy('product_view', 'desc')->get();
         $product  = Product::leftJoin('categories', 'categories.id', 'products.category_id')
-                ->select('products.*', 'categories.category_name as cat_name')
+                ->select('products.*', 'categories.category_name as cat_name', 'categories.slug as cat_slug')
                 ->where('products.slug', $slug)
                 ->first();
 

@@ -95,7 +95,7 @@
 <section class="flat-spacing">
     <div class="container">
         <div class="heading-section-2 wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;">
-            <h3 class="heading skeleton">Popular Categories</h3>
+            <h3 class="heading">Popular Categories</h3>
             {{-- <a href="shop-collection.html" class="btn-line py_8">View All Collection</a> --}}
         </div>
     </div>
@@ -115,7 +115,7 @@
                                 $subcategory = App\Models\Subcategory::where('category_id', $item->id)->where('status', 1)->count();
                             @endphp
                             <div class="content">
-                                <a href="{{ route('product.page', ['categories' => $item->slug]) }}" class="cls-btn skeleton2"><h6 class="text" style="font-size: 15px;">{{ $item->category_name }}</h6> <span class="count-item text-secondary">{{ $subcategory }} items</span><i class='icon bx bx-up-arrow-alt'></i></a>
+                                <a href="{{ route('product.page', ['categories' => $item->slug]) }}" class="cls-btn"><h6 class="text" style="font-size: 15px;">{{ $item->category_name }}</h6> <span class="count-item text-secondary">{{ $subcategory }} items</span><i class='icon bx bx-up-arrow-alt'></i></a>
                             </div>
                         </div>
                     </div>
@@ -131,8 +131,8 @@
 <section class="flat-spacing-4 space-30">
     <div class="container">
         <div class="heading-section-2 wow fadeInUp">
-            <h4 class="skeleton" style="font-size: 30px!important;">Popular Category Products</h4>
-            <ul class="tab-product-v3 justify-content-sm-center skeleton" role="tablist">
+            <h4 style="font-size: 30px!important;">Popular Category Products</h4>
+            <ul class="tab-product-v3 justify-content-sm-center" role="tablist">
                 <li class="nav-tab-item" role="presentation">
                     <a href="#AllProducts" class="active text-caption-1" data-bs-toggle="tab">All Products</a>
                 </li>
@@ -569,880 +569,6 @@
 </section>
 <!-- /Collection -->
 
-<!-- Top Products -->
-<section class="flat-spacing-4 pt-0">
-    <div class="container">
-        <div class="heading-section-2 wow fadeInUp">
-            <h4 class="skeleton" style="font-size: 30px!important;">Top Products</h4>
-            <a href="{{ route('product.page') }}" class="line-under skeleton">See All Products</a>
-        </div>
-
-        <div dir="ltr" class="swiper tf-sw-recent" data-preview="6" data-tablet="4" data-mobile="2" data-space-lg="30" data-space-md="30" data-space="15" data-pagination="1" data-pagination-md="1" data-pagination-lg="1">
-            <div class="swiper-wrapper">
-
-                @foreach ($top_products as $row)
-                    @php
-                        $wishlistItems = App\Models\Wishlist::where('user_id', auth()->id())->pluck('product_id')->toArray();
-                    @endphp
-                    <div class="swiper-slide">
-                        <div class="card-product wow fadeInUp" data-wow-delay="0.1s">
-                            <div class="card-product-wrapper">
-                                <a href="{{ route('product.details', $row->slug) }}" class="product-img skeleton">
-                                    <img class="lazyload img-product" data-src="{{ asset($row->thumb_image) }}" src="{{ asset($row->thumb_image) }}" alt="{{ $row->slug }}">
-
-                                    @php
-                                        $image = App\Models\ProductImage::where('product_id', $row->id)->first();
-
-                                        $discount = '';
-                                        if( checkDiscount($row) ){
-                                            if ( !empty($row->discount_type === "amount" ) ){
-                                                $discount = '-'. $row->discount_value . "Tk";
-                                            }   
-                                            else if( $row->discount_type === "percent" ){
-                                                $discount = '-'. $row->discount_value . "%";
-                                            }
-                                        }
-                                    @endphp
-
-                                    @if (!empty($image))
-                                        <img class="lazyload img-hover" data-src="{{ asset($image->images) }}" src="{{ asset($image->images) }}" alt="{{ $row->slug }}">
-                                    @endif
-                                </a>
-                                <div class="on-sale-wrap">
-                                    <span class="on-sale-item">
-                                        {{ $discount }}
-                                    </span>
-                                </div>
-
-                                @if ( checkDiscount($row) )
-                                    @if ( !empty($row->discount_type === "amount") || !empty($row->discount_type === "percent") )
-                                        <div class="marquee-product bg-main">
-                                            <div class="marquee-wrapper">
-                                                <div class="initial-child-container">
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="marquee-wrapper">
-                                                <div class="initial-child-container">
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    @endif
-                                @endif
-
-                                <div class="list-product-btn">
-                                    <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action {{ in_array($row->id, $wishlistItems) ? 'active' : '' }}" data-id="{{ $row->id }}">
-                                        <i class='bx bx-heart' style="font-size: 24px;"></i>
-                                        <span class="tooltip">Wishlist</span>
-                                    </a>
-
-                                    {{-- <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
-                                        <i class='bx bx-git-compare' style="font-size: 24px;"></i>
-                                        <span class="tooltip">Compare</span>
-                                    </a> --}}
-                                    <a href="#quickView" data-id={{ $row->id }} data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
-                                        <ion-icon name="eye-outline" style="font-size: 24px;"></ion-icon>
-                                        <span class="tooltip">Quick View</span>
-                                    </a>
-                                </div>
-                                <div class="list-btn-main">
-                                    <a href="#quickAdd" data-id={{ $row->id }} data-bs-toggle="modal" class="btn-main-product quickAdd">Quick Order</a>
-                                </div>
-                            </div>
-
-                            @php
-                                $avgRatings = App\Models\ProductReview::where('product_id', $row->id)->where('status', 1)->avg('ratings');
-                                $reviews = App\Models\ProductReview::where('product_id', $row->id)->where('status', 1)->count();
-                            @endphp
-
-                            <div class="card-product-info">
-                                <a href="{{ route('product.details', $row->slug) }}" class="title link skeleton">{{ $row->name }}</a>
-                                <div class="box-rating">
-                                    <ul class="list-star skeleton">
-                                        @for ( $i = 1; $i <= 5; $i++ )
-                                            @if ( $i <= round($avgRatings))
-                                                <li class="bx bxs-star" style="color: #F0A750;"></li>
-                                            @else
-                                                <li class="bx bx-star" style="color: #F0A750;"></li>
-                                            @endif
-                                        @endfor
-                                    </ul>
-                                    <span class="text-caption-1 text-secondary skeleton">({{ $reviews }} )</span>
-                                </div>
-
-                                @if ( checkDiscount($row) )
-                                    @if ( !empty($row->discount_type === "amount") )
-                                        <span class="price"><span class="old-price skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> <span class="skeleton">
-                                            {{ getSetting()->currency_symbol }}{{ $row->selling_price - $row->discount_value }}</span></span>
-                                    @elseif( !empty($row->discount_type === "percent") )
-                                    @php
-                                        $discount_val = $row->selling_price * $row->discount_value / 100;
-                                    @endphp
-                                        <span class="price"><span class="old-price skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> <span class="skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price - $discount_val }}</span></span>
-                                    @else
-                                        <span class="price "><span class="skeleton"> {{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span></span>
-                                    @endif
-                                @else
-                                    <span class="price "> <span class="skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span></span>
-                                @endif
-
-                                {{-- <div class="box-progress-stock">
-                                    <div class="progress">
-                                        <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <div class="stock-status d-flex justify-content-between align-items-center">
-                                        <div class="stock-item text-caption-1">
-                                            <span class="stock-label text-secondary-2">Stock:</span>
-                                            <span class="stock-value">{{ $row->qty }}</span>
-                                        </div>
-                                        <div class="stock-item text-caption-1">
-                                            <span class="stock-label text-secondary-2">Sold:</span>
-                                            <span class="stock-value">{{ $row->product_sold }}</span>
-                                        </div>
-                                    </div>
-                                </div> --}}
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-
-            </div>
-            <div class="sw-pagination-recent sw-dots type-circle justify-content-center"></div>
-        </div>
-    </div>
-</section>
-<!-- /Top Products -->
-
-<!-- Featured Products -->
-<section class="flat-spacing-4 pt-0">
-    <div class="container">
-        <div class="heading-section-2 wow fadeInUp">
-            <h4 class="skeleton" style="font-size: 30px!important;">Featured Products</h4>
-            <a href="{{ route('product.page') }}" class="line-under skeleton">See All Products</a>
-        </div>
-
-        <div dir="ltr" class="swiper tf-sw-recent" data-preview="6" data-tablet="4" data-mobile="2" data-space-lg="30" data-space-md="30" data-space="15" data-pagination="1" data-pagination-md="1" data-pagination-lg="1">
-            <div class="swiper-wrapper">
-
-                @foreach ($featured_products as $row)
-                    @php
-                        $wishlistItems = App\Models\Wishlist::where('user_id', auth()->id())->pluck('product_id')->toArray();
-                    @endphp
-                    <div class="swiper-slide">
-                        <div class="card-product wow fadeInUp" data-wow-delay="0.1s">
-                            <div class="card-product-wrapper">
-                                <a href="{{ route('product.details', $row->slug) }}" class="product-img skeleton">
-                                    <img class="lazyload img-product" data-src="{{ asset($row->thumb_image) }}" src="{{ asset($row->thumb_image) }}" alt="{{ $row->slug }}">
-
-                                    @php
-                                        $image = App\Models\ProductImage::where('product_id', $row->id)->first();
-
-                                        $discount = '';
-                                        if( checkDiscount($row) ){
-                                            if ( !empty($row->discount_type === "amount" ) ){
-                                                $discount = '-'. $row->discount_value . "Tk";
-                                            }   
-                                            else if( $row->discount_type === "percent" ){
-                                                $discount = '-'. $row->discount_value . "%";
-                                            }
-                                        }
-                                    @endphp
-
-                                    @if (!empty($image))
-                                        <img class="lazyload img-hover" data-src="{{ asset($image->images) }}" src="{{ asset($image->images) }}" alt="{{ $row->slug }}">
-                                    @endif
-                                </a>
-                                <div class="on-sale-wrap">
-                                    <span class="on-sale-item">
-                                        {{ $discount }}
-                                    </span>
-                                </div>
-
-                                @if ( checkDiscount($row) )
-                                    @if ( !empty($row->discount_type === "amount") || !empty($row->discount_type === "percent") )
-                                        <div class="marquee-product bg-main">
-                                            <div class="marquee-wrapper">
-                                                <div class="initial-child-container">
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="marquee-wrapper">
-                                                <div class="initial-child-container">
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    @endif
-                                @endif
-
-                                <div class="list-product-btn">
-                                    <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action {{ in_array($row->id, $wishlistItems) ? 'active' : '' }}" data-id="{{ $row->id }}">
-                                        <i class='bx bx-heart' style="font-size: 24px;"></i>
-                                        <span class="tooltip">Wishlist</span>
-                                    </a>
-
-                                    {{-- <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
-                                        <i class='bx bx-git-compare' style="font-size: 24px;"></i>
-                                        <span class="tooltip">Compare</span>
-                                    </a> --}}
-                                    <a href="#quickView" data-id={{ $row->id }} data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
-                                        <ion-icon name="eye-outline" style="font-size: 24px;"></ion-icon>
-                                        <span class="tooltip">Quick View</span>
-                                    </a>
-                                </div>
-                                <div class="list-btn-main">
-                                    <a href="#quickAdd" data-id={{ $row->id }} data-bs-toggle="modal" class="btn-main-product quickAdd">Quick Order</a>
-                                </div>
-                            </div>
-
-                            @php
-                                $avgRatings = App\Models\ProductReview::where('product_id', $row->id)->where('status', 1)->avg('ratings');
-                                $reviews = App\Models\ProductReview::where('product_id', $row->id)->where('status', 1)->count();
-                            @endphp
-
-                            <div class="card-product-info">
-                                <a href="{{ route('product.details', $row->slug) }}" class="title link skeleton">{{ $row->name }}</a>
-                                <div class="box-rating">
-                                    <ul class="list-star skeleton">
-                                        @for ( $i = 1; $i <= 5; $i++ )
-                                            @if ( $i <= round($avgRatings))
-                                                <li class="bx bxs-star" style="color: #F0A750;"></li>
-                                            @else
-                                                <li class="bx bx-star" style="color: #F0A750;"></li>
-                                            @endif
-                                        @endfor
-                                    </ul>
-                                    <span class="text-caption-1 text-secondary skeleton">({{ $reviews }} )</span>
-                                </div>
-
-                                @if ( checkDiscount($row) )
-                                    @if ( !empty($row->discount_type === "amount") )
-                                        <span class="price"><span class="old-price skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> <span class="skeleton">
-                                            {{ getSetting()->currency_symbol }}{{ $row->selling_price - $row->discount_value }}</span></span>
-                                    @elseif( !empty($row->discount_type === "percent") )
-                                    @php
-                                        $discount_val = $row->selling_price * $row->discount_value / 100;
-                                    @endphp
-                                        <span class="price"><span class="old-price skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> <span class="skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price - $discount_val }}</span></span>
-                                    @else
-                                        <span class="price "><span class="skeleton"> {{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span></span>
-                                    @endif
-                                @else
-                                    <span class="price "> <span class="skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span></span>
-                                @endif
-
-                                {{-- <div class="box-progress-stock">
-                                    <div class="progress">
-                                        <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <div class="stock-status d-flex justify-content-between align-items-center">
-                                        <div class="stock-item text-caption-1">
-                                            <span class="stock-label text-secondary-2">Stock:</span>
-                                            <span class="stock-value">{{ $row->qty }}</span>
-                                        </div>
-                                        <div class="stock-item text-caption-1">
-                                            <span class="stock-label text-secondary-2">Sold:</span>
-                                            <span class="stock-value">{{ $row->product_sold }}</span>
-                                        </div>
-                                    </div>
-                                </div> --}}
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-            <div class="sw-pagination-recent sw-dots type-circle justify-content-center"></div>
-        </div>
-    </div>
-</section>
-<!-- /Featured Products -->
-
-{{-- <!-- banner -->
-<section class="" style="background-image: url('http://localhost/shadhin_bazaar/public/backend/images/slider/29183700.jpg');">
-    <div class="container">
-        <div class="banner-supper-sale">
-            <h6>Supper Sale:</h6>
-            <div class="code-sale">K82FS8</div>
-            <div class="body-text-1">-20% Discount for first purchse</div>
-            <a href="#" class="tf-btn btn-fill"><span class="text text-button">Discover More</span></a>
-        </div>
-    </div>
-</section>
-<!-- /banner --> --}}
-
-<!-- product -->
-<section class="flat-spacing-4">
-    <div class="container">
-        <div class="grid-card-product tf-grid-layout lg-col-3 md-col-2">
-
-            <div class="column-card-product">
-                <h5 class="heading wow fadeInUp skeleton">View products</h5>
-                <div class="list-card-product">
-
-                    @foreach ($view_products as $row)
-                        <div class="card-product list-st-2 wow fadeInUp">
-                            <div class="card-product-wrapper">
-                                <a href="{{ route('product.details', $row->slug) }}" class="product-img skeleton">
-                                    <img class="lazyload img-product" data-src="{{ asset($row->thumb_image) }}" src="{{ asset($row->thumb_image) }}" alt="{{ $row->slug }}">
-
-                                    @php
-                                        $image = App\Models\ProductImage::where('product_id', $row->id)->first();
-
-                                        $discount = '';
-                                        if( checkDiscount($row) ){
-                                            if ( !empty($row->discount_type === "amount" ) ){
-                                                $discount = '-'. $row->discount_value . "Tk";
-                                            }   
-                                            else if( $row->discount_type === "percent" ){
-                                                $discount = '-'. $row->discount_value . "%";
-                                            }
-                                        }
-                                    @endphp
-
-                                    @if (!empty($image))
-                                        <img class="lazyload img-hover" data-src="{{ asset($image->images) }}" src="{{ asset($image->images) }}" alt="{{ $row->slug }}">
-                                    @endif
-                                </a>
-                                <div class="on-sale-wrap"><span class="on-sale-item">{{ $discount }}</span></div>
-                            </div>
-                            <div class="card-product-info">
-                                <a href="{{ route('product.details', $row->slug) }}" class="title link skeleton">{{ $row->name }}</a>
-
-                                @php
-                                    $avgRatings = App\Models\ProductReview::where('product_id', $row->id)->where('status', 1)->avg('ratings');
-                                    $reviews = App\Models\ProductReview::where('product_id', $row->id)->where('status', 1)->count();
-                                @endphp
-
-                                <div class="bottom">
-                                    <div class="inner-left">
-                                        <div class="box-rating">
-                                            <ul class="list-star skeleton">
-                                                @for ( $i = 1; $i <= 5; $i++ )
-                                                    @if ( $i <= round($avgRatings))
-                                                        <li class="bx bxs-star" style="color: #F0A750;"></li>
-                                                    @else
-                                                        <li class="bx bx-star" style="color: #F0A750;"></li>
-                                                    @endif
-                                                @endfor
-                                            </ul>
-                                            <span class="text-caption-1 text-secondary skeleton">({{ $reviews }} )</span>
-                                        </div>
-
-                                        @if ( checkDiscount($row) )
-                                            @if ( !empty($row->discount_type === "amount") )
-                                                <span class="price"><span class="old-price skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> <span class="skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price - $row->discount_value }}</span></span>
-                                            @elseif( !empty($row->discount_type === "percent") )
-                                            @php
-                                                $discount_val = $row->selling_price * $row->discount_value / 100;
-                                            @endphp
-                                                <span class="price"><span class="old-price skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> <span class="skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price - $discount_val }}</span></span>
-                                            @else
-                                                <span class="price"> <span class="skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span></span>
-                                            @endif
-                                        @else
-                                            <span class="price"> <span class="skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span></span>
-                                        @endif
-
-                                    </div>
-                                    <a href="#quickAdd" data-id={{ $row->id }} data-bs-toggle="modal" class="box-icon quickAdd skeleton">
-                                        <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M16.2187 10.3327V5.99935C16.2187 4.85008 15.7622 3.74788 14.9495 2.93522C14.1369 2.12256 13.0347 1.66602 11.8854 1.66602C10.7361 1.66602 9.63394 2.12256 8.82129 2.93522C8.00863 3.74788 7.55208 4.85008 7.55208 5.99935V10.3327M4.30208 8.16602H19.4687L20.5521 21.166H3.21875L4.30208 8.16602Z" stroke="#181818" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-                                        </svg>   
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-
-                </div>
-            </div>
-
-            <div class="column-card-product">
-                <h5 class="heading wow fadeInUp skeleton">New Arrivals</h5>
-                <div class="list-card-product">
-                    
-                    @foreach ($new_products as $row)
-                        <div class="card-product list-st-2 wow fadeInUp">
-                            <div class="card-product-wrapper">
-                                <a href="{{ route('product.details', $row->slug) }}" class="product-img skeleton">
-                                    <img class="lazyload img-product" data-src="{{ asset($row->thumb_image) }}" src="{{ asset($row->thumb_image) }}" alt="{{ $row->slug }}">
-
-                                    @php
-                                        $image = App\Models\ProductImage::where('product_id', $row->id)->first();
-
-                                        $discount = '';
-                                        if( checkDiscount($row) ){
-                                            if ( !empty($row->discount_type === "amount" ) ){
-                                                $discount = '-'. $row->discount_value . "Tk";
-                                            }   
-                                            else if( $row->discount_type === "percent" ){
-                                                $discount = '-'. $row->discount_value . "%";
-                                            }
-                                        }
-                                    @endphp
-
-                                    @if (!empty($image))
-                                        <img class="lazyload img-hover" data-src="{{ asset($image->images) }}" src="{{ asset($image->images) }}" alt="{{ $row->slug }}">
-                                    @endif
-                                </a>
-                                <div class="on-sale-wrap"><span class="on-sale-item">{{ $discount }}</span></div>
-                            </div>
-                            <div class="card-product-info">
-                                <a href="{{ route('product.details', $row->slug) }}" class="title link skeleton">{{ $row->name }}</a>
-
-                                @php
-                                    $avgRatings = App\Models\ProductReview::where('product_id', $row->id)->where('status', 1)->avg('ratings');
-                                    $reviews = App\Models\ProductReview::where('product_id', $row->id)->where('status', 1)->count();
-                                @endphp
-
-                                <div class="bottom">
-                                    <div class="inner-left">
-                                        <div class="box-rating">
-                                            <ul class="list-star skeleton">
-                                                @for ( $i = 1; $i <= 5; $i++ )
-                                                    @if ( $i <= round($avgRatings))
-                                                        <li class="bx bxs-star" style="color: #F0A750;"></li>
-                                                    @else
-                                                        <li class="bx bx-star" style="color: #F0A750;"></li>
-                                                    @endif
-                                                @endfor
-                                            </ul>
-                                            <span class="text-caption-1 text-secondary skeleton">({{ $reviews }} )</span>
-                                        </div>
-
-                                        @if ( checkDiscount($row) )
-                                            @if ( !empty($row->discount_type === "amount") )
-                                                <span class="price"><span class="old-price skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> <span class="skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price - $row->discount_value }}</span></span>
-                                            @elseif( !empty($row->discount_type === "percent") )
-                                            @php
-                                                $discount_val = $row->selling_price * $row->discount_value / 100;
-                                            @endphp
-                                                <span class="price"><span class="old-price skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> <span class="skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price - $discount_val }}</span></span>
-                                            @else
-                                                <span class="price"> <span class="skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span></span>
-                                            @endif
-                                        @else
-                                            <span class="price"> <span class="skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span></span>
-                                        @endif
-
-                                    </div>
-                                    <a href="#quickAdd" data-id={{ $row->id }} data-bs-toggle="modal" class="box-icon quickAdd skeleton">
-                                        <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M16.2187 10.3327V5.99935C16.2187 4.85008 15.7622 3.74788 14.9495 2.93522C14.1369 2.12256 13.0347 1.66602 11.8854 1.66602C10.7361 1.66602 9.63394 2.12256 8.82129 2.93522C8.00863 3.74788 7.55208 4.85008 7.55208 5.99935V10.3327M4.30208 8.16602H19.4687L20.5521 21.166H3.21875L4.30208 8.16602Z" stroke="#181818" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-                                        </svg>   
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-
-                </div>
-            </div>
-
-            <div class="column-card-product">
-                <h5 class="heading wow fadeInUp skeleton">Maybe you will love</h5>
-                <div class="list-card-product">
-                    @foreach ($random_products as $row)
-                        <div class="card-product list-st-2 wow fadeInUp">
-                            <div class="card-product-wrapper">
-                                <a href="{{ route('product.details', $row->slug) }}" class="product-img skeleton">
-                                    <img class="lazyload img-product" data-src="{{ asset($row->thumb_image) }}" src="{{ asset($row->thumb_image) }}" alt="{{ $row->slug }}">
-
-                                    @php
-                                        $image = App\Models\ProductImage::where('product_id', $row->id)->first();
-
-                                        $discount = '';
-                                        if( checkDiscount($row) ){
-                                            if ( !empty($row->discount_type === "amount" ) ){
-                                                $discount = '-'. $row->discount_value . "Tk";
-                                            }   
-                                            else if( $row->discount_type === "percent" ){
-                                                $discount = '-'. $row->discount_value . "%";
-                                            }
-                                        }
-                                    @endphp
-
-                                    @if (!empty($image))
-                                        <img class="lazyload img-hover" data-src="{{ asset($image->images) }}" src="{{ asset($image->images) }}" alt="{{ $row->slug }}">
-                                    @endif
-                                </a>
-                                <div class="on-sale-wrap"><span class="on-sale-item">{{ $discount }}</span></div>
-                            </div>
-                            <div class="card-product-info">
-                                <a href="{{ route('product.details', $row->slug) }}" class="title link skeleton">{{ $row->name }}</a>
-
-                                @php
-                                    $avgRatings = App\Models\ProductReview::where('product_id', $row->id)->where('status', 1)->avg('ratings');
-                                    $reviews = App\Models\ProductReview::where('product_id', $row->id)->where('status', 1)->count();
-                                @endphp
-
-                                <div class="bottom">
-                                    <div class="inner-left">
-                                        <div class="box-rating">
-                                            <ul class="list-star skeleton">
-                                                @for ( $i = 1; $i <= 5; $i++ )
-                                                    @if ( $i <= round($avgRatings))
-                                                        <li class="bx bxs-star" style="color: #F0A750;"></li>
-                                                    @else
-                                                        <li class="bx bx-star" style="color: #F0A750;"></li>
-                                                    @endif
-                                                @endfor
-                                            </ul>
-                                            <span class="text-caption-1 text-secondary skeleton">({{ $reviews }} )</span>
-                                        </div>
-
-                                        @if ( checkDiscount($row) )
-                                            @if ( !empty($row->discount_type === "amount") )
-                                                <span class="price"><span class="old-price skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> <span class="skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price - $row->discount_value }}</span></span>
-                                            @elseif( !empty($row->discount_type === "percent") )
-                                            @php
-                                                $discount_val = $row->selling_price * $row->discount_value / 100;
-                                            @endphp
-                                                <span class="price"><span class="old-price skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> <span class="skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price - $discount_val }}</span></span>
-                                            @else
-                                                <span class="price"> <span class="skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span></span>
-                                            @endif
-                                        @else
-                                            <span class="price"> <span class="skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span></span>
-                                        @endif
-
-                                    </div>
-                                    <a href="#quickAdd" data-id={{ $row->id }} data-bs-toggle="modal" class="box-icon quickAdd skeleton">
-                                        <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M16.2187 10.3327V5.99935C16.2187 4.85008 15.7622 3.74788 14.9495 2.93522C14.1369 2.12256 13.0347 1.66602 11.8854 1.66602C10.7361 1.66602 9.63394 2.12256 8.82129 2.93522C8.00863 3.74788 7.55208 4.85008 7.55208 5.99935V10.3327M4.30208 8.16602H19.4687L20.5521 21.166H3.21875L4.30208 8.16602Z" stroke="#181818" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-                                        </svg>   
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- /product -->
-
-<!-- Best Products -->
-<section class="flat-spacing-4 pt-0">
-    <div class="container">
-        <div class="heading-section-2 wow fadeInUp">
-            <h4 class="skeleton" style="font-size: 30px!important;">Best Products</h4>
-            <a href="{{ route('product.page') }}" class="line-under skeleton">See All Products</a>
-        </div>
-
-        <div dir="ltr" class="swiper tf-sw-products" data-preview="6" data-tablet="4" data-mobile="2" data-space-lg="30" data-space-md="30" data-space="15" data-pagination="1" data-pagination-md="1" data-pagination-lg="1">
-            <div class="swiper-wrapper">
-
-                @foreach ($best_products as $row)
-                    @php
-                        $wishlistItems = App\Models\Wishlist::where('user_id', auth()->id())->pluck('product_id')->toArray();
-                    @endphp
-                    <div class="swiper-slide">
-                        <div class="card-product wow fadeInUp" data-wow-delay="0.1s">
-                            <div class="card-product-wrapper">
-                                <a href="{{ route('product.details', $row->slug) }}" class="product-img skeleton">
-                                    <img class="lazyload img-product" data-src="{{ asset($row->thumb_image) }}" src="{{ asset($row->thumb_image) }}" alt="{{ $row->slug }}">
-
-                                    @php
-                                        $image = App\Models\ProductImage::where('product_id', $row->id)->first();
-
-                                        $discount = '';
-                                        if( checkDiscount($row) ){
-                                            if ( !empty($row->discount_type === "amount" ) ){
-                                                $discount = '-'. $row->discount_value . "Tk";
-                                            }   
-                                            else if( $row->discount_type === "percent" ){
-                                                $discount = '-'. $row->discount_value . "%";
-                                            }
-                                        }
-                                    @endphp
-
-                                    @if (!empty($image))
-                                        <img class="lazyload img-hover" data-src="{{ asset($image->images) }}" src="{{ asset($image->images) }}" alt="{{ $row->slug }}">
-                                    @endif
-                                </a>
-                                <div class="on-sale-wrap">
-                                    <span class="on-sale-item">
-                                        {{ $discount }}
-                                    </span>
-                                </div>
-
-                                @if ( checkDiscount($row) )
-                                    @if ( !empty($row->discount_type === "amount") || !empty($row->discount_type === "percent") )
-                                        <div class="marquee-product bg-main">
-                                            <div class="marquee-wrapper">
-                                                <div class="initial-child-container">
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="marquee-wrapper">
-                                                <div class="initial-child-container">
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
-                                                    </div>
-                                                    <div class="marquee-child-item">
-                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    @endif
-                                @endif
-
-                                <div class="list-product-btn">
-                                    <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action {{ in_array($row->id, $wishlistItems) ? 'active' : '' }}" data-id="{{ $row->id }}">
-                                        <i class='bx bx-heart' style="font-size: 24px;"></i>
-                                        <span class="tooltip">Wishlist</span>
-                                    </a>
-
-                                    {{-- <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
-                                        <i class='bx bx-git-compare' style="font-size: 24px;"></i>
-                                        <span class="tooltip">Compare</span>
-                                    </a> --}}
-                                    <a href="#quickView" data-id={{ $row->id }} data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
-                                        <ion-icon name="eye-outline" style="font-size: 24px;"></ion-icon>
-                                        <span class="tooltip">Quick View</span>
-                                    </a>
-                                </div>
-                                <div class="list-btn-main">
-                                    <a href="#quickAdd" data-id={{ $row->id }} data-bs-toggle="modal" class="btn-main-product quickAdd">Quick Order</a>
-                                </div>
-                            </div>
-
-                            @php
-                                $avgRatings = App\Models\ProductReview::where('product_id', $row->id)->where('status', 1)->avg('ratings');
-                                $reviews = App\Models\ProductReview::where('product_id', $row->id)->where('status', 1)->count();
-                            @endphp
-
-                            <div class="card-product-info">
-                                <a href="{{ route('product.details', $row->slug) }}" class="title link skeleton">{{ $row->name }}</a>
-                                <div class="box-rating">
-                                    <ul class="list-star skeleton">
-                                        @for ( $i = 1; $i <= 5; $i++ )
-                                            @if ( $i <= round($avgRatings))
-                                                <li class="bx bxs-star" style="color: #F0A750;"></li>
-                                            @else
-                                                <li class="bx bx-star" style="color: #F0A750;"></li>
-                                            @endif
-                                        @endfor
-                                    </ul>
-                                    <span class="text-caption-1 text-secondary skeleton">({{ $reviews }} )</span>
-                                </div>
-
-                                @if ( checkDiscount($row) )
-                                    @if ( !empty($row->discount_type === "amount") )
-                                        <span class="price"><span class="old-price skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> <span class="skeleton">
-                                            {{ getSetting()->currency_symbol }}{{ $row->selling_price - $row->discount_value }}</span></span>
-                                    @elseif( !empty($row->discount_type === "percent") )
-                                    @php
-                                        $discount_val = $row->selling_price * $row->discount_value / 100;
-                                    @endphp
-                                        <span class="price"><span class="old-price skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> <span class="skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price - $discount_val }}</span></span>
-                                    @else
-                                        <span class="price "><span class="skeleton"> {{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span></span>
-                                    @endif
-                                @else
-                                    <span class="price "> <span class="skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span></span>
-                                @endif
-
-                                {{-- <div class="box-progress-stock">
-                                    <div class="progress">
-                                        <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <div class="stock-status d-flex justify-content-between align-items-center">
-                                        <div class="stock-item text-caption-1">
-                                            <span class="stock-label text-secondary-2">Stock:</span>
-                                            <span class="stock-value">{{ $row->qty }}</span>
-                                        </div>
-                                        <div class="stock-item text-caption-1">
-                                            <span class="stock-label text-secondary-2">Sold:</span>
-                                            <span class="stock-value">{{ $row->product_sold }}</span>
-                                        </div>
-                                    </div>
-                                </div> --}}
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-
-            </div>
-            <div class="sw-pagination-products sw-dots type-circle justify-content-center"></div>
-        </div>
-    </div>
-</section>
-<!-- /Best Products -->
-
 <!-- Category Section One Products -->
 <section class="flat-spacing-4 pt-0">
     <div class="container">
@@ -1477,8 +603,8 @@
 
 
         <div class="heading-section-2 wow fadeInUp">
-            <h4 style="font-size: 30px!important;" class="skeleton">{{ $item_name }} Category</h4>
-            <a href="{{ route('product.page') }}" class="line-under skeleton">See All Products</a>
+            <h4 style="font-size: 30px!important;">{{ $item_name }} Category</h4>
+            <a href="{{ route('product.page') }}" class="line-under">See All Products</a>
         </div>
 
         <div dir="ltr" class="swiper tf-sw-products" data-preview="6" data-tablet="4" data-mobile="2" data-space-lg="30" data-space-md="30" data-space="15" data-pagination="1" data-pagination-md="1" data-pagination-lg="1">
@@ -1708,10 +834,9 @@
             }
         @endphp
 
-
         <div class="heading-section-2 wow fadeInUp">
-            <h4 style="font-size: 30px!important;" class="skeleton">{{ $item_name }} Category</h4>
-            <a href="{{ route('product.page') }}" class="line-under skeleton">See All Products</a>
+            <h4 style="font-size: 30px!important;">{{ $item_name }} Category</h4>
+            <a href="{{ route('product.page') }}" class="line-under">See All Products</a>
         </div>
 
         <div dir="ltr" class="swiper tf-sw-products" data-preview="6" data-tablet="4" data-mobile="2" data-space-lg="30" data-space-md="30" data-space="15" data-pagination="1" data-pagination-md="1" data-pagination-lg="1">
@@ -1941,10 +1066,9 @@
             }
         @endphp
 
-
         <div class="heading-section-2 wow fadeInUp">
-            <h4 style="font-size: 30px!important;" class="skeleton">{{ $item_name }} Category</h4>
-            <a href="{{ route('product.page') }}" class="line-under skeleton">See All Products</a>
+            <h4 style="font-size: 30px!important;">{{ $item_name }} Category</h4>
+            <a href="{{ route('product.page') }}" class="line-under">See All Products</a>
         </div>
 
         <div dir="ltr" class="swiper tf-sw-products" data-preview="6" data-tablet="4" data-mobile="2" data-space-lg="30" data-space-md="30" data-space="15" data-pagination="1" data-pagination-md="1" data-pagination-lg="1">
@@ -2142,13 +1266,887 @@
 </section>
 <!-- /Category Section Three Products -->
 
+{{-- <!-- banner -->
+<section class="" style="background-image: url('http://localhost/shadhin_bazaar/public/backend/images/slider/29183700.jpg');">
+    <div class="container">
+        <div class="banner-supper-sale">
+            <h6>Supper Sale:</h6>
+            <div class="code-sale">K82FS8</div>
+            <div class="body-text-1">-20% Discount for first purchse</div>
+            <a href="#" class="tf-btn btn-fill"><span class="text text-button">Discover More</span></a>
+        </div>
+    </div>
+</section>
+<!-- /banner --> --}}
+
+<!-- product -->
+<section class="flat-spacing-4">
+    <div class="container">
+        <div class="grid-card-product tf-grid-layout lg-col-3 md-col-2">
+
+            <div class="column-card-product">
+                <h5 class="heading wow fadeInUp">View products</h5>
+                <div class="list-card-product">
+
+                    @foreach ($view_products as $row)
+                        <div class="card-product list-st-2 wow fadeInUp">
+                            <div class="card-product-wrapper">
+                                <a href="{{ route('product.details', $row->slug) }}" class="product-img skeleton">
+                                    <img class="lazyload img-product" data-src="{{ asset($row->thumb_image) }}" src="{{ asset($row->thumb_image) }}" alt="{{ $row->slug }}">
+
+                                    @php
+                                        $image = App\Models\ProductImage::where('product_id', $row->id)->first();
+
+                                        $discount = '';
+                                        if( checkDiscount($row) ){
+                                            if ( !empty($row->discount_type === "amount" ) ){
+                                                $discount = '-'. $row->discount_value . "Tk";
+                                            }   
+                                            else if( $row->discount_type === "percent" ){
+                                                $discount = '-'. $row->discount_value . "%";
+                                            }
+                                        }
+                                    @endphp
+
+                                    @if (!empty($image))
+                                        <img class="lazyload img-hover" data-src="{{ asset($image->images) }}" src="{{ asset($image->images) }}" alt="{{ $row->slug }}">
+                                    @endif
+                                </a>
+                                <div class="on-sale-wrap"><span class="on-sale-item">{{ $discount }}</span></div>
+                            </div>
+                            <div class="card-product-info">
+                                <a href="{{ route('product.details', $row->slug) }}" class="title link skeleton">{{ $row->name }}</a>
+
+                                @php
+                                    $avgRatings = App\Models\ProductReview::where('product_id', $row->id)->where('status', 1)->avg('ratings');
+                                    $reviews = App\Models\ProductReview::where('product_id', $row->id)->where('status', 1)->count();
+                                @endphp
+
+                                <div class="bottom">
+                                    <div class="inner-left">
+                                        <div class="box-rating">
+                                            <ul class="list-star skeleton">
+                                                @for ( $i = 1; $i <= 5; $i++ )
+                                                    @if ( $i <= round($avgRatings))
+                                                        <li class="bx bxs-star" style="color: #F0A750;"></li>
+                                                    @else
+                                                        <li class="bx bx-star" style="color: #F0A750;"></li>
+                                                    @endif
+                                                @endfor
+                                            </ul>
+                                            <span class="text-caption-1 text-secondary skeleton">({{ $reviews }} )</span>
+                                        </div>
+
+                                        @if ( checkDiscount($row) )
+                                            @if ( !empty($row->discount_type === "amount") )
+                                                <span class="price"><span class="old-price skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> <span class="skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price - $row->discount_value }}</span></span>
+                                            @elseif( !empty($row->discount_type === "percent") )
+                                            @php
+                                                $discount_val = $row->selling_price * $row->discount_value / 100;
+                                            @endphp
+                                                <span class="price"><span class="old-price skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> <span class="skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price - $discount_val }}</span></span>
+                                            @else
+                                                <span class="price"> <span class="skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span></span>
+                                            @endif
+                                        @else
+                                            <span class="price"> <span class="skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span></span>
+                                        @endif
+
+                                    </div>
+                                    <a href="#quickAdd" data-id={{ $row->id }} data-bs-toggle="modal" class="box-icon quickAdd skeleton">
+                                        <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M16.2187 10.3327V5.99935C16.2187 4.85008 15.7622 3.74788 14.9495 2.93522C14.1369 2.12256 13.0347 1.66602 11.8854 1.66602C10.7361 1.66602 9.63394 2.12256 8.82129 2.93522C8.00863 3.74788 7.55208 4.85008 7.55208 5.99935V10.3327M4.30208 8.16602H19.4687L20.5521 21.166H3.21875L4.30208 8.16602Z" stroke="#181818" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>   
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+
+                </div>
+            </div>
+
+            <div class="column-card-product">
+                <h5 class="heading wow fadeInUp">New Arrivals</h5>
+                <div class="list-card-product">
+                    
+                    @foreach ($new_products as $row)
+                        <div class="card-product list-st-2 wow fadeInUp">
+                            <div class="card-product-wrapper">
+                                <a href="{{ route('product.details', $row->slug) }}" class="product-img skeleton">
+                                    <img class="lazyload img-product" data-src="{{ asset($row->thumb_image) }}" src="{{ asset($row->thumb_image) }}" alt="{{ $row->slug }}">
+
+                                    @php
+                                        $image = App\Models\ProductImage::where('product_id', $row->id)->first();
+
+                                        $discount = '';
+                                        if( checkDiscount($row) ){
+                                            if ( !empty($row->discount_type === "amount" ) ){
+                                                $discount = '-'. $row->discount_value . "Tk";
+                                            }   
+                                            else if( $row->discount_type === "percent" ){
+                                                $discount = '-'. $row->discount_value . "%";
+                                            }
+                                        }
+                                    @endphp
+
+                                    @if (!empty($image))
+                                        <img class="lazyload img-hover" data-src="{{ asset($image->images) }}" src="{{ asset($image->images) }}" alt="{{ $row->slug }}">
+                                    @endif
+                                </a>
+                                <div class="on-sale-wrap"><span class="on-sale-item">{{ $discount }}</span></div>
+                            </div>
+                            <div class="card-product-info">
+                                <a href="{{ route('product.details', $row->slug) }}" class="title link skeleton">{{ $row->name }}</a>
+
+                                @php
+                                    $avgRatings = App\Models\ProductReview::where('product_id', $row->id)->where('status', 1)->avg('ratings');
+                                    $reviews = App\Models\ProductReview::where('product_id', $row->id)->where('status', 1)->count();
+                                @endphp
+
+                                <div class="bottom">
+                                    <div class="inner-left">
+                                        <div class="box-rating">
+                                            <ul class="list-star skeleton">
+                                                @for ( $i = 1; $i <= 5; $i++ )
+                                                    @if ( $i <= round($avgRatings))
+                                                        <li class="bx bxs-star" style="color: #F0A750;"></li>
+                                                    @else
+                                                        <li class="bx bx-star" style="color: #F0A750;"></li>
+                                                    @endif
+                                                @endfor
+                                            </ul>
+                                            <span class="text-caption-1 text-secondary skeleton">({{ $reviews }} )</span>
+                                        </div>
+
+                                        @if ( checkDiscount($row) )
+                                            @if ( !empty($row->discount_type === "amount") )
+                                                <span class="price"><span class="old-price skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> <span class="skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price - $row->discount_value }}</span></span>
+                                            @elseif( !empty($row->discount_type === "percent") )
+                                            @php
+                                                $discount_val = $row->selling_price * $row->discount_value / 100;
+                                            @endphp
+                                                <span class="price"><span class="old-price skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> <span class="skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price - $discount_val }}</span></span>
+                                            @else
+                                                <span class="price"> <span class="skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span></span>
+                                            @endif
+                                        @else
+                                            <span class="price"> <span class="skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span></span>
+                                        @endif
+
+                                    </div>
+                                    <a href="#quickAdd" data-id={{ $row->id }} data-bs-toggle="modal" class="box-icon quickAdd skeleton">
+                                        <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M16.2187 10.3327V5.99935C16.2187 4.85008 15.7622 3.74788 14.9495 2.93522C14.1369 2.12256 13.0347 1.66602 11.8854 1.66602C10.7361 1.66602 9.63394 2.12256 8.82129 2.93522C8.00863 3.74788 7.55208 4.85008 7.55208 5.99935V10.3327M4.30208 8.16602H19.4687L20.5521 21.166H3.21875L4.30208 8.16602Z" stroke="#181818" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>   
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+
+                </div>
+            </div>
+
+            <div class="column-card-product">
+                <h5 class="heading wow fadeInUp">Maybe you will love</h5>
+                <div class="list-card-product">
+                    @foreach ($random_products as $row)
+                        <div class="card-product list-st-2 wow fadeInUp">
+                            <div class="card-product-wrapper">
+                                <a href="{{ route('product.details', $row->slug) }}" class="product-img skeleton">
+                                    <img class="lazyload img-product" data-src="{{ asset($row->thumb_image) }}" src="{{ asset($row->thumb_image) }}" alt="{{ $row->slug }}">
+
+                                    @php
+                                        $image = App\Models\ProductImage::where('product_id', $row->id)->first();
+
+                                        $discount = '';
+                                        if( checkDiscount($row) ){
+                                            if ( !empty($row->discount_type === "amount" ) ){
+                                                $discount = '-'. $row->discount_value . "Tk";
+                                            }   
+                                            else if( $row->discount_type === "percent" ){
+                                                $discount = '-'. $row->discount_value . "%";
+                                            }
+                                        }
+                                    @endphp
+
+                                    @if (!empty($image))
+                                        <img class="lazyload img-hover" data-src="{{ asset($image->images) }}" src="{{ asset($image->images) }}" alt="{{ $row->slug }}">
+                                    @endif
+                                </a>
+                                <div class="on-sale-wrap"><span class="on-sale-item">{{ $discount }}</span></div>
+                            </div>
+                            <div class="card-product-info">
+                                <a href="{{ route('product.details', $row->slug) }}" class="title link skeleton">{{ $row->name }}</a>
+
+                                @php
+                                    $avgRatings = App\Models\ProductReview::where('product_id', $row->id)->where('status', 1)->avg('ratings');
+                                    $reviews = App\Models\ProductReview::where('product_id', $row->id)->where('status', 1)->count();
+                                @endphp
+
+                                <div class="bottom">
+                                    <div class="inner-left">
+                                        <div class="box-rating">
+                                            <ul class="list-star skeleton">
+                                                @for ( $i = 1; $i <= 5; $i++ )
+                                                    @if ( $i <= round($avgRatings))
+                                                        <li class="bx bxs-star" style="color: #F0A750;"></li>
+                                                    @else
+                                                        <li class="bx bx-star" style="color: #F0A750;"></li>
+                                                    @endif
+                                                @endfor
+                                            </ul>
+                                            <span class="text-caption-1 text-secondary skeleton">({{ $reviews }} )</span>
+                                        </div>
+
+                                        @if ( checkDiscount($row) )
+                                            @if ( !empty($row->discount_type === "amount") )
+                                                <span class="price"><span class="old-price skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> <span class="skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price - $row->discount_value }}</span></span>
+                                            @elseif( !empty($row->discount_type === "percent") )
+                                            @php
+                                                $discount_val = $row->selling_price * $row->discount_value / 100;
+                                            @endphp
+                                                <span class="price"><span class="old-price skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> <span class="skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price - $discount_val }}</span></span>
+                                            @else
+                                                <span class="price"> <span class="skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span></span>
+                                            @endif
+                                        @else
+                                            <span class="price"> <span class="skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span></span>
+                                        @endif
+
+                                    </div>
+                                    <a href="#quickAdd" data-id={{ $row->id }} data-bs-toggle="modal" class="box-icon quickAdd skeleton">
+                                        <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M16.2187 10.3327V5.99935C16.2187 4.85008 15.7622 3.74788 14.9495 2.93522C14.1369 2.12256 13.0347 1.66602 11.8854 1.66602C10.7361 1.66602 9.63394 2.12256 8.82129 2.93522C8.00863 3.74788 7.55208 4.85008 7.55208 5.99935V10.3327M4.30208 8.16602H19.4687L20.5521 21.166H3.21875L4.30208 8.16602Z" stroke="#181818" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>   
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- /product -->
+
+<!-- Top Products -->
+<section class="flat-spacing-4 pt-0">
+    <div class="container">
+        <div class="heading-section-2 wow fadeInUp">
+            <h4 style="font-size: 30px!important;">Top Products</h4>
+            <a href="{{ route('product.page') }}" class="line-under">See All Products</a>
+        </div>
+
+        <div dir="ltr" class="swiper tf-sw-recent" data-preview="6" data-tablet="4" data-mobile="2" data-space-lg="30" data-space-md="30" data-space="15" data-pagination="1" data-pagination-md="1" data-pagination-lg="1">
+            <div class="swiper-wrapper">
+
+                @foreach ($top_products as $row)
+                    @php
+                        $wishlistItems = App\Models\Wishlist::where('user_id', auth()->id())->pluck('product_id')->toArray();
+                    @endphp
+                    <div class="swiper-slide">
+                        <div class="card-product wow fadeInUp" data-wow-delay="0.1s">
+                            <div class="card-product-wrapper">
+                                <a href="{{ route('product.details', $row->slug) }}" class="product-img skeleton">
+                                    <img class="lazyload img-product" data-src="{{ asset($row->thumb_image) }}" src="{{ asset($row->thumb_image) }}" alt="{{ $row->slug }}">
+
+                                    @php
+                                        $image = App\Models\ProductImage::where('product_id', $row->id)->first();
+
+                                        $discount = '';
+                                        if( checkDiscount($row) ){
+                                            if ( !empty($row->discount_type === "amount" ) ){
+                                                $discount = '-'. $row->discount_value . "Tk";
+                                            }   
+                                            else if( $row->discount_type === "percent" ){
+                                                $discount = '-'. $row->discount_value . "%";
+                                            }
+                                        }
+                                    @endphp
+
+                                    @if (!empty($image))
+                                        <img class="lazyload img-hover" data-src="{{ asset($image->images) }}" src="{{ asset($image->images) }}" alt="{{ $row->slug }}">
+                                    @endif
+                                </a>
+                                <div class="on-sale-wrap">
+                                    <span class="on-sale-item">
+                                        {{ $discount }}
+                                    </span>
+                                </div>
+
+                                @if ( checkDiscount($row) )
+                                    @if ( !empty($row->discount_type === "amount") || !empty($row->discount_type === "percent") )
+                                        <div class="marquee-product bg-main">
+                                            <div class="marquee-wrapper">
+                                                <div class="initial-child-container">
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="marquee-wrapper">
+                                                <div class="initial-child-container">
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endif
+                                @endif
+
+                                <div class="list-product-btn">
+                                    <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action {{ in_array($row->id, $wishlistItems) ? 'active' : '' }}" data-id="{{ $row->id }}">
+                                        <i class='bx bx-heart' style="font-size: 24px;"></i>
+                                        <span class="tooltip">Wishlist</span>
+                                    </a>
+
+                                    {{-- <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
+                                        <i class='bx bx-git-compare' style="font-size: 24px;"></i>
+                                        <span class="tooltip">Compare</span>
+                                    </a> --}}
+                                    <a href="#quickView" data-id={{ $row->id }} data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
+                                        <ion-icon name="eye-outline" style="font-size: 24px;"></ion-icon>
+                                        <span class="tooltip">Quick View</span>
+                                    </a>
+                                </div>
+                                <div class="list-btn-main">
+                                    <a href="#quickAdd" data-id={{ $row->id }} data-bs-toggle="modal" class="btn-main-product quickAdd">Quick Order</a>
+                                </div>
+                            </div>
+
+                            @php
+                                $avgRatings = App\Models\ProductReview::where('product_id', $row->id)->where('status', 1)->avg('ratings');
+                                $reviews = App\Models\ProductReview::where('product_id', $row->id)->where('status', 1)->count();
+                            @endphp
+
+                            <div class="card-product-info">
+                                <a href="{{ route('product.details', $row->slug) }}" class="title link skeleton">{{ $row->name }}</a>
+                                <div class="box-rating">
+                                    <ul class="list-star skeleton">
+                                        @for ( $i = 1; $i <= 5; $i++ )
+                                            @if ( $i <= round($avgRatings))
+                                                <li class="bx bxs-star" style="color: #F0A750;"></li>
+                                            @else
+                                                <li class="bx bx-star" style="color: #F0A750;"></li>
+                                            @endif
+                                        @endfor
+                                    </ul>
+                                    <span class="text-caption-1 text-secondary skeleton">({{ $reviews }} )</span>
+                                </div>
+
+                                @if ( checkDiscount($row) )
+                                    @if ( !empty($row->discount_type === "amount") )
+                                        <span class="price"><span class="old-price skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> <span class="skeleton">
+                                            {{ getSetting()->currency_symbol }}{{ $row->selling_price - $row->discount_value }}</span></span>
+                                    @elseif( !empty($row->discount_type === "percent") )
+                                    @php
+                                        $discount_val = $row->selling_price * $row->discount_value / 100;
+                                    @endphp
+                                        <span class="price"><span class="old-price skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> <span class="skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price - $discount_val }}</span></span>
+                                    @else
+                                        <span class="price "><span class="skeleton"> {{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span></span>
+                                    @endif
+                                @else
+                                    <span class="price "> <span class="skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span></span>
+                                @endif
+
+                                {{-- <div class="box-progress-stock">
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                    <div class="stock-status d-flex justify-content-between align-items-center">
+                                        <div class="stock-item text-caption-1">
+                                            <span class="stock-label text-secondary-2">Stock:</span>
+                                            <span class="stock-value">{{ $row->qty }}</span>
+                                        </div>
+                                        <div class="stock-item text-caption-1">
+                                            <span class="stock-label text-secondary-2">Sold:</span>
+                                            <span class="stock-value">{{ $row->product_sold }}</span>
+                                        </div>
+                                    </div>
+                                </div> --}}
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+
+            </div>
+            <div class="sw-pagination-recent sw-dots type-circle justify-content-center"></div>
+        </div>
+    </div>
+</section>
+<!-- /Top Products -->
+
+<!-- Featured Products -->
+<section class="flat-spacing-4 pt-0">
+    <div class="container">
+        <div class="heading-section-2 wow fadeInUp">
+            <h4 style="font-size: 30px!important;">Featured Products</h4>
+            <a href="{{ route('product.page') }}" class="line-under">See All Products</a>
+        </div>
+
+        <div dir="ltr" class="swiper tf-sw-recent" data-preview="6" data-tablet="4" data-mobile="2" data-space-lg="30" data-space-md="30" data-space="15" data-pagination="1" data-pagination-md="1" data-pagination-lg="1">
+            <div class="swiper-wrapper">
+
+                @foreach ($featured_products as $row)
+                    @php
+                        $wishlistItems = App\Models\Wishlist::where('user_id', auth()->id())->pluck('product_id')->toArray();
+                    @endphp
+                    <div class="swiper-slide">
+                        <div class="card-product wow fadeInUp" data-wow-delay="0.1s">
+                            <div class="card-product-wrapper">
+                                <a href="{{ route('product.details', $row->slug) }}" class="product-img skeleton">
+                                    <img class="lazyload img-product" data-src="{{ asset($row->thumb_image) }}" src="{{ asset($row->thumb_image) }}" alt="{{ $row->slug }}">
+
+                                    @php
+                                        $image = App\Models\ProductImage::where('product_id', $row->id)->first();
+
+                                        $discount = '';
+                                        if( checkDiscount($row) ){
+                                            if ( !empty($row->discount_type === "amount" ) ){
+                                                $discount = '-'. $row->discount_value . "Tk";
+                                            }   
+                                            else if( $row->discount_type === "percent" ){
+                                                $discount = '-'. $row->discount_value . "%";
+                                            }
+                                        }
+                                    @endphp
+
+                                    @if (!empty($image))
+                                        <img class="lazyload img-hover" data-src="{{ asset($image->images) }}" src="{{ asset($image->images) }}" alt="{{ $row->slug }}">
+                                    @endif
+                                </a>
+                                <div class="on-sale-wrap">
+                                    <span class="on-sale-item">
+                                        {{ $discount }}
+                                    </span>
+                                </div>
+
+                                @if ( checkDiscount($row) )
+                                    @if ( !empty($row->discount_type === "amount") || !empty($row->discount_type === "percent") )
+                                        <div class="marquee-product bg-main">
+                                            <div class="marquee-wrapper">
+                                                <div class="initial-child-container">
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="marquee-wrapper">
+                                                <div class="initial-child-container">
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endif
+                                @endif
+
+                                <div class="list-product-btn">
+                                    <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action {{ in_array($row->id, $wishlistItems) ? 'active' : '' }}" data-id="{{ $row->id }}">
+                                        <i class='bx bx-heart' style="font-size: 24px;"></i>
+                                        <span class="tooltip">Wishlist</span>
+                                    </a>
+
+                                    {{-- <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
+                                        <i class='bx bx-git-compare' style="font-size: 24px;"></i>
+                                        <span class="tooltip">Compare</span>
+                                    </a> --}}
+                                    <a href="#quickView" data-id={{ $row->id }} data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
+                                        <ion-icon name="eye-outline" style="font-size: 24px;"></ion-icon>
+                                        <span class="tooltip">Quick View</span>
+                                    </a>
+                                </div>
+                                <div class="list-btn-main">
+                                    <a href="#quickAdd" data-id={{ $row->id }} data-bs-toggle="modal" class="btn-main-product quickAdd">Quick Order</a>
+                                </div>
+                            </div>
+
+                            @php
+                                $avgRatings = App\Models\ProductReview::where('product_id', $row->id)->where('status', 1)->avg('ratings');
+                                $reviews = App\Models\ProductReview::where('product_id', $row->id)->where('status', 1)->count();
+                            @endphp
+
+                            <div class="card-product-info">
+                                <a href="{{ route('product.details', $row->slug) }}" class="title link skeleton">{{ $row->name }}</a>
+                                <div class="box-rating">
+                                    <ul class="list-star skeleton">
+                                        @for ( $i = 1; $i <= 5; $i++ )
+                                            @if ( $i <= round($avgRatings))
+                                                <li class="bx bxs-star" style="color: #F0A750;"></li>
+                                            @else
+                                                <li class="bx bx-star" style="color: #F0A750;"></li>
+                                            @endif
+                                        @endfor
+                                    </ul>
+                                    <span class="text-caption-1 text-secondary skeleton">({{ $reviews }} )</span>
+                                </div>
+
+                                @if ( checkDiscount($row) )
+                                    @if ( !empty($row->discount_type === "amount") )
+                                        <span class="price"><span class="old-price skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> <span class="skeleton">
+                                            {{ getSetting()->currency_symbol }}{{ $row->selling_price - $row->discount_value }}</span></span>
+                                    @elseif( !empty($row->discount_type === "percent") )
+                                    @php
+                                        $discount_val = $row->selling_price * $row->discount_value / 100;
+                                    @endphp
+                                        <span class="price"><span class="old-price skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> <span class="skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price - $discount_val }}</span></span>
+                                    @else
+                                        <span class="price "><span class="skeleton"> {{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span></span>
+                                    @endif
+                                @else
+                                    <span class="price "> <span class="skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span></span>
+                                @endif
+
+                                {{-- <div class="box-progress-stock">
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                    <div class="stock-status d-flex justify-content-between align-items-center">
+                                        <div class="stock-item text-caption-1">
+                                            <span class="stock-label text-secondary-2">Stock:</span>
+                                            <span class="stock-value">{{ $row->qty }}</span>
+                                        </div>
+                                        <div class="stock-item text-caption-1">
+                                            <span class="stock-label text-secondary-2">Sold:</span>
+                                            <span class="stock-value">{{ $row->product_sold }}</span>
+                                        </div>
+                                    </div>
+                                </div> --}}
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+            <div class="sw-pagination-recent sw-dots type-circle justify-content-center"></div>
+        </div>
+    </div>
+</section>
+<!-- /Featured Products -->
+
+<!-- Best Products -->
+<section class="flat-spacing-4 pt-0">
+    <div class="container">
+        <div class="heading-section-2 wow fadeInUp">
+            <h4 style="font-size: 30px!important;">Best Products</h4>
+            <a href="{{ route('product.page') }}" class="line-under">See All Products</a>
+        </div>
+
+        <div dir="ltr" class="swiper tf-sw-products" data-preview="6" data-tablet="4" data-mobile="2" data-space-lg="30" data-space-md="30" data-space="15" data-pagination="1" data-pagination-md="1" data-pagination-lg="1">
+            <div class="swiper-wrapper">
+
+                @foreach ($best_products as $row)
+                    @php
+                        $wishlistItems = App\Models\Wishlist::where('user_id', auth()->id())->pluck('product_id')->toArray();
+                    @endphp
+                    <div class="swiper-slide">
+                        <div class="card-product wow fadeInUp" data-wow-delay="0.1s">
+                            <div class="card-product-wrapper">
+                                <a href="{{ route('product.details', $row->slug) }}" class="product-img skeleton">
+                                    <img class="lazyload img-product" data-src="{{ asset($row->thumb_image) }}" src="{{ asset($row->thumb_image) }}" alt="{{ $row->slug }}">
+
+                                    @php
+                                        $image = App\Models\ProductImage::where('product_id', $row->id)->first();
+
+                                        $discount = '';
+                                        if( checkDiscount($row) ){
+                                            if ( !empty($row->discount_type === "amount" ) ){
+                                                $discount = '-'. $row->discount_value . "Tk";
+                                            }   
+                                            else if( $row->discount_type === "percent" ){
+                                                $discount = '-'. $row->discount_value . "%";
+                                            }
+                                        }
+                                    @endphp
+
+                                    @if (!empty($image))
+                                        <img class="lazyload img-hover" data-src="{{ asset($image->images) }}" src="{{ asset($image->images) }}" alt="{{ $row->slug }}">
+                                    @endif
+                                </a>
+                                <div class="on-sale-wrap">
+                                    <span class="on-sale-item">
+                                        {{ $discount }}
+                                    </span>
+                                </div>
+
+                                @if ( checkDiscount($row) )
+                                    @if ( !empty($row->discount_type === "amount") || !empty($row->discount_type === "percent") )
+                                        <div class="marquee-product bg-main">
+                                            <div class="marquee-wrapper">
+                                                <div class="initial-child-container">
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="marquee-wrapper">
+                                                <div class="initial-child-container">
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <p class="font-2 text-btn-uppercase fw-6 text-white">Hot Sale {{ $discount }} OFF</p>
+                                                    </div>
+                                                    <div class="marquee-child-item">
+                                                        <ion-icon name="flash-outline" class="text-critical"></ion-icon>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endif
+                                @endif
+
+                                <div class="list-product-btn">
+                                    <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action {{ in_array($row->id, $wishlistItems) ? 'active' : '' }}" data-id="{{ $row->id }}">
+                                        <i class='bx bx-heart' style="font-size: 24px;"></i>
+                                        <span class="tooltip">Wishlist</span>
+                                    </a>
+
+                                    {{-- <a href="#compare" data-bs-toggle="offcanvas" aria-controls="compare" class="box-icon compare btn-icon-action">
+                                        <i class='bx bx-git-compare' style="font-size: 24px;"></i>
+                                        <span class="tooltip">Compare</span>
+                                    </a> --}}
+                                    <a href="#quickView" data-id={{ $row->id }} data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
+                                        <ion-icon name="eye-outline" style="font-size: 24px;"></ion-icon>
+                                        <span class="tooltip">Quick View</span>
+                                    </a>
+                                </div>
+                                <div class="list-btn-main">
+                                    <a href="#quickAdd" data-id={{ $row->id }} data-bs-toggle="modal" class="btn-main-product quickAdd">Quick Order</a>
+                                </div>
+                            </div>
+
+                            @php
+                                $avgRatings = App\Models\ProductReview::where('product_id', $row->id)->where('status', 1)->avg('ratings');
+                                $reviews = App\Models\ProductReview::where('product_id', $row->id)->where('status', 1)->count();
+                            @endphp
+
+                            <div class="card-product-info">
+                                <a href="{{ route('product.details', $row->slug) }}" class="title link skeleton">{{ $row->name }}</a>
+                                <div class="box-rating">
+                                    <ul class="list-star skeleton">
+                                        @for ( $i = 1; $i <= 5; $i++ )
+                                            @if ( $i <= round($avgRatings))
+                                                <li class="bx bxs-star" style="color: #F0A750;"></li>
+                                            @else
+                                                <li class="bx bx-star" style="color: #F0A750;"></li>
+                                            @endif
+                                        @endfor
+                                    </ul>
+                                    <span class="text-caption-1 text-secondary skeleton">({{ $reviews }} )</span>
+                                </div>
+
+                                @if ( checkDiscount($row) )
+                                    @if ( !empty($row->discount_type === "amount") )
+                                        <span class="price"><span class="old-price skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> <span class="skeleton">
+                                            {{ getSetting()->currency_symbol }}{{ $row->selling_price - $row->discount_value }}</span></span>
+                                    @elseif( !empty($row->discount_type === "percent") )
+                                    @php
+                                        $discount_val = $row->selling_price * $row->discount_value / 100;
+                                    @endphp
+                                        <span class="price"><span class="old-price skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> <span class="skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price - $discount_val }}</span></span>
+                                    @else
+                                        <span class="price "><span class="skeleton"> {{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span></span>
+                                    @endif
+                                @else
+                                    <span class="price "> <span class="skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span></span>
+                                @endif
+
+                                {{-- <div class="box-progress-stock">
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                    <div class="stock-status d-flex justify-content-between align-items-center">
+                                        <div class="stock-item text-caption-1">
+                                            <span class="stock-label text-secondary-2">Stock:</span>
+                                            <span class="stock-value">{{ $row->qty }}</span>
+                                        </div>
+                                        <div class="stock-item text-caption-1">
+                                            <span class="stock-label text-secondary-2">Sold:</span>
+                                            <span class="stock-value">{{ $row->product_sold }}</span>
+                                        </div>
+                                    </div>
+                                </div> --}}
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+
+            </div>
+            <div class="sw-pagination-products sw-dots type-circle justify-content-center"></div>
+        </div>
+    </div>
+</section>
+<!-- /Best Products -->
+
 <!-- Testimonials -->
 @if ( $productReviews->count() > 0 )
 <section class="flat-spacing">
     <div class="container">
         <div class="heading-section text-center wow fadeInUp">
-            <h3 class="heading"><span class="skeleton">Customer Feedback!</span></h3>
-            <p class="subheading"><span class="skeleton">Our customers adore our products, and we constantly aim to delight them.</span></p>
+            <h3 class="heading">Customer Feedback!</h3>
+            <p class="subheading">Our customers adore our products, and we constantly aim to delight them.</p>
         </div>
 
         <div dir="ltr" class="swiper tf-sw-testimonial wow fadeInUp" data-wow-delay="0.1s" data-preview="3" data-tablet="2" data-mobile="1" data-space-lg="30" data-space-md="30" data-space="15" data-pagination="1" data-pagination-md="1" data-pagination-lg="1">

@@ -63,7 +63,7 @@
 @section('body-content')
 
    <!-- page-title -->
-   <div class="page-title" style="background-image: url(
+   <div class="page-title skeleton" style="background-image: url(
     @if( !empty(getSetting()->banner_breadcrumb_img) )
         {{ asset(getSetting()->banner_breadcrumb_img) }}
     @else
@@ -111,10 +111,10 @@
     <div class="container">
         <div class="tf-shop-control">
             <div class="tf-control-filter">
-                <button id="filterShop" class="filterShop tf-btn-filter">
+                <button id="filterShop" class="filterShop skeleton tf-btn-filter">
                     <i class='bx bx-filter-alt' style="font-size: 22px;"></i>
                     <span class="text">Filters</span></button>
-                <div class="d-none d-lg-flex shop-sale-text">
+                <div class="d-none d-lg-flex shop-sale-text skeleton">
                     <i class='bx bx-check-circle text-success' style="font-size: 22px;"></i>
                     <p class="text-caption-1">Best Quality items</p>
                 </div>
@@ -161,8 +161,8 @@
 
             {{-- Product Sorting --}}
             <div class="tf-control-sorting">
-                <p class="d-none d-lg-block text-caption-1">Sort by:</p>
-                <div class="tf-dropdown-sort" data-bs-toggle="dropdown">
+                <p class="d-none d-lg-block text-caption-1 skeleton">Sort by:</p>
+                <div class="tf-dropdown-sort skeleton" data-bs-toggle="dropdown">
                     <div class="btn-select">
                         <span class="text-sort-value">Best selling</span>
                         <i class='bx bx-chevron-down' style="font-size: 20px;"></i>
@@ -198,8 +198,8 @@
                 <div class="col-xl-3">
                     <div class="sidebar-filter canvas-filter left">
                         <div class="canvas-wrapper">
-                            <div class="canvas-header d-flex d-xl-none">
-                                <h5>Filters</h5>
+                            <div class="canvas-header d-flex d-xl-none skeleton">
+                                <h5 class="">Filters</h5>
                                 <i class='bx bx-x close-filter' style="font-size: 28px; cursor:pointer;"></i>
                             </div>
 
@@ -221,9 +221,9 @@
 
                                 {{-- Category Wise Filter --}}
                                 <div class="widget-facet facet-fieldset accordion-product-item">
-                                    <a href="#category" class="facet-title accordion-title current" data-bs-toggle="collapse" aria-expanded="true" aria-controls="category" style="font-size: 20px;">
+                                    <a href="#category" class="skeleton facet-title accordion-title current" data-bs-toggle="collapse" aria-expanded="true" aria-controls="category" style="font-size: 20px;">
                                         <h5>Product Categories</h5>
-                                        <span class="btn-open-sub"></span>
+                                        <span class="btn-open-sub "></span>
                                     </a>
 
                                     <div id="category" class="box-fieldset-item collapse show" data-bs-parent="#accordion-faq-1">
@@ -233,7 +233,7 @@
                                                     $count = App\Models\Product::where('category_id', $item->id)->count();
                                                 @endphp
 
-                                                <fieldset class="fieldset-item">
+                                                <fieldset class="fieldset-item skeleton">
                                                     <input type="checkbox"
                                                      name="categories" 
                                                      class="tf-check change_category" 
@@ -251,7 +251,7 @@
                                                    $count = App\Models\Product::where('subCategory_id', $item->id)->count();
                                                 @endphp
 
-                                                <fieldset class="fieldset-item">
+                                                <fieldset class="fieldset-item skeleton">
                                                     <input type="checkbox" 
                                                     name="sub_categories" 
                                                     class="tf-check change_subCategory" 
@@ -269,7 +269,7 @@
                                                    $count = App\Models\Product::where('childCategory_id', $item->id)->count();
                                                 @endphp
 
-                                                <fieldset class="fieldset-item">
+                                                <fieldset class="fieldset-item skeleton">
                                                     <input type="checkbox" 
                                                     name="child_categories" 
                                                     class="tf-check change_childCategory" 
@@ -286,7 +286,7 @@
                                                 @php
                                                     $count = App\Models\Product::where('category_id', $item->id)->count();
                                                 @endphp
-                                                <fieldset class="fieldset-item">
+                                                <fieldset class="fieldset-item skeleton">
                                                     <input type="checkbox"
                                                         name="brand" 
                                                         class="tf-check change_category" 
@@ -303,19 +303,19 @@
 
                                 {{-- Price Range Filter --}}
                                 <div class="widget-facet facet-price accordion-product-item">
-                                    <a href="#price_range" class="facet-title accordion-title current" data-bs-toggle="collapse" aria-expanded="true" aria-controls="price_range" style="font-size: 20px;">
-                                        <h5>Price</h5>
+                                    <a href="#price_range" class="skeleton facet-title accordion-title current" data-bs-toggle="collapse" aria-expanded="true" aria-controls="price_range" style="font-size: 20px;">
+                                        <h5 >Price</h5>
                                         <span class="btn-open-sub"></span>
                                     </a>
 
                                     <div id="price_range" class="box-fieldset-item collapse show" data-bs-parent="#accordion-faq-2">
                                         <div class="price-val-range" id="price-value-range" data-min="0" data-max="{{ $maxPrice }}"></div>
                                         <div class="box-price-product">
-                                            <div class="box-price-item">
+                                            <div class="box-price-item skeleton">
                                                 <span class="title-price">Min price</span>
                                                 <div class="price-val price-min-value" id="price-min-value" data-currency="$"></div>
                                             </div>
-                                            <div class="box-price-item">
+                                            <div class="box-price-item skeleton">
                                                 <span class="title-price">Max price</span>
                                                 <div class="price-val price-max-value" id="price-max-value" data-currency="$"></div>
                                             </div>
@@ -325,7 +325,7 @@
 
                                 {{-- Size Filter --}}
                                 <div class="widget-facet facet-size accordion-product-item">
-                                    <a href="#size_filter" class="facet-title accordion-title current" data-bs-toggle="collapse" aria-expanded="true" aria-controls="size_filter" style="font-size: 20px;">
+                                    <a href="#size_filter" class="skeleton facet-title accordion-title current" data-bs-toggle="collapse" aria-expanded="true" aria-controls="size_filter" style="font-size: 20px;">
                                         <h5>Size</h5>
                                         <span class="btn-open-sub"></span>
                                     </a>
@@ -333,7 +333,7 @@
                                     <div id="size_filter" class="size-box collapse show" data-bs-parent="#accordion-faq-3">
                                         <div class="facet-size-box box-fieldset-item">
                                             @foreach ($product_sizes as $row)
-                                                <span class="size-item size-check" id={{ $row->id }} data-val="0">{{ $row->value }}</span>
+                                                <span class="size-item size-check skeleton" id={{ $row->id }} data-val="0">{{ $row->value }}</span>
                                             @endforeach
                                         </div>
                                     </div>
@@ -341,7 +341,7 @@
 
                                 {{-- Colors Filter --}}
                                 <div class="widget-facet facet-color accordion-product-item">
-                                    <a href="#color_filter" class="facet-title accordion-title current" data-bs-toggle="collapse" aria-expanded="true" aria-controls="color_filter" style="font-size: 20px;">
+                                    <a href="#color_filter" class="skeleton facet-title accordion-title current" data-bs-toggle="collapse" aria-expanded="true" aria-controls="color_filter" style="font-size: 20px;">
                                         <h5>Color</h5>
                                         <span class="btn-open-sub"></span>
                                     </a>
@@ -349,7 +349,7 @@
                                     <div id="color_filter" class="collapse show" data-bs-parent="#accordion-faq-4">
                                         <div class="facet-color-box">
                                             @foreach ($product_colors as $row)
-                                                <div class="color-item color-check" id={{ $row->id }} data-val="0">
+                                                <div class="color-item color-check skeleton" id={{ $row->id }} data-val="0">
                                                     <span 
                                                         class="color {{ in_array($row->color_value, ['#FFFFFF', '#FFF', '#F8F8F8']) ? 'line-black' : '' }}" 
                                                         style="background: {{ $row->color_value }};">
@@ -363,18 +363,18 @@
 
                                 {{-- Stock Filter --}}
                                 <div  class="widget-facet facet-fieldset accordion-product-item">
-                                    <a href="#stock_available" class="facet-title accordion-title current" data-bs-toggle="collapse" aria-expanded="true" aria-controls="stock_available" style="font-size: 20px;">
+                                    <a href="#stock_available" class="skeleton facet-title accordion-title current" data-bs-toggle="collapse" aria-expanded="true" aria-controls="stock_available" style="font-size: 20px;">
                                         <h5>Availability</h5>
                                         <span class="btn-open-sub"></span>
                                     </a>
 
                                     <div id="stock_available" class="box-fieldset-item collapse show" data-bs-parent="#accordion-faq-4">
-                                        <fieldset class="fieldset-item">
+                                        <fieldset class="fieldset-item skeleton">
                                             <input type="radio" name="availability"  class="tf-check change_stock" id="inStock" value="stock_in">
                                             <label for="inStock">In stock <span class="count-stock">( {{ $stockIn }} )</span></label>
                                         </fieldset>
                                         
-                                        <fieldset class="fieldset-item">
+                                        <fieldset class="fieldset-item skeleton">
                                             <input type="radio" name="availability" class="tf-check change_stock" id="outStock" value="stock_out">
                                             <label for="outStock">Out of stock <span class="count-stock">( {{ $stockOut }} )</span></label>
                                         </fieldset>
@@ -383,7 +383,7 @@
 
                                 {{-- Brands Filter --}}
                                 <div class="widget-facet facet-fieldset accordion-product-item">
-                                    <a href="#brand_filter" class="facet-title accordion-title current" data-bs-toggle="collapse" aria-expanded="true" aria-controls="brand_filter" style="font-size: 20px;">
+                                    <a href="#brand_filter" class="skeleton facet-title accordion-title current" data-bs-toggle="collapse" aria-expanded="true" aria-controls="brand_filter" style="font-size: 20px;">
                                         <h5>Brands</h5>
                                         <span class="btn-open-sub"></span>
                                     </a>
@@ -393,7 +393,7 @@
                                                 @php
                                                     $count = App\Models\Product::where('brand_id', $item->id)->count();
                                                 @endphp
-                                            <fieldset class="fieldset-item">
+                                            <fieldset class="fieldset-item skeleton">
                                                 <input type="checkbox" 
                                                 name="brand" 
                                                 class="tf-check change_brand" 
@@ -438,7 +438,6 @@
         $(document).ready(function(){
             var xhr; 
             var i = 0;
-
 
             // Filter Form
             function filterForm(){

@@ -15,7 +15,7 @@
 @section('body-content')
 
     <!-- page-title -->
-    <div class="page-title" style="background-image: url(
+    <div class="page-title skeleton" style="background-image: url(
         @if( !empty(getSetting()->banner_breadcrumb_img) )
             {{ asset(getSetting()->banner_breadcrumb_img) }}
         @else

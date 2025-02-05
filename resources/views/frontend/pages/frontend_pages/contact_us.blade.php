@@ -24,7 +24,7 @@
 @section('body-content')
 
 <!-- page-title -->
-<div class="page-title" style="background-image: url(
+<div class="page-title skeleton" style="background-image: url(
     @if( !empty(getSetting()->banner_breadcrumb_img) )
         {{ asset(getSetting()->banner_breadcrumb_img) }}
     @else
@@ -65,39 +65,40 @@
         <div class="row">
             <div class="col-12">
                 <div class="contact-us-map">
-                    <div class="wrap-map">
+                    <div class="wrap-map skeleton">
                         {!! getSetting()->google_map !!}
                     </div>
+
                     <div class="right">
-                        <h4>Information</h4>
+                        <h5 class="skeleton mb-3">Information</h5>
                         <div class="mb_20">
-                            <div class="text-title mb_8">Phone:</div>
+                            <div class="text-title mb_8 skeleton">Phone:</div>
                             @if ( !empty(getSetting()->phone) )
-                                <a href="tel:{{ getSetting()->phone }}" class="text-secondary">{{ getSetting()->phone }}</a>
+                                <a href="tel:{{ getSetting()->phone }}" class="text-secondary skeleton">{{ getSetting()->phone }}</a>
                             @else
-                                <a href="tel:{{ getSetting()->phone_optional }}" class="text-secondary">{{ getSetting()->phone_optional }}</a>
+                                <a href="tel:{{ getSetting()->phone_optional }}" class="text-secondary skeleton">{{ getSetting()->phone_optional }}</a>
                             @endif
                         </div>
 
                         <div class="mb_20">
-                            <div class="text-title mb_8">Email:</div>
+                            <div class="text-title mb_8 skeleton">Email:</div>
                             @if ( !empty(getSetting()->email) )
-                                <a href="mailto:{{ getSetting()->email }}" class="text-secondary">{{ getSetting()->email }}</a>
+                                <a href="mailto:{{ getSetting()->email }}" class="text-secondary skeleton">{{ getSetting()->email }}</a>
                             @else
-                                <a href="mailto:{{ getSetting()->email_optional }}" class="text-secondary">{{ getSetting()->email_optional }}</a>
+                                <a href="mailto:{{ getSetting()->email_optional }}" class="text-secondary skeleton">{{ getSetting()->email_optional }}</a>
                             @endif
                         </div>
 
                         <div class="mb_20">
-                            <div class="text-title mb_8">Address:</div>
-                            <p class="text-secondary">{{ getSetting()->address }}</p>
+                            <div class="text-title mb_8 skeleton">Address:</div>
+                            <p class="text-secondary skeleton">{{ getSetting()->address }}</p>
                         </div>
                         <div>
-                            <div class="text-title mb_8">Open Time:</div>
-                            <p class="mb_4 open-time">
+                            <div class="text-title mb_8 skeleton">Open Time:</div>
+                            <p class="mb_4 open-time skeleton">
                                 <span class="text-secondary">{{ $time_schedule[0]['day'] }}:</span> {{ date('h:i a', strtotime($time_schedule[0]['start_time'])) .' - '. date('h:i a', strtotime($time_schedule[0]['end_time'])) }}
                             </p>
-                            <p class="open-time">
+                            <p class="open-time skeleton">
                                 <span class="text-secondary">{{ $time_schedule[1]['day'] }}:</span> {{ date('h:i a', strtotime($time_schedule[1]['start_time'])) .' - '. date('h:i a', strtotime($time_schedule[1]['end_time'])) }}
                             </p>
                         </div>
@@ -115,8 +116,8 @@
         <div class="row">
             <div class="col-lg-8 offset-lg-2">
                 <div class="heading-section text-center">
-                    <h3 class="heading">Get In Touch</h3>
-                    <p class="subheading">Use the form below to get in touch with the sales team</p>
+                    <h3 class="heading skeleton">Get In Touch</h3>
+                    <p class="subheading skeleton">Use the form below to get in touch with the sales team</p>
                 </div>
                 
                 <form id="contact_form" method="post" class="form-leave-comment">
@@ -124,13 +125,13 @@
 
                     <div class="wrap">
                         <div class="cols">
-                            <fieldset class="">
+                            <fieldset class="skeleton">
                                 <input class="" type="text" placeholder="Your Name*" name="name" id="name" value="{{ old('name') }}" aria-required="true">
 
                                 <span id="name_validate" class="text-danger mt-1"></span>
                             </fieldset>
 
-                            <fieldset class="">
+                            <fieldset class="skeleton">
                                 <input class="" type="number" placeholder="Phone Number*" name="phone" id="phone" value="{{ old('phone') }}" aria-required="true" >
 
                                 <span id="phone_validate" class="text-danger mt-1"></span>
@@ -138,7 +139,7 @@
                         </div>
 
                         <div class="cols">
-                            <fieldset class="">
+                            <fieldset class="skeleton">
                                 <input class="" type="email" placeholder="Email Address*" name="email" id="email" value="{{ old('email') }}" aria-required="true">
 
                                 <span id="email_validate" class="text-danger mt-1"></span>
@@ -146,14 +147,14 @@
                         </div>
 
                         <div class="cols">
-                            <fieldset class="">
+                            <fieldset class="skeleton">
                                 <input class="" type="text" placeholder="Subject Here*" name="subject" id="subject" tabindex="2" value="{{ old('subject') }}" aria-required="true">
 
                                 <span id="subject_validate" class="text-danger mt-1"></span>
                             </fieldset>
                         </div>
 
-                        <fieldset class="">
+                        <fieldset class="skeleton">
                             <textarea name="message" id="message" rows="4" placeholder="Your Message*" tabindex="2" aria-required="true">{{ old('message') }}</textarea>
 
                             <span id="message_validate" class="text-danger mt-1"></span>
@@ -161,7 +162,7 @@
                     </div>
 
                     <div class="button-submit send-wrap">
-                        <button class="tf-btn btn-fill tf_contact_btn" type="submit">
+                        <button class="tf-btn btn-fill tf_contact_btn skeleton" type="submit">
                             <span class="text text-button" id="contact_btn">Send message</span>
                         </button>
                     </div>

@@ -19,7 +19,7 @@
 @section('body-content')
 
 <!-- page-title -->
-<div class="page-title" style="background-image: url(
+<div class="page-title skeleton" style="background-image: url(
     @if( !empty(getSetting()->banner_breadcrumb_img) )
         {{ asset(getSetting()->banner_breadcrumb_img) }}
     @else
@@ -79,16 +79,18 @@
                         @endif --}}
 
                         <div class="wrap">
-                            <h5 class="title">Information</h5>
+                            <h5 class="title skeleton">Information</h5>
 
                             <form id="payment-form" class="form-payment info-box" action="" method="POST">
                                 @csrf 
 
                                 <div class="row">
                                     <div class="col-lg-6 ">
-                                        <label for="" class="mb-2" style="font-weight: 500;">Full Name <span class="text-danger">*</span></label>
+                                        <label for="" class="mb-2 skeleton" style="font-weight: 500;">Full Name <span class="text-danger">*</span></label>
 
-                                        <input type="text" name="full_name" placeholder="Full Name*" value="{{ old('full_name', Auth::check() ? Auth::user()->name : '') }}" class="mb-1">
+                                        <div class="skeleton">
+                                            <input type="text" name="full_name" placeholder="Full Name*" value="{{ old('full_name', Auth::check() ? Auth::user()->name : '') }}" class="mb-1">
+                                        </div>
     
                                         @error('full_name')
                                             <div class="text-danger error_validation" >{{ $message }}</div>
@@ -96,9 +98,11 @@
                                     </div>
     
                                     <div class="col-lg-6">
-                                        <label for="" class="mb-2" style="font-weight: 500;">Email Address ( Optional )</label>
+                                        <label for="" class="skeleton mb-2" style="font-weight: 500;">Email Address ( Optional )</label>
 
-                                        <input type="text" name="email" class="" placeholder="Email Address" @if( !empty(Auth::user()->email) ) disabled @endif value="{{ old('email', Auth::check() ? Auth::user()->email : '') }}">
+                                        <div class="skeleton">
+                                            <input type="text" name="email" class="skeleton" placeholder="Email Address" @if( !empty(Auth::user()->email) ) disabled @endif value="{{ old('email', Auth::check() ? Auth::user()->email : '') }}">
+                                        </div>
     
                                         @error('email')
                                             <div class="text-danger error_validation" >{{ $message }}</div>
@@ -108,9 +112,11 @@
 
                                 <div class="row">
                                     <div class="col-lg-6 mb-2">
-                                        <label for="" class="mb-2" style="font-weight: 500;">Phone Number <span class="text-danger">*</span></label>
+                                        <label for="" class="mb-2 skeleton" style="font-weight: 500;">Phone Number <span class="text-danger">*</span></label>
 
-                                        <input type="text" name="phone" pattern="^0\d{10}$" maxlength="11" placeholder="Phone Number*" value="{{ old('phone', Auth::check() ? Auth::user()->phone : '') }}" class="mb-1">
+                                        <div class="skeleton">
+                                            <input type="text" name="phone" pattern="^0\d{10}$" maxlength="11" placeholder="Phone Number*" value="{{ old('phone', Auth::check() ? Auth::user()->phone : '') }}" class="mb-1">
+                                        </div>
     
                                         @error('phone')
                                             <div class="text-danger error_validation" >{{ $message }}</div>
@@ -118,16 +124,18 @@
                                     </div>
 
                                     <div class="col-lg-6 mb-2">
-                                        <label for="" class="mb-2" style="font-weight: 500;">Delivery Charge <span class="text-danger">*</span></label>
+                                        <label for="" class="skeleton mb-2" style="font-weight: 500;">Delivery Charge <span class="text-danger">*</span></label>
 
-                                        @if ( !empty(getSetting()->inside_city) && !empty(getSetting()->outside_city) )
-                                            <div class="tf-select">
-                                                <select class="text-title" id="shippingRules" style="border-radius: 8px;" required>
-                                                    <option value="{{ getSetting()->inside_city }}" {{ session('shippingCost') == getSetting()->inside_city ? 'selected' : '' }}>InSide Dhaka ( {{ getSetting()->currency_symbol . getSetting()->inside_city }} )</option>
-                                                    <option value="{{ getSetting()->outside_city }}" {{ session('shippingCost') == getSetting()->outside_city ? 'selected' : '' }}>OutSide Dhaka ( {{ getSetting()->currency_symbol . getSetting()->outside_city }} )</option>
-                                                </select>
-                                            </div>
-                                        @endif
+                                        <div class="skeleton">
+                                            @if ( !empty(getSetting()->inside_city) && !empty(getSetting()->outside_city) )
+                                                <div class="tf-select">
+                                                    <select class="text-title" id="shippingRules" style="border-radius: 8px;" required>
+                                                        <option value="{{ getSetting()->inside_city }}" {{ session('shippingCost') == getSetting()->inside_city ? 'selected' : '' }}>InSide Dhaka ( {{ getSetting()->currency_symbol . getSetting()->inside_city }} )</option>
+                                                        <option value="{{ getSetting()->outside_city }}" {{ session('shippingCost') == getSetting()->outside_city ? 'selected' : '' }}>OutSide Dhaka ( {{ getSetting()->currency_symbol . getSetting()->outside_city }} )</option>
+                                                    </select>
+                                                </div>
+                                            @endif
+                                        </div>
                                     </div>
                                 </div>
 
@@ -141,33 +149,36 @@
                                 </div> --}}
 
                                 <div class="grid-1">
-                                    <label for="" class="mb-2" style="font-weight: 500;">Full Address <span class="text-danger">*</span></label>
-                                    <textarea name="address" id="address" placeholder="Address*" cols="30" rows="6">{{ old('address', Auth::check() ? Auth::user()->address : '') }}</textarea>
+                                    <label for="" class="skeleton mb-2" style="font-weight: 500;">Full Address <span class="text-danger">*</span></label>
+
+                                    <div class="skeleton">
+                                        <textarea name="address" id="address" placeholder="Address*" cols="30" rows="6">{{ old('address', Auth::check() ? Auth::user()->address : '') }}</textarea>    
+                                    </div>
 
                                     @error('address')
                                         <div class="text-danger error_validation">{{ $message }}</div>
                                     @enderror
                                 </div>
 
-                                <h5 class="title mt-5">Choose payment Option:</h5>
+                                <h5 class="title skeleton mt-5">Choose payment Option:</h5>
 
                                 <div class="payment-box" id="payment-box">
                                     <!-- Cash on Delivery -->
-                                    <div class="payment-item">
+                                    <div class="payment-item skeleton">
                                         <label for="delivery-method" class="payment-header" data-payment-route="{{ route('payment.cod') }}">
                                             <input type="radio" name="payment-method" class="tf-check-rounded" required id="delivery-method" value="cod">
                                             <span class="text-title">Cash on delivery</span>
                                         </label>
                                     </div>
 
-                                    <div class="payment-item">
+                                    <div class="payment-item skeleton">
                                         <label for="sslcommerz-method" class="payment-header" data-payment-route="{{ route('payment.ssl_commercz') }}">
                                             <input type="radio" name="payment-method" class="tf-check-rounded" id="sslcommerz-method" value="sslcommerz" required>
                                             <span class="text-title apple-pay-title align-items-center"><img src="{{ asset('public/frontend/images/payment/ssl_commerz.png') }}" alt=""></span>
                                         </label>
                                     </div>
 
-                                    {{-- <div class="payment-item paypal-item">
+                                    {{-- <div class="payment-item skeleton paypal-item">
                                         <label for="bKash-method" class="payment-header" data-payment-route="{{ route('payment.bkash') }}">
                                             <input type="radio" name="payment-method" class="tf-check-rounded" id="bKash-method" value="bkash">
                                             <span class="paypal-title apple-pay-title align-items-center"><img src="{{ asset('public/frontend/images/payment/Bkash.png') }}" alt=""></span>
@@ -175,7 +186,7 @@
                                     </div> --}}
                                 </div>
 
-                                <button type="submit" id="pay-now-button" class="tf-btn btn-reset">Payment</button>
+                                <button type="submit" id="pay-now-button" class="skeleton tf-btn btn-reset">Payment</button>
                             </form>
                         </div>
                     </div>
@@ -188,7 +199,7 @@
                 <div class="col-xl-5">
                     <div class="flat-spacing flat-sidebar-checkout">
                         <div class="sidebar-checkout-content">
-                            <h5 class="title">Shopping Cart</h5>
+                            <h5 class="title skeleton">Shopping Cart</h5>
                             <div class="list-product" id="list_product">
 
                                 @if ($cartItems->count() > 0)
@@ -200,17 +211,17 @@
                                         @endphp
 
                                         <div class="item-product checkout_product" id="checkout-{{ $item->rowId }}">
-                                            <a href="{{ route('product.details', $item->options->slug) }}" class="img-product">
+                                            <a href="{{ route('product.details', $item->options->slug) }}" class="img-product skeleton">
                                                 <img src="{{ asset($item->options->image) }}" alt="{{ $item->slug }}">
                                             </a>
 
                                             <div class="content-box">
                                                 <div class="info">
-                                                    <a href="{{ route('product.details', $item->options->slug) }}" class="name-product link text-title">{{ $item->name }}</a>
+                                                    <a href="{{ route('product.details', $item->options->slug) }}" class="name-product link text-title skeleton">{{ $item->name }}</a>
 
-                                                    <div class="variant text-caption-1 text-secondary"><span class="size">{{ strtoupper($item->options->size_name) }} ( {{ getSetting()->currency_symbol }}{{ $item->options->size_price ?? 0 }} )</span> / <span class="color">{{ $item->options->color_name }} ( {{ getSetting()->currency_symbol }}{{ $item->options->color_price ?? 0 }} )</span></div>
+                                                    <div class="variant text-caption-1 text-secondary"><span class="size skeleton">{{ strtoupper($item->options->size_name) }} ( {{ getSetting()->currency_symbol }}{{ $item->options->size_price ?? 0 }} )</span> / <span class="color skeleton">{{ $item->options->color_name }} ( {{ getSetting()->currency_symbol }}{{ $item->options->color_price ?? 0 }} )</span></div>
 
-                                                    <div class="wg-quantity">
+                                                    <div class="wg-quantity skeleton">
                                                         <span class="btn-quantity product-decrease">-</span>
                                                         <input type="text" name="number" class="product_quantity" data-row_id="{{ $item->rowId }}" value="{{ $item->qty }}">
                                                         <span class="btn-quantity product-increase">+</span>
@@ -218,14 +229,14 @@
                                                 </div>
 
                                                 <div class="total-price text-button" style="flex-direction: column">
-                                                    <div class="text-button tf-btn-remove remove checkout_remove_cart" data-row_id="{{ $item->rowId }}">Remove</div>
+                                                    <div class="text-button tf-btn-remove remove checkout_remove_cart skeleton" data-row_id="{{ $item->rowId }}">Remove</div>
 
-                                                    <div class="">
+                                                    <div class="skeleton">
                                                         <span class="count" data-row_id="{{ $item->rowId }}" id="qty{{ $item->rowId }}">{{ $item->qty .' '. $item->options->units }}</span>
                                                         <span class="x-mark">X</span>  <span class="price">{{ getSetting()->currency_symbol }}{{ $item->price }}</span>
                                                     </div>
 
-                                                    <div id="{{ $item->rowId }}" class="cart_total text-button total_price">{{ getSetting()->currency_symbol }}{{ $totalPrice }}</div>
+                                                    <div id="{{ $item->rowId }}" class="cart_total text-button total_price skeleton">{{ getSetting()->currency_symbol }}{{ $totalPrice }}</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -243,7 +254,7 @@
                                     <div class="sec-discount">
                                         @if ( getCartTotal() > 0 )
                                             <div dir="ltr" class="swiper tf-sw-categories" data-preview="2.25" data-tablet="3" data-mobile-sm="2.5" data-mobile="1.2" data-space-lg="20" data-space-md="20" data-space="15" data-pagination="1" data-pagination-md="1" data-pagination-lg="1">
-                                                <div class="swiper-wrapper">
+                                                <div class="swiper-wrapper skeleton">
                                                     @foreach ($coupons as $item)
                                                         <div class="swiper-slide">
                                                             @if ( date('Y-m-d') >= $item->start_date && date('Y-m-d') <= $item->end_date && $item->quantity >= $item->total_used)
@@ -280,7 +291,7 @@
                                         <form class="coupon_form">
                                             @csrf
                         
-                                            <div class="ip-discount-code">
+                                            <div class="ip-discount-code skeleton">
                                                 <input type="text" name="coupon_code" id="coupon_codes" placeholder="Add voucher discount"
                                                 @if ( Session::has('coupon') )
                                                     value="{{ Session::get('coupon')['coupon_code'] }}"
@@ -298,14 +309,14 @@
                             <div class="sec-total-price">
                                 <div class="top">
                                     <h5 class="item d-flex align-items-center justify-content-between ">
-                                        <span>SubTotal</span>
-                                        <span class="tf-totals-total-value">
+                                        <span class="skeleton">SubTotal</span>
+                                        <span class="skeleton tf-totals-total-value">
                                             {{ getSetting()->currency_symbol }}{{ getCartTotal() }}
                                         </span>
                                     </h5>
 
                                     <div class="item d-flex align-items-center justify-content-between text-button">
-                                        <span>(-) Discounts
+                                        <span class="skeleton">(-) Discounts
                                             <code class="percent_show">
                                                 @if ( Session::has('coupon') && Session::get('coupon')['discount_type'] === "percent")
                                                     ({{ Session::get('coupon')['discount'] }}%)
@@ -313,7 +324,7 @@
                                             </code>
                                         </span>
 
-                                        <span class="total_discount">
+                                        <span class="total_discount skeleton">
                                             @if ( Session::has('coupon') )
                                                 @if ( Session::get('coupon')['discount_type'] === "amount")
                                                     {{ getSetting()->currency_symbol }}{{ Session::get('coupon')['discount'] }}
@@ -328,8 +339,8 @@
 
                                     <div class="item d-flex align-items-center justify-content-between text-button">
                                         {{-- <span>(+) Shipping</span> --}}
-                                        <span>(+) Delivery Charge</span>
-                                        <span class="shipping_amount">
+                                        <span class="skeleton">(+) Delivery Charge</span>
+                                        <span class="skeleton shipping_amount">
                                             @if ( Session::has('shippingCost') && Session::get('shippingCost'))
                                                 {{ getSetting()->currency_symbol }}{{ Session::get('shippingCost') ?: 0 }}
                                             @endif
@@ -338,8 +349,8 @@
                                 </div>
                                 <div class="bottom">
                                     <h5 class="d-flex justify-content-between">
-                                        <span>Total</span>
-                                        <span class="total-price-checkout main_cart_total">{{ getSetting()->currency_symbol }}{{ getMainCartTotal() }}</span>
+                                        <span class="skeleton">Total</span>
+                                        <span class="skeleton total-price-checkout main_cart_total">{{ getSetting()->currency_symbol }}{{ getMainCartTotal() }}</span>
                                     </h5>
                                 </div>
                             </div>

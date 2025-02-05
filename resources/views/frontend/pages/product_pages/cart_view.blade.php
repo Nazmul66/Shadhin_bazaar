@@ -18,27 +18,27 @@
 
 @section('body-content')
 
-  <!-- page-title -->
-  <div class="page-title" style="background-image: url(
-    @if( !empty(getSetting()->banner_breadcrumb_img) )
-        {{ asset(getSetting()->banner_breadcrumb_img) }}
-    @else
-        {{ asset('public/frontend/images/section/page-title.jpg') }}
-    @endif
-    );">
-    
-    <div class="container">
-        <h3 class="heading text-center">Shopping Cart</h3>
-        <ul class="breadcrumbs d-flex align-items-center justify-content-center">
-            <li><a class="link" href="{{ url('/') }}">Homepage</a></li>
-            <li><i class='bx bx-chevron-right'></i></li>
-            <li><a class="link" href="{{ route('product.page') }}">Shop</a></li>
-            <li><i class='bx bx-chevron-right'></i></li>
-            <li>Shopping Cart</li>
-        </ul>
+    <!-- page-title -->
+    <div class="page-title skeleton" style="background-image: url(
+        @if( !empty(getSetting()->banner_breadcrumb_img) )
+            {{ asset(getSetting()->banner_breadcrumb_img) }}
+        @else
+            {{ asset('public/frontend/images/section/page-title.jpg') }}
+        @endif
+        );">
+        
+        <div class="container">
+            <h3 class="heading text-center">Shopping Cart</h3>
+            <ul class="breadcrumbs d-flex align-items-center justify-content-center">
+                <li><a class="link" href="{{ url('/') }}">Homepage</a></li>
+                <li><i class='bx bx-chevron-right'></i></li>
+                <li><a class="link" href="{{ route('product.page') }}">Shop</a></li>
+                <li><i class='bx bx-chevron-right'></i></li>
+                <li>Shopping Cart</li>
+            </ul>
+        </div>
     </div>
-</div>
-<!-- /page-title -->
+    <!-- /page-title -->
 
 <!-- Section cart -->
 <section class="flat-spacing">
@@ -63,7 +63,7 @@
 
                 <table class="tf-table-page-cart">
                     <thead>
-                        <tr>
+                        <tr class="skeleton">
                             <th>Products</th>
                             <th>Price</th>
                             <th>Quantity</th>
@@ -83,15 +83,15 @@
 
                             <tr class="tf-cart-item file-delete" id="remove-{{ $row->rowId }}">
                                 <td class="tf-cart-item_product">
-                                    <a href="{{ route('product.details', $row->options->slug) }}" class="img-box">
+                                    <a href="{{ route('product.details', $row->options->slug) }}" class="img-box skeleton">
                                         <img src="{{ asset($row->options->image) }}" alt="{{ $row->options->slug }}">
                                     </a>
                                     
                                     <div class="cart-info">
-                                        <a href="{{ route('product.details', $row->options->slug) }}" class="cart-title link">{{ $row->name }}</a>
+                                        <a href="{{ route('product.details', $row->options->slug) }}" class="cart-title link skeleton">{{ $row->name }}</a>
                                         <div class="variant-box">
                                             <div class="tf-select">
-                                                <div class="product_variant">
+                                                <div class="product_variant skeleton">
                                                     Color : {{ strtoupper($row->options->color_name) }} ( {{ getSetting()->currency_symbol}}{{ $row->options->color_price ?? 0 }} )
                                                 </div>
                                                 {{-- <select>
@@ -104,7 +104,7 @@
                                                 </select> --}}
                                             </div>
                                             <div class="tf-select">
-                                                <div class="product_variant">
+                                                <div class="product_variant skeleton">
                                                     Size : {{ strtoupper($row->options->size_name) }} ( {{ getSetting()->currency_symbol}}{{ $row->options->size_price ?? 0 }} )
                                                 </div>
                                                 {{-- <select>
@@ -122,27 +122,29 @@
                                 </td>
 
                                 <td data-cart-title="Price" class="tf-cart-item_price text-center">
-                                    <div class="cart_price text-button price_on_sale">{{ getSetting()->currency_symbol}}{{ $row->price }}</div>
+                                    <div class="cart_price text-button price_on_sale skeleton">{{ getSetting()->currency_symbol}}{{ $row->price }}</div>
                                 </td>
 
                                 <td data-cart-title="Quantity" class="tf-cart-item_quantity">
-                                    <div class="wg-quantity mx-md-auto">
+                                    <div class="wg-quantity mx-md-auto skeleton">
                                         <span class="btn-quantity product-decrease">-</span>
                                         <input type="text" name="number" class="product_quantity" data-row_id="{{ $row->rowId }}" value="{{ $row->qty }}">
                                         <span class="btn-quantity product-increase">+</span>
                                     </div>
                                 </td>
                                 <td data-cart-title="Total" class="tf-cart-item_total text-center">
-                                    <div id="{{ $row->rowId }}" class="cart_total text-button total_price">{{ getSetting()->currency_symbol}}{{ $totalPrice }}</div>
+                                    <div id="{{ $row->rowId }}" class="skeleton cart_total text-button total_price">{{ getSetting()->currency_symbol}}{{ $totalPrice }}</div>
                                 </td>
                                 <td class="remove-cart remove_item_alignemnt" id="remove_cart">
-                                    <i class='icon bx bx-x icon-close-popup remove_product_cart' style="font-size: 20px;" data-id="{{ $row->rowId }}"></i>
+                                    <span class="skeleton">
+                                        <i class='icon bx skeleton bx-x icon-close-popup remove_product_cart' style="font-size: 20px;" data-id="{{ $row->rowId }}"></i>
+                                    </span>
                                 </td>
                             </tr>
                         @empty
                         <tr>
                             <td colspan="5">
-                                <div class="alert alert-danger text-center" role="alert">
+                                <div class="alert alert-danger text-center skeleton" role="alert">
                                     <p class="mb-3">There is no cart item</p>
                                     <a href="{{ route('checkout') }}" class="tf-btn btn-reset">Continue Shopping</a>
                                 </div>
@@ -155,11 +157,13 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="tf-select mb-3">
-                            <label for="" class="mb-2">Delivery Charge</label>
-                            <select class="text-title" id="shippingRules" style="border-radius: 8px;">
-                                <option value="{{ getSetting()->inside_city }}" {{ session('shippingCost') == getSetting()->inside_city ? 'selected' : '' }}>InSide Dhaka ( {{ getSetting()->currency_symbol}}{{ getSetting()->inside_city }} )</option>
-                                <option value="{{ getSetting()->outside_city }}" {{ session('shippingCost') ==  getSetting()->outside_city ? 'selected' : '' }}>OutSide Dhaka ( {{ getSetting()->currency_symbol }}{{ getSetting()->outside_city }} )</option>
-                            </select>
+                            <label for="" class="mb-2 skeleton">Delivery Charge</label>
+                            <div class="skeleton">
+                                <select class="text-title " id="shippingRules" style="border-radius: 8px;">
+                                    <option value="{{ getSetting()->inside_city }}" {{ session('shippingCost') == getSetting()->inside_city ? 'selected' : '' }}>InSide Dhaka ( {{ getSetting()->currency_symbol}}{{ getSetting()->inside_city }} )</option>
+                                    <option value="{{ getSetting()->outside_city }}" {{ session('shippingCost') ==  getSetting()->outside_city ? 'selected' : '' }}>OutSide Dhaka ( {{ getSetting()->currency_symbol }}{{ getSetting()->outside_city }} )</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -167,7 +171,7 @@
                 <form class="coupon_form">
                     @csrf
 
-                    <div class="ip-discount-code">
+                    <div class="ip-discount-code skeleton">
                         <input type="text" name="coupon_code" id="coupon_codes" placeholder="Add voucher discount"
                         @if ( Session::has('coupon') )
                             value="{{ Session::get('coupon')['coupon_code'] }}"
@@ -178,7 +182,7 @@
                 </form>
 
                 <div class="whole_discount_container">
-                    <div class="group-discount">
+                    <div class="group-discount skeleton">
 
                         @if ( getCartTotal() > 0 )
                             @foreach ($coupons as $item)
@@ -249,13 +253,13 @@
             <div class="col-xl-4">
                 <div class="fl-sidebar-cart">
                     <div class="box-order bg-surface">
-                        <h5 class="title">Order Summary</h5>
-                        <div class="subtotal text-button d-flex justify-content-between align-items-center">
+                        <h5 class="title skeleton">Order Summary</h5>
+                        <div class="skeleton subtotal text-button d-flex justify-content-between align-items-center">
                             <span>Subtotal</span>
                             <span class="subTotal">{{ getSetting()->currency_symbol }}{{ getCartTotal() }}</span>
                         </div>
 
-                        <div class="discount text-button d-flex justify-content-between align-items-center">
+                        <div class="skeleton discount text-button d-flex justify-content-between align-items-center">
                             <span>(-) Discounts
                                 <code class="percent_show">
                                     @if ( Session::has('coupon') && Session::get('coupon')['discount_type'] === "percent")
@@ -264,7 +268,7 @@
                                 </code>
                             </span>
 
-                            <span class="total_discount">
+                            <span class="skeleton total_discount">
                                 @if ( Session::has('coupon') )
                                     @if ( Session::get('coupon')['discount_type'] === "amount")
                                         {{ getSetting()->currency_symbol }}{{ Session::get('coupon')['discount'] }}
@@ -277,7 +281,7 @@
                             </span>
                         </div>
 
-                        <div class="subtotal text-button d-flex justify-content-between align-items-center">
+                        <div class="skeleton subtotal text-button d-flex justify-content-between align-items-center">
                             {{-- <span>(+) Shipping</span> --}}
                             <span>(+) Delivery Charge</span>
                             <span class="shipping_amount">
@@ -321,7 +325,7 @@
                             </div>
                         </div> --}}
 
-                        <h5 class="total-order d-flex justify-content-between align-items-center">
+                        <h5 class="skeleton total-order d-flex justify-content-between align-items-center">
                             <span>Total</span>
                             <span class="main_cart_total">{{ getSetting()->currency_symbol }}{{ getMainCartTotal() }}</span>
                         </h5>
@@ -333,8 +337,8 @@
                                     I agree with the <a href="term-of-use.html">terms and conditions</a>
                                 </label>
                             </fieldset> --}}
-                            <a href="{{ route('checkout') }}" class="tf-btn btn-reset">Process To Checkout</a>
-                            <a href="{{ route('product.page') }}" class="text-button text-center">Or continue shopping</a>
+                            <a href="{{ route('checkout') }}" class="skeleton tf-btn btn-reset">Process To Checkout</a>
+                            <a href="{{ route('product.page') }}" class="skeleton text-button text-center">Or continue shopping</a>
                         </div>
                     </div>
                 </div>
@@ -348,7 +352,7 @@
 <section class="flat-spacing pt-0">
     <div class="container">
         <div class="heading-section text-center wow fadeInUp">
-            <h4 class="heading">You may also like</h4>
+            <h5 class="skeleton heading">You may also like</h5>
         </div>
         <div dir="ltr" class="swiper tf-sw-recent" data-preview="4" data-tablet="3" data-mobile="2" data-space-lg="30" data-space-md="30" data-space="15" data-pagination="1" data-pagination-md="1" data-pagination-lg="1">
             <div class="swiper-wrapper">
@@ -360,7 +364,7 @@
                     <div class="swiper-slide">
                         <div class="card-product wow fadeInUp" data-wow-delay="0.1s">
                             <div class="card-product-wrapper">
-                                <a href="{{ route('product.details', $row->slug) }}" class="product-img">
+                                <a href="{{ route('product.details', $row->slug) }}" class="product-img skeleton">
                                     <img class="lazyload img-product" data-src="{{ asset($row->thumb_image) }}" src="{{ asset($row->thumb_image) }}" alt="{{ $row->slug }}">
 
                                     @php
@@ -462,7 +466,6 @@
                                     @endif
                                 @endif
 
-                                
                                 <div class="list-product-btn">
                                     <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action {{ in_array($row->id, $wishlistItems) ? 'active' : '' }}" data-id="{{ $row->id }}">
                                         <i class='bx bx-heart' style="font-size: 24px;"></i>
@@ -489,10 +492,9 @@
                             @endphp
 
                             <div class="card-product-info">
-                                <a href="{{ route('product.details', $row->slug) }}" class="title link">{{ $row->name }}</a>
+                                <a href="{{ route('product.details', $row->slug) }}" class="title link skeleton">{{ $row->name }}</a>
                                 <div class="box-rating">
-                                    <ul class="list-star">
-                                        
+                                    <ul class="list-star skeleton">
                                         @for ( $i = 1; $i <= 5; $i++ )
                                             @if ( $i <= round($avgRatings))
                                                 <li class="bx bxs-star" style="color: #F0A750;"></li>
@@ -501,25 +503,26 @@
                                             @endif
                                         @endfor
                                     </ul>
-                                    <span class="text-caption-1 text-secondary">({{ $reviews }} )</span>
+                                    <span class="text-caption-1 text-secondary skeleton">({{ $reviews }} )</span>
                                 </div>
 
                                 @if ( checkDiscount($row) )
                                     @if ( !empty($row->discount_type === "amount") )
-                                        <span class="price"><span class="old-price">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> {{ getSetting()->currency_symbol }}{{ $row->selling_price - $row->discount_value }}</span>
+                                        <span class="price"><span class="old-price skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> <span class="skeleton">
+                                            {{ getSetting()->currency_symbol }}{{ $row->selling_price - $row->discount_value }}</span></span>
                                     @elseif( !empty($row->discount_type === "percent") )
                                     @php
                                         $discount_val = $row->selling_price * $row->discount_value / 100;
                                     @endphp
-                                        <span class="price"><span class="old-price">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> {{ getSetting()->currency_symbol }}{{ $row->selling_price - $discount_val }}</span>
+                                        <span class="price"><span class="old-price skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> <span class="skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price - $discount_val }}</span></span>
                                     @else
-                                        <span class="price"> {{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span>
+                                        <span class="price "><span class="skeleton"> {{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span></span>
                                     @endif
                                 @else
-                                    <span class="price"> {{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span>
+                                    <span class="price "> <span class="skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span></span>
                                 @endif
 
-                                <div class="box-progress-stock">
+                                {{-- <div class="box-progress-stock">
                                     <div class="progress">
                                         <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
@@ -528,12 +531,12 @@
                                             <span class="stock-label text-secondary-2">Stock:</span>
                                             <span class="stock-value">{{ $row->qty }}</span>
                                         </div>
-                                        {{-- <div class="stock-item text-caption-1">
+                                        <div class="stock-item text-caption-1">
                                             <span class="stock-label text-secondary-2">Sold:</span>
                                             <span class="stock-value">{{ $row->product_sold }}</span>
-                                        </div> --}}
+                                        </div>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </div>

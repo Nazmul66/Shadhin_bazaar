@@ -19,7 +19,7 @@
 @section('body-content')
 
  <!-- page-title -->
- <div class="page-title" style="background-image: url(
+ <div class="page-title skeleton" style="background-image: url(
     @if( !empty(getSetting()->banner_breadcrumb_img) )
         {{ asset(getSetting()->banner_breadcrumb_img) }}
     @else
@@ -65,7 +65,7 @@
 
                 <div class="testimonial-item style-2">
                     <div class="content-top">
-                        <div class="list-star-default">
+                        <div class="list-star-default skeleton">
                             @for ( $i = 1; $i <= 5; $i++ )
                                 @if ( $i <= round($avgRatings))
                                     <i class="bx bxs-star" style="color: #F0A750;"></i>
@@ -75,9 +75,9 @@
                             @endfor
                         </div>
 
-                        <p class="text-secondary">{{ $row->review }}</p>
+                        <p class="text-secondary skeleton">{{ Str::substr($row->review, 0, 200) }}...</p>
 
-                        <div class="box-author">
+                        <div class="box-author skeleton">
                             <div class="text-title author">{{ $row->user_name }}</div>
                             <svg class="icon" width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <g clip-path="url(#clip0_15758_14563)">
@@ -94,7 +94,7 @@
                     </div>
 
                     <div class="box-avt">
-                        <div class="avatar avt-60 round">
+                        <div class="avatar avt-60 round skeleton">
                             @if ( !empty($row->user_img) )
                                 <img src="{{ asset($row->user_img) }}" alt="avt">
                             @else
@@ -107,8 +107,8 @@
                         @endphp
 
                         <div class="box-price">
-                            <p class="text-title text-line-clamp-1">{{ $row->product_name }}</p>
-                            <div class="text-button price">{{ getSetting()->currency_symbol }}{{ $total_sum }}</div>
+                            <p class="text-title text-line-clamp-1 skeleton">{{ $row->product_name }}</p>
+                            <div class="text-button price skeleton mt-2">{{ getSetting()->currency_symbol }}{{ $total_sum }}</div>
                         </div>
                     </div>
                 </div>

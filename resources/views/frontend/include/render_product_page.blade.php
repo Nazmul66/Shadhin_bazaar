@@ -9,7 +9,7 @@
             <div class="swiper-slide">
                 <div class="card-product wow fadeInUp" data-wow-delay="0.1s">
                     <div class="card-product-wrapper">
-                        <a href="{{ route('product.details', $row->slug) }}" class="product-img">
+                        <a href="{{ route('product.details', $row->slug) }}" class="product-img skeleton">
                             <img class="lazyload img-product" data-src="{{ asset($row->thumb_image) }}" src="{{ asset($row->thumb_image) }}" alt="{{ $row->slug }}">
 
                             @php
@@ -30,7 +30,7 @@
                                 <img class="lazyload img-hover" data-src="{{ asset($image->images) }}" src="{{ asset($image->images) }}" alt="{{ $row->slug }}">
                             @endif
                         </a>
-                        <div class="on-sale-wrap">
+                        <div class="on-sale-wrap skeleton">
                             <span class="on-sale-item">
                                 {{ $discount }}
                             </span>
@@ -138,10 +138,9 @@
                     @endphp
 
                     <div class="card-product-info">
-                        <a href="{{ route('product.details', $row->slug) }}" class="title link">{{ $row->name }}</a>
+                        <a href="{{ route('product.details', $row->slug) }}" class="title link skeleton">{{ $row->name }}</a>
                         <div class="box-rating">
-                            <ul class="list-star">
-                                
+                            <ul class="list-star skeleton">
                                 @for ( $i = 1; $i <= 5; $i++ )
                                     @if ( $i <= round($avgRatings))
                                         <li class="bx bxs-star" style="color: #F0A750;"></li>
@@ -150,25 +149,25 @@
                                     @endif
                                 @endfor
                             </ul>
-                            <span class="text-caption-1 text-secondary">({{ $reviews }} )</span>
+                            <span class="text-caption-1 text-secondary skeleton">({{ $reviews }} )</span>
                         </div>
 
                         @if ( checkDiscount($row) )
                             @if ( !empty($row->discount_type === "amount") )
-                                <span class="price"><span class="old-price">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> {{ getSetting()->currency_symbol }}{{ $row->selling_price - $row->discount_value }}</span>
+                                <span class="price"><span class="old-price skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> <span class="skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price - $row->discount_value }}</span></span>
                             @elseif( !empty($row->discount_type === "percent") )
                             @php
                                 $discount_val = $row->selling_price * $row->discount_value / 100;
                             @endphp
-                                <span class="price"><span class="old-price">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> {{ getSetting()->currency_symbol }}{{ $row->selling_price - $discount_val }}</span>
+                                <span class="price"><span class="old-price skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span> <span class="skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price - $discount_val }}</span></span>
                             @else
-                                <span class="price"> {{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span>
+                                <span class="price"> <span class="skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span></span>
                             @endif
                         @else
-                            <span class="price"> {{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span>
+                            <span class="price"> <span class="skeleton">{{ getSetting()->currency_symbol }}{{ $row->selling_price }}</span></span>
                         @endif
 
-                        <div class="box-progress-stock">
+                        {{-- <div class="box-progress-stock">
                             <div class="progress">
                                 <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
@@ -177,12 +176,12 @@
                                     <span class="stock-label text-secondary-2">Stock:</span>
                                     <span class="stock-value">{{ $row->qty }}</span>
                                 </div>
-                                {{-- <div class="stock-item text-caption-1">
+                                <div class="stock-item text-caption-1">
                                     <span class="stock-label text-secondary-2">Sold:</span>
                                     <span class="stock-value">{{ $row->product_sold }}</span>
-                                </div> --}}
+                                </div>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
