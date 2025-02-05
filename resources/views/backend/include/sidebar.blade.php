@@ -82,6 +82,22 @@
                     </li>
                 @endif
 
+                {{-- HRMS --}}
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow">
+                        <i class='bx bx-cart'></i>
+                        <span >HRMS</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li >
+                            <a href="{{ route('admin.hrms.expense.index') }}">
+                                <i class='bx bx-cart'></i>
+                                <span >Expense</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
                 {{-- E-commerce --}}
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">

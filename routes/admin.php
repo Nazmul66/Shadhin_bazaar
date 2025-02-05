@@ -38,6 +38,7 @@ use App\Http\Controllers\Backend\CustomerController;
 use App\Http\Controllers\Backend\SubscriptionController;
 use App\Http\Controllers\Backend\HomeSettingController;
 use App\Http\Controllers\Backend\EssentialSettingController;
+use App\Http\Controllers\Backend\Hrms\ExpenseController;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
 
@@ -257,6 +258,21 @@ Route::middleware('setLanguage')->group(function(){
             Route::put('/time-schedule', 'timeScheduleSection')->name('time.schedule');
             Route::put('/website-rules', 'websiteRules')->name('website-rules');
         });  
+
+
+            
+        /****************************
+        *      All HRMS Modules
+        ******************************/
+
+        Route::group(["as" => 'hrms.',"prefix" => '/hrms'], function () {
+            //______ Expense _____//
+            Route::resource('/expense', ExpenseController::class)->names('expense');
+            Route::get('/expense-data', [ExpenseController::class, 'getData'])->name('expense-data');
+            Route::post('/expense/status', [ExpenseController::class, 'changeExpenseStatus'])->name('expense.status');
+            Route::get('/expense/view/{id}', [ExpenseController::class, 'expenseView'])->name('expense.view');
+        });
+
     });
 
 });
