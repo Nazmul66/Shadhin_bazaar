@@ -1220,6 +1220,53 @@ a:hover {
     column-gap: 15px;
     row-gap: 30px;
 }
+.tf_grid_layout {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 15px;
+    row-gap: 30px;
+}
+
+@media ( min-width: 320px ) and ( max-width: 576px ){
+    .tf_grid_layout {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        column-gap: 15px;
+        row-gap: 30px;
+    }
+}
+@media ( min-width: 577px ) and ( max-width: 768px ){
+    .tf_grid_layout {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        column-gap: 15px;
+        row-gap: 30px;
+    }
+}
+@media ( min-width: 769px ) and ( max-width: 992px ){
+    .tf_grid_layout {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        column-gap: 15px;
+        row-gap: 30px;
+    }
+}
+@media ( min-width: 993px ) and ( max-width: 1200px ){
+    .tf_grid_layout {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        column-gap: 15px;
+        row-gap: 30px;
+    }
+}
+@media ( min-width: 1201px ) and ( max-width: 1400px ){
+    .tf_grid_layout {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        column-gap: 15px;
+        row-gap: 30px;
+    }
+}
 
 .tf-grid-layout.tf-col-2 {
     grid-template-columns: 1fr 1fr;
@@ -2000,7 +2047,7 @@ a:hover {
 }
 
 .header-white.header-bg {
-    background-color: var(--main);
+    background-color: #FFF;
 }
 
 .logo-header img {
@@ -18732,3 +18779,54 @@ ul.list-text.type-number {
     33% {background: #f03355}
     66% {background: #25b09b}
   }
+
+.mobile_menu_icons{
+    display: flex;
+   align-items: center;
+   justify-content: flex-end;
+   gap: 12px;
+}
+.mobile_menu_icons li{
+    display: flex;
+    align-items: center;
+}
+.mobile_menu_icons .nav_carts{
+    display: inline-flex;
+}
+.mobile_menu_icons .nav_carts .nav-icon-item {
+    position: relative;
+    display: inline-flex;
+}
+.mobile_menu_icons .nav_carts .nav-icon-item .count-box {
+    position: absolute;
+    line-height: 14px;
+    height: 14px;
+    min-width: 14px;
+    text-align: center;
+    padding: 0 3px;
+    font-size: 10px;
+    font-weight: 500;
+    border-radius: 9999px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: block;
+    overflow: hidden;
+    z-index: 2;
+    top: -2px;
+    right: -2px;
+    color: var(--white);
+    background-color: var(--primary);
+}
+.container_flex{
+    flex-direction: row-reverse;
+}
+@media ( min-width: 993px ) and ( max-width: 1200px ){
+    .container_flex{
+        flex-direction: row;
+    }   
+}
+@media ( min-width: 1201px ) and ( max-width: 1400px ){
+    .container_flex{
+        flex-direction: row;
+    }   
+}

@@ -22,52 +22,45 @@
 @section('body-content')
 
 
-
 <!-- Slider -->
-<div class="container">
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="tf-slideshow banner_slider slider-style2 slider-electronic slider-position slider-effect-fade">
+    <div class="tf-slideshow banner_slider slider-style2 slider-electronic slider-position slider-effect-fade">
 
-                <div dir="ltr" class="swiper tf-sw-slideshow" data-effect="fade" data-preview="1" data-tablet="1" data-mobile="1" data-centered="false" data-space="0" data-space-mb="0" data-loop="true" data-auto-play="true">
-                    <div class="swiper-wrapper">
-            
-                        @foreach ($sliders as $row)
-                            <div class="swiper-slide">
-                                <div class="wrap-slider">
-                                    <img src="{{ asset($row->slider_image) }}" alt="{{ $row->title }}" loading="lazy">
-                                    <div class="box-content">
-                                        <div class="container">
-                                            <div class="content-slider">
-                                                <div class="box-title-slider">
-                                                    <div>
-                                                        <p class="fade-item fade-item-1 subtitle text-btn-uppercase text-primary">{{ $row->type }}</p>
-                                                        <div class="fade-item fade-item-2 title-display heading">{{ $row->title }}</div>
-                                                    </div>
-                                                    <p class="fade-item fade-item-3 body-text-1 subheading"><strong>Price: {{ $row->starting_price }} Tk </strong></p>
-                                                </div>
-                                                <div class="fade-item fade-item-4 box-btn-slider">
-                                                    <a href="{{ url($row->btn_url ?? "/" ) }}" class="tf-btn btn-fill">
-                                                        <span class="text">Shop Now</span>
-                                                        <i class='bx bx-right-arrow-alt'></i></a>
-                                                </div>
+        <div dir="ltr" class="swiper tf-sw-slideshow" data-effect="fade" data-preview="1" data-tablet="1" data-mobile="1" data-centered="false" data-space="0" data-space-mb="0" data-loop="true" data-auto-play="true">
+            <div class="swiper-wrapper">
+    
+                @foreach ($sliders as $row)
+                    <div class="swiper-slide">
+                        <div class="wrap-slider">
+                            <img src="{{ asset($row->slider_image) }}" alt="{{ $row->title }}" loading="lazy">
+                            <div class="box-content">
+                                <div class="container">
+                                    <div class="content-slider">
+                                        <div class="box-title-slider">
+                                            <div>
+                                                <p class="fade-item fade-item-1 subtitle text-btn-uppercase text-primary">{{ $row->type }}</p>
+                                                <div class="fade-item fade-item-2 title-display heading">{{ $row->title }}</div>
                                             </div>
+                                            <p class="fade-item fade-item-3 body-text-1 subheading"><strong>Price: {{ $row->starting_price }} Tk </strong></p>
+                                        </div>
+                                        <div class="fade-item fade-item-4 box-btn-slider">
+                                            <a href="{{ url($row->btn_url ?? "/" ) }}" class="tf-btn btn-fill">
+                                                <span class="text">Shop Now</span>
+                                                <i class='bx bx-right-arrow-alt'></i></a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        @endforeach
+                        </div>
                     </div>
-                </div>
-                <div class="wrap-pagination d-block">
-                    <div class="container">
-                        <div class="sw-dots sw-pagination-slider type-square justify-content-center"></div>
-                    </div>
-                </div>
+                @endforeach
+            </div>
+        </div>
+        <div class="wrap-pagination d-block">
+            <div class="container">
+                <div class="sw-dots sw-pagination-slider type-square justify-content-center"></div>
             </div>
         </div>
     </div>
-</div>
 <!-- /Slider -->
 
 <div class="loader"></div>

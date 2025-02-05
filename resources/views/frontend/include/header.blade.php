@@ -3,27 +3,40 @@
 @endphp
 
 <header id="header" class="header-default header-style-5 header-white">
-    <div class="main-header bg-blue-2">
+    <div class="main-header">
         <div class="container">
-            <div class="row wrapper-header align-items-center line-top-rgba">
-                <div class="col-md-4 col-3 d-xl-none">
-                    <a href="#mobileMenu" class="mobile-menu" data-bs-toggle="offcanvas" aria-controls="mobileMenu">
-                        <i class='bx bx-menu-alt-left text-white' style="font-size: 32px;"></i>
-                    </a>
+            <div class="row wrapper-header align-items-center line-top-rgba container_flex">
+                <div class="col-md-6 col-6 d-lg-none d-xl-none">
+                    <ul class="mobile_menu_icons">
+                        <li class="nav_carts skeleton">
+                            <a href="#shoppingCart" data-bs-toggle="modal" class="nav-icon-item">
+                            <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M16.5078 10.8734V6.36686C16.5078 5.17166 16.033 4.02541 15.1879 3.18028C14.3428 2.33514 13.1965 1.86035 12.0013 1.86035C10.8061 1.86035 9.65985 2.33514 8.81472 3.18028C7.96958 4.02541 7.49479 5.17166 7.49479 6.36686V10.8734M4.11491 8.62012H19.8877L21.0143 22.1396H2.98828L4.11491 8.62012Z" stroke="#181818" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>  
+                            <span class="count-box skeleton">{{ Cart::content()->count() }}</span></a>
+                        </li>
+
+                        <li>
+                            <a href="#mobileMenu" class="mobile-menu skeleton" data-bs-toggle="offcanvas" aria-controls="mobileMenu">
+                                <i class='bx bx-menu' style="font-size: 28px; color: #181818;"></i>
+                            </a>
+                        </li>
+                    </ul>
                 </div>
-                <div class="col-xl-8 col-md-4 col-6">
-                    <div class="wrapper-header-left justify-content-center justify-content-xl-start">
+
+                <div class="col-xl-8 col-lg-8 col-md-6 col-6">
+                    <div class="wrapper-header-left justify-content-start justify-content-xl-start">
                         <a href="{{ route('home') }}" class="logo-header skeleton">
                             @if ( !empty(getSetting()->logo) )
-                                <img src="{{ asset(getSetting()->logo) }}" alt="logo" class="logo" style="width: 55px;">
+                                <img src="{{ asset(getSetting()->logo) }}" alt="logo" class="logo" style="width: 70px;">
                             @else
                                 <img src="{{ asset('public/frontend/images/logo/logo-white.svg') }}" alt="logo" class="logo">
                             @endif
                         </a>
 
-                        <div class="d-xl-block d-none">
+                        <div class="d-xl-block d-lg-block d-none">
                             <form action="{{ route('product.page') }}">
-                                <div class="form-search-select skeleton">
+                                <div class="form-search-select skeleton" style="border: 2px solid #181818;">
                                     <input type="text" name="search" placeholder="What are you looking for today?" value="{{ request()->search }}">
                                     <button class="tf-btn" type="submit">
                                         <span class="text">Search</span>
@@ -34,13 +47,13 @@
                     </div>
 
                 </div>
-                <div class="col-xl-4 col-md-4 col-3">
+                <div class="col-xl-4 col-lg-4 col-md-4 col-3">
                     <div class="wrapper-header-right">
-                        <div class="d-none d-xl-flex box-support skeleton">
-                            <i class='bx bxs-color text-white ' style="font-size: 32px;"></i>
+                        <div class="d-none d-lg-flex d-xl-flex box-support skeleton">
+                            <i class='bx bxs-color' style="font-size: 32px; color: #181818;"></i>
                             <div>
-                                <a href="tel: {{ getSetting()->phone_optional ?? getSetting()->phone }}" class="text-title text-white">Hotline: +{{ getSetting()->phone_optional ?? getSetting()->phone }}</a>
-                                <div class="text-white text-caption-2">24/7 Support Center</div>
+                                <a href="tel: {{ getSetting()->phone_optional ?? getSetting()->phone }}" class="text-title" style="color: #181818;">Hotline: +{{ getSetting()->phone_optional ?? getSetting()->phone }}</a>
+                                <div class="text-caption-2" style="color: #181818;">24/7 Support Center</div>
                             </div>
                         </div>
 
@@ -87,7 +100,7 @@
         </div>
     </div>
 
-    <div class="header-bottom bg-blue-3 d-none d-xl-block">
+    <div class="header-bottom bg-blue-3 d-none d-lg-block d-xl-block">
         <div class="container">
             <div class="wrapper-header d-flex justify-content-between align-items-center">
                 <div class="box-left">
@@ -189,12 +202,12 @@
                                 </svg>    
                             </a>
                         </li>
-                        <li class="nav-search d-inline-flex d-xl-none"><a href="#search" data-bs-toggle="modal" class="nav-icon-item">
+                        {{-- <li class="nav-search d-inline-flex d-xl-none"><a href="#search" data-bs-toggle="modal" class="nav-icon-item">
                             <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z" stroke="#181818" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                 <path d="M21.35 21.0004L17 16.6504" stroke="#181818" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>    
-                        </a></li>
+                        </a></li> --}}
 
                         <li class="nav-account skeleton">
                             <div class="nav-icon-item" data-bs-toggle="dropdown" aria-expanded="false">

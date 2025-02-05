@@ -1,6 +1,6 @@
 @if ( $products->count() > 0 )
 
-    <div class="tf-grid-layout tf-col-4" id="gridLayout" style="">
+    <div class="tf_grid_layout" id="gridLayout">
 
         @foreach ($products as $row)
             @php
@@ -196,7 +196,7 @@
     </div>
 
 @else
-    <div class="tf-grid-layout tf-col-1" id="gridLayout" style="">
+    <div class="tf_grid_layout" id="gridLayout" style="grid-template-columns: repeat(1, 1fr)!important;">
         <div class="alert alert-danger alert-dismissible fade show px-4 mb-0 text-center" role="alert">
             <i class="bx bx-tired d-block display-4 mt-2 mb-3 text-danger"></i>
             {{-- <h5 class="text-danger">Warning</h5> --}}
@@ -204,3 +204,25 @@
         </div>
     </div>
 @endif
+
+
+<script>
+    // Skeleton loader added
+    $(document).ready(function(){
+        $('.skeleton').each(function(){
+            $(this).on('load', function(){
+                $(this).removeClass('skeleton');
+            }).trigger('load'); // Manually trigger load in case it's already loaded
+        });
+        $('.skeleton2').each(function(){
+            $(this).on('load', function(){
+                $(this).removeClass('skeleton2');
+            }).trigger('load'); // Manually trigger load in case it's already loaded
+        });
+        $('.banner_slider').each(function(){
+            $(this).on('load', function(){
+                $(this).removeClass('banner_slider');
+            }).trigger('load'); // Manually trigger load in case it's already loaded
+        });
+    })
+</script>
