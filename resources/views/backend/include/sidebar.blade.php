@@ -286,26 +286,6 @@
                     </ul>
                 </li>
 
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow">
-                        <i class='bx bx-grid-alt'></i>
-                        <span >Data Print</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li>
-                            <a href="{{ route('admin.slider.index') }}">
-                                <span >Print Barcode</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="{{ route('admin.home.page.setting') }}">
-                                <span >Print Qrcode</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
                 {{-- Role & Permission --}}
                 @if(auth("admin")->user()->can("main-admin-access"))
                 <li>
@@ -376,6 +356,25 @@
                                 </a>
                             </li>
                         @endif
+
+                        <li class="">
+                            <a href="javascript: void(0);" class="has-arrow" aria-expanded="false">
+                                <span data-key="t-invoices">Generate Print</span>
+                            </a>
+                            <ul class="sub-menu mm-collapse" aria-expanded="false" style="height: 0px;">
+                                <li>
+                                    <a href="{{ route('admin.slider.index') }}">
+                                        <span >Print Barcode</span>
+                                    </a>
+                                </li>
+        
+                                <li>
+                                    <a href="{{ route('admin.qrcode.index') }}">
+                                        <span >Print Qrcode</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
 
                         <li>
                             <a href="{{ route('admin.marquee.index') }}">

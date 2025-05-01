@@ -9,6 +9,7 @@
 */
 
 use App\Http\Controllers\Admin\PosController;
+use App\Http\Controllers\Admin\QRCodeController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Backend\PermissionController;
@@ -261,12 +262,16 @@ Route::middleware('setLanguage')->group(function(){
             Route::put('/website-rules', 'websiteRules')->name('website-rules');
         });  
 
-
-        // Route::get('/pos', function (){
-        //     return view('backend.pages.pos.index');
-        // })->name('pos');
-
+        //______ POS _____//
         Route::resource('/pos', PosController::class)->names('pos');
+
+        //______ QRCode _____//
+        Route::resource('/qrcode', QRCodeController::class)->names('qrcode');
+        Route::get('/qrcode-data', [QRCodeController::class, 'getData'])->name('qrcode-data');
+        Route::post('/qrcode/status', [QRCodeController::class, 'changeQrcodeStatus'])->name('qrcode.status');
+        Route::get('/qrcode/view/{id}', [QRCodeController::class, 'qrcodeView'])->name('qrcode.view');
+
+
             
         /****************************
         *      All HRMS Modules
