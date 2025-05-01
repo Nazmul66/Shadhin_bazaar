@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="{{ asset('public/backend/assets/libs/flatpickr/flatpickr.min.css') }}">
 @endpush
 
+
 @php
     $invoice_id = App\Models\Expense::max('invoice_id'); 
 
@@ -78,7 +79,7 @@
 
         <!-- Create Modal -->
         <div id="createModal" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" data-bs-scroll="true"
-             style="display: none;" aria-hidden="true">
+            style="display: none;" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header bg-primary">
@@ -259,7 +260,7 @@
                                 </button>
 
                                 <button type="submit" id="btn-store" class="btn btn-primary waves-effect waves-light">
-                                   Update
+                                Update
                                 </button>
                             </div>
                         </form>
@@ -316,6 +317,7 @@
             </div><!-- /.modal-dialog -->
         </div>
     </div>
+
 
 @endsection
 

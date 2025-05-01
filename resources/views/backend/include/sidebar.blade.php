@@ -60,6 +60,14 @@
                     </a>
                 </li>
 
+                {{-- Custom Pages --}}
+                <li class="">
+                    <a href="{{ route('admin.pos.index') }}" >
+                        <i class='bx bx-laptop'></i>
+                        <span >POS Software</span>
+                    </a>
+                </li>
+
                 {{-- Attribute --}}
                 @if(auth("admin")->user()->can("index.attribute"))
                     <li>
@@ -82,11 +90,12 @@
                     </li>
                 @endif
 
+                <li class="menu-title" data-key="t-menu">Finance & Accounts</li>
                 {{-- HRMS --}}
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow">
+                <li class="@yield('hrms')">
+                    <a href="javascript:void();" class="has-arrow @yield('hrms_a')">
                         <i class='bx bx-cart'></i>
-                        <span >HRMS</span>
+                        <span >Accounts</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li >
@@ -95,6 +104,12 @@
                                 <span >Expense</span>
                             </a>
                         </li>
+                        {{-- <li class>
+                            <a href="{{ route('admin.hrms.multi') }}">
+                                <i class='bx bx-cart'></i>
+                                <span >Multi</span>
+                            </a>
+                        </li> --}}
                     </ul>
                 </li>
 
@@ -266,6 +281,26 @@
                         <li>
                             <a href="{{ route('admin.home.page.setting') }}">
                                 <span >Home Setting</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow">
+                        <i class='bx bx-grid-alt'></i>
+                        <span >Data Print</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li>
+                            <a href="{{ route('admin.slider.index') }}">
+                                <span >Print Barcode</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('admin.home.page.setting') }}">
+                                <span >Print Qrcode</span>
                             </a>
                         </li>
                     </ul>

@@ -44,7 +44,6 @@
 
     @stack('add-css')
 
-
     <!-- Style Css-->
     <link href="{{ asset('public/backend/assets/css/style.css') }}" />
 

@@ -8,6 +8,7 @@
 |
 */
 
+use App\Http\Controllers\Admin\PosController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Backend\PermissionController;
@@ -60,6 +61,7 @@ Route::middleware('setLanguage')->group(function(){
 
 
     Route::group(["as" => 'admin.',"prefix" => '/admin', 'middleware' => ['auth:admin', 'role:SuperAdmin|Admin']], function () {
+
         Route::get('/dashboards', [AdminController::class, "dashboards"])->name('dashboards');
         Route::get('/profiles', [AdminController::class, "profiles"])->name('profiles');
         Route::get('/profile-update', [AdminController::class, "profileUpdate"])->name('profile-update');
@@ -260,17 +262,34 @@ Route::middleware('setLanguage')->group(function(){
         });  
 
 
+        // Route::get('/pos', function (){
+        //     return view('backend.pages.pos.index');
+        // })->name('pos');
+
+        Route::resource('/pos', PosController::class)->names('pos');
             
         /****************************
         *      All HRMS Modules
         ******************************/
-
         Route::group(["as" => 'hrms.',"prefix" => '/hrms'], function () {
+
             //______ Expense _____//
             Route::resource('/expense', ExpenseController::class)->names('expense');
             Route::get('/expense-data', [ExpenseController::class, 'getData'])->name('expense-data');
             Route::post('/expense/status', [ExpenseController::class, 'changeExpenseStatus'])->name('expense.status');
             Route::get('/expense/view/{id}', [ExpenseController::class, 'expenseView'])->name('expense.view');
+
+
+            //______ Payroll _____//
+
+
+            Route::get('/multi', function (){
+                return view('backend.pages.hrms.multi.index');
+            })->name('multi');
+
+            Route::get('/elementor', function (){
+                return view('backend.pages.elementor.index');
+            })->name('elementor');
         });
 
     });
