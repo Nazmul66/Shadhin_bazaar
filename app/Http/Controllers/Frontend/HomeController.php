@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Events\SubscriptionEvent;
 use App\Helper\MailHelper;
 use App\Http\Controllers\Controller;
 use App\Mail\ContactMail;

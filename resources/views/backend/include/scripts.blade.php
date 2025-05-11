@@ -25,6 +25,7 @@
 
  <!-- toaster Js plugins  -->
  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+ <script src="https://js.pusher.com/8.4.0/pusher.min.js"></script>
 
  <script src="{{ asset('/public/backend/assets/js/app.js') }}"></script>
 
@@ -33,13 +34,35 @@
 {!! Toastr::message() !!}
 
 <script type="text/javascript">
-
     @if ($errors->any())
         @foreach ($errors->all() as $error)
             toastr.error("{!! $error !!}");
         @endforeach
     @endif
 </script>
+
+{{-- Pusher Js Start --}}
+    <script>
+
+    // Enable pusher logging - don't include this in production
+    Pusher.logToConsole = true;
+
+    var pusher = new Pusher('29983ad499efd408200f', {
+        cluster: 'ap1'
+    });
+
+    var channel = pusher.subscribe('my-channel');
+    channel.bind('my-event', function(data) {
+        // alert(JSON.stringify(data.message));
+        if( data ){
+            toastr.success(data.message);
+        }
+        else{
+            toastr.error("there is something wrong");
+        }
+    });
+    </script>
+{{-- Pusher Js End --}}
 
 <script>
     $.ajaxSetup({

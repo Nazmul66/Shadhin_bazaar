@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Events\SubscriptionEvent;
 use App\Helper\MailHelper;
 use App\Http\Controllers\Controller;
 use App\Mail\SubscriptionVerification;
@@ -36,7 +37,7 @@ class NewsletterController extends Controller
                 // send email
                 Mail::to($existSubscriber->email)->send(new SubscriptionVerification($existSubscriber));
                 
-                return response(['status' => 'success', 'message' => 'A verification link send to your email please check.']);
+                return response(['status' => 'success', 'message' => 'A verification link send to your email please check 2.']);
             }
             elseif($existSubscriber->is_verified == 1){
                 return response(['status' => 'error', 'message' => 'you already subscribed with this email.']);
@@ -55,7 +56,10 @@ class NewsletterController extends Controller
             // send email
             Mail::to($subscriber->email)->send(new SubscriptionVerification($subscriber));
 
-            return response(['status' => 'success', 'message' => 'A verification link send to your email please check.']);
+            //Event
+            broadcast(new SubscriptionEvent('New User Subscription'));
+
+            return response(['status' => 'success', 'message' => 'A verification link send to your email please check 1.']);
         }
     }
 
